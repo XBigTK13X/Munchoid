@@ -42,11 +42,18 @@ public class StateManager {
     }
 
     public void push(State state) {
+        boolean isNewState = false;
         if (_states.size() > 0) {
             _components.put(current(), new StateDependentComponents(EntityManager.get(), ParticleEngine.get(), TextPool.get()));
         }
+        if (!_states.contains(state)) {
+            isNewState = true;
+        }
         _states.push(state);
         loadCurrent();
+        if (isNewState) {
+            state.create();
+        }
     }
 
     public void pop() {

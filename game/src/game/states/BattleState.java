@@ -5,6 +5,10 @@ import sps.entities.EntityManager;
 import sps.states.State;
 
 public class BattleState implements State {
+    @Override
+    public void create() {
+        EntityManager.get().addEntity(new Creature());
+    }
 
     @Override
     public void draw() {
@@ -22,7 +26,7 @@ public class BattleState implements State {
 
     @Override
     public void load() {
-        EntityManager.get().addEntity(new Creature());
+
     }
 
     @Override

@@ -1,6 +1,8 @@
 package sps.states;
 
 public interface State {
+    void create();
+
     void draw();
 
     void update();
