@@ -4,6 +4,7 @@ package game;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.graphics.Color;
 import game.states.BattleState;
+import sps.bridge.Commands;
 import sps.bridge.SpriteTypes;
 import sps.bridge.Sps;
 import sps.core.DevConsole;
@@ -48,10 +49,18 @@ public class Game implements ApplicationListener {
 
             // Update
             Input.get().update();
-            if (Input.get().isActive(sps.bridge.Commands.get("ToggleDevConsole"), 0)) {
+
+            if (Input.get().isActive(Commands.get("ToggleDevConsole"), 0)) {
+                DevConsole.get().toggle();
+            }
+            if (Input.get().isActive(Commands.get("ToggleFullScreen"), 0)) {
+                Renderer.get().toggleFullScreen();
+            }
+
+            if (Input.get().isActive(Commands.get("Push"), 0)) {
                 StateManager.get().push(new BattleState());
             }
-            if (Input.get().isActive(sps.bridge.Commands.get("ToggleFullScreen"), 0)) {
+            if (Input.get().isActive(Commands.get("Pop"), 0)) {
                 StateManager.get().pop();
             }
 
