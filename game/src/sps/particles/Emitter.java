@@ -38,7 +38,7 @@ public class Emitter extends PEComponent {
         _behavior = behavior;
         _index = 0;
         while (_index < behavior.getParticleCount()) {
-            _particles[_index] = ParticleEngine.createParticle(behavior, position, baseColor);
+            _particles[_index] = ParticleEngine.get().createParticle(behavior, position, baseColor);
             _index++;
         }
     }
@@ -48,7 +48,7 @@ public class Emitter extends PEComponent {
         _behavior = behavior;
         _index = 0;
         while (_index < behavior.getParticleCount()) {
-            _particles[_index] = ParticleEngine.createParticle(behavior, entity, baseColor);
+            _particles[_index] = ParticleEngine.get().createParticle(behavior, entity, baseColor);
             _index++;
         }
     }

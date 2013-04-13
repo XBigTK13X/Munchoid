@@ -314,4 +314,8 @@ public class EntityManager {
             _contents.get(ii).recalculateEdge();
         }
     }
+
+    public static void set(EntityManager entityManager) {
+        __instance = entityManager;
+    }
 }

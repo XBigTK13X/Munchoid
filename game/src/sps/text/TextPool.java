@@ -9,13 +9,21 @@ import java.util.List;
 
 public class TextPool {
 
-    private static TextPool instance;
+    private static TextPool __instance;
 
     public static TextPool get() {
-        if (instance == null) {
-            instance = new TextPool();
+        if (__instance == null) {
+            __instance = new TextPool();
         }
-        return instance;
+        return __instance;
+    }
+
+    public static void set(TextPool textPool) {
+        __instance = textPool;
+    }
+
+    public static void reset() {
+        __instance = new TextPool();
     }
 
 

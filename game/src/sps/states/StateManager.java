@@ -1,7 +1,11 @@
 package sps.states;
 
+import sps.entities.EntityManager;
+import sps.particles.ParticleEngine;
 import sps.text.TextPool;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 public class StateManager {
@@ -12,22 +16,37 @@ public class StateManager {
         return instance;
     }
 
-
-    // TODO
-    // Its currently the case that writing too much text in one state could
-    // prevent a previous state from retrieving a needed text object
-    // Could fix this by giving each State its own TextPool
     private Stack<State> _states;
+    private Map<State, StateDependentComponents> _components = new HashMap<State, StateDependentComponents>();
 
     private StateManager() {
         _states = new Stack<State>();
     }
 
-    public void push(State state) {
-        _states.push(state);
-
+    private void load(State state) {
         //$$$ Logger.info("=== Loading new state: " + state.getName());
+
+        if (_components.containsKey(state)) {
+            StateDependentComponents components = _components.get(state);
+            EntityManager.set(components.entityManager);
+            ParticleEngine.set(components.particleEngine);
+            TextPool.set(components.textPool);
+        }
+        else {
+            EntityManager.reset();
+            ParticleEngine.reset();
+            TextPool.reset();
+        }
+        _states.push(state);
         current().load();
+    }
+
+    public void push(State state) {
+        if (_states.size() > 0) {
+            _components.put(current(), new StateDependentComponents(EntityManager.get(), ParticleEngine.get(), TextPool.get()));
+        }
+        load(state);
+
     }
 
     public void pop() {
@@ -36,6 +55,7 @@ public class StateManager {
             TextPool.get().clear(dying);
             dying.unload();
         }
+        load(current());
     }
 
     public void draw() {

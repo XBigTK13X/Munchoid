@@ -3,11 +3,10 @@ package game.states;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.EntityManager;
-import sps.graphics.Renderer;
 import sps.states.State;
 import sps.text.TextPool;
 
-public class GameplayState implements State {
+public class BattleState implements State {
     @Override
     public void draw() {
         EntityManager.get().draw();
@@ -24,7 +23,7 @@ public class GameplayState implements State {
 
     @Override
     public void load() {
-        TextPool.get().write("The game is running :)", new Point2(RNG.next(0, 100), Renderer.get().VirtualHeight - RNG.next(0, 1000)));
+        TextPool.get().write("WHALSD", new Point2(RNG.next(0, 1000), RNG.next(0, 1000)));
         EntityManager.reset();
         EntityManager.get().loadContent();
     }

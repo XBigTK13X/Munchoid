@@ -3,7 +3,7 @@ package game;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.graphics.Color;
-import game.states.GameplayState;
+import game.states.BattleState;
 import sps.bridge.SpriteTypes;
 import sps.bridge.Sps;
 import sps.core.DevConsole;
@@ -29,7 +29,7 @@ public class Game implements ApplicationListener {
         Renderer.get().setRefreshInstance(this);
         Input.get().setup(new DefaultStateProvider());
         SpriteSheetManager.setup(SpriteTypes.getDefs());
-        StateManager.get().push(new GameplayState());
+        StateManager.get().push(new BattleState());
         ParticleEngine.reset();
         StateManager.get().loadContent();
     }
@@ -56,13 +56,13 @@ public class Game implements ApplicationListener {
 
             StateManager.get().asyncUpdate();
             StateManager.get().update();
-            ParticleEngine.update();
+            ParticleEngine.get().update();
             TextPool.get().update();
 
             // Render
             Renderer.get().begin();
             StateManager.get().draw();
-            ParticleEngine.draw();
+            ParticleEngine.get().draw();
             TextPool.get().draw();
             DevConsole.get().draw();
             Renderer.get().end();
