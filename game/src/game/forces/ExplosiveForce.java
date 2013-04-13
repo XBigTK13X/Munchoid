@@ -1,7 +1,6 @@
 package game.forces;
 
 import game.creatures.Atom;
-import game.creatures.BodyPart;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.HitTest;
@@ -11,13 +10,8 @@ public class ExplosiveForce extends Force {
     private Point2 _epicenter;
 
     public ExplosiveForce() {
-        _magnitude = RNG.next(0, 100);
+        _magnitude = RNG.next(25, 70);
 
-    }
-
-    @Override
-    public void apply(BodyPart bodyPart) {
-        super.apply(bodyPart);
     }
 
     @Override
