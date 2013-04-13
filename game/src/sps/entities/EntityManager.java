@@ -162,7 +162,7 @@ public class EntityManager {
         for (int ii = -distance; ii < distance + 1; ii++) {
             for (int jj = -distance; jj < distance + 1; jj++) {
                 if (ii != 0 || jj != 0) {
-                    buffer.copy(target.add(new Point2(ii, jj)));
+                    buffer.copy(target.addGrid(new Point2(ii, jj)));
                     if (CoordVerifier.isValid(buffer)) {
                         for (IActor creature : getActorsAt(buffer, null)) {
                             _creatures2.add(creature);

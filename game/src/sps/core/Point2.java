@@ -1,5 +1,7 @@
 package sps.core;
 
+import sps.graphics.Renderer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,8 +66,16 @@ public class Point2 {
         }
     }
 
-    public Point2 add(Point2 target) {
+    public Point2 addGrid(Point2 target) {
         return new Point2(GridX + target.GridX, GridY + target.GridY);
+    }
+
+    public Point2 addPosition(Point2 target) {
+        return new Point2(PosX + target.PosX, PosY + target.PosY);
+    }
+
+    public Point2 addRaw(Point2 target) {
+        return new Point2(X + target.X, Y + target.Y);
     }
 
     public Point2 add(int dX, int dY) {
@@ -197,5 +207,9 @@ public class Point2 {
     @Override
     public String toString() {
         return "(X,Y) - (gX,gY) - (posX,posY):  (" + X + "," + Y + ") - (" + GridX + "," + GridY + ") - (" + PosX + "," + PosY + ")";
+    }
+
+    public static Point2 random() {
+        return new Point2(RNG.next(0, Renderer.get().VirtualWidth), RNG.next(0, Renderer.get().VirtualHeight));
     }
 }

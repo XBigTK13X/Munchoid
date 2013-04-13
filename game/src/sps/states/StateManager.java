@@ -62,10 +62,6 @@ public class StateManager {
         current().draw();
     }
 
-    public void loadContent() {
-        current().load();
-    }
-
     public void update() {
         current().update();
     }

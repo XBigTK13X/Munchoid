@@ -1,5 +1,6 @@
 package game.states;
 
+import game.creatures.Creature;
 import sps.entities.EntityManager;
 import sps.states.State;
 
@@ -21,6 +22,7 @@ public class BattleState implements State {
 
     @Override
     public void load() {
+        EntityManager.get().addEntity(new Creature());
     }
 
     @Override

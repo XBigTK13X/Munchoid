@@ -17,11 +17,13 @@ import java.util.Map;
 public class Assets {
     private enum Sprites {
         Particle,
+        Pixel,
         MenuBase
     }
 
     private static Assets instance;
     private static final String __menuBaseSprite = "MenuBase.png";
+    private static final String __pixelSprite = "Pixel.png";
 
     public static Assets get() {
         if (instance == null) {
@@ -76,6 +78,13 @@ public class Assets {
         catch (Exception e) {
             Logger.exception("ERROR: Exception while loading the menu base sprite. The HUDs that use it might not be functional.", e, false);
         }
+
+        try {
+            sprites.put(Sprites.Pixel, new Sprite(image(__pixelSprite)));
+        }
+        catch (Exception e) {
+            Logger.exception("ERROR: Exception while loading the menu base sprite. The HUDs that use it might not be functional.", e, false);
+        }
     }
 
     public BitmapFont font() {
@@ -99,5 +108,9 @@ public class Assets {
 
     public Sprite baseMenu() {
         return sprites.get(Sprites.MenuBase);
+    }
+
+    public Sprite pixel() {
+        return sprites.get(Sprites.Pixel);
     }
 }

@@ -25,6 +25,8 @@ public class SpsConfig {
     public final int tileMapWidth;
     public final int resolutionHeight;
     public final int resolutionWidth;
+    public final int virtualHeight;
+    public final int virtualWidth;
     public final boolean fullScreen;
 
     public final boolean viewPaths;
@@ -43,7 +45,8 @@ public class SpsConfig {
                     Logger.info("SETTINGS: Parsing section '" + line.replace("##", "") + "'");
                 }
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Logger.exception(e);
         }
 
@@ -57,6 +60,8 @@ public class SpsConfig {
         tileMapWidth = Parse.inte(_settings.get("tileMapWidth"));
         resolutionHeight = Parse.inte(_settings.get("resolutionHeight"));
         resolutionWidth = Parse.inte(_settings.get("resolutionWidth"));
+        virtualHeight = Parse.inte(_settings.get("virtualHeight"));
+        virtualWidth = Parse.inte(_settings.get("virtualWidth"));
         fullScreen = Parse.bool(_settings.get("fullScreen"));
 
         // Dev

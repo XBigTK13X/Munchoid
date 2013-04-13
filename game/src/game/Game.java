@@ -9,6 +9,7 @@ import sps.bridge.Sps;
 import sps.core.DevConsole;
 import sps.core.Logger;
 import sps.core.RNG;
+import sps.core.SpsConfig;
 import sps.graphics.FrameStrategy;
 import sps.graphics.Renderer;
 import sps.graphics.SpriteSheetManager;
@@ -24,6 +25,7 @@ public class Game implements ApplicationListener {
     public void create() {
         RNG.seed(0);
         Sps.setup();
+        Renderer.setVirtualResolution(SpsConfig.get().virtualWidth, SpsConfig.get().virtualHeight);
         Renderer.get().setWindowsBackground(Color.BLACK);
         Renderer.get().setStrategy(new FrameStrategy());
         Renderer.get().setRefreshInstance(this);
@@ -31,7 +33,6 @@ public class Game implements ApplicationListener {
         SpriteSheetManager.setup(SpriteTypes.getDefs());
         StateManager.get().push(new BattleState());
         ParticleEngine.reset();
-        StateManager.get().loadContent();
     }
 
     @Override
@@ -82,5 +83,9 @@ public class Game implements ApplicationListener {
 
     @Override
     public void dispose() {
+    }
+
+    public class DrawDepths {
+        public final static String Atom = "Atom";
     }
 }
