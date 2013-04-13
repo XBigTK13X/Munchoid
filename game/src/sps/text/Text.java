@@ -6,9 +6,13 @@ import sps.bridge.DrawDepths;
 import sps.bridge.Sps;
 import sps.core.Point2;
 import sps.graphics.Renderer;
+import sps.states.State;
+import sps.states.StateManager;
 
 public class Text {
     public static final float NotTimed = Float.MIN_VALUE;
+
+    private State _createdDuring;
 
     private Point2 position = new Point2(0, 0);
     private String message;
@@ -27,6 +31,7 @@ public class Text {
     }
 
     public void reset(Point2 position, String message, float scale, float lifeInSeconds, TextEffect effect) {
+        _createdDuring = StateManager.get().current();
         if (position.equals(Point2.Zero)) {
             visible = false;
             return;
@@ -63,7 +68,7 @@ public class Text {
     }
 
     public boolean isVisible() {
-        return visible;
+        return visible && isCurrent();
     }
 
     public void setVel(float x, float y) {
@@ -98,5 +103,11 @@ public class Text {
         this.message = message;
     }
 
+    public boolean createdDuring(State state) {
+        return _createdDuring == state;
+    }
 
+    public boolean isCurrent() {
+        return _createdDuring == StateManager.get().current();
+    }
 }

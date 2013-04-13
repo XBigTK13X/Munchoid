@@ -1,17 +1,21 @@
 package game.states;
 
 import sps.core.Point2;
+import sps.core.RNG;
+import sps.entities.EntityManager;
 import sps.graphics.Renderer;
 import sps.states.State;
 import sps.text.TextPool;
 
-public class DefaultState implements State {
+public class GameplayState implements State {
     @Override
     public void draw() {
+        EntityManager.get().draw();
     }
 
     @Override
     public void update() {
+        EntityManager.get().update();
     }
 
     @Override
@@ -20,16 +24,19 @@ public class DefaultState implements State {
 
     @Override
     public void load() {
-        TextPool.get().write("The game is running :)",new Point2(100, Renderer.get().VirtualHeight-120));
+        TextPool.get().write("The game is running :)", new Point2(RNG.next(0, 100), Renderer.get().VirtualHeight - RNG.next(0, 1000)));
+        EntityManager.reset();
+        EntityManager.get().loadContent();
     }
 
     @Override
     public void unload() {
+        EntityManager.get().clear();
     }
 
     @Override
     public String getName() {
-        return null;
+        return "Gameplay State";
     }
 
     @Override

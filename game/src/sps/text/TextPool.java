@@ -2,6 +2,7 @@ package sps.text;
 
 import com.badlogic.gdx.graphics.Color;
 import sps.core.Point2;
+import sps.states.State;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class TextPool {
     private int index = 0;
 
     private TextPool() {
-        for (int ii = 0; ii < 1000; ii++) {
+        for (int ii = 0; ii < 10000; ii++) {
             texts.add(new Text());
         }
     }
@@ -30,6 +31,14 @@ public class TextPool {
     public void clear() {
         for (Text text : texts) {
             text.hide();
+        }
+    }
+
+    public void clear(State state) {
+        for (Text text : texts) {
+            if (text.createdDuring(state)) {
+                text.hide();
+            }
         }
     }
 
@@ -46,6 +55,7 @@ public class TextPool {
         result.reset(position, message, 1, lifeInSeconds, effect);
         result.setColor(color);
         result.setScale(scale);
+        //TODO A log entry when all texts are in use, to prevent overwriting texts from an old state
         index = (index + 1) % texts.size();
         return result;
     }
