@@ -1,6 +1,7 @@
 package sps.io;
 
 import sps.bridge.Command;
+import sps.bridge.Commands;
 
 public class DefaultStateProvider implements StateProvider {
     private final CommandState state = new CommandState();
@@ -22,6 +23,8 @@ public class DefaultStateProvider implements StateProvider {
 
     @Override
     public void pollLocalState() {
-
+        for (Command command : Commands.values()) {
+            setState(command, getFirstPlayerIndex(), Input.get().detectState(command, getFirstPlayerIndex()));
+        }
     }
 }

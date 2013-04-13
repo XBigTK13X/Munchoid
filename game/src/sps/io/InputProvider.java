@@ -3,13 +3,6 @@ package sps.io;
 import sps.bridge.Command;
 import sps.bridge.Context;
 
-/**
- * Created with IntelliJ IDEA.
- * User: kretst
- * Date: 2/11/13
- * Time: 6:41 PM
- * To change this template use File | SpsConfig | File Templates.
- */
 public interface InputProvider {
     void setup(StateProvider stateProvider);
 

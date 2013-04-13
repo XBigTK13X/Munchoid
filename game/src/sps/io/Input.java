@@ -6,7 +6,6 @@ import sps.bridge.Command;
 import sps.bridge.Context;
 import sps.bridge.Contexts;
 import sps.bridge.Sps;
-import sps.core.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,7 +59,6 @@ public class Input implements InputProvider {
 
     @Override
     public boolean detectState(Command command, int playerIndex) {
-        boolean debugInput = false;
         boolean gamepadActive = false;
         if (Controllers.getControllers().size > playerIndex) {
             gamepadActive = command.controllerInput().isActive(Controllers.getControllers().get(playerIndex));
