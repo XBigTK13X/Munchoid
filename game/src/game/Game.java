@@ -48,10 +48,10 @@ public class Game implements ApplicationListener {
             // Update
             Input.get().update();
             if (Input.get().isActive(sps.bridge.Commands.get("ToggleDevConsole"), 0)) {
-                DevConsole.get().toggle();
+                StateManager.get().push(new BattleState());
             }
             if (Input.get().isActive(sps.bridge.Commands.get("ToggleFullScreen"), 0)) {
-                Renderer.get().toggleFullScreen();
+                StateManager.get().pop();
             }
 
             StateManager.get().asyncUpdate();

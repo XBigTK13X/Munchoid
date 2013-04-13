@@ -23,11 +23,11 @@ public class StateManager {
         _states = new Stack<State>();
     }
 
-    private void load(State state) {
+    private void loadCurrent() {
         //$$$ Logger.info("=== Loading new state: " + state.getName());
 
-        if (_components.containsKey(state)) {
-            StateDependentComponents components = _components.get(state);
+        if (_components.containsKey(current())) {
+            StateDependentComponents components = _components.get(current());
             EntityManager.set(components.entityManager);
             ParticleEngine.set(components.particleEngine);
             TextPool.set(components.textPool);
@@ -37,7 +37,7 @@ public class StateManager {
             ParticleEngine.reset();
             TextPool.reset();
         }
-        _states.push(state);
+
         current().load();
     }
 
@@ -45,8 +45,8 @@ public class StateManager {
         if (_states.size() > 0) {
             _components.put(current(), new StateDependentComponents(EntityManager.get(), ParticleEngine.get(), TextPool.get()));
         }
-        load(state);
-
+        _states.push(state);
+        loadCurrent();
     }
 
     public void pop() {
@@ -54,8 +54,8 @@ public class StateManager {
             State dying = _states.pop();
             TextPool.get().clear(dying);
             dying.unload();
+            loadCurrent();
         }
-        load(current());
     }
 
     public void draw() {
