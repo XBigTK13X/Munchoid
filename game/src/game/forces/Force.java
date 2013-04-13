@@ -19,5 +19,8 @@ public abstract class Force {
 
     public abstract Atom forceSpecifics(Atom[][] atoms, int ii, int jj);
 
-    public abstract void prepareCalculations(Atom[][] atoms);
+    public void prepareCalculations(Atom[][] atoms) {
+    }
+
+    ;
 }

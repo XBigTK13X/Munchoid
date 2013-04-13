@@ -1,7 +1,7 @@
 package game.creatures;
 
-import game.forces.AbrasiveForce;
 import game.forces.Force;
+import game.forces.VaporizeForce;
 import sps.bridge.Commands;
 import sps.entities.Entity;
 import sps.entities.EntityManager;
@@ -21,7 +21,7 @@ public class Creature extends Entity {
     public void update() {
         if (Input.get().isActive(Commands.get("Force"), 0)) {
             BodyPart part = body.getRandomPart();
-            Force force = new AbrasiveForce();
+            Force force = new VaporizeForce();
             force.apply(part);
         }
 

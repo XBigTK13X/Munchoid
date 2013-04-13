@@ -1,7 +1,6 @@
 package game.forces;
 
 import game.creatures.Atom;
-import game.creatures.BodyPart;
 import sps.core.RNG;
 
 public class AbrasiveForce extends Force {
@@ -14,11 +13,6 @@ public class AbrasiveForce extends Force {
     public AbrasiveForce() {
         _magnitude = RNG.next(30, 50);
         _adjustedMagnitude = _magnitude;
-    }
-
-    @Override
-    public void apply(BodyPart bodyPart) {
-        super.apply(bodyPart);
     }
 
     @Override
