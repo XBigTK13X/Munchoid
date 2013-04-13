@@ -9,7 +9,8 @@ public class BodyPart {
     Atom[][] _atoms;
     int _width;
     int _height;
-
+    float _percentRequiredToLive = .15f;
+    boolean _isAlive = true;
     Color _color;
 
     private Point2 _position;
@@ -28,6 +29,26 @@ public class BodyPart {
 
     }
 
+    public Atom[][] getAtoms() {
+        return _atoms;
+    }
+
+    public void setAtoms(Atom[][] atoms) {
+        _atoms = atoms;
+        int maxActive = _width * _height;
+        int currentActive = 0;
+        for (int ii = 0; ii < _width; ii++) {
+            for (int jj = 0; jj < _height; jj++) {
+                if (atoms[ii][jj] != null) {
+                    currentActive++;
+                }
+            }
+        }
+        if (currentActive / (float) maxActive <= _percentRequiredToLive) {
+            _isAlive = false;
+        }
+    }
+
     public void draw() {
         for (int ii = 0; ii < _width; ii++) {
             for (int jj = 0; jj < _height; jj++) {
@@ -40,5 +61,9 @@ public class BodyPart {
 
     public Point2 getPosition() {
         return _position;
+    }
+
+    public boolean isAlive() {
+        return _isAlive;
     }
 }

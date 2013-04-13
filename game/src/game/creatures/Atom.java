@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.Game;
 import sps.bridge.DrawDepths;
 import sps.core.Point2;
+import sps.core.RNG;
 import sps.graphics.Assets;
 import sps.graphics.Renderer;
 
@@ -13,6 +14,7 @@ public class Atom {
 
     private Point2 _location;
     private Color _color;
+    private int survivalChance = 5;
 
     Body _owner;
     BodyPart _container;
@@ -29,5 +31,9 @@ public class Atom {
 
     public void draw() {
         Renderer.get().draw(__pixel, _location.addRaw(_owner.getPosition()).addRaw(_container.getPosition()), DrawDepths.get(Game.DrawDepths.Atom), _color, 1, 1);
+    }
+
+    public boolean isLucky() {
+        return RNG.percent(survivalChance);
     }
 }
