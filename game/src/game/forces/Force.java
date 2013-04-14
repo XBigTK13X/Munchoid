@@ -1,24 +1,38 @@
 package game.forces;
 
-import game.creatures.Atom;
-import game.creatures.BodyPart;
+import sps.core.RNG;
 
-public abstract class Force {
-    public void apply(BodyPart bodyPart) {
-        Atom[][] atoms = bodyPart.getAtoms();
-        prepareCalculations(bodyPart);
-        for (int ii = 0; ii < atoms.length; ii++) {
-            for (int jj = 0; jj < atoms[ii].length; jj++) {
-                if (atoms[ii][jj] != null) {
-                    atoms[ii][jj] = forceSpecifics(bodyPart, ii, jj);
-                }
-            }
-        }
-        bodyPart.setAtoms(atoms);
+public enum Force {
+    Abrasive,
+    Expansion,
+    Explosive,
+    Slice,
+    Contraction,
+    Vaporize;
+
+    private Force() {
+
     }
 
-    public abstract Atom forceSpecifics(BodyPart bodyPart, int ii, int jj);
+    public static BaseForce create(Force force) {
+        switch (force) {
+            case Abrasive:
+                return new Abrasive();
+            case Expansion:
+                return new Expansion();
+            case Explosive:
+                return new Explosive();
+            case Slice:
+                return new Slice();
+            case Contraction:
+                return new Contraction();
+            case Vaporize:
+                return new Vaporize();
+        }
+        return null;
+    }
 
-    public void prepareCalculations(BodyPart bodyPart) {
+    public static BaseForce createRandom() {
+        return create(Force.values()[RNG.next(0, Force.values().length)]);
     }
 }

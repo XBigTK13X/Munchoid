@@ -4,14 +4,14 @@ import game.creatures.Atom;
 import game.creatures.BodyPart;
 import sps.core.RNG;
 
-public class AbrasiveForce extends Force {
+public class Abrasive extends BaseForce {
     private int _magnitude;
     private int _adjustedMagnitude;
     private int wiggleRoom = 10;
     boolean rubX;
     boolean rubBehind;
 
-    public AbrasiveForce() {
+    public Abrasive() {
         _magnitude = RNG.next(30, 50);
         _adjustedMagnitude = _magnitude;
     }

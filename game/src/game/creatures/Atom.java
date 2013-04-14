@@ -17,8 +17,9 @@ public class Atom {
     private Color _color;
     private int survivalChance = 5;
 
-    Body _owner;
-    BodyPart _container;
+
+    Body _body;
+    BodyPart _bodyPart;
 
     private Point2 _scaledLocation = new Point2(0, 0);
 
@@ -28,18 +29,18 @@ public class Atom {
         }
         _location = new Point2(localX, localY);
         _color = color;
-        _owner = owner;
-        _container = container;
+        _body = owner;
+        _bodyPart = container;
     }
 
     public void draw() {
-        if (_container.getScale() < 1) {
-            _scaledLocation.reset(_location.X - (_location.X * ((1 - _container.getScale()) * __scaleDistance)), _location.Y - (_location.Y * ((1 - _container.getScale()) * __scaleDistance)), false);
+        if (_bodyPart.getScale() < 1) {
+            _scaledLocation.reset(_location.X - (_location.X * ((1 - _bodyPart.getScale()) * __scaleDistance)), _location.Y - (_location.Y * ((1 - _bodyPart.getScale()) * __scaleDistance)), false);
         }
         else {
-            _scaledLocation.reset(_location.X + _location.X * (_container.getScale() - 1 * __scaleDistance), _location.Y + _location.Y * (_container.getScale() - 1 * __scaleDistance), false);
+            _scaledLocation.reset(_location.X + _location.X * (_bodyPart.getScale() - 1 * __scaleDistance), _location.Y + _location.Y * (_bodyPart.getScale() - 1 * __scaleDistance), false);
         }
-        _scaledLocation = _scaledLocation.addRaw(_owner.getPosition()).addRaw(_container.getPosition());
+        _scaledLocation = _scaledLocation.addRaw(_body.getOwner().getLocation()).addRaw(_bodyPart.getPosition());
         Renderer.get().draw(__pixel, _scaledLocation, DrawDepths.get(Game.DrawDepths.Atom), _color, 1, 1);
     }
 

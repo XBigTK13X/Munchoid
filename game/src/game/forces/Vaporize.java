@@ -4,10 +4,10 @@ import game.creatures.Atom;
 import game.creatures.BodyPart;
 import sps.core.RNG;
 
-public class VaporizeForce extends Force {
+public class Vaporize extends BaseForce {
     int _magnitude;
 
-    public VaporizeForce() {
+    public Vaporize() {
         _magnitude = RNG.next(10, 40);
     }
 

@@ -4,7 +4,7 @@ import game.creatures.Atom;
 import game.creatures.BodyPart;
 import sps.core.RNG;
 
-public class ExpansiveForce extends Force {
+public class Expansion extends BaseForce {
     @Override
     public Atom forceSpecifics(BodyPart bodyPart, int ii, int jj) {
         return bodyPart.getAtoms()[ii][jj];

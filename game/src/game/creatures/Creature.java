@@ -1,56 +1,59 @@
 package game.creatures;
 
-import game.forces.*;
+import game.Shared;
+import game.forces.Force;
+import game.states.MergeState;
 import sps.bridge.Commands;
 import sps.core.RNG;
 import sps.entities.Entity;
 import sps.entities.EntityManager;
 import sps.io.Input;
+import sps.states.StateManager;
+import sps.util.Screen;
 
 public class Creature extends Entity {
-    private Body body;
+    private Body _body;
+    private Stats _stats;
 
-    public Creature() {
-        body = new Body(RNG.next(3, 7), 200, 200);
+    public Creature(boolean faceLeft) {
+        _body = new Body(this, RNG.next(3, 7), 200, 200);
+        if (faceLeft) {
+            setLocation(Screen.pos(80, 20));
+        }
+        else {
+            setLocation(Screen.pos(20, 20));
+        }
+
+        _stats = new Stats();
     }
 
     public void draw() {
-        body.draw();
+        _body.draw();
     }
 
     public void update() {
         if (Input.get().isActive(Commands.get("Force"), 0)) {
-            BodyPart part = body.getRandomPart();
-            Force force = null;
-            int rand = RNG.next(0, 6);
-            switch (rand) {
-                case 0:
-                    force = new TensionForce();
-                    break;
-                case 1:
-                    force = new ExpansiveForce();
-                    break;
-                case 2:
-                    force = new ExplosiveForce();
-                    break;
-                case 3:
-                    force = new SliceForce();
-                    break;
-                case 4:
-                    force = new VaporizeForce();
-                    break;
-                case 5:
-                    force = new AbrasiveForce();
-                    break;
+            Force.createRandom().apply(_body.getRandomPart());
+        }
+
+        _body.update();
+        if (!_body.isAlive()) {
+            if (Shared.get().playerCreature() == this) {
 
             }
-            force.apply(part);
+            else {
+                EntityManager.get().removeEntity(this);
+                StateManager.get().pop();
+                StateManager.get().push(new MergeState(this));
+            }
         }
+    }
 
-        body.update();
-        if (!body.isAlive()) {
-            EntityManager.get().removeEntity(this);
-            EntityManager.get().addEntity(new Creature());
-        }
+    public Stats getStats() {
+        return _stats;
+    }
+
+    public void setStats(Stats stats) {
+        _stats = stats;
     }
 }

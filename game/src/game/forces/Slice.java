@@ -6,7 +6,7 @@ import sps.core.Point2;
 import sps.core.RNG;
 import sps.util.MathHelper;
 
-public class SliceForce extends Force {
+public class Slice extends BaseForce {
     int _magnitude;
     float _dX;
     float _dY;
@@ -14,7 +14,7 @@ public class SliceForce extends Force {
     boolean _killRight;
     boolean _killUp;
 
-    public SliceForce() {
+    public Slice() {
         _magnitude = RNG.next(10, 20);
     }
 

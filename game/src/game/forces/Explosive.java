@@ -6,11 +6,11 @@ import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.HitTest;
 
-public class ExplosiveForce extends Force {
+public class Explosive extends BaseForce {
     private int _magnitude;
     private Point2 _epicenter;
 
-    public ExplosiveForce() {
+    public Explosive() {
         _magnitude = RNG.next(25, 70);
 
     }

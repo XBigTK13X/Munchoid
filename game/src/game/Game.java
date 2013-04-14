@@ -4,6 +4,7 @@ package game;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.graphics.Color;
 import game.states.BattleState;
+import game.states.WorldState;
 import sps.bridge.Commands;
 import sps.bridge.SpriteTypes;
 import sps.bridge.Sps;
@@ -32,7 +33,7 @@ public class Game implements ApplicationListener {
         Renderer.get().setRefreshInstance(this);
         Input.get().setup(new DefaultStateProvider());
         SpriteSheetManager.setup(SpriteTypes.getDefs());
-        StateManager.get().push(new BattleState());
+        StateManager.get().push(new WorldState());
         ParticleEngine.reset();
     }
 
