@@ -10,7 +10,8 @@ import sps.graphics.Assets;
 import sps.graphics.Renderer;
 
 public class Atom {
-    protected static Sprite __pixel;
+    private static Sprite __pixel;
+    private static float __scaleDistance = 1;
 
     private Point2 _location;
     private Color _color;
@@ -18,6 +19,8 @@ public class Atom {
 
     Body _owner;
     BodyPart _container;
+
+    private Point2 _scaledLocation = new Point2(0, 0);
 
     public Atom(int localX, int localY, Color color, Body owner, BodyPart container) {
         if (__pixel == null) {
@@ -30,7 +33,9 @@ public class Atom {
     }
 
     public void draw() {
-        Renderer.get().draw(__pixel, _location.addRaw(_owner.getPosition()).addRaw(_container.getPosition()), DrawDepths.get(Game.DrawDepths.Atom), _color, 1, 1);
+        _scaledLocation.reset(_location.X + _location.X * (_container.getScale() * __scaleDistance), _location.Y + _location.Y * (_container.getScale() * __scaleDistance), false);
+        _scaledLocation = _scaledLocation.addRaw(_owner.getPosition()).addRaw(_container.getPosition());
+        Renderer.get().draw(__pixel, _scaledLocation, DrawDepths.get(Game.DrawDepths.Atom), _color, 1, 1);
     }
 
     public boolean isLucky() {

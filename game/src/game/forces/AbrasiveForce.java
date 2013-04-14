@@ -1,6 +1,7 @@
 package game.forces;
 
 import game.creatures.Atom;
+import game.creatures.BodyPart;
 import sps.core.RNG;
 
 public class AbrasiveForce extends Force {
@@ -16,24 +17,24 @@ public class AbrasiveForce extends Force {
     }
 
     @Override
-    public Atom forceSpecifics(Atom[][] atoms, int ii, int jj) {
+    public Atom forceSpecifics(BodyPart bodyPart, int ii, int jj) {
         _adjustedMagnitude = _adjustedMagnitude + RNG.next(0, wiggleRoom * 2) - wiggleRoom;
         if (_adjustedMagnitude > _magnitude + wiggleRoom * 3
                 || _adjustedMagnitude < _magnitude - wiggleRoom * 3) {
             _adjustedMagnitude = _magnitude + RNG.next(0, wiggleRoom * 2) - wiggleRoom;
         }
         if ((rubX && jj < _adjustedMagnitude && !rubBehind)
-                || (rubX && jj > atoms[0].length - _adjustedMagnitude && rubBehind)
+                || (rubX && jj > bodyPart.getAtoms()[0].length - _adjustedMagnitude && rubBehind)
                 || (!rubX && ii < _adjustedMagnitude && !rubBehind)
-                || (!rubX && ii > atoms.length - _adjustedMagnitude && rubBehind)) {
+                || (!rubX && ii > bodyPart.getAtoms().length - _adjustedMagnitude && rubBehind)) {
             return null;
         }
 
-        return atoms[ii][jj];
+        return bodyPart.getAtoms()[ii][jj];
     }
 
     @Override
-    public void prepareCalculations(Atom[][] atoms) {
+    public void prepareCalculations(BodyPart bodyPart) {
         rubX = RNG.coinFlip();
         rubBehind = RNG.coinFlip();
     }

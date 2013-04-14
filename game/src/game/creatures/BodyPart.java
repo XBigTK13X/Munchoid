@@ -12,6 +12,7 @@ public class BodyPart {
     float _percentRequiredToLive = .15f;
     boolean _isAlive = true;
     Color _color;
+    float _scale;
 
     private Point2 _position;
 
@@ -65,5 +66,13 @@ public class BodyPart {
 
     public boolean isAlive() {
         return _isAlive;
+    }
+
+    public void setScale(float scale) {
+        _scale = scale;
+    }
+
+    public float getScale() {
+        return _scale;
     }
 }

@@ -1,6 +1,7 @@
 package game.forces;
 
 import game.creatures.Atom;
+import game.creatures.BodyPart;
 import sps.core.RNG;
 
 public class VaporizeForce extends Force {
@@ -11,7 +12,7 @@ public class VaporizeForce extends Force {
     }
 
     @Override
-    public Atom forceSpecifics(Atom[][] atoms, int ii, int jj) {
-        return RNG.percent(_magnitude) ? null : atoms[ii][jj];
+    public Atom forceSpecifics(BodyPart bodyPart, int ii, int jj) {
+        return RNG.percent(_magnitude) ? null : bodyPart.getAtoms()[ii][jj];
     }
 }
