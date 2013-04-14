@@ -63,7 +63,7 @@ public class TextPool {
         result.reset(position, message, 1, lifeInSeconds, effect);
         result.setColor(color);
         result.setScale(scale);
-        //TODO A log entry when all texts are in use, to prevent overwriting texts from an old state
+        //TODO A log entry when all texts are in use
         index = (index + 1) % texts.size();
         return result;
     }

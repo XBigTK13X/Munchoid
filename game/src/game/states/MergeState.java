@@ -35,6 +35,8 @@ public class MergeState implements State {
             forceRow++;
         }
         Shared.get().playerCreature().setStats(merged);
+
+        //TODO Merge in size as well as stats
     }
 
     @Override
@@ -45,7 +47,7 @@ public class MergeState implements State {
     public void update() {
         if (Input.get().isActive(Commands.get("Confirm"), 0)) {
             StateManager.get().pop();
-            StateManager.get().push(new WorldState());
+            StateManager.get().push(new ArenaState());
         }
     }
 
