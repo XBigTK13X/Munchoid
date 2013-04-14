@@ -6,6 +6,7 @@ import sps.core.RNG;
 
 public class SliceForce extends Force {
     int _magnitude;
+    
 
     public SliceForce() {
         _magnitude = RNG.next(10, 40);
@@ -19,5 +20,6 @@ public class SliceForce extends Force {
     @Override
     public Atom forceSpecifics(Atom[][] atoms, int ii, int jj) {
         return RNG.percent(_magnitude) ? null : atoms[ii][jj];
+
     }
 }
