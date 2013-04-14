@@ -1,7 +1,7 @@
 package game.creatures;
 
-import game.forces.ExpansiveForce;
 import game.forces.Force;
+import game.forces.TensionForce;
 import sps.bridge.Commands;
 import sps.entities.Entity;
 import sps.entities.EntityManager;
@@ -11,7 +11,7 @@ public class Creature extends Entity {
     private Body body;
 
     public Creature() {
-        body = new Body(5, 200, 200);
+        body = new Body(1, 200, 200);
     }
 
     public void draw() {
@@ -21,7 +21,7 @@ public class Creature extends Entity {
     public void update() {
         if (Input.get().isActive(Commands.get("Force"), 0)) {
             BodyPart part = body.getRandomPart();
-            Force force = new ExpansiveForce();
+            Force force = new TensionForce();
             force.apply(part);
         }
 

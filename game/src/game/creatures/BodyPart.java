@@ -20,6 +20,7 @@ public class BodyPart {
         _atoms = new Atom[width][height];
         _width = width;
         _height = height;
+        _scale = 1f;
         _color = Colors.random();
         _position = new Point2(RNG.next(-50, 50), RNG.next(-100, 100));
         for (int ii = 0; ii < width; ii++) {
