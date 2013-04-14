@@ -1,7 +1,6 @@
 package game.forces;
 
 import game.creatures.Atom;
-import game.creatures.BodyPart;
 import sps.core.RNG;
 
 public class VaporizeForce extends Force {
@@ -9,11 +8,6 @@ public class VaporizeForce extends Force {
 
     public VaporizeForce() {
         _magnitude = RNG.next(10, 40);
-    }
-
-    @Override
-    public void apply(BodyPart bodyPart) {
-        super.apply(bodyPart);
     }
 
     @Override

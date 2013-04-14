@@ -21,6 +21,4 @@ public abstract class Force {
 
     public void prepareCalculations(Atom[][] atoms) {
     }
-
-    ;
 }
