@@ -10,6 +10,8 @@ public interface InputProvider {
 
     boolean isActive(Command command, int playerIndex, boolean failIfLocked);
 
+    public boolean isActive(Command command);
+
     public boolean isActive(Command command, int playerIndex);
 
     void setContext(Context context, int playerIndex);

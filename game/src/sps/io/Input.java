@@ -94,6 +94,11 @@ public class Input implements InputProvider {
         return __isInputActive;
     }
 
+    @Override
+    public boolean isActive(Command command) {
+        return isActive(command,0);
+    }
+
     // If the key is marked to be locked on press and its lock context is
     // currently inactive
     private boolean shouldLock(Command command, int playerIndex) {

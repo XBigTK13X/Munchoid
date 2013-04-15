@@ -98,4 +98,10 @@ public class Game implements ApplicationListener {
     public class DrawDepths {
         public final static String Atom = "Atom";
     }
+    public class CommandNames{
+        public final static String MoveUp = "MoveUp";
+        public final static String MoveDown = "MoveDown";
+        public final static String MoveLeft = "MoveLeft";
+        public final static String MoveRight = "MoveRight";
+    }
 }

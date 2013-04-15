@@ -2,6 +2,7 @@ package game.states;
 
 import com.badlogic.gdx.Gdx;
 import game.Shared;
+import game.arena.Player;
 import game.creatures.Creature;
 import sps.core.Point2;
 import sps.entities.EntityManager;
@@ -31,6 +32,7 @@ public class ArenaState implements State {
         _countDownSeconds = __countDownSecondsMax;
         _lastTime = (int) __countDownSecondsMax;
         _timerText = TextPool.get().write(timeDisplay(), timerPos);
+        EntityManager.get().addEntity(new Player());
     }
 
     @Override

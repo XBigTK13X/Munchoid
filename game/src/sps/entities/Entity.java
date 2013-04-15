@@ -61,7 +61,9 @@ public class Entity implements Comparable {
         oldLocation.copy(_location);
         _graphic.setPosition(location);
         _location.copy(location);
-        EntityManager.get().updateGridLocation(this, oldLocation);
+        if (SpsConfig.get().entityGridEnabled) {
+            EntityManager.get().updateGridLocation(this, oldLocation);
+        }
     }
 
     private final Point2 target = new Point2(0, 0);
@@ -74,9 +76,15 @@ public class Entity implements Comparable {
     }
 
     public boolean move(float amountX, float amountY) {
-        amountX = normalizeDistance(amountX);
-        amountY = normalizeDistance(amountY);
-        target.reset(_location.PosX + amountX, _location.PosY + amountY);
+        return move(amountX, amountY, false);
+    }
+
+    public boolean move(float amountX, float amountY, boolean normalizeToSpriteDimensions) {
+        if (normalizeToSpriteDimensions) {
+            amountX = normalizeDistance(amountX);
+            amountY = normalizeDistance(amountY);
+        }
+        target.reset(_location.PosX + amountX, _location.PosY + amountY,false);
         if (amountX > 0) {
             setFacingLeft(false);
         }

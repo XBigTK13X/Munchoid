@@ -29,6 +29,8 @@ public class SpsConfig {
     public final int virtualWidth;
     public final boolean fullScreen;
 
+    public final boolean entityGridEnabled;
+
     public final boolean viewPaths;
     public final boolean devConsoleEnabled;
 
@@ -63,6 +65,8 @@ public class SpsConfig {
         virtualHeight = Parse.inte(_settings.get("virtualHeight"));
         virtualWidth = Parse.inte(_settings.get("virtualWidth"));
         fullScreen = Parse.bool(_settings.get("fullScreen"));
+
+        entityGridEnabled = Parse.bool(_settings.get("entityGridEnabled"));
 
         // Dev
         viewPaths = Parse.bool(_settings.get("viewPaths"));

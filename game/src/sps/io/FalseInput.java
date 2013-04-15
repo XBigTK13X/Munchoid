@@ -20,6 +20,11 @@ public class FalseInput implements InputProvider {
     }
 
     @Override
+    public boolean isActive(Command command) {
+        return false;
+    }
+
+    @Override
     public boolean isActive(Command command, int playerIndex) {
         return false;
     }
