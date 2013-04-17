@@ -35,4 +35,8 @@ public enum Force {
     public static BaseForce createRandom() {
         return create(Force.values()[RNG.next(0, Force.values().length)]);
     }
+
+    public static Force random() {
+        return values()[RNG.next(0, values().length)];
+    }
 }

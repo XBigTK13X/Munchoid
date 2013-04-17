@@ -2,8 +2,8 @@ package game.states;
 
 import com.badlogic.gdx.Gdx;
 import game.Shared;
+import game.arena.Catchable;
 import game.arena.Player;
-import game.creatures.Creature;
 import sps.core.Point2;
 import sps.entities.EntityManager;
 import sps.states.State;
@@ -13,8 +13,10 @@ import sps.text.TextPool;
 import sps.util.Screen;
 
 public class ArenaState implements State {
-    private static float __countDownSecondsMax = 10f;
-    private static Point2 timerPos = Screen.pos(15, 85);
+    private static final float __countDownSecondsMax = 10f;
+    private static final Point2 __timerPos = Screen.pos(15, 85);
+    private static final int __creatureCount = 10;
+
     private int _lastTime;
     private float _countDownSeconds;
     private Text _timerText;
@@ -26,13 +28,13 @@ public class ArenaState implements State {
 
     @Override
     public void create() {
-        if (Shared.get().playerCreature() == null) {
-            Shared.get().setPlayerCreature(new Creature(false));
-        }
         _countDownSeconds = __countDownSecondsMax;
         _lastTime = (int) __countDownSecondsMax;
-        _timerText = TextPool.get().write(timeDisplay(), timerPos);
+        _timerText = TextPool.get().write(timeDisplay(), __timerPos);
         EntityManager.get().addEntity(new Player());
+        for (int ii = 0; ii < __creatureCount; ii++) {
+            EntityManager.get().addEntity(new Catchable());
+        }
     }
 
     @Override
@@ -44,13 +46,18 @@ public class ArenaState implements State {
     public void update() {
         EntityManager.get().update();
 
-        _countDownSeconds -= Gdx.graphics.getDeltaTime();
-        if (_lastTime != (int) _countDownSeconds) {
-            _lastTime = (int) _countDownSeconds;
-            _timerText.setMessage(timeDisplay());
+        if (Shared.get().playerCreature() != null) {
+            _countDownSeconds -= Gdx.graphics.getDeltaTime();
+            if (_lastTime != (int) _countDownSeconds) {
+                _lastTime = (int) _countDownSeconds;
+                _timerText.setMessage(timeDisplay());
+            }
+            if (_countDownSeconds <= 0) {
+                StateManager.get().push(new BattleState());
+            }
         }
-        if (_countDownSeconds <= 0) {
-            StateManager.get().push(new BattleState());
+        else {
+            _timerText.setMessage("Catch a creature!");
         }
     }
 
@@ -60,7 +67,7 @@ public class ArenaState implements State {
 
     @Override
     public void load() {
-
+        _countDownSeconds = __countDownSecondsMax;
     }
 
     @Override

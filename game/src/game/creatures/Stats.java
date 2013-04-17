@@ -24,4 +24,12 @@ public class Stats {
     public void set(Force force, int value) {
         _stats.put(force, value);
     }
+
+    public Integer power() {
+        int power = 0;
+        for (Force force : Force.values()) {
+            power += _stats.get(force);
+        }
+        return power;
+    }
 }

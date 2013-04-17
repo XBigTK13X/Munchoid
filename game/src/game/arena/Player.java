@@ -4,6 +4,7 @@ import game.Game;
 import sps.bridge.*;
 import sps.core.Point2;
 import sps.entities.Entity;
+import sps.entities.EntityManager;
 import sps.io.Input;
 import sps.util.Screen;
 
@@ -11,8 +12,12 @@ public class Player extends Entity {
     private Point2 _keyVelocity = new Point2(0, 0);
     private float _moveDistance = (Screen.height(1) + Screen.width(1)) / 2;
 
+    private CatchNet _net;
+
     public Player() {
         initialize(Screen.pos(20, 20), SpriteTypes.get("Player_Stand"), EntityTypes.get(Sps.Actors.Player), DrawDepths.get(Sps.Actors.Player));
+        _net = new CatchNet(this);
+        EntityManager.get().addEntity(_net);
     }
 
     @Override
@@ -31,5 +36,9 @@ public class Player extends Entity {
         _keyVelocity.setY(upVelocity + downVelocity);
 
         move(_keyVelocity.X, _keyVelocity.Y);
+
+        if (Input.get().isActive(Commands.get("Confirm"))) {
+            _net.use();
+        }
     }
 }

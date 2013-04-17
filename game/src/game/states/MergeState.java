@@ -47,7 +47,6 @@ public class MergeState implements State {
     public void update() {
         if (Input.get().isActive(Commands.get("Confirm"), 0)) {
             StateManager.get().pop();
-            StateManager.get().push(new ArenaState());
         }
     }
 

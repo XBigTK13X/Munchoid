@@ -7,12 +7,10 @@ import java.util.List;
 
 public class Body {
     private List<BodyPart> parts;
-    private static int partWidthMin = 50;
-    private static int partHeightMin = 50;
 
     private Creature _owner;
 
-    public Body(Creature owner, int numberOfParts, int partWidthMax, int partHeightMax) {
+    public Body(Creature owner, int numberOfParts, int partWidthMin, int partHeightMin, int partWidthMax, int partHeightMax) {
         _owner = owner;
         parts = new ArrayList<BodyPart>();
         for (int ii = 0; ii < numberOfParts; ii++) {

@@ -12,6 +12,7 @@ import sps.graphics.SpriteInfo;
 import sps.util.Screen;
 
 public class Entity implements Comparable {
+
     private static int isNeg = 1;
     private static int factorsOfSpriteHeight = 0;
     protected final Animation _graphic = new Animation();
