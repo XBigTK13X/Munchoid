@@ -1,5 +1,6 @@
 package game.arena;
 
+import com.badlogic.gdx.Gdx;
 import game.creatures.Creature;
 import sps.bridge.EntityTypes;
 import sps.core.Point2;
@@ -12,6 +13,12 @@ public class Catchable extends Entity {
     private Creature _creature;
     private int _moveDistance = (int) (Screen.height(1) + Screen.width(1)) / 2;
 
+    private float _dX = 0;
+    private float _dY = 0;
+
+    private static final float __changeDriectionSecondsMax = 2.5f;
+    private float _changeDirectionSeconds;
+
     public Catchable() {
         _creature = new Creature(true, Screen.pos(2, 2), Screen.pos(5, 5));
         setLocation(Point2.random());
@@ -22,8 +29,16 @@ public class Catchable extends Entity {
         _creature.setLocation(getLocation());
 
         CatchNet net = (CatchNet) EntityManager.get().getEntity(EntityTypes.get("Hand"));
+        Player player = (Player) EntityManager.get().getPlayers().get(0);
+
+        if (player.getPet() != null) {
+            if (player.getPet().getStats().power() >= _creature.getStats().power()) {
+                //TODO Indicate that it can be eaten
+                //Flashing is built into _graphic, can we write the arrays to the sprite?
+            }
+        }
+
         if (net != null && net.isInUse() && net.isTouching(_creature)) {
-            Player player = (Player) EntityManager.get().getPlayers().get(0);
             if (player.getPet() == null) {
                 player.setPet(_creature);
                 setInactive();
@@ -37,9 +52,14 @@ public class Catchable extends Entity {
                     _creature.addBonus(_creature.getStats().power() - player.getPet().getStats().power());
                 }
             }
-
         }
-        move(RNG.next(-_moveDistance, _moveDistance), RNG.next(-_moveDistance, _moveDistance));
+        if (_changeDirectionSeconds <= 0) {
+            _changeDirectionSeconds = RNG.next(0, (int) __changeDriectionSecondsMax * 100) / 100f;
+            _dX = RNG.next(-_moveDistance, _moveDistance);
+            _dY = RNG.next(-_moveDistance, _moveDistance);
+        }
+        _changeDirectionSeconds -= Gdx.graphics.getDeltaTime();
+        move(_dX, _dY);
     }
 
     @Override
