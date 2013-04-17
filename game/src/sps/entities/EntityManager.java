@@ -198,7 +198,9 @@ public class EntityManager {
 
     public void removeEntity(Entity target) {
         _contents.remove(target);
-        _gridContents.get(target.getLocation()).remove(target);
+        if (SpsConfig.get().entityGridEnabled) {
+            _gridContents.get(target.getLocation()).remove(target);
+        }
         if (target.getEntityType() == EntityTypes.get(Sps.Entities.Actor)) {
             IActor actor = (IActor) target;
             if (actor.getActorType() == ActorTypes.get(Sps.Actors.Player)) {

@@ -14,8 +14,8 @@ import sps.util.Screen;
 
 public class ArenaState implements State {
     private static final float __countDownSecondsMax = 10f;
-    private static final Point2 __timerPos = Screen.pos(15, 85);
-    private static final int __creatureCount = 10;
+    private static final Point2 __timerPos = Screen.pos(5, 95);
+    private static final int __creatureCount = 15;
 
     private int _lastTime;
     private float _countDownSeconds;

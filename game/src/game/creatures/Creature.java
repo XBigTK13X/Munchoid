@@ -10,11 +10,13 @@ import sps.entities.Entity;
 import sps.entities.EntityManager;
 import sps.io.Input;
 import sps.states.StateManager;
+import sps.text.TextEffects;
+import sps.text.TextPool;
 import sps.util.Screen;
 
 public class Creature extends Entity {
     private static final int __bonusAmount = 1;
-    private static final int __bonusAward = 1000;
+    private static final int __bonusAward = 3;
 
     private Body _body;
     private Stats _stats;
@@ -44,7 +46,7 @@ public class Creature extends Entity {
         _body.update();
         if (!_body.isAlive()) {
             if (Shared.get().playerCreature() == this) {
-
+                //TODO Lose the game
             }
             else {
                 EntityManager.get().removeEntity(this);
@@ -52,6 +54,8 @@ public class Creature extends Entity {
                 StateManager.get().push(new MergeState(this));
             }
         }
+
+        useBonus();
     }
 
     public Stats getStats() {
@@ -62,8 +66,12 @@ public class Creature extends Entity {
         _stats = stats;
     }
 
+    public Body getBody() {
+        return _body;
+    }
+
     public boolean isLargerThan(Creature target) {
-        return _stats.power() > target.getStats().power();
+        return _stats.power() >= target.getStats().power();
     }
 
     public void addBonus(int bonus) {
@@ -75,6 +83,7 @@ public class Creature extends Entity {
             _bonusPoints -= __bonusAward;
             Force bonus = Force.random();
             _stats.set(bonus, _stats.get(bonus) + __bonusAmount);
+            TextPool.get().write("BONUS!", Screen.rand(40, 60, 40, 60), 2f, TextEffects.Fountain);
         }
     }
 }

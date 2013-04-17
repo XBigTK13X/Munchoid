@@ -22,7 +22,7 @@ public class BodyPart {
         _height = height;
         _scale = 1f;
         _color = Colors.random();
-        _position = new Point2(RNG.next(-50, 50), RNG.next(-100, 100));
+        _position = new Point2(RNG.next(-width, width), RNG.next(-height, height));
         for (int ii = 0; ii < width; ii++) {
             for (int jj = 0; jj < height; jj++) {
                 _atoms[ii][jj] = new Atom(ii, jj, _color, owner, this);
@@ -75,5 +75,13 @@ public class BodyPart {
 
     public float getScale() {
         return _scale;
+    }
+
+    public int getWidth() {
+        return _width;
+    }
+
+    public int getHeight() {
+        return _height;
     }
 }

@@ -27,6 +27,9 @@ public class Entity implements Comparable {
     private boolean _isInteracting = false;
     private boolean facingLeft = true;
 
+    private int _width;
+    private int _height;
+
     private static float normalizeDistance(float amount) {
         isNeg = (amount < 0) ? -1 : 1;
         amount = Math.abs(amount);
@@ -53,7 +56,9 @@ public class Entity implements Comparable {
         _isOnBoard = true;
     }
 
-    protected void initialize(Point2 location, SpriteType spriteType, EntityType entityType, DrawDepth depth) {
+    protected void initialize(int width, int height, Point2 location, SpriteType spriteType, EntityType entityType, DrawDepth depth) {
+        _width = width;
+        _height = height;
         _assetName = spriteType;
         _entityType = entityType;
         _location.copy(location);
@@ -66,9 +71,9 @@ public class Entity implements Comparable {
     }
 
     public void updateLocation(Point2 location) {
-        oldLocation.copy(_location);
+        oldLocation.reset(_location.X, _location.Y, false);
         _graphic.setPosition(location);
-        _location.copy(location);
+        _location.reset(location.X, location.Y, false);
         if (SpsConfig.get().entityGridEnabled) {
             EntityManager.get().updateGridLocation(this, oldLocation);
         }
@@ -97,7 +102,7 @@ public class Entity implements Comparable {
         }
         if (!CoordVerifier.isValidX(target)) {
             if (target.X > Screen.pos(50, 0).X) {
-                target.reset(Renderer.get().VirtualWidth - SpsConfig.get().spriteWidth, target.Y, false);
+                target.reset(Renderer.get().VirtualWidth - _width, target.Y, false);
             }
             else {
                 target.reset(0, target.Y, false);
@@ -105,7 +110,7 @@ public class Entity implements Comparable {
         }
         if (!CoordVerifier.isValidY(target)) {
             if (target.Y > Screen.pos(0, 50).Y) {
-                target.reset(target.X, Renderer.get().VirtualHeight - SpsConfig.get().spriteHeight, false);
+                target.reset(target.X, Renderer.get().VirtualHeight - _height, false);
             }
             else {
                 target.reset(target.X, 0, false);
@@ -185,5 +190,13 @@ public class Entity implements Comparable {
         if (_graphic.hasDynamicEdges()) {
             _graphic.setEdge(SpriteEdge.determine(_entityType, _location));
         }
+    }
+
+    public int getWidth() {
+        return _width;
+    }
+
+    public int getHeight() {
+        return _height;
     }
 }

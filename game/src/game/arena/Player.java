@@ -1,8 +1,10 @@
 package game.arena;
 
 import game.Game;
+import game.Shared;
 import sps.bridge.*;
 import sps.core.Point2;
+import sps.core.SpsConfig;
 import sps.entities.Entity;
 import sps.entities.EntityManager;
 import sps.io.Input;
@@ -15,7 +17,7 @@ public class Player extends Entity {
     private CatchNet _net;
 
     public Player() {
-        initialize(Screen.pos(20, 20), SpriteTypes.get("Player_Stand"), EntityTypes.get(Sps.Actors.Player), DrawDepths.get(Sps.Actors.Player));
+        initialize(SpsConfig.get().spriteWidth, SpsConfig.get().spriteHeight, Screen.pos(20, 20), SpriteTypes.get("Player_Stand"), EntityTypes.get(Sps.Actors.Player), DrawDepths.get(Sps.Actors.Player));
         _net = new CatchNet(this);
         EntityManager.get().addEntity(_net);
     }
@@ -39,6 +41,10 @@ public class Player extends Entity {
 
         if (Input.get().isActive(Commands.get("Confirm"))) {
             _net.use();
+        }
+
+        if (Shared.get().playerCreature() != null) {
+            Shared.get().playerCreature().update();
         }
     }
 }

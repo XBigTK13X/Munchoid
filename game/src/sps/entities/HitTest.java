@@ -4,9 +4,7 @@ import sps.bridge.Sps;
 import sps.core.Point2;
 
 public class HitTest {
-    public static boolean isTouching(Entity source, Entity target)
-
-    {
+    public static boolean isTouching(Entity source, Entity target) {
         return isClose(source, target);
     }
 
