@@ -11,16 +11,23 @@ import java.util.Stack;
 public class StateManager {
 
     private static StateManager instance = new StateManager();
-
-    public static StateManager get() {
-        return instance;
-    }
-
     private Stack<State> _states;
     private Map<State, StateDependentComponents> _components = new HashMap<State, StateDependentComponents>();
 
     private StateManager() {
         _states = new Stack<State>();
+    }
+
+    public static StateManager get() {
+        return instance;
+    }
+
+    public static StateManager reset() {
+        if (instance != null) {
+            instance.removeAll();
+        }
+        instance = new StateManager();
+        return get();
     }
 
     private void loadCurrent() {
@@ -56,12 +63,24 @@ public class StateManager {
         }
     }
 
+    public void removeAll() {
+        while (_states.size() > 0) {
+            pop(true);
+        }
+    }
+
     public void pop() {
-        if (_states.size() > 1) {
+        pop(false);
+    }
+
+    public void pop(boolean force) {
+        if (_states.size() > 1 || (force && _states.size() > 0)) {
             State dying = _states.pop();
             TextPool.get().clear(dying);
             dying.unload();
-            loadCurrent();
+            if (_states.size() > 0) {
+                loadCurrent();
+            }
         }
     }
 

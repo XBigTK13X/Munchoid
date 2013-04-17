@@ -260,6 +260,13 @@ public class EntityManager {
         return players;
     }
 
+    public Entity getPlayer() {
+        if (players.size() > 0) {
+            return players.get(0);
+        }
+        return null;
+    }
+
     public IActor getNearestPlayer(Entity target) {
         List<Entity> actors = getPlayers();
         if (actors.size() > 0) {

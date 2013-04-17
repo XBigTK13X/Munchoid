@@ -4,7 +4,6 @@ package game;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.graphics.Color;
 import game.states.ArenaState;
-import game.states.BattleState;
 import sps.bridge.Commands;
 import sps.bridge.SpriteTypes;
 import sps.bridge.Sps;
@@ -58,13 +57,6 @@ public class Game implements ApplicationListener {
                 Renderer.get().toggleFullScreen();
             }
 
-            if (Input.get().isActive(Commands.get("Push"), 0)) {
-                StateManager.get().push(new BattleState());
-            }
-            if (Input.get().isActive(Commands.get("Pop"), 0)) {
-                StateManager.get().pop();
-            }
-
             StateManager.get().asyncUpdate();
             StateManager.get().update();
             ParticleEngine.get().update();
@@ -98,7 +90,8 @@ public class Game implements ApplicationListener {
     public class DrawDepths {
         public final static String Atom = "Atom";
     }
-    public class CommandNames{
+
+    public class CommandNames {
         public final static String MoveUp = "MoveUp";
         public final static String MoveDown = "MoveDown";
         public final static String MoveLeft = "MoveLeft";

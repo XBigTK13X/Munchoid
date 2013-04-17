@@ -1,23 +1,29 @@
 package game.arena;
 
 import game.Game;
-import game.Shared;
+import game.creatures.Creature;
 import sps.bridge.*;
 import sps.core.Point2;
 import sps.core.SpsConfig;
 import sps.entities.Entity;
 import sps.entities.EntityManager;
+import sps.entities.IActor;
 import sps.io.Input;
 import sps.util.Screen;
 
-public class Player extends Entity {
+public class Player extends Entity implements IActor {
+    private ActorType _actorType;
+
     private Point2 _keyVelocity = new Point2(0, 0);
     private float _moveDistance = (Screen.height(1) + Screen.width(1)) / 2;
 
     private CatchNet _net;
+    private Creature _pet;
 
     public Player() {
-        initialize(SpsConfig.get().spriteWidth, SpsConfig.get().spriteHeight, Screen.pos(20, 20), SpriteTypes.get("Player_Stand"), EntityTypes.get(Sps.Actors.Player), DrawDepths.get(Sps.Actors.Player));
+        initialize(SpsConfig.get().spriteWidth, SpsConfig.get().spriteHeight, Screen.pos(20, 20), SpriteTypes.get("Player_Stand"), EntityTypes.get(Sps.Entities.Actor), DrawDepths.get(Sps.Actors.Player));
+        _actorType = ActorTypes.get(Sps.Actors.Player);
+
         _net = new CatchNet(this);
         EntityManager.get().addEntity(_net);
     }
@@ -43,8 +49,25 @@ public class Player extends Entity {
             _net.use();
         }
 
-        if (Shared.get().playerCreature() != null) {
-            Shared.get().playerCreature().update();
+        if (_pet != null) {
+            _pet.update();
         }
+    }
+
+    public Creature getPet() {
+        return _pet;
+    }
+
+    public void setPet(Creature pet) {
+        _pet = pet;
+    }
+
+    @Override
+    public ActorType getActorType() {
+        return _actorType;
+    }
+
+    @Override
+    public void performInteraction() {
     }
 }

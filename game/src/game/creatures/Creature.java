@@ -1,15 +1,9 @@
 package game.creatures;
 
-import game.Shared;
 import game.forces.Force;
-import game.states.MergeState;
-import sps.bridge.Commands;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.Entity;
-import sps.entities.EntityManager;
-import sps.io.Input;
-import sps.states.StateManager;
 import sps.text.TextEffects;
 import sps.text.TextPool;
 import sps.util.Screen;
@@ -17,10 +11,10 @@ import sps.util.Screen;
 public class Creature extends Entity {
     private static final int __bonusAmount = 1;
     private static final int __bonusAward = 3;
-
     private Body _body;
     private Stats _stats;
     private int _bonusPoints;
+    private Creature _opponent;
 
     public Creature(boolean faceLeft, Point2 minDimensions, Point2 maxDimensions) {
         _body = new Body(this, RNG.next(3, 7), (int) minDimensions.X, (int) minDimensions.Y, (int) maxDimensions.X, (int) maxDimensions.Y);
@@ -39,23 +33,14 @@ public class Creature extends Entity {
     }
 
     public void update() {
-        if (Input.get().isActive(Commands.get("Force"), 0)) {
-            Force.createRandom().apply(_body.getRandomPart());
-        }
-
         _body.update();
-        if (!_body.isAlive()) {
-            if (Shared.get().playerCreature() == this) {
-                //TODO Lose the game
-            }
-            else {
-                EntityManager.get().removeEntity(this);
-                StateManager.get().pop();
-                StateManager.get().push(new MergeState(this));
-            }
-        }
-
         useBonus();
+    }
+
+    public void attack() {
+        if (_opponent != null && _opponent.getBody().isAlive()) {
+            Force.createRandom().apply(_opponent.getBody().getRandomPart());
+        }
     }
 
     public Stats getStats() {
@@ -85,5 +70,9 @@ public class Creature extends Entity {
             _stats.set(bonus, _stats.get(bonus) + __bonusAmount);
             TextPool.get().write("BONUS!", Screen.rand(40, 60, 40, 60), 2f, TextEffects.Fountain);
         }
+    }
+
+    public void setOpponent(Creature creature) {
+        _opponent = creature;
     }
 }

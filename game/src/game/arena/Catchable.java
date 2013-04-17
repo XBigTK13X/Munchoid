@@ -1,6 +1,5 @@
 package game.arena;
 
-import game.Shared;
 import game.creatures.Creature;
 import sps.bridge.EntityTypes;
 import sps.core.Point2;
@@ -24,18 +23,18 @@ public class Catchable extends Entity {
 
         CatchNet net = (CatchNet) EntityManager.get().getEntity(EntityTypes.get("Hand"));
         if (net != null && net.isInUse() && net.isTouching(_creature)) {
-            Creature pet = Shared.get().playerCreature();
-            if (pet == null) {
-                Shared.get().setPlayerCreature(_creature);
+            Player player = (Player) EntityManager.get().getPlayers().get(0);
+            if (player.getPet() == null) {
+                player.setPet(_creature);
                 setInactive();
             }
             else {
-                if (pet.isLargerThan(_creature)) {
-                    pet.addBonus(pet.getStats().power() - _creature.getStats().power());
+                if (player.getPet().isLargerThan(_creature)) {
+                    player.getPet().addBonus(player.getPet().getStats().power() - _creature.getStats().power());
                     setInactive();
                 }
                 else {
-                    _creature.addBonus(_creature.getStats().power() - pet.getStats().power());
+                    _creature.addBonus(_creature.getStats().power() - player.getPet().getStats().power());
                 }
             }
 

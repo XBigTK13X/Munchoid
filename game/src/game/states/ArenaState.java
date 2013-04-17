@@ -1,7 +1,6 @@
 package game.states;
 
 import com.badlogic.gdx.Gdx;
-import game.Shared;
 import game.arena.Catchable;
 import game.arena.Player;
 import sps.core.Point2;
@@ -13,7 +12,7 @@ import sps.text.TextPool;
 import sps.util.Screen;
 
 public class ArenaState implements State {
-    private static final float __countDownSecondsMax = 10f;
+    private static final float __countDownSecondsMax = 2f;
     private static final Point2 __timerPos = Screen.pos(5, 95);
     private static final int __creatureCount = 15;
 
@@ -46,14 +45,15 @@ public class ArenaState implements State {
     public void update() {
         EntityManager.get().update();
 
-        if (Shared.get().playerCreature() != null) {
+        Player player = (Player) EntityManager.get().getPlayers().get(0);
+        if (player.getPet() != null) {
             _countDownSeconds -= Gdx.graphics.getDeltaTime();
             if (_lastTime != (int) _countDownSeconds) {
                 _lastTime = (int) _countDownSeconds;
                 _timerText.setMessage(timeDisplay());
             }
             if (_countDownSeconds <= 0) {
-                StateManager.get().push(new BattleState());
+                StateManager.get().push(new BattleState(player));
             }
         }
         else {
