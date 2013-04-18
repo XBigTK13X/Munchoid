@@ -16,11 +16,12 @@ public class Catchable extends Entity {
     private float _dX = 0;
     private float _dY = 0;
 
-    private static final float __changeDriectionSecondsMax = 2.5f;
+    private static final float __changeDriectionSecondsMax = 4.5f;
     private float _changeDirectionSeconds;
 
     public Catchable() {
         _creature = new Creature(true, Screen.pos(2, 2), Screen.pos(5, 5));
+        setSize(_creature.getWidth(), _creature.getHeight());
         setLocation(Point2.random());
     }
 
@@ -55,8 +56,10 @@ public class Catchable extends Entity {
         }
         if (_changeDirectionSeconds <= 0) {
             _changeDirectionSeconds = RNG.next(0, (int) __changeDriectionSecondsMax * 100) / 100f;
-            _dX = RNG.next(-_moveDistance, _moveDistance);
-            _dY = RNG.next(-_moveDistance, _moveDistance);
+            Point2 dest = Screen.rand(10, 90, 10, 90);
+            double direction = Math.atan2(dest.Y - getLocation().Y, dest.X - getLocation().X);
+            _dX = (float) Math.cos(direction) * _moveDistance;
+            _dY = (float) Math.sin(direction) * _moveDistance;
         }
         _changeDirectionSeconds -= Gdx.graphics.getDeltaTime();
         move(_dX, _dY);

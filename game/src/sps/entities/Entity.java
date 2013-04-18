@@ -199,4 +199,9 @@ public class Entity implements Comparable {
     public int getHeight() {
         return _height;
     }
+
+    public void setSize(int width, int height) {
+        _width = width;
+        _height = height;
+    }
 }
