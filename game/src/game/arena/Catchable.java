@@ -62,7 +62,8 @@ public class Catchable extends Entity {
             _dY = (float) Math.sin(direction) * _moveDistance;
         }
         _changeDirectionSeconds -= Gdx.graphics.getDeltaTime();
-        move(_dX, _dY);
+        //TODO Fix movement. Currently, edges snag the catchable.
+        // move(_dX, _dY);
     }
 
     @Override
