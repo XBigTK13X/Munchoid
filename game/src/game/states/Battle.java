@@ -59,6 +59,7 @@ public class Battle implements State {
 
         if (_isPlayerTurn) {
             if (Input.get().isActive(Commands.get("Force"), 0)) {
+                victory();
                 _left.attack();
                 _isPlayerTurn = false;
 
@@ -70,13 +71,17 @@ public class Battle implements State {
         }
 
         if (!_right.getBody().isAlive()) {
-            EntityManager.get().removeEntity(_right);
-            StateManager.get().pop();
-            StateManager.get().push(new MergeOutcome(_left, _right));
+            victory();
         }
         if (!_left.getBody().isAlive()) {
-            StateManager.reset().push(new Arena());
+            StateManager.reset().push(new GameLose());
         }
+    }
+
+    private void victory() {
+        EntityManager.get().removeEntity(_right);
+        StateManager.get().pop();
+        StateManager.get().push(new MergeOutcome(_left, _right));
     }
 
     @Override

@@ -78,7 +78,7 @@ public class StateManager {
             State dying = _states.pop();
             TextPool.get().clear(dying);
             dying.unload();
-            if (_states.size() > 0) {
+            if (_states.size() > 0 && !force) {
                 loadCurrent();
             }
         }

@@ -3,61 +3,59 @@ package game.tournament;
 import game.arena.Player;
 import game.creatures.Creature;
 import game.states.Battle;
+import game.states.TournamentWin;
 import sps.core.RNG;
 import sps.states.StateManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Bracket {
-    class BinaryTree {
-        BinaryTree left;
-        BinaryTree right;
-        BinaryTree parent;
-        Combatant winner;
 
-        public BinaryTree(int depth) {
-            left = new BinaryTree(this, depth - 1);
-            right = new BinaryTree(this, depth - 1);
-        }
+    final Player _player;
 
-        public BinaryTree(BinaryTree parent, int depth) {
-            this.parent = parent;
-            if (depth == 0) {
-                winner = fighter();
-            }
-            else {
-                left = new BinaryTree(this, depth - 1);
-                right = new BinaryTree(this, depth - 1);
-            }
-        }
+    public void removeLastOpponent() {
+        _matches._fighters.set(1, null);
     }
 
-    Player _player;
+    class Matchups {
+        private List<Combatant> _fighters = new ArrayList<Combatant>();
+        private int _index;
 
-    public Bracket(Player player) {
-        _player = player;
+        public Matchups(int bouts) {
+            while (--bouts > 0) {
+                _fighters.add(fighter());
+                _fighters.add(fighter());
+            }
+        }
+
+        public void next() {
+            _index += 2;
+            if (_fighters.size() == 1 || (_fighters.size() == 2 && _fighters.get(1) == null)) {
+                StateManager.get().push(new TournamentWin());
+            }
+            if (_index - 1 >= _fighters.size()) {
+                List<Combatant> condensed = new ArrayList<Combatant>();
+                for (int ii = 0; ii < _fighters.size(); ii++) {
+                    if (_fighters.get(ii) != null) {
+                        condensed.add(_fighters.get(ii));
+                    }
+                }
+                _fighters = condensed;
+                _index = 2;
+            }
+
+            if (_fighters.get(_index - 2).getName().equalsIgnoreCase("Player")) {
+                StateManager.get().push(new Battle(_player.getPet(), new Creature(true)));
+            }
+            else {
+                _fighters.set(RNG.coinFlip() ? _index - 2 : _index - 1, null);
+            }
+        }
     }
 
     public void runNextMatch() {
-        runNextMatch(_matches.left);
-    }
-
-    private void runNextMatch(BinaryTree tree) {
-        if (tree.left == null && tree.right == null) {
-            //TODO Assumes player is always on a left branch
-            if (tree.winner.getName().equalsIgnoreCase("Player")) {
-                Creature slot1 = tree.winner.getName().equalsIgnoreCase("Player") ? _player.getPet() : tree.winner.getPet();
-                Creature slot2 = tree.parent.right.winner.getName().equalsIgnoreCase("Player") ? _player.getPet() : tree.parent.right.winner.getPet();
-                StateManager.get().push(new Battle(slot1, slot2));
-            }
-            else {
-                //TODO Thorough simulation of PC vs PC battle
-                tree.parent.winner = RNG.coinFlip() ? tree.left.winner : tree.parent.right.winner;
-                tree.parent.right = null;
-                tree.parent.left = null;
-            }
-        }
-        if (tree.left.winner != null && tree.right.winner == null) {
-            runNextMatch(tree.right);
-        }
+        _matches.next();
     }
 
     private boolean first = true;
@@ -73,9 +71,10 @@ public class Bracket {
         return new Combatant(RNG.next(0, Integer.MAX_VALUE) + "");
     }
 
-    private BinaryTree _matches;
+    private Matchups _matches;
 
-    public Bracket(int matches) {
-        _matches = new BinaryTree(matches);
+    public Bracket(Player player, int matches) {
+        _player = player;
+        _matches = new Matchups(matches);
     }
 }
