@@ -10,6 +10,8 @@ import sps.graphics.Assets;
 import sps.graphics.Renderer;
 
 public class Atom {
+    public static int count = 0;
+
     private static Sprite __pixel;
     private static float __scaleDistance = 1;
 
@@ -24,6 +26,7 @@ public class Atom {
     private Point2 _scaledLocation = new Point2(0, 0);
 
     public Atom(int localX, int localY, Color color, Body owner, BodyPart container) {
+        count++;
         if (__pixel == null) {
             __pixel = Assets.get().pixel();
         }

@@ -12,32 +12,33 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.util.Screen;
 
-public class BattleState implements State {
+public class Battle implements State {
     private static SingleSongPlayer __battleMusic;
-
-    private static final Point2 __creatureMinDimension = Screen.pos(15, 15);
-    private static final Point2 __creatureMaxDimension = Screen.pos(40, 40);
 
     private static final Point2 __petLocation = Screen.pos(15, 15);
 
     private boolean _isPlayerTurn = true;
-    private Creature _opponent;
+    private Creature _left;
+    private Creature _right;
 
-    private Player _player;
+    public Battle(Player player) {
+        _left = player.getPet();
+        _right = new Creature(true);
+    }
 
-    public BattleState(Player player) {
-        _player = player;
+    public Battle(Creature slot1, Creature slot2) {
+        _left = slot1;
+        _right = slot2;
     }
 
     @Override
     public void create() {
-        _opponent = new Creature(true, __creatureMinDimension, __creatureMaxDimension);
-        EntityManager.get().addEntity(_opponent);
-        _player.getPet().setLocation(__petLocation);
-        EntityManager.get().addEntity(_player.getPet());
+        EntityManager.get().addEntity(_right);
+        _left.setLocation(__petLocation);
+        EntityManager.get().addEntity(_left);
 
-        _opponent.setOpponent(_player.getPet());
-        _player.getPet().setOpponent(_opponent);
+        _right.setOpponent(_left);
+        _left.setOpponent(_right);
 
 
         if (__battleMusic == null) {
@@ -58,23 +59,23 @@ public class BattleState implements State {
 
         if (_isPlayerTurn) {
             if (Input.get().isActive(Commands.get("Force"), 0)) {
-                _player.getPet().attack();
+                _left.attack();
                 _isPlayerTurn = false;
 
             }
         }
         else {
-            _opponent.attack();
+            _right.attack();
             _isPlayerTurn = true;
         }
 
-        if (!_opponent.getBody().isAlive()) {
-            EntityManager.get().removeEntity(_opponent);
+        if (!_right.getBody().isAlive()) {
+            EntityManager.get().removeEntity(_right);
             StateManager.get().pop();
-            StateManager.get().push(new MergeState(_player.getPet(), _opponent));
+            StateManager.get().push(new MergeOutcome(_left, _right));
         }
-        if (!_player.getPet().getBody().isAlive()) {
-            StateManager.reset().push(new ArenaState());
+        if (!_left.getBody().isAlive()) {
+            StateManager.reset().push(new Arena());
         }
     }
 

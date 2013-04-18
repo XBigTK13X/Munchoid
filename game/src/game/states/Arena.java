@@ -11,7 +11,7 @@ import sps.text.Text;
 import sps.text.TextPool;
 import sps.util.Screen;
 
-public class ArenaState implements State {
+public class Arena implements State {
     private static final float __countDownSecondsMax = 2f;
     private static final Point2 __timerPos = Screen.pos(5, 95);
     private static final int __creatureCount = 15;
@@ -53,7 +53,7 @@ public class ArenaState implements State {
                 _timerText.setMessage(timeDisplay());
             }
             if (_countDownSeconds <= 0) {
-                StateManager.get().push(new BattleState(player));
+                StateManager.get().push(new Battle(player));
             }
         }
         else {

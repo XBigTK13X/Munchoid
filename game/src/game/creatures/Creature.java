@@ -1,6 +1,7 @@
 package game.creatures;
 
 import game.forces.Force;
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.Entity;
@@ -9,6 +10,11 @@ import sps.text.TextPool;
 import sps.util.Screen;
 
 public class Creature extends Entity {
+    private static int count = 0;
+
+    private static final Point2 __minDimensions = Screen.pos(15, 15);
+    private static final Point2 __maxDimensions = Screen.pos(40, 40);
+
     private static final int __bonusAmount = 1;
     private static final int __bonusAward = 3;
     private Body _body;
@@ -17,6 +23,8 @@ public class Creature extends Entity {
     private Creature _opponent;
 
     public Creature(boolean faceLeft, Point2 minDimensions, Point2 maxDimensions) {
+        count++;
+        Logger.info("COUNT: " + count);
         _body = new Body(this, RNG.next(3, 7), (int) minDimensions.X, (int) minDimensions.Y, (int) maxDimensions.X, (int) maxDimensions.Y);
         if (faceLeft) {
             setLocation(Screen.pos(80, 20));
@@ -26,6 +34,10 @@ public class Creature extends Entity {
         }
 
         _stats = new Stats();
+    }
+
+    public Creature(boolean facingLeft) {
+        this(facingLeft, __minDimensions, __maxDimensions);
     }
 
     public void draw() {
