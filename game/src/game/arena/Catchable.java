@@ -2,6 +2,7 @@ package game.arena;
 
 import com.badlogic.gdx.Gdx;
 import game.creatures.Creature;
+import sps.bridge.DrawDepths;
 import sps.bridge.EntityTypes;
 import sps.core.Point2;
 import sps.core.RNG;
@@ -20,6 +21,7 @@ public class Catchable extends Entity {
     private float _changeDirectionSeconds;
 
     public Catchable() {
+        initialize(0, 0, Point2.Zero, null, EntityTypes.get("Catchable"), DrawDepths.get("Catchable"));
         _creature = new Creature(true, Screen.pos(2, 2), Screen.pos(5, 5));
         setLocation(Point2.random());
     }

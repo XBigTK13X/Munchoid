@@ -23,7 +23,7 @@ public class PreGame implements State {
         if (Input.get().isActive(Commands.get("Confirm"))) {
             Player player = new Player();
             player.setPet(new Creature(true, new Point2(150, 150), new Point2(170, 170)));
-            StateManager.get().push(new Tournament(player));
+            StateManager.get().push(new Arena());
         }
     }
 

@@ -3,6 +3,7 @@ package game.states;
 import com.badlogic.gdx.Gdx;
 import game.arena.Catchable;
 import game.arena.Player;
+import sps.bridge.EntityTypes;
 import sps.core.Point2;
 import sps.entities.EntityManager;
 import sps.states.State;
@@ -51,6 +52,9 @@ public class Arena implements State {
             if (_lastTime != (int) _countDownSeconds) {
                 _lastTime = (int) _countDownSeconds;
                 _timerText.setMessage(timeDisplay());
+            }
+            if (EntityManager.get().getEntities(EntityTypes.get("Catchable")).size() <= 0) {
+                StateManager.get().push(new Tournament((Player) EntityManager.get().getPlayer()));
             }
             if (_countDownSeconds <= 0) {
                 StateManager.get().push(new Battle(player));
