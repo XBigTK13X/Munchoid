@@ -11,6 +11,6 @@ public class Expansion extends BaseForce {
 
     @Override
     public void prepareCalculations(BodyPart bodyPart) {
-        bodyPart.setScale(bodyPart.getScale() + RNG.next(120, 150) / 100f);
+        bodyPart.setScale(bodyPart.getScale() + RNG.next(103, 108) / 100f);
     }
 }

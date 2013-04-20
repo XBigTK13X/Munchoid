@@ -29,7 +29,7 @@ public class Bracket {
             }
         }
 
-        public void next() {
+        public boolean next() {
             _index += 2;
             if (_fighters.size() == 1 || (_fighters.size() == 2 && _fighters.get(1) == null)) {
                 StateManager.get().push(new TournamentWin());
@@ -47,15 +47,17 @@ public class Bracket {
 
             if (_fighters.get(_index - 2).getName().equalsIgnoreCase("Player")) {
                 StateManager.get().push(new Battle(_player.getPet(), new Creature()));
+                return true;
             }
             else {
                 _fighters.set(RNG.coinFlip() ? _index - 2 : _index - 1, null);
             }
+            return false;
         }
     }
 
-    public void runNextMatch() {
-        _matches.next();
+    public boolean runNextMatch() {
+        return _matches.next();
     }
 
     private boolean first = true;

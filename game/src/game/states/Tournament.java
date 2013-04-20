@@ -40,9 +40,11 @@ public class Tournament implements State {
     @Override
     public void update() {
         if (Input.get().isActive(Commands.get("Confirm"))) {
-            _entranceInfo.setMessage(boutMessage());
             _boutNumber++;
-            _bracket.runNextMatch();
+            _entranceInfo.setMessage(boutMessage());
+            // Run all of the EvE matches and Bys, then load the next PvE match
+            while (!_bracket.runNextMatch()) {
+            }
         }
     }
 

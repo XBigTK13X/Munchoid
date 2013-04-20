@@ -57,8 +57,11 @@ public class Battle implements State {
                 if (Input.get().isActive(Commands.get(force.Command), 0)) {
                     _left.attack(force);
                     _isPlayerTurn = false;
-
                 }
+            }
+            if (Input.get().isActive(Commands.get("Confirm"))) {
+                //TODO Remove this debugging helper
+                victory();
             }
         }
         else {
