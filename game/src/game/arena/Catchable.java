@@ -82,7 +82,7 @@ public class Catchable extends Entity {
 
         _changeDirectionSeconds -= Gdx.graphics.getDeltaTime();
         //TODO Fix movement. Currently, edges snag the catchable.
-        // move(_dX, _dY);
+        move(_dX, _dY);
     }
 
     @Override
