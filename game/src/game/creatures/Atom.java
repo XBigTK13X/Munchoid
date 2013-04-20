@@ -55,6 +55,10 @@ public class Atom {
         Renderer.get().draw(__pixel, __point.reset(_scaledX, _scaledY, false), DrawDepths.get(Game.DrawDepths.Atom), _color, 1, 1);
     }
 
+    public void setScale(float scale) {
+
+    }
+
     public boolean isLucky() {
         return RNG.percent(survivalChance);
     }

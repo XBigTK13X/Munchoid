@@ -1,5 +1,6 @@
 package game.states;
 
+import game.GameConfig;
 import game.creatures.Atom;
 import game.creatures.Creature;
 import sps.core.Logger;
@@ -12,7 +13,7 @@ public class TestBed implements State {
     public void create() {
         //Test the limits of full-size creature generation
         int creatureCount = 0;
-        while (true) {
+        while (creatureCount < GameConfig.CreatureLimit) {
             Logger.info("Atoms: " + Atom.count + ", Creatures: " + creatureCount++);
             EntityManager.get().addEntity(new Creature());
         }

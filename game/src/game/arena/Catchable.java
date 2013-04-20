@@ -18,6 +18,8 @@ public class Catchable extends Entity {
     private int _moveIncrements = 10;
     private int __pace = 5;
 
+    private static final float __creatureScale = .1f;
+
     private float _dX = 0;
     private float _dY = 0;
 
@@ -27,7 +29,8 @@ public class Catchable extends Entity {
 
     public Catchable() {
         initialize(0, 0, Point2.Zero, null, EntityTypes.get("Catchable"), DrawDepths.get("Catchable"));
-        _creature = new Creature(true, Screen.pos(2, 2), Screen.pos(5, 5));
+        _creature = new Creature();
+        _creature.getBody().setScale(__creatureScale);
 
         setSize(_creature.getWidth(), _creature.getHeight());
         setLocation(Screen.rand(15, 85, 15, 85));
@@ -88,5 +91,9 @@ public class Catchable extends Entity {
     @Override
     public void draw() {
         _creature.draw();
+    }
+
+    public Creature getPet() {
+        return _creature;
     }
 }

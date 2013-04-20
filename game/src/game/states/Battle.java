@@ -1,6 +1,5 @@
 package game.states;
 
-import game.arena.Player;
 import game.creatures.Creature;
 import game.forces.Force;
 import sps.audio.MusicPlayer;
@@ -22,11 +21,6 @@ public class Battle implements State {
     private Creature _left;
     private Creature _right;
 
-    public Battle(Player player) {
-        _left = player.getPet();
-        _right = new Creature();
-    }
-
     public Battle(Creature slot1, Creature slot2) {
         _left = slot1;
         _right = slot2;
@@ -35,7 +29,9 @@ public class Battle implements State {
     @Override
     public void create() {
         EntityManager.get().addEntity(_right);
+        _right.getBody().setScale(1);
         _left.setLocation(__petLocation);
+        _left.getBody().setScale(1);
         EntityManager.get().addEntity(_left);
 
         _right.setOpponent(_left);

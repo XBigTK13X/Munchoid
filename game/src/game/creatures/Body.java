@@ -66,4 +66,10 @@ public class Body {
     public float getHeight() {
         return _height;
     }
+
+    public void setScale(float scale) {
+        for (BodyPart part : _parts) {
+            part.setScale(scale);
+        }
+    }
 }

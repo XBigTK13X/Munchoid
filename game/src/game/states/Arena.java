@@ -4,8 +4,12 @@ import com.badlogic.gdx.Gdx;
 import game.GameConfig;
 import game.arena.Catchable;
 import game.arena.Player;
+import game.creatures.Atom;
 import sps.bridge.EntityTypes;
+import sps.core.Logger;
 import sps.core.Point2;
+import sps.core.RNG;
+import sps.entities.Entity;
 import sps.entities.EntityManager;
 import sps.states.State;
 import sps.states.StateManager;
@@ -13,9 +17,10 @@ import sps.text.Text;
 import sps.text.TextPool;
 import sps.util.Screen;
 
+import java.util.List;
+
 public class Arena implements State {
     private static final Point2 __timerPos = Screen.pos(5, 95);
-    private static final int __creatureCount = 15;
 
     private int _lastTime;
     private float _countDownSeconds;
@@ -32,9 +37,10 @@ public class Arena implements State {
         _lastTime = (int) GameConfig.ArenaTimeoutSeconds;
         _timerText = TextPool.get().write(timeDisplay(), __timerPos);
         EntityManager.get().addEntity(new Player());
-        for (int ii = 0; ii < __creatureCount; ii++) {
+        for (int ii = 0; ii < GameConfig.CreatureLimit; ii++) {
             EntityManager.get().addEntity(new Catchable());
         }
+        Logger.info("Atoms: " + Atom.count);
     }
 
     @Override
@@ -53,11 +59,12 @@ public class Arena implements State {
                 _lastTime = (int) _countDownSeconds;
                 _timerText.setMessage(timeDisplay());
             }
-            if (EntityManager.get().getEntities(EntityTypes.get("Catchable")).size() <= 0) {
+            List<Entity> opponents = EntityManager.get().getEntities(EntityTypes.get("Catchable"));
+            if (opponents.size() <= 0) {
                 StateManager.get().push(new Tournament((Player) EntityManager.get().getPlayer()));
             }
             if (_countDownSeconds <= 0) {
-                StateManager.get().push(new Battle(player));
+                StateManager.get().push(new Battle(player.getPet(), ((Catchable) opponents.get(RNG.next(0, opponents.size()))).getPet()));
             }
         }
         else {

@@ -1,5 +1,6 @@
 package game.creatures;
 
+import game.GameConfig;
 import game.forces.Force;
 import sps.core.Point2;
 import sps.core.RNG;
@@ -9,8 +10,7 @@ import sps.text.TextPool;
 import sps.util.Screen;
 
 public class Creature extends Entity {
-    private static final Point2 __minDimensions = Screen.pos(15, 15);
-    private static final Point2 __maxDimensions = Screen.pos(40, 40);
+
 
     private static final int __bonusAmount = 1;
     private static final int __bonusAward = 3;
@@ -32,7 +32,7 @@ public class Creature extends Entity {
     }
 
     public Creature() {
-        this(true, __minDimensions, __maxDimensions);
+        this(true, GameConfig.MinBodyPartDimensions, GameConfig.MaxBodyPartDimensions);
     }
 
     public void draw() {
