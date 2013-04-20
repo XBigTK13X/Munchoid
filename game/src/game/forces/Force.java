@@ -10,8 +10,10 @@ public enum Force {
     Contraction,
     Vaporize;
 
-    private Force() {
+    public final String Command;
 
+    private Force() {
+        Command = "Force" + (ordinal() + 1);
     }
 
     public static BaseForce create(Force force) {

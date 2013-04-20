@@ -44,9 +44,9 @@ public class Creature extends Entity {
         useBonus();
     }
 
-    public void attack() {
+    public void attack(Force force) {
         if (_opponent != null && _opponent.getBody().isAlive()) {
-            Force.createRandom().apply(_opponent.getBody().getRandomPart());
+            Force.create(force).apply(_opponent.getBody().getRandomPart());
         }
     }
 

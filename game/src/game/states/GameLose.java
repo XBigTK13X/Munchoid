@@ -11,6 +11,7 @@ public class GameLose implements State {
     @Override
     public void create() {
         TextPool.get().write("You Lose", Screen.pos(10, 60));
+        TextPool.get().write("SPACE to restart", Screen.pos(10, 50));
     }
 
     @Override

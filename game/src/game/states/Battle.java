@@ -2,6 +2,7 @@ package game.states;
 
 import game.arena.Player;
 import game.creatures.Creature;
+import game.forces.Force;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
@@ -58,15 +59,18 @@ public class Battle implements State {
         EntityManager.get().update();
 
         if (_isPlayerTurn) {
-            if (Input.get().isActive(Commands.get("Force"), 0)) {
-                victory();
-                _left.attack();
-                _isPlayerTurn = false;
+            for (Force force : Force.values()) {
+                if (Input.get().isActive(Commands.get(force.Command), 0)) {
+                    _left.attack(force);
+                    _isPlayerTurn = false;
 
+                }
             }
+
         }
         else {
-            _right.attack();
+            //TODO Smarter attacks
+            _right.attack(Force.random());
             _isPlayerTurn = true;
         }
 
