@@ -31,8 +31,8 @@ public class Creature extends Entity {
         _stats = new Stats();
     }
 
-    public Creature(boolean facingLeft) {
-        this(facingLeft, __minDimensions, __maxDimensions);
+    public Creature() {
+        this(true, __minDimensions, __maxDimensions);
     }
 
     public void draw() {

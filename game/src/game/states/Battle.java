@@ -24,7 +24,7 @@ public class Battle implements State {
 
     public Battle(Player player) {
         _left = player.getPet();
-        _right = new Creature(true);
+        _right = new Creature();
     }
 
     public Battle(Creature slot1, Creature slot2) {

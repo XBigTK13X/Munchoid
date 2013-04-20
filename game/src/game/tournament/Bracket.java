@@ -46,7 +46,7 @@ public class Bracket {
             }
 
             if (_fighters.get(_index - 2).getName().equalsIgnoreCase("Player")) {
-                StateManager.get().push(new Battle(_player.getPet(), new Creature(true)));
+                StateManager.get().push(new Battle(_player.getPet(), new Creature()));
             }
             else {
                 _fighters.set(RNG.coinFlip() ? _index - 2 : _index - 1, null);

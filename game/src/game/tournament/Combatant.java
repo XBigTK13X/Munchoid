@@ -12,7 +12,7 @@ public class Combatant {
 
     public Creature getPet() {
         if (_pet == null) {
-            _pet = new Creature(true);
+            _pet = new Creature();
         }
         return _pet;
     }
