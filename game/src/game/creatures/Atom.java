@@ -9,6 +9,7 @@ import sps.core.RNG;
 import sps.graphics.Assets;
 import sps.graphics.Renderer;
 
+//TODO Improve performance, currently get ~20-30 creatures manageable per 512MB of available memory
 public class Atom {
     public static int count = 0;
 
