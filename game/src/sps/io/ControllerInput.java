@@ -37,8 +37,8 @@ public class ControllerInput implements Serializable {
         this.greaterThan = greaterThan;
     }
 
-    private ControllerInput(){
-        this(null,null,null,null,null,null,null,null);
+    private ControllerInput() {
+        this(null, null, null, null, null, null, null, null);
     }
 
     public static ControllerInput createButton(int index) {
@@ -73,7 +73,10 @@ public class ControllerInput implements Serializable {
         String[] parts = source.split("/");
         //Wired Xbox 360 controllers are the only supported, non-serialized input
         if (parts.length == 1) {
-            return XBox360ControllerInputs.get(parts[0]).Input;
+            if (!parts[0].equalsIgnoreCase("null")) {
+                return XBox360ControllerInputs.get(parts[0]).Input;
+            }
+            return null;
         }
         else {
             Device device = Device.get(parts[0]);

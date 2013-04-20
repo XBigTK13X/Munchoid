@@ -9,6 +9,9 @@ import sps.text.TextPool;
 import sps.util.Screen;
 
 public class Creature extends Entity {
+    private static final Point2 __minDimensions = Screen.pos(15, 15);
+    private static final Point2 __maxDimensions = Screen.pos(40, 40);
+
     private static final int __bonusAmount = 1;
     private static final int __bonusAward = 3;
     private Body _body;
@@ -28,6 +31,10 @@ public class Creature extends Entity {
         _stats = new Stats();
     }
 
+    public Creature(boolean facingLeft) {
+        this(facingLeft, __minDimensions, __maxDimensions);
+    }
+
     public void draw() {
         _body.draw();
     }
@@ -37,9 +44,9 @@ public class Creature extends Entity {
         useBonus();
     }
 
-    public void attack() {
+    public void attack(Force force) {
         if (_opponent != null && _opponent.getBody().isAlive()) {
-            Force.createRandom().apply(_opponent.getBody().getRandomPart());
+            Force.create(force).apply(_opponent.getBody().getRandomPart());
         }
     }
 

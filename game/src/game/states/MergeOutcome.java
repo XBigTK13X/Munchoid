@@ -12,18 +12,18 @@ import sps.states.StateManager;
 import sps.text.TextPool;
 import sps.util.Screen;
 
-public class MergeState implements State {
+public class MergeOutcome implements State {
     private Creature _defeated;
     private Creature _pet;
 
-    public MergeState(Creature pet, Creature defeated) {
+    public MergeOutcome(Creature pet, Creature defeated) {
         _pet = pet;
         _defeated = defeated;
     }
 
     @Override
     public void create() {
-        TextPool.get().write("Merge results:", Screen.pos(15, 80));
+        TextPool.get().write("Merge Outcome:", Screen.pos(15, 80));
         Stats preMerge = _pet.getStats();
         Stats incoming = _defeated.getStats();
         Stats merged = new Stats();
@@ -37,7 +37,7 @@ public class MergeState implements State {
         }
         _pet.setStats(merged);
 
-        //TODO Merge in size as well as stats
+        //TODO MergeOutcome in size as well as stats
     }
 
     @Override
@@ -67,7 +67,7 @@ public class MergeState implements State {
 
     @Override
     public String getName() {
-        return "Merge";
+        return "MergeOutcome";
     }
 
     @Override
