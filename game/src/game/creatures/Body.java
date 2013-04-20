@@ -35,7 +35,9 @@ public class Body {
 
     public void draw() {
         for (BodyPart part : _parts) {
-            part.draw();
+            if (part.isAlive()) {
+                part.draw();
+            }
         }
     }
 
