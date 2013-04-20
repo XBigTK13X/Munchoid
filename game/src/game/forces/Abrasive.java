@@ -1,6 +1,5 @@
 package game.forces;
 
-import game.creatures.Atom;
 import game.creatures.BodyPart;
 import sps.core.RNG;
 
@@ -17,7 +16,7 @@ public class Abrasive extends BaseForce {
     }
 
     @Override
-    public Atom forceSpecifics(BodyPart bodyPart, int ii, int jj) {
+    public boolean forceSpecifics(BodyPart bodyPart, int ii, int jj) {
         _adjustedMagnitude = _adjustedMagnitude + RNG.next(0, wiggleRoom * 2) - wiggleRoom;
         if (_adjustedMagnitude > _magnitude + wiggleRoom * 3
                 || _adjustedMagnitude < _magnitude - wiggleRoom * 3) {
@@ -27,10 +26,10 @@ public class Abrasive extends BaseForce {
                 || (rubX && jj > bodyPart.getAtoms()[0].length - _adjustedMagnitude && rubBehind)
                 || (!rubX && ii < _adjustedMagnitude && !rubBehind)
                 || (!rubX && ii > bodyPart.getAtoms().length - _adjustedMagnitude && rubBehind)) {
-            return null;
+            return false;
         }
 
-        return bodyPart.getAtoms()[ii][jj];
+        return bodyPart.getAtoms()[ii][jj].isActive();
     }
 
     @Override

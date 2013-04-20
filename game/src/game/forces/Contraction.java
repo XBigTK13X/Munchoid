@@ -1,13 +1,12 @@
 package game.forces;
 
-import game.creatures.Atom;
 import game.creatures.BodyPart;
 import sps.core.RNG;
 
 public class Contraction extends BaseForce {
     @Override
-    public Atom forceSpecifics(BodyPart bodyPart, int ii, int jj) {
-        return bodyPart.getAtoms()[ii][jj];
+    public boolean forceSpecifics(BodyPart bodyPart, int ii, int jj) {
+        return bodyPart.getAtoms()[ii][jj].isActive();
     }
 
     @Override

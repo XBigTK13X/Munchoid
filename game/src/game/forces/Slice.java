@@ -1,6 +1,5 @@
 package game.forces;
 
-import game.creatures.Atom;
 import game.creatures.BodyPart;
 import sps.core.Point2;
 import sps.core.RNG;
@@ -19,14 +18,14 @@ public class Slice extends BaseForce {
     }
 
     @Override
-    public Atom forceSpecifics(BodyPart bodyPart, int ii, int jj) {
+    public boolean forceSpecifics(BodyPart bodyPart, int ii, int jj) {
         Point2 direction = MathHelper.directionToPointFromLine(new Point2(ii, jj), _origin, _dX, _dY);
         if ((_killRight && direction.X > 0) || (!_killRight && direction.X < 0)) {
             if ((_killUp && direction.Y > 0) || (!_killUp && direction.Y < 0)) {
-                return null;
+                return false;
             }
         }
-        return bodyPart.getAtoms()[ii][jj];
+        return bodyPart.getAtoms()[ii][jj].isActive();
     }
 
     @Override

@@ -1,6 +1,5 @@
 package game.forces;
 
-import game.creatures.Atom;
 import game.creatures.BodyPart;
 import sps.core.RNG;
 
@@ -12,7 +11,7 @@ public class Vaporize extends BaseForce {
     }
 
     @Override
-    public Atom forceSpecifics(BodyPart bodyPart, int ii, int jj) {
-        return RNG.percent(_magnitude) ? null : bodyPart.getAtoms()[ii][jj];
+    public boolean forceSpecifics(BodyPart bodyPart, int ii, int jj) {
+        return RNG.percent(_magnitude) ? false : bodyPart.getAtoms()[ii][jj].isActive();
     }
 }

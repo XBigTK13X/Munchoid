@@ -41,7 +41,7 @@ public class BodyPart {
         int currentActive = 0;
         for (int ii = 0; ii < _width; ii++) {
             for (int jj = 0; jj < _height; jj++) {
-                if (atoms[ii][jj] != null) {
+                if (atoms[ii][jj] != null && atoms[ii][jj].isActive()) {
                     currentActive++;
                 }
             }
@@ -54,7 +54,7 @@ public class BodyPart {
     public void draw() {
         for (int ii = 0; ii < _width; ii++) {
             for (int jj = 0; jj < _height; jj++) {
-                if (_atoms[ii][jj] != null) {
+                if (_atoms[ii][jj] != null && _atoms[ii][jj].isActive()) {
                     _atoms[ii][jj].draw();
                 }
             }

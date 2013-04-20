@@ -1,6 +1,5 @@
 package game.forces;
 
-import game.creatures.Atom;
 import game.creatures.BodyPart;
 import sps.core.Point2;
 import sps.core.RNG;
@@ -16,14 +15,14 @@ public class Explosive extends BaseForce {
     }
 
     @Override
-    public Atom forceSpecifics(BodyPart bodyPart, int ii, int jj) {
+    public boolean forceSpecifics(BodyPart bodyPart, int ii, int jj) {
 
         int adjustedMag = _magnitude + RNG.next(0, 10) - 5;
         int adjustedMagSquared = adjustedMag * adjustedMag;
         if (HitTest.getDistanceSquare(ii, _epicenter.X, jj, _epicenter.Y) <= adjustedMagSquared && !bodyPart.getAtoms()[ii][jj].isLucky()) {
-            return null;
+            return false;
         }
-        return bodyPart.getAtoms()[ii][jj];
+        return bodyPart.getAtoms()[ii][jj].isActive();
     }
 
     @Override

@@ -11,23 +11,18 @@ import sps.graphics.Renderer;
 
 public class Atom {
     public static int count = 0;
-
     private static Point2 __point = new Point2(0, 0);
-
     private static Sprite __pixel;
     private static float __scaleDistance = 1;
-
-    private Color _color;
-    private int survivalChance = 5;
-
     Body _body;
     BodyPart _bodyPart;
-
+    private Color _color;
+    private int survivalChance = 5;
     private float _localX;
     private float _localY;
-
     private float _scaledX;
     private float _scaledY;
+    private boolean _isActive = true;
 
     public Atom(int localX, int localY, Color color, Body owner, BodyPart container) {
         count++;
@@ -55,8 +50,12 @@ public class Atom {
         Renderer.get().draw(__pixel, __point.reset(_scaledX, _scaledY, false), DrawDepths.get(Game.DrawDepths.Atom), _color, 1, 1);
     }
 
-    public void setScale(float scale) {
+    public boolean isActive() {
+        return _isActive;
+    }
 
+    public void setActive(boolean active) {
+        _isActive = active;
     }
 
     public boolean isLucky() {

@@ -8,8 +8,8 @@ public class GameConfig {
     public final static int CreatureLimit = 10;
 
     public final static float ArenaTimeoutSeconds = 7f;
-    public final static int TournamentMatches = 2;
+    public final static int TournamentMatches = 3;
 
-    public static final Point2 MinBodyPartDimensions = Screen.pos(15, 15);
-    public static final Point2 MaxBodyPartDimensions = Screen.pos(40, 40);
+    public static final Point2 MinBodyPartDimensions = Screen.pos(5, 5);
+    public static final Point2 MaxBodyPartDimensions = Screen.pos(10, 10);
 }
