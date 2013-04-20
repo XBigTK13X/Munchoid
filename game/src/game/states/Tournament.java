@@ -6,6 +6,7 @@ import game.tournament.Bracket;
 import sps.bridge.Commands;
 import sps.io.Input;
 import sps.states.State;
+import sps.text.Text;
 import sps.text.TextPool;
 import sps.util.Screen;
 
@@ -16,6 +17,8 @@ public class Tournament implements State {
 
     private int _boutNumber = 1;
 
+    Text _entranceInfo;
+
     public Tournament(Player player) {
         _player = player;
     }
@@ -23,7 +26,11 @@ public class Tournament implements State {
     @Override
     public void create() {
         _bracket = new Bracket(_player, GameConfig.TournamentMatches);
-        TextPool.get().write("SPACE for bout " + _boutNumber + " of " + GameConfig.TournamentMatches, Screen.pos(5, 50));
+        _entranceInfo = TextPool.get().write(boutMessage(), Screen.pos(5, 50));
+    }
+
+    private String boutMessage() {
+        return "SPACE for bout " + _boutNumber + " of " + GameConfig.TournamentMatches;
     }
 
     @Override
@@ -33,6 +40,7 @@ public class Tournament implements State {
     @Override
     public void update() {
         if (Input.get().isActive(Commands.get("Confirm"))) {
+            _entranceInfo.setMessage(boutMessage());
             _boutNumber++;
             _bracket.runNextMatch();
         }

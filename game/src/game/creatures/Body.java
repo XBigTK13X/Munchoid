@@ -40,19 +40,26 @@ public class Body {
     }
 
     public BodyPart getRandomPart() {
-        return _parts.get(RNG.next(0, _parts.size()));
+        List<Integer> validIndices = new ArrayList<Integer>();
+        for (int ii = 0; ii < _parts.size(); ii++) {
+            if (_parts.get(ii).isAlive()) {
+                validIndices.add(ii);
+            }
+        }
+        return _parts.get(validIndices.get(RNG.next(0, validIndices.size())));
     }
 
     public void update() {
-        for (int ii = 0; ii < _parts.size(); ii++) {
-            if (!_parts.get(ii).isAlive()) {
-                _parts.remove(ii);
-            }
-        }
+
     }
 
     public boolean isAlive() {
-        return _parts.size() > 0;
+        for (int ii = 0; ii < _parts.size(); ii++) {
+            if (_parts.get(ii).isAlive()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Creature getOwner() {
@@ -70,6 +77,12 @@ public class Body {
     public void setScale(float scale) {
         for (BodyPart part : _parts) {
             part.setScale(scale);
+        }
+    }
+
+    public void restore() {
+        for (BodyPart part : _parts) {
+            part.restore();
         }
     }
 }

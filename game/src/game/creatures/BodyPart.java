@@ -84,4 +84,16 @@ public class BodyPart {
     public int getHeight() {
         return _height;
     }
+
+    public void restore() {
+        _scale = 1;
+        for (int ii = 0; ii < _width; ii++) {
+            for (int jj = 0; jj < _height; jj++) {
+                if (_atoms[ii][jj] != null) {
+                    _atoms[ii][jj].setActive(true);
+
+                }
+            }
+        }
+    }
 }

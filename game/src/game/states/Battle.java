@@ -13,10 +13,8 @@ import sps.states.StateManager;
 import sps.util.Screen;
 
 public class Battle implements State {
-    private static SingleSongPlayer __battleMusic;
-
     private static final Point2 __petLocation = Screen.pos(15, 15);
-
+    private static SingleSongPlayer __battleMusic;
     private boolean _isPlayerTurn = true;
     private Creature _left;
     private Creature _right;
@@ -62,7 +60,6 @@ public class Battle implements State {
 
                 }
             }
-
         }
         else {
             //TODO Smarter attacks
@@ -79,7 +76,9 @@ public class Battle implements State {
     }
 
     private void victory() {
+        _right.setInactive();
         EntityManager.get().removeEntity(_right);
+        _left.getBody().restore();
         StateManager.get().pop();
         StateManager.get().push(new MergeOutcome(_left, _right));
     }
