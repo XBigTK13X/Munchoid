@@ -9,29 +9,33 @@ import sps.core.RNG;
 import sps.graphics.Assets;
 import sps.graphics.Renderer;
 
-//TODO Improve performance, currently get ~20-30 creatures manageable per 512MB of available memory
 public class Atom {
     public static int count = 0;
+
+    private static Point2 __point = new Point2(0, 0);
 
     private static Sprite __pixel;
     private static float __scaleDistance = 1;
 
-    private Point2 _location;
     private Color _color;
     private int survivalChance = 5;
-
 
     Body _body;
     BodyPart _bodyPart;
 
-    private Point2 _scaledLocation = new Point2(0, 0);
+    private float _localX;
+    private float _localY;
+
+    private float _scaledX;
+    private float _scaledY;
 
     public Atom(int localX, int localY, Color color, Body owner, BodyPart container) {
         count++;
         if (__pixel == null) {
             __pixel = Assets.get().pixel();
         }
-        _location = new Point2(localX, localY);
+        _localX = localX;
+        _localY = localY;
         _color = color;
         _body = owner;
         _bodyPart = container;
@@ -39,13 +43,16 @@ public class Atom {
 
     public void draw() {
         if (_bodyPart.getScale() < 1) {
-            _scaledLocation.reset(_location.X - (_location.X * ((1 - _bodyPart.getScale()) * __scaleDistance)), _location.Y - (_location.Y * ((1 - _bodyPart.getScale()) * __scaleDistance)), false);
+            _scaledX = _localX - (_localX * ((1 - _bodyPart.getScale()) * __scaleDistance));
+            _scaledY = _localY - (_localY * ((1 - _bodyPart.getScale()) * __scaleDistance));
         }
         else {
-            _scaledLocation.reset(_location.X + _location.X * (_bodyPart.getScale() - 1 * __scaleDistance), _location.Y + _location.Y * (_bodyPart.getScale() - 1 * __scaleDistance), false);
+            _scaledX = _localX + _localX * (_bodyPart.getScale() - 1 * __scaleDistance);
+            _scaledY = _localY + _localY * (_bodyPart.getScale() - 1 * __scaleDistance);
         }
-        _scaledLocation = _scaledLocation.addRaw(_body.getOwner().getLocation()).addRaw(_bodyPart.getPosition());
-        Renderer.get().draw(__pixel, _scaledLocation, DrawDepths.get(Game.DrawDepths.Atom), _color, 1, 1);
+        _scaledX += _body.getOwner().getLocation().X + _bodyPart.getPosition().X;
+        _scaledY += _body.getOwner().getLocation().Y + _bodyPart.getPosition().Y;
+        Renderer.get().draw(__pixel, __point.reset(_scaledX, _scaledY, false), DrawDepths.get(Game.DrawDepths.Atom), _color, 1, 1);
     }
 
     public boolean isLucky() {

@@ -48,7 +48,7 @@ public class Point2 {
         setY(y);
     }
 
-    public void reset(float x, float y, boolean isGrid) {
+    public Point2 reset(float x, float y, boolean isGrid) {
         if (isGrid) {
             setAdjustedX(x);
             setAdjustedY(y);
@@ -57,6 +57,7 @@ public class Point2 {
             setRawX(x);
             setRawY(y);
         }
+        return this;
     }
 
     public void copy(Point2 point) {
