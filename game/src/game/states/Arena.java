@@ -1,6 +1,7 @@
 package game.states;
 
 import com.badlogic.gdx.Gdx;
+import game.GameConfig;
 import game.arena.Catchable;
 import game.arena.Player;
 import sps.bridge.EntityTypes;
@@ -13,7 +14,6 @@ import sps.text.TextPool;
 import sps.util.Screen;
 
 public class Arena implements State {
-    private static final float __countDownSecondsMax = 2f;
     private static final Point2 __timerPos = Screen.pos(5, 95);
     private static final int __creatureCount = 15;
 
@@ -28,8 +28,8 @@ public class Arena implements State {
 
     @Override
     public void create() {
-        _countDownSeconds = __countDownSecondsMax;
-        _lastTime = (int) __countDownSecondsMax;
+        _countDownSeconds = GameConfig.ArenaTimeoutSeconds;
+        _lastTime = (int) GameConfig.ArenaTimeoutSeconds;
         _timerText = TextPool.get().write(timeDisplay(), __timerPos);
         EntityManager.get().addEntity(new Player());
         for (int ii = 0; ii < __creatureCount; ii++) {
@@ -71,7 +71,7 @@ public class Arena implements State {
 
     @Override
     public void load() {
-        _countDownSeconds = __countDownSecondsMax;
+        _countDownSeconds = GameConfig.ArenaTimeoutSeconds;
     }
 
     @Override

@@ -1,12 +1,11 @@
 package game.states;
 
+import game.GameConfig;
 import game.arena.Player;
 import game.tournament.Bracket;
 import sps.states.State;
 
 public class Tournament implements State {
-
-    private static final int __matches = 2;
 
     private Bracket _bracket;
 
@@ -18,7 +17,7 @@ public class Tournament implements State {
 
     @Override
     public void create() {
-        _bracket = new Bracket(_player, __matches);
+        _bracket = new Bracket(_player, GameConfig.TournamentMatches);
     }
 
     @Override
