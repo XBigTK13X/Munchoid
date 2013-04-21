@@ -1,5 +1,6 @@
 package game.creatures;
 
+import sps.core.Point2;
 import sps.core.RNG;
 
 import java.util.ArrayList;
@@ -24,6 +25,29 @@ public class Body {
     }
 
     private void calculateSize() {
+        BodyPart body = _parts.get(0);
+        body.setPosition(new Point2(0, 0));
+        for (int ii = 1; ii < _parts.size(); ii++) {
+            BodyPart part = _parts.get(ii);
+            switch (part.getFunction()) {
+                case Head:
+                    _parts.get(ii).setPosition(RNG.point(0, body.getWidth() - part.getWidth(), part.getHeight() / 3, part.getHeight()));
+                    break;
+                case UpperLimb:
+                    _parts.get(ii).setPosition(RNG.point(-part.getWidth(), -part.getWidth() + body.getWidth() / 4, -part.getHeight() / 3, 0));
+                    break;
+                case LowerLimb:
+                    _parts.get(ii).setPosition(RNG.point(0, body.getWidth() - part.getWidth(), -body.getHeight(), -body.getHeight() + body.getHeight() / 5));
+                    break;
+                case BodyDetail:
+                    _parts.get(ii).setPosition(RNG.point(0, body.getWidth() - part.getWidth(), 0, body.getHeight() - part.getHeight()));
+                    break;
+                case HeadDetail:
+                    _parts.get(ii).setPosition(RNG.point(0, body.getWidth() - part.getWidth(), part.getHeight() / 3, part.getHeight()));
+                    break;
+            }
+        }
+
         for (BodyPart part : _parts) {
             if (part.getWidth() + part.getPosition().X > _width) {
                 _width = part.getWidth() + part.getPosition().X;

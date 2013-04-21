@@ -45,8 +45,8 @@ public class Atom {
             _scaledX = _localX + _localX * (_bodyPart.getScale() - 1 * __scaleDistance);
             _scaledY = _localY + _localY * (_bodyPart.getScale() - 1 * __scaleDistance);
         }
-        _scaledX += _body.getOwner().getLocation().X + _bodyPart.getPosition().X;
-        _scaledY += _body.getOwner().getLocation().Y + _bodyPart.getPosition().Y;
+        _scaledX += _body.getOwner().getLocation().X + _bodyPart.getPosition().X * _bodyPart.getScale();
+        _scaledY += _body.getOwner().getLocation().Y + _bodyPart.getPosition().Y * _bodyPart.getScale();
         Renderer.get().draw(__pixel, __point.reset(_scaledX, _scaledY, false), DrawDepths.get(Game.DrawDepths.Atom), _color, 1, 1);
     }
 

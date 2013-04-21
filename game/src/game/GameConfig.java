@@ -7,6 +7,7 @@ public class GameConfig {
     //The upper limit is ~400 with 2GB of memory.
     public final static int CreatureLimit = 10;
 
+    public static final float ArenaCreatureScale = .3f;
     public final static float ArenaTimeoutSeconds = 7f;
     public final static int TournamentMatches = 3;
 

@@ -1,7 +1,6 @@
 package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
-import game.creatures.part.Design;
 import game.creatures.part.Designs;
 import sps.core.Point2;
 import sps.core.RNG;
@@ -27,13 +26,14 @@ public class BodyPart {
         _scale = 1f;
         _color = Colors.random();
         _position = new Point2(RNG.next(-width, width), RNG.next(-height, height));
-        boolean[][] design = Designs.get(_function).create(_width,_height);
+
+        boolean[][] design = Designs.get(_function).create(_width, _height);
 
         //TODO Shading the outer edges w/ a 2px line
         //TODO Single color palette
         for (int ii = 0; ii < width; ii++) {
             for (int jj = 0; jj < height; jj++) {
-                if(design[ii][jj]){
+                if (design[ii][jj]) {
                     _atoms[ii][jj] = new Atom(ii, jj, _color, owner, this);
                 }
             }
@@ -51,11 +51,9 @@ public class BodyPart {
         int currentActive = 0;
         for (int ii = 0; ii < _width; ii++) {
             for (int jj = 0; jj < _height; jj++) {
-                if (atoms[ii][jj] != null)
-                {
+                if (atoms[ii][jj] != null) {
                     maxActive++;
-                    if(atoms[ii][jj].isActive())
-                    {
+                    if (atoms[ii][jj].isActive()) {
                         currentActive++;
                     }
                 }
@@ -110,5 +108,13 @@ public class BodyPart {
                 }
             }
         }
+    }
+
+    public void setPosition(Point2 position) {
+        _position = position;
+    }
+
+    public PartFunction getFunction() {
+        return _function;
     }
 }

@@ -1,6 +1,7 @@
 package game.arena;
 
 import com.badlogic.gdx.Gdx;
+import game.GameConfig;
 import game.creatures.Creature;
 import sps.bridge.DrawDepths;
 import sps.bridge.EntityTypes;
@@ -18,8 +19,6 @@ public class Catchable extends Entity {
     private int _moveIncrements = 10;
     private int __pace = 5;
 
-    private static final float __creatureScale = .1f;
-
     private float _dX = 0;
     private float _dY = 0;
 
@@ -30,7 +29,7 @@ public class Catchable extends Entity {
     public Catchable() {
         initialize(0, 0, Point2.Zero, null, EntityTypes.get("Catchable"), DrawDepths.get("Catchable"));
         _creature = new Creature();
-        _creature.getBody().setScale(__creatureScale);
+        _creature.getBody().setScale(GameConfig.ArenaCreatureScale);
 
         setSize(_creature.getWidth(), _creature.getHeight());
         setLocation(Screen.rand(15, 85, 15, 85));
