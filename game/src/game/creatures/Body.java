@@ -1,5 +1,6 @@
 package game.creatures;
 
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 
@@ -16,10 +17,12 @@ public class Body {
         _owner = owner;
         _parts = new ArrayList<BodyPart>();
         BodyPart part;
+        Logger.info("=== New Creature");
         for (int ii = 0; ii < numberOfParts; ii++) {
             boolean core = _parts.size() == 0;
             int mult = core ? 2 : 1;
             PartFunction function = core ? PartFunction.Body : PartFunction.nonBody();
+            Logger.info("--> "+function);
             part = new BodyPart(function, RNG.next(mult * partWidthMin, mult * partWidthMax), RNG.next(mult * partHeightMin, mult * partHeightMax), this);
             _parts.add(part);
         }

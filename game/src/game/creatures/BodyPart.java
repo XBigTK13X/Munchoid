@@ -1,6 +1,7 @@
 package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
+import game.creatures.part.Common;
 import game.creatures.part.Designs;
 import sps.core.Point2;
 import sps.core.RNG;
@@ -28,11 +29,14 @@ public class BodyPart {
         _position = new Point2(RNG.next(-width, width), RNG.next(-height, height));
 
         boolean[][] design = Designs.get(_function).create(_width, _height);
+        design = Common.trim(design);
+        _width = design.length;
+        _height = design[0].length;
 
         //TODO Shading the outer edges w/ a 2px line
         //TODO Single color palette
-        for (int ii = 0; ii < width; ii++) {
-            for (int jj = 0; jj < height; jj++) {
+        for (int ii = 0; ii < _width; ii++) {
+            for (int jj = 0; jj < _height; jj++) {
                 if (design[ii][jj]) {
                     _atoms[ii][jj] = new Atom(ii, jj, _color, owner, this);
                 }

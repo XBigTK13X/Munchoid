@@ -8,7 +8,7 @@ public class Dots implements Design {
     @Override
     public boolean[][] create(int width, int height) {
         boolean[][] result = new boolean[width][height];
-        int numDots = RNG.next(3, 6);
+        int numDots = RNG.next(1, 3);
         for (int ii = 0; ii < numDots; ii++) {
             int radius = RNG.next(1, width * height / numDots);
             Point2 center = RNG.point(0, width, 0, height);

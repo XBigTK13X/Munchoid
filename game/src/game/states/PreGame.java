@@ -1,5 +1,6 @@
 package game.states;
 
+import game.creatures.Creature;
 import sps.bridge.Commands;
 import sps.io.Input;
 import sps.states.State;
@@ -20,7 +21,8 @@ public class PreGame implements State {
     @Override
     public void update() {
         if (Input.get().isActive(Commands.get("Confirm"))) {
-            StateManager.get().push(new Arena());
+
+            StateManager.get().push(new Battle(new Creature(),new Creature()));
         }
     }
 

@@ -9,7 +9,7 @@ public class RoundHead implements Design{
     public boolean[][] create(int width, int height) {
         boolean[][] result = new boolean[width][height];
 
-        double radius = Math.min(width,height);
+        double radius = Math.min(width,height)/2;
         Point2 center = new Point2(width/2,height/2);
         for(int ii = 0;ii<width;ii++){
             for(int jj = 0;jj<height;jj++){
