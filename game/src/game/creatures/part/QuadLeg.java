@@ -8,13 +8,15 @@ public class QuadLeg implements Design {
         if (legWidth == 0) {
             legWidth = 1;
         }
-        for (int ii = 0; ii < legWidth;ii++) {
-            for(int jj=0;jj<height;jj++){
+        for (int ii = 0; ii < legWidth; ii++) {
+            for (int jj = 0; jj < height; jj++) {
                 result[ii][jj] = true;
             }
         }
-        for (int ii = 0; ii < width;ii++) {
-            for(int jj=height-legWidth;jj<height;jj++){
+        int footWidth = (int) (legWidth * 1.5f);
+        footWidth = footWidth > width ? width : footWidth;
+        for (int ii = 0; ii < footWidth; ii++) {
+            for (int jj = 0; jj < footWidth; jj++) {
                 result[ii][jj] = true;
             }
         }
