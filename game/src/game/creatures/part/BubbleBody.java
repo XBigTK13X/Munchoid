@@ -1,0 +1,34 @@
+package game.creatures.part;
+
+import sps.core.Point2;
+import sps.entities.HitTest;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class BubbleBody implements Design {
+    @Override
+    public boolean[][] create(int width, int height) {
+        boolean[][] result = Common.rectangle(width, height);
+        float cornerRad = (width + height) / 6;
+        float cornerRad2 = (float) Math.pow(cornerRad, 2);
+        List<Point2> corners = new ArrayList<Point2>();
+        corners.add(new Point2(cornerRad, cornerRad));
+        corners.add(new Point2(width - cornerRad, cornerRad));
+        corners.add(new Point2(cornerRad, height - cornerRad));
+        corners.add(new Point2(width - cornerRad, height - cornerRad));
+
+        for (int ii = 0; ii < width; ii++) {
+            for (int jj = 0; jj < height; jj++) {
+                for (Point2 corner : corners) {
+                    float rad2 = HitTest.getDistanceSquare(corner.X, ii, corner.Y, jj);
+                    if (rad2 < cornerRad2) {
+                        result[ii][jj] = false;
+                    }
+                }
+            }
+        }
+        Common.invert(result);
+        return result;
+    }
+}

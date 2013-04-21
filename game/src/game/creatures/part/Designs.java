@@ -17,7 +17,7 @@ public class Designs {
         tmp.get(PartFunction.HeadDetail).add(new RoundEye());
         tmp.get(PartFunction.UpperLimb).add(new QuadArm());
         tmp.get(PartFunction.BodyDetail).add(new Dots());
-        tmp.get(PartFunction.Body).add(new QuadBody());
+        tmp.get(PartFunction.Body).add(new BubbleBody());
         tmp.get(PartFunction.LowerLimb).add(new QuadLeg());
         __designs = Collections.unmodifiableMap(tmp);
     }

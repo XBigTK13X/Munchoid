@@ -91,4 +91,13 @@ public class Common {
         }
         return arr;
     }
+
+    public static boolean[][] invert(boolean[][] arr) {
+        for (int ii = 0; ii < arr.length; ii++) {
+            for (int jj = 0; jj < arr[0].length; jj++) {
+                arr[ii][jj] = !arr[ii][jj];
+            }
+        }
+        return arr;
+    }
 }
