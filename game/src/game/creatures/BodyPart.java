@@ -1,6 +1,8 @@
 package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
+import game.creatures.part.Design;
+import game.creatures.part.Designs;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.util.Colors;
@@ -13,19 +15,27 @@ public class BodyPart {
     boolean _isAlive = true;
     Color _color;
     float _scale;
+    private PartFunction _function;
 
     private Point2 _position;
 
-    public BodyPart(int width, int height, Body owner) {
+    public BodyPart(PartFunction function, int width, int height, Body owner) {
+        _function = function;
         _atoms = new Atom[width][height];
         _width = width;
         _height = height;
         _scale = 1f;
         _color = Colors.random();
         _position = new Point2(RNG.next(-width, width), RNG.next(-height, height));
+        boolean[][] design = Designs.get(_function).create(_width,_height);
+
+        //TODO Shading the outer edges w/ a 2px line
+        //TODO Single color palette
         for (int ii = 0; ii < width; ii++) {
             for (int jj = 0; jj < height; jj++) {
-                _atoms[ii][jj] = new Atom(ii, jj, _color, owner, this);
+                if(design[ii][jj]){
+                    _atoms[ii][jj] = new Atom(ii, jj, _color, owner, this);
+                }
             }
         }
 
@@ -37,12 +47,17 @@ public class BodyPart {
 
     public void setAtoms(Atom[][] atoms) {
         _atoms = atoms;
-        int maxActive = _width * _height;
+        int maxActive = 0;
         int currentActive = 0;
         for (int ii = 0; ii < _width; ii++) {
             for (int jj = 0; jj < _height; jj++) {
-                if (atoms[ii][jj] != null && atoms[ii][jj].isActive()) {
-                    currentActive++;
+                if (atoms[ii][jj] != null)
+                {
+                    maxActive++;
+                    if(atoms[ii][jj].isActive())
+                    {
+                        currentActive++;
+                    }
                 }
             }
         }

@@ -16,7 +16,8 @@ public class Body {
         _parts = new ArrayList<BodyPart>();
         BodyPart part;
         for (int ii = 0; ii < numberOfParts; ii++) {
-            part = new BodyPart(RNG.next(partWidthMin, partWidthMax), RNG.next(partHeightMin, partHeightMax), this);
+            PartFunction function = _parts.size() == 0 ? PartFunction.Body : PartFunction.nonBody();
+            part = new BodyPart(function, RNG.next(partWidthMin, partWidthMax), RNG.next(partHeightMin, partHeightMax), this);
             _parts.add(part);
         }
         calculateSize();

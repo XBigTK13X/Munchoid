@@ -53,4 +53,8 @@ public class RNG {
     public static boolean coinFlip(boolean synced) {
         return getRand(synced).nextInt(2) == 1;
     }
+
+    public static Point2 point(int minX, int maxX, int minY, int maxY) {
+        return new Point2(RNG.next(minX,maxX),RNG.next(minY,maxY));
+    }
 }
