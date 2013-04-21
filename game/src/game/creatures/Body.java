@@ -22,7 +22,7 @@ public class Body {
             boolean core = _parts.size() == 0;
             int mult = core ? 2 : 1;
             PartFunction function = core ? PartFunction.Body : PartFunction.nonBody();
-            Logger.info("--> "+function);
+            Logger.info("--> " + function);
             part = new BodyPart(function, RNG.next(mult * partWidthMin, mult * partWidthMax), RNG.next(mult * partHeightMin, mult * partHeightMax), this);
             _parts.add(part);
         }
@@ -36,7 +36,7 @@ public class Body {
             BodyPart part = _parts.get(ii);
             switch (part.getFunction()) {
                 case Head:
-                    _parts.get(ii).setPosition(RNG.point(0, body.getWidth() - part.getWidth(), part.getHeight() / 3, part.getHeight()));
+                    _parts.get(ii).setPosition(RNG.point(0, body.getWidth(), body.getHeight() / 2, body.getHeight() / 2 + part.getHeight() / 2));
                     break;
                 case UpperLimb:
                     _parts.get(ii).setPosition(RNG.point(-part.getWidth(), -part.getWidth() + body.getWidth() / 4, -part.getHeight() / 3, 0));
