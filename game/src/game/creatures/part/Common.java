@@ -1,7 +1,5 @@
 package game.creatures.part;
 
-import sps.core.Logger;
-
 public class Common {
     public static boolean[][] rectangle(int width, int height) {
         boolean[][] result = new boolean[width][height];
@@ -83,5 +81,14 @@ public class Common {
             tI++;
         }
         return trimmed;
+    }
+
+    public static boolean[][] empty(boolean[][] arr) {
+        for (int ii = 0; ii < arr.length; ii++) {
+            for (int jj = 0; jj < arr[0].length; jj++) {
+                arr[ii][jj] = false;
+            }
+        }
+        return arr;
     }
 }
