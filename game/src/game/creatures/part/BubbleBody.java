@@ -1,6 +1,7 @@
 package game.creatures.part;
 
 import sps.core.Point2;
+import sps.core.RNG;
 import sps.entities.HitTest;
 
 import java.util.ArrayList;
@@ -18,11 +19,16 @@ public class BubbleBody implements Design {
         corners.add(new Point2(cornerRad, height - cornerRad));
         corners.add(new Point2(width - cornerRad, height - cornerRad));
 
+        int fudgeFactor = (int) (width * .05f);
+        //TODO Instead of 4 point and then inverse,
+        // compare dist to 4 corners and then the center.
+        // If further from center than corner, hide the point
+
         for (int ii = 0; ii < width; ii++) {
             for (int jj = 0; jj < height; jj++) {
                 for (Point2 corner : corners) {
                     float rad2 = HitTest.getDistanceSquare(corner.X, ii, corner.Y, jj);
-                    if (rad2 < cornerRad2) {
+                    if (rad2 < cornerRad2 + RNG.next(-fudgeFactor, fudgeFactor)) {
                         result[ii][jj] = false;
                     }
                 }
