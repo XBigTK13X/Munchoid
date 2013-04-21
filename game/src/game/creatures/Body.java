@@ -39,7 +39,7 @@ public class Body {
                     _parts.get(ii).setPosition(RNG.point(0, body.getWidth(), body.getHeight() / 2, body.getHeight() / 2 + part.getHeight() / 2));
                     break;
                 case UpperLimb:
-                    _parts.get(ii).setPosition(RNG.point(-part.getWidth(), -part.getWidth() + body.getWidth() / 4, -part.getHeight() / 3, 0));
+                    _parts.get(ii).setPosition(RNG.point(body.getWidth() - part.getWidth() / 3, body.getWidth() + part.getWidth() / 4, body.getHeight() / 2 - part.getHeight() / 3, body.getHeight() / 2 + part.getHeight() / 3));
                     break;
                 case LowerLimb:
                     _parts.get(ii).setPosition(RNG.point(0, body.getWidth() - part.getWidth(), -body.getHeight(), -body.getHeight() + body.getHeight() / 5));
