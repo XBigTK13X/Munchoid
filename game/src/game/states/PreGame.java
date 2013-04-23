@@ -22,7 +22,7 @@ public class PreGame implements State {
     public void update() {
         if (Input.get().isActive(Commands.get("Confirm"))) {
 
-            StateManager.get().push(new Battle(new Creature(),new Creature()));
+            StateManager.get().push(new Battle(new Creature(false), new Creature()));
         }
     }
 

@@ -2,6 +2,7 @@ package game.creatures;
 
 import game.GameConfig;
 import game.forces.Force;
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.Entity;
@@ -22,13 +23,20 @@ public class Creature extends Entity {
     public Creature(boolean faceLeft, Point2 minDimensions, Point2 maxDimensions) {
         _body = new Body(this, RNG.next(3, 7), (int) minDimensions.X, (int) minDimensions.Y, (int) maxDimensions.X, (int) maxDimensions.Y);
         if (faceLeft) {
+            Logger.info("LEFT");
             setLocation(Screen.pos(80, 20));
+            _body.flipX();
         }
         else {
+            Logger.info("RIGHT");
             setLocation(Screen.pos(20, 20));
         }
 
         _stats = new Stats();
+    }
+
+    public Creature(boolean faceLeft) {
+        this(faceLeft, GameConfig.MinBodyPartDimensions, GameConfig.MaxBodyPartDimensions);
     }
 
     public Creature() {

@@ -37,15 +37,17 @@ public class Atom {
     }
 
     public void draw() {
+        int flipX = _body.isFlipX() ? -1 : 1;
+        float localX = _localX * flipX;
         if (_bodyPart.getScale() < 1) {
-            _scaledX = _localX - (_localX * ((1 - _bodyPart.getScale()) * __scaleDistance));
+            _scaledX = localX - (localX * ((1 - _bodyPart.getScale()) * __scaleDistance));
             _scaledY = _localY - (_localY * ((1 - _bodyPart.getScale()) * __scaleDistance));
         }
         else {
-            _scaledX = _localX + _localX * (_bodyPart.getScale() - 1 * __scaleDistance);
+            _scaledX = localX + localX * (_bodyPart.getScale() - 1 * __scaleDistance);
             _scaledY = _localY + _localY * (_bodyPart.getScale() - 1 * __scaleDistance);
         }
-        _scaledX += _body.getOwner().getLocation().X + _bodyPart.getPosition().X * _bodyPart.getScale();
+        _scaledX += _body.getOwner().getLocation().X + (flipX * _bodyPart.getPosition().X) * _bodyPart.getScale();
         _scaledY += _body.getOwner().getLocation().Y + _bodyPart.getPosition().Y * _bodyPart.getScale();
         Renderer.get().draw(__pixel, __point.reset(_scaledX, _scaledY, false), DrawDepths.get(Game.DrawDepths.Atom), _color, 1, 1);
     }

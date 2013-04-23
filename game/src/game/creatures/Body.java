@@ -12,6 +12,7 @@ public class Body {
     private Creature _owner;
     private float _width;
     private float _height;
+    private boolean _flipX;
 
     public Body(Creature owner, int numberOfParts, int partWidthMin, int partHeightMin, int partWidthMax, int partHeightMax) {
         _owner = owner;
@@ -102,6 +103,10 @@ public class Body {
         return _width;
     }
 
+    public boolean isFlipX() {
+        return _flipX;
+    }
+
     public float getHeight() {
         return _height;
     }
@@ -116,5 +121,9 @@ public class Body {
         for (BodyPart part : _parts) {
             part.restore();
         }
+    }
+
+    public void flipX() {
+        _flipX = !_flipX;
     }
 }
