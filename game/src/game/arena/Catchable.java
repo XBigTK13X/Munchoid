@@ -1,6 +1,5 @@
 package game.arena;
 
-import com.badlogic.gdx.Gdx;
 import game.GameConfig;
 import game.creatures.Creature;
 import sps.bridge.DrawDepths;
@@ -13,17 +12,14 @@ import sps.util.Screen;
 
 public class Catchable extends Entity {
     private Creature _creature;
-    private int _moveDistance = (int) (Screen.height(1) + Screen.width(1)) / 2;
 
     private static final int __moveIncrementsMax = 30;
-    private int _moveIncrements = __moveIncrementsMax;
-    private int __pace = 5;
+    private int _moveIncrements = 0;
+    private int __pace = 25;
 
     private float _dX = 0;
     private float _dY = 0;
 
-    private static final float __changeDriectionSecondsMax = 4.5f;
-    private float _changeDirectionSeconds;
     private Point2 _movementTarget = new Point2();
 
     public Catchable() {
@@ -64,27 +60,19 @@ public class Catchable extends Entity {
                 }
             }
         }
-        if (_changeDirectionSeconds <= 0) {
-            _changeDirectionSeconds = RNG.next(0, (int) __changeDriectionSecondsMax * 100) / 100f;
-            Point2 dest = Screen.rand(10, 90, 10, 90);
-            double direction = Math.atan2(dest.Y - getLocation().Y, dest.X - getLocation().X);
-            _dX = (float) Math.cos(direction) * _moveDistance;
-            _dY = (float) Math.sin(direction) * _moveDistance;
-        }
 
         if (_moveIncrements > 0) {
-            _dX = (_movementTarget.X - getLocation().X) / __moveIncrementsMax / __pace;
-            _dY = (_movementTarget.Y - getLocation().Y) / __moveIncrementsMax / __pace;
+            _dX = (_movementTarget.X - getLocation().X) * __pace / __moveIncrementsMax;
+            _dY = (_movementTarget.Y - getLocation().Y) * __pace / __moveIncrementsMax;
             _moveIncrements--;
         }
         else {
-            _moveIncrements = __moveIncrementsMax;
-            _movementTarget = Screen.rand(15, 85, 15, 85);
+            _moveIncrements = RNG.next(__moveIncrementsMax / 2, __moveIncrementsMax);
+            _movementTarget = Screen.rand(5, 95, 5, 95);
         }
 
         _creature.orientX(_dX <= 0, false);
 
-        _changeDirectionSeconds -= Gdx.graphics.getDeltaTime();
         //TODO Fix movement. Currently, edges snag the catchable.
         move(_dX, _dY);
     }

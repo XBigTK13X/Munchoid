@@ -15,7 +15,7 @@ public class Player extends Entity implements IActor {
     private ActorType _actorType;
 
     private Point2 _keyVelocity = new Point2(0, 0);
-    private float _moveDistance = (Screen.height(1) + Screen.width(1)) / 2;
+    private float _moveDistance = 250;
 
     private CatchNet _net;
     private Creature _pet;

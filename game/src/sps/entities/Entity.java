@@ -1,5 +1,6 @@
 package sps.entities;
 
+import com.badlogic.gdx.Gdx;
 import sps.bridge.DrawDepth;
 import sps.bridge.EntityType;
 import sps.bridge.SpriteType;
@@ -93,6 +94,8 @@ public class Entity implements Comparable {
             amountX = normalizeDistance(amountX);
             amountY = normalizeDistance(amountY);
         }
+        amountX *= Gdx.graphics.getDeltaTime();
+        amountY *= Gdx.graphics.getDeltaTime();
         target.reset(_location.X + amountX, _location.Y + amountY, false);
         if (amountX > 0) {
             setFacingLeft(false);
