@@ -26,6 +26,9 @@ public class Battle implements State {
 
     @Override
     public void create() {
+        _left.orientX(false, true);
+        _right.orientX(true, true);
+
         EntityManager.get().addEntity(_right);
         _right.getBody().setScale(1);
         _left.setLocation(__petLocation);

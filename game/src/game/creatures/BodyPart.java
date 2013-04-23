@@ -108,10 +108,10 @@ public class BodyPart {
             for (int jj = 0; jj < _height; jj++) {
                 if (_atoms[ii][jj] != null) {
                     _atoms[ii][jj].setActive(true);
-
                 }
             }
         }
+        _isAlive = true;
     }
 
     public void setPosition(Point2 position) {

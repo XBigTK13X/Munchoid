@@ -2,7 +2,6 @@ package game.creatures;
 
 import game.GameConfig;
 import game.forces.Force;
-import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.Entity;
@@ -22,16 +21,7 @@ public class Creature extends Entity {
 
     public Creature(boolean faceLeft, Point2 minDimensions, Point2 maxDimensions) {
         _body = new Body(this, RNG.next(3, 7), (int) minDimensions.X, (int) minDimensions.Y, (int) maxDimensions.X, (int) maxDimensions.Y);
-        if (faceLeft) {
-            Logger.info("LEFT");
-            setLocation(Screen.pos(80, 20));
-            _body.flipX();
-        }
-        else {
-            Logger.info("RIGHT");
-            setLocation(Screen.pos(20, 20));
-        }
-
+        orientX(faceLeft, true);
         _stats = new Stats();
     }
 
@@ -41,6 +31,20 @@ public class Creature extends Entity {
 
     public Creature() {
         this(true, GameConfig.MinBodyPartDimensions, GameConfig.MaxBodyPartDimensions);
+    }
+
+    public void orientX(boolean faceLeft, boolean updatePos) {
+        if (faceLeft != _body.isFlipX()) {
+            _body.flipX(faceLeft);
+        }
+        if (updatePos) {
+            if (faceLeft) {
+                setLocation(Screen.pos(80, 20));
+            }
+            else {
+                setLocation(Screen.pos(20, 20));
+            }
+        }
     }
 
     public void draw() {
@@ -83,6 +87,7 @@ public class Creature extends Entity {
             _bonusPoints -= __bonusAward;
             Force bonus = Force.random();
             _stats.set(bonus, _stats.get(bonus) + __bonusAmount);
+
             TextPool.get().write("BONUS!", Screen.rand(40, 60, 40, 60), 2f, TextEffects.Fountain);
         }
     }

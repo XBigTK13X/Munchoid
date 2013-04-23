@@ -7,7 +7,7 @@ import sps.core.Logger;
 import sps.entities.EntityManager;
 import sps.states.State;
 
-public class TestBed implements State {
+public class TestCreatureLimit implements State {
 
     @Override
     public void create() {
