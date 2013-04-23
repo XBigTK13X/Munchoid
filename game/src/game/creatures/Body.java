@@ -125,4 +125,9 @@ public class Body {
     public void flipX(boolean faceLeft) {
         _flipX = faceLeft;
     }
+
+    public void kill() {
+        _parts.clear();
+        _owner.setInactive();
+    }
 }

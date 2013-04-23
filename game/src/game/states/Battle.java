@@ -62,7 +62,7 @@ public class Battle implements State {
                     _isPlayerTurn = false;
                 }
             }
-            if (Input.get().isActive(Commands.get("Confirm"))) {
+            if (Input.get().isActive(Commands.get("Pop"))) {
                 //TODO Remove this debugging helper
                 victory();
             }
@@ -82,8 +82,7 @@ public class Battle implements State {
     }
 
     private void victory() {
-        _right.setInactive();
-        EntityManager.get().removeEntity(_right);
+        _right.getBody().kill();
         _left.getBody().restore();
         StateManager.get().pop();
         StateManager.get().push(new MergeOutcome(_left, _right));

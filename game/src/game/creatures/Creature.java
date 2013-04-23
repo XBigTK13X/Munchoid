@@ -2,6 +2,7 @@ package game.creatures;
 
 import game.GameConfig;
 import game.forces.Force;
+import sps.bridge.EntityTypes;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.Entity;
@@ -21,6 +22,7 @@ public class Creature extends Entity {
 
     public Creature(boolean faceLeft, Point2 minDimensions, Point2 maxDimensions) {
         _body = new Body(this, RNG.next(3, 7), (int) minDimensions.X, (int) minDimensions.Y, (int) maxDimensions.X, (int) maxDimensions.Y);
+        _entityType = EntityTypes.get("Creature");
         orientX(faceLeft, true);
         _stats = new Stats();
     }

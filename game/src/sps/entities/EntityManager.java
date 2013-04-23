@@ -15,6 +15,10 @@ public class EntityManager {
 
     public static EntityManager __instance;
 
+    public static void set(EntityManager entityManager) {
+        __instance = entityManager;
+    }
+
     public static EntityManager get() {
         if (__instance == null) {
             __instance = new EntityManager();
@@ -61,7 +65,7 @@ public class EntityManager {
             }
             actorBuckets.get(actor.getActorType()).add(actor);
         }
-        if (!entityBuckets.containsKey(entity)) {
+        if (!entityBuckets.containsKey(entity.getEntityType())) {
             entityBuckets.put(entity.getEntityType(), new ArrayList<Entity>());
         }
         entityBuckets.get(entity.getEntityType()).add(entity);
@@ -322,9 +326,5 @@ public class EntityManager {
             }
             _contents.get(ii).recalculateEdge();
         }
-    }
-
-    public static void set(EntityManager entityManager) {
-        __instance = entityManager;
     }
 }

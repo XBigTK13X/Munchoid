@@ -33,6 +33,10 @@ public class Catchable extends Entity {
 
     @Override
     public void update() {
+        if (!_creature.getBody().isAlive()) {
+            setInactive();
+        }
+
         _creature.setLocation(getLocation());
 
         CatchNet net = (CatchNet) EntityManager.get().getEntity(EntityTypes.get("Hand"));

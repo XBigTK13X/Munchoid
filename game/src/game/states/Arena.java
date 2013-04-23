@@ -21,7 +21,6 @@ import java.util.List;
 
 public class Arena implements State {
     private static final Point2 __timerPos = Screen.pos(5, 95);
-
     private int _lastTime;
     private float _countDownSeconds;
     private Text _timerText;
@@ -60,11 +59,13 @@ public class Arena implements State {
                 _timerText.setMessage(timeDisplay());
             }
             List<Entity> opponents = EntityManager.get().getEntities(EntityTypes.get("Catchable"));
-            if (opponents.size() <= 0) {
-                StateManager.get().push(new Tournament((Player) EntityManager.get().getPlayer()));
-            }
             if (_countDownSeconds <= 0) {
-                StateManager.get().push(new Battle(player.getPet(), ((Catchable) opponents.get(RNG.next(0, opponents.size()))).getPet()));
+                if (opponents.size() <= 0) {
+                    StateManager.get().push(new Tournament((Player) EntityManager.get().getPlayer()));
+                }
+                else {
+                    StateManager.get().push(new Battle(player.getPet(), ((Catchable) opponents.get(RNG.next(0, opponents.size()))).getPet()));
+                }
             }
         }
         else {
