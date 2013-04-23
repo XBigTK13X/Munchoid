@@ -63,4 +63,12 @@ public class Atom {
     public boolean isLucky() {
         return RNG.percent(survivalChance);
     }
+
+    public void setColor(Color color) {
+        _color = color;
+    }
+
+    public Color getColor() {
+        return _color;
+    }
 }
