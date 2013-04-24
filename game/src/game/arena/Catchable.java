@@ -15,7 +15,7 @@ public class Catchable extends Entity {
 
     private static final int __moveIncrementsMax = 30;
     private int _moveIncrements = 0;
-    private int __pace = 25;
+    private int __pace = 10;
 
     private float _dX = 0;
     private float _dY = 0;

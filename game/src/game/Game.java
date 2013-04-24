@@ -24,7 +24,7 @@ public class Game implements ApplicationListener {
 
     @Override
     public void create() {
-        RNG.seed(0);
+        RNG.seed((int) System.currentTimeMillis());
         Sps.setup();
         Renderer.setVirtualResolution(SpsConfig.get().virtualWidth, SpsConfig.get().virtualHeight);
         Renderer.get().setWindowsBackground(Color.BLACK);

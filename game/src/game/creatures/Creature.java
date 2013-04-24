@@ -11,8 +11,6 @@ import sps.text.TextPool;
 import sps.util.Screen;
 
 public class Creature extends Entity {
-
-
     private static final int __bonusAmount = 1;
     private static final int __bonusAward = 3;
     private Body _body;

@@ -4,6 +4,26 @@ import com.badlogic.gdx.graphics.Color;
 import sps.core.RNG;
 
 public class Colors {
+    private static class HSV {
+        public float H;
+        public float S;
+        public float V;
+
+        public HSV() {
+            this(0f, 0f, 0f);
+        }
+
+        public HSV(float hue, float saturation, float value) {
+            H = hue;
+            S = saturation;
+            V = value;
+        }
+
+        public Color toColor() {
+            return hsv(H, S, V);
+        }
+    }
+
     private static float base = 255f;
 
     public static Color rgb(int r, int g, int b) {
@@ -14,17 +34,61 @@ public class Colors {
         return rgb(RNG.next(0, 255, false), RNG.next(0, 255, false), RNG.next(0, 255, false));
     }
 
-    //Taken from: http://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/
-    private static final float golden_ratio_conjugate = 0.618033988749895f;
-    private static float hueBase = 0f;
+    //From: http://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/
+    private static final float __goldenRatioCongujate = (float) Math.abs(1 - Math.sqrt(5)) / 2; //approx 0.618033988749895f;
+    private static float __hueBase;
+    private static boolean __hueBaseRandomized = false;
 
     public static Color randomPleasant() {
-        hueBase += golden_ratio_conjugate;
-        hueBase %= 1f;
-        return hsv(hueBase, 0.7f, 0.95f);
+        if (!__hueBaseRandomized) {
+            __hueBase = RNG.next(0, 360) / 360f;
+            __hueBaseRandomized = true;
+        }
+        __hueBase += __goldenRatioCongujate;
+        __hueBase %= 1f;
+
+        return hsv(__hueBase, 0.7f, 0.95f);
     }
 
-    //Taken from: http://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/
+    //From: http://stackoverflow.com/questions/1664140/js-function-to-calculate-complementary-colour
+    public static HSV fromRGB(Color rgb) {
+        HSV hsv = new HSV();
+        float max = Math.max(Math.max(rgb.r, rgb.g), rgb.b);
+        float dif = max - Math.min(Math.min(rgb.r, rgb.g), rgb.b);
+        hsv.S = (max == 0.0) ? 0 : (dif / max);
+        if (hsv.S == 0) {
+            hsv.H = 0;
+        }
+        else if (rgb.r == max) {
+            hsv.H = 1f / 6f * (rgb.g - rgb.b) / dif;
+        }
+        else if (rgb.g == max) {
+            hsv.H = 2f / 6f + 1f / 6f * (rgb.b - rgb.r) / dif;
+        }
+        else if (rgb.b == max) {
+            hsv.H = 4f / 6f + 1f / 6f * (rgb.r - rgb.g) / dif;
+        }
+        if (hsv.H < 0.0) {
+            hsv.H += 1f / 6f;
+        }
+        hsv.V = max;
+
+        return hsv;
+    }
+
+    public static Color hueShift(Color color, float shift) {
+        HSV hsv = fromRGB(color);
+        hsv.H += shift;
+        while (hsv.H >= 1f) {
+            hsv.H -= 1f / 6;
+        }
+        while (hsv.H < 0.0) {
+            hsv.H += 1f / 6;
+        }
+        return hsv.toColor();
+    }
+
+    //From: http://stackoverflow.com/questions/7896280/converting-from-hsv-hsb-in-java-to-rgb-without-using-java-awt-color-disallowe
     public static Color hsv(float hue, float saturation, float value) {
         int h = (int) (hue * 6);
         float f = hue * 6 - h;
@@ -46,7 +110,7 @@ public class Colors {
             case 5:
                 return rgbToColor(value, p, q);
             default:
-                throw new RuntimeException("Something went wrong when converting from HSV to RGB. Input was " + hue + ", " + saturation + ", " + value);
+                throw new RuntimeException("HSV to RGB failure. Input was " + hue + ", " + saturation + ", " + value + ". Calculated H: " + h);
         }
     }
 

@@ -33,6 +33,7 @@ public class BodyPart {
         _width = design.length;
         _height = design[0].length;
 
+
         //TODO Shading the outer edges w/ a 2px line
         //TODO Single color palette
         for (int ii = 0; ii < _width; ii++) {

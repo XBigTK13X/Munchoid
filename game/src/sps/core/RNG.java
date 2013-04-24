@@ -13,6 +13,7 @@ public class RNG {
 
     public static void seed(int seed) {
         lastSyncSeed = seed;
+        Rand = new Random(seed);
         SyncedRand = new Random(seed);
     }
 
@@ -55,6 +56,6 @@ public class RNG {
     }
 
     public static Point2 point(int minX, int maxX, int minY, int maxY) {
-        return new Point2(RNG.next(minX,maxX),RNG.next(minY,maxY));
+        return new Point2(RNG.next(minX, maxX), RNG.next(minY, maxY));
     }
 }

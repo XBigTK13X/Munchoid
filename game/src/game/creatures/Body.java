@@ -1,7 +1,9 @@
 package game.creatures;
 
+import com.badlogic.gdx.graphics.Color;
 import sps.core.Point2;
 import sps.core.RNG;
+import sps.util.Colors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +14,13 @@ public class Body {
     private float _width;
     private float _height;
     private boolean _flipX;
+    private Color _color;
 
     public Body(Creature owner, int numberOfParts, int partWidthMin, int partHeightMin, int partWidthMax, int partHeightMax) {
         _owner = owner;
         _parts = new ArrayList<BodyPart>();
         BodyPart part;
+        _color = Colors.randomPleasant();
         //Logger.info("=== New Creature");
         for (int ii = 0; ii < numberOfParts; ii++) {
             boolean core = _parts.size() == 0;
@@ -129,5 +133,9 @@ public class Body {
     public void kill() {
         _parts.clear();
         _owner.setInactive();
+    }
+
+    public Color getColor() {
+        return _color;
     }
 }
