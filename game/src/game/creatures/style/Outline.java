@@ -7,8 +7,8 @@ public class Outline {
     private static final int thickness = 2;
 
     public static void complimentary(Atom[][] atoms) {
-        for (int ii = 0; ii < atoms.length - 1; ii++) {
-            for (int jj = 0; jj < atoms[0].length - 1; jj++) {
+        for (int ii = 0; ii < atoms.length; ii++) {
+            for (int jj = 0; jj < atoms[0].length; jj++) {
                 if (atoms[ii][jj] != null) {
                     boolean shift = false;
                     for (int mm = 1; mm <= thickness; mm++) {
@@ -20,7 +20,7 @@ public class Outline {
                                 for (int ll = -thickness; ll < thickness; ll++) {
                                     if (kk != 0 || ll != 0) {
                                         //TODO also check if active, so that outlines will change after destruction
-                                        if (atoms[ii + kk][jj + ll] != null) {
+                                        if (atoms[ii + kk][jj + ll] == null) {
                                             shift = true;
                                         }
                                     }
