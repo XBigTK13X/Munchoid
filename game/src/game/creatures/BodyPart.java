@@ -3,6 +3,7 @@ package game.creatures;
 import com.badlogic.gdx.graphics.Color;
 import game.creatures.part.Common;
 import game.creatures.part.Designs;
+import game.creatures.style.Outline;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.util.Colors;
@@ -43,7 +44,7 @@ public class BodyPart {
                 }
             }
         }
-
+        Outline.complimentary(_atoms);
     }
 
     public Atom[][] getAtoms() {
