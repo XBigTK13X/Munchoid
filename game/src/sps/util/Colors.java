@@ -30,7 +30,8 @@ public class Colors {
         return new Color(r / base, g / base, b / base, 1f);
     }
 
-    private static float __shadePercent = .8f;
+    private static float __shadePercent = .9f;
+
     public static Color lighten(Color color) {
         HSV hsv = fromRGB(color);
         hsv.S = hsv.S * __shadePercent;
