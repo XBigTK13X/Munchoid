@@ -30,6 +30,19 @@ public class Colors {
         return new Color(r / base, g / base, b / base, 1f);
     }
 
+    private static float __shadePercent = .8f;
+    public static Color lighten(Color color) {
+        HSV hsv = fromRGB(color);
+        hsv.S = hsv.S * __shadePercent;
+        return hsv.toColor();
+    }
+
+    public static Color darken(Color color) {
+        HSV hsv = fromRGB(color);
+        hsv.V = hsv.V * __shadePercent;
+        return hsv.toColor();
+    }
+
     public static Color random() {
         return rgb(RNG.next(0, 255, false), RNG.next(0, 255, false), RNG.next(0, 255, false));
     }

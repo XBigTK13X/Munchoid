@@ -1,5 +1,6 @@
 package sps.states;
 
+import sps.audio.MusicPlayer;
 import sps.entities.EntityManager;
 import sps.particles.ParticleEngine;
 import sps.text.TextPool;
@@ -38,11 +39,13 @@ public class StateManager {
             EntityManager.set(components.entityManager);
             ParticleEngine.set(components.particleEngine);
             TextPool.set(components.textPool);
+            MusicPlayer.set(components.musicPlayer);
         }
         else {
             EntityManager.reset();
             ParticleEngine.reset();
             TextPool.reset();
+            MusicPlayer.reset();
         }
 
         current().load();
@@ -51,7 +54,7 @@ public class StateManager {
     public void push(State state) {
         boolean isNewState = false;
         if (_states.size() > 0) {
-            _components.put(current(), new StateDependentComponents(EntityManager.get(), ParticleEngine.get(), TextPool.get()));
+            _components.put(current(), new StateDependentComponents(EntityManager.get(), ParticleEngine.get(), TextPool.get(), MusicPlayer.get()));
         }
         if (!_states.contains(state)) {
             isNewState = true;

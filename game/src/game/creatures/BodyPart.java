@@ -26,7 +26,18 @@ public class BodyPart {
         _width = width;
         _height = height;
         _scale = 1f;
-        _color = Colors.randomPleasant();
+        _color = owner.getColor();
+        switch(RNG.next(0,3)){
+            case 0:
+                _color = _color;
+                break;
+            case 1:
+                _color = Colors.darken(_color);
+                break;
+            case 2:
+                _color = Colors.lighten(_color);
+                break;
+        }
         _position = new Point2(RNG.next(-width, width), RNG.next(-height, height));
 
         boolean[][] design = Designs.get(_function).create(_width, _height);

@@ -3,6 +3,8 @@ package game.states;
 import game.creatures.Creature;
 import game.creatures.Stats;
 import game.forces.Force;
+import sps.audio.MusicPlayer;
+import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
 import sps.core.RNG;
 import sps.entities.EntityManager;
@@ -13,6 +15,7 @@ import sps.text.TextPool;
 import sps.util.Screen;
 
 public class MergeOutcome implements State {
+    private static SingleSongPlayer __mergeMusic;
     private Creature _defeated;
     private Creature _pet;
 
@@ -57,12 +60,17 @@ public class MergeOutcome implements State {
 
     @Override
     public void load() {
-
+        if (__mergeMusic == null) {
+            __mergeMusic = new SingleSongPlayer("MergeTheme.ogg");
+        }
+        MusicPlayer.get(__mergeMusic);
+        MusicPlayer.get().start();
     }
 
     @Override
     public void unload() {
         EntityManager.get().clear();
+        MusicPlayer.get().stop();
     }
 
     @Override
@@ -72,5 +80,10 @@ public class MergeOutcome implements State {
 
     @Override
     public void resize(int width, int height) {
+    }
+
+    @Override
+    public void pause() {
+        MusicPlayer.get().stop();
     }
 }

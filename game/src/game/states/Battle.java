@@ -37,13 +37,6 @@ public class Battle implements State {
 
         _right.setOpponent(_left);
         _left.setOpponent(_right);
-
-
-        if (__battleMusic == null) {
-            __battleMusic = new SingleSongPlayer("BattleTheme.ogg");
-        }
-        MusicPlayer.get(__battleMusic);
-        MusicPlayer.get().start();
     }
 
     @Override
@@ -94,13 +87,16 @@ public class Battle implements State {
 
     @Override
     public void load() {
-
+        if (__battleMusic == null) {
+            __battleMusic = new SingleSongPlayer("BattleTheme.ogg");
+        }
+        MusicPlayer.get(__battleMusic);
+        MusicPlayer.get().start();
     }
 
     @Override
     public void unload() {
         EntityManager.get().clear();
-        MusicPlayer.get().stop();
     }
 
     @Override
@@ -110,5 +106,9 @@ public class Battle implements State {
 
     @Override
     public void resize(int width, int height) {
+    }
+
+    @Override
+    public void pause() {
     }
 }

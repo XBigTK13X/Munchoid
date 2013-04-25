@@ -5,6 +5,8 @@ import game.GameConfig;
 import game.arena.Catchable;
 import game.arena.Player;
 import game.creatures.Atom;
+import sps.audio.MusicPlayer;
+import sps.audio.SingleSongPlayer;
 import sps.bridge.EntityTypes;
 import sps.core.Logger;
 import sps.core.Point2;
@@ -21,6 +23,8 @@ import java.util.List;
 
 public class Arena implements State {
     private static final Point2 __timerPos = Screen.pos(5, 95);
+    private static SingleSongPlayer __arenaMusic;
+
     private int _lastTime;
     private float _countDownSeconds;
     private Text _timerText;
@@ -80,11 +84,22 @@ public class Arena implements State {
     @Override
     public void load() {
         _countDownSeconds = GameConfig.ArenaTimeoutSeconds;
+        if (__arenaMusic == null) {
+            __arenaMusic = new SingleSongPlayer("ArenaTheme.ogg");
+        }
+        MusicPlayer.get(__arenaMusic);
+        MusicPlayer.get().start();
+    }
+
+    @Override
+    public void pause(){
+        MusicPlayer.get().stop();
     }
 
     @Override
     public void unload() {
         EntityManager.get().clear();
+        MusicPlayer.get().stop();
     }
 
     @Override
