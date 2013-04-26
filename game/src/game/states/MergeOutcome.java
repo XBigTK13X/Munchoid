@@ -40,7 +40,8 @@ public class MergeOutcome implements State {
             }
 
             merged.set(force, preMerge.get(force) + impact);
-            TextPool.get().write(force.name() + ": " + preMerge.get(force) + " -> " + merged.get(force), Screen.pos(15, 80 - forceRow * 5));
+            String resultText = merged.get(force) == GameConfig.MaxStat ? "MAX" : merged.get(force) + "";
+            TextPool.get().write(force.name() + ": " + preMerge.get(force) + " -> " + resultText, Screen.pos(15, 80 - forceRow * 5));
             forceRow++;
         }
         _pet.setStats(merged);
