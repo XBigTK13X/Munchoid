@@ -10,6 +10,8 @@ import sps.entities.EntityManager;
 import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
+import sps.text.TextEffects;
+import sps.text.TextPool;
 import sps.util.Screen;
 
 public class Battle implements State {
@@ -51,8 +53,13 @@ public class Battle implements State {
         if (_isPlayerTurn) {
             for (Force force : Force.values()) {
                 if (Input.get().isActive(Commands.get(force.Command), 0)) {
-                    _left.attack(force);
-                    _isPlayerTurn = false;
+                    if (_left.getStats().get(force) > 0) {
+                        _left.attack(force);
+                        _isPlayerTurn = false;
+                    }
+                    else {
+                        TextPool.get().write(force.name() + " Disabled", Screen.pos(10, 50), 1f, TextEffects.Fountain);
+                    }
                 }
             }
             if (Input.get().isActive(Commands.get("Pop"))) {
@@ -62,7 +69,7 @@ public class Battle implements State {
         }
         else {
             //TODO Smarter attacks
-            _right.attack(Force.random());
+            _right.attack(_right.getStats().nonZeroForce());
             _isPlayerTurn = true;
         }
 

@@ -1,5 +1,6 @@
 package game.states;
 
+import game.GameConfig;
 import game.creatures.Creature;
 import game.creatures.Stats;
 import game.forces.Force;
@@ -33,7 +34,11 @@ public class MergeOutcome implements State {
         int forceRow = 2;
         for (Force force : Force.values()) {
             int average = (preMerge.get(force) + incoming.get(force)) / 2;
-            int impact = (int) (average * (RNG.next(15, 40) / 100f));
+            int impact = (int) (average * (RNG.next(GameConfig.MinMergeImpactPercent, GameConfig.MaxMergeImpactPercent) / 100f));
+            if (impact == 0 && incoming.get(force) > 0) {
+                impact = 1;
+            }
+
             merged.set(force, preMerge.get(force) + impact);
             TextPool.get().write(force.name() + ": " + preMerge.get(force) + " -> " + merged.get(force), Screen.pos(15, 80 - forceRow * 5));
             forceRow++;

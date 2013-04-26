@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Stats {
-    private static final int __baseStatMin = 5;
-    private static final int __baseStatMax = 10;
+    private static final int __baseStatMin = 0;
+    private static final int __baseStatMax = 5;
 
     private Map<Force, Integer> _stats;
 
@@ -33,5 +33,15 @@ public class Stats {
             power += _stats.get(force);
         }
         return power;
+    }
+
+    public Force nonZeroForce() {
+        Force force = null;
+        while (true) {
+            force = Force.random();
+            if (get(force) > 0) {
+                return force;
+            }
+        }
     }
 }
