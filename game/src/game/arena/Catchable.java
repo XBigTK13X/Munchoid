@@ -8,6 +8,8 @@ import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.Entity;
 import sps.entities.EntityManager;
+import sps.text.TextEffects;
+import sps.text.TextPool;
 import sps.util.Screen;
 
 public class Catchable extends Entity {
@@ -56,6 +58,7 @@ public class Catchable extends Entity {
             }
             else {
                 if (player.getPet().isLargerThan(_creature)) {
+                    TextPool.get().write("*CHOMP*", player.getLocation(), 1f, TextEffects.Fountain);
                     player.getPet().addBonus(player.getPet().getStats().power() - _creature.getStats().power());
                     setInactive();
                 }
