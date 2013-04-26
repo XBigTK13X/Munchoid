@@ -11,8 +11,6 @@ import sps.text.TextPool;
 import sps.util.Screen;
 
 public class Creature extends Entity {
-    private static final int __bonusAmount = 1;
-    private static final int __bonusAward = 3;
     private Body _body;
     private Stats _stats;
     private int _bonusPoints;
@@ -26,11 +24,11 @@ public class Creature extends Entity {
     }
 
     public Creature(boolean faceLeft) {
-        this(faceLeft, GameConfig.MinBodyPartDimensions, GameConfig.MaxBodyPartDimensions);
+        this(faceLeft, GameConfig.MinBodyPartSize, GameConfig.MaxBodyPartSize);
     }
 
     public Creature() {
-        this(true, GameConfig.MinBodyPartDimensions, GameConfig.MaxBodyPartDimensions);
+        this(true, GameConfig.MinBodyPartSize, GameConfig.MaxBodyPartSize);
     }
 
     public void orientX(boolean faceLeft, boolean updatePos) {
@@ -83,10 +81,10 @@ public class Creature extends Entity {
     }
 
     public void useBonus() {
-        while (_bonusPoints > __bonusAward) {
-            _bonusPoints -= __bonusAward;
+        while (_bonusPoints > GameConfig.BonusAward) {
+            _bonusPoints -= GameConfig.BonusAward;
             Force bonus = _stats.nonZeroForce();
-            _stats.set(bonus, _stats.get(bonus) + __bonusAmount);
+            _stats.set(bonus, _stats.get(bonus) + GameConfig.BonusAmount);
 
             TextPool.get().write("BONUS!", Screen.rand(40, 60, 40, 60), 2f, TextEffects.Fountain);
         }

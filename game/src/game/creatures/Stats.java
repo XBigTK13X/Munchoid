@@ -13,10 +13,10 @@ public class Stats {
     public Stats() {
         _stats = new HashMap<Force, Integer>();
         for (Force force : Force.values()) {
-            _stats.put(force, 0);
+            _stats.put(force, GameConfig.MinStat);
         }
         for (Force force : Force.random(1)) {
-            _stats.put(force, RNG.next(GameConfig.BaseStatStartMin, GameConfig.BaseStatStartMax));
+            _stats.put(force, RNG.next(GameConfig.MinStatInit, GameConfig.MaxStatInit));
         }
     }
 
@@ -25,6 +25,9 @@ public class Stats {
     }
 
     public void set(Force force, int value) {
+        if (value > GameConfig.MaxStat) {
+            value = GameConfig.MaxStat;
+        }
         _stats.put(force, value);
     }
 
