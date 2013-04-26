@@ -20,9 +20,6 @@ public class StarFishBody implements Design {
         corners.add(new Point2(width - cornerRad, height - cornerRad));
 
         int fudgeFactor = (int) (width * .05f);
-        //TODO Instead of 4 point and then inverse,
-        // compare dist to 4 corners and then the center.
-        // If further from center than corner, hide the point
 
         Point2 center = new Point2(width / 2, height / 2);
 

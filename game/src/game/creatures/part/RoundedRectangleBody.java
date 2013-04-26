@@ -10,10 +10,6 @@ public class RoundedRectangleBody implements Design {
         float max = Math.max(width, height);
         float cornerRad2 = (float) Math.pow(max / 2, 2);
 
-        //TODO Instead of 4 point and then inverse,
-        // compare dist to 4 corners and then the center.
-        // If further from center than corner, hide the point
-
         Point2 center = new Point2(width / 2, height / 2);
 
         for (int ii = 0; ii < width; ii++) {
