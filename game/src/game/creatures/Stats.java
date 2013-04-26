@@ -1,5 +1,6 @@
 package game.creatures;
 
+import game.GameConfig;
 import game.forces.Force;
 import sps.core.RNG;
 
@@ -7,15 +8,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Stats {
-    private static final int __baseStatMin = 0;
-    private static final int __baseStatMax = 5;
-
     private Map<Force, Integer> _stats;
 
     public Stats() {
         _stats = new HashMap<Force, Integer>();
         for (Force force : Force.values()) {
-            _stats.put(force, RNG.next(__baseStatMin, __baseStatMax));
+            _stats.put(force, 0);
+        }
+        for (Force force : Force.random(1)) {
+            _stats.put(force, RNG.next(GameConfig.BaseStatStartMin, GameConfig.BaseStatStartMax));
         }
     }
 
@@ -36,7 +37,7 @@ public class Stats {
     }
 
     public Force nonZeroForce() {
-        Force force = null;
+        Force force;
         while (true) {
             force = Force.random();
             if (get(force) > 0) {

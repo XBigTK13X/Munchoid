@@ -14,6 +14,9 @@ public class GameConfig {
     public static final Point2 MinBodyPartDimensions = Screen.pos(5, 5);
     public static final Point2 MaxBodyPartDimensions = Screen.pos(10, 10);
 
+    public static final int BaseStatStartMin = 2;
+    public static final int BaseStatStartMax = 5;
+
     public static final int MinMergeImpactPercent = 15;
     public static final int MaxMergeImpactPercent = 40;
 }
