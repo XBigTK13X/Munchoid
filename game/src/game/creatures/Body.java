@@ -36,23 +36,36 @@ public class Body {
     private void calculateSize() {
         BodyPart body = _parts.get(0);
         body.setPosition(new Point2(0, 0));
+        int bh = body.getHeight();
+        int bw = body.getWidth();
         for (int ii = 1; ii < _parts.size(); ii++) {
             BodyPart part = _parts.get(ii);
+            int pw = part.getWidth();
+            int ph = part.getHeight();
+            int wd = bw - pw;
+            if (wd < 0) {
+                wd = 0;
+            }
+            int hd = bh - ph;
+            if (hd < 0) {
+                hd = 0;
+            }
+
             switch (part.getFunction()) {
                 case Head:
-                    _parts.get(ii).setPosition(RNG.point(0, body.getWidth(), body.getHeight() / 2, body.getHeight() / 2 + part.getHeight() / 2));
+                    _parts.get(ii).setPosition(RNG.point(0, bw, bh / 2, bh / 2 + ph / 2));
                     break;
                 case UpperLimb:
-                    _parts.get(ii).setPosition(RNG.point(body.getWidth() - part.getWidth() / 3, body.getWidth() + part.getWidth() / 4, body.getHeight() / 2 - part.getHeight() / 3, body.getHeight() / 2 + part.getHeight() / 3));
+                    _parts.get(ii).setPosition(RNG.point(bw - pw / 3, bw + pw / 4, bh / 2 - ph / 3, bh / 2 + ph / 3));
                     break;
                 case LowerLimb:
-                    _parts.get(ii).setPosition(RNG.point(0, body.getWidth() - part.getWidth(), -part.getHeight(), -part.getHeight() + body.getHeight() / 5));
+                    _parts.get(ii).setPosition(RNG.point(0, wd, -ph, -ph + bh / 5));
                     break;
                 case BodyDetail:
-                    _parts.get(ii).setPosition(RNG.point(0, body.getWidth() - part.getWidth(), 0, body.getHeight() - part.getHeight()));
+                    _parts.get(ii).setPosition(RNG.point(0, wd, 0, hd));
                     break;
                 case HeadDetail:
-                    _parts.get(ii).setPosition(RNG.point(0, body.getWidth() - part.getWidth(), part.getHeight() / 3, part.getHeight()));
+                    _parts.get(ii).setPosition(RNG.point(0, wd, ph / 3, ph));
                     break;
             }
         }

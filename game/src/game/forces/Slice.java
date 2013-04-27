@@ -1,20 +1,20 @@
 package game.forces;
 
+import game.GameConfig;
 import game.creatures.BodyPart;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.util.MathHelper;
 
 public class Slice extends BaseForce {
-    int _magnitude;
     float _dX;
     float _dY;
     Point2 _origin;
     boolean _killRight;
     boolean _killUp;
 
-    public Slice() {
-        _magnitude = RNG.next(10, 20);
+    public Slice(int magnitude) {
+        super(magnitude, GameConfig.SliceScale);
     }
 
     @Override
@@ -30,9 +30,11 @@ public class Slice extends BaseForce {
 
     @Override
     public void prepareCalculations(BodyPart bodyPart) {
-        _dX = RNG.coinFlip() ? -1 : 1 * RNG.next(1, _magnitude);
-        _dY = RNG.coinFlip() ? -1 : 1 * RNG.next(1, _magnitude);
-        _origin = new Point2(RNG.next(_magnitude, bodyPart.getAtoms().length), RNG.next(_magnitude, bodyPart.getAtoms()[0].length));
+        _dX = RNG.coinFlip() ? -1 : 1 * RNG.next(1, getScaledMagnitude());
+        _dY = RNG.coinFlip() ? -1 : 1 * RNG.next(1, getScaledMagnitude());
+        //TODO This doesn't really make a higher magnitude more useful
+        // Higher mag = better chance at picking a direction that does more damage
+        _origin = new Point2(RNG.next(0, getScaledMagnitude()), RNG.next(0, getScaledMagnitude()));
         _killRight = RNG.coinFlip();
         _killUp = RNG.coinFlip();
     }

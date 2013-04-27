@@ -4,6 +4,16 @@ import game.creatures.Atom;
 import game.creatures.BodyPart;
 
 public abstract class BaseForce {
+    protected static int NoScale = 1;
+
+    private int _magnitude;
+    private int _scale;
+
+    public BaseForce(int magnitude, int scale) {
+        _magnitude = magnitude;
+        _scale = scale;
+    }
+
     public void apply(BodyPart bodyPart) {
         Atom[][] atoms = bodyPart.getAtoms();
         prepareCalculations(bodyPart);
@@ -20,5 +30,17 @@ public abstract class BaseForce {
     public abstract boolean forceSpecifics(BodyPart bodyPart, int ii, int jj);
 
     public void prepareCalculations(BodyPart bodyPart) {
+    }
+
+    public int getMagnitude() {
+        return _magnitude;
+    }
+
+    public int getScale() {
+        return _scale;
+    }
+
+    public int getScaledMagnitude() {
+        return _magnitude * _scale;
     }
 }

@@ -25,6 +25,14 @@ public class RNG {
         if (max - min > 0) {
             return getRand(synced).nextInt(max - min) + min;
         }
+        if (max == min) {
+            return min;
+        }
+        try {
+            throw new RuntimeException("You cannot generate a random number if max is less than min!");
+        } catch (Exception e) {
+            Logger.exception(e, false);
+        }
         return 0;
     }
 

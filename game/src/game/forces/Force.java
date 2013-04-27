@@ -20,26 +20,26 @@ public enum Force {
         Command = "Force" + (ordinal() + 1);
     }
 
-    public static BaseForce create(Force force) {
+    public static BaseForce create(Force force, int magnitude) {
         switch (force) {
             case Abrasive:
-                return new Abrasive();
+                return new Abrasive(magnitude);
             case Expansion:
-                return new Expansion();
+                return new Expansion(magnitude);
             case Explosive:
-                return new Explosive();
+                return new Explosive(magnitude);
             case Slice:
-                return new Slice();
+                return new Slice(magnitude);
             case Contraction:
-                return new Contraction();
+                return new Contraction(magnitude);
             case Vaporize:
-                return new Vaporize();
+                return new Vaporize(magnitude);
         }
         return null;
     }
 
-    public static BaseForce createRandom() {
-        return create(Force.values()[RNG.next(0, Force.values().length)]);
+    public static BaseForce createRandom(int magnitude) {
+        return create(Force.values()[RNG.next(0, Force.values().length)], magnitude);
     }
 
     public static Force random() {

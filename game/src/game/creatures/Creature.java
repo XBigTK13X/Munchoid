@@ -38,8 +38,7 @@ public class Creature extends Entity {
         if (updatePos) {
             if (faceLeft) {
                 setLocation(Screen.pos(80, 20));
-            }
-            else {
+            } else {
                 setLocation(Screen.pos(20, 20));
             }
         }
@@ -56,7 +55,7 @@ public class Creature extends Entity {
 
     public void attack(Force force) {
         if (_opponent != null && _opponent.getBody().isAlive()) {
-            Force.create(force).apply(_opponent.getBody().getRandomPart());
+            Force.create(force, _stats.get(force)).apply(_opponent.getBody().getRandomPart());
         }
     }
 
