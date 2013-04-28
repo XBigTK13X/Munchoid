@@ -63,13 +63,11 @@ public class Arena implements State {
                 _timerText.setMessage(timeDisplay());
             }
             List<Entity> opponents = EntityManager.get().getEntities(EntityTypes.get("Catchable"));
-            if (_countDownSeconds <= 0) {
-                if (opponents.size() <= 0) {
-                    StateManager.get().push(new Tournament((Player) EntityManager.get().getPlayer()));
-                }
-                else {
-                    StateManager.get().push(new Battle(player.getPet(), ((Catchable) opponents.get(RNG.next(0, opponents.size()))).getPet()));
-                }
+            if (opponents.size() <= 0) {
+                StateManager.get().push(new Tournament((Player) EntityManager.get().getPlayer()));
+            }
+            if (_countDownSeconds <= 0 && opponents.size() > 0) {
+                StateManager.get().push(new Battle(player.getPet(), ((Catchable) opponents.get(RNG.next(0, opponents.size()))).getPet()));
             }
         }
         else {
@@ -92,7 +90,7 @@ public class Arena implements State {
     }
 
     @Override
-    public void pause(){
+    public void pause() {
         MusicPlayer.get().stop();
     }
 
