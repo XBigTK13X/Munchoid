@@ -1,6 +1,7 @@
 package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
+import game.GameConfig;
 import game.creatures.part.Common;
 import game.creatures.part.Designs;
 import game.creatures.style.Outline;
@@ -27,7 +28,7 @@ public class BodyPart {
         _height = height;
         _scale = 1f;
         _color = owner.getColor();
-        switch(RNG.next(0,3)){
+        switch (RNG.next(0, 3)) {
             case 0:
                 _color = _color;
                 break;
@@ -77,6 +78,9 @@ public class BodyPart {
             }
         }
         if (currentActive / (float) maxActive <= _percentRequiredToLive) {
+            _isAlive = false;
+        }
+        if (_scale <= GameConfig.MinScaleDeath || _scale >= GameConfig.MaxScaleDeath) {
             _isAlive = false;
         }
     }

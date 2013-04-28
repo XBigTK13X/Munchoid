@@ -103,8 +103,8 @@ public class Body {
     }
 
     public boolean isAlive() {
-        for (int ii = 0; ii < _parts.size(); ii++) {
-            if (_parts.get(ii).isAlive()) {
+        for (BodyPart part : _parts) {
+            if (part.isAlive()) {
                 return true;
             }
         }

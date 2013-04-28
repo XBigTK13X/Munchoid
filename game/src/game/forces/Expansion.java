@@ -1,11 +1,12 @@
 package game.forces;
 
+import game.GameConfig;
 import game.creatures.BodyPart;
 import sps.core.RNG;
 
 public class Expansion extends BaseForce {
     public Expansion(int magnitude) {
-        super(magnitude, BaseForce.NoScale);
+        super(magnitude, GameConfig.ExpansionScale);
     }
 
     @Override
@@ -15,6 +16,6 @@ public class Expansion extends BaseForce {
 
     @Override
     public void prepareCalculations(BodyPart bodyPart) {
-        bodyPart.setScale(bodyPart.getScale() + RNG.next(getMagnitude(), (int) (getMagnitude() * 1.1f)) / 100f);
+        bodyPart.setScale(bodyPart.getScale() + RNG.next(getScaledMagnitude(), (int) (getScaledMagnitude() * 1.1f)) / 100f);
     }
 }
