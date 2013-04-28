@@ -38,6 +38,42 @@ public enum Force {
         return null;
     }
 
+    public static Force strength(Force force) {
+        switch (force) {
+            case Abrasive:
+                return Force.Vaporize;
+            case Expansion:
+                return Force.Abrasive;
+            case Explosive:
+                return Force.Slice;
+            case Slice:
+                return Force.Contraction;
+            case Contraction:
+                return Force.Expansion;
+            case Vaporize:
+                return Force.Explosive;
+        }
+        return null;
+    }
+
+    public static Force weakness(Force force) {
+        switch (force) {
+            case Abrasive:
+                return Force.Slice;
+            case Expansion:
+                return Force.Explosive;
+            case Explosive:
+                return Force.Expansion;
+            case Slice:
+                return Force.Abrasive;
+            case Contraction:
+                return Force.Vaporize;
+            case Vaporize:
+                return Force.Contraction;
+        }
+        return null;
+    }
+
     public static BaseForce createRandom(int magnitude) {
         return create(Force.values()[RNG.next(0, Force.values().length)], magnitude);
     }

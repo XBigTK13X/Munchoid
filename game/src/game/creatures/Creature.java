@@ -55,7 +55,27 @@ public class Creature extends Entity {
 
     public void attack(Force force) {
         if (_opponent != null && _opponent.getBody().isAlive()) {
-            Force.create(force, _stats.get(force)).apply(_opponent.getBody().getRandomPart());
+            int weakness = _opponent.getStats().get(Force.weakness(force));
+            int strength = _opponent.getStats().get(Force.strength(force));
+
+
+            if (strength != 0) {
+                String result;
+                if (strength >= weakness) {
+                    result = "STRONG";
+                } else {
+                    result = "WEAK";
+                }
+                TextPool.get().write(result, getLocation(), 1f, TextEffects.Fountain);
+            }
+
+
+            int magnitude = _stats.get(force) + strength - weakness;
+            if (magnitude < 1) {
+                magnitude = 1;
+            }
+
+            Force.create(force, magnitude).apply(_opponent.getBody().getRandomPart());
         }
     }
 
