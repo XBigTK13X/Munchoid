@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import sps.bridge.DrawDepth;
@@ -127,8 +128,7 @@ public class Renderer {
     public void draw(Sprite sprite, Point2 position, DrawDepth depth, Color color, boolean flipX, boolean flipY) {
         try {
             render(sprite, position, depth, color, sprite.getWidth(), sprite.getHeight(), flipX ? -1 : 1, flipY ? -1 : 1);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             int x = 0;
         }
     }
@@ -154,5 +154,14 @@ public class Renderer {
         Assets.get().font().setScale(scale);
         Assets.get().font().setColor(filter);
         Assets.get().font().draw(batch, content, location.PosX, location.PosY);
+    }
+
+    //Texture rendering
+    public void draw(Texture texture) {
+        batch.draw(texture, 0, 0);
+    }
+
+    public Color getWindowBackground() {
+        return bgColor;
     }
 }
