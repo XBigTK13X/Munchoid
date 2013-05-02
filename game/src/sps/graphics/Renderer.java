@@ -185,6 +185,7 @@ public class Renderer {
     }
 
     public boolean isInView(float x, float y) {
-        return isInView((int) x, (int) y);
+        return true;
+        //return isInView((int) x, (int) y);
     }
 }

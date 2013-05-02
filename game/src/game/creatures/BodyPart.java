@@ -24,7 +24,6 @@ public class BodyPart {
     float _scale;
     private PartFunction _function;
     private Body _owner;
-    private boolean _isSpriteDynamic = false;
     private Point2 _position;
 
     public BodyPart(PartFunction function, int width, int height, Body owner) {
@@ -37,7 +36,6 @@ public class BodyPart {
         _color = owner.getColor();
         switch (RNG.next(0, 3)) {
             case 0:
-                _color = _color;
                 break;
             case 1:
                 _color = Colors.darken(_color);
@@ -59,7 +57,7 @@ public class BodyPart {
         for (int ii = 0; ii < _width; ii++) {
             for (int jj = 0; jj < _height; jj++) {
                 if (design[ii][jj]) {
-                    _atoms[ii][jj] = new Atom(ii, jj, _color, owner, this);
+                    _atoms[ii][jj] = new Atom(ii, jj, _color);
                 }
             }
         }
@@ -98,21 +96,12 @@ public class BodyPart {
         if (_scale <= GameConfig.MinScaleDeath || _scale >= GameConfig.MaxScaleDeath) {
             _isAlive = false;
         }
+        createSprite();
     }
 
     public void draw() {
-        if (_isSpriteDynamic) {
-            for (int ii = 0; ii < _width; ii++) {
-                for (int jj = 0; jj < _height; jj++) {
-                    if (_atoms[ii][jj] != null && _atoms[ii][jj].isActive()) {
-                        _atoms[ii][jj].draw();
-                    }
-                }
-            }
-        }
-        else {
-            Renderer.get().draw(_sprite, getPosition().addRaw(_owner.getOwner().getLocation()), DrawDepths.get("Atom"), Color.WHITE);
-        }
+        Point2 scaledLoc = getPosition().addRaw(_owner.getOwner().getLocation());
+        Renderer.get().draw(_sprite, scaledLoc, DrawDepths.get("Atom"), Color.WHITE, _width * _scale, _height * _scale);
     }
 
     public Point2 getPosition() {

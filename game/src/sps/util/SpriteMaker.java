@@ -24,11 +24,11 @@ public class SpriteMaker {
     public Sprite fromAtoms(Atom[][] atoms) {
         Pixmap textureBase = new Pixmap(atoms.length, atoms[0].length, Pixmap.Format.RGBA8888);
         for (int ii = 0; ii < atoms.length; ii++) {
-            for (int jj = 0; jj < atoms[ii].length; jj++) {
+            for (int jj = 0; jj < atoms[0].length; jj++) {
                 at = atoms[ii][jj];
-                if (at != null && at.isActive()) {
+                if (at != null) {
                     textureBase.setColor(at.getColor());
-                    textureBase.drawPixel((int) at.getScaledX(), (int) at.getScaledY());
+                    textureBase.drawPixel((int) at.getLocalX(), atoms[0].length - (int) at.getLocalY());
                 }
             }
         }

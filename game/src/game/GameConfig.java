@@ -6,7 +6,7 @@ import sps.util.Screen;
 public class GameConfig {
     public final static int CreatureLimit = 100;
     public final static float ArenaTimeoutSeconds = 8.5f;
-    public static final float ArenaCreatureScale = .4f;
+    public static final float ArenaCreatureScale = 1f;
 
     public final static int TournamentMatches = 3;
 

@@ -111,10 +111,6 @@ public class Body {
         return false;
     }
 
-    public Creature getOwner() {
-        return _owner;
-    }
-
     public float getWidth() {
         return _width;
     }
@@ -150,5 +146,9 @@ public class Body {
 
     public Color getColor() {
         return _color;
+    }
+
+    public Creature getOwner() {
+        return _owner;
     }
 }
