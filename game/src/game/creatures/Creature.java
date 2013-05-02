@@ -47,7 +47,10 @@ public class Creature extends Entity {
     }
 
     public void draw() {
-        if (Renderer.get().isInView((int) getLocation().X, (int) getLocation().Y)) {
+        if (Renderer.get().isInView(getLocation().X, getLocation().Y)
+                || Renderer.get().isInView(getLocation().X + _body.getWidth(), getLocation().Y)
+                || Renderer.get().isInView(getLocation().X, getLocation().Y + _body.getHeight())
+                || Renderer.get().isInView(getLocation().X + _body.getWidth(), getLocation().Y + _body.getHeight())) {
             _body.draw();
         }
     }

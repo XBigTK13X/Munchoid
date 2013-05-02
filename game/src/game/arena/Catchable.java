@@ -30,7 +30,7 @@ public class Catchable extends Entity {
         _creature.getBody().setScale(GameConfig.ArenaCreatureScale);
 
         setSize(_creature.getWidth(), _creature.getHeight());
-        setLocation(Screen.rand(-33, 133, -33, 133));
+        setLocation(Screen.rand(-100, 200, -100, 200));
     }
 
     @Override
@@ -76,7 +76,7 @@ public class Catchable extends Entity {
         }
         else {
             _moveIncrements = RNG.next(__moveIncrementsMax / 2, __moveIncrementsMax);
-            _movementTarget = Screen.rand(5, 95, 5, 95);
+            _movementTarget = getLocation().addRaw(Screen.rand(-10, 10, -10, 10));
         }
 
         _creature.orientX(_dX <= 0, false);

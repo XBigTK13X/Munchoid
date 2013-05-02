@@ -13,6 +13,9 @@ import sps.io.Input;
 import sps.util.Screen;
 
 public class Player extends Entity implements IActor {
+    private static int __scrollSpeedX;
+    private static int __scrollSpeedY;
+
     private ActorType _actorType;
 
     private Point2 _movementBuffer;
@@ -24,11 +27,15 @@ public class Player extends Entity implements IActor {
     private Creature _pet;
 
     public Player() {
+        __scrollSpeedX = (int) Screen.width(2);
+        __scrollSpeedY = (int) Screen.height(2);
+        _movementBuffer = Screen.pos(33, 33);
+
         initialize(SpsConfig.get().spriteWidth, SpsConfig.get().spriteHeight, Screen.pos(20, 20), SpriteTypes.get("Player_Stand"), EntityTypes.get(Sps.Entities.Actor), DrawDepths.get(Sps.Actors.Player));
         _actorType = ActorTypes.get(Sps.Actors.Player);
-        _movementBuffer = Screen.pos(33, 33);
         _net = new CatchNet(this);
         EntityManager.get().addEntity(_net);
+        setLocation(Screen.pos(50, 50));
     }
 
     @Override
@@ -48,12 +55,14 @@ public class Player extends Entity implements IActor {
 
         if (getLocation().X + _keyVelocity.X > _movementBuffer.X
                 && getLocation().X + _keyVelocity.X < Renderer.get().VirtualWidth - _movementBuffer.X
-                && getLocation().X + _keyVelocity.X > _movementBuffer.X
-                && getLocation().X + _keyVelocity.X < Renderer.get().VirtualWidth - _movementBuffer.X) {
+                && getLocation().X + _keyVelocity.Y > _movementBuffer.Y
+                && getLocation().X + _keyVelocity.Y < Renderer.get().VirtualWidth - _movementBuffer.Y) {
             move(_keyVelocity.X, _keyVelocity.Y);
         }
         else {
-            Renderer.get().moveOffsets((int) _keyVelocity.X, (int) _keyVelocity.Y);
+            int oX = _keyVelocity.X == 0 ? 0 : _keyVelocity.X > 0 ? __scrollSpeedX : -__scrollSpeedX;
+            int oY = _keyVelocity.Y == 0 ? 0 : _keyVelocity.Y > 0 ? __scrollSpeedY : -__scrollSpeedY;
+            Renderer.get().moveOffsets(oX, oY);
         }
 
 
