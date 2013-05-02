@@ -1,15 +1,20 @@
 package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import game.creatures.part.Common;
 import game.creatures.part.Designs;
 import game.creatures.style.Outline;
+import sps.bridge.DrawDepths;
 import sps.core.Point2;
 import sps.core.RNG;
+import sps.graphics.Renderer;
 import sps.util.Colors;
+import sps.util.SpriteMaker;
 
 public class BodyPart {
+    Sprite _sprite;
     Atom[][] _atoms;
     int _width;
     int _height;
@@ -18,11 +23,13 @@ public class BodyPart {
     Color _color;
     float _scale;
     private PartFunction _function;
-
+    private Body _owner;
+    private boolean _isSpriteDynamic = false;
     private Point2 _position;
 
     public BodyPart(PartFunction function, int width, int height, Body owner) {
         _function = function;
+        _owner = owner;
         _atoms = new Atom[width][height];
         _width = width;
         _height = height;
@@ -57,6 +64,14 @@ public class BodyPart {
             }
         }
         Outline.complimentary(_atoms);
+        createSprite();
+    }
+
+    private void createSprite() {
+        if (_sprite != null) {
+            _sprite.getTexture().dispose();
+        }
+        _sprite = SpriteMaker.get().fromAtoms(_atoms);
     }
 
     public Atom[][] getAtoms() {
@@ -86,12 +101,17 @@ public class BodyPart {
     }
 
     public void draw() {
-        for (int ii = 0; ii < _width; ii++) {
-            for (int jj = 0; jj < _height; jj++) {
-                if (_atoms[ii][jj] != null && _atoms[ii][jj].isActive()) {
-                    _atoms[ii][jj].draw();
+        if (_isSpriteDynamic) {
+            for (int ii = 0; ii < _width; ii++) {
+                for (int jj = 0; jj < _height; jj++) {
+                    if (_atoms[ii][jj] != null && _atoms[ii][jj].isActive()) {
+                        _atoms[ii][jj].draw();
+                    }
                 }
             }
+        }
+        else {
+            Renderer.get().draw(_sprite, getPosition().addRaw(_owner.getOwner().getLocation()), DrawDepths.get("Atom"), Color.WHITE);
         }
     }
 

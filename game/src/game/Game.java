@@ -20,7 +20,6 @@ import sps.io.Input;
 import sps.particles.ParticleEngine;
 import sps.states.StateManager;
 import sps.text.TextPool;
-import sps.util.Screen;
 
 public class Game implements ApplicationListener {
 
@@ -66,7 +65,6 @@ public class Game implements ApplicationListener {
 
             // Render
             Renderer.get().begin();
-            Screen.get().draw();
             StateManager.get().draw();
             ParticleEngine.get().draw();
             TextPool.get().draw();
@@ -74,7 +72,8 @@ public class Game implements ApplicationListener {
             Renderer.get().end();
 
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Logger.exception(e);
         }
     }
