@@ -6,6 +6,7 @@ import sps.bridge.EntityTypes;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.Entity;
+import sps.graphics.Renderer;
 import sps.text.TextEffects;
 import sps.text.TextPool;
 import sps.util.Screen;
@@ -38,14 +39,17 @@ public class Creature extends Entity {
         if (updatePos) {
             if (faceLeft) {
                 setLocation(Screen.pos(80, 20));
-            } else {
+            }
+            else {
                 setLocation(Screen.pos(20, 20));
             }
         }
     }
 
     public void draw() {
-        _body.draw();
+        if (Renderer.get().isInView((int) getLocation().X, (int) getLocation().Y)) {
+            _body.draw();
+        }
     }
 
     public void update() {
@@ -63,7 +67,8 @@ public class Creature extends Entity {
                 String result;
                 if (strength >= weakness) {
                     result = "STRONG";
-                } else {
+                }
+                else {
                     result = "WEAK";
                 }
                 TextPool.get().write(result, getLocation(), 1f, TextEffects.Fountain);

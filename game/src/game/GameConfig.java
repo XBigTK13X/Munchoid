@@ -4,7 +4,6 @@ import sps.core.Point2;
 import sps.util.Screen;
 
 public class GameConfig {
-    //The upper limit is ~400 with 2GB of memory.
     public final static int CreatureLimit = 100;
     public final static float ArenaTimeoutSeconds = 8.5f;
     public static final float ArenaCreatureScale = .4f;

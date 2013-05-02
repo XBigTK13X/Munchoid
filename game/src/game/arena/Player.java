@@ -8,11 +8,14 @@ import sps.core.SpsConfig;
 import sps.entities.Entity;
 import sps.entities.EntityManager;
 import sps.entities.IActor;
+import sps.graphics.Renderer;
 import sps.io.Input;
 import sps.util.Screen;
 
 public class Player extends Entity implements IActor {
     private ActorType _actorType;
+
+    private Point2 _movementBuffer;
 
     private Point2 _keyVelocity = new Point2(0, 0);
     private float _moveDistance = 250;
@@ -23,7 +26,7 @@ public class Player extends Entity implements IActor {
     public Player() {
         initialize(SpsConfig.get().spriteWidth, SpsConfig.get().spriteHeight, Screen.pos(20, 20), SpriteTypes.get("Player_Stand"), EntityTypes.get(Sps.Entities.Actor), DrawDepths.get(Sps.Actors.Player));
         _actorType = ActorTypes.get(Sps.Actors.Player);
-
+        _movementBuffer = Screen.pos(33, 33);
         _net = new CatchNet(this);
         EntityManager.get().addEntity(_net);
     }
@@ -43,7 +46,16 @@ public class Player extends Entity implements IActor {
         float upVelocity = (Input.get().isActive(Commands.get(Game.CommandNames.MoveUp)) ? _moveDistance : 0);
         _keyVelocity.setY(upVelocity + downVelocity);
 
-        move(_keyVelocity.X, _keyVelocity.Y);
+        if (getLocation().X + _keyVelocity.X > _movementBuffer.X
+                && getLocation().X + _keyVelocity.X < Renderer.get().VirtualWidth - _movementBuffer.X
+                && getLocation().X + _keyVelocity.X > _movementBuffer.X
+                && getLocation().X + _keyVelocity.X < Renderer.get().VirtualWidth - _movementBuffer.X) {
+            move(_keyVelocity.X, _keyVelocity.Y);
+        }
+        else {
+            Renderer.get().moveOffsets((int) _keyVelocity.X, (int) _keyVelocity.Y);
+        }
+
 
         if (Input.get().isActive(Commands.get("Confirm"))) {
             _net.use();

@@ -30,7 +30,7 @@ public class Catchable extends Entity {
         _creature.getBody().setScale(GameConfig.ArenaCreatureScale);
 
         setSize(_creature.getWidth(), _creature.getHeight());
-        setLocation(Screen.rand(15, 85, 15, 85));
+        setLocation(Screen.rand(-33, 133, -33, 133));
     }
 
     @Override

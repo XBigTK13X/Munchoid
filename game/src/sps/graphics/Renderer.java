@@ -42,6 +42,8 @@ public class Renderer {
     public final float VirtualAspectRatio;
     private int Height;
     private int Width;
+    private int _xOffset;
+    private int _yOffset;
 
     public SpriteBatch batch;
     public OrthographicCamera camera;
@@ -163,5 +165,24 @@ public class Renderer {
 
     public Color getWindowBackground() {
         return bgColor;
+    }
+
+    public int getXOffset() {
+        return _xOffset;
+    }
+
+    public int getYOffset() {
+        return _yOffset;
+    }
+
+    public void moveOffsets(int x, int y) {
+        _xOffset += x;
+        _yOffset += y;
+    }
+
+    public boolean isInView(int x, int y) {
+        x = x + Renderer.get().getXOffset();
+        y = y + Renderer.get().getYOffset();
+        return x > 0 && y > 0 && x < Renderer.get().VirtualWidth && y < Renderer.get().VirtualHeight;
     }
 }
