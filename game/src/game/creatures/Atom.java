@@ -1,16 +1,11 @@
 package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import sps.core.Point2;
 import sps.core.RNG;
-import sps.graphics.Assets;
-import sps.util.Screen;
+import sps.util.RawPixels;
 
 public class Atom {
     public static int count = 0;
-    private static Point2 __point = new Point2(0, 0);
-    private static Sprite __pixel;
     private static float __scaleDistance = 1f;
     Body _body;
     BodyPart _bodyPart;
@@ -24,9 +19,6 @@ public class Atom {
 
     public Atom(int localX, int localY, Color color, Body owner, BodyPart container) {
         count++;
-        if (__pixel == null) {
-            __pixel = Assets.get().pixel();
-        }
         _localX = localX;
         _localY = localY;
         _color = color;
@@ -44,7 +36,7 @@ public class Atom {
         _scaledX += _body.getOwner().getLocation().X + (flipX * _bodyPart.getPosition().X) * _bodyPart.getScale();
         _scaledY += _body.getOwner().getLocation().Y + _bodyPart.getPosition().Y * _bodyPart.getScale();
 
-        Screen.get().setPixel(_scaledX, _scaledY, _color);
+        RawPixels.get().setPixel((int) _scaledX, (int) _scaledY, _color);
 
         //Renderer.get().draw(__pixel, __point.reset(_scaledX, _scaledY, false), DrawDepths.get(Game.DrawDepths.Atom), _color, 1, 1);
     }

@@ -2,6 +2,7 @@ package game;
 
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import game.states.PreGame;
 import sps.bridge.Commands;
@@ -19,7 +20,7 @@ import sps.io.Input;
 import sps.particles.ParticleEngine;
 import sps.states.StateManager;
 import sps.text.TextPool;
-import sps.util.Screen;
+import sps.util.RawPixels;
 
 public class Game implements ApplicationListener {
 
@@ -46,7 +47,7 @@ public class Game implements ApplicationListener {
     @Override
     public void render() {
         try {
-            //Logger.devConsole("" + Gdx.graphics.getFramesPerSecond() + ": " + Gdx.graphics.getDeltaTime());
+            Logger.devConsole("" + Gdx.graphics.getFramesPerSecond() + ": " + Gdx.graphics.getDeltaTime());
 
             // Update
             Input.get().update();
@@ -65,13 +66,16 @@ public class Game implements ApplicationListener {
 
             // Render
             Renderer.get().begin();
-            Screen.get().draw();
             StateManager.get().draw();
+
             ParticleEngine.get().draw();
             TextPool.get().draw();
             DevConsole.get().draw();
             Renderer.get().end();
-        } catch (Exception e) {
+            RawPixels.get().draw();
+
+        }
+        catch (Exception e) {
             Logger.exception(e);
         }
     }
