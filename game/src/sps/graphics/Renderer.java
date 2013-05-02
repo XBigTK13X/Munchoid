@@ -176,13 +176,11 @@ public class Renderer {
     }
 
     public void moveOffsets(int x, int y) {
-        _xOffset += x;
-        _yOffset -= y;
+        _xOffset -= x * Gdx.graphics.getDeltaTime();
+        _yOffset -= y * Gdx.graphics.getDeltaTime();
     }
 
     public boolean isInView(int x, int y) {
-        x = x + Renderer.get().getXOffset();
-        y = y + Renderer.get().getYOffset();
         return x > 0 && y > 0 && x < Renderer.get().VirtualWidth && y < Renderer.get().VirtualHeight;
     }
 

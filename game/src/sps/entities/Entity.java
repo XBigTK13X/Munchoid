@@ -7,10 +7,8 @@ import sps.bridge.SpriteType;
 import sps.core.Point2;
 import sps.core.SpsConfig;
 import sps.graphics.Animation;
-import sps.graphics.Renderer;
 import sps.graphics.SpriteEdge;
 import sps.graphics.SpriteInfo;
-import sps.util.Screen;
 
 public class Entity implements Comparable {
 
@@ -102,23 +100,6 @@ public class Entity implements Comparable {
         }
         if (amountX < 0) {
             setFacingLeft(true);
-        }
-        if (!CoordVerifier.isValidX(target)) {
-            if (target.X > Screen.pos(50, 0).X) {
-                target.reset(Renderer.get().VirtualWidth - _width, target.Y, false);
-            }
-            else {
-                target.reset(0, target.Y, false);
-            }
-        }
-        if (!CoordVerifier.isValidY(target)) {
-            if (target.Y > Screen.pos(0, 50).Y) {
-                target.reset(target.X, Renderer.get().VirtualHeight - _height, false);
-            }
-            else {
-                target.reset(target.X, 0, false);
-            }
-
         }
         if (target.X != 0 || target.Y != 0) {
             updateLocation(target);

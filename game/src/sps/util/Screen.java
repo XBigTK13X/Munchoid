@@ -55,7 +55,7 @@ public class Screen {
     public void setPixel(int x, int y, Color color) {
         if (Renderer.get().isInView(x, y)) {
             textureBase.setColor(color);
-            textureBase.drawPixel((int) x, Renderer.get().VirtualHeight - (int) y);
+            textureBase.drawPixel(x, Renderer.get().VirtualHeight - y);
         }
     }
 }

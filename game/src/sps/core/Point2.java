@@ -103,7 +103,8 @@ public class Point2 {
 
     public void setX(float x) {
         X = x;
-        boolean isGrid = (Math.abs(X) < SpsConfig.get().tileMapWidth);
+        //TODO Disabling this more NNUE, but needs a more permanent solution
+        boolean isGrid = false;
         if (isGrid) {
             setAdjustedX(x);
         }

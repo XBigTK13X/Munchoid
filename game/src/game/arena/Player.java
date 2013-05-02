@@ -27,8 +27,8 @@ public class Player extends Entity implements IActor {
     private Creature _pet;
 
     public Player() {
-        __scrollSpeedX = (int) Screen.width(2);
-        __scrollSpeedY = (int) Screen.height(2);
+        __scrollSpeedX = 250;
+        __scrollSpeedY = 250;
         _movementBuffer = Screen.pos(33, 33);
 
         initialize(SpsConfig.get().spriteWidth, SpsConfig.get().spriteHeight, Screen.pos(20, 20), SpriteTypes.get("Player_Stand"), EntityTypes.get(Sps.Entities.Actor), DrawDepths.get(Sps.Actors.Player));
@@ -53,16 +53,25 @@ public class Player extends Entity implements IActor {
         float upVelocity = (Input.get().isActive(Commands.get(Game.CommandNames.MoveUp)) ? _moveDistance : 0);
         _keyVelocity.setY(upVelocity + downVelocity);
 
-        if (getLocation().X + _keyVelocity.X > _movementBuffer.X
-                && getLocation().X + _keyVelocity.X < Renderer.get().VirtualWidth - _movementBuffer.X
-                && getLocation().X + _keyVelocity.Y > _movementBuffer.Y
-                && getLocation().X + _keyVelocity.Y < Renderer.get().VirtualWidth - _movementBuffer.Y) {
-            move(_keyVelocity.X, _keyVelocity.Y);
+        boolean canMoveX = getLocation().X + _keyVelocity.X > _movementBuffer.X
+                && getLocation().X + _keyVelocity.X < Renderer.get().VirtualWidth - _movementBuffer.X;
+
+        boolean canMoveY = getLocation().Y + _keyVelocity.Y > _movementBuffer.Y
+                && getLocation().Y + _keyVelocity.Y < Renderer.get().VirtualHeight - _movementBuffer.Y;
+
+        if (canMoveX) {
+            move(_keyVelocity.X, 0);
         }
         else {
             int oX = _keyVelocity.X == 0 ? 0 : _keyVelocity.X > 0 ? __scrollSpeedX : -__scrollSpeedX;
+            Renderer.get().moveOffsets(oX, 0);
+        }
+        if (canMoveY) {
+            move(0, _keyVelocity.Y);
+        }
+        else {
             int oY = _keyVelocity.Y == 0 ? 0 : _keyVelocity.Y > 0 ? __scrollSpeedY : -__scrollSpeedY;
-            Renderer.get().moveOffsets(oX, oY);
+            Renderer.get().moveOffsets(0, oY);
         }
 
 
