@@ -45,5 +45,4 @@ public class Atom {
     public float getLocalY() {
         return _localY;
     }
-
 }
