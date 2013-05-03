@@ -1,5 +1,6 @@
 package game.arena;
 
+import com.badlogic.gdx.Gdx;
 import game.Game;
 import game.creatures.Creature;
 import sps.bridge.*;
@@ -29,7 +30,7 @@ public class Player extends Entity implements IActor {
     public Player() {
         __scrollSpeedX = 250;
         __scrollSpeedY = 250;
-        _movementBuffer = Screen.pos(33, 33);
+        _movementBuffer = Screen.pos(45, 45);
 
         initialize(SpsConfig.get().spriteWidth, SpsConfig.get().spriteHeight, Screen.pos(20, 20), SpriteTypes.get("Player_Stand"), EntityTypes.get(Sps.Entities.Actor), DrawDepths.get(Sps.Actors.Player));
         _actorType = ActorTypes.get(Sps.Actors.Player);
@@ -53,11 +54,14 @@ public class Player extends Entity implements IActor {
         float upVelocity = (Input.get().isActive(Commands.get(Game.CommandNames.MoveUp)) ? _moveDistance : 0);
         _keyVelocity.setY(upVelocity + downVelocity);
 
-        boolean canMoveX = getLocation().X + _keyVelocity.X > _movementBuffer.X
-                && getLocation().X + _keyVelocity.X < Renderer.get().VirtualWidth - _movementBuffer.X;
+        float adjX = _keyVelocity.X * Gdx.graphics.getDeltaTime();
+        float adjY = _keyVelocity.Y * Gdx.graphics.getDeltaTime();
 
-        boolean canMoveY = getLocation().Y + _keyVelocity.Y > _movementBuffer.Y
-                && getLocation().Y + _keyVelocity.Y < Renderer.get().VirtualHeight - _movementBuffer.Y;
+        boolean canMoveX = getLocation().X + adjX > _movementBuffer.X
+                && getLocation().X + adjX < Renderer.get().VirtualWidth - _movementBuffer.X;
+
+        boolean canMoveY = getLocation().Y + adjY > _movementBuffer.Y
+                && getLocation().Y + adjY < Renderer.get().VirtualHeight - _movementBuffer.Y;
 
         if (canMoveX) {
             move(_keyVelocity.X, 0);
