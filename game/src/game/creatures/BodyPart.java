@@ -29,9 +29,6 @@ public class BodyPart {
     public BodyPart(PartFunction function, int width, int height, Body owner) {
         _function = function;
         _owner = owner;
-        _atoms = new Atom[width][height];
-        _width = width;
-        _height = height;
         _scale = 1f;
         _color = owner.getColor();
         switch (RNG.next(0, 3)) {
@@ -46,7 +43,7 @@ public class BodyPart {
         }
         _position = new Point2(0, 0);
 
-        boolean[][] design = Designs.get(_function).create(_width, _height);
+        boolean[][] design = Designs.get(_function).create(width, height);
         design = Common.trim(design);
         _width = design.length;
         _height = design[0].length;
@@ -102,9 +99,9 @@ public class BodyPart {
     }
 
     public void draw() {
-        Point2 scaledLoc = getPosition().addRaw(_owner.getOwner().getLocation());
-        //Logger.info(getPosition() + ", " +scaledLoc);
-        Renderer.get().draw(_sprite, scaledLoc, DrawDepths.get("Atom"), Color.WHITE);
+        Point2 scaledLoc = new Point2(getPosition().X * _scale, getPosition().Y * _scale);
+        scaledLoc = scaledLoc.addRaw(_owner.getOwner().getLocation());
+        Renderer.get().draw(_sprite, scaledLoc, DrawDepths.get("Atom"), Color.WHITE, _width * _scale, _height * _scale);
     }
 
     public Point2 getPosition() {

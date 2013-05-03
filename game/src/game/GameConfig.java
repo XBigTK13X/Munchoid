@@ -6,15 +6,14 @@ import sps.util.Screen;
 public class GameConfig {
     public final static int CreatureLimit = 100;
     public final static float ArenaTimeoutSeconds = 8.5f;
-    public static final float ArenaCreatureScale = 1f;
+    public static final float ArenaCreatureScale = .4f;
 
     public final static int TournamentMatches = 3;
 
     public static final Point2 MinBodyPartSize = Screen.pos(5, 5);
-    public static final Point2 MaxBodyPartSize = Screen.pos(10, 10);
-
+    public static final Point2 MaxBodyPartSize = Screen.pos(13, 13);
     public static final int MinBodyParts = 4;
-    public static final int MaxBodyParts = 10;
+    public static final int MaxBodyParts = 6;
 
     public static final int MinStatInit = 2;
     public static final int MaxStatInit = 5;
