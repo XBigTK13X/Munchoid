@@ -44,14 +44,16 @@ public class BodyPart {
                 _color = Colors.lighten(_color);
                 break;
         }
-        _position = new Point2(RNG.next(-width, width), RNG.next(-height, height));
+        _position = new Point2(0, 0);
 
         boolean[][] design = Designs.get(_function).create(_width, _height);
         design = Common.trim(design);
         _width = design.length;
         _height = design[0].length;
+        //TODO Remove Logger.info("PART: " +function.name() + ", "+_width +" . " +_height);
 
 
+        _atoms = new Atom[_width][_height];
         //TODO Shading the outer edges w/ a 2px line
         //TODO Single color palette
         for (int ii = 0; ii < _width; ii++) {
@@ -101,7 +103,8 @@ public class BodyPart {
 
     public void draw() {
         Point2 scaledLoc = getPosition().addRaw(_owner.getOwner().getLocation());
-        Renderer.get().draw(_sprite, scaledLoc, DrawDepths.get("Atom"), Color.WHITE, _width * _scale, _height * _scale);
+        //Logger.info(getPosition() + ", " +scaledLoc);
+        Renderer.get().draw(_sprite, scaledLoc, DrawDepths.get("Atom"), Color.WHITE);
     }
 
     public Point2 getPosition() {

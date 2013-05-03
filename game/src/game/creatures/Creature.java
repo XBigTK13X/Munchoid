@@ -18,7 +18,7 @@ public class Creature extends Entity {
     private Creature _opponent;
 
     public Creature(boolean faceLeft, Point2 minDimensions, Point2 maxDimensions) {
-        _body = new Body(this, RNG.next(7, 13), (int) minDimensions.X, (int) minDimensions.Y, (int) maxDimensions.X, (int) maxDimensions.Y);
+        _body = new Body(this, RNG.next(GameConfig.MinBodyParts, GameConfig.MaxBodyParts), (int) minDimensions.X, (int) minDimensions.Y, (int) maxDimensions.X, (int) maxDimensions.Y);
         _entityType = EntityTypes.get("Creature");
         orientX(faceLeft, true);
         _stats = new Stats();

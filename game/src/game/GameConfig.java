@@ -13,6 +13,9 @@ public class GameConfig {
     public static final Point2 MinBodyPartSize = Screen.pos(5, 5);
     public static final Point2 MaxBodyPartSize = Screen.pos(10, 10);
 
+    public static final int MinBodyParts = 4;
+    public static final int MaxBodyParts = 10;
+
     public static final int MinStatInit = 2;
     public static final int MaxStatInit = 5;
 

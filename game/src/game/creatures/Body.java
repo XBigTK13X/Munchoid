@@ -1,6 +1,7 @@
 package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.util.Colors;
@@ -66,6 +67,11 @@ public class Body {
                     break;
                 case HeadDetail:
                     _parts.get(ii).setPosition(RNG.point(0, wd, ph / 3, ph));
+                    break;
+                case Body:
+                    _parts.get(ii).setPosition(new Point2(0, 0));
+                default:
+                    Logger.info("Case not handled while positioning a body part");
                     break;
             }
         }

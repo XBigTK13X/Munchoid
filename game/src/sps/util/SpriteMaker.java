@@ -27,10 +27,15 @@ public class SpriteMaker {
             for (int jj = 0; jj < atoms[0].length; jj++) {
                 at = atoms[ii][jj];
                 if (at != null) {
+                    //System.out.print("1");
                     textureBase.setColor(at.getColor());
                     textureBase.drawPixel((int) at.getLocalX(), atoms[0].length - (int) at.getLocalY());
                 }
+                else {
+                    //System.out.print("0");
+                }
             }
+            //System.out.println();
         }
         return new Sprite(new Texture(textureBase));
     }
