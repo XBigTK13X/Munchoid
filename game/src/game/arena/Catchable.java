@@ -14,16 +14,15 @@ import sps.text.TextPool;
 import sps.util.Screen;
 
 public class Catchable extends Entity {
-    private Creature _creature;
-
+    private static int buffer = (int) ((GameConfig.CreatureLimit / 2) * GameConfig.SpacePercentPerCreature);
     private static final int __moveIncrementsMax = 30;
-    private int _moveIncrements = 0;
-    private int __pace = 10;
 
+    private Creature _creature;
+    private int _moveIncrements = 0;
+    private Point2 _movementTarget = new Point2();
+    private int __pace = 10;
     private float _dX = 0;
     private float _dY = 0;
-
-    private Point2 _movementTarget = new Point2();
 
     public Catchable() {
         initialize(0, 0, Point2.Zero, null, EntityTypes.get("Catchable"), DrawDepths.get("Catchable"));
@@ -31,7 +30,7 @@ public class Catchable extends Entity {
         _creature.getBody().setScale(GameConfig.ArenaCreatureScale);
 
         setSize(_creature.getWidth(), _creature.getHeight());
-        setLocation(Screen.rand(-100, 200, -100, 200));
+        setLocation(Screen.rand(-buffer, 100 + buffer, -buffer, 100 + buffer));
     }
 
     @Override

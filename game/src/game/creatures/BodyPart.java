@@ -138,6 +138,7 @@ public class BodyPart {
             }
         }
         _isAlive = true;
+        createSprite();
     }
 
     public void setPosition(Point2 position) {
