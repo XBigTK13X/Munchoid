@@ -21,16 +21,22 @@ public class ForcesHUD {
         _owner = owner;
         _origin = new Point2(owner.getLocation().X, Renderer.get().VirtualHeight - __heightPercent * Force.values().length - Screen.height(40));
         _meters = new ArrayList<ForceMeter>();
+        int row = Force.values().length;
         for (Force force : Force.values()) {
-            _meters.add(new ForceMeter(force, _owner, __widthPercent, __heightPercent));
+            row--;
+            _meters.add(new ForceMeter(force, _owner, __widthPercent, __heightPercent, _origin, row));
         }
     }
 
     public void draw() {
-        int row = Force.values().length;
         for (ForceMeter meter : _meters) {
-            row--;
-            meter.draw(_origin, row);
+            meter.draw();
+        }
+    }
+
+    public void update() {
+        for (ForceMeter meter : _meters) {
+            meter.update();
         }
     }
 }

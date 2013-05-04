@@ -35,4 +35,11 @@ public class HitTest {
     public static int getDistanceSquare(int x1, int x2, int y1, int y2) {
         return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
     }
+
+    public static boolean inBox(int x, int y, int oX, int oY, int width, int height) {
+        boolean inX = x >= oX && x <= oX + width;
+        boolean inY = y >= oY && y <= oY + height;
+        return inX && inY;
+    }
+
 }

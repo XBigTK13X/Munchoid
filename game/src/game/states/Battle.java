@@ -82,6 +82,8 @@ public class Battle implements State {
             _isPlayerTurn = true;
         }
 
+        _leftUI.update();
+
         if (!_right.getBody().isAlive()) {
             victory();
         }
