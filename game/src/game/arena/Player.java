@@ -2,6 +2,7 @@ package game.arena;
 
 import com.badlogic.gdx.Gdx;
 import game.Game;
+import game.GameConfig;
 import game.creatures.Creature;
 import sps.bridge.*;
 import sps.core.Point2;
@@ -22,14 +23,14 @@ public class Player extends Entity implements IActor {
     private Point2 _movementBuffer;
 
     private Point2 _keyVelocity = new Point2(0, 0);
-    private float _moveDistance = 250;
+    private float _moveDistance = GameConfig.playerSpeed;
 
     private CatchNet _net;
     private Creature _pet;
 
     public Player() {
-        __scrollSpeedX = 250;
-        __scrollSpeedY = 250;
+        __scrollSpeedX = GameConfig.playerSpeed;
+        __scrollSpeedY = GameConfig.playerSpeed;
         _movementBuffer = Screen.pos(45, 45);
 
         initialize(SpsConfig.get().spriteWidth, SpsConfig.get().spriteHeight, Screen.pos(20, 20), SpriteTypes.get("Player_Stand"), EntityTypes.get(Sps.Entities.Actor), DrawDepths.get(Sps.Actors.Player));
