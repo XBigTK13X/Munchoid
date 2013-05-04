@@ -18,7 +18,7 @@ public class ForcesHUD {
     private Creature _owner;
     private List<Sprite> _backgrounds;
     private static final int __widthPercent = 15;
-    private static final int __heightPercent = 3;
+    private static final int __heightPercent = 5;
     private Point2 _origin;
 
     public ForcesHUD(Creature owner) {
@@ -35,7 +35,7 @@ public class ForcesHUD {
                 base[ii][jj] = force.Color;
             }
         }
-        Outline.complimentary(base);
+        Outline.single(base, Color.WHITE);
         return SpriteMaker.get().fromColors(base);
     }
 

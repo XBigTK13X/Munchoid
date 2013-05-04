@@ -60,7 +60,9 @@ public class BodyPart {
                 }
             }
         }
-        Outline.complimentary(_atoms);
+        Color[][] atomColors = AtomHelper.getColors(_atoms);
+        Outline.complimentary(atomColors);
+        AtomHelper.setColors(_atoms, atomColors);
         createSprite();
     }
 
