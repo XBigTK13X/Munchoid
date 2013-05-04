@@ -20,7 +20,7 @@ public class Abrasive extends BaseForce {
         _adjustedMagnitude = _adjustedMagnitude + getPartScale(bodyPart) + RNG.next(0, wiggleRoom * 2) - wiggleRoom;
         if (_adjustedMagnitude > getScaledMagnitude() + wiggleRoom * 3
                 || _adjustedMagnitude < getScaledMagnitude() - wiggleRoom * 3) {
-            _adjustedMagnitude = getScaledMagnitude() + RNG.next(0, wiggleRoom * 2) - wiggleRoom;
+            _adjustedMagnitude = getScaledMagnitude() + getPartScale(bodyPart) + RNG.next(0, wiggleRoom * 2) - wiggleRoom;
         }
         if ((rubX && jj < _adjustedMagnitude && !rubBehind)
                 || (rubX && jj > bodyPart.getAtoms()[0].length - _adjustedMagnitude && rubBehind)

@@ -29,7 +29,7 @@ public class GameConfig {
     public static final int MaxStat = 100;
 
     public static final int SliceScale = 4;
-    public static final int AbrasiveScale = 6;
+    public static final int AbrasiveScale = 10;
     public static final int ExplosiveScale = 15;
     public static final int ContractionScale = 3;
     public static final int VaporizeScale = 10;
