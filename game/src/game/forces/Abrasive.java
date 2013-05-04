@@ -7,6 +7,7 @@ import sps.core.RNG;
 public class Abrasive extends BaseForce {
     private int _adjustedMagnitude;
     private int wiggleRoom = 10;
+    private static final int __wiggleImpact = 3;
     boolean rubX;
     boolean rubBehind;
 
@@ -17,10 +18,11 @@ public class Abrasive extends BaseForce {
 
     @Override
     public boolean forceSpecifics(BodyPart bodyPart, int ii, int jj) {
-        _adjustedMagnitude = _adjustedMagnitude + getPartScale(bodyPart) + RNG.next(0, wiggleRoom * 2) - wiggleRoom;
-        if (_adjustedMagnitude > getScaledMagnitude() + wiggleRoom * 3
-                || _adjustedMagnitude < getScaledMagnitude() - wiggleRoom * 3) {
-            _adjustedMagnitude = getScaledMagnitude() + getPartScale(bodyPart) + RNG.next(0, wiggleRoom * 2) - wiggleRoom;
+        //TODO Explain what this code should be doing
+        _adjustedMagnitude = _adjustedMagnitude + getPartScale(bodyPart) + RNG.next(0, wiggleRoom * (__wiggleImpact - 1)) - wiggleRoom;
+        if (_adjustedMagnitude > getScaledMagnitude() + wiggleRoom * __wiggleImpact
+                || _adjustedMagnitude < getScaledMagnitude() - wiggleRoom * __wiggleImpact) {
+            _adjustedMagnitude = getScaledMagnitude() + getPartScale(bodyPart) + RNG.next(0, wiggleRoom * (__wiggleImpact - 1)) - wiggleRoom;
         }
         if ((rubX && jj < _adjustedMagnitude && !rubBehind)
                 || (rubX && jj > bodyPart.getAtoms()[0].length - _adjustedMagnitude && rubBehind)

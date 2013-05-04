@@ -1,5 +1,6 @@
 package game.states;
 
+import game.battle.ForcesHUD;
 import game.creatures.Creature;
 import game.forces.Force;
 import sps.audio.MusicPlayer;
@@ -20,6 +21,8 @@ public class Battle implements State {
     private boolean _isPlayerTurn = true;
     private Creature _left;
     private Creature _right;
+    private ForcesHUD _leftUI;
+    private ForcesHUD _rightUI;
 
     public Battle(Creature slot1, Creature slot2) {
         _left = slot1;
@@ -39,11 +42,17 @@ public class Battle implements State {
 
         _right.setOpponent(_left);
         _left.setOpponent(_right);
+
+        _leftUI = new ForcesHUD(_left);
+        _rightUI = new ForcesHUD(_right);
     }
 
     @Override
     public void draw() {
         EntityManager.get().draw();
+        //TODO makes these proper entities to enable depth sorting
+        _leftUI.draw();
+        _rightUI.draw();
     }
 
     @Override

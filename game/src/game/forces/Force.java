@@ -1,23 +1,29 @@
 package game.forces;
 
+import com.badlogic.gdx.graphics.Color;
+import game.GameConfig;
 import sps.core.RNG;
+import sps.util.Colors;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 public enum Force {
-    Abrasive,
-    Expansion,
-    Explosive,
-    Slice,
-    Contraction,
-    Vaporize;
+
+    Abrasive(Colors.rgbToColor(GameConfig.ForceColorIntensity, 0, 0)),
+    Expansion(Colors.rgbToColor(0, GameConfig.ForceColorIntensity, 0)),
+    Explosive(Colors.rgbToColor(0, 0, GameConfig.ForceColorIntensity)),
+    Slice(Colors.rgbToColor(GameConfig.ForceColorIntensity, GameConfig.ForceColorIntensity, 0)),
+    Contraction(Colors.rgbToColor(GameConfig.ForceColorIntensity, 0, GameConfig.ForceColorIntensity)),
+    Vaporize(Colors.rgbToColor(0, GameConfig.ForceColorIntensity, GameConfig.ForceColorIntensity));
 
     public final String Command;
+    public final Color Color;
 
-    private Force() {
+    private Force(Color color) {
         Command = "Force" + (ordinal() + 1);
+        Color = color;
     }
 
     public static BaseForce create(Force force, int magnitude) {
