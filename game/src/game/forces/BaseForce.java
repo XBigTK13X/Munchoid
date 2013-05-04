@@ -43,4 +43,8 @@ public abstract class BaseForce {
     public int getScaledMagnitude() {
         return _magnitude * _scale;
     }
+
+    public int getPartScale(BodyPart part) {
+        return (int) ((part.getWidth() + part.getHeight()) / 2 * (getScale() / 100f));
+    }
 }

@@ -16,6 +16,6 @@ public class Contraction extends BaseForce {
 
     @Override
     public void prepareCalculations(BodyPart bodyPart) {
-        bodyPart.setScale(bodyPart.getScale() - bodyPart.getScale() * (RNG.next(getMagnitude(), getScaledMagnitude()) / 100f));
+        bodyPart.setScale(bodyPart.getScale() - bodyPart.getScale() * (RNG.next(getMagnitude(), getScaledMagnitude() + getPartScale(bodyPart)) / 100f));
     }
 }

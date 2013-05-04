@@ -17,7 +17,7 @@ public class Abrasive extends BaseForce {
 
     @Override
     public boolean forceSpecifics(BodyPart bodyPart, int ii, int jj) {
-        _adjustedMagnitude = _adjustedMagnitude + RNG.next(0, wiggleRoom * 2) - wiggleRoom;
+        _adjustedMagnitude = _adjustedMagnitude + getPartScale(bodyPart) + RNG.next(0, wiggleRoom * 2) - wiggleRoom;
         if (_adjustedMagnitude > getScaledMagnitude() + wiggleRoom * 3
                 || _adjustedMagnitude < getScaledMagnitude() - wiggleRoom * 3) {
             _adjustedMagnitude = getScaledMagnitude() + RNG.next(0, wiggleRoom * 2) - wiggleRoom;

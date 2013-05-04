@@ -30,8 +30,8 @@ public class Slice extends BaseForce {
 
     @Override
     public void prepareCalculations(BodyPart bodyPart) {
-        _dX = RNG.coinFlip() ? -1 : 1 * RNG.next(1, getScaledMagnitude());
-        _dY = RNG.coinFlip() ? -1 : 1 * RNG.next(1, getScaledMagnitude());
+        _dX = RNG.coinFlip() ? -1 : 1 * RNG.next(1, getScaledMagnitude() + getPartScale(bodyPart));
+        _dY = RNG.coinFlip() ? -1 : 1 * RNG.next(1, getScaledMagnitude() + getPartScale(bodyPart));
         //TODO This doesn't really make a higher magnitude more useful
         // Higher mag = better chance at picking a direction that does more damage
         _origin = new Point2(RNG.next(0, getScaledMagnitude()), RNG.next(0, getScaledMagnitude()));
