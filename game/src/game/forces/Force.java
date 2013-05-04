@@ -11,12 +11,12 @@ import java.util.List;
 
 public enum Force {
 
-    Abrasive(Colors.rgbToColor(GameConfig.ForceColorIntensity, 0, 0)),
-    Expansion(Colors.rgbToColor(0, GameConfig.ForceColorIntensity, 0)),
-    Explosive(Colors.rgbToColor(0, 0, GameConfig.ForceColorIntensity)),
-    Slice(Colors.rgbToColor(GameConfig.ForceColorIntensity, GameConfig.ForceColorIntensity, 0)),
-    Contraction(Colors.rgbToColor(GameConfig.ForceColorIntensity, 0, GameConfig.ForceColorIntensity)),
-    Vaporize(Colors.rgbToColor(0, GameConfig.ForceColorIntensity, GameConfig.ForceColorIntensity));
+    Abrasive(Colors.rgbToColor(GameConfig.ForceColorIntensity, GameConfig.ForceColorMix, GameConfig.ForceColorMix)),
+    Expansion(Colors.rgbToColor(GameConfig.ForceColorMix, GameConfig.ForceColorIntensity, GameConfig.ForceColorMix)),
+    Explosive(Colors.rgbToColor(GameConfig.ForceColorMix, GameConfig.ForceColorMix, GameConfig.ForceColorIntensity)),
+    Slice(Colors.rgbToColor(GameConfig.ForceColorIntensity, GameConfig.ForceColorIntensity, GameConfig.ForceColorMix)),
+    Contraction(Colors.rgbToColor(GameConfig.ForceColorIntensity, GameConfig.ForceColorMix, GameConfig.ForceColorIntensity)),
+    Vaporize(Colors.rgbToColor(GameConfig.ForceColorMix, GameConfig.ForceColorIntensity, GameConfig.ForceColorIntensity));
 
     public final String Command;
     public final Color Color;

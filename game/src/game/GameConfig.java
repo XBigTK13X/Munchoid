@@ -39,5 +39,6 @@ public class GameConfig {
     public static final float MinScaleDeath = .5f;
     public static final float MaxScaleDeath = 1.5f;
 
-    public static final float ForceColorIntensity = .8f;
+    public static final float ForceColorIntensity = .85f;
+    public static final float ForceColorMix = .4f;
 }
