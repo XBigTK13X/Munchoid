@@ -1,7 +1,6 @@
 package game.creatures.style;
 
 import com.badlogic.gdx.graphics.Color;
-import sps.core.Logger;
 import sps.util.Colors;
 
 public class Outline {
@@ -46,8 +45,6 @@ public class Outline {
         int thicknessY = (int) (colors[0].length * (__thicknessPercent / 100f) + 1);
         boolean[][] shifted = new boolean[colors.length][colors[0].length];
 
-        Logger.info("tX: " + thicknessX + ", tY: " + thicknessY + ", cW: " + colors.length + ", cH: " + colors[0].length);
-
         for (int ii = 0; ii < colors.length; ii++) {
             for (int jj = 0; jj < colors[0].length; jj++) {
                 if (colors[ii][jj] != null) {
@@ -70,7 +67,6 @@ public class Outline {
                         }
                         if (shift && !shifted[ii][jj]) {
                             colors[ii][jj] = picker.convert(colors[ii][jj]);
-                            Logger.info("SHIFT: " + ii + " , " + jj);
                             shifted[ii][jj] = true;
                         }
                     }

@@ -10,25 +10,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ForcesHUD {
-    private static final int __widthPercent = 15;
+    private static final int __widthPercent = 30;
     private static final int __heightPercent = 5;
 
     private Creature _owner;
-    private List<ForceMeter> _backgrounds;
+    private List<ForceMeter> _meters;
     private Point2 _origin;
 
     public ForcesHUD(Creature owner) {
         _owner = owner;
         _origin = new Point2(owner.getLocation().X, Renderer.get().VirtualHeight - __heightPercent * Force.values().length - Screen.height(40));
-        _backgrounds = new ArrayList<ForceMeter>();
+        _meters = new ArrayList<ForceMeter>();
         for (Force force : Force.values()) {
-            _backgrounds.add(new ForceMeter(force, _owner, __widthPercent, __heightPercent));
+            _meters.add(new ForceMeter(force, _owner, __widthPercent, __heightPercent));
         }
     }
 
     public void draw() {
         int row = Force.values().length;
-        for (ForceMeter meter : _backgrounds) {
+        for (ForceMeter meter : _meters) {
             row--;
             meter.draw(_origin, row);
         }

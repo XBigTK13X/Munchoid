@@ -131,4 +131,14 @@ public class Colors {
     public static Color rgbToColor(float r, float g, float b) {
         return new Color(r, g, b, 1);
     }
+
+    public static Color[][] genArr(int width, int height, Color color) {
+        Color[][] base = new Color[width][height];
+        for (int ii = 0; ii < base.length; ii++) {
+            for (int jj = 0; jj < base[0].length; jj++) {
+                base[ii][jj] = color;
+            }
+        }
+        return base;
+    }
 }
