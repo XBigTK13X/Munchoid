@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import sps.bridge.DrawDepth;
 import sps.core.Logger;
 import sps.core.Point2;
@@ -130,7 +131,8 @@ public class Renderer {
     public void draw(Sprite sprite, Point2 position, DrawDepth depth, Color color, boolean flipX, boolean flipY) {
         try {
             render(sprite, position, depth, color, sprite.getWidth(), sprite.getHeight(), flipX ? -1 : 1, flipY ? -1 : 1);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             int x = 0;
         }
     }
@@ -185,7 +187,10 @@ public class Renderer {
     }
 
     public boolean isInView(float x, float y) {
-        return true;
-        //return isInView((int) x, (int) y);
+        return isInView((int) x, (int) y);
+    }
+
+    public Vector2 getBuffer() {
+        return strategy.getBuffer();
     }
 }

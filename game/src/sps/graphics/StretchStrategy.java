@@ -3,6 +3,7 @@ package sps.graphics;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 public class StretchStrategy implements RenderStrategy {
     @Override
@@ -21,5 +22,10 @@ public class StretchStrategy implements RenderStrategy {
     @Override
     public void resize(int width, int height) {
 
+    }
+
+    @Override
+    public Vector2 getBuffer() {
+        return Vector2.Zero;
     }
 }
