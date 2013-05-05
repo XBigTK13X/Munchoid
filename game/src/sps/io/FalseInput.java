@@ -60,12 +60,12 @@ public class FalseInput implements InputProvider {
     }
 
     @Override
-    public int mouseX() {
+    public int x() {
         return 0;
     }
 
     @Override
-    public int mouseY() {
+    public int y() {
         return 0;
     }
 }

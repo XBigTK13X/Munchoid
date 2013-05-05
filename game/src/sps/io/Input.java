@@ -23,6 +23,8 @@ public class Input implements InputProvider {
     // $$$ FIXME (Integer -> PlayerId) Maps a playerId to a context
     private HashMap<Integer, Context> __contexts;
     private boolean __isInputActive = false;
+    private int mouseX;
+    private int mouseY;
 
     public static InputProvider get() {
         return isDisabled() ? falseInstance : instance;
@@ -152,23 +154,24 @@ public class Input implements InputProvider {
         }
 
         provider.pollLocalState();
+        translateMouseCoords();
     }
 
+    private void translateMouseCoords() {
+        float percentX = ((float) Gdx.input.getX()) / Gdx.graphics.getWidth();
+        mouseX = (int) (percentX * Renderer.get().VirtualWidth);
 
-    //Translates mouse coords into virtual resolution
-    @Override
-    public int mouseX() {
-        int raw = Gdx.input.getX();
-        float percent = ((float) raw) / Gdx.graphics.getWidth();
-        return (int) (percent * Renderer.get().VirtualWidth);
+        float percentY = ((float) Gdx.input.getY()) / Gdx.graphics.getHeight();
+        mouseY = Renderer.get().VirtualHeight - (int) (percentY * Renderer.get().VirtualHeight);
     }
 
-    //Translate into virtual resolution
-    //Also flips to match (0,0) in bottom left
     @Override
-    public int mouseY() {
-        int raw = Gdx.input.getY();
-        float percent = ((float) raw) / Gdx.graphics.getHeight();
-        return Renderer.get().VirtualHeight - (int) (percent * Renderer.get().VirtualHeight);
+    public int x() {
+        return mouseX;
+    }
+
+    @Override
+    public int y() {
+        return mouseY;
     }
 }

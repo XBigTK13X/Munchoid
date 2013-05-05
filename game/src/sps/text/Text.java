@@ -110,4 +110,8 @@ public class Text {
     public boolean isCurrent() {
         return _createdDuring == StateManager.get().current();
     }
+
+    public void setPosition(int x, int y) {
+        position.reset(x, y);
+    }
 }

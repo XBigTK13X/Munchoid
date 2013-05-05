@@ -26,7 +26,7 @@ public interface InputProvider {
 
     void update();
 
-    int mouseX();
+    int x();
 
-    int mouseY();
+    int y();
 }
