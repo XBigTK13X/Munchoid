@@ -25,4 +25,8 @@ public interface InputProvider {
     void unlock(Command command, int playerIndex);
 
     void update();
+
+    int mouseX();
+
+    int mouseY();
 }

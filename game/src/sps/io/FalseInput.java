@@ -58,4 +58,14 @@ public class FalseInput implements InputProvider {
     public void update() {
 
     }
+
+    @Override
+    public int mouseX() {
+        return 0;
+    }
+
+    @Override
+    public int mouseY() {
+        return 0;
+    }
 }

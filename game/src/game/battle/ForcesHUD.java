@@ -22,9 +22,13 @@ public class ForcesHUD {
         _origin = new Point2(owner.getLocation().X, Renderer.get().VirtualHeight - __heightPercent * Force.values().length - Screen.height(40));
         _meters = new ArrayList<ForceMeter>();
         int row = Force.values().length;
+        boolean onlyOne = true;
         for (Force force : Force.values()) {
             row--;
-            _meters.add(new ForceMeter(force, _owner, __widthPercent, __heightPercent, _origin, row));
+            if (onlyOne) {
+                _meters.add(new ForceMeter(force, _owner, __widthPercent, __heightPercent, _origin, row));
+                onlyOne = false;
+            }
         }
     }
 

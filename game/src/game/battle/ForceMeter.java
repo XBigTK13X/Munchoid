@@ -1,6 +1,5 @@
 package game.battle;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
@@ -11,6 +10,7 @@ import sps.bridge.DrawDepths;
 import sps.core.Point2;
 import sps.entities.HitTest;
 import sps.graphics.Renderer;
+import sps.io.Input;
 import sps.text.Text;
 import sps.text.TextPool;
 import sps.util.Colors;
@@ -44,17 +44,16 @@ public class ForceMeter {
         _sprite = SpriteMaker.get().fromColors(base);
 
         _meterMessage = force.name();
-        _messageDisplay = TextPool.get().write(_meterMessage, _position);
+        _messageDisplay = TextPool.get().write(_meterMessage, _position.add(_width, _height));
         _messageDisplay.hide();
     }
 
     public void draw() {
         Renderer.get().draw(_background, _position, DrawDepths.get("ForceMeter"), Color.WHITE, _width, _height);
         Renderer.get().draw(_sprite, _position, DrawDepths.get("ForceMeter"), Color.WHITE, _scaledWidth, _height);
-        _messageDisplay.draw();
     }
 
     public void update() {
-        _messageDisplay.setVisible(HitTest.inBox(Gdx.input.getX(), Gdx.input.getY(), (int) _position.X, (int) _position.Y, _width, _height));
+        _messageDisplay.setVisible(HitTest.inBox(Input.get().mouseX(), Input.get().mouseY(), (int) _position.X, (int) _position.Y, _width, _height));
     }
 }

@@ -2,7 +2,6 @@ package game;
 
 
 import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import game.states.PreGame;
 import sps.bridge.Commands;
@@ -46,7 +45,7 @@ public class Game implements ApplicationListener {
     @Override
     public void render() {
         try {
-            Logger.devConsole("" + Gdx.graphics.getFramesPerSecond() + ": " + Gdx.graphics.getDeltaTime());
+            //Logger.devConsole("" + Gdx.graphics.getFramesPerSecond() + ": " + Gdx.graphics.getDeltaTime());
 
             // Update
             Input.get().update();
@@ -72,8 +71,7 @@ public class Game implements ApplicationListener {
             Renderer.get().end();
 
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Logger.exception(e);
         }
     }

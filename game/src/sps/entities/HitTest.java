@@ -1,6 +1,7 @@
 package sps.entities;
 
 import sps.bridge.Sps;
+import sps.core.Logger;
 import sps.core.Point2;
 
 public class HitTest {
@@ -37,8 +38,10 @@ public class HitTest {
     }
 
     public static boolean inBox(int x, int y, int oX, int oY, int width, int height) {
+
         boolean inX = x >= oX && x <= oX + width;
         boolean inY = y >= oY && y <= oY + height;
+        Logger.devConsole(inX + ", " + inY);
         return inX && inY;
     }
 

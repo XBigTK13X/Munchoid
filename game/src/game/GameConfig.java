@@ -4,7 +4,7 @@ import sps.core.Point2;
 import sps.util.Screen;
 
 public class GameConfig {
-    public final static int CreatureLimit = 50;
+    public final static int CreatureLimit = 4;
     public final static int SpacePercentPerCreature = 1;
     public final static float ArenaTimeoutSeconds = .1f;
     public static final float ArenaCreatureScale = .4f;

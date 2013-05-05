@@ -6,6 +6,7 @@ import sps.bridge.Command;
 import sps.bridge.Context;
 import sps.bridge.Contexts;
 import sps.bridge.Sps;
+import sps.graphics.Renderer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,7 +97,7 @@ public class Input implements InputProvider {
 
     @Override
     public boolean isActive(Command command) {
-        return isActive(command,0);
+        return isActive(command, 0);
     }
 
     // If the key is marked to be locked on press and its lock context is
@@ -151,5 +152,23 @@ public class Input implements InputProvider {
         }
 
         provider.pollLocalState();
+    }
+
+
+    //Translates mouse coords into virtual resolution
+    @Override
+    public int mouseX() {
+        int raw = Gdx.input.getX();
+        float percent = ((float) raw) / Gdx.graphics.getWidth();
+        return (int) (percent * Renderer.get().VirtualWidth);
+    }
+
+    //Translate into virtual resolution
+    //Also flips to match (0,0) in bottom left
+    @Override
+    public int mouseY() {
+        int raw = Gdx.input.getY();
+        float percent = ((float) raw) / Gdx.graphics.getHeight();
+        return Renderer.get().VirtualHeight - (int) (percent * Renderer.get().VirtualHeight);
     }
 }
