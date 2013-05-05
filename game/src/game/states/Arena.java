@@ -81,6 +81,11 @@ public class Arena implements State {
 
     @Override
     public void load() {
+        List<Entity> opponents = EntityManager.get().getEntities(EntityTypes.get("Catchable"));
+
+        if (opponents.size() <= 0 && EntityManager.get().getPlayer() != null) {
+            StateManager.get().push(new Tournament((Player) EntityManager.get().getPlayer()));
+        }
         _countDownSeconds = GameConfig.ArenaTimeoutSeconds;
         if (__arenaMusic == null) {
             __arenaMusic = new SingleSongPlayer("ArenaTheme.ogg");
