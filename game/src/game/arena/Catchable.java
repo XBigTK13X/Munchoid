@@ -64,7 +64,7 @@ public class Catchable extends Entity {
                     setInactive();
                 }
                 else {
-                    _creature.addBonus(_creature.getStats().power() - player.getPet().getStats().power());
+                    _creature.addBonus(Math.min(_creature.getStats().power() - player.getPet().getStats().power(), player.getPet().getStats().power()));
                 }
             }
         }
