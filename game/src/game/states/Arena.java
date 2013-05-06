@@ -22,16 +22,24 @@ import sps.util.Screen;
 import java.util.List;
 
 public class Arena implements State {
-    private static final Point2 __timerPos = Screen.pos(5, 95);
     private static SingleSongPlayer __arenaMusic;
 
+    private static final Point2 __timerPos = Screen.pos(5, 95);
     private int _lastTime;
     private float _countDownSeconds;
     private Text _timerText;
 
+    private static final Point2 __creatureTextPos = Screen.pos(55, 95);
+    private Text _creatureText;
+    private int _lastCreatureCount;
+
     private String timeDisplay() {
         return _lastTime == 1 ?
                 "Time Remaining: " + _lastTime + " second" : "Time Remaining: " + _lastTime + " seconds";
+    }
+
+    private String creatureDisplay(int creatureCount) {
+        return "Creatures remaining: " + creatureCount;
     }
 
     @Override
@@ -43,6 +51,7 @@ public class Arena implements State {
         for (int ii = 0; ii < GameConfig.CreatureLimit; ii++) {
             EntityManager.get().addEntity(new Catchable());
         }
+        _creatureText = TextPool.get().write(creatureDisplay(GameConfig.CreatureLimit), __creatureTextPos);
         Logger.info("Atoms: " + Atom.count);
     }
 
@@ -62,10 +71,17 @@ public class Arena implements State {
                 _lastTime = (int) _countDownSeconds;
                 _timerText.setMessage(timeDisplay());
             }
+
             List<Entity> opponents = EntityManager.get().getEntities(EntityTypes.get("Catchable"));
             if (opponents.size() <= 0) {
                 StateManager.get().push(new Tournament((Player) EntityManager.get().getPlayer()));
             }
+
+            if (_lastCreatureCount != opponents.size()) {
+                _lastCreatureCount = opponents.size();
+                _creatureText.setMessage(creatureDisplay(opponents.size()));
+            }
+
             if (_countDownSeconds <= 0 && opponents.size() > 0) {
                 StateManager.get().push(new Battle(player.getPet(), ((Catchable) opponents.get(RNG.next(0, opponents.size()))).getPet()));
             }
