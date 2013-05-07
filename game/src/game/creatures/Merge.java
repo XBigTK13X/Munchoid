@@ -15,14 +15,20 @@ public class Merge {
         pool.addAll(b.getBody().getParts());
         int partMean = pool.size() / 2;
 
-        //TODO Remove both bodies first and choose one
+        List<BodyPart> bodies = new ArrayList<BodyPart>();
+        for (int ii = 0; ii < pool.size(); ii++) {
+            if (pool.get(ii).getFunction() == PartFunction.Body) {
+                bodies.add(pool.remove(ii));
+            }
+        }
+
         while (pool.size() > partMean) {
             pool.remove(RNG.next(0, pool.size()));
         }
+        pool.add(0, bodies.get(RNG.next(0, bodies.size())));
         Creature result = new Creature(new Body(pool));
 
         //Average the stats together
-        int forceRow = 2;
         for (Force force : Force.values()) {
             int average = (a.getStats().get(force) + b.getStats().get(force)) / 2;
             int impact = (int) (average * (RNG.next(GameConfig.MinMergeImpactPercent, GameConfig.MaxMergeImpactPercent) / 100f));
