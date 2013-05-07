@@ -29,4 +29,14 @@ public class AtomHelper {
             }
         }
     }
+
+    public static Atom[][] copy(Atom[][] atoms) {
+        Atom[][] result = new Atom[atoms.length][atoms[0].length];
+        for (int ii = 0; ii < atoms.length; ii++) {
+            for (int jj = 0; jj < atoms[0].length; jj++) {
+                result[ii][jj] = atoms[ii][jj];
+            }
+        }
+        return result;
+    }
 }

@@ -2,6 +2,7 @@ package game.states;
 
 import game.GameConfig;
 import game.creatures.Creature;
+import game.creatures.Merge;
 import game.creatures.Stats;
 import game.forces.Force;
 import sps.audio.MusicPlayer;
@@ -19,6 +20,7 @@ public class MergeOutcome implements State {
     private static SingleSongPlayer __mergeMusic;
     private Creature _defeated;
     private Creature _pet;
+    private Creature _merged;
 
     public MergeOutcome(Creature pet, Creature defeated) {
         _pet = pet;
@@ -27,10 +29,11 @@ public class MergeOutcome implements State {
 
     @Override
     public void create() {
+        //Merge the stats
         TextPool.get().write("Merge Outcome:", Screen.pos(15, 80));
         Stats preMerge = _pet.getStats();
         Stats incoming = _defeated.getStats();
-        Stats merged = new Stats();
+        Stats mergedStats = new Stats();
         int forceRow = 2;
         for (Force force : Force.values()) {
             int average = (preMerge.get(force) + incoming.get(force)) / 2;
@@ -39,23 +42,45 @@ public class MergeOutcome implements State {
                 impact = 1;
             }
 
-            merged.set(force, preMerge.get(force) + impact);
-            String resultText = merged.get(force) == GameConfig.MaxStat ? "MAX" : merged.get(force) + "";
-            TextPool.get().write(force.name() + ": " + preMerge.get(force) + " -> " + resultText, Screen.pos(15, 80 - forceRow * 5));
+            mergedStats.set(force, preMerge.get(force) + impact);
+            String resultText = mergedStats.get(force) == GameConfig.MaxStat ? "MAX" : mergedStats.get(force) + "";
+            String forceChange = force.name() + ": " + preMerge.get(force) + " -> " + resultText;
+            TextPool.get().write(forceChange, Screen.pos(15, 80 - forceRow * 5));
             forceRow++;
         }
-        _pet.setStats(merged);
 
-        //TODO MergeOutcome in size as well as stats
+
+        //Merge the bodies
+        _pet.getBody().restore();
+        _pet.setLocation(Screen.pos(10, 10));
+        _pet.getBody().setScale(.5f);
+        TextPool.get().write("+", Screen.pos(25, 15));
+        _defeated.getBody().restore();
+        _defeated.setLocation(Screen.pos(30, 10));
+        _defeated.getBody().setScale(.5f);
+        TextPool.get().write("=", Screen.pos(45, 15));
+
+
+        //Create a new merged creature
+        _merged = Merge.two(_pet, _defeated);
+        _merged.setStats(mergedStats);
+        _merged.setLocation(Screen.pos(65, 15));
+
+
+        //TODO MergeOutcome in size as well as stats/body
     }
 
     @Override
     public void draw() {
+        _pet.draw();
+        _defeated.draw();
+        _merged.draw();
     }
 
     @Override
     public void update() {
         if (Input.get().isActive(Commands.get("Confirm"), 0)) {
+            _defeated.getBody().kill();
             StateManager.get().pop();
         }
     }

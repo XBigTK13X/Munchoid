@@ -34,6 +34,14 @@ public class Body {
         calculateSize();
     }
 
+    public Body(List<BodyPart> parts) {
+        _parts = new ArrayList<BodyPart>();
+        for (BodyPart part : parts) {
+            _parts.add(new BodyPart(part, this));
+        }
+        calculateSize();
+    }
+
     private void calculateSize() {
         BodyPart body = _parts.get(0);
         body.setPosition(new Point2(0, 0));
@@ -70,8 +78,9 @@ public class Body {
                     break;
                 case Body:
                     _parts.get(ii).setPosition(new Point2(0, 0));
+                    break;
                 default:
-                    Logger.info("Case not handled while positioning a body part");
+                    Logger.info("Case not handled while positioning a body part: " + part.getFunction());
                     break;
             }
         }
@@ -156,5 +165,14 @@ public class Body {
 
     public Creature getOwner() {
         return _owner;
+    }
+
+    public void setOwner(Creature owner) {
+        _owner = owner;
+    }
+
+
+    public List<BodyPart> getParts() {
+        return _parts;
     }
 }

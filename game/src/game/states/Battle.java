@@ -6,6 +6,7 @@ import game.forces.Force;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.entities.EntityManager;
 import sps.io.Input;
@@ -23,6 +24,11 @@ public class Battle implements State {
     private Creature _right;
     private ForcesHUD _leftUI;
     private ForcesHUD _rightUI;
+
+    public Battle() {
+        this(new Creature(), new Creature());
+        Logger.error("ONLY USE THIS METHOD FOR DEBUGGING");
+    }
 
     public Battle(Creature slot1, Creature slot2) {
         _left = slot1;
@@ -93,7 +99,6 @@ public class Battle implements State {
     }
 
     private void victory() {
-        _right.getBody().kill();
         _left.getBody().restore();
         StateManager.get().pop();
         StateManager.get().push(new MergeOutcome(_left, _right));

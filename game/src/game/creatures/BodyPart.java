@@ -66,6 +66,16 @@ public class BodyPart {
         createSprite();
     }
 
+    public BodyPart(BodyPart source, Body owner) {
+        _function = source.getFunction();
+        _owner = owner;
+        _scale = 1f;
+        _atoms = AtomHelper.copy(source.getAtoms());
+        _width = _atoms.length;
+        _height = _atoms[0].length;
+        createSprite();
+    }
+
     private void createSprite() {
         if (_sprite != null) {
             _sprite.getTexture().dispose();
@@ -149,5 +159,9 @@ public class BodyPart {
 
     public PartFunction getFunction() {
         return _function;
+    }
+
+    public void setOwner(Body body) {
+        _owner = body;
     }
 }

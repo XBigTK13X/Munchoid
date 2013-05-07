@@ -28,6 +28,13 @@ public class Creature extends Entity {
         this(faceLeft, GameConfig.MinBodyPartSize, GameConfig.MaxBodyPartSize);
     }
 
+    public Creature(Body body) {
+        _body = body;
+        _entityType = EntityTypes.get("Creature");
+        orientX(false, true);
+        _body.setOwner(this);
+    }
+
     public Creature() {
         this(true, GameConfig.MinBodyPartSize, GameConfig.MaxBodyPartSize);
     }
@@ -97,6 +104,10 @@ public class Creature extends Entity {
 
     public Body getBody() {
         return _body;
+    }
+
+    public void setBody(Body body) {
+        _body = body;
     }
 
     public boolean isLargerThan(Creature target) {
