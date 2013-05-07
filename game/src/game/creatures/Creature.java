@@ -33,6 +33,7 @@ public class Creature extends Entity {
         _entityType = EntityTypes.get("Creature");
         orientX(false, true);
         _body.setOwner(this);
+        _stats = new Stats();
     }
 
     public Creature() {
@@ -130,5 +131,11 @@ public class Creature extends Entity {
 
     public void setOpponent(Creature creature) {
         _opponent = creature;
+    }
+
+    public void reset(Creature source) {
+        _body = source._body;
+        _stats = source._stats;
+        _bonusPoints = source._bonusPoints;
     }
 }

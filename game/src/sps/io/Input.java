@@ -163,8 +163,6 @@ public class Input implements InputProvider {
 
         float percentY = ((float) Gdx.input.getY() - Renderer.get().getBuffer().y) / (Gdx.graphics.getHeight() - Renderer.get().getBuffer().y * 2);
         mouseY = Renderer.get().VirtualHeight - (int) (percentY * Renderer.get().VirtualHeight);
-
-
     }
 
     @Override
