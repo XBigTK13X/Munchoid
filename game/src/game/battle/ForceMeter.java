@@ -29,6 +29,7 @@ public class ForceMeter {
     private Point2 _position;
     private Creature _owner;
     private Force _force;
+    private Color _highlight;
 
     private String _message;
 
@@ -75,15 +76,26 @@ public class ForceMeter {
             }
 
             @Override
+            public void normal() {
+                _highlight = Color.WHITE;
+            }
+
+            @Override
+            public void over() {
+                _highlight = Color.YELLOW;
+            }
+
+            @Override
             public void onClick() {
                 _owner.attack(_force);
+                _highlight = Color.BLUE;
             }
         });
 
     }
 
     public void draw() {
-        Renderer.get().draw(__bg, _position, DrawDepths.get("ForceMeter"), Color.WHITE, _width, _height);
-        Renderer.get().draw(_sprite, _position, DrawDepths.get("ForceMeter"), Color.WHITE, _scaledWidth, _height);
+        Renderer.get().draw(__bg, _position, DrawDepths.get("ForceMeter"), _highlight, _width, _height);
+        Renderer.get().draw(_sprite, _position, DrawDepths.get("ForceMeter"), _highlight, _scaledWidth, _height);
     }
 }

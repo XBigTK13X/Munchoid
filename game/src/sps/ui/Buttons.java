@@ -12,6 +12,10 @@ public class Buttons {
     public interface User {
         Bounds getBounds();
 
+        void normal();
+
+        void over();
+
         void onClick();
     }
 
@@ -52,13 +56,13 @@ public class Buttons {
         for (User user : _users) {
             boolean mouseOver = HitTest.inBox(Input.get().x(), Input.get().y(), user.getBounds());
             boolean mouseDown = Input.get().isMouseDown();
-            if (!mouseOver) {
+            if (!mouseOver || _states.get(user) == State.Clicked) {
                 _states.put(user, State.Outside);
-                //TODO Reset to default
+                user.normal();
             }
             if (mouseOver && !mouseDown) {
                 _states.put(user, State.Over);
-                //TODO change color
+                user.over();
             }
             if (_states.get(user) == State.Over && mouseOver && mouseDown) {
                 _states.put(user, State.Clicked);
