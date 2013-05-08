@@ -39,4 +39,14 @@ public class AtomHelper {
         }
         return result;
     }
+
+    public static void setColor(Atom[][] atoms, Color color) {
+        for (int ii = 0; ii < atoms.length; ii++) {
+            for (int jj = 0; jj < atoms[0].length; jj++) {
+                if (atoms[ii][jj] != null) {
+                    atoms[ii][jj].setColor(color);
+                }
+            }
+        }
+    }
 }

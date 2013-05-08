@@ -132,6 +132,12 @@ public class Colors {
         return new Color(r, g, b, 1);
     }
 
+    public static Color hsvAverage(Color a, Color b) {
+        HSV ha = fromRGB(a);
+        HSV hb = fromRGB(b);
+        return hsv((ha.H + hb.H) / 2, (ha.S + hb.S) / 2, (ha.V + hb.V) / 2);
+    }
+
     public static Color[][] genArr(int width, int height, Color color) {
         Color[][] base = new Color[width][height];
         for (int ii = 0; ii < base.length; ii++) {

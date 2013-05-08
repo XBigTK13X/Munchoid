@@ -1,8 +1,10 @@
 package game.creatures;
 
+import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.forces.Force;
 import sps.core.RNG;
+import sps.util.Colors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +24,13 @@ public class Merge {
             }
         }
 
+        Color mergedColor = Colors.hsvAverage(a.getBody().getColor(), b.getBody().getColor());
+
         while (pool.size() > partMean) {
             pool.remove(RNG.next(0, pool.size()));
         }
         pool.add(0, bodies.get(RNG.next(0, bodies.size())));
-        Creature result = new Creature(new Body(pool));
+        Creature result = new Creature(new Body(pool, mergedColor));
 
         //Average the stats together
         for (Force force : Force.values()) {

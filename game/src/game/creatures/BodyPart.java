@@ -14,14 +14,14 @@ import sps.util.Colors;
 import sps.util.SpriteMaker;
 
 public class BodyPart {
-    Sprite _sprite;
-    Atom[][] _atoms;
-    int _width;
-    int _height;
-    float _percentRequiredToLive = .15f;
-    boolean _isAlive = true;
-    Color _color;
-    float _scale;
+    private Sprite _sprite;
+    private Atom[][] _atoms;
+    private int _width;
+    private int _height;
+    private float _percentRequiredToLive = .15f;
+    private boolean _isAlive = true;
+    private Color _color;
+    private float _scale;
     private PartFunction _function;
     private Body _owner;
     private Point2 _position;
@@ -30,17 +30,7 @@ public class BodyPart {
         _function = function;
         _owner = owner;
         _scale = 1f;
-        _color = owner.getColor();
-        switch (RNG.next(0, 3)) {
-            case 0:
-                break;
-            case 1:
-                _color = Colors.darken(_color);
-                break;
-            case 2:
-                _color = Colors.lighten(_color);
-                break;
-        }
+        chooseColor(owner.getColor());
         _position = new Point2(0, 0);
 
         boolean[][] design = Designs.get(_function).create(width, height);
@@ -60,17 +50,37 @@ public class BodyPart {
                 }
             }
         }
-        Color[][] atomColors = AtomHelper.getColors(_atoms);
-        Outline.complimentary(atomColors);
-        AtomHelper.setColors(_atoms, atomColors);
-        createSprite();
+        applyStyle();
     }
 
-    public BodyPart(BodyPart source, Body owner) {
+    public BodyPart(BodyPart source, Body owner, Color color) {
         _function = source.getFunction();
         _owner = owner;
         _scale = 1f;
+        chooseColor(color);
         _atoms = AtomHelper.copy(source.getAtoms());
+        AtomHelper.setColor(_atoms, _color);
+        applyStyle();
+    }
+
+    private void chooseColor(Color base) {
+        _color = base;
+        switch (RNG.next(0, 3)) {
+            case 0:
+                break;
+            case 1:
+                _color = Colors.darken(_color);
+                break;
+            case 2:
+                _color = Colors.lighten(_color);
+                break;
+        }
+    }
+
+    private void applyStyle() {
+        Color[][] atomColors = AtomHelper.getColors(_atoms);
+        Outline.complimentary(atomColors);
+        AtomHelper.setColors(_atoms, atomColors);
         _width = _atoms.length;
         _height = _atoms[0].length;
         createSprite();

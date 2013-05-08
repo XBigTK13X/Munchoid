@@ -34,10 +34,10 @@ public class Body {
         calculateSize();
     }
 
-    public Body(List<BodyPart> parts) {
+    public Body(List<BodyPart> parts, Color color) {
         _parts = new ArrayList<BodyPart>();
         for (BodyPart part : parts) {
-            _parts.add(new BodyPart(part, this));
+            _parts.add(new BodyPart(part, this, color));
         }
         calculateSize();
     }
@@ -170,7 +170,6 @@ public class Body {
     public void setOwner(Creature owner) {
         _owner = owner;
     }
-
 
     public List<BodyPart> getParts() {
         return _parts;
