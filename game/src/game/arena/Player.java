@@ -23,14 +23,14 @@ public class Player extends Entity implements IActor {
     private Point2 _movementBuffer;
 
     private Point2 _keyVelocity = new Point2(0, 0);
-    private float _moveDistance = GameConfig.playerSpeed;
+    private float _moveDistance = GameConfig.playerTopSpeed;
 
     private CatchNet _net;
     private Creature _pet;
 
     public Player() {
-        __scrollSpeedX = GameConfig.playerSpeed;
-        __scrollSpeedY = GameConfig.playerSpeed;
+        __scrollSpeedX = GameConfig.playerTopSpeed;
+        __scrollSpeedY = GameConfig.playerTopSpeed;
         _movementBuffer = Screen.pos(45, 45);
 
         initialize(SpsConfig.get().spriteWidth, SpsConfig.get().spriteHeight, Screen.pos(20, 20), SpriteTypes.get("Player_Stand"), EntityTypes.get(Sps.Entities.Actor), DrawDepths.get(Sps.Actors.Player));
