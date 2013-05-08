@@ -12,6 +12,7 @@ public class UiElements {
 
     public static void reset() {
         ToolTip.reset();
+        Buttons.reset();
     }
 
     private UiElements() {

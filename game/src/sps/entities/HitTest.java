@@ -2,6 +2,7 @@ package sps.entities;
 
 import sps.bridge.Sps;
 import sps.core.Point2;
+import sps.io.Input;
 import sps.ui.Bounds;
 
 public class HitTest {
@@ -45,5 +46,9 @@ public class HitTest {
 
     public static boolean inBox(int x, int y, Bounds bounds) {
         return inBox(x, y, bounds.X, bounds.Y, bounds.Width, bounds.Height);
+    }
+
+    public static boolean mouseInside(Bounds bounds) {
+        return inBox(Input.get().x(), Input.get().y(), bounds);
     }
 }

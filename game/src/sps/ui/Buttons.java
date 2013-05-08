@@ -1,5 +1,6 @@
 package sps.ui;
 
+import sps.core.Logger;
 import sps.entities.HitTest;
 import sps.io.Input;
 
@@ -65,6 +66,7 @@ public class Buttons {
                 user.over();
             }
             if (_states.get(user) == State.Over && mouseOver && mouseDown) {
+                Logger.info("CLICK");
                 _states.put(user, State.Clicked);
                 user.onClick();
             }

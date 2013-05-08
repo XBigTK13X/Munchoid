@@ -141,6 +141,13 @@ public class Renderer {
         render(sprite, position, depth, color, width, height, 1, 1);
     }
 
+    Point2 pos = new Point2(0, 0);
+
+    public void draw(Sprite sprite, Color color) {
+        pos.reset(sprite.getX(), sprite.getY());
+        render(sprite, pos, null, color, sprite.getWidth(), sprite.getHeight(), 1, 1);
+    }
+
     private void render(Sprite sprite, Point2 position, DrawDepth depth, Color color, float width, float height, float scaleX, float scaleY) {
         sprite.setColor(color);
         sprite.setSize(width, height);

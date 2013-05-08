@@ -64,7 +64,7 @@ public class Arena implements State {
     public void update() {
         EntityManager.get().update();
 
-        Player player = (Player) EntityManager.get().getPlayers().get(0);
+        Player player = (Player) EntityManager.get().getPlayer();
         if (player.getPet() != null) {
             _countDownSeconds -= Gdx.graphics.getDeltaTime();
             if (_lastTime != (int) _countDownSeconds) {
