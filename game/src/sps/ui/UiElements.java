@@ -20,6 +20,7 @@ public class UiElements {
 
     public void update() {
         ToolTip.get().update();
+        Buttons.get().update();
     }
 
     public void draw() {

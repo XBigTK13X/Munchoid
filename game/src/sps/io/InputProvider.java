@@ -29,4 +29,6 @@ public interface InputProvider {
     int x();
 
     int y();
+
+    boolean isMouseDown();
 }

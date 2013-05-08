@@ -68,4 +68,9 @@ public class FalseInput implements InputProvider {
     public int y() {
         return 0;
     }
+
+    @Override
+    public boolean isMouseDown() {
+        return false;
+    }
 }

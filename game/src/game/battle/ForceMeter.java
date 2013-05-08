@@ -12,6 +12,8 @@ import sps.core.Point2;
 import sps.entities.HitTest;
 import sps.graphics.Renderer;
 import sps.io.Input;
+import sps.ui.Bounds;
+import sps.ui.Buttons;
 import sps.ui.ToolTip;
 import sps.util.Colors;
 import sps.util.Screen;
@@ -25,11 +27,14 @@ public class ForceMeter {
     private int _width;
     private int _scaledWidth;
     private Point2 _position;
+    private Creature _owner;
+    private Force _force;
 
     private String _message;
 
     public ForceMeter(Force force, Creature owner, int width, int height, Point2 origin, int row) {
-
+        _owner = owner;
+        _force = force;
         _width = (int) Screen.width(width);
         _height = (int) Screen.height(height);
         _position = new Point2(origin.X, (row * (int) (_height * 1.5)) + origin.Y);
@@ -60,6 +65,18 @@ public class ForceMeter {
             @Override
             public String message() {
                 return _message;
+            }
+        });
+
+        Buttons.get().add(new Buttons.User() {
+            @Override
+            public Bounds getBounds() {
+                return new Bounds(_position.X, _position.Y, _width, _height);
+            }
+
+            @Override
+            public void onClick() {
+                _owner.attack(_force);
             }
         });
 

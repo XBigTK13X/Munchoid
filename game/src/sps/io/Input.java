@@ -174,4 +174,9 @@ public class Input implements InputProvider {
     public int y() {
         return mouseY;
     }
+
+    @Override
+    public boolean isMouseDown() {
+        return Gdx.input.isButtonPressed(com.badlogic.gdx.Input.Buttons.LEFT);
+    }
 }

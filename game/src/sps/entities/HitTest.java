@@ -2,6 +2,7 @@ package sps.entities;
 
 import sps.bridge.Sps;
 import sps.core.Point2;
+import sps.ui.Bounds;
 
 public class HitTest {
     public static boolean isTouching(Entity source, Entity target) {
@@ -39,8 +40,10 @@ public class HitTest {
     public static boolean inBox(int x, int y, int oX, int oY, int width, int height) {
         boolean inX = x >= oX && x <= oX + width;
         boolean inY = y >= oY && y <= oY + height;
-        //Logger.devConsole(inX + ", " + inY + ", " + x + ", " + y + ", " + oX + ", " + oY);
         return inX && inY;
     }
 
+    public static boolean inBox(int x, int y, Bounds bounds) {
+        return inBox(x, y, bounds.X, bounds.Y, bounds.Width, bounds.Height);
+    }
 }
