@@ -33,10 +33,4 @@ public class ForcesHUD {
             meter.draw();
         }
     }
-
-    public void update() {
-        for (ForceMeter meter : _meters) {
-            meter.update();
-        }
-    }
 }

@@ -14,6 +14,7 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.text.TextEffects;
 import sps.text.TextPool;
+import sps.ui.ToolTip;
 import sps.util.Screen;
 
 public class Battle implements State {
@@ -39,14 +40,12 @@ public class Battle implements State {
     public void create() {
         _left.orientX(false, true);
         _right.orientX(true, true);
-        Logger.info("POS1: " + _left.getLocation());
 
         EntityManager.get().addEntity(_right);
         _right.getBody().setScale(1);
         _left.setLocation(__petLocation);
         _left.getBody().setScale(1);
         EntityManager.get().addEntity(_left);
-        Logger.info("POS2: " + _left.getLocation());
         _right.setOpponent(_left);
         _left.setOpponent(_right);
 
@@ -89,8 +88,6 @@ public class Battle implements State {
             _isPlayerTurn = true;
         }
 
-        _leftUI.update();
-
         if (!_right.getBody().isAlive()) {
             victory();
         }
@@ -121,6 +118,7 @@ public class Battle implements State {
     @Override
     public void unload() {
         EntityManager.get().clear();
+        ToolTip.reset();
     }
 
     @Override

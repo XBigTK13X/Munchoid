@@ -19,6 +19,7 @@ import sps.io.Input;
 import sps.particles.ParticleEngine;
 import sps.states.StateManager;
 import sps.text.TextPool;
+import sps.ui.UiElements;
 
 public class Game implements ApplicationListener {
 
@@ -61,17 +62,20 @@ public class Game implements ApplicationListener {
             StateManager.get().update();
             ParticleEngine.get().update();
             TextPool.get().update();
+            UiElements.get().update();
 
             // Render
             Renderer.get().begin();
             StateManager.get().draw();
             ParticleEngine.get().draw();
+            UiElements.get().draw();
             TextPool.get().draw();
             DevConsole.get().draw();
             Renderer.get().end();
 
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Logger.exception(e);
         }
     }

@@ -4,6 +4,7 @@ import sps.audio.MusicPlayer;
 import sps.entities.EntityManager;
 import sps.particles.ParticleEngine;
 import sps.text.TextPool;
+import sps.ui.UiElements;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +34,6 @@ public class StateManager {
 
     private void loadCurrent() {
         //$$$ Logger.info("=== Loading new state: " + state.getName());
-
         if (_components.containsKey(current())) {
             StateDependentComponents components = _components.get(current());
             EntityManager.set(components.entityManager);
@@ -47,7 +47,8 @@ public class StateManager {
             TextPool.reset();
             MusicPlayer.reset();
         }
-
+        //TODO Make UiElements a SDC
+        UiElements.reset();
         current().load();
     }
 

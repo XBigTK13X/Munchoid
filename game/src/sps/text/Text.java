@@ -14,7 +14,7 @@ public class Text {
 
     private State _createdDuring;
 
-    private Point2 position = new Point2(0, 0);
+    private Point2 position;
     private String message;
     private float scale;
     private boolean visible = false;
@@ -28,14 +28,11 @@ public class Text {
 
     public Text() {
         _color = Color.WHITE;
+        position = new Point2(0, 0);
     }
 
     public void reset(Point2 position, String message, float scale, float lifeInSeconds, TextEffect effect) {
         _createdDuring = StateManager.get().current();
-        if (position.equals(Point2.Zero)) {
-            visible = false;
-            return;
-        }
         this.position.copy(position);
         this.message = message;
         this.scale = scale;

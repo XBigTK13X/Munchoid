@@ -3,7 +3,6 @@ package game.creatures;
 import game.GameConfig;
 import game.forces.Force;
 import sps.bridge.EntityTypes;
-import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.Entity;
@@ -45,14 +44,7 @@ public class Creature extends Entity {
             _body.flipX(faceLeft);
         }
         if (updatePos) {
-            if (faceLeft) {
-                Logger.info("Setting right");
-                setLocation(Screen.pos(80, 20));
-            }
-            else {
-                Logger.info("Setting left");
-                setLocation(Screen.pos(20, 20));
-            }
+            setLocation(faceLeft ? Screen.pos(80, 20) : Screen.pos(20, 20));
         }
     }
 
