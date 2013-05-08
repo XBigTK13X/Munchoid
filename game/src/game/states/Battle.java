@@ -39,13 +39,14 @@ public class Battle implements State {
     public void create() {
         _left.orientX(false, true);
         _right.orientX(true, true);
+        Logger.info("POS1: " + _left.getLocation());
 
         EntityManager.get().addEntity(_right);
         _right.getBody().setScale(1);
         _left.setLocation(__petLocation);
         _left.getBody().setScale(1);
         EntityManager.get().addEntity(_left);
-
+        Logger.info("POS2: " + _left.getLocation());
         _right.setOpponent(_left);
         _left.setOpponent(_right);
 

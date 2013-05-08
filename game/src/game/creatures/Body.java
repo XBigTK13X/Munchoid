@@ -36,6 +36,8 @@ public class Body {
 
     public Body(List<BodyPart> parts, Color color) {
         _parts = new ArrayList<BodyPart>();
+        _color = color;
+
         for (BodyPart part : parts) {
             _parts.add(new BodyPart(part, this, color));
         }

@@ -170,8 +170,4 @@ public class BodyPart {
     public PartFunction getFunction() {
         return _function;
     }
-
-    public void setOwner(Body body) {
-        _owner = body;
-    }
 }

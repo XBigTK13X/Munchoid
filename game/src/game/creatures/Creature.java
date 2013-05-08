@@ -3,6 +3,7 @@ package game.creatures;
 import game.GameConfig;
 import game.forces.Force;
 import sps.bridge.EntityTypes;
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.Entity;
@@ -31,7 +32,6 @@ public class Creature extends Entity {
     public Creature(Body body) {
         _body = body;
         _entityType = EntityTypes.get("Creature");
-        orientX(false, true);
         _body.setOwner(this);
         _stats = new Stats();
     }
@@ -46,9 +46,11 @@ public class Creature extends Entity {
         }
         if (updatePos) {
             if (faceLeft) {
+                Logger.info("Setting right");
                 setLocation(Screen.pos(80, 20));
             }
             else {
+                Logger.info("Setting left");
                 setLocation(Screen.pos(20, 20));
             }
         }
@@ -99,16 +101,8 @@ public class Creature extends Entity {
         return _stats;
     }
 
-    public void setStats(Stats stats) {
-        _stats = stats;
-    }
-
     public Body getBody() {
         return _body;
-    }
-
-    public void setBody(Body body) {
-        _body = body;
     }
 
     public boolean isLargerThan(Creature target) {
@@ -135,6 +129,7 @@ public class Creature extends Entity {
 
     public void reset(Creature source) {
         _body = source._body;
+        _body.setOwner(this);
         _stats = source._stats;
         _bonusPoints = source._bonusPoints;
     }
