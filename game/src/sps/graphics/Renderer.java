@@ -131,8 +131,7 @@ public class Renderer {
     public void draw(Sprite sprite, Point2 position, DrawDepth depth, Color color, boolean flipX, boolean flipY) {
         try {
             render(sprite, position, depth, color, sprite.getWidth(), sprite.getHeight(), flipX ? -1 : 1, flipY ? -1 : 1);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             int x = 0;
         }
     }
@@ -143,9 +142,9 @@ public class Renderer {
 
     Point2 pos = new Point2(0, 0);
 
-    public void draw(Sprite sprite, Color color) {
+    public void draw(Sprite sprite) {
         pos.reset(sprite.getX(), sprite.getY());
-        render(sprite, pos, null, color, sprite.getWidth(), sprite.getHeight(), 1, 1);
+        render(sprite, pos, null, sprite.getColor(), sprite.getWidth(), sprite.getHeight(), 1, 1);
     }
 
     private void render(Sprite sprite, Point2 position, DrawDepth depth, Color color, float width, float height, float scaleX, float scaleY) {

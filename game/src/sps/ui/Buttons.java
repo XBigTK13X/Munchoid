@@ -1,6 +1,7 @@
 package sps.ui;
 
-import sps.core.Logger;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.entities.HitTest;
 import sps.io.Input;
 
@@ -10,14 +11,22 @@ import java.util.List;
 import java.util.Map;
 
 public class Buttons {
-    public interface User {
-        Bounds getBounds();
+    public static abstract class User {
+        public abstract Sprite getSprite();
 
-        void normal();
+        public abstract void onClick();
 
-        void over();
+        public void normal() {
+            getSprite().setColor(Color.GRAY);
+        }
 
-        void onClick();
+        public void over() {
+            getSprite().setColor(Color.LIGHT_GRAY);
+        }
+
+        public Bounds getBounds() {
+            return new Bounds(getSprite().getX(), getSprite().getY(), (int) getSprite().getWidth(), (int) getSprite().getHeight());
+        }
     }
 
     private enum State {
@@ -66,7 +75,6 @@ public class Buttons {
                 user.over();
             }
             if (_states.get(user) == State.Over && mouseOver && mouseDown) {
-                Logger.info("CLICK");
                 _states.put(user, State.Clicked);
                 user.onClick();
             }

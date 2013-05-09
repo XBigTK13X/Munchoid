@@ -1,5 +1,6 @@
 package sps.entities;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.bridge.Sps;
 import sps.core.Point2;
 import sps.io.Input;
@@ -48,7 +49,7 @@ public class HitTest {
         return inBox(x, y, bounds.X, bounds.Y, bounds.Width, bounds.Height);
     }
 
-    public static boolean mouseInside(Bounds bounds) {
-        return inBox(Input.get().x(), Input.get().y(), bounds);
+    public static boolean mouseInside(Sprite sprite) {
+        return inBox(Input.get().x(), Input.get().y(), new Bounds(sprite.getX(), sprite.getY(), (int) sprite.getWidth(), (int) sprite.getHeight()));
     }
 }

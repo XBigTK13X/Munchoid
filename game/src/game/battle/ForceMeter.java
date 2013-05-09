@@ -7,12 +7,10 @@ import game.creatures.Creature;
 import game.creatures.style.Outline;
 import game.forces.Force;
 import sps.bridge.Commands;
-import sps.bridge.DrawDepths;
 import sps.core.Point2;
 import sps.entities.HitTest;
 import sps.graphics.Renderer;
 import sps.io.Input;
-import sps.ui.Bounds;
 import sps.ui.Buttons;
 import sps.ui.ToolTip;
 import sps.util.Colors;
@@ -20,8 +18,7 @@ import sps.util.Screen;
 import sps.util.SpriteMaker;
 
 public class ForceMeter {
-    private static Sprite __bg;
-
+    private Sprite _bg;
     private Sprite _sprite;
     private int _height;
     private int _width;
@@ -43,14 +40,17 @@ public class ForceMeter {
         float statPercent = stat / ((float) GameConfig.MaxStat);
         _scaledWidth = (int) (statPercent * _width);
 
-        if (__bg == null) {
-            Color[][] bg = Colors.genArr(width, height, Color.LIGHT_GRAY);
-            __bg = SpriteMaker.get().fromColors(bg);
-        }
+        Color[][] bg = Colors.genArr(width, height, Color.LIGHT_GRAY);
+        _bg = SpriteMaker.get().fromColors(bg);
 
         Color[][] base = Colors.genArr(width, height, force.Color);
         Outline.single(base, Color.WHITE);
         _sprite = SpriteMaker.get().fromColors(base);
+
+        _bg.setSize(_width, _height);
+        _bg.setPosition(_position.X, _position.Y);
+        _sprite.setSize(_scaledWidth, _height);
+        _sprite.setPosition(_position.X, _position.Y);
 
         String input = "[" + Commands.get(force.Command).key().name() + "]";
         String strength = "(" + stat + "/" + GameConfig.MaxStat + ")";
@@ -71,18 +71,8 @@ public class ForceMeter {
 
         Buttons.get().add(new Buttons.User() {
             @Override
-            public Bounds getBounds() {
-                return new Bounds(_position.X, _position.Y, _width, _height);
-            }
-
-            @Override
-            public void normal() {
-                _highlight = Color.WHITE;
-            }
-
-            @Override
-            public void over() {
-                _highlight = Color.YELLOW;
+            public Sprite getSprite() {
+                return _bg;
             }
 
             @Override
@@ -95,7 +85,7 @@ public class ForceMeter {
     }
 
     public void draw() {
-        Renderer.get().draw(__bg, _position, DrawDepths.get("ForceMeter"), _highlight, _width, _height);
-        Renderer.get().draw(_sprite, _position, DrawDepths.get("ForceMeter"), _highlight, _scaledWidth, _height);
+        Renderer.get().draw(_bg);
+        Renderer.get().draw(_sprite);
     }
 }

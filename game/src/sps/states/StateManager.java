@@ -1,7 +1,6 @@
 package sps.states;
 
 import sps.audio.MusicPlayer;
-import sps.core.Logger;
 import sps.entities.EntityManager;
 import sps.particles.ParticleEngine;
 import sps.text.TextPool;
@@ -50,7 +49,6 @@ public class StateManager {
         }
         //TODO Make UiElements a SDC
         UiElements.reset();
-        Logger.info("LOADING: " + current().getName());
         current().load();
     }
 

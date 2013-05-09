@@ -17,7 +17,6 @@ import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.TextPool;
-import sps.ui.Bounds;
 import sps.ui.Buttons;
 import sps.ui.ToolTip;
 import sps.util.Colors;
@@ -32,10 +31,6 @@ public class MergeOutcome implements State {
 
     private Sprite _reject;
     private Sprite _accept;
-    private Color _acceptHighlight;
-    private Color _rejectHighlight;
-    private Bounds _acceptBounds;
-    private Bounds _rejectBounds;
 
     public MergeOutcome(Creature pet, Creature defeated) {
         _pet = pet;
@@ -77,51 +72,28 @@ public class MergeOutcome implements State {
 
             _accept.setPosition(Screen.width(60), Screen.height(80));
             _reject.setPosition(Screen.width(60), Screen.height(60));
-            _rejectBounds = new Bounds(_reject.getX(), _reject.getY(), (int) _reject.getWidth(), (int) _reject.getHeight());
-            _acceptBounds = new Bounds(_accept.getX(), _accept.getY(), (int) _accept.getWidth(), (int) _accept.getHeight());
+
             Buttons.get().add(new Buttons.User() {
 
                 @Override
-                public Bounds getBounds() {
-                    return _acceptBounds;
-                }
-
-                @Override
-                public void normal() {
-                    _acceptHighlight = Color.WHITE;
-                }
-
-                @Override
-                public void over() {
-                    _acceptHighlight = Color.YELLOW;
+                public Sprite getSprite() {
+                    return _accept;
                 }
 
                 @Override
                 public void onClick() {
-                    _acceptHighlight = Color.BLUE;
                     acceptMerge();
                 }
             });
             Buttons.get().add(new Buttons.User() {
 
                 @Override
-                public Bounds getBounds() {
-                    return _rejectBounds;
-                }
-
-                @Override
-                public void normal() {
-                    _rejectHighlight = Color.WHITE;
-                }
-
-                @Override
-                public void over() {
-                    _rejectHighlight = Color.YELLOW;
+                public Sprite getSprite() {
+                    return _reject;
                 }
 
                 @Override
                 public void onClick() {
-                    _rejectHighlight = Color.BLUE;
                     rejectMerge();
                 }
             });
@@ -130,7 +102,7 @@ public class MergeOutcome implements State {
 
             @Override
             public boolean isActive() {
-                return HitTest.mouseInside(_acceptBounds);
+                return HitTest.mouseInside(_accept);
             }
 
             @Override
@@ -143,7 +115,7 @@ public class MergeOutcome implements State {
 
             @Override
             public boolean isActive() {
-                return HitTest.mouseInside(_rejectBounds);
+                return HitTest.mouseInside(_reject);
             }
 
             @Override
@@ -164,8 +136,8 @@ public class MergeOutcome implements State {
         _pet.draw();
         _defeated.draw();
         _merged.draw();
-        Renderer.get().draw(_accept, _acceptHighlight);
-        Renderer.get().draw(_reject, _rejectHighlight);
+        Renderer.get().draw(_accept);
+        Renderer.get().draw(_reject);
     }
 
     private void acceptMerge() {
