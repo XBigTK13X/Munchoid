@@ -78,7 +78,6 @@ public class ForceMeter {
             @Override
             public void onClick() {
                 _owner.attack(_force);
-                _highlight = Color.BLUE;
             }
         });
 
