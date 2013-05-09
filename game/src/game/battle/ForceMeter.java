@@ -6,11 +6,13 @@ import game.GameConfig;
 import game.creatures.Creature;
 import game.creatures.style.Outline;
 import game.forces.Force;
+import game.states.Battle;
 import sps.bridge.Commands;
 import sps.core.Point2;
 import sps.entities.HitTest;
 import sps.graphics.Renderer;
 import sps.io.Input;
+import sps.states.StateManager;
 import sps.ui.Buttons;
 import sps.ui.ToolTip;
 import sps.util.Colors;
@@ -24,14 +26,11 @@ public class ForceMeter {
     private int _width;
     private int _scaledWidth;
     private Point2 _position;
-    private Creature _owner;
     private Force _force;
-    private Color _highlight;
 
     private String _message;
 
     public ForceMeter(Force force, Creature owner, int width, int height, Point2 origin, int row) {
-        _owner = owner;
         _force = force;
         _width = (int) Screen.width(width);
         _height = (int) Screen.height(height);
@@ -77,7 +76,8 @@ public class ForceMeter {
 
             @Override
             public void onClick() {
-                _owner.attack(_force);
+                Battle battle = (Battle) StateManager.get().current();
+                battle.playerAttack(_force);
             }
         });
 

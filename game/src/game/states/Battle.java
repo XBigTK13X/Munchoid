@@ -61,16 +61,21 @@ public class Battle implements State {
         _rightUI.draw();
     }
 
+    public void playerAttack(Force force) {
+        if (_isPlayerTurn) {
+            _left.attack(force);
+            _isPlayerTurn = false;
+        }
+    }
+
     @Override
     public void update() {
         EntityManager.get().update();
-
         if (_isPlayerTurn) {
             for (Force force : Force.values()) {
                 if (Input.get().isActive(Commands.get(force.Command), 0)) {
                     if (_left.getStats().get(force) > 0) {
-                        _left.attack(force);
-                        _isPlayerTurn = false;
+                        playerAttack(force);
                     }
                     else {
                         TextPool.get().write(force.name() + " Disabled", Screen.pos(10, 50), 1f, TextEffects.Fountain);
