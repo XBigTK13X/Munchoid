@@ -23,7 +23,7 @@ public class ToolTip {
     }
 
     private static final Point2 __tooltipOffset = Screen.pos(1, 1);
-    private static final int __fontWidth = 24;
+    private static final int __fontWidth = 25;
     private static final int __fontHeight = __fontWidth * 4;
     private static Sprite __bg;
 

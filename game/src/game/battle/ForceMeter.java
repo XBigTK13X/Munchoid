@@ -51,36 +51,42 @@ public class ForceMeter {
         _sprite.setSize(_scaledWidth, _height);
         _sprite.setPosition(_position.X, _position.Y);
 
-        String input = "[" + Commands.get(force.Command).key().name() + "]";
-        String strength = "(" + stat + "/" + GameConfig.MaxStat + ")";
+        _bg.setColor(Color.GRAY);
+        _sprite.setColor(Color.GRAY);
+        boolean isPlayer = _position.X < Screen.width(50);
+        if (isPlayer) {
+            String input = "[" + Commands.get(force.Command).key().name() + "]";
+            String strength = "(" + stat + "/" + GameConfig.MaxStat + ")";
 
-        _message = force.name() + ": " + strength + input;
+            _message = (stat > GameConfig.DisableStat) ? force.name() + ": " + strength + input : "Disabled";
 
-        ToolTip.get().add(new ToolTip.User() {
-            @Override
-            public boolean isActive() {
-                return _position.X < Screen.width(50) && HitTest.inBox(Input.get().x(), Input.get().y(), (int) _position.X, (int) _position.Y, _width, _height);
+            ToolTip.get().add(new ToolTip.User() {
+                @Override
+                public boolean isActive() {
+                    return HitTest.inBox(Input.get().x(), Input.get().y(), (int) _position.X, (int) _position.Y, _width, _height);
+                }
+
+                @Override
+                public String message() {
+                    return _message;
+                }
+            });
+
+            if (stat > GameConfig.DisableStat) {
+                Buttons.get().add(new Buttons.User() {
+                    @Override
+                    public Sprite getSprite() {
+                        return _bg;
+                    }
+
+                    @Override
+                    public void onClick() {
+                        Battle battle = (Battle) StateManager.get().current();
+                        battle.playerAttack(_force);
+                    }
+                });
             }
-
-            @Override
-            public String message() {
-                return _message;
-            }
-        });
-
-        Buttons.get().add(new Buttons.User() {
-            @Override
-            public Sprite getSprite() {
-                return _bg;
-            }
-
-            @Override
-            public void onClick() {
-                Battle battle = (Battle) StateManager.get().current();
-                battle.playerAttack(_force);
-            }
-        });
-
+        }
     }
 
     public void draw() {
