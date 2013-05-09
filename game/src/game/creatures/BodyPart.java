@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import game.creatures.part.Common;
 import game.creatures.part.Designs;
+import game.creatures.style.BodyRules;
 import game.creatures.style.Outline;
 import sps.bridge.DrawDepths;
 import sps.core.Point2;
@@ -12,6 +13,9 @@ import sps.core.RNG;
 import sps.graphics.Renderer;
 import sps.util.Colors;
 import sps.util.SpriteMaker;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BodyPart {
     private Sprite _sprite;
@@ -25,8 +29,12 @@ public class BodyPart {
     private PartFunction _function;
     private Body _owner;
     private Point2 _position;
+    private BodyPart _parent;
+    private List<BodyPart> _children;
 
     public BodyPart(PartFunction function, int width, int height, Body owner) {
+        _parent = null;
+        _children = new ArrayList<BodyPart>();
         _function = function;
         _owner = owner;
         _scale = 1f;
@@ -59,6 +67,7 @@ public class BodyPart {
         _scale = 1f;
         chooseColor(color);
         _atoms = AtomHelper.copy(source.getAtoms());
+        _position = source.getPosition();
         AtomHelper.setColor(_atoms, _color);
         applyStyle();
     }
@@ -121,8 +130,9 @@ public class BodyPart {
     }
 
     public void draw() {
-        Point2 scaledLoc = new Point2(getPosition().X * _scale, getPosition().Y * _scale);
+        Point2 scaledLoc = new Point2((getPosition().X + (_parent != null ? _parent.getPosition().X : 0)) * _scale, (getPosition().Y + (_parent != null ? _parent.getPosition().Y : 0)) * _scale);
         scaledLoc = scaledLoc.addRaw(_owner.getOwner().getLocation());
+
         Renderer.get().draw(_sprite, scaledLoc, DrawDepths.get("Atom"), Color.WHITE, _width * _scale, _height * _scale);
     }
 
@@ -169,5 +179,27 @@ public class BodyPart {
 
     public PartFunction getFunction() {
         return _function;
+    }
+
+    public void addChild(BodyPart child) {
+        _children.add(child);
+        child.setParent(this);
+    }
+
+    public BodyPart getParent() {
+        return _parent;
+    }
+
+    public void setParent(BodyPart parent) {
+        _parent = parent;
+    }
+
+    public void calculateOrigins() {
+        setPosition(BodyRules.getOrigin(this));
+        if (_children != null && _children.size() > 0) {
+            for (BodyPart part : _children) {
+                part.calculateOrigins();
+            }
+        }
     }
 }

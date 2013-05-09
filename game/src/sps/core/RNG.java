@@ -30,8 +30,9 @@ public class RNG {
         }
         try {
             throw new RuntimeException("You cannot generate a random number if max is less than min!");
-        } catch (Exception e) {
-            Logger.exception(e, false);
+        }
+        catch (Exception e) {
+            Logger.exception(e);
         }
         return 0;
     }

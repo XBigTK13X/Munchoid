@@ -2,8 +2,6 @@ package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
 import game.creatures.style.BodyRules;
-import sps.core.Logger;
-import sps.core.Point2;
 import sps.core.RNG;
 import sps.util.Colors;
 
@@ -23,14 +21,17 @@ public class Body {
         _parts = new ArrayList<BodyPart>();
         BodyPart part;
         _color = Colors.randomPleasant();
-        //1) Pick a part with no dependencies
-        //2) Pick parts that either have no deps, or the first piece picked
-        //3) Continue choosing parts until limit reached
+
         //Logger.info("=== New Creature");
         for (int ii = 0; ii < numberOfParts; ii++) {
             //TODO replace core = size x 2 functionality
             //Logger.info("--> " + function);
-            part = new BodyPart(BodyRules.getSupported(_parts), RNG.next(partWidthMin, partWidthMax), RNG.next(partHeightMin, partHeightMax), this);
+            BodyPart parent = BodyRules.getParent(_parts);
+            PartFunction function = BodyRules.getChildFunction(parent);
+            part = new BodyPart(function, RNG.next(partWidthMin * function.Mult, partWidthMax * function.Mult), RNG.next(partHeightMin * function.Mult, partHeightMax * function.Mult), this);
+            if (parent != null) {
+                parent.addChild(part);
+            }
             _parts.add(part);
         }
         calculateSize();
@@ -43,52 +44,13 @@ public class Body {
         for (BodyPart part : parts) {
             _parts.add(new BodyPart(part, this, color));
         }
+
         calculateSize();
     }
 
     private void calculateSize() {
-        BodyPart body = _parts.get(0);
-        body.setPosition(new Point2(0, 0));
-        int bh = body.getHeight();
-        int bw = body.getWidth();
-        for (int ii = 1; ii < _parts.size(); ii++) {
-            BodyPart part = _parts.get(ii);
-            int pw = part.getWidth();
-            int ph = part.getHeight();
-            int wd = bw - pw;
-            if (wd < 0) {
-                wd = 0;
-            }
-            int hd = bh - ph;
-            if (hd < 0) {
-                hd = 0;
-            }
-
-            //TODO Move this into function
-            switch (part.getFunction()) {
-                case Head:
-                    _parts.get(ii).setPosition(RNG.point(0, bw, bh / 2, bh / 2 + ph / 2));
-                    break;
-                case UpperLimb:
-                    _parts.get(ii).setPosition(RNG.point(bw - pw / 3, bw + pw / 4, bh / 2 - ph / 3, bh / 2 + ph / 3));
-                    break;
-                case LowerLimb:
-                    _parts.get(ii).setPosition(RNG.point(0, wd, -ph, -ph + bh / 5));
-                    break;
-                case BodyDetail:
-                    _parts.get(ii).setPosition(RNG.point(0, wd, 0, hd));
-                    break;
-                case HeadDetail:
-                    _parts.get(ii).setPosition(RNG.point(0, wd, ph / 3, ph));
-                    break;
-                case Body:
-                    _parts.get(ii).setPosition(new Point2(0, 0));
-                    break;
-                default:
-                    Logger.info("Case not handled while positioning a body part: " + part.getFunction());
-                    break;
-            }
-        }
+        //This needs to be the body!
+        _parts.get(0).calculateOrigins();
 
         for (BodyPart part : _parts) {
             if (part.getWidth() + part.getPosition().X > _width) {
@@ -109,6 +71,9 @@ public class Body {
     }
 
     public BodyPart getRandomPart() {
+        if (_parts.size() == 0) {
+            return null;
+        }
         List<Integer> validIndices = new ArrayList<Integer>();
         for (int ii = 0; ii < _parts.size(); ii++) {
             if (_parts.get(ii).isAlive()) {

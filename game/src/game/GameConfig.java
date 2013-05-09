@@ -9,6 +9,7 @@ public class GameConfig {
     public final static float ArenaTimeoutSeconds = 1f;
     public static final float ArenaCreatureScale = .4f;
     public static final int playerTopSpeed = 500;
+    //TODO Smoother movement
     public static final int playerAcceleration = 50;
 
     public final static int TournamentMatches = 3;
