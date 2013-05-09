@@ -11,8 +11,8 @@ public abstract class MusicPlayer {
         __instance = musicPlayer;
     }
 
-    public static void reset(){
-        if(__instance != null){
+    public static void reset() {
+        if (__instance != null) {
             __instance.stop();
         }
         __instance = null;
@@ -27,6 +27,10 @@ public abstract class MusicPlayer {
             else {
                 __instance = new MuteMusicPlayer();
             }
+        }
+        else {
+            __instance.stop();
+            __instance = player;
         }
         return __instance;
     }
@@ -52,5 +56,6 @@ public abstract class MusicPlayer {
     }
 
     public abstract void start();
+
     public abstract void stop();
 }

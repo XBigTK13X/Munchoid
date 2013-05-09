@@ -6,7 +6,8 @@ import sps.util.Screen;
 public class GameConfig {
     public final static int CreatureLimit = 50;
     public final static int SpacePercentPerCreature = 1;
-    public final static float ArenaTimeoutSeconds = 1f;
+    //The length of Quickly.ogg
+    public final static float ArenaTimeoutSeconds = 10f;
     public static final float ArenaCreatureScale = .4f;
     public static final int playerTopSpeed = 500;
     //TODO Smoother movement

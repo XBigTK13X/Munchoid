@@ -2,6 +2,8 @@ package game.arena;
 
 import game.GameConfig;
 import game.creatures.Creature;
+import sps.audio.MusicPlayer;
+import sps.audio.SingleSongPlayer;
 import sps.bridge.DrawDepths;
 import sps.bridge.EntityTypes;
 import sps.core.Point2;
@@ -55,6 +57,8 @@ public class Catchable extends Entity {
             if (player.getPet() == null) {
                 player.setPet(_creature);
                 setInactive();
+                MusicPlayer.get(new SingleSongPlayer("Quickly.ogg"));
+                MusicPlayer.get().start();
             }
             else {
                 if (player.getPet().isLargerThan(_creature)) {

@@ -22,7 +22,6 @@ import sps.util.Screen;
 import java.util.List;
 
 public class Arena implements State {
-    private static SingleSongPlayer __arenaMusic;
 
     private static final Point2 __timerPos = Screen.pos(5, 95);
     private int _lastTime;
@@ -103,10 +102,9 @@ public class Arena implements State {
             StateManager.get().push(new Tournament((Player) EntityManager.get().getPlayer()));
         }
         _countDownSeconds = GameConfig.ArenaTimeoutSeconds;
-        if (__arenaMusic == null) {
-            __arenaMusic = new SingleSongPlayer("ArenaTheme.ogg");
+        if (EntityManager.get().getPlayer() == null) {
+            MusicPlayer.get(new SingleSongPlayer("Anticipation.ogg"));
         }
-        MusicPlayer.get(__arenaMusic);
         MusicPlayer.get().start();
     }
 
