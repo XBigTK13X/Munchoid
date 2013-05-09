@@ -79,10 +79,7 @@ public class BodyRules {
             return new Point2(0, 0);
         }
         int wdP = (int) (((parent.getWidth() - part.getWidth()) / (float) parent.getWidth()) * 100);
-
         int hdP = (int) (((parent.getHeight() - part.getHeight()) / (float) parent.getHeight()) * 100);
-
-        Logger.info("Parent: " + part.getParent().getFunction() + ", Child: " + part.getFunction());
         //Position on parent
         switch (part.getFunction()) {
             case Head:

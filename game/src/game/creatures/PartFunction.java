@@ -1,7 +1,5 @@
 package game.creatures;
 
-import sps.core.RNG;
-
 //TODO Base position for each part?
 
 public enum PartFunction {
@@ -16,9 +14,5 @@ public enum PartFunction {
 
     private PartFunction(int sizeMultiplier) {
         Mult = sizeMultiplier;
-    }
-
-    public static PartFunction nonBody() {
-        return values()[RNG.next(1, values().length)];
     }
 }
