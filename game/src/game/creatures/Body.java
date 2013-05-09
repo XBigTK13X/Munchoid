@@ -1,6 +1,7 @@
 package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
+import game.creatures.style.BodyRules;
 import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
@@ -22,13 +23,14 @@ public class Body {
         _parts = new ArrayList<BodyPart>();
         BodyPart part;
         _color = Colors.randomPleasant();
+        //1) Pick a part with no dependencies
+        //2) Pick parts that either have no deps, or the first piece picked
+        //3) Continue choosing parts until limit reached
         //Logger.info("=== New Creature");
         for (int ii = 0; ii < numberOfParts; ii++) {
-            boolean core = _parts.size() == 0;
-            int mult = core ? 2 : 1;
-            PartFunction function = core ? PartFunction.Body : PartFunction.nonBody();
+            //TODO replace core = size x 2 functionality
             //Logger.info("--> " + function);
-            part = new BodyPart(function, RNG.next(mult * partWidthMin, mult * partWidthMax), RNG.next(mult * partHeightMin, mult * partHeightMax), this);
+            part = new BodyPart(BodyRules.getSupported(_parts), RNG.next(partWidthMin, partWidthMax), RNG.next(partHeightMin, partHeightMax), this);
             _parts.add(part);
         }
         calculateSize();
@@ -62,6 +64,7 @@ public class Body {
                 hd = 0;
             }
 
+            //TODO Move this into function
             switch (part.getFunction()) {
                 case Head:
                     _parts.get(ii).setPosition(RNG.point(0, bw, bh / 2, bh / 2 + ph / 2));
