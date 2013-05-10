@@ -67,4 +67,12 @@ public class RNG {
     public static Point2 point(int minX, int maxX, int minY, int maxY) {
         return new Point2(RNG.next(minX, maxX), RNG.next(minY, maxY));
     }
+
+    public static double next(boolean synced) {
+        return getRand(synced).nextDouble();
+    }
+
+    public static double next() {
+        return next(true);
+    }
 }
