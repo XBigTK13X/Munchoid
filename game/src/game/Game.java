@@ -3,7 +3,6 @@ package game;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import game.states.PreGame;
 import sps.bridge.Commands;
 import sps.bridge.SpriteTypes;
@@ -12,7 +11,6 @@ import sps.core.DevConsole;
 import sps.core.Logger;
 import sps.core.RNG;
 import sps.core.SpsConfig;
-import sps.graphics.Assets;
 import sps.graphics.FrameStrategy;
 import sps.graphics.Renderer;
 import sps.graphics.SpriteSheetManager;
@@ -33,11 +31,6 @@ public class Game implements ApplicationListener {
         Renderer.get().setWindowsBackground(Color.BLACK);
         Renderer.get().setStrategy(new FrameStrategy());
         Renderer.get().setRefreshInstance(this);
-        ShaderProgram shaders = new ShaderProgram(Assets.get().vertexShader(),Assets.get().fragmentShader());
-        if(!shaders.isCompiled()){
-            Logger.exception(new Exception("Shader compilation failed. Here is the GLSL log\n\t"+shaders.getLog()));
-        }
-        Renderer.get().setShader(shaders);
         Input.get().setup(new DefaultStateProvider());
         SpriteSheetManager.setup(SpriteTypes.getDefs());
         StateManager.get().push(new PreGame());
@@ -81,8 +74,7 @@ public class Game implements ApplicationListener {
             Renderer.get().end();
 
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Logger.exception(e);
         }
     }

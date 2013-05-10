@@ -62,9 +62,10 @@ public class Renderer {
         bgColor = Color.WHITE;
         strategy = new StretchStrategy();
         resize(width, height);
+        setShader(Assets.get().defaultShaders());
     }
 
-    public void setShader(ShaderProgram shader){
+    public void setShader(ShaderProgram shader) {
         batch.setShader(shader);
     }
 

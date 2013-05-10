@@ -4,6 +4,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import sps.bridge.SpriteType;
 import sps.bridge.SpriteTypes;
 import sps.core.Loader;
@@ -15,12 +16,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Assets {
-    public FileHandle fragmentShader() {
+    private FileHandle fragmentShader() {
         return new FileHandle(Loader.get().graphics("fragment.glsl"));
     }
 
-    public FileHandle vertexShader(){
+    private FileHandle vertexShader() {
         return new FileHandle(Loader.get().graphics("vertex.glsl"));
+    }
+
+    public ShaderProgram defaultShaders() {
+        ShaderProgram shaders = new ShaderProgram(vertexShader(), fragmentShader());
+        if (!shaders.isCompiled()) {
+            Logger.exception(new Exception("Shader compilation failed. GLSL log:\n\t" + shaders.getLog()));
+        }
+        return shaders;
     }
 
     private enum Sprites {
@@ -82,15 +91,13 @@ public class Assets {
 
         try {
             sprites.put(Sprites.MenuBase, new Sprite(image(__menuBaseSprite)));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Logger.exception("ERROR: Exception while loading the menu base sprite. The HUDs that use it might not be functional.", e, false);
         }
 
         try {
             sprites.put(Sprites.Pixel, new Sprite(image(__pixelSprite)));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Logger.exception("ERROR: Exception while loading the menu base sprite. The HUDs that use it might not be functional.", e, false);
         }
     }
