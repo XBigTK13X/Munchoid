@@ -15,6 +15,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Assets {
+    public FileHandle fragmentShader() {
+        return new FileHandle(Loader.get().graphics("fragment.glsl"));
+    }
+
+    public FileHandle vertexShader(){
+        return new FileHandle(Loader.get().graphics("vertex.glsl"));
+    }
+
     private enum Sprites {
         Particle,
         Pixel,

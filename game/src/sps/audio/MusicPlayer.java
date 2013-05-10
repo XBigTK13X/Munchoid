@@ -29,8 +29,10 @@ public abstract class MusicPlayer {
             }
         }
         else {
-            __instance.stop();
-            __instance = player;
+            if (SpsConfig.get().musicEnabled) {
+                __instance.stop();
+                __instance = player;
+            }
         }
         return __instance;
     }

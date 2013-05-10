@@ -47,14 +47,17 @@ public class BodyPart {
         _height = design[0].length;
         //TODO Remove Logger.info("PART: " +function.name() + ", "+_width +" . " +_height);
 
-
         _atoms = new Atom[_width][_height];
         //TODO Shading the outer edges w/ a 2px line
         //TODO Single color palette
+        int shadeBreadthMax = 30;
+        int shadeBreadth = RNG.next(0, shadeBreadthMax);
+        int shadeAccel = RNG.next(1,shadeBreadthMax/5);
         for (int ii = 0; ii < _width; ii++) {
             for (int jj = 0; jj < _height; jj++) {
                 if (design[ii][jj]) {
-                    _atoms[ii][jj] = new Atom(ii, jj, _color);
+                    _atoms[ii][jj] = new Atom(ii, jj, Colors.shade(_color, shadeBreadth-shadeBreadthMax/2));
+                    shadeBreadth = (shadeBreadth + shadeAccel) % shadeBreadthMax;
                 }
             }
         }

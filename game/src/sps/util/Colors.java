@@ -44,6 +44,18 @@ public class Colors {
         return hsv.toColor();
     }
 
+    public static Color shade(Color color, int breadth){
+        HSV hsv = fromRGB(color);
+        hsv.V = hsv.V * ((100+breadth)/100f);
+        if(hsv.V > 1){
+            hsv.V = 1;
+        }
+        if(hsv.V < 0){
+            hsv.V = 0;
+        }
+        return hsv.toColor();
+    }
+
     public static Color random() {
         return rgb(RNG.next(0, 255, false), RNG.next(0, 255, false), RNG.next(0, 255, false));
     }

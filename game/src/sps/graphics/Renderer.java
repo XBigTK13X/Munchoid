@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import sps.bridge.DrawDepth;
 import sps.core.Logger;
@@ -61,6 +62,10 @@ public class Renderer {
         bgColor = Color.WHITE;
         strategy = new StretchStrategy();
         resize(width, height);
+    }
+
+    public void setShader(ShaderProgram shader){
+        batch.setShader(shader);
     }
 
     public void setRefreshInstance(ApplicationListener app) {
