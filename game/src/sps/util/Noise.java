@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 import sps.core.RNG;
 
 // Based off of: http://devmag.org.za/2009/04/25/perlin-noise/
-public class PerlinNoise {
-    public static float[][] generateWhiteNoise(int width, int height) {
+public class Noise {
+    public static float[][] white(int width, int height) {
         float[][] noise = new float[width][height];
 
         for (int i = 0; i < width; i++) {
@@ -21,12 +21,7 @@ public class PerlinNoise {
         return x0 * (1 - alpha) + alpha * x1;
     }
 
-    public static Color interpolate(Color col0, Color col1, float alpha) {
-        float beta = 1 - alpha;
-        return new Color((col0.r * alpha + col1.r * beta), (col0.g * alpha + col1.g * beta), (col0.b * alpha + col1.b * beta), 1f);
-    }
-
-    public static Color gertColor(Color gradientStart, Color gradientEnd, float t) {
+    public static Color getColor(Color gradientStart, Color gradientEnd, float t) {
         float u = 1 - t;
 
         Color color = new Color(gradientStart.r * u + gradientEnd.r * t, (gradientStart.g * u + gradientEnd.g * t), (gradientStart.b * u + gradientEnd.b * t), 1f);
@@ -42,14 +37,14 @@ public class PerlinNoise {
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                image[i][j] = gertColor(gradientStart, gradientEnd, perlinNoise[i][j]);
+                image[i][j] = getColor(gradientStart, gradientEnd, perlinNoise[i][j]);
             }
         }
 
         return image;
     }
 
-    public static float[][] generateSmoothNoise(float[][] baseNoise, int octave) {
+    public static float[][] smooth(float[][] baseNoise, int octave) {
         int width = baseNoise.length;
         int height = baseNoise[0].length;
 
@@ -86,7 +81,7 @@ public class PerlinNoise {
         return smoothNoise;
     }
 
-    public static float[][] generatePerlinNoise(float[][] baseNoise, int octaveCount) {
+    public static float[][] perlin(float[][] baseNoise, int octaveCount) {
         int width = baseNoise.length;
         int height = baseNoise[0].length;
 
@@ -96,7 +91,7 @@ public class PerlinNoise {
 
         //generate smooth noise
         for (int i = 0; i < octaveCount; i++) {
-            smoothNoise[i] = generateSmoothNoise(baseNoise, i);
+            smoothNoise[i] = smooth(baseNoise, i);
         }
 
         float[][] perlinNoise = new float[width][height];
@@ -126,52 +121,10 @@ public class PerlinNoise {
         return perlinNoise;
     }
 
-    public static float[][] generatePerlinNoise(int width, int height, int octaveCount) {
-        float[][] baseNoise = generateWhiteNoise(width, height);
+    public static float[][] perlin(int width, int height, int octaveCount) {
+        float[][] baseNoise = white(width, height);
 
-        return generatePerlinNoise(baseNoise, octaveCount);
+        return perlin(baseNoise, octaveCount);
     }
-
-    public static Color[][] blendImages(Color[][] image1, Color[][] image2, float[][] perlinNoise) {
-        int width = image1.length;
-        int height = image1[0].length;
-
-        Color[][] image = new Color[width][height];
-
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                image[i][j] = interpolate(image1[i][j], image2[i][j], perlinNoise[i][j]);
-            }
-        }
-
-        return image;
-    }
-
-
-    public static float[][] adjustLevels(float[][] image, float low, float high) {
-        int width = image.length;
-        int height = image[0].length;
-
-        float[][] newImage = new float[width][height];
-
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                float col = image[i][j];
-
-                if (col <= low) {
-                    newImage[i][j] = 0;
-                }
-                else if (col >= high) {
-                    newImage[i][j] = 1;
-                }
-                else {
-                    newImage[i][j] = (col - low) / (high - low);
-                }
-            }
-        }
-
-        return newImage;
-    }
-
 }
 

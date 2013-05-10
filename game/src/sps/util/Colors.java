@@ -30,7 +30,7 @@ public class Colors {
         return new Color(r / base, g / base, b / base, 1f);
     }
 
-    private static float __shadePercent = .9f;
+    private static float __shadePercent = .65f;
 
     public static Color lighten(Color color) {
         HSV hsv = fromRGB(color);
@@ -44,13 +44,13 @@ public class Colors {
         return hsv.toColor();
     }
 
-    public static Color shade(Color color, int breadth){
+    public static Color shade(Color color, int breadth) {
         HSV hsv = fromRGB(color);
-        hsv.V = hsv.V * ((100+breadth)/100f);
-        if(hsv.V > 1){
+        hsv.V = hsv.V * ((100 + breadth) / 100f);
+        if (hsv.V > 1) {
             hsv.V = 1;
         }
-        if(hsv.V < 0){
+        if (hsv.V < 0) {
             hsv.V = 0;
         }
         return hsv.toColor();
@@ -158,5 +158,12 @@ public class Colors {
             }
         }
         return base;
+    }
+
+    private static final int perlinOctaves = 8;
+
+    public static Color[][] getPerlinGrid(int width, int height, Color start, Color end) {
+        float[][] noise = Noise.perlin(width, height, RNG.next(perlinOctaves - 1, perlinOctaves + 1));
+        return Noise.mapGradient(start, end, noise);
     }
 }

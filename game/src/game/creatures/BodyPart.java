@@ -9,7 +9,6 @@ import game.creatures.style.BodyRules;
 import game.creatures.style.Outline;
 import sps.bridge.DrawDepths;
 import sps.core.Point2;
-import sps.core.RNG;
 import sps.graphics.Renderer;
 import sps.util.Colors;
 import sps.util.SpriteMaker;
@@ -38,7 +37,7 @@ public class BodyPart {
         _function = function;
         _owner = owner;
         _scale = 1f;
-        chooseColor(owner.getColor());
+        _color = owner.getColor();
         _position = new Point2(0, 0);
 
         boolean[][] design = Designs.get(_function).create(width, height);
@@ -50,48 +49,42 @@ public class BodyPart {
         _atoms = new Atom[_width][_height];
         //TODO Shading the outer edges w/ a 2px line
         //TODO Single color palette
-        int shadeBreadthMax = 30;
-        int shadeBreadth = RNG.next(0, shadeBreadthMax);
-        int shadeAccel = RNG.next(1,shadeBreadthMax/5);
+        Color[][] textureBase = getTextureBase();
         for (int ii = 0; ii < _width; ii++) {
             for (int jj = 0; jj < _height; jj++) {
                 if (design[ii][jj]) {
-                    _atoms[ii][jj] = new Atom(ii, jj, Colors.shade(_color, shadeBreadth-shadeBreadthMax/2));
-                    shadeBreadth = (shadeBreadth + shadeAccel) % shadeBreadthMax;
+                    _atoms[ii][jj] = new Atom(ii, jj, textureBase[ii][jj]);
                 }
             }
         }
         applyStyle();
     }
 
+    private Color[][] getTextureBase() {
+        return Colors.getPerlinGrid(_width, _height, Colors.darken(_color), Colors.lighten(_color));
+    }
+
     public BodyPart(BodyPart source, Body owner, Color color) {
         _function = source.getFunction();
         _owner = owner;
         _scale = 1f;
-        chooseColor(color);
+        _color = color;
         _atoms = AtomHelper.copy(source.getAtoms());
         _position = source.getPosition();
-        AtomHelper.setColor(_atoms, _color);
-        applyStyle();
-    }
-
-    private void chooseColor(Color base) {
-        _color = base;
-        switch (RNG.next(0, 3)) {
-            case 0:
-                break;
-            case 1:
-                _color = Colors.darken(_color);
-                break;
-            case 2:
-                _color = Colors.lighten(_color);
-                break;
+        _width = source.getWidth();
+        _height = source.getHeight();
+        Color[][] textureBase = getTextureBase();
+        for (int ii = 0; ii < _atoms.length; ii++) {
+            for (int jj = 0; jj < _atoms[0].length; jj++) {
+                _atoms[ii][jj].setColor(textureBase[ii][jj]);
+            }
         }
+        applyStyle();
     }
 
     private void applyStyle() {
         Color[][] atomColors = AtomHelper.getColors(_atoms);
-        Outline.complimentary(atomColors);
+        Outline.single(atomColors, Color.WHITE);
         AtomHelper.setColors(_atoms, atomColors);
         _width = _atoms.length;
         _height = _atoms[0].length;
