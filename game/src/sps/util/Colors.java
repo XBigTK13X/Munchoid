@@ -160,7 +160,7 @@ public class Colors {
         return base;
     }
 
-    private static final int perlinOctaves = 8;
+    private static final int perlinOctaves = 6;
 
     public static Color[][] getPerlinGrid(int width, int height, Color start, Color end) {
         float[][] noise = Noise.perlin(width, height, RNG.next(perlinOctaves - 1, perlinOctaves + 1));

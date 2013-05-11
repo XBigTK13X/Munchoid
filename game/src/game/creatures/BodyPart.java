@@ -76,7 +76,9 @@ public class BodyPart {
         Color[][] textureBase = getTextureBase();
         for (int ii = 0; ii < _atoms.length; ii++) {
             for (int jj = 0; jj < _atoms[0].length; jj++) {
-                _atoms[ii][jj].setColor(textureBase[ii][jj]);
+                if (_atoms[ii][jj] != null) {
+                    _atoms[ii][jj].setColor(textureBase[ii][jj]);
+                }
             }
         }
         applyStyle();
