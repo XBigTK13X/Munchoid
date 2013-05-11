@@ -1,8 +1,10 @@
 package game.forces;
 
 import game.GameConfig;
+import game.creatures.AtomHelper;
 import game.creatures.BodyPart;
 import sps.core.RNG;
+import sps.ui.Bounds;
 
 public class Abrasive extends BaseForce {
     private int _adjustedMagnitude;
@@ -10,6 +12,7 @@ public class Abrasive extends BaseForce {
     private static final int __wiggleImpact = 3;
     boolean rubX;
     boolean rubBehind;
+    private Bounds _edges;
 
     public Abrasive(int magnitude) {
         super(magnitude, GameConfig.AbrasiveScale);
@@ -24,10 +27,10 @@ public class Abrasive extends BaseForce {
                 || _adjustedMagnitude < getScaledMagnitude() - wiggleRoom * __wiggleImpact) {
             _adjustedMagnitude = getScaledMagnitude() + getPartScale(bodyPart) + RNG.next(0, wiggleRoom * (__wiggleImpact - 1)) - wiggleRoom;
         }
-        if ((rubX && jj < _adjustedMagnitude && !rubBehind)
-                || (rubX && jj > bodyPart.getAtoms()[0].length - _adjustedMagnitude && rubBehind)
-                || (!rubX && ii < _adjustedMagnitude && !rubBehind)
-                || (!rubX && ii > bodyPart.getAtoms().length - _adjustedMagnitude && rubBehind)) {
+        if ((rubX && jj < _adjustedMagnitude + _edges.Y && !rubBehind)
+                || (rubX && jj > bodyPart.getAtoms()[0].length - _adjustedMagnitude - _edges.Y2 && rubBehind)
+                || (!rubX && ii < _adjustedMagnitude + _edges.X && !rubBehind)
+                || (!rubX && ii > bodyPart.getAtoms().length - _adjustedMagnitude - _edges.X2 && rubBehind)) {
             return false;
         }
 
@@ -38,5 +41,6 @@ public class Abrasive extends BaseForce {
     public void prepareCalculations(BodyPart bodyPart) {
         rubX = RNG.coinFlip();
         rubBehind = RNG.coinFlip();
+        _edges = AtomHelper.getEdges(bodyPart.getAtoms());
     }
 }

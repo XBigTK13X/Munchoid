@@ -2,6 +2,7 @@ package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
 import sps.core.Logger;
+import sps.ui.Bounds;
 
 public class AtomHelper {
     public static Color[][] getColors(Atom[][] atoms) {
@@ -48,5 +49,65 @@ public class AtomHelper {
                 }
             }
         }
+    }
+
+    public static Bounds getEdges(Atom[][] atoms) {
+        int leftX = 0;
+        boolean found = false;
+        for (int ii = 0; ii < atoms.length; ii++) {
+            for (int jj = 0; jj < atoms[0].length; jj++) {
+                if (atoms[ii][jj] != null && atoms[ii][jj].isActive()) {
+                    leftX = ii;
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                break;
+            }
+        }
+        int rightX = 0;
+        found = false;
+        for (int ii = atoms.length - 1; ii > 0; ii--) {
+            for (int jj = atoms[0].length - 1; jj > 0; jj--) {
+                if (atoms[ii][jj] != null && atoms[ii][jj].isActive()) {
+                    rightX = ii + 1;
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                break;
+            }
+        }
+        int bottomY = 0;
+        found = false;
+        for (int ii = 0; ii < atoms[0].length; ii++) {
+            for (int jj = 0; jj < atoms.length; jj++) {
+                if (atoms[jj][ii] != null && atoms[jj][ii].isActive()) {
+                    bottomY = ii;
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                break;
+            }
+        }
+        int topY = 0;
+        found = false;
+        for (int ii = atoms[0].length - 1; ii > 0; ii--) {
+            for (int jj = atoms.length - 1; jj > 0; jj--) {
+                if (atoms[jj][ii] != null && atoms[jj][ii].isActive()) {
+                    topY = ii + 1;
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                break;
+            }
+        }
+        return new Bounds(leftX, bottomY, rightX, topY);
     }
 }

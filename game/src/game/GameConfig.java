@@ -30,11 +30,11 @@ public class GameConfig {
     public static final int BonusAward = 15;
 
     public static final int DisableStat = 0;
-    public static final int MinStat = 0;
+    public static final int MinStat = 1;
     public static final int MaxStat = 100;
 
     public static final int SliceScale = 4;
-    public static final int AbrasiveScale = 10;
+    public static final int AbrasiveScale = 5;
     public static final int ExplosiveScale = 15;
     public static final int ContractionScale = 3;
     public static final int VaporizeScale = 10;
