@@ -45,8 +45,9 @@ public class Arena implements State {
         _countDownSeconds = GameConfig.ArenaTimeoutSeconds;
         _lastTime = (int) GameConfig.ArenaTimeoutSeconds;
         _timerText = TextPool.get().write(timeDisplay(), __timerPos);
-        EntityManager.get().addEntity(new Floor());
-        EntityManager.get().addEntity(new Player());
+        Floor floor = new Floor();
+        EntityManager.get().addEntity(floor);
+        EntityManager.get().addEntity(new Player(floor));
         for (int ii = 0; ii < GameConfig.CreatureLimit; ii++) {
             EntityManager.get().addEntity(new Catchable());
         }
