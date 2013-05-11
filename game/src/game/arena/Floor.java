@@ -39,4 +39,11 @@ public class Floor extends Entity {
         return _location.add(Renderer.get().getXOffset(), Renderer.get().getYOffset());
     }
 
+    public boolean canMoveToX(float x) {
+        return x > MarginX * -2 && x < 0;
+    }
+
+    public boolean canMoveToY(float y) {
+        return y > MarginY * -2 && y < 0;
+    }
 }

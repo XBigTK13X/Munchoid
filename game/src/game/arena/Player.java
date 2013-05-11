@@ -73,39 +73,46 @@ public class Player extends Entity implements IActor {
     public void update() {
         calculateKeyVelocity();
 
-        float adjX = _keyVelocity.X * Gdx.graphics.getDeltaTime();
-        float adjY = _keyVelocity.Y * Gdx.graphics.getDeltaTime();
-
+        float adjustedXVelocity = _keyVelocity.X * Gdx.graphics.getDeltaTime();
         boolean inBufferX = inXBuffer(0);
-        boolean inBufferY = inYBuffer(0);
+        boolean willBeInBufferX = inXBuffer(adjustedXVelocity);
+        float nextX = getLocation().X + adjustedXVelocity;
 
-        boolean nextMoveInXBuffer = inXBuffer(adjX);
-        boolean nextMoveInYBuffer = inYBuffer(adjY);
-
-
-        if (nextMoveInXBuffer) {
+        int floorVelocityX = _keyVelocity.X == 0 ? 0 : (_keyVelocity.X > 0 ? __scrollSpeedX : -__scrollSpeedX);
+        float nextFloorX = _floor.getLocation().X - floorVelocityX * Gdx.graphics.getDeltaTime();
+        if (willBeInBufferX) {
             move(_keyVelocity.X, 0);
         }
         else {
-            int oX = _keyVelocity.X == 0 ? 0 : (_keyVelocity.X > 0 ? __scrollSpeedX : -__scrollSpeedX);
-
-            //Logger.devConsole("X->FL: os: " + Renderer.get().getXOffset() + ", marg: " + floor.MarginX + ", loc: " + floor.getLocation().X + " , add:" + (floor.getLocation().X - oX * Gdx.graphics.getDeltaTime()));
-            if (_floor.getLocation().X - oX * Gdx.graphics.getDeltaTime() > _floor.MarginX * -2 && _floor.getLocation().X - oX * Gdx.graphics.getDeltaTime() < 0) {
-                Renderer.get().moveOffsets(oX, 0);
+            if (_floor.canMoveToX(nextFloorX) && inBufferX) {
+                Renderer.get().moveOffsets(floorVelocityX, 0);
+            }
+            else {
+                if (adjustedXVelocity > 0 && nextX < Renderer.get().VirtualWidth - getWidth() || adjustedXVelocity < 0 && nextX > 0) {
+                    move(_keyVelocity.X, 0);
+                }
             }
         }
-        if (nextMoveInYBuffer) {
+
+        float adjustedYVelocity = _keyVelocity.Y * Gdx.graphics.getDeltaTime();
+        boolean inBufferY = inYBuffer(0);
+        int floorVelocityY = _keyVelocity.Y == 0 ? 0 : _keyVelocity.Y > 0 ? __scrollSpeedY : -__scrollSpeedY;
+        float nextFloorY = _floor.getLocation().Y - floorVelocityY * Gdx.graphics.getDeltaTime();
+        float nextY = getLocation().Y + adjustedYVelocity;
+
+        if (inYBuffer(adjustedYVelocity)) {
             move(0, _keyVelocity.Y);
         }
         else {
-
-            int oY = _keyVelocity.Y == 0 ? 0 : _keyVelocity.Y > 0 ? __scrollSpeedY : -__scrollSpeedY;
-            //Logger.devConsole("Y->FL: os: " + Renderer.get().getYOffset() + ", marg: " + floor.MarginY + ", loc: " + floor.getLocation().Y + " , add:" + (floor.getLocation().Y - oY * Gdx.graphics.getDeltaTime()));
-            if (_floor.getLocation().Y - oY * Gdx.graphics.getDeltaTime() > _floor.MarginY * -2 && _floor.getLocation().Y - oY * Gdx.graphics.getDeltaTime() < 0) {
-                Renderer.get().moveOffsets(0, oY);
+            if (_floor.canMoveToY(nextFloorY) && inBufferY) {
+                Renderer.get().moveOffsets(0, floorVelocityY);
+            }
+            else {
+                if (adjustedYVelocity > 0 && nextY < Renderer.get().VirtualHeight - getHeight() || adjustedYVelocity < 0 && nextY > 0) {
+                    move(0, _keyVelocity.Y);
+                }
             }
         }
-
 
         if (Input.get().isActive(Commands.get("Confirm"))) {
             _net.use();
