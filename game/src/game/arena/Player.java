@@ -69,10 +69,11 @@ public class Player extends Entity implements IActor {
             move(_keyVelocity.X, 0);
         }
         else {
-            int oX = _keyVelocity.X == 0 ? 0 : _keyVelocity.X > 0 ? __scrollSpeedX : -__scrollSpeedX;
+            int oX = _keyVelocity.X == 0 ? 0 : (_keyVelocity.X > 0 ? __scrollSpeedX : -__scrollSpeedX);
+
             Floor floor = (Floor) EntityManager.get().getEntity(EntityTypes.get("Floor"));
-            Logger.devConsole("FL: loc: " + floor.getLocation().X + " , add:" + (floor.getLocation().X + oX));
-            if (floor.getLocation().X + oX > 0) {
+            Logger.devConsole("X->FL: os: " + Renderer.get().getXOffset() + ", marg: " + floor.MarginX + ", loc: " + floor.getLocation().X + " , add:" + (floor.getLocation().X - oX * Gdx.graphics.getDeltaTime()));
+            if (floor.getLocation().X - oX * Gdx.graphics.getDeltaTime() > floor.MarginX * -2 && floor.getLocation().X - oX * Gdx.graphics.getDeltaTime() < 0) {
                 Renderer.get().moveOffsets(oX, 0);
             }
         }
@@ -80,8 +81,12 @@ public class Player extends Entity implements IActor {
             move(0, _keyVelocity.Y);
         }
         else {
+            Floor floor = (Floor) EntityManager.get().getEntity(EntityTypes.get("Floor"));
             int oY = _keyVelocity.Y == 0 ? 0 : _keyVelocity.Y > 0 ? __scrollSpeedY : -__scrollSpeedY;
-            Renderer.get().moveOffsets(0, oY);
+            Logger.devConsole("Y->FL: os: " + Renderer.get().getYOffset() + ", marg: " + floor.MarginY + ", loc: " + floor.getLocation().Y + " , add:" + (floor.getLocation().Y - oY * Gdx.graphics.getDeltaTime()));
+            if (floor.getLocation().Y - oY * Gdx.graphics.getDeltaTime() > floor.MarginY * -2 && floor.getLocation().Y - oY * Gdx.graphics.getDeltaTime() < 0) {
+                Renderer.get().moveOffsets(0, oY);
+            }
         }
 
 

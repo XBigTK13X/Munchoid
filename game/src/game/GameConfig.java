@@ -46,6 +46,8 @@ public class GameConfig {
     public static final float ForceColorIntensity = .85f;
     public static final float ForceColorMix = .4f;
 
-    public static final int ArenaHeight = 1180;
-    public static final int ArenaWidth = 2020;
+    public static final int ArenaBufferPercent = (int) ((GameConfig.CreatureLimit / 2) * GameConfig.SpacePercentPerCreature);
+    public static final int ArenaHeight = 1080 + (int) Screen.height(ArenaBufferPercent) * 2;
+    public static final int ArenaWidth = 1920 + (int) Screen.width(ArenaBufferPercent) * 2;
+
 }

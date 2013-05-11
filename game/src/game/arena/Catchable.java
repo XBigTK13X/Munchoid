@@ -16,7 +16,7 @@ import sps.text.TextPool;
 import sps.util.Screen;
 
 public class Catchable extends Entity {
-    private static int buffer = (int) ((GameConfig.CreatureLimit / 2) * GameConfig.SpacePercentPerCreature);
+
     private static final int __moveIncrementsMax = 30;
 
     private Creature _creature;
@@ -32,7 +32,7 @@ public class Catchable extends Entity {
         _creature.getBody().setScale(GameConfig.ArenaCreatureScale);
 
         setSize(_creature.getWidth(), _creature.getHeight());
-        setLocation(Screen.rand(-buffer, 100 + buffer, -buffer, 100 + buffer));
+        setLocation(Screen.rand(-GameConfig.ArenaBufferPercent, 100 + GameConfig.ArenaBufferPercent, -GameConfig.ArenaBufferPercent, 100 + GameConfig.ArenaBufferPercent));
     }
 
     @Override
