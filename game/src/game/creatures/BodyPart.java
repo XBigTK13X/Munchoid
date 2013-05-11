@@ -105,6 +105,7 @@ public class BodyPart {
     }
 
     public void setAtoms(Atom[][] atoms) {
+
         _atoms = atoms;
         int maxActive = 0;
         int currentActive = 0;

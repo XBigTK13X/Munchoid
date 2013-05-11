@@ -3,12 +3,11 @@ package game.states;
 import com.badlogic.gdx.Gdx;
 import game.GameConfig;
 import game.arena.Catchable;
+import game.arena.Floor;
 import game.arena.Player;
-import game.creatures.Atom;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.EntityTypes;
-import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.Entity;
@@ -46,12 +45,13 @@ public class Arena implements State {
         _countDownSeconds = GameConfig.ArenaTimeoutSeconds;
         _lastTime = (int) GameConfig.ArenaTimeoutSeconds;
         _timerText = TextPool.get().write(timeDisplay(), __timerPos);
+        EntityManager.get().addEntity(new Floor());
         EntityManager.get().addEntity(new Player());
         for (int ii = 0; ii < GameConfig.CreatureLimit; ii++) {
             EntityManager.get().addEntity(new Catchable());
         }
         _creatureText = TextPool.get().write(creatureDisplay(GameConfig.CreatureLimit), __creatureTextPos);
-        Logger.info("Atoms: " + Atom.count);
+
     }
 
     @Override

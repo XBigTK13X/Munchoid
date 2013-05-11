@@ -45,4 +45,7 @@ public class GameConfig {
 
     public static final float ForceColorIntensity = .85f;
     public static final float ForceColorMix = .4f;
+
+    public static final int ArenaHeight = 1180;
+    public static final int ArenaWidth = 2020;
 }

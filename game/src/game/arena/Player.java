@@ -5,6 +5,7 @@ import game.Game;
 import game.GameConfig;
 import game.creatures.Creature;
 import sps.bridge.*;
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.SpsConfig;
 import sps.entities.Entity;
@@ -69,7 +70,11 @@ public class Player extends Entity implements IActor {
         }
         else {
             int oX = _keyVelocity.X == 0 ? 0 : _keyVelocity.X > 0 ? __scrollSpeedX : -__scrollSpeedX;
-            Renderer.get().moveOffsets(oX, 0);
+            Floor floor = (Floor) EntityManager.get().getEntity(EntityTypes.get("Floor"));
+            Logger.devConsole("FL: loc: " + floor.getLocation().X + " , add:" + (floor.getLocation().X + oX));
+            if (floor.getLocation().X + oX > 0) {
+                Renderer.get().moveOffsets(oX, 0);
+            }
         }
         if (canMoveY) {
             move(0, _keyVelocity.Y);
