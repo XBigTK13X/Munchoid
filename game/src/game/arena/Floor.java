@@ -18,7 +18,7 @@ public class Floor extends Entity {
     public Floor() {
         initialize(0, 0, Point2.Zero, null, EntityTypes.get("Floor"), DrawDepths.get("Floor"));
         MarginX = (GameConfig.ArenaWidth - Renderer.get().VirtualWidth) / 2;
-        MarginY = (GameConfig.ArenaWidth - Renderer.get().VirtualWidth) / 2;
+        MarginY = (GameConfig.ArenaHeight - Renderer.get().VirtualHeight) / 2;
         _background = SpriteMaker.get().fromColors(Colors.getPerlinGrid(GameConfig.ArenaWidth, GameConfig.ArenaHeight, Colors.rgb(55, 30, 15), Colors.rgb(15, 55, 15)));
         setSize((int) _background.getWidth(), (int) _background.getHeight());
         setLocation(new Point2(-MarginX, -MarginY));
