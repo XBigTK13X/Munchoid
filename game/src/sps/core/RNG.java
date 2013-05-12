@@ -4,10 +4,13 @@ import java.util.Random;
 
 public class RNG {
     private static Random SyncedRand;
-    private static Random Rand = new Random();
+    private static Random Rand;
     private static int lastSyncSeed;
 
     private static Random getRand(boolean synced) {
+        if (SyncedRand == null) {
+            seed((int) System.currentTimeMillis());
+        }
         return synced ? SyncedRand : Rand;
     }
 
@@ -74,5 +77,9 @@ public class RNG {
 
     public static double next() {
         return next(true);
+    }
+
+    public static int next(int max) {
+        return next(0, max);
     }
 }
