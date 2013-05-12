@@ -131,7 +131,6 @@ public class BodyPart {
     public void draw() {
         Point2 scaledLoc = new Point2((getPosition().X + (_parent != null ? _parent.getPosition().X : 0)) * _scale, (getPosition().Y + (_parent != null ? _parent.getPosition().Y : 0)) * _scale);
         scaledLoc = scaledLoc.addRaw(_owner.getOwner().getLocation());
-
         Renderer.get().draw(_sprite, scaledLoc, DrawDepths.get("Atom"), Color.WHITE, _width * _scale, _height * _scale);
     }
 

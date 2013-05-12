@@ -126,9 +126,11 @@ public class MergeOutcome implements State {
     }
 
     private Sprite button(Color color) {
-        Color[][] acceptBase = Colors.genArr((int) Screen.width(10), (int) Screen.height(8), color);
-        Outline.complimentary(acceptBase);
-        return SpriteMaker.get().fromColors(acceptBase);
+        int width = (int) Screen.width(10);
+        int height = (int) Screen.height(8);
+        Color[][] base = Colors.genPerlinGrid(width, height, color, Color.BLACK, 7);
+        Outline.single(base, Color.WHITE);
+        return SpriteMaker.get().fromColors(base);
     }
 
     @Override

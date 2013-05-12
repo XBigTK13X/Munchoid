@@ -12,7 +12,6 @@ import sps.core.SpsConfig;
 import sps.entities.Entity;
 import sps.entities.EntityManager;
 import sps.entities.HitTest;
-import sps.graphics.Renderer;
 import sps.util.Screen;
 import sps.util.SpriteMaker;
 
@@ -88,7 +87,7 @@ public class Arrow extends Entity {
             _graphic.draw();
         }
         else {
-            Renderer.get().draw(_target);
+            //Renderer.get().draw(_target);
         }
     }
 }
