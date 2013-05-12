@@ -3,7 +3,6 @@ package game.arena;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
-import game.creatures.Atom;
 import game.creatures.part.Common;
 import sps.bridge.DrawDepths;
 import sps.bridge.EntityTypes;
@@ -21,7 +20,7 @@ import java.util.List;
 
 public class Arrow extends Entity {
     private static final float __radius = Screen.height(6);
-    private static final float __rad2TargetDistance = (float) Math.pow(Screen.height(30), 2);
+    private static final float __rad2TargetDistance = (float) Math.pow(Screen.height(25), 2);
     private Player _owner;
     private Point2 _targetLoc = new Point2(0, 0);
     private Entity _closest;
@@ -34,7 +33,7 @@ public class Arrow extends Entity {
         boolean[][] base = new boolean[(int) GameConfig.MaxBodyPartSize.X][(int) GameConfig.MaxBodyPartSize.Y];
         float radius2 = 8 * (base.length + base[0].length);
         float innerRadius2 = .7f * radius2;
-        Point2 center = new Point2(base.length/2, base[0].length / 2);
+        Point2 center = new Point2(base.length / 2, base[0].length / 2);
         for (int ii = 0; ii < base.length; ii++) {
             for (int jj = 0; jj < base[0].length; jj++) {
                 float dist = HitTest.getDistanceSquare(ii, center.X, jj, center.Y);
@@ -72,7 +71,7 @@ public class Arrow extends Entity {
             double x = Math.cos(rads) * -__radius + _owner.getLocation().X;
             double y = Math.sin(rads) * -__radius + _owner.getLocation().Y;
             _targetLoc.reset((float) x, (float) y);
-            _target.setPosition(_closest.getLocation().X - _target.getWidth()/2, _closest.getLocation().Y  - _target.getHeight()/2);
+            _target.setPosition(_closest.getLocation().X - _target.getWidth() / 2, _closest.getLocation().Y - _target.getHeight() / 2);
             setLocation(_targetLoc);
         }
         if (HitTest.getDistanceSquare(_owner, _closest) <= __rad2TargetDistance) {
