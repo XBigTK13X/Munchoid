@@ -16,7 +16,7 @@ public class Designs {
         tmp.get(PartFunction.Head).add(new RoundHead());
         tmp.get(PartFunction.HeadDetail).add(new RoundEye());
         tmp.get(PartFunction.UpperLimb).add(new QuadArm());
-        tmp.get(PartFunction.BodyDetail).add(new Dots());
+        tmp.get(PartFunction.BodyDetail).add(new PolyAccent());
         tmp.get(PartFunction.Body).add(new RoundedRectangleBody());
         tmp.get(PartFunction.Body).add(new StarFishBody());
         tmp.get(PartFunction.LowerLimb).add(new QuadLeg());

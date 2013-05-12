@@ -8,7 +8,7 @@ public class GameConfig {
     public final static int SpacePercentPerCreature = 1;
     //The length of Quickly.ogg
     public final static float ArenaTimeoutSeconds = 1f;
-    public static final float ArenaCreatureScale = .4f;
+    public static final float ArenaCreatureScale = .6f;
     public static final int playerTopSpeed = 500;
     //TODO Smoother movement
     public static final int playerAcceleration = 50;
