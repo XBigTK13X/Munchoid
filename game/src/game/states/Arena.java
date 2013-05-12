@@ -5,13 +5,17 @@ import game.GameConfig;
 import game.arena.Catchable;
 import game.arena.Floor;
 import game.arena.Player;
+import game.creatures.Creature;
+import game.creatures.Merge;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
+import sps.bridge.Commands;
 import sps.bridge.EntityTypes;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.Entity;
 import sps.entities.EntityManager;
+import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
@@ -82,8 +86,9 @@ public class Arena implements State {
                 _creatureText.setMessage(creatureDisplay(opponents.size()));
             }
 
-            if (_countDownSeconds <= 0 && opponents.size() > 0) {
-                StateManager.get().push(new Battle(player.getPet(), ((Catchable) opponents.get(RNG.next(0, opponents.size()))).getPet()));
+            //TODO Remove debug input helper
+            if (_countDownSeconds <= 0 && opponents.size() > 0 || Input.get().isActive(Commands.get("Push"))) {
+                StateManager.get().push(new Battle(player.getPet(), ((Catchable) opponents.get(RNG.next(0, opponents.size()))).getCreature()));
             }
         }
         else {
@@ -101,6 +106,17 @@ public class Arena implements State {
 
         if (opponents.size() <= 0 && EntityManager.get().getPlayer() != null) {
             StateManager.get().push(new Tournament((Player) EntityManager.get().getPlayer()));
+        }
+
+        if (opponents.size() > 1) {
+            for (int ii = 0; ii + 1 < opponents.size(); ii += 2) {
+                if (opponents.get(ii).isActive() && opponents.get(ii + 1).isActive() && RNG.percent(GameConfig.ArenaMergeChance)) {
+                    Catchable catchable = ((Catchable) opponents.get(ii + 1));
+                    Creature merged = Merge.two(catchable.getCreature(), ((Catchable) opponents.get(ii + 1)).getCreature());
+                    catchable.setCreature(merged);
+                    opponents.get(ii + 1).setInactive();
+                }
+            }
         }
         _countDownSeconds = GameConfig.ArenaTimeoutSeconds;
         if (EntityManager.get().getPlayer() == null) {

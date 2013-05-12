@@ -94,13 +94,20 @@ public class Catchable extends Entity {
         _creature.draw();
     }
 
-    public Creature getPet() {
+    public Creature getCreature() {
         return _creature;
+    }
+
+    public void setCreature(Creature creature) {
+        _creature = creature;
+        setSize(_creature.getWidth(), _creature.getHeight());
+        _creature.getBody().setScale(GameConfig.ArenaCreatureScale);
     }
 
     @Override
     public Point2 getLocation() {
         return _location.add(Renderer.get().getXOffset(), Renderer.get().getYOffset());
     }
+
 
 }

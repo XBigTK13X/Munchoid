@@ -9,7 +9,8 @@ public class GameConfig {
     //The length of Quickly.ogg
     public final static float ArenaTimeoutSeconds = 10f;
     public static final float ArenaCreatureScale = .6f;
-    public static final int playerTopSpeed = 500;
+    public static final int ArenaMergeChance = 60;
+    public static final int PlayerTopSpeed = 500;
     //TODO Smoother movement
     public static final int playerAcceleration = 50;
 

@@ -23,7 +23,7 @@ public class Player extends Entity implements IActor {
     private Point2 _movementBuffer;
 
     private Point2 _keyVelocity = new Point2(0, 0);
-    private float _moveDistance = GameConfig.playerTopSpeed;
+    private float _moveDistance = GameConfig.PlayerTopSpeed;
 
     private CatchNet _net;
     private Creature _pet;
@@ -31,8 +31,8 @@ public class Player extends Entity implements IActor {
     private Floor _floor;
 
     public Player(Floor floor) {
-        __scrollSpeedX = GameConfig.playerTopSpeed;
-        __scrollSpeedY = GameConfig.playerTopSpeed;
+        __scrollSpeedX = GameConfig.PlayerTopSpeed;
+        __scrollSpeedY = GameConfig.PlayerTopSpeed;
         _movementBuffer = Screen.pos(45, 45);
 
         _floor = floor;
