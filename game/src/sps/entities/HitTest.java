@@ -20,7 +20,6 @@ public class HitTest {
     }
 
     public static float getDistanceSquare(Entity source, Entity target)
-
     {
         return getDistanceSquare(source.getLocation().PosX, target.getLocation().PosX, source.getLocation().PosY, target.getLocation().PosY);
     }

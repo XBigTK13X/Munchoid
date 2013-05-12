@@ -40,6 +40,7 @@ public class Player extends Entity implements IActor {
         initialize(SpsConfig.get().spriteWidth, SpsConfig.get().spriteHeight, Screen.pos(20, 20), SpriteTypes.get("Player_Stand"), EntityTypes.get(Sps.Entities.Actor), DrawDepths.get(Sps.Actors.Player));
         _actorType = ActorTypes.get(Sps.Actors.Player);
         _net = new CatchNet(this);
+        EntityManager.get().addEntity(new Arrow(this));
         EntityManager.get().addEntity(_net);
         setLocation(Screen.pos(50, 50));
     }

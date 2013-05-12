@@ -61,7 +61,7 @@ public class BodyPart {
     }
 
     private Color[][] getTextureBase() {
-        return Colors.getPerlinGrid(_width, _height, Colors.darken(_color), Colors.lighten(_color));
+        return Colors.genPerlinGrid(_width, _height, Colors.darken(_color), Colors.lighten(_color));
     }
 
     public BodyPart(BodyPart source, Body owner, Color color) {

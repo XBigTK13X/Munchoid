@@ -162,11 +162,11 @@ public class Colors {
 
     private static final int defaultPerlinSmoothness = 6;
 
-    public static Color[][] getPerlinGrid(int width, int height, Color start, Color end) {
-        return getPerlinGrid(width, height, start, end, RNG.next(defaultPerlinSmoothness - 1, defaultPerlinSmoothness + 1));
+    public static Color[][] genPerlinGrid(int width, int height, Color start, Color end) {
+        return genPerlinGrid(width, height, start, end, RNG.next(defaultPerlinSmoothness - 1, defaultPerlinSmoothness + 1));
     }
 
-    public static Color[][] getPerlinGrid(int width, int height, Color start, Color end, int smoothness) {
+    public static Color[][] genPerlinGrid(int width, int height, Color start, Color end, int smoothness) {
         float[][] noise = Noise.perlin(width, height, smoothness);
         return Noise.mapGradient(start, end, noise);
     }

@@ -23,7 +23,7 @@ public class Floor extends Entity {
         _marginY = (GameConfig.ArenaHeight - Renderer.get().VirtualHeight) / 2;
         Color dirt = Colors.rgb(55, 30, 15);
         Color grass = Colors.rgb(15, 55, 15);
-        Color[][] base = Colors.getPerlinGrid(GameConfig.ArenaWidth, GameConfig.ArenaHeight, grass, dirt, __fieldSmoothness);
+        Color[][] base = Colors.genPerlinGrid(GameConfig.ArenaWidth, GameConfig.ArenaHeight, grass, dirt, __fieldSmoothness);
         _background = SpriteMaker.get().fromColors(base);
         setSize((int) _background.getWidth(), (int) _background.getHeight());
         setLocation(new Point2(-_marginX, -_marginY));
