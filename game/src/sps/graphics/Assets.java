@@ -32,6 +32,10 @@ public class Assets {
         return shaders;
     }
 
+    public File markovSeed() {
+        return Loader.get().data("markov-seed.txt");
+    }
+
     private enum Sprites {
         Particle,
         Pixel,
@@ -91,13 +95,15 @@ public class Assets {
 
         try {
             sprites.put(Sprites.MenuBase, new Sprite(image(__menuBaseSprite)));
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Logger.exception("ERROR: Exception while loading the menu base sprite. The HUDs that use it might not be functional.", e, false);
         }
 
         try {
             sprites.put(Sprites.Pixel, new Sprite(image(__pixelSprite)));
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Logger.exception("ERROR: Exception while loading the menu base sprite. The HUDs that use it might not be functional.", e, false);
         }
     }

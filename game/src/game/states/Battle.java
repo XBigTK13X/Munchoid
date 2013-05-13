@@ -51,6 +51,9 @@ public class Battle implements State {
 
         _leftUI = new ForcesHUD(_left);
         _rightUI = new ForcesHUD(_right);
+
+        TextPool.get().write(_left.getName(), Screen.pos(0, 50).add((int) _left.getLocation().X, 0));
+        TextPool.get().write(_right.getName(), Screen.pos(0, 50).add((int) _right.getLocation().X, 0));
     }
 
     @Override

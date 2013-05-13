@@ -15,25 +15,40 @@ import java.util.Map;
 
 public class Markov {
     private static final String __startId = "$$start$$";
-    private static final String __endId = "$$end$$";
-
-    public static Map<String, ArrayList<String>> markovChain = new HashMap<String, ArrayList<String>>();
 
     public static void main(String[] args) throws IOException {
-        digest("game/assets/data/markov-seed.txt", 3);
-        Logger.info("WORD: " + genWord(9));
+        File corpus = new File("game/assets/data/markov-seed.txt");
+        for (int ii = 0; ii < 10; ii++) {
+            int gramSize = 4;
+            int wordLength = RNG.next(6, 10);
+            Markov markov = Markov.get(corpus, gramSize);
+            Logger.info("WORD: " + markov.makeWord(wordLength) + ", " + gramSize + ", " + wordLength);
+        }
+    }
+
+    private static Map<File, Map<Integer, Markov>> __cachedChains = new HashMap<File, Map<Integer, Markov>>();
+
+    public static Markov get(File seedText, int gramSize) {
+        if (!__cachedChains.containsKey(seedText)) {
+            __cachedChains.put(seedText, new HashMap<Integer, Markov>());
+        }
+        if (!__cachedChains.get(seedText).containsKey(gramSize)) {
+            __cachedChains.get(seedText).put(gramSize, new Markov(seedText, gramSize));
+        }
+        return __cachedChains.get(seedText).get(gramSize);
     }
 
 
-    public static void digest(String corpusPath, int order) {
-        if (markovChain.keySet().size() == 0) {
-            markovChain.put(__startId, new ArrayList<String>());
-            markovChain.put(__endId, new ArrayList<String>());
+    private Map<String, ArrayList<String>> _chain = new HashMap<String, ArrayList<String>>();
+
+    private Markov(File seedText, int gramSize) {
+        if (_chain.keySet().size() == 0) {
+            _chain.put(__startId, new ArrayList<String>());
         }
         try {
-            List<String> words = FileUtils.readLines(new File(corpusPath));
+            List<String> words = FileUtils.readLines(seedText);
             for (String word : words) {
-                addWord(word, order);
+                addWord(word, gramSize);
             }
         }
         catch (IOException e) {
@@ -41,7 +56,7 @@ public class Markov {
         }
     }
 
-    public static void addWord(String word, int order) {
+    private void addWord(String word, int order) {
         if (order < 1) {
             throw new RuntimeException("order must be larger than 0");
         }
@@ -54,52 +69,43 @@ public class Markov {
 
         String[] nGrams = new String[(int) Math.ceil(word.length() / (double) order)];
         for (int ii = 0; ii < word.length(); ii += order) {
-            int index = ii / order;
+            int index = (int) Math.ceil(ii / order);
             nGrams[index] = "";
-            for (int jj = 0; jj < order; jj++) {
-                nGrams[index] += word.charAt(jj);
+            for (int jj = 0; jj < order && jj + index * order < word.length(); jj++) {
+                nGrams[index] += word.charAt(jj + index * order);
             }
         }
+        ArrayList<String> startWords = _chain.get(__startId);
+        if (!startWords.contains(nGrams[0])) {
+            startWords.add(nGrams[0]);
+        }
 
-        for (int ii = 0; ii < nGrams.length; ii++) {
-            if (ii == 0) {
-                ArrayList<String> startWords = markovChain.get(__startId);
-                startWords.add(nGrams[ii]);
-
-                ArrayList<String> suffix = markovChain.get(nGrams[ii]);
-                if (suffix == null) {
-                    suffix = new ArrayList<String>();
-                    suffix.add(nGrams[ii + 1]);
-                    markovChain.put(nGrams[ii], suffix);
-                }
-
+        if (_chain.get(nGrams[0]) == null) {
+            _chain.put(nGrams[0], new ArrayList<String>());
+        }
+        for (int ii = 0; ii < nGrams.length - 1; ii++) {
+            ArrayList<String> suffix = _chain.get(nGrams[ii]);
+            if (suffix == null) {
+                suffix = new ArrayList<String>();
             }
-            else if (ii == nGrams.length - 1) {
-                ArrayList<String> endWords = markovChain.get(__endId);
-                endWords.add(nGrams[ii]);
-
-            }
-            else {
-                ArrayList<String> suffix = markovChain.get(nGrams[ii]);
-                if (suffix == null) {
-                    suffix = new ArrayList<String>();
-                }
-                if (nGrams[ii] != nGrams[ii + 1]) {
-                    suffix.add(nGrams[ii + 1]);
-                    markovChain.put(nGrams[ii], suffix);
-                }
+            if (!nGrams[ii].equals(nGrams[ii + 1])) {
+                suffix.add(nGrams[ii + 1]);
+                _chain.put(nGrams[ii], suffix);
             }
         }
     }
 
-    public static String genWord(int length) {
+    public String makeWord(int length) {
         String result = "";
 
-        ArrayList<String> startWords = markovChain.get(__startId);
+        ArrayList<String> startWords = _chain.get(__startId);
         String nextGram = startWords.get(RNG.next(startWords.size()));
-
+        result += nextGram;
         while (result.length() < length) {
-            ArrayList<String> wordSelection = markovChain.get(nextGram);
+            ArrayList<String> wordSelection = _chain.get(nextGram);
+            if (wordSelection == null) {
+                wordSelection = startWords;
+            }
             nextGram = wordSelection.get(RNG.next(wordSelection.size()));
             result += nextGram;
         }

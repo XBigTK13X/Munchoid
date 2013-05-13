@@ -74,7 +74,8 @@ public class Game implements ApplicationListener {
             Renderer.get().end();
 
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Logger.exception(e);
         }
     }
