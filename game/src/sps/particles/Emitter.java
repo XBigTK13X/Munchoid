@@ -5,7 +5,7 @@ import sps.core.Point2;
 import sps.entities.Entity;
 
 public class Emitter extends PEComponent {
-    private final Particle2[] _particles = new Particle2[10];
+    private Particle2[] _particles = new Particle2[10];
     private int _index = 0;
     ParticleBehavior _behavior;
 
@@ -36,6 +36,9 @@ public class Emitter extends PEComponent {
         IsActive = true;
         _behavior = behavior;
         _index = 0;
+        if (behavior.getParticleCount() > _particles.length) {
+            _particles = new Particle2[behavior.getParticleCount()];
+        }
         while (_index < behavior.getParticleCount()) {
             _particles[_index] = ParticleEngine.get().createParticle(behavior, position, baseColor);
             _index++;
@@ -46,6 +49,9 @@ public class Emitter extends PEComponent {
         IsActive = true;
         _behavior = behavior;
         _index = 0;
+        if (behavior.getParticleCount() > _particles.length) {
+            _particles = new Particle2[behavior.getParticleCount()];
+        }
         while (_index < behavior.getParticleCount()) {
             _particles[_index] = ParticleEngine.get().createParticle(behavior, entity, baseColor);
             _index++;

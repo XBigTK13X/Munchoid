@@ -1,9 +1,12 @@
 package game.forces;
 
+import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.creatures.BodyPart;
 import sps.core.Point2;
 import sps.core.RNG;
+import sps.particles.ParticleEngine;
+import sps.particles.behaviors.SliceBehavior;
 import sps.util.MathHelper;
 
 public class Slice extends BaseForce {
@@ -41,5 +44,6 @@ public class Slice extends BaseForce {
 
     @Override
     public void animate(BodyPart part) {
+        ParticleEngine.get().emit(SliceBehavior.getInstance(), part.getGlobalPosition(), Color.WHITE);
     }
 }
