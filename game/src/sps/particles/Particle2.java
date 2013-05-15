@@ -57,7 +57,7 @@ public class Particle2 extends PEComponent {
 
     private void init(ParticleBehavior behavior, Point2 position, Entity entity, Color baseColor) {
 
-        _sprite = SpriteMaker.get().fromColors(Colors.genArr((int) Width, (int) Height, Color.BLACK));
+        _sprite = SpriteMaker.get().fromColors(Colors.genArr((int) Width, (int) Height, baseColor));
         _behavior = behavior;
         if (position != null) {
             Origin.reset(position.X, position.Y);
