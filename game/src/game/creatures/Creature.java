@@ -14,7 +14,7 @@ import sps.util.Markov;
 import sps.util.Screen;
 
 public class Creature extends Entity {
-    private static final Markov __nameGenerator = Markov.get(Assets.get().markovSeed(), 3);
+    private static final Markov __nameGenerator = Markov.get(Assets.get().markovSeed(), 2);
 
     private Body _body;
     private Stats _stats;
@@ -125,10 +125,11 @@ public class Creature extends Entity {
     }
 
     public void reset(Creature source) {
-        _body = source._body;
+        _body = source.getBody();
         _body.setOwner(this);
-        _stats = source._stats;
+        _stats = source.getStats();
         _bonusPoints = source._bonusPoints;
+        _name = source.getName();
     }
 
     public String getName() {

@@ -16,7 +16,6 @@ public class Merge {
         List<BodyPart> pool = new ArrayList<BodyPart>();
         pool.addAll(a.getBody().getParts());
         pool.addAll(b.getBody().getParts());
-        int partMean = pool.size() / 2;
 
         List<BodyPart> bodies = new ArrayList<BodyPart>();
         for (int ii = 0; ii < pool.size(); ii++) {
@@ -25,6 +24,7 @@ public class Merge {
             }
         }
 
+        int partMean = pool.size() / 2;
         Color mergedColor = Colors.hsvAverage(a.getBody().getColor(), b.getBody().getColor());
 
         while (pool.size() > partMean) {
@@ -34,6 +34,8 @@ public class Merge {
             pool.add(0, bodies.get(RNG.next(0, bodies.size())));
         }
         catch (Exception e) {
+            //TODO simplify the merge ALG so that this bug doesn't randomly pop up
+            Logger.info("This is a bug that continues to occur, but I need more data to figure out what's causing it.");
             Logger.exception(e);
         }
         Creature result = new Creature(new Body(pool, mergedColor));
