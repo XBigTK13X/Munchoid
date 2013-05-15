@@ -14,22 +14,23 @@ public abstract class BaseForce {
         _scale = scale;
     }
 
-    public void apply(BodyPart bodyPart) {
-        Atom[][] atoms = bodyPart.getAtoms();
-        prepareCalculations(bodyPart);
+    public void apply(BodyPart part) {
+        Atom[][] atoms = part.getAtoms();
+        animate(part);
+        prepareCalculations(part);
         for (int ii = 0; ii < atoms.length; ii++) {
             for (int jj = 0; jj < atoms[ii].length; jj++) {
                 if (atoms[ii][jj] != null) {
-                    atoms[ii][jj].setActive(forceSpecifics(bodyPart, ii, jj));
+                    atoms[ii][jj].setActive(forceSpecifics(part, ii, jj));
                 }
             }
         }
-        bodyPart.setAtoms(atoms);
+        part.setAtoms(atoms);
     }
 
-    public abstract boolean forceSpecifics(BodyPart bodyPart, int ii, int jj);
+    public abstract boolean forceSpecifics(BodyPart part, int ii, int jj);
 
-    public void prepareCalculations(BodyPart bodyPart) {
+    public void prepareCalculations(BodyPart part) {
     }
 
     public int getMagnitude() {
@@ -47,4 +48,6 @@ public abstract class BaseForce {
     public int getPartScale(BodyPart part) {
         return (int) ((part.getWidth() + part.getHeight()) / 2 * (getScale() / 100f));
     }
+
+    public abstract void animate(BodyPart part);
 }

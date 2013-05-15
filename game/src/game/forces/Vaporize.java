@@ -10,7 +10,11 @@ public class Vaporize extends BaseForce {
     }
 
     @Override
-    public boolean forceSpecifics(BodyPart bodyPart, int ii, int jj) {
-        return RNG.percent(getScaledMagnitude() + getPartScale(bodyPart)) ? false : bodyPart.getAtoms()[ii][jj].isActive();
+    public boolean forceSpecifics(BodyPart part, int ii, int jj) {
+        return RNG.percent(getScaledMagnitude() + getPartScale(part)) ? false : part.getAtoms()[ii][jj].isActive();
+    }
+
+    @Override
+    public void animate(BodyPart part) {
     }
 }

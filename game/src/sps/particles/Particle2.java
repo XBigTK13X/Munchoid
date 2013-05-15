@@ -9,13 +9,14 @@ import sps.core.RNG;
 import sps.entities.Entity;
 import sps.graphics.Animation;
 import sps.util.MathHelper;
+import sps.util.Screen;
 
 public class Particle2 extends PEComponent {
     public static final int DefaultLife = 100;
     public static final SpriteType DefaultSpriteType = SpriteTypes.get(Sps.Particle);
 
-    public float Height = 1;
-    public float Width = 1;
+    public float Height = Screen.width(1);
+    public float Width = Screen.width(1);
 
     private float _life = DefaultLife;
     private final Animation _graphic = new Animation();

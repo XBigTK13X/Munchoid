@@ -10,12 +10,16 @@ public class Contraction extends BaseForce {
     }
 
     @Override
-    public boolean forceSpecifics(BodyPart bodyPart, int ii, int jj) {
-        return bodyPart.getAtoms()[ii][jj].isActive();
+    public boolean forceSpecifics(BodyPart part, int ii, int jj) {
+        return part.getAtoms()[ii][jj].isActive();
     }
 
     @Override
-    public void prepareCalculations(BodyPart bodyPart) {
-        bodyPart.setScale(bodyPart.getScale() - bodyPart.getScale() * (RNG.next(getMagnitude(), getScaledMagnitude() + getPartScale(bodyPart)) / 100f));
+    public void prepareCalculations(BodyPart part) {
+        part.setScale(part.getScale() - part.getScale() * (RNG.next(getMagnitude(), getScaledMagnitude() + getPartScale(part)) / 100f));
+    }
+
+    @Override
+    public void animate(BodyPart part) {
     }
 }

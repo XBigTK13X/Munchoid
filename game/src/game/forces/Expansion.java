@@ -1,8 +1,11 @@
 package game.forces;
 
+import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.creatures.BodyPart;
 import sps.core.RNG;
+import sps.particles.ParticleEngine;
+import sps.particles.behaviors.RadiateBehavior;
 
 public class Expansion extends BaseForce {
     public Expansion(int magnitude) {
@@ -10,12 +13,17 @@ public class Expansion extends BaseForce {
     }
 
     @Override
-    public boolean forceSpecifics(BodyPart bodyPart, int ii, int jj) {
-        return bodyPart.getAtoms()[ii][jj].isActive();
+    public boolean forceSpecifics(BodyPart part, int ii, int jj) {
+        return part.getAtoms()[ii][jj].isActive();
     }
 
     @Override
-    public void prepareCalculations(BodyPart bodyPart) {
-        bodyPart.setScale(bodyPart.getScale() + RNG.next(getScaledMagnitude(), (int) ((getScaledMagnitude() + getPartScale(bodyPart)) * 1.1f)) / 100f);
+    public void prepareCalculations(BodyPart part) {
+        part.setScale(part.getScale() + RNG.next(getScaledMagnitude(), (int) ((getScaledMagnitude() + getPartScale(part)) * 1.1f)) / 100f);
+    }
+
+    @Override
+    public void animate(BodyPart part) {
+        ParticleEngine.get().emit(RadiateBehavior.getInstance(), part.getGlobalPosition(), Color.WHITE);
     }
 }

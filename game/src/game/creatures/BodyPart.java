@@ -130,9 +130,14 @@ public class BodyPart {
 
     public void draw() {
         float dirScale = _scale * (_owner.isFlipX() ? -1 : 1);
-        Point2 scaledLoc = new Point2((getPosition().X + (_parent != null ? _parent.getPosition().X : 0)) * dirScale, (getPosition().Y + (_parent != null ? _parent.getPosition().Y : 0)) * _scale);
+        Point2 scaledLoc = getGlobalPosition();
         scaledLoc = scaledLoc.addRaw(_owner.getOwner().getLocation());
         Renderer.get().draw(_sprite, scaledLoc, DrawDepths.get("Atom"), Color.WHITE, _width * dirScale, _height * _scale);
+    }
+
+    public Point2 getGlobalPosition() {
+        float dirScale = _scale * (_owner.isFlipX() ? -1 : 1);
+        return new Point2((getPosition().X + (_parent != null ? _parent.getPosition().X : 0)) * dirScale, (getPosition().Y + (_parent != null ? _parent.getPosition().Y : 0)) * _scale);
     }
 
     public Point2 getPosition() {

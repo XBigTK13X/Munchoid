@@ -14,19 +14,23 @@ public class Explosive extends BaseForce {
     }
 
     @Override
-    public boolean forceSpecifics(BodyPart bodyPart, int ii, int jj) {
+    public boolean forceSpecifics(BodyPart part, int ii, int jj) {
 
 
-        int adjustedMag = (getMagnitude() + RNG.next(-getMagnitude(), getMagnitude())) * (getScale() + getPartScale(bodyPart));
+        int adjustedMag = (getMagnitude() + RNG.next(-getMagnitude(), getMagnitude())) * (getScale() + getPartScale(part));
         int adjustedMagSquared = adjustedMag * adjustedMag;
-        if (HitTest.getDistanceSquare(ii, _epicenter.X, jj, _epicenter.Y) <= adjustedMagSquared && !bodyPart.getAtoms()[ii][jj].isLucky()) {
+        if (HitTest.getDistanceSquare(ii, _epicenter.X, jj, _epicenter.Y) <= adjustedMagSquared && !part.getAtoms()[ii][jj].isLucky()) {
             return false;
         }
-        return bodyPart.getAtoms()[ii][jj].isActive();
+        return part.getAtoms()[ii][jj].isActive();
     }
 
     @Override
-    public void prepareCalculations(BodyPart bodyPart) {
-        _epicenter = new Point2(RNG.next(0, bodyPart.getAtoms().length), RNG.next(0, bodyPart.getAtoms()[0].length));
+    public void prepareCalculations(BodyPart part) {
+        _epicenter = new Point2(RNG.next(0, part.getAtoms().length), RNG.next(0, part.getAtoms()[0].length));
+    }
+
+    @Override
+    public void animate(BodyPart part) {
     }
 }
