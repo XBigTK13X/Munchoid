@@ -22,24 +22,22 @@ public class Creature extends Entity {
     private Creature _opponent;
     private String _name;
 
-    public Creature(boolean faceLeft, Point2 minDimensions, Point2 maxDimensions) {
-        _body = new Body(this, RNG.next(GameConfig.MinBodyParts, GameConfig.MaxBodyParts), (int) minDimensions.X, (int) minDimensions.Y, (int) maxDimensions.X, (int) maxDimensions.Y);
+    public Creature(Body body) {
+        _body = body;
+        _body.setOwner(this);
         _entityType = EntityTypes.get("Creature");
-        orientX(faceLeft, true);
         _stats = new Stats();
         _name = __nameGenerator.makeWord(RNG.next(6, 10));
         _name = _name.substring(0, 1).toUpperCase() + _name.substring(1);
     }
 
-    public Creature(boolean faceLeft) {
-        this(faceLeft, GameConfig.MinBodyPartSize, GameConfig.MaxBodyPartSize);
+    public Creature(boolean faceLeft, Point2 minDimensions, Point2 maxDimensions) {
+        this(new Body(RNG.next(GameConfig.MinBodyParts, GameConfig.MaxBodyParts), (int) minDimensions.X, (int) minDimensions.Y, (int) maxDimensions.X, (int) maxDimensions.Y));
+        orientX(faceLeft, true);
     }
 
-    public Creature(Body body) {
-        _body = body;
-        _entityType = EntityTypes.get("Creature");
-        _body.setOwner(this);
-        _stats = new Stats();
+    public Creature(boolean faceLeft) {
+        this(faceLeft, GameConfig.MinBodyPartSize, GameConfig.MaxBodyPartSize);
     }
 
     public Creature() {
@@ -83,7 +81,7 @@ public class Creature extends Entity {
                 else {
                     result = "WEAK";
                 }
-                TextPool.get().write(result, getLocation(), 1f, TextEffects.Fountain);
+                TextPool.get().write(result, _opponent.getLocation(), 1f, TextEffects.Fountain);
             }
 
 

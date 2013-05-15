@@ -49,7 +49,6 @@ public class Merge {
             result.getStats().set(force, a.getStats().get(force) + impact);
         }
 
-
         //TODO MergeOutcome in size as well as stats/body
         return result;
     }

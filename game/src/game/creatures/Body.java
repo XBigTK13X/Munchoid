@@ -16,8 +16,7 @@ public class Body {
     private boolean _flipX;
     private Color _color;
 
-    public Body(Creature owner, int numberOfParts, int partWidthMin, int partHeightMin, int partWidthMax, int partHeightMax) {
-        _owner = owner;
+    public Body(int numberOfParts, int partWidthMin, int partHeightMin, int partWidthMax, int partHeightMax) {
         _parts = new ArrayList<BodyPart>();
         BodyPart part;
         _color = Colors.randomPleasant();
