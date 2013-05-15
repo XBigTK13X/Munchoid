@@ -1,6 +1,5 @@
 package sps.particles.behaviors;
 
-import sps.core.Logger;
 import sps.core.RNG;
 import sps.entities.HitTest;
 import sps.particles.Particle2;
@@ -13,7 +12,6 @@ public class ContractBehavior extends ParticleBehavior {
         if (__instance == null) {
             __instance = new ContractBehavior();
         }
-        Logger.info("Gettingl contract");
         return __instance;
     }
 

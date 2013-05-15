@@ -1,10 +1,13 @@
 package game.forces;
 
+import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.creatures.BodyPart;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.HitTest;
+import sps.particles.ParticleEngine;
+import sps.particles.behaviors.ExplodeBehavior;
 
 public class Explosive extends BaseForce {
     private Point2 _epicenter;
@@ -32,5 +35,6 @@ public class Explosive extends BaseForce {
 
     @Override
     public void animate(BodyPart part) {
+        ParticleEngine.get().emit(ExplodeBehavior.getInstance(), part.getGlobalPosition(), Color.WHITE);
     }
 }
