@@ -1,8 +1,11 @@
 package game.forces;
 
+import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.creatures.BodyPart;
 import sps.core.RNG;
+import sps.particles.ParticleEngine;
+import sps.particles.behaviors.ContractBehavior;
 
 public class Contraction extends BaseForce {
     public Contraction(int magnitude) {
@@ -21,5 +24,6 @@ public class Contraction extends BaseForce {
 
     @Override
     public void animate(BodyPart part) {
+        ParticleEngine.get().emit(ContractBehavior.getInstance(), part.getGlobalPosition(), Color.WHITE);
     }
 }

@@ -92,7 +92,7 @@ public class Animation {
     }
 
     public void setPosition(Point2 position) {
-        _position.reset(position.PosX, position.PosY);
+        _position.reset(position.X, position.Y);
     }
 
     public Color getColor() {

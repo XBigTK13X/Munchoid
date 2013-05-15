@@ -107,7 +107,12 @@ public class Markov {
                 wordSelection = startWords;
             }
             //TODO An out of range [0] exception has been thrown here
-            nextGram = wordSelection.get(RNG.next(wordSelection.size()));
+            try {
+                nextGram = wordSelection.get(RNG.next(wordSelection.size()));
+            }
+            catch (Exception e) {
+                Logger.exception(e);
+            }
             result += nextGram;
         }
 

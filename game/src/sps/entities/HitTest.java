@@ -19,8 +19,7 @@ public class HitTest {
         return getDistanceSquare(x1, x2, y1, y2) < Sps.SpriteRadius;
     }
 
-    public static float getDistanceSquare(Entity source, Entity target)
-    {
+    public static float getDistanceSquare(Entity source, Entity target) {
         return getDistanceSquare(source.getLocation().PosX, target.getLocation().PosX, source.getLocation().PosY, target.getLocation().PosY);
     }
 
@@ -50,5 +49,9 @@ public class HitTest {
 
     public static boolean mouseInside(Sprite sprite) {
         return inBox(Input.get().x(), Input.get().y(), new Bounds(sprite.getX(), sprite.getY(), (int) sprite.getWidth(), (int) sprite.getHeight()));
+    }
+
+    public static float getDistance(float x, float y, float x1, float y1) {
+        return (float) Math.sqrt(getDistanceSquare(x, x1, y, y1));
     }
 }
