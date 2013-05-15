@@ -41,4 +41,8 @@ public class FollowBehavior extends ParticleBehavior {
             particle.Position.setY(particle.Entity.getLocation().PosCenterY - particle.Height / 2 + (float) Math.sin(particle.Angle) * particle.Radius);
         }
     }
+
+    @Override
+    public void setup(Particle2 particle) {
+    }
 }

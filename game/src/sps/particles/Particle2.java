@@ -78,6 +78,7 @@ public class Particle2 extends PEComponent {
         IsActive = true;
         Radius = 0;
         setMoveSpeed();
+        _behavior.setup(this);
     }
 
     private void setMoveSpeed() {

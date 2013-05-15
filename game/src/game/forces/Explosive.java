@@ -18,8 +18,6 @@ public class Explosive extends BaseForce {
 
     @Override
     public boolean forceSpecifics(BodyPart part, int ii, int jj) {
-
-
         int adjustedMag = (getMagnitude() + RNG.next(-getMagnitude(), getMagnitude())) * (getScale() + getPartScale(part));
         int adjustedMagSquared = adjustedMag * adjustedMag;
         if (HitTest.getDistanceSquare(ii, _epicenter.X, jj, _epicenter.Y) <= adjustedMagSquared && !part.getAtoms()[ii][jj].isLucky()) {

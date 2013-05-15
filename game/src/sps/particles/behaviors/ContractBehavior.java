@@ -29,4 +29,8 @@ public class ContractBehavior extends ParticleBehavior {
             particle.Position.setY(particle.Position.Y + (float) Math.sin(particle.Angle) * -particle.MoveSpeed);
         }
     }
+
+    @Override
+    public void setup(Particle2 particle) {
+    }
 }

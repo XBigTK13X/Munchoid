@@ -18,4 +18,8 @@ public class RadiateBehavior extends ParticleBehavior {
         particle.Position.setX(particle.Position.X + (float) Math.cos(particle.Angle) * particle.MoveSpeed);
         particle.Position.setY(particle.Position.Y + (float) Math.sin(particle.Angle) * particle.MoveSpeed);
     }
+
+    @Override
+    public void setup(Particle2 particle) {
+    }
 }
