@@ -1,8 +1,11 @@
 package game.forces;
 
+import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.creatures.BodyPart;
 import sps.core.RNG;
+import sps.particles.ParticleEngine;
+import sps.particles.behaviors.VaporizeBehavior;
 
 public class Vaporize extends BaseForce {
     public Vaporize(int magnitude) {
@@ -16,5 +19,6 @@ public class Vaporize extends BaseForce {
 
     @Override
     public void animate(BodyPart part) {
+        ParticleEngine.get().emit(VaporizeBehavior.getInstance(), part.getGlobalPosition(), Color.WHITE);
     }
 }

@@ -42,6 +42,7 @@ public class Particle2 extends PEComponent {
         if (IsActive) {
             _sprite.setSize(Width, Height);
             _sprite.setColor(_color);
+            _sprite.setRotation((float) (Angle * 180 / Math.PI));
             _sprite.setPosition(Position.X, Position.Y);
             Renderer.get().draw(_sprite);
         }
