@@ -51,4 +51,5 @@ public class GameConfig {
     public static final int ArenaHeight = 1080 + (int) Screen.height(ArenaBufferPercent) * 2;
     public static final int ArenaWidth = 1920 + (int) Screen.width(ArenaBufferPercent) * 2;
 
+    public static final int MaxForcesEnabled = 4;
 }

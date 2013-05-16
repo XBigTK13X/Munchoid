@@ -113,7 +113,7 @@ public class Creature extends Entity {
     public void useBonus() {
         while (_bonusPoints > GameConfig.BonusAward) {
             _bonusPoints -= GameConfig.BonusAward;
-            Force bonus = _stats.nonZeroForce();
+            Force bonus = _stats.randomEnabledForce();
             _stats.set(bonus, _stats.get(bonus) + GameConfig.BonusAmount);
 
             TextPool.get().write("BONUS!", Screen.rand(40, 60, 40, 60), 2f, TextEffects.Fountain);

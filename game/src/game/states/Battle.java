@@ -76,7 +76,7 @@ public class Battle implements State {
         EntityManager.get().update();
         if (_isPlayerTurn) {
             for (Force force : Force.values()) {
-                if (Input.get().isActive(Commands.get(force.Command), 0)) {
+                if (Input.get().isActive(Commands.get(force.Command), 0) && _left.getStats().isEnabled(force)) {
                     if (_left.getStats().get(force) > 0) {
                         playerAttack(force);
                     }
@@ -92,7 +92,7 @@ public class Battle implements State {
         }
         else {
             //TODO Smarter attacks
-            _right.attack(_right.getStats().nonZeroForce());
+            _right.attack(_right.getStats().randomEnabledForce());
             _isPlayerTurn = true;
         }
 

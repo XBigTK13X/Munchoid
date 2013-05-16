@@ -3,9 +3,9 @@ package game.states;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
+import game.UI;
 import game.creatures.Creature;
 import game.creatures.Merge;
-import game.creatures.style.Outline;
 import game.forces.Force;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
@@ -19,9 +19,7 @@ import sps.states.StateManager;
 import sps.text.TextPool;
 import sps.ui.Buttons;
 import sps.ui.ToolTip;
-import sps.util.Colors;
 import sps.util.Screen;
-import sps.util.SpriteMaker;
 
 public class MergeOutcome implements State {
     private static SingleSongPlayer __mergeMusic;
@@ -67,8 +65,8 @@ public class MergeOutcome implements State {
 
         //Accept and reject buttons
         if (_accept == null) {
-            _accept = button(Color.GREEN);
-            _reject = button(Color.RED);
+            _accept = UI.button(Color.GREEN);
+            _reject = UI.button(Color.RED);
 
             _accept.setPosition(Screen.width(60), Screen.height(80));
             _reject.setPosition(Screen.width(60), Screen.height(60));
@@ -125,14 +123,6 @@ public class MergeOutcome implements State {
         });
     }
 
-    private Sprite button(Color color) {
-        int width = (int) Screen.width(10);
-        int height = (int) Screen.height(8);
-        Color[][] base = Colors.genPerlinGrid(width, height, color, Color.BLACK, 7);
-        Outline.single(base, Color.WHITE);
-        return SpriteMaker.get().fromColors(base);
-    }
-
     @Override
     public void draw() {
         _pet.draw();
@@ -145,12 +135,16 @@ public class MergeOutcome implements State {
     private void acceptMerge() {
         _defeated.getBody().kill();
         _pet.reset(_merged);
-        StateManager.get().pop();
+        loadNextScene();
     }
 
     private void rejectMerge() {
         _defeated.getBody().kill();
-        StateManager.get().pop();
+        loadNextScene();
+    }
+
+    private void loadNextScene() {
+        StateManager.get().push(new ForceSelection(_pet));
     }
 
     @Override

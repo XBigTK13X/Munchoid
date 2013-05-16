@@ -20,7 +20,7 @@ public class PreGame implements State {
     @Override
     public void update() {
         if (Input.get().isActive(Commands.get("Confirm"))) {
-            StateManager.get().push(new Battle());
+            StateManager.get().push(new Arena());
         }
     }
 
