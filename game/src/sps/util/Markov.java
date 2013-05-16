@@ -18,8 +18,8 @@ public class Markov {
 
     public static void main(String[] args) throws IOException {
         File corpus = new File("game/assets/data/markov-seed.txt");
-        for (int ii = 0; ii < 10; ii++) {
-            int gramSize = 4;
+        for (int ii = 0; ii < 100000; ii++) {
+            int gramSize = 2;
             int wordLength = RNG.next(6, 10);
             Markov markov = Markov.get(corpus, gramSize);
             Logger.info("WORD: " + markov.makeWord(wordLength) + ", " + gramSize + ", " + wordLength);
@@ -83,6 +83,7 @@ public class Markov {
         if (_chain.get(nGrams[0]) == null) {
             _chain.put(nGrams[0], new ArrayList<String>());
         }
+        boolean linksFound = false;
         for (int ii = 0; ii < nGrams.length - 1; ii++) {
             ArrayList<String> suffix = _chain.get(nGrams[ii]);
             if (suffix == null) {
@@ -91,7 +92,13 @@ public class Markov {
             if (!nGrams[ii].equals(nGrams[ii + 1])) {
                 suffix.add(nGrams[ii + 1]);
                 _chain.put(nGrams[ii], suffix);
+                linksFound = true;
+
             }
+        }
+
+        if (!linksFound) {
+            _chain.get(__startId).remove(nGrams[0]);
         }
     }
 
@@ -106,15 +113,8 @@ public class Markov {
             if (wordSelection == null) {
                 wordSelection = startWords;
             }
-            //TODO An out of range [0] exception has been thrown here
-            //Fails on nGram "uh"
-            try {
-                nextGram = wordSelection.get(RNG.next(wordSelection.size()));
-            }
 
-            catch (Exception e) {
-                Logger.exception(e);
-            }
+            nextGram = wordSelection.get(RNG.next(wordSelection.size()));
             result += nextGram;
         }
 
