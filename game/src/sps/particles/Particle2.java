@@ -2,12 +2,10 @@ package sps.particles;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.Entity;
 import sps.graphics.Renderer;
-import sps.util.Colors;
 import sps.util.MathHelper;
 import sps.util.Screen;
 import sps.util.SpriteMaker;
@@ -30,7 +28,7 @@ public class Particle2 extends PEComponent {
     public float Radius;
     public boolean Toggle;
 
-    private Sprite _sprite;
+    private static Sprite _sprite;
 
     private ParticleBehavior _behavior;
 
@@ -58,14 +56,10 @@ public class Particle2 extends PEComponent {
     }
 
     private void init(ParticleBehavior behavior, Point2 position, Entity entity, Color baseColor) {
-        // TODO Exception being thrown here when Width/Height 0.
-        // Manually setting them to 1 seems to break all effects
-        try {
-            _sprite = SpriteMaker.get().fromColors(Colors.genArr((int) Width, (int) Height, baseColor));
+        if (_sprite == null) {
+            _sprite = SpriteMaker.get().pixel(Color.WHITE);
         }
-        catch (Exception e) {
-            Logger.exception(e);
-        }
+
         _behavior = behavior;
         if (position != null) {
             Origin.reset(position.X, position.Y);

@@ -51,4 +51,11 @@ public class SpriteMaker {
         }
         return new Sprite(new Texture(textureBase));
     }
+
+    public Sprite pixel(Color color) {
+        Pixmap textureBase = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        textureBase.setColor(color);
+        textureBase.drawPixel(0, 0);
+        return new Sprite(new Texture(textureBase));
+    }
 }
