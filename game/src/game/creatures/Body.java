@@ -21,10 +21,7 @@ public class Body {
         BodyPart part;
         _color = Colors.randomPleasant();
 
-        //Logger.info("=== New Creature");
         for (int ii = 0; ii < numberOfParts; ii++) {
-            //TODO replace core = size x 2 functionality
-            //Logger.info("--> " + function);
             BodyPart parent = BodyRules.getParent(_parts);
             PartFunction function = BodyRules.getChildFunction(parent);
             part = new BodyPart(function, RNG.next(partWidthMin * function.Mult, partWidthMax * function.Mult), RNG.next(partHeightMin * function.Mult, partHeightMax * function.Mult), this);

@@ -51,12 +51,16 @@ public class Arena implements State {
         _timerText = TextPool.get().write(timeDisplay(), __timerPos);
         Floor floor = new Floor();
         EntityManager.get().addEntity(floor);
-        EntityManager.get().addEntity(new Player(floor));
+        Player player = new Player(floor);
+        EntityManager.get().addEntity(player);
         for (int ii = 0; ii < GameConfig.CreatureLimit; ii++) {
             EntityManager.get().addEntity(new Catchable());
         }
         _creatureText = TextPool.get().write(creatureDisplay(GameConfig.CreatureLimit), __creatureTextPos);
 
+        if (GameConfig.PlaythroughTest) {
+            player.setPet(new Creature());
+        }
     }
 
     @Override
@@ -80,15 +84,16 @@ public class Arena implements State {
             if (opponents.size() <= 0) {
                 StateManager.get().push(new Tournament((Player) EntityManager.get().getPlayer()));
             }
+            else {
+                if (_countDownSeconds <= 0 && opponents.size() > 0 || Input.get().isActive(Commands.get("Push")) || GameConfig.PlaythroughTest) {
+                    StateManager.get().push(new Battle(player.getPet(), ((Catchable) opponents.get(RNG.next(0, opponents.size()))).getCreature()));
+                }
+            }
+
 
             if (_lastCreatureCount != opponents.size()) {
                 _lastCreatureCount = opponents.size();
                 _creatureText.setMessage(creatureDisplay(opponents.size()));
-            }
-
-            //TODO Remove debug input helper
-            if (_countDownSeconds <= 0 && opponents.size() > 0 || Input.get().isActive(Commands.get("Push"))) {
-                StateManager.get().push(new Battle(player.getPet(), ((Catchable) opponents.get(RNG.next(0, opponents.size()))).getCreature()));
             }
         }
         else {
@@ -111,10 +116,13 @@ public class Arena implements State {
         if (opponents.size() > 1) {
             for (int ii = 0; ii + 1 < opponents.size(); ii += 2) {
                 if (opponents.get(ii).isActive() && opponents.get(ii + 1).isActive() && RNG.percent(GameConfig.ArenaMergeChance)) {
-                    Catchable catchable = ((Catchable) opponents.get(ii + 1));
-                    Creature merged = Merge.two(catchable.getCreature(), ((Catchable) opponents.get(ii + 1)).getCreature());
-                    catchable.setCreature(merged);
-                    opponents.get(ii + 1).setInactive();
+                    Catchable c1 = (Catchable) opponents.get(ii);
+                    Catchable c2 = (Catchable) opponents.get(ii + 1);
+                    if (c1.getCreature().getBody().isAlive() && c2.getCreature().getBody().isAlive()) {
+                        Creature merged = Merge.two(c1.getCreature(), c2.getCreature());
+                        c1.setCreature(merged);
+                        opponents.get(ii + 1).setInactive();
+                    }
                 }
             }
         }

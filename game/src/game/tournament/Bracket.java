@@ -64,8 +64,9 @@ public class Bracket {
 
     private Combatant fighter() {
         //TODO Creating the creature when you create a combatant
-        // Leads to memory issues on the sixth creature. There's gotta be a better way
-        // to pack Atom into a smaller space
+        // There used to be memory issues preventing
+        //   more than 1 creature being loaded at a time.
+        // This has since been solved.
         if (first) {
             first = false;
             return new Combatant("Player");

@@ -1,7 +1,5 @@
 package game.creatures;
 
-//TODO Base position for each part?
-
 public enum PartFunction {
     Body(1),
     Head(1),

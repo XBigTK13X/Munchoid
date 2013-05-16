@@ -44,11 +44,8 @@ public class BodyPart {
         design = Common.trim(design);
         _width = design.length;
         _height = design[0].length;
-        //TODO Remove Logger.info("PART: " +function.name() + ", "+_width +" . " +_height);
 
         _atoms = new Atom[_width][_height];
-        //TODO Shading the outer edges w/ a 2px line
-        //TODO Single color palette
         Color[][] textureBase = getTextureBase();
         for (int ii = 0; ii < _width; ii++) {
             for (int jj = 0; jj < _height; jj++) {

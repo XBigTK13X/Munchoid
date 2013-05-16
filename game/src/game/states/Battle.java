@@ -1,5 +1,6 @@
 package game.states;
 
+import game.GameConfig;
 import game.battle.ForcesHUD;
 import game.creatures.Creature;
 import game.forces.Force;
@@ -96,7 +97,7 @@ public class Battle implements State {
             _isPlayerTurn = true;
         }
 
-        if (!_right.getBody().isAlive()) {
+        if (!_right.getBody().isAlive() || GameConfig.PlaythroughTest) {
             victory();
         }
         if (!_left.getBody().isAlive()) {

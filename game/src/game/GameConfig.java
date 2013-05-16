@@ -52,4 +52,7 @@ public class GameConfig {
     public static final int ArenaWidth = 1920 + (int) Screen.width(ArenaBufferPercent) * 2;
 
     public static final int MaxForcesEnabled = 4;
+
+    //Debugging / Development
+    public static final boolean PlaythroughTest = false;
 }

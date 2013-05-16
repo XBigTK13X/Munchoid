@@ -1,5 +1,6 @@
 package game.states;
 
+import game.GameConfig;
 import sps.bridge.Commands;
 import sps.io.Input;
 import sps.states.State;
@@ -19,7 +20,7 @@ public class PreGame implements State {
 
     @Override
     public void update() {
-        if (Input.get().isActive(Commands.get("Confirm"))) {
+        if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.PlaythroughTest) {
             StateManager.get().push(new Arena());
         }
     }

@@ -2,6 +2,7 @@ package game.states;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import game.GameConfig;
 import game.UI;
 import game.battle.ForcesHUD;
 import game.creatures.Creature;
@@ -68,15 +69,22 @@ public class ForceSelection implements State {
             }
         });
         _forces = new ForcesHUD(_pet);
+        if (GameConfig.PlaythroughTest) {
+            while (!confirmSelection()) {
+                _pet.getStats().setEnabled(_pet.getStats().randomEnabledForce(), false);
+            }
+        }
     }
 
-    private void confirmSelection() {
+    private boolean confirmSelection() {
         if (_pet.getStats().enabledCount() == _pet.getStats().maxEnabled()) {
             StateManager.get().pop();
             StateManager.get().pop();
+            return true;
         }
         else {
             _wrongCountMessage.setVisible(true);
+            return false;
         }
     }
 

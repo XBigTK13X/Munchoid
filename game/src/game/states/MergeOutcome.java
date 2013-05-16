@@ -121,6 +121,9 @@ public class MergeOutcome implements State {
                 return "Prevent Merge";
             }
         });
+        if (GameConfig.PlaythroughTest) {
+            acceptMerge();
+        }
     }
 
     @Override

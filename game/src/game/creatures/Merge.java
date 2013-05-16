@@ -3,7 +3,6 @@ package game.creatures;
 import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.forces.Force;
-import sps.core.Logger;
 import sps.core.RNG;
 import sps.util.Colors;
 
@@ -30,14 +29,8 @@ public class Merge {
         while (pool.size() > partMean) {
             pool.remove(RNG.next(0, pool.size()));
         }
-        try {
-            pool.add(0, bodies.get(RNG.next(0, bodies.size())));
-        }
-        catch (Exception e) {
-            //TODO simplify the merge ALG so that this bug doesn't randomly pop up
-            Logger.info("This is a bug that continues to occur, but I need more data to figure out what's causing it.");
-            Logger.exception(e);
-        }
+
+        pool.add(0, bodies.get(RNG.next(0, bodies.size())));
         Creature result = new Creature(new Body(pool, mergedColor));
 
         //Average the stats together
