@@ -30,7 +30,7 @@ public class Catchable extends Entity {
         initialize(0, 0, Point2.Zero, null, EntityTypes.get("Catchable"), DrawDepths.get("Catchable"));
         _creature = new Creature();
         _creature.getBody().setScale(GameConfig.ArenaCreatureScale);
-        _creature.orientX(RNG.coinFlip(), false);
+        _creature.orientX((GameConfig.DevFlipEnabled) ? RNG.coinFlip() : false, false);
         setSize(_creature.getWidth(), _creature.getHeight());
         setLocation(Screen.rand(-GameConfig.ArenaBufferPercent, 100 + GameConfig.ArenaBufferPercent, -GameConfig.ArenaBufferPercent, 100 + GameConfig.ArenaBufferPercent));
     }
@@ -83,7 +83,9 @@ public class Catchable extends Entity {
             _movementTarget = getLocation().addRaw(Screen.rand(-10, 10, -10, 10));
         }
 
-        _creature.orientX(_dX <= 0, false);
+        if (GameConfig.DevFlipEnabled) {
+            _creature.orientX(_dX <= 0, false);
+        }
 
         //TODO Fix movement. Currently, edges snag the catchable.
         move(_dX, _dY);
