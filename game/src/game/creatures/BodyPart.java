@@ -42,12 +42,18 @@ public class BodyPart {
         _position = new Point2(0, 0);
 
         int[][] design = Designs.get(_function).create(width, height);
+        _atoms = designToAtoms(design);
+        _width = _atoms.length;
+        _height = _atoms[0].length;
+        applyStyle();
+    }
+
+    private Atom[][] designToAtoms(int[][] design) {
         design = Common.trim(design);
         _width = design.length;
         _height = design[0].length;
-
-        _atoms = new Atom[_width][_height];
         Color[][] textureBase = getTextureBase();
+        Atom[][] result = new Atom[_width][_height];
         for (int ii = 0; ii < _width; ii++) {
             for (int jj = 0; jj < _height; jj++) {
                 if (design[ii][jj] != Design.Empty) {
@@ -58,11 +64,11 @@ public class BodyPart {
                     if (design[ii][jj] == Design.Black) {
                         c = Color.BLACK;
                     }
-                    _atoms[ii][jj] = new Atom(ii, jj, c);
+                    result[ii][jj] = new Atom(ii, jj, c);
                 }
             }
         }
-        applyStyle();
+        return result;
     }
 
     private Color[][] getTextureBase() {
