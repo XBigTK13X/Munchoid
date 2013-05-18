@@ -21,7 +21,7 @@ public class PreGame implements State {
     @Override
     public void update() {
         if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.PlaythroughTest) {
-            StateManager.get().push(new Arena());
+            StateManager.get().push(new LoadArena());
         }
     }
 
