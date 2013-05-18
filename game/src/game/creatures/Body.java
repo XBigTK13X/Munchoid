@@ -24,7 +24,7 @@ public class Body {
         for (int ii = 0; ii < numberOfParts; ii++) {
             BodyPart parent = BodyRules.getParent(_parts);
             PartFunction function = BodyRules.getChildFunction(parent);
-            part = new BodyPart(function, RNG.next(partWidthMin * function.Mult, partWidthMax * function.Mult), RNG.next(partHeightMin * function.Mult, partHeightMax * function.Mult), this);
+            part = new BodyPart(function, RNG.next((int) (partWidthMin * function.Mult), (int) (partWidthMax * function.Mult)), RNG.next((int) (partHeightMin * function.Mult), (int) (partHeightMax * function.Mult)), this);
             if (parent != null) {
                 parent.addChild(part);
             }
