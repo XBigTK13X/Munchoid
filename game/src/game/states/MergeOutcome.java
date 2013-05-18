@@ -40,7 +40,10 @@ public class MergeOutcome implements State {
         //Create a new merged creature
         _pet.getBody().restore();
         _defeated.getBody().restore();
+        _pet.getBody().flipX(false);
+        _defeated.getBody().flipX(false);
         _merged = Merge.two(_pet, _defeated);
+
 
         //Stat merge display
         TextPool.get().write("Merge Outcome:", Screen.pos(15, 80));

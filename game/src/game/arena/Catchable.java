@@ -83,7 +83,7 @@ public class Catchable extends Entity {
             _movementTarget = getLocation().addRaw(Screen.rand(-10, 10, -10, 10));
         }
 
-        //_creature.orientX(_dX <= 0, false);
+        _creature.orientX(_dX <= 0, false);
 
         //TODO Fix movement. Currently, edges snag the catchable.
         move(_dX, _dY);
