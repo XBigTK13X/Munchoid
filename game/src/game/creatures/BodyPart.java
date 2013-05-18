@@ -51,7 +51,14 @@ public class BodyPart {
         for (int ii = 0; ii < _width; ii++) {
             for (int jj = 0; jj < _height; jj++) {
                 if (design[ii][jj] != Design.Empty) {
-                    _atoms[ii][jj] = new Atom(ii, jj, textureBase[ii][jj]);
+                    Color c = textureBase[ii][jj];
+                    if (design[ii][jj] == Design.White) {
+                        c = Color.WHITE;
+                    }
+                    if (design[ii][jj] == Design.Black) {
+                        c = Color.BLACK;
+                    }
+                    _atoms[ii][jj] = new Atom(ii, jj, c);
                 }
             }
         }

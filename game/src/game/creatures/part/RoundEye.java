@@ -22,6 +22,10 @@ public class RoundEye implements Design {
                 if (pupCenterRad2 <= pupilRad2) {
                     result[ii][jj] = Design.BaseColor;
                 }
+
+                if (pupCenterRad2 > pupilRad2 && rad2 < lidRad2Min) {
+                    result[ii][jj] = Design.White;
+                }
             }
         }
 
