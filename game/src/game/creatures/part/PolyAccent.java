@@ -7,8 +7,8 @@ import java.awt.*;
 
 public class PolyAccent implements Design {
     @Override
-    public boolean[][] create(int width, int height) {
-        boolean[][] result = new boolean[width][height];
+    public int[][] create(int width, int height) {
+        int[][] result = new int[width][height];
 
         int radius = Math.min(width, height) / 3;
 
@@ -17,7 +17,7 @@ public class PolyAccent implements Design {
         for (int ii = 0; ii < result.length; ii++) {
             for (int jj = 0; jj < result[0].length; jj++) {
                 if (detail.contains(ii, jj)) {
-                    result[ii][jj] = true;
+                    result[ii][jj] = Design.BaseColor;
                 }
             }
         }

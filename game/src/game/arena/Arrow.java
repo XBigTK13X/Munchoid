@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import game.creatures.part.Common;
+import game.creatures.part.Design;
 import sps.bridge.DrawDepths;
 import sps.bridge.EntityTypes;
 import sps.bridge.SpriteTypes;
@@ -29,7 +30,8 @@ public class Arrow extends Entity {
     public Arrow(Player owner) {
         initialize(SpsConfig.get().spriteWidth, SpsConfig.get().spriteHeight, new Point2(0, 0), SpriteTypes.get("Arrow"), EntityTypes.get("Arrow"), DrawDepths.get("Arrow"));
         _owner = owner;
-        boolean[][] base = new boolean[(int) GameConfig.MaxBodyPartSize.X][(int) GameConfig.MaxBodyPartSize.Y];
+
+        int[][] base = new int[(int) GameConfig.MaxBodyPartSize.X][(int) GameConfig.MaxBodyPartSize.Y];
         float radius2 = 8 * (base.length + base[0].length);
         float innerRadius2 = .7f * radius2;
         Point2 center = new Point2(base.length / 2, base[0].length / 2);
@@ -37,7 +39,7 @@ public class Arrow extends Entity {
             for (int jj = 0; jj < base[0].length; jj++) {
                 float dist = HitTest.getDistanceSquare(ii, center.X, jj, center.Y);
                 if (dist <= radius2 && dist >= innerRadius2) {
-                    base[ii][jj] = true;
+                    base[ii][jj] = Design.BaseColor;
                 }
             }
         }
@@ -45,7 +47,7 @@ public class Arrow extends Entity {
         Color[][] colorBase = new Color[base.length][base[0].length];
         for (int ii = 0; ii < colorBase.length; ii++) {
             for (int jj = 0; jj < colorBase[0].length; jj++) {
-                if (base[ii][jj]) {
+                if (base[ii][jj] == Design.BaseColor) {
                     colorBase[ii][jj] = Color.WHITE;
                 }
             }

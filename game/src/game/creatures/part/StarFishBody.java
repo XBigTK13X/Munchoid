@@ -9,8 +9,8 @@ import java.util.List;
 
 public class StarFishBody implements Design {
     @Override
-    public boolean[][] create(int width, int height) {
-        boolean[][] result = Common.rectangle(width, height);
+    public int[][] create(int width, int height) {
+        int[][] result = Common.rectangle(width, height);
         float cornerRad = (width + height) / 6;
         float cornerRad2 = (float) Math.pow(cornerRad, 2);
         List<Point2> corners = new ArrayList<Point2>();
@@ -30,7 +30,7 @@ public class StarFishBody implements Design {
                     float cenRad2 = HitTest.getDistanceSquare(ii, center.X, jj, center.Y);
                     if (cenRad2 < rad2 && rad2 < cornerRad2 + RNG.next(-fudgeFactor, fudgeFactor)) {
 
-                        result[ii][jj] = false;
+                        result[ii][jj] = Design.Empty;
                     }
                 }
             }

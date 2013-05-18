@@ -5,8 +5,8 @@ import sps.entities.HitTest;
 
 public class RoundedRectangleBody implements Design {
     @Override
-    public boolean[][] create(int width, int height) {
-        boolean[][] result = Common.rectangle(width, height);
+    public int[][] create(int width, int height) {
+        int[][] result = Common.rectangle(width, height);
         float max = Math.max(width, height);
         float cornerRad2 = (float) Math.pow(max / 2, 2);
 
@@ -16,7 +16,7 @@ public class RoundedRectangleBody implements Design {
             for (int jj = 0; jj < height; jj++) {
                 float cenRad2 = HitTest.getDistanceSquare(ii, center.X, jj, center.Y);
                 if (cenRad2 <= cornerRad2) {
-                    result[ii][jj] = false;
+                    result[ii][jj] = Design.Empty;
                 }
             }
         }

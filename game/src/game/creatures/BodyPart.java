@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import game.creatures.part.Common;
+import game.creatures.part.Design;
 import game.creatures.part.Designs;
 import game.creatures.style.BodyRules;
 import game.creatures.style.Outline;
@@ -40,7 +41,7 @@ public class BodyPart {
         _color = owner.getColor();
         _position = new Point2(0, 0);
 
-        boolean[][] design = Designs.get(_function).create(width, height);
+        int[][] design = Designs.get(_function).create(width, height);
         design = Common.trim(design);
         _width = design.length;
         _height = design[0].length;
@@ -49,7 +50,7 @@ public class BodyPart {
         Color[][] textureBase = getTextureBase();
         for (int ii = 0; ii < _width; ii++) {
             for (int jj = 0; jj < _height; jj++) {
-                if (design[ii][jj]) {
+                if (design[ii][jj] != Design.Empty) {
                     _atoms[ii][jj] = new Atom(ii, jj, textureBase[ii][jj]);
                 }
             }
