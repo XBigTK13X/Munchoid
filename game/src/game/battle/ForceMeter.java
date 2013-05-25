@@ -9,7 +9,6 @@ import game.forces.Force;
 import game.states.Battle;
 import game.states.ForceSelection;
 import sps.bridge.Commands;
-import sps.core.Logger;
 import sps.core.Point2;
 import sps.entities.HitTest;
 import sps.graphics.Renderer;
@@ -105,7 +104,6 @@ public class ForceMeter {
 
                     @Override
                     public void onClick() {
-                        Logger.info("Toggling: " + _force + ":  from: " + _owner.getStats().isEnabled(_force));
                         _owner.getStats().toggleEnabled(_force);
                         if (!_owner.getStats().isEnabled(_force)) {
                             moveToRightSide();
