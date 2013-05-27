@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//Based on: https:import static org.apache.commons.io.FileUtils.readLines;//gist.github.com/veryphatic/3190969
+//Based on: https://gist.github.com/veryphatic/3190969
 
 public class Markov {
     private static final String __startId = "$$start$$";
