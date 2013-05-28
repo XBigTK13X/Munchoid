@@ -16,17 +16,19 @@ public class Body {
     private boolean _flipX;
     private Color _color;
 
+    private List<BodyPart> _front;
+    private List<BodyPart> _back;
+
     public Body(int numberOfParts, int partWidthMin, int partHeightMin, int partWidthMax, int partHeightMax) {
-        _parts = new ArrayList<BodyPart>();
-        BodyPart part;
-        _color = Colors.randomPleasant();
+        this(Colors.randomPleasant());
 
         for (int ii = 0; ii < numberOfParts; ii++) {
             BodyPart parent = BodyRules.getParent(_parts);
             PartFunction function = BodyRules.getChildFunction(parent);
-            part = new BodyPart(function, RNG.next((int) (partWidthMin * function.Mult), (int) (partWidthMax * function.Mult)), RNG.next((int) (partHeightMin * function.Mult), (int) (partHeightMax * function.Mult)), this);
+            BodyPart part = new BodyPart(function, RNG.next((int) (partWidthMin * function.Mult), (int) (partWidthMax * function.Mult)), RNG.next((int) (partHeightMin * function.Mult), (int) (partHeightMax * function.Mult)), this);
             if (parent != null) {
                 parent.addChild(part);
+                assignDepth(part);
             }
             _parts.add(part);
         }
@@ -34,14 +36,35 @@ public class Body {
     }
 
     public Body(List<BodyPart> parts, Color color) {
-        _parts = new ArrayList<BodyPart>();
-        _color = color;
+        this(color);
 
         for (BodyPart part : parts) {
-            _parts.add(new BodyPart(part, this, color));
+            BodyPart copiedPart = new BodyPart(part, this, _color);
+            _parts.add(copiedPart);
+            if (_parts.size() > 1) {
+                assignDepth(copiedPart);
+            }
         }
 
         calculateSize();
+    }
+
+    private Body(Color color) {
+        _parts = new ArrayList<BodyPart>();
+        _front = new ArrayList<BodyPart>();
+        _back = new ArrayList<BodyPart>();
+        _color = color;
+    }
+
+    private void assignDepth(BodyPart part) {
+        if (_parts.size() > 1) {
+            if (RNG.coinFlip()) {
+                _front.add(part);
+            }
+            else {
+                _back.add(part);
+            }
+        }
     }
 
     private void calculateSize() {
@@ -58,11 +81,19 @@ public class Body {
         }
     }
 
+    private void drawPart(BodyPart part) {
+        if (part.isAlive()) {
+            part.draw();
+        }
+    }
+
     public void draw() {
-        for (BodyPart part : _parts) {
-            if (part.isAlive()) {
-                part.draw();
-            }
+        for (BodyPart part : _back) {
+            drawPart(part);
+        }
+        drawPart(_parts.get(0));
+        for (BodyPart part : _front) {
+            drawPart(part);
         }
     }
 
