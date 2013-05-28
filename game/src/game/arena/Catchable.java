@@ -46,13 +46,6 @@ public class Catchable extends Entity {
         CatchNet net = (CatchNet) EntityManager.get().getEntity(EntityTypes.get("Hand"));
         Player player = (Player) EntityManager.get().getPlayers().get(0);
 
-        if (player.getPet() != null) {
-            if (player.getPet().getStats().power() >= _creature.getStats().power()) {
-                //TODO Indicate that it can be eaten
-                //Flashing is built into _graphic, can we write the arrays to the sprite?
-            }
-        }
-
         if (net != null && net.isInUse() && net.isTouching(_creature)) {
             if (player.getPet() == null) {
                 player.setPet(_creature);
