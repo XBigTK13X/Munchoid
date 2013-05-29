@@ -91,7 +91,9 @@ public class Body {
         for (BodyPart part : _back) {
             drawPart(part);
         }
-        drawPart(_parts.get(0));
+        if (_parts.size() > 0) {
+            drawPart(_parts.get(0));
+        }
         for (BodyPart part : _front) {
             drawPart(part);
         }
