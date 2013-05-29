@@ -1,6 +1,7 @@
 package game.arena;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import game.Game;
 import game.GameConfig;
 import game.creatures.Creature;
@@ -12,6 +13,8 @@ import sps.entities.EntityManager;
 import sps.entities.IActor;
 import sps.graphics.Renderer;
 import sps.io.Input;
+import sps.text.TextEffects;
+import sps.text.TextPool;
 import sps.util.Screen;
 
 public class Player extends Entity implements IActor {
@@ -29,6 +32,7 @@ public class Player extends Entity implements IActor {
     private Creature _pet;
 
     private Floor _floor;
+    private float _frozenSeconds;
 
     public Player(Floor floor) {
         __scrollSpeedX = GameConfig.PlayerTopSpeed;
@@ -72,6 +76,13 @@ public class Player extends Entity implements IActor {
 
     @Override
     public void update() {
+        if (_frozenSeconds > 0) {
+            _frozenSeconds -= Gdx.graphics.getDeltaTime();
+            if (_frozenSeconds <= 0) {
+                _graphic.setColor(Color.WHITE);
+            }
+            return;
+        }
         calculateKeyVelocity();
 
         float adjustedXVelocity = _keyVelocity.X * Gdx.graphics.getDeltaTime();
@@ -139,5 +150,11 @@ public class Player extends Entity implements IActor {
 
     @Override
     public void performInteraction() {
+    }
+
+    public void freeze() {
+        _frozenSeconds = GameConfig.PlayerFrozenSecondsMax;
+        _graphic.setColor(Color.BLUE);
+        TextPool.get().write("*FROZEN*", getLocation(), .5f, TextEffects.Fountain);
     }
 }

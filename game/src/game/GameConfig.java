@@ -4,13 +4,14 @@ import sps.core.Point2;
 import sps.util.Screen;
 
 public class GameConfig {
-    public final static int CreatureLimit = 5;
+    public final static int CreatureLimit = 50;
     public final static int SpacePercentPerCreature = 1;
     //The length of Quickly.ogg
     public final static float ArenaTimeoutSeconds = 10f;
     public static final float ArenaCreatureScale = .6f;
     public static final int ArenaMergeChance = 60;
     public static final int PlayerTopSpeed = 500;
+    public static final float PlayerFrozenSecondsMax = .5f;
     //TODO Smoother movement
     public static final int playerAcceleration = 50;
 
