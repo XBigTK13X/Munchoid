@@ -3,15 +3,12 @@ package game.creatures;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
-import game.creatures.part.Common;
-import game.creatures.part.Design;
 import game.creatures.part.Designs;
 import game.creatures.style.BodyRules;
 import game.creatures.style.Outline;
 import sps.bridge.DrawDepths;
 import sps.core.Point2;
 import sps.graphics.Renderer;
-import sps.util.Colors;
 import sps.util.SpriteMaker;
 
 import java.util.ArrayList;
@@ -33,58 +30,22 @@ public class BodyPart {
     private List<BodyPart> _children;
 
     public BodyPart(PartFunction function, int width, int height, Body owner) {
-        _parent = null;
+        this(function, owner, owner.getColor(), new Point2(0, 0));
         _children = new ArrayList<BodyPart>();
-        _function = function;
-        _owner = owner;
-        _scale = 1f;
-        _color = owner.getColor();
-        _position = new Point2(0, 0);
 
         int[][] design = Designs.get(_function).create(width, height);
-        _atoms = designToAtoms(design);
+        _atoms = Designs.toAtoms(design, _color);
         _width = _atoms.length;
         _height = _atoms[0].length;
         applyStyle();
     }
 
-    private Atom[][] designToAtoms(int[][] design) {
-        design = Common.trim(design);
-        _width = design.length;
-        _height = design[0].length;
-        Color[][] textureBase = getTextureBase();
-        Atom[][] result = new Atom[_width][_height];
-        for (int ii = 0; ii < _width; ii++) {
-            for (int jj = 0; jj < _height; jj++) {
-                if (design[ii][jj] != Design.Empty) {
-                    Color c = textureBase[ii][jj];
-                    if (design[ii][jj] == Design.White) {
-                        c = Color.WHITE;
-                    }
-                    if (design[ii][jj] == Design.Black) {
-                        c = Color.BLACK;
-                    }
-                    result[ii][jj] = new Atom(ii, jj, c);
-                }
-            }
-        }
-        return result;
-    }
-
-    private Color[][] getTextureBase() {
-        return Colors.genPerlinGrid(_width, _height, Colors.darken(_color), Colors.lighten(_color));
-    }
-
     public BodyPart(BodyPart source, Body owner, Color color) {
-        _function = source.getFunction();
-        _owner = owner;
-        _scale = 1f;
-        _color = color;
+        this(source.getFunction(), owner, color, source.getPosition());
         _atoms = AtomHelper.copy(source.getAtoms());
-        _position = source.getPosition();
         _width = source.getWidth();
         _height = source.getHeight();
-        Color[][] textureBase = getTextureBase();
+        Color[][] textureBase = Designs.getTexture(_width, _height, _color);
         for (int ii = 0; ii < _atoms.length; ii++) {
             for (int jj = 0; jj < _atoms[0].length; jj++) {
                 if (_atoms[ii][jj] != null) {
@@ -93,6 +54,14 @@ public class BodyPart {
             }
         }
         applyStyle();
+    }
+
+    private BodyPart(PartFunction function, Body owner, Color color, Point2 position) {
+        _scale = 1f;
+        _function = function;
+        _owner = owner;
+        _color = color;
+        _position = position;
     }
 
     private void applyStyle() {
