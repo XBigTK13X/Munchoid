@@ -18,6 +18,13 @@ public class Atom {
         _color = color;
     }
 
+    public Atom(Atom atom) {
+        count++;
+        _color = atom.getColor();
+        _localX = atom.getLocalX();
+        _localY = atom.getLocalY();
+    }
+
     public boolean isActive() {
         return _isActive;
     }

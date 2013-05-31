@@ -39,6 +39,7 @@ public class ForceSelection implements State {
         TextPool.get().write("DISABLED", Screen.pos(70, 100));
 
         if (_accept == null) {
+            //TODO Change the wording to "ENABLE X" if not enough, and "DISABLE X" if too many
             _wrongCountMessage = TextPool.get().write("Exactly " + _pet.getStats().maxEnabled() + " Forces Must Be Enabled", Screen.pos(10, 30));
             _wrongCountMessage.hide();
             _accept = UI.button(Color.GREEN);
