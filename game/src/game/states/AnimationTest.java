@@ -1,29 +1,36 @@
 package game.states;
 
-import game.GameConfig;
+import game.creatures.Body;
+import game.skeleton.Skeleton;
 import sps.bridge.Commands;
 import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
-import sps.text.TextPool;
-import sps.util.Screen;
 
-public class PreGame implements State {
+public class AnimationTest implements State {
+
+    private Skeleton skeleton;
+    private Body body;
+
     @Override
     public void create() {
-        TextPool.get().write("Press SPACE to enter the arena.", Screen.pos(10, 60));
+        int jointCount = 4;
+        skeleton = new Skeleton(jointCount);
+        body = new Body(jointCount);
+
     }
 
     @Override
     public void draw() {
+        skeleton.draw();
     }
 
     @Override
     public void update() {
-        if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.PlaythroughTest) {
-            //TODO Change back to LoadArena
+        if (Input.get().isActive(Commands.get("Confirm"))) {
             StateManager.get().push(new AnimationTest());
         }
+        skeleton.update();
     }
 
     @Override

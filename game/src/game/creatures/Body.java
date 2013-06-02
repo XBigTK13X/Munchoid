@@ -1,6 +1,7 @@
 package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
+import game.GameConfig;
 import game.creatures.style.BodyRules;
 import sps.core.RNG;
 import sps.util.Colors;
@@ -18,6 +19,10 @@ public class Body {
 
     private List<BodyPart> _front;
     private List<BodyPart> _back;
+
+    public Body(int numberOfParts) {
+        this(numberOfParts, (int) GameConfig.MaxBodyPartSize.Y, (int) GameConfig.MinBodyPartSize.Y, (int) GameConfig.MaxBodyPartSize.X, (int) GameConfig.MinBodyPartSize.X);
+    }
 
     public Body(int numberOfParts, int partWidthMin, int partHeightMin, int partWidthMax, int partHeightMax) {
         this(Colors.randomPleasant());
