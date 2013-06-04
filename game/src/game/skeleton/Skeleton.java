@@ -7,6 +7,10 @@ public class Skeleton {
 
     private Joint root;
 
+    public Skeleton(){
+
+    }
+
     public Skeleton(int joints) {
         int boneLength = 30;
 
@@ -16,38 +20,42 @@ public class Skeleton {
             Point2 pos = Screen.rand(10, 90, 10, 90);
             joints--;
             Joint temp = new Joint(pos.X, pos.Y);
-            if (root.getOutbound() == null) {
+            if (root.getOutbounds().size() == 0) {
                 joint = temp;
-                root.setOutbound(joint);
-                joint.Inbound = root;
+                root.addOutbound(joint);
+                joint.setInbound(root);
             }
             else {
-                joint.setOutbound(temp);
-                temp.Inbound = joint;
+                joint.addOutbound(temp);
+                temp.setInbound(joint);
                 joint = temp;
             }
         }
     }
 
     public void draw() {
-        Joint current = root;
-        while (true) {
-            current.draw();
-            if (current.getOutbound() == null) {
-                return;
+        draw(root);
+    }
+
+    private void draw(Joint parent){
+        if(parent.getOutbounds().size() > 0){
+            for(Joint j:parent.getOutbounds()){
+                draw(j);
             }
-            current = current.getOutbound();
         }
+        parent.draw();
     }
 
     public void update() {
-        Joint current = root;
-        while (true) {
-            current.update();
-            if (current.getOutbound() == null) {
-                return;
+        update(root);
+    }
+
+    public void update(Joint parent){
+        if(parent.getOutbounds().size() > 0){
+            for(Joint j:parent.getOutbounds()){
+                update(j);
             }
-            current = current.getOutbound();
         }
+        parent.update();
     }
 }

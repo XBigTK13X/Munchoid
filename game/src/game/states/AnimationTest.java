@@ -18,11 +18,13 @@ public class AnimationTest implements State {
         skeleton = new Skeleton(jointCount);
         body = new Body(jointCount);
 
+
     }
 
     @Override
     public void draw() {
         skeleton.draw();
+
     }
 
     @Override

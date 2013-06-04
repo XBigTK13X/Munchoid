@@ -3,6 +3,7 @@ package game.creatures;
 import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.creatures.style.BodyRules;
+import game.skeleton.Skeleton;
 import sps.core.RNG;
 import sps.util.Colors;
 
@@ -19,6 +20,8 @@ public class Body {
 
     private List<BodyPart> _front;
     private List<BodyPart> _back;
+
+    private Skeleton skeleton;
 
     public Body(int numberOfParts) {
         this(numberOfParts, (int) GameConfig.MaxBodyPartSize.Y, (int) GameConfig.MinBodyPartSize.Y, (int) GameConfig.MaxBodyPartSize.X, (int) GameConfig.MinBodyPartSize.X);

@@ -8,6 +8,10 @@ import sps.entities.HitTest;
 import sps.graphics.Renderer;
 import sps.util.SpriteMaker;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 public class Joint {
     private float _width = 10;
     private float _height = 10;
@@ -15,8 +19,8 @@ public class Joint {
     public float X;
     public float Y;
     public float Degrees;
-    private Joint _outbound;
-    public Joint Inbound;
+    private List<Joint> _outbound;
+    private Joint _inbound;
 
     private float rangeDegrees = 10;
 
@@ -24,19 +28,23 @@ public class Joint {
     private int _id;
 
     public Joint(float x, float y) {
+        _outbound = new LinkedList<Joint>();
         _id = id++;
         X = x;
         Y = y;
         sprite = SpriteMaker.get().pixel(Color.WHITE);
     }
 
-    public void setOutbound(Joint _outbound) {
-        this._outbound = _outbound;
-
+    public void addOutbound(Joint outbound) {
+        _outbound.add(outbound);
     }
 
-    public Joint getOutbound() {
+    public List<Joint> getOutbounds() {
         return _outbound;
+    }
+
+    public void setInbound(Joint inbound){
+        _inbound = inbound;
     }
 
     public void update() {
@@ -44,8 +52,8 @@ public class Joint {
         Point2 m = RNG.point(-10, 10, -10, 10);
         X += m.X * delt;
         Y += m.Y * delt;
-        if (_outbound != null) {
-            Degrees = (float) (180 * Math.atan2(this._outbound.Y - Y, this._outbound.X - X) / Math.PI) - 90;
+        if (_outbound.size() > 0) {
+            Degrees = (float) (180 * Math.atan2(_outbound.get(0).Y - Y, _outbound.get(0).X - X) / Math.PI) - 90;
         }
     }
 
@@ -54,8 +62,8 @@ public class Joint {
         sprite.setRotation(Degrees);
         sprite.setPosition(X, Y);
         Renderer.get().draw(sprite);
-        if (_outbound != null) {
-            float dist = HitTest.getDistance(X, Y, _outbound.X, _outbound.Y);
+        if (_outbound.size() > 0) {
+            float dist = HitTest.getDistance(X, Y, _outbound.get(0).X, _outbound.get(0).Y);
             int boneWidth = 3;
             sprite.setSize(boneWidth, dist);
             sprite.setRotation(Degrees);
