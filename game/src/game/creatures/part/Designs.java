@@ -21,7 +21,7 @@ public class Designs {
         tmp.get(PartFunction.UpperLimb).add(new QuadArm());
         tmp.get(PartFunction.BodyDetail).add(new PolyAccent());
         tmp.get(PartFunction.Body).add(new RoundedRectangleBody());
-        tmp.get(PartFunction.Body).add(new StarFishBody());
+        tmp.get(PartFunction.Body).add(new CannonShotBody());
         tmp.get(PartFunction.LowerLimb).add(new QuadLeg());
         __designs = Collections.unmodifiableMap(tmp);
     }
