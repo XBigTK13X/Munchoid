@@ -183,6 +183,10 @@ public class BodyPart {
         _parent = parent;
     }
 
+    public List<BodyPart> getChildren() {
+        return _children;
+    }
+
     public void calculateOrigins() {
         setPosition(BodyRules.getOrigin(this));
         if (_children != null && _children.size() > 0) {

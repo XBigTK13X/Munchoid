@@ -1,5 +1,6 @@
 package game.skeleton;
 
+import game.creatures.BodyPart;
 import sps.core.Point2;
 import sps.util.Screen;
 
@@ -7,8 +8,19 @@ public class Skeleton {
 
     private Joint root;
 
-    public Skeleton(){
+    public Skeleton(BodyPart core) {
+        root = new Joint(core);
+        grow(core, root);
+    }
 
+    private void grow(BodyPart start, Joint parent) {
+        if (start.getChildren().size() > 0) {
+            for (BodyPart part : start.getChildren()) {
+                Joint out = new Joint(part);
+                parent.addOutbound(out);
+                grow(part, parent);
+            }
+        }
     }
 
     public Skeleton(int joints) {
@@ -23,11 +35,9 @@ public class Skeleton {
             if (root.getOutbounds().size() == 0) {
                 joint = temp;
                 root.addOutbound(joint);
-                joint.setInbound(root);
             }
             else {
                 joint.addOutbound(temp);
-                temp.setInbound(joint);
                 joint = temp;
             }
         }
@@ -37,9 +47,9 @@ public class Skeleton {
         draw(root);
     }
 
-    private void draw(Joint parent){
-        if(parent.getOutbounds().size() > 0){
-            for(Joint j:parent.getOutbounds()){
+    private void draw(Joint parent) {
+        if (parent.getOutbounds().size() > 0) {
+            for (Joint j : parent.getOutbounds()) {
                 draw(j);
             }
         }
@@ -50,9 +60,9 @@ public class Skeleton {
         update(root);
     }
 
-    public void update(Joint parent){
-        if(parent.getOutbounds().size() > 0){
-            for(Joint j:parent.getOutbounds()){
+    public void update(Joint parent) {
+        if (parent.getOutbounds().size() > 0) {
+            for (Joint j : parent.getOutbounds()) {
                 update(j);
             }
         }

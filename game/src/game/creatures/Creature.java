@@ -22,6 +22,10 @@ public class Creature extends Entity {
     private Creature _opponent;
     private String _name;
 
+    public Creature(int partCount) {
+        this(new Body(partCount));
+    }
+
     public Creature(Body body) {
         _body = body;
         _body.setOwner(this);

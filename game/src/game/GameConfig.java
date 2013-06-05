@@ -57,4 +57,5 @@ public class GameConfig {
     //Debugging / Development
     public static final boolean PlaythroughTest = false;
     public static final boolean DevFlipEnabled = false;
+    public static final boolean DevDrawSkeleton = true;
 }

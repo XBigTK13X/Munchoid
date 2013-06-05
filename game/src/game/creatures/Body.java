@@ -21,7 +21,7 @@ public class Body {
     private List<BodyPart> _front;
     private List<BodyPart> _back;
 
-    private Skeleton skeleton;
+    private Skeleton _skeleton;
 
     public Body(int numberOfParts) {
         this(numberOfParts, (int) GameConfig.MaxBodyPartSize.Y, (int) GameConfig.MinBodyPartSize.Y, (int) GameConfig.MaxBodyPartSize.X, (int) GameConfig.MinBodyPartSize.X);
@@ -87,11 +87,16 @@ public class Body {
                 _height = part.getHeight() + part.getPosition().Y;
             }
         }
+
+        _skeleton = new Skeleton(_parts.get(0));
     }
 
     private void drawPart(BodyPart part) {
         if (part.isAlive()) {
             part.draw();
+        }
+        if (GameConfig.DevDrawSkeleton) {
+            _skeleton.draw();
         }
     }
 
@@ -121,7 +126,9 @@ public class Body {
     }
 
     public void update() {
-
+        if (GameConfig.DevDrawSkeleton) {
+            _skeleton.update();
+        }
     }
 
     public boolean isAlive() {

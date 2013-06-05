@@ -1,29 +1,27 @@
 package game.states;
 
-import game.creatures.Body;
-import game.skeleton.Skeleton;
+import game.creatures.Creature;
 import sps.bridge.Commands;
+import sps.core.RNG;
 import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
+import sps.util.Screen;
 
 public class AnimationTest implements State {
 
-    private Skeleton skeleton;
-    private Body body;
+    private Creature creature;
 
     @Override
     public void create() {
-        int jointCount = 4;
-        skeleton = new Skeleton(jointCount);
-        body = new Body(jointCount);
-
-
+        int partCount = RNG.next(4, 8);
+        creature = new Creature(partCount);
+        creature.setLocation(Screen.pos(50, 50));
     }
 
     @Override
     public void draw() {
-        skeleton.draw();
+        creature.draw();
 
     }
 
@@ -32,7 +30,7 @@ public class AnimationTest implements State {
         if (Input.get().isActive(Commands.get("Confirm"))) {
             StateManager.get().push(new AnimationTest());
         }
-        skeleton.update();
+        creature.update();
     }
 
     @Override
