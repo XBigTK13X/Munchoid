@@ -1,6 +1,7 @@
 package sps.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import sps.bridge.Sps;
 import sps.core.Point2;
 import sps.io.Input;
@@ -55,5 +56,11 @@ public class HitTest {
 
     public static float getDistance(float x, float y, float x1, float y1) {
         return (float) Math.sqrt(getDistanceSquare(x, x1, y, y1));
+    }
+
+    public static boolean overlap(float x, float y, int w, int h, float x2, float y2, int w2, int h2) {
+        Rectangle r1 = new Rectangle(x, y, w, h);
+        Rectangle r2 = new Rectangle(x2, y2, w2, h2);
+        return r1.overlaps(r2);
     }
 }

@@ -1,7 +1,7 @@
 package game.arena;
 
 import com.badlogic.gdx.Gdx;
-import game.creatures.Body;
+import game.creatures.BodyPart;
 import game.creatures.Creature;
 import sps.bridge.DrawDepths;
 import sps.bridge.EntityTypes;
@@ -52,20 +52,12 @@ public class CatchNet extends Entity {
     }
 
     public boolean isTouching(Creature creature) {
-        Body target = creature.getBody();
-
-        float distance = HitTest.getDistance(
-                getLocation().X + getWidth() / 2,
-                getLocation().Y + getHeight() / 2,
-                creature.getLocation().X + target.getWidth() / 2,
-                creature.getLocation().Y + target.getHeight() / 2);
-        float radius = ((target.getWidth() + target.getHeight()) / 4 + (getHeight() + getWidth()) / 3) / 2;
-
-        boolean result = distance < radius;
-
-        if (result) {
-            disable();
+        for (BodyPart part : creature.getBody().getParts()) {
+            if (HitTest.overlap(getLocation().X, getLocation().Y, getWidth(), getHeight(), part.getGlobalPosition().X, part.getGlobalPosition().Y, part.getWidth(), part.getHeight())) {
+                disable();
+                return true;
+            }
         }
-        return result;
+        return false;
     }
 }
