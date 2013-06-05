@@ -54,15 +54,15 @@ public class CatchNet extends Entity {
     public boolean isTouching(Creature creature) {
         Body target = creature.getBody();
 
-        float distanceSquared = HitTest.getDistanceSquare(
+        float distance = HitTest.getDistance(
                 getLocation().X + getWidth() / 2,
-                creature.getLocation().X + target.getWidth() / 2,
                 getLocation().Y + getHeight() / 2,
+                creature.getLocation().X + target.getWidth() / 2,
                 creature.getLocation().Y + target.getHeight() / 2);
-        float radiusSquared = Math.abs(((target.getWidth() / 2 + target.getHeight() / 2)) + ((getHeight() / 2 + getWidth() / 2)));
-        radiusSquared /= 2;
-        radiusSquared *= radiusSquared;
-        boolean result = distanceSquared < radiusSquared;
+        float radius = ((target.getWidth() + target.getHeight()) / 4 + (getHeight() + getWidth()) / 3) / 2;
+
+        boolean result = distance < radius;
+
         if (result) {
             disable();
         }
