@@ -12,7 +12,7 @@ public class RoundHead implements Design {
         Point2 center = new Point2(width / 2, height / 2);
         for (int ii = 0; ii < width; ii++) {
             for (int jj = 0; jj < height; jj++) {
-                if (HitTest.getDistanceSquare(ii, center.X, jj, center.Y) <= radius * radius) {
+                if (HitTest.getDistance(ii, jj, center.X, center.Y) <= radius) {
                     result[ii][jj] = Design.BaseColor;
                 }
             }

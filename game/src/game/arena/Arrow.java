@@ -3,7 +3,6 @@ package game.arena;
 import sps.bridge.DrawDepths;
 import sps.bridge.EntityTypes;
 import sps.bridge.SpriteTypes;
-import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.SpsConfig;
 import sps.entities.Entity;
@@ -32,7 +31,6 @@ public class Arrow extends Entity {
             _closest = catchables.get(0);
             float dist = Float.MAX_VALUE;
             for (Entity catchable : catchables) {
-                Logger.info("" + dist);
                 if (HitTest.getDistance(this, catchable) < dist) {
                     dist = HitTest.getDistance(this, catchable);
                     _closest = catchable;
