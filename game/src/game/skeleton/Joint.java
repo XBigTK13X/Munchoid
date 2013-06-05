@@ -25,7 +25,10 @@ public class Joint {
         _outbound = new LinkedList<Joint>();
         X = x;
         Y = y;
-        sprite = SpriteMaker.get().pixel(Color.WHITE);
+        Color color = new Color(Color.WHITE);
+        color.a = .5f;
+        sprite = SpriteMaker.get().pixel(color);
+
     }
 
     public Joint(BodyPart part) {

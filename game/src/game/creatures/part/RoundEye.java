@@ -8,22 +8,22 @@ public class RoundEye implements Design {
         int dim = Math.min(width, height);
         int[][] result = Common.empty(Common.rectangle(dim, dim));
 
-        float lidRad2Min = (float) Math.pow(dim * .35, 2);
-        float lidRad2Max = (float) Math.pow(dim * .5, 2);
-        float pupilRad2 = (float) Math.pow(dim * .1, 2);
+        float lidRadMin = dim * .35f;
+        float lidRadMax = dim * .5f;
+        float pupilRad = dim * .1f;
         for (int ii = 0; ii < dim; ii++) {
             for (int jj = 0; jj < dim; jj++) {
-                float rad2 = HitTest.getDistanceSquare(dim / 2, ii, dim / 2, jj);
-                if (rad2 >= lidRad2Min && rad2 <= lidRad2Max) {
+                float rad = HitTest.getDistance(dim / 2, dim / 2, ii, jj);
+                if (rad >= lidRadMin && rad <= lidRadMax) {
                     result[ii][jj] = Design.BaseColor;
                 }
 
-                float pupCenterRad2 = HitTest.getDistanceSquare(dim * .66f, ii, dim / 2, jj);
-                if (pupCenterRad2 <= pupilRad2) {
+                float pupCenterRad = HitTest.getDistance(dim * .66f, dim / 2, ii, jj);
+                if (pupCenterRad <= pupilRad) {
                     result[ii][jj] = Design.BaseColor;
                 }
 
-                if (pupCenterRad2 > pupilRad2 && rad2 < lidRad2Min) {
+                if (pupCenterRad > pupilRad && rad < lidRadMin) {
                     result[ii][jj] = Design.White;
                 }
             }

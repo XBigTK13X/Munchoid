@@ -19,13 +19,15 @@ public class HitTest {
         return getDistanceSquare(x1, x2, y1, y2) < Sps.SpriteRadius;
     }
 
+    public static float getDistance(Entity source, Entity target) {
+        return getDistance(source.getLocation().X, source.getLocation().Y, target.getLocation().X, target.getLocation().Y);
+    }
+
     public static float getDistanceSquare(Entity source, Entity target) {
         return getDistanceSquare(source.getLocation().PosX, target.getLocation().PosX, source.getLocation().PosY, target.getLocation().PosY);
     }
 
-    public static float getDistanceSquare(Point2 source, Point2 target)
-
-    {
+    public static float getDistanceSquare(Point2 source, Point2 target) {
         return getDistanceSquare(source.GridX, target.GridX, source.GridY, target.GridY);
     }
 
