@@ -202,7 +202,7 @@ public class BodyPart {
     }
 
     public int getHealth() {
-        return _isAlive ? _health : 0;
+        return _health;
     }
 
     public int getHealthMax() {

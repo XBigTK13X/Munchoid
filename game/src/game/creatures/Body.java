@@ -203,9 +203,12 @@ public class Body {
 
     public void recalculateHealth() {
         _health = 0;
+        _healthMax = 0;
         for (BodyPart part : _parts) {
-            _health += part.getHealth();
-            _healthMax += part.getHealthMax();
+            if (part.isAlive()) {
+                _health += part.getHealth();
+                _healthMax += part.getHealthMax();
+            }
         }
     }
 }

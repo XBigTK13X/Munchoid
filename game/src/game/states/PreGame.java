@@ -22,7 +22,7 @@ public class PreGame implements State {
     public void update() {
         if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.PlaythroughTest) {
             //TODO Change back to LoadArena
-            StateManager.get().push(new Arena());
+            StateManager.get().push(new Battle());
         }
     }
 

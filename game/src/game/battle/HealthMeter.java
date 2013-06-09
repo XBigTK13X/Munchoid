@@ -22,6 +22,8 @@ public class HealthMeter {
     private Point2 _position;
     private int _scaledHeight;
 
+    private int _lastHealth;
+
     public HealthMeter(Creature owner) {
         _owner = owner;
         _owner = owner;
@@ -47,8 +49,11 @@ public class HealthMeter {
     }
 
     private void scaleHeight() {
-        _scaledHeight = (int) (_height * (_owner.getBody().getHealth() / (float) _owner.getBody().getHealthMax()));
-        _sprite.setSize(_width, _scaledHeight);
+        if (_lastHealth == 0 || _lastHealth != _owner.getBody().getHealth()) {
+            _scaledHeight = (int) (_height * (_owner.getBody().getHealth() / (float) _owner.getBody().getHealthMax()));
+            _sprite.setSize(_width, _scaledHeight);
+            _lastHealth = _owner.getBody().getHealth();
+        }
     }
 
     public void update() {
