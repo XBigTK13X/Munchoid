@@ -53,7 +53,15 @@ public class Creature extends Entity {
             _body.flipX(faceLeft);
         }
         if (updatePos) {
-            setLocation(faceLeft ? Screen.pos(80, 20) : Screen.pos(20, 20));
+            if (faceLeft) {
+                Point2 rightSide = Screen.pos(100, 20);
+                rightSide.setX(rightSide.X - getBody().getWidth());
+                setLocation(rightSide);
+            }
+            else {
+                Point2 leftSide = Screen.pos(20, 20);
+                setLocation(leftSide);
+            }
         }
     }
 

@@ -8,7 +8,6 @@ import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
 import sps.core.Logger;
-import sps.core.Point2;
 import sps.entities.EntityManager;
 import sps.io.Input;
 import sps.states.State;
@@ -19,7 +18,6 @@ import sps.ui.ToolTip;
 import sps.util.Screen;
 
 public class Battle implements State {
-    private static final Point2 __petLocation = Screen.pos(15, 15);
     private static SingleSongPlayer __battleMusic;
     private boolean _isPlayerTurn = true;
     private Creature _left;
@@ -44,7 +42,6 @@ public class Battle implements State {
 
         EntityManager.get().addEntity(_right);
         _right.getBody().setScale(1);
-        _left.setLocation(__petLocation);
         _left.getBody().setScale(1);
         EntityManager.get().addEntity(_left);
         _right.setOpponent(_left);
