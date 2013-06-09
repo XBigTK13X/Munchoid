@@ -28,6 +28,8 @@ public class BodyPart {
     private Point2 _position;
     private BodyPart _parent;
     private List<BodyPart> _children;
+    private int _health;
+    private int _healthMax = 100;
 
     public BodyPart(PartFunction function, int width, int height, Body owner) {
         this(function, owner, owner.getColor(), new Point2(0, 0));
@@ -62,6 +64,7 @@ public class BodyPart {
         _owner = owner;
         _color = color;
         _position = position;
+        _health = _healthMax;
     }
 
     private void applyStyle() {
@@ -85,7 +88,6 @@ public class BodyPart {
     }
 
     public void setAtoms(Atom[][] atoms) {
-
         _atoms = atoms;
         int maxActive = 0;
         int currentActive = 0;
@@ -99,12 +101,15 @@ public class BodyPart {
                 }
             }
         }
-        if (currentActive / (float) maxActive <= _percentRequiredToLive) {
+        float percentActive = currentActive / (float) maxActive;
+        if (percentActive <= _percentRequiredToLive) {
             _isAlive = false;
         }
         if (_scale <= GameConfig.MinScaleDeath || _scale >= GameConfig.MaxScaleDeath) {
             _isAlive = false;
         }
+        _health = (int) ((percentActive - _percentRequiredToLive) * _healthMax);
+        _owner.recalculateHealth();
         createSprite();
     }
 
@@ -194,5 +199,13 @@ public class BodyPart {
                 part.calculateOrigins();
             }
         }
+    }
+
+    public int getHealth() {
+        return _isAlive ? _health : 0;
+    }
+
+    public int getHealthMax() {
+        return _healthMax;
     }
 }

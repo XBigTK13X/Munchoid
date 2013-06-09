@@ -2,6 +2,7 @@ package game.states;
 
 import game.GameConfig;
 import game.battle.ForcesHUD;
+import game.battle.HealthMeter;
 import game.creatures.Creature;
 import game.forces.Force;
 import sps.audio.MusicPlayer;
@@ -24,6 +25,8 @@ public class Battle implements State {
     private Creature _right;
     private ForcesHUD _leftUI;
     private ForcesHUD _rightUI;
+    private HealthMeter _leftHealth;
+    private HealthMeter _rightHealth;
 
     public Battle() {
         this(new Creature(), new Creature());
@@ -50,6 +53,9 @@ public class Battle implements State {
         _leftUI = new ForcesHUD(_left);
         _rightUI = new ForcesHUD(_right);
 
+        _leftHealth = new HealthMeter(_left);
+        _rightHealth = new HealthMeter(_right);
+
         TextPool.get().write(_left.getName(), Screen.pos(0, 50).add((int) _left.getLocation().X, 0));
         TextPool.get().write(_right.getName(), Screen.pos(0, 50).add((int) _right.getLocation().X, 0));
     }
@@ -60,6 +66,8 @@ public class Battle implements State {
         //TODO makes these proper entities to enable depth sorting
         _leftUI.draw();
         _rightUI.draw();
+        _leftHealth.draw();
+        _rightHealth.draw();
     }
 
     public void playerAttack(Force force) {
@@ -72,6 +80,9 @@ public class Battle implements State {
     @Override
     public void update() {
         EntityManager.get().update();
+        _leftHealth.update();
+        _rightHealth.update();
+
         if (_isPlayerTurn) {
             for (Force force : Force.values()) {
                 if (Input.get().isActive(Commands.get(force.Command), 0) && _left.getStats().isEnabled(force)) {

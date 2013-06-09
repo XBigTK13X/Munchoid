@@ -23,6 +23,9 @@ public class Body {
 
     private Skeleton _skeleton;
 
+    private int _health;
+    private int _healthMax;
+
     public Body(int numberOfParts) {
         this(numberOfParts, (int) GameConfig.MaxBodyPartSize.Y, (int) GameConfig.MinBodyPartSize.Y, (int) GameConfig.MaxBodyPartSize.X, (int) GameConfig.MinBodyPartSize.X);
     }
@@ -89,6 +92,7 @@ public class Body {
         }
 
         _skeleton = new Skeleton(_parts.get(0));
+        recalculateHealth();
     }
 
     private void drawPart(BodyPart part) {
@@ -187,5 +191,21 @@ public class Body {
 
     public List<BodyPart> getParts() {
         return _parts;
+    }
+
+    public int getHealth() {
+        return _health;
+    }
+
+    public int getHealthMax() {
+        return _healthMax;
+    }
+
+    public void recalculateHealth() {
+        _health = 0;
+        for (BodyPart part : _parts) {
+            _health += part.getHealth();
+            _healthMax += part.getHealthMax();
+        }
     }
 }
