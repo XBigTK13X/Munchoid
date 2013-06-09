@@ -54,8 +54,7 @@ public class Creature extends Entity {
         }
         if (updatePos) {
             if (faceLeft) {
-                Point2 rightSide = Screen.pos(100, 20);
-                rightSide.setX(rightSide.X - getBody().getWidth());
+                Point2 rightSide = Screen.pos(60, 20);
                 setLocation(rightSide);
             }
             else {
