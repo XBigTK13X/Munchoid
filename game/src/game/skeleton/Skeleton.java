@@ -14,18 +14,18 @@ public class Skeleton {
     }
 
     private void grow(BodyPart start, Joint parent) {
-        if (start.getChildren().size() > 0) {
-            for (BodyPart part : start.getChildren()) {
-                Joint out = new Joint(part);
-                parent.addOutbound(out);
-                grow(part, parent);
+        if (start.getChildren() != null) {
+            if (start.getChildren().size() > 0) {
+                for (BodyPart part : start.getChildren()) {
+                    Joint out = new Joint(part);
+                    parent.addOutbound(out);
+                    grow(part, parent);
+                }
             }
         }
     }
 
     public Skeleton(int joints) {
-        int boneLength = 30;
-
         root = new Joint(Screen.width(50), Screen.height(50));
         Joint joint = null;
         while (joints > 0) {
