@@ -17,6 +17,7 @@ import sps.graphics.SpriteSheetManager;
 import sps.io.DefaultStateProvider;
 import sps.io.Input;
 import sps.particles.ParticleEngine;
+import sps.states.State;
 import sps.states.StateManager;
 import sps.text.TextPool;
 import sps.ui.UiElements;
@@ -43,6 +44,9 @@ public class Game implements ApplicationListener {
         StateManager.get().resize(width, height);
     }
 
+
+    State _preUpdateState;
+
     @Override
     public void render() {
         try {
@@ -58,20 +62,23 @@ public class Game implements ApplicationListener {
                 Renderer.get().toggleFullScreen();
             }
 
+            _preUpdateState = StateManager.get().current();
             StateManager.get().asyncUpdate();
             StateManager.get().update();
             ParticleEngine.get().update();
             TextPool.get().update();
             UiElements.get().update();
 
-            // Render
-            Renderer.get().begin();
-            StateManager.get().draw();
-            ParticleEngine.get().draw();
-            UiElements.get().draw();
-            TextPool.get().draw();
-            DevConsole.get().draw();
-            Renderer.get().end();
+            if (_preUpdateState == StateManager.get().current()) {
+                // Render
+                Renderer.get().begin();
+                StateManager.get().draw();
+                ParticleEngine.get().draw();
+                UiElements.get().draw();
+                TextPool.get().draw();
+                DevConsole.get().draw();
+                Renderer.get().end();
+            }
 
 
         }

@@ -35,6 +35,10 @@ public class ForceSelection implements State {
 
     @Override
     public void create() {
+        if (_pet.getStats().possibleActiveForces() <= 4) {
+            exitMenu();
+            return;
+        }
         TextPool.get().write("ENABLED", Screen.pos(20, 100));
         TextPool.get().write("DISABLED", Screen.pos(70, 100));
 
@@ -77,10 +81,14 @@ public class ForceSelection implements State {
         }
     }
 
+    private void exitMenu() {
+        StateManager.get().pop();
+        StateManager.get().pop();
+    }
+
     private boolean confirmSelection() {
         if (_pet.getStats().enabledCount() == _pet.getStats().maxEnabled()) {
-            StateManager.get().pop();
-            StateManager.get().pop();
+            exitMenu();
             return true;
         }
         else {

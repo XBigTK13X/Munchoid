@@ -61,13 +61,7 @@ public class Stats {
     }
 
     public int maxEnabled() {
-        int max = 0;
-        for (Force force : Force.values()) {
-            if (get(force) > GameConfig.DisableStat) {
-                max++;
-            }
-        }
-        return Math.min(max, GameConfig.MaxForcesEnabled);
+        return Math.min(possibleActiveForces(), GameConfig.MaxForcesEnabled);
     }
 
     public int enabledCount() {
@@ -80,5 +74,15 @@ public class Stats {
 
     public void setEnabled(Force force, boolean enabled) {
         _enabled.put(force, enabled);
+    }
+
+    public int possibleActiveForces() {
+        int max = 0;
+        for (Force force : Force.values()) {
+            if (get(force) > GameConfig.DisableStat) {
+                max++;
+            }
+        }
+        return max;
     }
 }
