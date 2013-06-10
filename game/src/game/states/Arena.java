@@ -89,6 +89,9 @@ public class Arena implements State {
 
         EntityManager.get().addEntity(_preload.getFloor());
         EntityManager.get().addEntity(_preload.getPlayer());
+        EntityManager.get().addEntity(_preload.getPlayer().getNet());
+        EntityManager.get().addEntity(_preload.getPlayer().getArrow());
+
         for (Catchable catchable : _preload.getCatchables()) {
             EntityManager.get().addEntity(catchable);
         }

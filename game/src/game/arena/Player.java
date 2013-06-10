@@ -9,7 +9,6 @@ import sps.bridge.*;
 import sps.core.Point2;
 import sps.core.SpsConfig;
 import sps.entities.Entity;
-import sps.entities.EntityManager;
 import sps.entities.IActor;
 import sps.graphics.Renderer;
 import sps.io.Input;
@@ -33,6 +32,7 @@ public class Player extends Entity implements IActor {
 
     private Floor _floor;
     private float _frozenSeconds;
+    private Arrow _arrow;
 
     public Player(Floor floor) {
         __scrollSpeedX = GameConfig.PlayerTopSpeed;
@@ -44,8 +44,7 @@ public class Player extends Entity implements IActor {
         initialize(SpsConfig.get().spriteWidth, SpsConfig.get().spriteHeight, Screen.pos(20, 20), SpriteTypes.get("Player_Stand"), EntityTypes.get(Sps.Entities.Actor), DrawDepths.get(Sps.Actors.Player));
         _actorType = ActorTypes.get(Sps.Actors.Player);
         _net = new CatchNet(this);
-        EntityManager.get().addEntity(new Arrow(this));
-        EntityManager.get().addEntity(_net);
+        _arrow = new Arrow(this);
         setLocation(Screen.pos(50, 50));
     }
 
@@ -160,5 +159,9 @@ public class Player extends Entity implements IActor {
 
     public CatchNet getNet() {
         return _net;
+    }
+
+    public Arrow getArrow() {
+        return _arrow;
     }
 }
