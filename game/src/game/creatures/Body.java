@@ -207,8 +207,8 @@ public class Body {
         for (BodyPart part : _parts) {
             if (part.isAlive()) {
                 _health += part.getHealth();
-                _healthMax += part.getHealthMax();
             }
+            _healthMax += part.getHealthMax();
         }
     }
 }
