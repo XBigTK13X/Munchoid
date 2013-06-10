@@ -44,8 +44,7 @@ public class ForceSelection implements State {
 
         if (_accept == null) {
             //TODO Change the wording to "ENABLE X" if not enough, and "DISABLE X" if too many
-            _wrongCountMessage = TextPool.get().write("Exactly " + _pet.getStats().maxEnabled() + " Forces Must Be Enabled", Screen.pos(10, 30));
-            _wrongCountMessage.hide();
+            setMessage();
             _accept = UI.button(Color.GREEN);
 
             _accept.setPosition(Screen.width(50), Screen.height(10));
@@ -103,8 +102,36 @@ public class ForceSelection implements State {
         _forces.draw();
     }
 
+    private String getMessage() {
+        int diff = _pet.getStats().enabledCount() - _pet.getStats().maxEnabled();
+        if (diff > 0) {
+            return "Please disable " + (_pet.getStats().enabledCount() - _pet.getStats().maxEnabled()) + " of the forces on the left.";
+        }
+        else if (diff == 0) {
+            return "Please press the green button to accept your changes.";
+        }
+        else {
+            return "Please enable " + (_pet.getStats().maxEnabled() - _pet.getStats().enabledCount()) + " of the forces on the right";
+        }
+    }
+
+    private int _lastEnabledCount;
+
+    private void setMessage() {
+        if (_wrongCountMessage == null) {
+            _wrongCountMessage = TextPool.get().write(getMessage(), Screen.pos(10, 30));
+        }
+        else {
+            if (_lastEnabledCount != _pet.getStats().enabledCount()) {
+                _lastEnabledCount = _pet.getStats().enabledCount();
+                _wrongCountMessage.setMessage(getMessage());
+            }
+        }
+    }
+
     @Override
     public void update() {
+        setMessage();
         if (Input.get().isActive(Commands.get("Confirm"))) {
             confirmSelection();
         }

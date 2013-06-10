@@ -93,7 +93,7 @@ public class ForceMeter {
                 });
             }
             else if (StateManager.get().current() instanceof ForceSelection) {
-                if (!_owner.getStats().isEnabled(_force)) {
+                if (!_owner.getStats().isEnabled(_force) || _owner.getStats().get(_force) <= GameConfig.DisableStat) {
                     moveToRightSide();
                 }
                 Buttons.get().add(new Buttons.User() {
