@@ -35,6 +35,7 @@ public class ForceSelection implements State {
 
     @Override
     public void create() {
+        //TODO Option that automatically chooses
         if (_pet.getStats().possibleActiveForces() <= 4) {
             exitMenu();
             return;
