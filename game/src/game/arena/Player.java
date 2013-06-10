@@ -157,4 +157,8 @@ public class Player extends Entity implements IActor {
         _graphic.setColor(Color.BLUE);
         TextPool.get().write("*FROZEN*", getLocation(), .5f, TextEffects.Fountain);
     }
+
+    public CatchNet getNet() {
+        return _net;
+    }
 }

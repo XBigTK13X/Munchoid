@@ -26,7 +26,6 @@ public class HealthMeter {
 
     public HealthMeter(Creature owner) {
         _owner = owner;
-        _owner = owner;
         _width = (int) Screen.width(__widthPercent);
         _height = (int) Screen.height(__heightPercent);
         if (owner.getLocation().X < Screen.width(50)) {

@@ -22,9 +22,40 @@ import sps.text.Text;
 import sps.text.TextPool;
 import sps.util.Screen;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Arena implements State {
+
+    public static class Preload {
+        private List<Catchable> _catchables = new ArrayList<Catchable>();
+        private Floor _floor;
+        private Player _player;
+
+        public void cache(Player player) {
+            _player = player;
+        }
+
+        public Player getPlayer() {
+            return _player;
+        }
+
+        public void cache(Catchable catchable) {
+            _catchables.add(catchable);
+        }
+
+        public List<Catchable> getCatchables() {
+            return _catchables;
+        }
+
+        public void cache(Floor floor) {
+            _floor = floor;
+        }
+
+        public Floor getFloor() {
+            return _floor;
+        }
+    }
 
     private static final Point2 __timerPos = Screen.pos(5, 95);
     private int _lastTime;
@@ -34,6 +65,12 @@ public class Arena implements State {
     private static final Point2 __creatureTextPos = Screen.pos(55, 95);
     private Text _creatureText;
     private int _lastCreatureCount;
+
+    private Preload _preload;
+
+    public Arena(Preload preload) {
+        _preload = preload;
+    }
 
     private String timeDisplay() {
         return _lastTime == 1 ?
@@ -49,17 +86,16 @@ public class Arena implements State {
         _countDownSeconds = GameConfig.ArenaTimeoutSeconds;
         _lastTime = (int) GameConfig.ArenaTimeoutSeconds;
         _timerText = TextPool.get().write(timeDisplay(), __timerPos);
-        Floor floor = new Floor();
-        EntityManager.get().addEntity(floor);
-        Player player = new Player(floor);
-        EntityManager.get().addEntity(player);
-        for (int ii = 0; ii < GameConfig.CreatureLimit; ii++) {
-            EntityManager.get().addEntity(new Catchable());
-        }
-        _creatureText = TextPool.get().write(creatureDisplay(GameConfig.CreatureLimit), __creatureTextPos);
 
+        EntityManager.get().addEntity(_preload.getFloor());
+        EntityManager.get().addEntity(_preload.getPlayer());
+        for (Catchable catchable : _preload.getCatchables()) {
+            EntityManager.get().addEntity(catchable);
+        }
+
+        _creatureText = TextPool.get().write(creatureDisplay(GameConfig.CreatureLimit), __creatureTextPos);
         if (GameConfig.PlaythroughTest) {
-            player.setPet(new Creature());
+            _preload.getPlayer().setPet(new Creature());
         }
     }
 
