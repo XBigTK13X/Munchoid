@@ -30,6 +30,7 @@ public class BodyPart {
     private List<BodyPart> _children;
     private int _health;
     private int _healthMax = 100;
+    private static final float __scaleBase = 1f;
 
     public BodyPart(PartFunction function, int width, int height, Body owner) {
         this(function, owner, owner.getColor(), new Point2(0, 0));
@@ -59,7 +60,7 @@ public class BodyPart {
     }
 
     private BodyPart(PartFunction function, Body owner, Color color, Point2 position) {
-        _scale = 1f;
+        _scale = __scaleBase;
         _function = function;
         _owner = owner;
         _color = color;
@@ -108,7 +109,22 @@ public class BodyPart {
         if (_scale <= GameConfig.MinScaleDeath || _scale >= GameConfig.MaxScaleDeath) {
             _isAlive = false;
         }
-        _health = (int) ((percentActive - _percentRequiredToLive) * _healthMax);
+        int atomHealth = (int) ((percentActive - _percentRequiredToLive) * _healthMax);
+
+        float scaleDelta = 1;
+        float scaleDeltaThreshold = 1;
+        if (_scale > __scaleBase) {
+            scaleDelta = GameConfig.MaxScaleDeath - _scale;
+            scaleDeltaThreshold = GameConfig.MaxScaleDeath - __scaleBase;
+        }
+        else if (_scale < __scaleBase) {
+            scaleDelta = _scale - GameConfig.MinScaleDeath;
+            scaleDeltaThreshold = __scaleBase - GameConfig.MinScaleDeath;
+        }
+        int scaleHealth = (int) ((scaleDelta / scaleDeltaThreshold) * _healthMax);
+
+        _health = (atomHealth + scaleHealth) / 2;
+
         _owner.recalculateHealth();
         createSprite();
     }
