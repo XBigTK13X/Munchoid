@@ -6,6 +6,7 @@ import game.GameConfig;
 import game.UI;
 import game.creatures.Creature;
 import game.creatures.Merge;
+import game.creatures.Stats;
 import game.forces.Force;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
@@ -42,16 +43,27 @@ public class MergeOutcome implements State {
         _defeated.getBody().restore();
         _pet.getBody().flipX(false);
         _defeated.getBody().flipX(false);
-        _merged = Merge.two(_pet, _defeated);
+        _merged = Merge.creatures(_pet, _defeated);
 
-
+        final int left = 5;
+        final int top = 90;
         //Stat merge display
-        TextPool.get().write("Merge Outcome:", Screen.pos(15, 80));
+        Stats cancelStats = Merge.stats(_pet.getStats(), _pet.getStats());
+        TextPool.get().write("Cancel Outcome:", Screen.pos(left, top + 5));
         int forceRow = 2;
+        for (Force force : Force.values()) {
+            String resultText = cancelStats.get(force) == GameConfig.MaxStat ? "MAX" : cancelStats.get(force) + "";
+            String forceChange = force.name() + ": " + _pet.getStats().get(force) + " -> " + resultText;
+            TextPool.get().write(forceChange, Screen.pos(left, top - forceRow * 5));
+            forceRow++;
+        }
+
+        TextPool.get().write("Merge Outcome:", Screen.pos(left + 50, top + 5));
+        forceRow = 2;
         for (Force force : Force.values()) {
             String resultText = _merged.getStats().get(force) == GameConfig.MaxStat ? "MAX" : _merged.getStats().get(force) + "";
             String forceChange = force.name() + ": " + _pet.getStats().get(force) + " -> " + resultText;
-            TextPool.get().write(forceChange, Screen.pos(15, 80 - forceRow * 5));
+            TextPool.get().write(forceChange, Screen.pos(left + 50, top - forceRow * 5));
             forceRow++;
         }
 
@@ -71,8 +83,9 @@ public class MergeOutcome implements State {
             _accept = UI.button(Color.GREEN);
             _reject = UI.button(Color.RED);
 
-            _accept.setPosition(Screen.width(60), Screen.height(80));
-            _reject.setPosition(Screen.width(60), Screen.height(60));
+            _reject.setPosition(Screen.width(left + 5), Screen.height(35));
+            _accept.setPosition(Screen.width(left + 55), Screen.height(35));
+
 
             Buttons.get().add(new Buttons.User() {
 

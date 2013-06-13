@@ -158,7 +158,7 @@ public class Arena implements State {
                     Catchable c1 = (Catchable) opponents.get(ii);
                     Catchable c2 = (Catchable) opponents.get(ii + 1);
                     if (c1.getCreature().getBody().isAlive() && c2.getCreature().getBody().isAlive()) {
-                        Creature merged = Merge.two(c1.getCreature(), c2.getCreature());
+                        Creature merged = Merge.creatures(c1.getCreature(), c2.getCreature());
                         c1.setCreature(merged);
                         opponents.get(ii + 1).setInactive();
                     }

@@ -109,6 +109,10 @@ public class Creature extends Entity {
         return _stats;
     }
 
+    public void setStats(Stats stats) {
+        _stats = stats;
+    }
+
     public Body getBody() {
         return _body;
     }

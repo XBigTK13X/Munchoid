@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Merge {
-    public static Creature two(Creature a, Creature b) {
+    public static Creature creatures(Creature a, Creature b) {
         //Create a new body from the two inputs
         List<BodyPart> pool = new ArrayList<BodyPart>();
         pool.addAll(a.getBody().getParts());
@@ -33,19 +33,24 @@ public class Merge {
         pool.add(0, bodies.get(RNG.next(0, bodies.size())));
         Creature result = new Creature(new Body(pool, mergedColor));
 
-        //Average the stats together
+        result.setStats(stats(a.getStats(), b.getStats()));
+
+        //TODO MergeOutcome in size as well as stats/body
+        return result;
+    }
+
+    public static Stats stats(Stats a, Stats b) {
+        Stats result = new Stats();
         for (Force force : Force.values()) {
-            int average = (a.getStats().get(force) + b.getStats().get(force)) / 2;
+            int average = (a.get(force) + b.get(force)) / 2;
             int impact = (int) (average * (RNG.next(GameConfig.MinMergeImpactPercent, GameConfig.MaxMergeImpactPercent) / 100f));
-            if (impact == 0 && b.getStats().get(force) > 0) {
+            if (impact == 0 && b.get(force) > 0) {
                 impact = 1;
             }
 
-            result.getStats().set(force, a.getStats().get(force) + impact);
-            result.getStats().setEnabled(force, a.getStats().isEnabled(force));
+            result.set(force, a.get(force) + impact);
+            result.setEnabled(force, a.isEnabled(force));
         }
-
-        //TODO MergeOutcome in size as well as stats/body
         return result;
     }
 }

@@ -4,7 +4,7 @@ import sps.core.Point2;
 import sps.util.Screen;
 
 public class GameConfig {
-    public final static int CreatureLimit = 50;
+    public final static int CreatureLimit = 5;
     public final static int SpacePercentPerCreature = 1;
     //The length of Quickly.ogg
     public final static float ArenaTimeoutSeconds = 10f;
@@ -22,17 +22,16 @@ public class GameConfig {
     public static final int MinBodyParts = 4;
     public static final int MaxBodyParts = 6;
 
-    public static final int MinStatInit = 2;
-    public static final int MaxStatInit = 5;
-
     public static final int MinMergeImpactPercent = 15;
     public static final int MaxMergeImpactPercent = 40;
 
     public static final int BonusAmount = 1;
     public static final int BonusAward = 15;
 
+    public static final int MinStatInit = 2;
+    public static final int MaxStatInit = 5;
     public static final int DisableStat = 0;
-    public static final int MinStat = 1;
+    public static final int MinStat = 0;
     public static final int MaxStat = 100;
 
     public static final int SliceScale = 4;
