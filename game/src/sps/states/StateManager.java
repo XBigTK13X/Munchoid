@@ -13,12 +13,6 @@ import java.util.Stack;
 public class StateManager {
 
     private static StateManager instance = new StateManager();
-    private Stack<State> _states;
-    private Map<State, StateDependentComponents> _components = new HashMap<State, StateDependentComponents>();
-
-    private StateManager() {
-        _states = new Stack<State>();
-    }
 
     public static StateManager get() {
         return instance;
@@ -30,6 +24,13 @@ public class StateManager {
         }
         instance = new StateManager();
         return get();
+    }
+
+    private Stack<State> _states;
+    private Map<State, StateDependentComponents> _components = new HashMap<State, StateDependentComponents>();
+
+    private StateManager() {
+        _states = new Stack<State>();
     }
 
     private void loadCurrent() {
