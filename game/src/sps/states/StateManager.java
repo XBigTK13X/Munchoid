@@ -27,10 +27,11 @@ public class StateManager {
     }
 
     private Stack<State> _states;
-    private Map<State, StateDependentComponents> _components = new HashMap<State, StateDependentComponents>();
+    private Map<State, StateDependentComponents> _components;
 
     private StateManager() {
         _states = new Stack<State>();
+        _components = new HashMap<State, StateDependentComponents>();
     }
 
     private void loadCurrent() {

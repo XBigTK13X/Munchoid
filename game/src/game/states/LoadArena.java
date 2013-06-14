@@ -4,6 +4,7 @@ import game.GameConfig;
 import game.arena.Catchable;
 import game.arena.Floor;
 import game.arena.Player;
+import game.arena.Preload;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
@@ -11,7 +12,7 @@ import sps.text.TextPool;
 import sps.util.Screen;
 
 public class LoadArena implements State {
-    private Arena.Preload _preload;
+    private Preload _preload;
     private int _preloadedItems;
     private int _preloadedItemsTarget;
     private Text _loadingMessage;
@@ -22,7 +23,7 @@ public class LoadArena implements State {
         //Floor + Player + Creatures
         _preloadedItemsTarget = 1 + 1 + GameConfig.CreatureLimit;
         _loadingMessage = TextPool.get().write(getMessage(), Screen.pos(10, 60));
-        _preload = new Arena.Preload();
+        _preload = new Preload();
         _meter = new LoadingMeter();
     }
 

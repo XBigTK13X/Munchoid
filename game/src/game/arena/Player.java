@@ -125,7 +125,7 @@ public class Player extends Entity implements IActor {
             }
         }
 
-        if (Input.get().isActive(Commands.get("Confirm"))) {
+        if (Input.get().isActive(Commands.get("Confirm")) && !_net.isInUse()) {
             _net.use();
         }
 

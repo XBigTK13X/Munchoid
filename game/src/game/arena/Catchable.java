@@ -18,18 +18,17 @@ public class Catchable extends Entity {
 
     private static final int __moveIncrementsMax = 30;
 
+    private static Player __player;
+
     private Creature _creature;
     private int _moveIncrements = 0;
     private Point2 _movementTarget = new Point2();
     private int __pace = 10;
     private float _dX = 0;
     private float _dY = 0;
-    private static Player __player;
 
     public Catchable(Player player) {
-        if (__player == null) {
-            __player = player;
-        }
+        __player = player;
         initialize(0, 0, Point2.Zero, null, EntityTypes.get("Catchable"), DrawDepths.get("Catchable"));
         _creature = new Creature();
         _creature.getBody().setScale(GameConfig.ArenaCreatureScale);
@@ -46,7 +45,8 @@ public class Catchable extends Entity {
 
         _creature.setLocation(getLocation());
 
-        if (__player.getNet() != null && __player.getNet().isInUse() && __player.getNet().isTouching(_creature)) {
+        if (__player.getNet().isInUse() && __player.getNet().isTouching(_creature)) {
+            __player.getNet().disable();
             if (__player.getPet() == null) {
                 __player.setPet(_creature);
                 setInactive();

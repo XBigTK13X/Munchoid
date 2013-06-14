@@ -3,8 +3,8 @@ package game.states;
 import com.badlogic.gdx.Gdx;
 import game.GameConfig;
 import game.arena.Catchable;
-import game.arena.Floor;
 import game.arena.Player;
+import game.arena.Preload;
 import game.creatures.Creature;
 import game.creatures.Merge;
 import sps.audio.MusicPlayer;
@@ -22,40 +22,9 @@ import sps.text.Text;
 import sps.text.TextPool;
 import sps.util.Screen;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Arena implements State {
-
-    public static class Preload {
-        private List<Catchable> _catchables = new ArrayList<Catchable>();
-        private Floor _floor;
-        private Player _player;
-
-        public void cache(Player player) {
-            _player = player;
-        }
-
-        public Player getPlayer() {
-            return _player;
-        }
-
-        public void cache(Catchable catchable) {
-            _catchables.add(catchable);
-        }
-
-        public List<Catchable> getCatchables() {
-            return _catchables;
-        }
-
-        public void cache(Floor floor) {
-            _floor = floor;
-        }
-
-        public Floor getFloor() {
-            return _floor;
-        }
-    }
 
     private static final Point2 __timerPos = Screen.pos(5, 95);
     private int _lastTime;
@@ -73,8 +42,7 @@ public class Arena implements State {
     }
 
     private String timeDisplay() {
-        return _lastTime == 1 ?
-                "Time Remaining: " + _lastTime + " second" : "Time Remaining: " + _lastTime + " seconds";
+        return "Time Remaining: " + _lastTime + " second" + ((_lastTime == 1) ? "" : "s");
     }
 
     private String creatureDisplay(int creatureCount) {
@@ -124,11 +92,11 @@ public class Arena implements State {
                 StateManager.get().push(new Tournament((Player) EntityManager.get().getPlayer()));
             }
             else {
+                //TODO Remove debug command listeners
                 if (_countDownSeconds <= 0 && opponents.size() > 0 || Input.get().isActive(Commands.get("Push")) || GameConfig.PlaythroughTest) {
                     StateManager.get().push(new Battle(player.getPet(), ((Catchable) opponents.get(RNG.next(0, opponents.size()))).getCreature()));
                 }
             }
-
 
             if (_lastCreatureCount != opponents.size()) {
                 _lastCreatureCount = opponents.size();
@@ -137,6 +105,10 @@ public class Arena implements State {
         }
         else {
             _timerText.setMessage("Catch a creature!");
+        }
+
+        if (Input.get().isActive(Commands.get("Pop"))) {
+            StateManager.reset().push(new PreGame());
         }
     }
 
