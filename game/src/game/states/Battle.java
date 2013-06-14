@@ -94,8 +94,7 @@ public class Battle implements State {
                     }
                 }
             }
-            if (Input.get().isActive(Commands.get("Pop"))) {
-                //TODO Remove this debugging helper
+            if (Input.get().isActive(Commands.get("Pop")) && GameConfig.DevShortcutsEnabled) {
                 victory();
             }
         }
@@ -105,7 +104,7 @@ public class Battle implements State {
             _isPlayerTurn = true;
         }
 
-        if (!_right.getBody().isAlive() || GameConfig.PlaythroughTest) {
+        if (!_right.getBody().isAlive() || GameConfig.DevPlaythroughTest) {
             victory();
         }
         if (!_left.getBody().isAlive()) {

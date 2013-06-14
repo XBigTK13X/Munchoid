@@ -20,7 +20,7 @@ public class TournamentWin implements State {
 
     @Override
     public void update() {
-        if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.PlaythroughTest) {
+        if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.DevPlaythroughTest) {
             StateManager.reset().push(new PreGame());
         }
     }

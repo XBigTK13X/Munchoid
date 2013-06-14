@@ -20,7 +20,7 @@ public class PreGame implements State {
 
     @Override
     public void update() {
-        if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.PlaythroughTest) {
+        if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.DevPlaythroughTest) {
             //TODO Change back to LoadArena
             StateManager.get().push(new LoadArena());
         }

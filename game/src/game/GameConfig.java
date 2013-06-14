@@ -54,7 +54,9 @@ public class GameConfig {
     public static final int MaxForcesEnabled = 4;
 
     //Debugging / Development
-    public static final boolean PlaythroughTest = false;
+    public static final boolean DevShortcutsEnabled = true;
+    public static final boolean DevPlaythroughTest = false;
     public static final boolean DevFlipEnabled = false;
     public static final boolean DevDrawSkeleton = false;
+
 }

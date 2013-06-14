@@ -65,7 +65,7 @@ public class Arena implements State {
         }
 
         _creatureText = TextPool.get().write(creatureDisplay(GameConfig.CreatureLimit), __creatureTextPos);
-        if (GameConfig.PlaythroughTest) {
+        if (GameConfig.DevPlaythroughTest) {
             _preload.getPlayer().setPet(new Creature());
         }
     }
@@ -92,8 +92,7 @@ public class Arena implements State {
                 StateManager.get().push(new Tournament((Player) EntityManager.get().getPlayer()));
             }
             else {
-                //TODO Remove debug command listeners
-                if (_countDownSeconds <= 0 && opponents.size() > 0 || Input.get().isActive(Commands.get("Push")) || GameConfig.PlaythroughTest) {
+                if ((_countDownSeconds <= 0 && opponents.size() > 0) || (Input.get().isActive(Commands.get("Push")) && GameConfig.DevShortcutsEnabled) || GameConfig.DevPlaythroughTest) {
                     StateManager.get().push(new Battle(player.getPet(), ((Catchable) opponents.get(RNG.next(0, opponents.size()))).getCreature()));
                 }
             }
@@ -105,10 +104,6 @@ public class Arena implements State {
         }
         else {
             _timerText.setMessage("Catch a creature!");
-        }
-
-        if (Input.get().isActive(Commands.get("Pop"))) {
-            StateManager.reset().push(new PreGame());
         }
     }
 

@@ -39,7 +39,7 @@ public class Tournament implements State {
 
     @Override
     public void update() {
-        if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.PlaythroughTest) {
+        if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.DevPlaythroughTest) {
             _boutNumber++;
             _entranceInfo.setMessage(boutMessage());
             // Run all of the EvE matches and Bys, then load the next PvE match
