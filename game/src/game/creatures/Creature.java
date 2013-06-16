@@ -80,9 +80,8 @@ public class Creature extends Entity {
 
     public void attack(Force force) {
         if (_opponent != null && _opponent.getBody().isAlive()) {
-            int weakness = _opponent.getStats().get(Force.weakness(force));
-            int strength = _opponent.getStats().get(Force.strength(force));
-
+            int weakness = _opponent.getStats().get(Force.beatenBy(force));
+            int strength = _opponent.getStats().get(Force.beats(force));
 
             if (strength != 0) {
                 String result;

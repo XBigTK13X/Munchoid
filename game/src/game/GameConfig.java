@@ -59,4 +59,5 @@ public class GameConfig {
     public static final boolean DevFlipEnabled = false;
     public static final boolean DevDrawSkeleton = false;
 
+    public static final float FirstFightMult = 1.5f;
 }

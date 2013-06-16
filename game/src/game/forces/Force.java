@@ -44,7 +44,7 @@ public enum Force {
         return null;
     }
 
-    public static Force strength(Force force) {
+    public static Force beats(Force force) {
         switch (force) {
             case Abrasive:
                 return Force.Vaporize;
@@ -62,7 +62,7 @@ public enum Force {
         return null;
     }
 
-    public static Force weakness(Force force) {
+    public static Force beatenBy(Force force) {
         switch (force) {
             case Abrasive:
                 return Force.Slice;

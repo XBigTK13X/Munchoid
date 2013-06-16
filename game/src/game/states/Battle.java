@@ -31,7 +31,7 @@ public class Battle implements State {
 
     public Battle() {
         this(new Creature(), new Creature());
-        Logger.error("ONLY USE THIS METHOD FOR DEBUGGING");
+        Logger.error("ONLY USE Battle() FOR DEBUGGING!!!");
     }
 
     public Battle(Creature slot1, Creature slot2) {

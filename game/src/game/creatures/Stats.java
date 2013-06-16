@@ -8,6 +8,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Stats {
+    public static Stats createWeakling(Stats stats) {
+        Stats result = new Stats();
+        for (Force f : Force.values()) {
+            result.set(f, 0);
+        }
+        Force strength = stats.randomEnabledForce();
+        Force weakness = Force.beats(strength);
+        result.set(weakness, stats.get(strength) / 2);
+        return result;
+    }
+
     private Map<Force, Integer> _stats;
     private Map<Force, Boolean> _enabled;
 

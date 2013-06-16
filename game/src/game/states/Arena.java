@@ -2,11 +2,14 @@ package game.states;
 
 import com.badlogic.gdx.Gdx;
 import game.GameConfig;
+import game.Score;
 import game.arena.Catchable;
 import game.arena.Player;
 import game.arena.Preload;
 import game.creatures.Creature;
 import game.creatures.Merge;
+import game.creatures.Stats;
+import game.forces.Force;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
@@ -51,6 +54,7 @@ public class Arena implements State {
 
     @Override
     public void create() {
+        Score.reset();
         _countDownSeconds = GameConfig.ArenaTimeoutSeconds;
         _lastTime = (int) GameConfig.ArenaTimeoutSeconds;
         _timerText = TextPool.get().write(timeDisplay(), __timerPos);
@@ -93,7 +97,14 @@ public class Arena implements State {
             }
             else {
                 if ((_countDownSeconds <= 0 && opponents.size() > 0) || (Input.get().isActive(Commands.get("Push")) && GameConfig.DevShortcutsEnabled) || GameConfig.DevPlaythroughTest) {
-                    StateManager.get().push(new Battle(player.getPet(), ((Catchable) opponents.get(RNG.next(0, opponents.size()))).getCreature()));
+                    Creature opponent = ((Catchable) opponents.get(RNG.next(0, opponents.size()))).getCreature();
+                    if (Score.get().victories() == 0) {
+                        opponent.setStats(Stats.createWeakling(player.getPet().getStats()));
+                        Stats pet = player.getPet().getStats();
+                        Force strongest = pet.randomEnabledForce();
+                        pet.set(strongest, (int) (pet.get(strongest) * GameConfig.FirstFightMult));
+                    }
+                    StateManager.get().push(new Battle(player.getPet(), opponent));
                 }
             }
 
