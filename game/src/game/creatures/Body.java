@@ -166,6 +166,7 @@ public class Body {
         for (BodyPart part : _parts) {
             part.restore();
         }
+        recalculateHealth();
     }
 
     public void flipX(boolean faceLeft) {

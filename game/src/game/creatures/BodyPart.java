@@ -172,6 +172,7 @@ public class BodyPart {
 
     public void restore() {
         _scale = 1;
+        _health = _healthMax;
         for (int ii = 0; ii < _width; ii++) {
             for (int jj = 0; jj < _height; jj++) {
                 if (_atoms[ii][jj] != null) {
