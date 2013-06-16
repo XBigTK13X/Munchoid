@@ -1,6 +1,7 @@
 package game.states;
 
 import game.GameConfig;
+import game.Score;
 import sps.bridge.Commands;
 import sps.io.Input;
 import sps.states.State;
@@ -12,6 +13,7 @@ public class PreGame implements State {
     @Override
     public void create() {
         TextPool.get().write("Press SPACE to enter the arena.", Screen.pos(10, 60));
+        Score.reset();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package game.arena;
 
 import game.GameConfig;
+import game.Score;
 import game.creatures.Creature;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
@@ -57,6 +58,7 @@ public class Catchable extends Entity {
                 if (__player.getPet().isLargerThan(_creature)) {
                     //TODO Chomping sound effect here
                     TextPool.get().write("*CHOMP*", __player.getLocation(), 1f, TextEffects.Fountain);
+                    Score.get().addChomp();
                     __player.getPet().addBonus(Math.min(__player.getPet().getStats().power() - _creature.getStats().power(), _creature.getStats().power()));
                     setInactive();
                 }

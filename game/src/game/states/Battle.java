@@ -1,6 +1,7 @@
 package game.states;
 
 import game.GameConfig;
+import game.Score;
 import game.battle.ForcesHUD;
 import game.battle.HealthMeter;
 import game.creatures.Creature;
@@ -113,6 +114,7 @@ public class Battle implements State {
     }
 
     private void victory() {
+        Score.get().addVictory();
         _left.getBody().restore();
         StateManager.get().pop();
         StateManager.get().push(new MergeOutcome(_left, _right));

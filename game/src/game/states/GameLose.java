@@ -1,5 +1,6 @@
 package game.states;
 
+import game.Score;
 import sps.bridge.Commands;
 import sps.io.Input;
 import sps.states.State;
@@ -10,8 +11,9 @@ import sps.util.Screen;
 public class GameLose implements State {
     @Override
     public void create() {
-        TextPool.get().write("You Lose", Screen.pos(10, 60));
-        TextPool.get().write("SPACE to restart", Screen.pos(10, 50));
+        TextPool.get().write("You Lose", Screen.pos(10, 80));
+        TextPool.get().write(Score.get().message(), Screen.pos(10, 60));
+        TextPool.get().write("SPACE to restart", Screen.pos(10, 40));
     }
 
     @Override

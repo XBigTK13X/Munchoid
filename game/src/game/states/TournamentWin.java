@@ -1,6 +1,7 @@
 package game.states;
 
 import game.GameConfig;
+import game.Score;
 import sps.bridge.Commands;
 import sps.io.Input;
 import sps.states.State;
@@ -11,7 +12,9 @@ import sps.util.Screen;
 public class TournamentWin implements State {
     @Override
     public void create() {
-        TextPool.get().write("A WINNER IS YOU", Screen.pos(10, 60));
+        TextPool.get().write("A WINNER IS YOU", Screen.pos(10, 80));
+        TextPool.get().write(Score.get().message(), Screen.pos(10, 60));
+        TextPool.get().write("Press SPACE to restart", Screen.pos(10, 40));
     }
 
     @Override
