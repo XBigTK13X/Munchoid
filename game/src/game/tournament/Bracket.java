@@ -1,5 +1,6 @@
 package game.tournament;
 
+import game.Score;
 import game.arena.Player;
 import game.creatures.Creature;
 import game.states.Battle;
@@ -32,6 +33,7 @@ public class Bracket {
         public boolean next() {
             _index += 2;
             if (_fighters.size() == 1 || (_fighters.size() == 2 && _fighters.get(1) == null)) {
+                Score.get().setPlayerPetStats(_player.getPet().getStats());
                 StateManager.get().push(new TournamentWin());
             }
             if (_index - 1 >= _fighters.size()) {

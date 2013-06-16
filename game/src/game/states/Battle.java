@@ -109,6 +109,7 @@ public class Battle implements State {
             victory();
         }
         if (!_left.getBody().isAlive()) {
+            Score.get().setPlayerPetStats(_left.getStats());
             StateManager.reset().push(new GameLose());
         }
     }
