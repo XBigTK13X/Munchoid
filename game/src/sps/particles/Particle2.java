@@ -7,14 +7,13 @@ import sps.core.RNG;
 import sps.entities.Entity;
 import sps.graphics.Renderer;
 import sps.util.MathHelper;
-import sps.util.Screen;
 import sps.util.SpriteMaker;
 
 public class Particle2 extends PEComponent {
     public static final int DefaultLife = 100;
 
-    public float Height = Screen.width(1);
-    public float Width = Screen.width(1);
+    public float Height = RNG.next(4, 10);
+    public float Width = RNG.next(4, 10);
 
     private float _life = DefaultLife;
     private Color _color = Color.WHITE;
