@@ -32,7 +32,7 @@ public class Joint {
     }
 
     public Joint(BodyPart part) {
-        this(part.getPosition().X, part.getPosition().Y);
+        this(part.getGlobalPosition().X, part.getGlobalPosition().Y);
         _part = part;
     }
 

@@ -136,13 +136,14 @@ public class BodyPart {
 
     public Point2 getGlobalPosition() {
         float dirScale = _scale * (_owner.isFlipX() ? -1 : 1);
-        float xOffset = (_parent != null && _owner.isFlipX()) ? _parent.getWidth() : 0;
-        xOffset = (_parent == null && _owner.isFlipX()) ? getWidth() : xOffset;
+        float xOffset = _owner.isFlipX() ? _owner.getWidth() : 0;
         float parentX = (_parent != null ? _parent.getPosition().X : 0);
         float parentY = (_parent != null ? _parent.getPosition().Y : 0);
 
         Point2 scaledLoc = new Point2((getPosition().X + parentX) * dirScale + xOffset, (getPosition().Y + parentY) * _scale);
-        scaledLoc = scaledLoc.addRaw(_owner.getOwner().getLocation());
+        if (_owner.getOwner() != null) {
+            scaledLoc = scaledLoc.addRaw(_owner.getOwner().getLocation());
+        }
         return scaledLoc;
     }
 

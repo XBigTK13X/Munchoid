@@ -30,6 +30,9 @@ public class AnimationTest implements State {
         if (Input.get().isActive(Commands.get("Confirm"))) {
             StateManager.get().push(new AnimationTest());
         }
+        if (Input.get().isActive(Commands.get("Pop"))) {
+            creature.getBody().flipX(!creature.getBody().isFlipX());
+        }
         creature.update();
     }
 
