@@ -123,7 +123,6 @@ public class Noise {
 
     public static float[][] perlin(int width, int height, int octaveCount) {
         float[][] baseNoise = white(width, height);
-
         return perlin(baseNoise, octaveCount);
     }
 }

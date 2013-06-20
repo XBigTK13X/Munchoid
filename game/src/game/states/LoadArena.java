@@ -25,6 +25,7 @@ public class LoadArena implements State {
         _loadingMessage = TextPool.get().write(getMessage(), Screen.pos(10, 60));
         _preload = new Preload();
         _meter = new LoadingMeter();
+        _preloadedItems = -1;
     }
 
     private String getMessage() {
@@ -39,6 +40,9 @@ public class LoadArena implements State {
     @Override
     public void update() {
         switch (_preloadedItems) {
+            case -1:
+                //Gives the preloader a chance to show up before the Floor is generated
+                break;
             case 0:
                 _preload.cache(new Floor());
                 break;
