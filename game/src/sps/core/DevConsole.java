@@ -7,6 +7,7 @@ import sps.graphics.Assets;
 import sps.graphics.Renderer;
 import sps.text.Text;
 import sps.text.TextPool;
+import sps.util.Screen;
 
 public class DevConsole {
 
@@ -64,7 +65,7 @@ public class DevConsole {
     }
 
     private int getY(int index) {
-        return Renderer.get().VirtualHeight - (index * margin / 2);
+        return Screen.get().VirtualHeight - (index * margin / 2);
     }
 
     public void add(String message) {
@@ -81,7 +82,7 @@ public class DevConsole {
 
     public void draw() {
         if (_isVisible) {
-            Renderer.get().draw(_consoleBase, Point2.Zero, DrawDepths.get("DevConsole"), _bgColor, Renderer.get().VirtualWidth, Renderer.get().VirtualHeight);
+            Renderer.get().draw(_consoleBase, Point2.Zero, DrawDepths.get("DevConsole"), _bgColor, Screen.get().VirtualWidth, Screen.get().VirtualHeight);
             for (ConsoleText _content : _contents) {
                 if (_content != null) {
                     _content.draw();

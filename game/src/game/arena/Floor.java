@@ -9,6 +9,7 @@ import sps.core.Point2;
 import sps.entities.Entity;
 import sps.graphics.Renderer;
 import sps.util.Colors;
+import sps.util.Screen;
 import sps.util.SpriteMaker;
 
 public class Floor extends Entity {
@@ -19,8 +20,8 @@ public class Floor extends Entity {
 
     public Floor() {
         initialize(0, 0, Point2.Zero, null, EntityTypes.get("Floor"), DrawDepths.get("Floor"));
-        _marginX = (GameConfig.ArenaWidth - Renderer.get().VirtualWidth) / 2;
-        _marginY = (GameConfig.ArenaHeight - Renderer.get().VirtualHeight) / 2;
+        _marginX = (GameConfig.ArenaWidth - Screen.get().VirtualWidth) / 2;
+        _marginY = (GameConfig.ArenaHeight - Screen.get().VirtualHeight) / 2;
         Color dirt = Colors.rgb(55, 30, 15);
         Color grass = Colors.rgb(15, 55, 15);
         Color[][] base = Colors.genPerlinGrid(GameConfig.ArenaWidth, GameConfig.ArenaHeight, grass, dirt, __fieldSmoothness);

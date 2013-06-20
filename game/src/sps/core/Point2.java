@@ -1,6 +1,6 @@
 package sps.core;
 
-import sps.graphics.Renderer;
+import sps.util.Screen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -212,6 +212,6 @@ public class Point2 {
     }
 
     public static Point2 random() {
-        return new Point2(RNG.next(0, Renderer.get().VirtualWidth), RNG.next(0, Renderer.get().VirtualHeight));
+        return new Point2(RNG.next(0, Screen.get().VirtualWidth), RNG.next(0, Screen.get().VirtualHeight));
     }
 }

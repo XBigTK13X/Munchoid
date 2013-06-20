@@ -50,12 +50,12 @@ public class Player extends Entity implements IActor {
 
     private boolean inXBuffer(float offset) {
         return getLocation().X + offset > _movementBuffer.X
-                && getLocation().X + offset < Renderer.get().VirtualWidth - _movementBuffer.X;
+                && getLocation().X + offset < Screen.get().VirtualWidth - _movementBuffer.X;
     }
 
     private boolean inYBuffer(float offset) {
         return getLocation().Y + offset > _movementBuffer.Y
-                && getLocation().Y + offset < Renderer.get().VirtualHeight - _movementBuffer.Y;
+                && getLocation().Y + offset < Screen.get().VirtualHeight - _movementBuffer.Y;
     }
 
     private void calculateKeyVelocity() {
@@ -99,7 +99,7 @@ public class Player extends Entity implements IActor {
                 Renderer.get().moveOffsets(floorVelocityX, 0);
             }
             else {
-                if (adjustedXVelocity > 0 && nextX < Renderer.get().VirtualWidth - getWidth() || adjustedXVelocity < 0 && nextX > 0) {
+                if (adjustedXVelocity > 0 && nextX < Screen.get().VirtualWidth - getWidth() || adjustedXVelocity < 0 && nextX > 0) {
                     move(_keyVelocity.X, 0);
                 }
             }
@@ -119,7 +119,7 @@ public class Player extends Entity implements IActor {
                 Renderer.get().moveOffsets(0, floorVelocityY);
             }
             else {
-                if (adjustedYVelocity > 0 && nextY < Renderer.get().VirtualHeight - getHeight() || adjustedYVelocity < 0 && nextY > 0) {
+                if (adjustedYVelocity > 0 && nextY < Screen.get().VirtualHeight - getHeight() || adjustedYVelocity < 0 && nextY > 0) {
                     move(0, _keyVelocity.Y);
                 }
             }

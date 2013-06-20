@@ -3,7 +3,7 @@ package sps.entities;
 import sps.bridge.EntityType;
 import sps.core.Point2;
 import sps.core.SpsConfig;
-import sps.graphics.Renderer;
+import sps.util.Screen;
 
 public class CoordVerifier {
     public static boolean isValid(Point2 position) {
@@ -12,15 +12,15 @@ public class CoordVerifier {
 
     public static boolean isValidX(Point2 position) {
         return (position.PosX >= 0
-                && position.PosX < Renderer.get().VirtualWidth - SpsConfig.get().spriteWidth
-                && position.X < Renderer.get().VirtualWidth - SpsConfig.get().spriteWidth
+                && position.PosX < Screen.get().VirtualWidth - SpsConfig.get().spriteWidth
+                && position.X < Screen.get().VirtualWidth - SpsConfig.get().spriteWidth
                 && position.GridX < SpsConfig.get().tileMapWidth);
     }
 
     public static boolean isValidY(Point2 position) {
         return (position.PosY >= 0
-                && position.PosY < Renderer.get().VirtualHeight - SpsConfig.get().spriteHeight
-                && position.Y < Renderer.get().VirtualHeight - SpsConfig.get().spriteHeight
+                && position.PosY < Screen.get().VirtualHeight - SpsConfig.get().spriteHeight
+                && position.Y < Screen.get().VirtualHeight - SpsConfig.get().spriteHeight
                 && position.GridY < SpsConfig.get().tileMapHeight);
     }
 

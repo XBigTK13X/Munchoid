@@ -4,13 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import sps.util.Screen;
 
 public class StretchStrategy implements RenderStrategy {
     @Override
     public OrthographicCamera createCamera() {
         OrthographicCamera camera = new OrthographicCamera();
-        camera.setToOrtho(false, Renderer.get().VirtualWidth, Renderer.get().VirtualHeight);
-        Gdx.gl.glViewport(0, 0, Renderer.get().getWidth(), Renderer.get().getHeight());
+        camera.setToOrtho(false, Screen.get().VirtualWidth, Screen.get().VirtualHeight);
+        Gdx.gl.glViewport(0, 0, Screen.get().VirtualWidth, Screen.get().VirtualHeight);
         return camera;
     }
 

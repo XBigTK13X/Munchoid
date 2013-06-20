@@ -7,7 +7,6 @@ import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.Entity;
 import sps.graphics.Assets;
-import sps.graphics.Renderer;
 import sps.text.TextEffects;
 import sps.text.TextPool;
 import sps.util.Markov;
@@ -65,10 +64,10 @@ public class Creature extends Entity {
     }
 
     public void draw() {
-        if (Renderer.get().isInView(getLocation().X, getLocation().Y)
-                || Renderer.get().isInView(getLocation().X + _body.getWidth(), getLocation().Y)
-                || Renderer.get().isInView(getLocation().X, getLocation().Y + _body.getHeight())
-                || Renderer.get().isInView(getLocation().X + _body.getWidth(), getLocation().Y + _body.getHeight())) {
+        if (Screen.get().isInView(getLocation().X, getLocation().Y)
+                || Screen.get().isInView(getLocation().X + _body.getWidth(), getLocation().Y)
+                || Screen.get().isInView(getLocation().X, getLocation().Y + _body.getHeight())
+                || Screen.get().isInView(getLocation().X + _body.getWidth(), getLocation().Y + _body.getHeight())) {
             _body.draw();
         }
     }

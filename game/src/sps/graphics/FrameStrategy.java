@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import sps.util.Screen;
 
 public class FrameStrategy implements RenderStrategy {
     private Rectangle viewport;
@@ -12,12 +13,12 @@ public class FrameStrategy implements RenderStrategy {
     @Override
     public OrthographicCamera createCamera() {
         viewport = new Rectangle(0, 0, 0, 0);
-        return new OrthographicCamera(Renderer.get().VirtualWidth, Renderer.get().VirtualHeight);
+        return new OrthographicCamera(Screen.get().VirtualWidth, Screen.get().VirtualHeight);
     }
 
     @Override
     public void begin(OrthographicCamera camera, SpriteBatch batch) {
-        camera.setToOrtho(false, Renderer.get().VirtualWidth, Renderer.get().VirtualHeight);
+        camera.setToOrtho(false, Screen.get().VirtualWidth, Screen.get().VirtualHeight);
         batch.setProjectionMatrix(camera.combined);
     }
 
@@ -29,20 +30,20 @@ public class FrameStrategy implements RenderStrategy {
         float scale = 1f;
         crop.set(0, 0);
 
-        if (aspectRatio > Renderer.get().VirtualAspectRatio) {
-            scale = (float) height / (float) Renderer.get().VirtualHeight;
-            crop.x = (width - Renderer.get().VirtualWidth * scale) / 2f;
+        if (aspectRatio > Screen.get().VirtualAspectRatio) {
+            scale = (float) height / (float) Screen.get().VirtualHeight;
+            crop.x = (width - Screen.get().VirtualWidth * scale) / 2f;
         }
-        else if (aspectRatio < Renderer.get().VirtualAspectRatio) {
-            scale = (float) width / (float) Renderer.get().VirtualWidth;
-            crop.y = (height - Renderer.get().VirtualHeight * scale) / 2f;
+        else if (aspectRatio < Screen.get().VirtualAspectRatio) {
+            scale = (float) width / (float) Screen.get().VirtualWidth;
+            crop.y = (height - Screen.get().VirtualHeight * scale) / 2f;
         }
         else {
-            scale = (float) width / (float) Renderer.get().VirtualWidth;
+            scale = (float) width / (float) Screen.get().VirtualWidth;
         }
 
-        float w = (float) Renderer.get().VirtualWidth * scale;
-        float h = (float) Renderer.get().VirtualHeight * scale;
+        float w = (float) Screen.get().VirtualWidth * scale;
+        float h = (float) Screen.get().VirtualHeight * scale;
         viewport.set(crop.x, crop.y, w, h);
         Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
     }

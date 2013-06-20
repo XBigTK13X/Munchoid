@@ -3,7 +3,6 @@ package game.battle;
 import game.creatures.Creature;
 import game.forces.Force;
 import sps.core.Point2;
-import sps.graphics.Renderer;
 import sps.util.Screen;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class ForcesHUD {
 
     public ForcesHUD(Creature owner) {
         _owner = owner;
-        _origin = new Point2(owner.getLocation().X, Renderer.get().VirtualHeight - __heightPercent * Force.values().length - Screen.height(42));
+        _origin = new Point2(owner.getLocation().X, Screen.get().VirtualHeight - __heightPercent * Force.values().length - Screen.height(42));
         _meters = new ArrayList<ForceMeter>();
         int row = Force.values().length;
         for (Force force : Force.values()) {
