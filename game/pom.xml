@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <libgdx-version>2013.03.20</libgdx-version>
+        <libgdx-version>2013.06.20</libgdx-version>
     </properties>
 
     <parent>
