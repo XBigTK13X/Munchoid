@@ -1,9 +1,11 @@
 package game.arena;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.Score;
 import game.creatures.Creature;
+import game.states.Arena;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.DrawDepths;
@@ -14,23 +16,16 @@ import sps.entities.Entity;
 import sps.graphics.Renderer;
 import sps.text.TextEffects;
 import sps.text.TextPool;
-import sps.util.Screen;
 
 public class Catchable extends Entity {
-
-    private static final int __moveIncrementsMax = 30;
-
     private static Player __player;
+    private static final int __changeDirectionSecondsMax = 3;
 
     private Creature _creature;
-    private int _moveIncrements = 0;
-    private Point2 _movementTarget = new Point2();
-    private int __pace = 10;
     private float _dX = 0;
     private float _dY = 0;
 
-    public static Point2 ArenaMin;
-    public static Point2 ArenaMax;
+    private float _changeDirectionsSeconds = 0;
 
     public Catchable(Player player) {
         __player = player;
@@ -39,21 +34,10 @@ public class Catchable extends Entity {
         _creature.getBody().setScale(GameConfig.ArenaCreatureScale);
         _creature.orientX((GameConfig.DevFlipEnabled) ? RNG.coinFlip() : false, false);
         setSize(_creature.getWidth(), _creature.getHeight());
-        if (ArenaMax == null) {
-            ArenaMin = Screen.pos(-GameConfig.ArenaBufferPercent, -GameConfig.ArenaBufferPercent);
-            ArenaMax = Screen.pos(100 + GameConfig.ArenaBufferPercent, 100 + GameConfig.ArenaBufferPercent);
-        }
-        setLocation(new Point2(RNG.next((int) ArenaMin.X, (int) ArenaMax.X), RNG.next((int) ArenaMin.Y, (int) ArenaMax.Y)));
+        setLocation(new Point2(RNG.next(Arena.getBounds().X, Arena.getBounds().X2), RNG.next(Arena.getBounds().Y, Arena.getBounds().Y2)));
     }
 
-    @Override
-    public void update() {
-        if (!_creature.getBody().isAlive()) {
-            setInactive();
-        }
-
-        _creature.setLocation(getLocation());
-
+    private void interactWithPlayer() {
         if (__player.getNet().isTouching(_creature)) {
             if (__player.getPet() == null || __player.getPet().isLargerThan(_creature)) {
                 _creature.getBody().setHighlight(Color.BLUE);
@@ -88,31 +72,37 @@ public class Catchable extends Entity {
         else {
             _creature.getBody().setHighlight(Color.WHITE);
         }
-        if (_moveIncrements > 0) {
-            _dX = (_movementTarget.X - getLocation().X) * __pace / __moveIncrementsMax;
-            _dY = (_movementTarget.Y - getLocation().Y) * __pace / __moveIncrementsMax;
-            _moveIncrements--;
-        }
-        else {
-            _moveIncrements = RNG.next(__moveIncrementsMax / 2, __moveIncrementsMax);
-            _movementTarget = getLocation().addRaw(Screen.rand(-10, 10, -10, 10));
-        }
+    }
 
+    private void movement() {
         if (GameConfig.DevFlipEnabled) {
             _creature.orientX(_dX <= 0, false);
         }
 
-        if (!_creature.getBody().anyPartOutsideArena(_dX, _dY)) {
-            //TODO Fix movement. Currently, edges snag the catchable.
+        _changeDirectionsSeconds -= Gdx.graphics.getDeltaTime();
+
+        boolean anyPartOutside = _creature.getBody().anyPartOutsideArena(_dX, _dY);
+        if (!anyPartOutside) {
             move(_dX, _dY);
         }
-        else {
-            //If a creature's movement would take it off the board
-            //  Then choose a spot near the center to target.
-            _movementTarget = Screen.pos(50, 50);
-            int centerBuffer = 15;
-            _movementTarget.addRaw(Screen.rand(-centerBuffer, centerBuffer, -centerBuffer, centerBuffer));
+
+        if (_changeDirectionsSeconds <= 0 || anyPartOutside) {
+            _changeDirectionsSeconds = RNG.next(__changeDirectionSecondsMax / 2, __changeDirectionSecondsMax);
+            float playerSpeedPercent = .5f;
+            _dX = RNG.next(-GameConfig.PlayerTopSpeed, GameConfig.PlayerTopSpeed) * playerSpeedPercent;
+            _dY = RNG.next(-GameConfig.PlayerTopSpeed, GameConfig.PlayerTopSpeed) * playerSpeedPercent;
         }
+    }
+
+    @Override
+    public void update() {
+        if (!_creature.getBody().isAlive()) {
+            setInactive();
+        }
+        _creature.setLocation(getLocation());
+
+        interactWithPlayer();
+        movement();
     }
 
     @Override

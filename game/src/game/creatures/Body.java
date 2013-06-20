@@ -2,9 +2,9 @@ package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
-import game.arena.Catchable;
 import game.creatures.style.BodyRules;
 import game.skeleton.Skeleton;
+import game.states.Arena;
 import sps.core.RNG;
 import sps.entities.HitTest;
 import sps.ui.Bounds;
@@ -218,13 +218,11 @@ public class Body {
         }
     }
 
-
     public boolean anyPartOutsideArena(float dX, float dY) {
         Bounds b;
-        Bounds screen = new Bounds((int) Catchable.ArenaMin.X, (int) Catchable.ArenaMin.Y, (int) Catchable.ArenaMax.X, (int) Catchable.ArenaMax.Y);
         for (BodyPart p : _parts) {
             b = new Bounds(dX + p.getGlobalPosition().X, dY + p.getGlobalPosition().Y, p.getWidth(), p.getHeight());
-            if (!HitTest.inBox(b.X, b.Y, screen) || !HitTest.inBox(b.X, b.Y2, screen) || !HitTest.inBox(b.X2, b.Y, screen) || !HitTest.inBox(b.X2, b.Y2, screen)) {
+            if (!HitTest.inBox(b.X, b.Y, Arena.getBounds()) || !HitTest.inBox(b.X, b.Y2, Arena.getBounds()) || !HitTest.inBox(b.X2, b.Y, Arena.getBounds()) || !HitTest.inBox(b.X2, b.Y2, Arena.getBounds())) {
                 return true;
             }
         }
