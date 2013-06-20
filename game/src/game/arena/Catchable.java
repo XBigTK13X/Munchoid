@@ -1,5 +1,6 @@
 package game.arena;
 
+import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.Score;
 import game.creatures.Creature;
@@ -46,29 +47,40 @@ public class Catchable extends Entity {
 
         _creature.setLocation(getLocation());
 
-        if (__player.getNet().isInUse() && __player.getNet().isTouching(_creature)) {
-            __player.getNet().disable();
-            if (__player.getPet() == null) {
-                __player.setPet(_creature);
-                setInactive();
-                MusicPlayer.get(new SingleSongPlayer("Quickly.ogg"));
-                MusicPlayer.get().start();
+        if (__player.getNet().isTouching(_creature)) {
+            if (__player.getPet() == null || __player.getPet().isLargerThan(_creature)) {
+                _creature.getBody().setHighlight(Color.BLUE);
             }
             else {
-                if (__player.getPet().isLargerThan(_creature)) {
-                    //TODO Chomping sound effect here
-                    TextPool.get().write("*CHOMP*", __player.getLocation(), 1f, TextEffects.Fountain);
-                    Score.get().addChomp();
-                    __player.getPet().addBonus(Math.min(__player.getPet().getStats().power() - _creature.getStats().power(), _creature.getStats().power()));
+                _creature.getBody().setHighlight(Color.RED);
+            }
+            if (__player.getNet().isInUse()) {
+                __player.getNet().disable();
+                if (__player.getPet() == null) {
+                    _creature.getBody().setHighlight(Color.WHITE);
+                    __player.setPet(_creature);
                     setInactive();
+                    MusicPlayer.get(new SingleSongPlayer("Quickly.ogg"));
+                    MusicPlayer.get().start();
                 }
                 else {
-                    __player.freeze();
-                    _creature.addBonus(Math.min(_creature.getStats().power() - __player.getPet().getStats().power(), __player.getPet().getStats().power()));
+                    if (__player.getPet().isLargerThan(_creature)) {
+                        //TODO Chomping sound effect here
+                        TextPool.get().write("*CHOMP*", __player.getLocation(), 1f, TextEffects.Fountain);
+                        Score.get().addChomp();
+                        __player.getPet().addBonus(Math.min(__player.getPet().getStats().power() - _creature.getStats().power(), _creature.getStats().power()));
+                        setInactive();
+                    }
+                    else {
+                        __player.freeze();
+                        _creature.addBonus(Math.min(_creature.getStats().power() - __player.getPet().getStats().power(), __player.getPet().getStats().power()));
+                    }
                 }
             }
         }
-
+        else {
+            _creature.getBody().setHighlight(Color.WHITE);
+        }
         if (_moveIncrements > 0) {
             _dX = (_movementTarget.X - getLocation().X) * __pace / __moveIncrementsMax;
             _dY = (_movementTarget.Y - getLocation().Y) * __pace / __moveIncrementsMax;
@@ -115,6 +127,4 @@ public class Catchable extends Entity {
     public Point2 getLocation() {
         return _location.add(Renderer.get().getXOffset(), Renderer.get().getYOffset());
     }
-
-
 }

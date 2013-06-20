@@ -21,6 +21,8 @@ public class Body {
     private boolean _flipX;
     private Color _color;
 
+    private Color _highlight = Color.WHITE;
+
     private List<BodyPart> _front;
     private List<BodyPart> _back;
 
@@ -227,5 +229,13 @@ public class Body {
             }
         }
         return false;
+    }
+
+    public void setHighlight(Color color) {
+        _highlight = color;
+    }
+
+    public Color getHighlight() {
+        return _highlight;
     }
 }

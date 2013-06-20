@@ -131,7 +131,7 @@ public class BodyPart {
 
     public void draw() {
         float dirScale = _scale * (_owner.isFlipX() ? -1 : 1);
-        Renderer.get().draw(_sprite, getGlobalPosition(), DrawDepths.get("Atom"), Color.WHITE, _width * dirScale, _height * _scale);
+        Renderer.get().draw(_sprite, getGlobalPosition(), DrawDepths.get("Atom"), _owner.getHighlight(), _width * dirScale, _height * _scale);
     }
 
     public Point2 getGlobalPosition() {
