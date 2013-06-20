@@ -49,7 +49,7 @@ public class HealthMeter {
 
     private void scaleHeight() {
         if (_lastHealth == 0 || _lastHealth != _owner.getBody().getHealth()) {
-            _scaledHeight = (int) (_height * (_owner.getBody().getHealth() / (float) _owner.getBody().getHealthMax()));
+            _scaledHeight = (int) (_height * _owner.getBody().getPercentHealth());
             _sprite.setSize(_width, _scaledHeight);
             _lastHealth = _owner.getBody().getHealth();
         }

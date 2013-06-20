@@ -16,10 +16,11 @@ public class Score {
         __instance = new Score();
     }
 
-    private static final int __victoryWeight = 10;
-    private static final int __chompWeight = 1;
-    private static final int __petVarietyWeight = 100;
-    private static final int __petPowerWeight = 25;
+    private static final int __victoryWeight = 11;
+    private static final int __chompWeight = 3;
+    private static final int __petVarietyWeight = 119;
+    private static final int __petPowerWeight = 27;
+    private static final int __healthRemainingWeight = 16;
 
     private static final int __scoreMult = 13;
 
@@ -27,6 +28,7 @@ public class Score {
     private int _chomps;
     private int _petVariety;
     private int _petPower;
+    private int _healthRemaining;
 
     private Score() {
 
@@ -49,7 +51,8 @@ public class Score {
                 _victories * __victoryWeight +
                         _chomps * __chompWeight +
                         _petVariety * __petVarietyWeight +
-                        _petPower * __petPowerWeight
+                        _petPower * __petPowerWeight +
+                        _healthRemaining * __healthRemainingWeight
         );
     }
 
@@ -60,5 +63,9 @@ public class Score {
     public void setPlayerPetStats(Stats stats) {
         _petVariety = stats.possibleActiveForces();
         _petPower = stats.power();
+    }
+
+    public void addHealthRemaining(float percentHealth) {
+        _healthRemaining += percentHealth * 100;
     }
 }

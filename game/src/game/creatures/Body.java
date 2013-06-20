@@ -238,4 +238,8 @@ public class Body {
     public Color getHighlight() {
         return _highlight;
     }
+
+    public float getPercentHealth() {
+        return (getHealth() / (float) getHealthMax());
+    }
 }

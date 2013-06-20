@@ -122,6 +122,7 @@ public class Battle implements State {
 
     private void victory() {
         Score.get().addVictory();
+        Score.get().addHealthRemaining(_left.getBody().getPercentHealth());
         _left.getBody().restore();
         StateManager.get().pop();
         if (_isFinalBattle) {
