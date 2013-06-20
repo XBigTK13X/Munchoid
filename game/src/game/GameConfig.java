@@ -5,7 +5,9 @@ import sps.util.Screen;
 
 public class GameConfig {
 
-    public final static int CreatureLimit = 5;
+    public final static int CreatureLimit = 2;
+    public final static int TournamentMatches = 1;
+
     public final static int SpacePercentPerCreature = 1;
     public static final int ArenaBufferPercent = (int) ((GameConfig.CreatureLimit / 2) * GameConfig.SpacePercentPerCreature);
     public static final int ArenaHeight = 1080 + (int) Screen.height(ArenaBufferPercent) * 2;
@@ -20,8 +22,6 @@ public class GameConfig {
 
     //TODO Smoother movement
     public static final int playerAcceleration = 50;
-
-    public final static int TournamentMatches = 3;
 
     public static final Point2 MinBodyPartSize = Screen.pos(5, 5);
     public static final Point2 MaxBodyPartSize = Screen.pos(13, 13);

@@ -9,7 +9,7 @@ import sps.states.StateManager;
 import sps.text.TextPool;
 import sps.util.Screen;
 
-public class TournamentWin implements State {
+public class GameWin implements State {
     @Override
     public void create() {
         TextPool.get().write("A WINNER IS YOU", Screen.pos(10, 80));

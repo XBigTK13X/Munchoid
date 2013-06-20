@@ -1,10 +1,8 @@
 package game.tournament;
 
-import game.Score;
 import game.arena.Player;
 import game.creatures.Creature;
 import game.states.Battle;
-import game.states.TournamentWin;
 import sps.core.RNG;
 import sps.states.StateManager;
 
@@ -24,22 +22,23 @@ public class Bracket {
         private int _index;
 
         public Matchups(int bouts) {
-            while (--bouts > 0) {
+            while (--bouts > 0 || _fighters.size() == 0) {
                 _fighters.add(fighter());
                 _fighters.add(fighter());
             }
         }
 
+        private boolean isLastMatch() {
+            return _fighters.size() == 2;
+        }
+
         public boolean next() {
             _index += 2;
-            if (_fighters.size() == 1 || (_fighters.size() == 2 && _fighters.get(1) == null)) {
-                Score.get().setPlayerPetStats(_player.getPet().getStats());
-                StateManager.get().push(new TournamentWin());
-            }
             if (_index - 1 >= _fighters.size()) {
                 List<Combatant> condensed = new ArrayList<Combatant>();
                 for (int ii = 0; ii < _fighters.size(); ii++) {
                     if (_fighters.get(ii) != null) {
+                        //TODO Merge opponents
                         condensed.add(_fighters.get(ii));
                     }
                 }
@@ -48,7 +47,7 @@ public class Bracket {
             }
 
             if (_fighters.get(_index - 2).getName().equalsIgnoreCase("Player")) {
-                StateManager.get().push(new Battle(_player.getPet(), new Creature()));
+                StateManager.get().push(new Battle(_player.getPet(), new Creature(), isLastMatch()));
                 return true;
             }
             else {

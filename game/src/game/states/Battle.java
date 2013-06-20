@@ -28,6 +28,7 @@ public class Battle implements State {
     private ForcesHUD _rightUI;
     private HealthMeter _leftHealth;
     private HealthMeter _rightHealth;
+    private boolean _isFinalBattle;
 
     public Battle() {
         this(new Creature(), new Creature());
@@ -37,6 +38,11 @@ public class Battle implements State {
     public Battle(Creature slot1, Creature slot2) {
         _left = slot1;
         _right = slot2;
+    }
+
+    public Battle(Creature slot1, Creature slot2, boolean isFinalBattle) {
+        this(slot1, slot2);
+        _isFinalBattle = isFinalBattle;
     }
 
     @Override
@@ -118,7 +124,13 @@ public class Battle implements State {
         Score.get().addVictory();
         _left.getBody().restore();
         StateManager.get().pop();
-        StateManager.get().push(new MergeOutcome(_left, _right));
+        if (_isFinalBattle) {
+            Score.get().setPlayerPetStats(_left.getStats());
+            StateManager.get().push(new GameWin());
+        }
+        else {
+            StateManager.get().push(new MergeOutcome(_left, _right));
+        }
     }
 
     @Override
