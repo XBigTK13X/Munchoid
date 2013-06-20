@@ -29,6 +29,9 @@ public class Catchable extends Entity {
     private float _dX = 0;
     private float _dY = 0;
 
+    public static Point2 ArenaMin;
+    public static Point2 ArenaMax;
+
     public Catchable(Player player) {
         __player = player;
         initialize(0, 0, Point2.Zero, null, EntityTypes.get("Catchable"), DrawDepths.get("Catchable"));
@@ -36,7 +39,11 @@ public class Catchable extends Entity {
         _creature.getBody().setScale(GameConfig.ArenaCreatureScale);
         _creature.orientX((GameConfig.DevFlipEnabled) ? RNG.coinFlip() : false, false);
         setSize(_creature.getWidth(), _creature.getHeight());
-        setLocation(Screen.rand(-GameConfig.ArenaBufferPercent, 100 + GameConfig.ArenaBufferPercent, -GameConfig.ArenaBufferPercent, 100 + GameConfig.ArenaBufferPercent));
+        if (ArenaMax == null) {
+            ArenaMin = Screen.pos(-GameConfig.ArenaBufferPercent, -GameConfig.ArenaBufferPercent);
+            ArenaMax = Screen.pos(100 + GameConfig.ArenaBufferPercent, 100 + GameConfig.ArenaBufferPercent);
+        }
+        setLocation(new Point2(RNG.next((int) ArenaMin.X, (int) ArenaMax.X), RNG.next((int) ArenaMin.Y, (int) ArenaMax.Y)));
     }
 
     @Override
@@ -95,7 +102,7 @@ public class Catchable extends Entity {
             _creature.orientX(_dX <= 0, false);
         }
 
-        if (!_creature.getBody().anyPartOffScreen(_dX, _dY)) {
+        if (!_creature.getBody().anyPartOutsideArena(_dX, _dY)) {
             //TODO Fix movement. Currently, edges snag the catchable.
             move(_dX, _dY);
         }
