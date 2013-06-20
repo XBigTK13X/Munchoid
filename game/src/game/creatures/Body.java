@@ -6,7 +6,6 @@ import game.creatures.style.BodyRules;
 import game.skeleton.Skeleton;
 import game.states.Arena;
 import sps.core.RNG;
-import sps.entities.HitTest;
 import sps.ui.Bounds;
 import sps.util.Colors;
 
@@ -222,7 +221,7 @@ public class Body {
         Bounds b;
         for (BodyPart p : _parts) {
             b = new Bounds(dX + p.getGlobalPosition().X, dY + p.getGlobalPosition().Y, p.getWidth(), p.getHeight());
-            if (!HitTest.inBox(b.X, b.Y, Arena.getBounds()) || !HitTest.inBox(b.X, b.Y2, Arena.getBounds()) || !HitTest.inBox(b.X2, b.Y, Arena.getBounds()) || !HitTest.inBox(b.X2, b.Y2, Arena.getBounds())) {
+            if (!Arena.getBounds().envelopes(b)) {
                 return true;
             }
         }

@@ -1,5 +1,8 @@
 package sps.ui;
 
+import game.states.Arena;
+import sps.entities.HitTest;
+
 public class Bounds {
     public final int X;
     public final int Y;
@@ -20,5 +23,9 @@ public class Bounds {
         Height = height;
         X2 = X + width;
         Y2 = Y + height;
+    }
+
+    public boolean envelopes(Bounds b) {
+        return HitTest.inBox(b.X, b.Y, Arena.getBounds()) && HitTest.inBox(b.X, b.Y2, Arena.getBounds()) && HitTest.inBox(b.X2, b.Y, Arena.getBounds()) && HitTest.inBox(b.X2, b.Y2, Arena.getBounds());
     }
 }
