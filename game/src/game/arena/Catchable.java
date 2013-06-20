@@ -83,8 +83,17 @@ public class Catchable extends Entity {
             _creature.orientX(_dX <= 0, false);
         }
 
-        //TODO Fix movement. Currently, edges snag the catchable.
-        move(_dX, _dY);
+        if (!_creature.getBody().anyPartOffScreen(_dX, _dY)) {
+            //TODO Fix movement. Currently, edges snag the catchable.
+            move(_dX, _dY);
+        }
+        else {
+            //If a creature's movement would take it off the board
+            //  Then choose a spot near the center to target.
+            _movementTarget = Screen.pos(50, 50);
+            int centerBuffer = 15;
+            _movementTarget.addRaw(Screen.rand(-centerBuffer, centerBuffer, -centerBuffer, centerBuffer));
+        }
     }
 
     @Override

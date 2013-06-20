@@ -5,6 +5,9 @@ import game.GameConfig;
 import game.creatures.style.BodyRules;
 import game.skeleton.Skeleton;
 import sps.core.RNG;
+import sps.entities.HitTest;
+import sps.graphics.Renderer;
+import sps.ui.Bounds;
 import sps.util.Colors;
 
 import java.util.ArrayList;
@@ -211,5 +214,18 @@ public class Body {
             }
             _healthMax += part.getHealthMax();
         }
+    }
+
+
+    public boolean anyPartOffScreen(float dX, float dY) {
+        Bounds b;
+        Bounds screen = new Bounds(0, 0, Renderer.get().VirtualWidth, Renderer.get().VirtualHeight);
+        for (BodyPart p : _parts) {
+            b = new Bounds(dX + p.getGlobalPosition().X, dY + p.getGlobalPosition().Y, p.getWidth(), p.getHeight());
+            if (!HitTest.inBox(b.X, b.Y, screen) || !HitTest.inBox(b.X, b.Y2, screen) || !HitTest.inBox(b.X2, b.Y, screen) || !HitTest.inBox(b.X2, b.Y2, screen)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
