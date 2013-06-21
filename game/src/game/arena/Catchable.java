@@ -92,6 +92,8 @@ public class Catchable extends Entity {
             _dX = RNG.next(-GameConfig.PlayerTopSpeed, GameConfig.PlayerTopSpeed) * playerSpeedPercent;
             _dY = RNG.next(-GameConfig.PlayerTopSpeed, GameConfig.PlayerTopSpeed) * playerSpeedPercent;
         }
+        _dX = -GameConfig.PlayerTopSpeed * .5f;
+        _dY = 0;
     }
 
     @Override

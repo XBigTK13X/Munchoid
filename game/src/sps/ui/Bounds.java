@@ -1,6 +1,7 @@
 package sps.ui;
 
 import game.states.Arena;
+import sps.core.Logger;
 import sps.entities.HitTest;
 
 public class Bounds {
@@ -26,6 +27,18 @@ public class Bounds {
     }
 
     public boolean envelopes(Bounds b) {
+        boolean left = HitTest.inBox(b.X, b.Y, Arena.getBounds());
+        boolean top = HitTest.inBox(b.X, b.Y2, Arena.getBounds());
+        boolean right = HitTest.inBox(b.X2, b.Y, Arena.getBounds());
+        boolean bottom = HitTest.inBox(b.X2, b.Y2, Arena.getBounds());
+
+        Logger.info("ME: " + debug() + ", b: " + b.debug());
+        Logger.info("SIDES: " + left + "," + top + "," + right + "," + bottom);
+
         return HitTest.inBox(b.X, b.Y, Arena.getBounds()) && HitTest.inBox(b.X, b.Y2, Arena.getBounds()) && HitTest.inBox(b.X2, b.Y, Arena.getBounds()) && HitTest.inBox(b.X2, b.Y2, Arena.getBounds());
+    }
+
+    public String debug() {
+        return "X: " + X + ",Y: " + Y + ",X2: " + X2 + ",Y2: " + Y2;
     }
 }
