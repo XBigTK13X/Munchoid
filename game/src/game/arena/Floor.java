@@ -40,6 +40,11 @@ public class Floor extends Entity {
         Renderer.get().draw(_background);
     }
 
+    @Override
+    public Point2 getLocation() {
+        return _location.add(Renderer.get().getXOffset(), Renderer.get().getYOffset());
+    }
+
     public boolean canMoveToX(float x) {
         return x > _marginX * -2 && x < 0;
     }
