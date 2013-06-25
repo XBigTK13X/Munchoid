@@ -5,6 +5,7 @@ import game.GameConfig;
 import game.creatures.style.BodyRules;
 import game.skeleton.Skeleton;
 import game.states.Arena;
+import sps.core.Logger;
 import sps.core.RNG;
 import sps.ui.Bounds;
 import sps.util.Colors;
@@ -219,8 +220,11 @@ public class Body {
 
     public boolean anyPartOutsideArena(float dX, float dY) {
         Bounds b;
+        String d = "";
         for (BodyPart p : _parts) {
             b = new Bounds(dX + p.getGlobalPosition().X, dY + p.getGlobalPosition().Y, p.getWidth(), p.getHeight());
+            d += "," + b.debug();
+            Logger.info(p.getPosition()+","+p.getGlobalPosition());
             if (!Arena.getBounds().envelopes(b)) {
                 return true;
             }

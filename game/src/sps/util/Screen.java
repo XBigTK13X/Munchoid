@@ -25,7 +25,7 @@ public class Screen {
 
     public static Screen get() {
         if (__instance == null) {
-            __instance = new Screen(SpsConfig.get().resolutionWidth, SpsConfig.get().resolutionHeight);
+            __instance = new Screen(SpsConfig.get().virtualWidth, SpsConfig.get().virtualHeight);
         }
         return __instance;
     }

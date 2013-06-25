@@ -32,13 +32,10 @@ public class Bounds {
         boolean right = HitTest.inBox(b.X2, b.Y, Arena.getBounds());
         boolean bottom = HitTest.inBox(b.X2, b.Y2, Arena.getBounds());
 
-        Logger.info("ME: " + debug() + ", b: " + b.debug());
-        Logger.info("SIDES: " + left + "," + top + "," + right + "," + bottom);
-
-        return HitTest.inBox(b.X, b.Y, Arena.getBounds()) && HitTest.inBox(b.X, b.Y2, Arena.getBounds()) && HitTest.inBox(b.X2, b.Y, Arena.getBounds()) && HitTest.inBox(b.X2, b.Y2, Arena.getBounds());
+        return left && right && top && bottom;
     }
 
     public String debug() {
-        return "X: " + X + ",Y: " + Y + ",X2: " + X2 + ",Y2: " + Y2;
+        return "("+X + "," + Y + ")>(" + X2 + "," + Y2+")";
     }
 }

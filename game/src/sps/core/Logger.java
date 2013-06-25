@@ -5,6 +5,8 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Logger {
     private static File logFile;
@@ -30,16 +32,22 @@ public class Logger {
         log(message);
     }
 
+    private static Set<String> cache = new HashSet<String>();
+
     private static void log(String message) {
-        System.out.println(message);
-        if (logFile == null) {
-            setLogFile("sps-gamelib.log");
-        }
-        try {
-            FileUtils.writeStringToFile(logFile, message + "\n", true);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
+        //TODO Remove this debugging helper
+        if (!cache.contains(message)) {
+            cache.add(message);
+            System.out.println(message);
+            if (logFile == null) {
+                setLogFile("sps-gamelib.log");
+            }
+            try {
+                FileUtils.writeStringToFile(logFile, message + "\n", true);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import sps.bridge.DrawDepths;
 import sps.bridge.EntityTypes;
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.entities.Entity;
 import sps.graphics.Renderer;
