@@ -224,7 +224,7 @@ public class Body {
         for (BodyPart p : _parts) {
             b = new Bounds(dX + p.getGlobalPosition().X, dY + p.getGlobalPosition().Y, p.getWidth(), p.getHeight());
             d += "," + b.debug();
-            Logger.info(p.getPosition()+","+p.getGlobalPosition());
+            Logger.info("(" + p.getPosition().X + "," + p.getPosition().Y + "),(" + p.getGlobalPosition().X + "," + p.getGlobalPosition().Y + "),");
             if (!Arena.getBounds().envelopes(b)) {
                 return true;
             }
