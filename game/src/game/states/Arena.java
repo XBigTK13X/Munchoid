@@ -70,6 +70,7 @@ public class Arena implements State {
         _countDownSeconds = GameConfig.ArenaTimeoutSeconds;
         _lastTime = (int) GameConfig.ArenaTimeoutSeconds;
         _timerText = TextPool.get().write(timeDisplay(), __timerPos);
+        _timerText.setMoveable(false);
 
         EntityManager.get().addEntity(_preload.getFloor());
         EntityManager.get().addEntity(_preload.getPlayer());
@@ -81,6 +82,7 @@ public class Arena implements State {
         }
 
         _creatureText = TextPool.get().write(creatureDisplay(GameConfig.CreatureLimit), __creatureTextPos);
+        _creatureText.setMoveable(false);
         if (GameConfig.DevPlaythroughTest) {
             _preload.getPlayer().setPet(new Creature());
         }

@@ -17,26 +17,67 @@ import sps.core.SpsConfig;
 import sps.util.Screen;
 
 public class Renderer {
-
-    private static Renderer instance;
     private static RenderStrategy defaultStrategy = new StretchStrategy();
-    private ApplicationListener refreshInstance;
+    private static Renderer __dynamic;
+    private static Renderer __fixed;
+
+    private static boolean tipHasBeenDisplayed = false;
 
     public static Renderer get() {
-        if (instance == null) {
+        return get(false);
+    }
+
+    public static Renderer get(boolean fixed) {
+        if (__dynamic == null || __fixed == null) {
             int width = SpsConfig.get().virtualWidth;
             int height = SpsConfig.get().virtualHeight;
             Logger.info("Virtual resolution: " + width + "W, " + height + "H");
-            instance = new Renderer(width, height);
-            instance.setStrategy(defaultStrategy);
+            __dynamic = new Renderer(width, height);
+            __dynamic.setStrategy(defaultStrategy);
+            __fixed = new Renderer(width, height);
+            __fixed.setStrategy(defaultStrategy);
         }
-        return instance;
+        return fixed ? __fixed : __dynamic;
     }
 
+    public static void setAllRefreshInstance(ApplicationListener app) {
+        get(true).setRefreshInstance(app);
+        get(false).setRefreshInstance(app);
+    }
+
+    public static void setAllStrategy(RenderStrategy strategy) {
+        get(true).setStrategy(strategy);
+        get(false).setStrategy(strategy);
+    }
+
+    public static void setAllWindowBackground(Color color) {
+        get(true).setWindowsBackground(color);
+        get(false).setWindowsBackground(color);
+    }
+
+    public static void beginAll() {
+        get(true).begin();
+        get(false).begin();
+    }
+
+    public static void endAll() {
+        get(true).end();
+        get(false).end();
+    }
+
+    public static void resizeAll(int width, int height) {
+        get(true).resize(width, height);
+        get(false).resize(width, height);
+    }
+
+
+    private ApplicationListener refreshInstance;
     private SpriteBatch _batch;
     private OrthographicCamera _camera;
     private RenderStrategy strategy;
     private Color bgColor;
+    private int _offsetX;
+    private int _offsetY;
 
     private Renderer(int width, int height) {
         _batch = new SpriteBatch();
@@ -46,21 +87,24 @@ public class Renderer {
         setShader(Assets.get().defaultShaders());
     }
 
+    public void centerCamera() {
+        _offsetX = 0;
+        _offsetY = 0;
+    }
+
     public void setShader(ShaderProgram shader) {
         _batch.setShader(shader);
     }
 
-    public void setRefreshInstance(ApplicationListener app) {
+    private void setRefreshInstance(ApplicationListener app) {
         refreshInstance = app;
     }
 
-    public void setWindowsBackground(Color bgColor) {
+    private void setWindowsBackground(Color bgColor) {
         this.bgColor = bgColor;
     }
 
-    private static boolean tipHasBeenDisplayed = false;
-
-    public void setStrategy(RenderStrategy strategy) {
+    private void setStrategy(RenderStrategy strategy) {
         this.strategy = strategy;
         _camera = strategy.createCamera();
         if (refreshInstance != null) {
@@ -79,7 +123,7 @@ public class Renderer {
         resize(Gdx.graphics.getDesktopDisplayMode().width, Gdx.graphics.getDesktopDisplayMode().height);
     }
 
-    public void begin() {
+    private void begin() {
         Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         _camera.update();
@@ -87,16 +131,13 @@ public class Renderer {
         _batch.begin();
     }
 
-    public void end() {
+    private void end() {
         _batch.end();
     }
 
-    public void resize(int width, int height) {
+    private void resize(int width, int height) {
         strategy.resize(width, height);
     }
-
-    private int _offsetX;
-    private int _offsetY;
 
     public void moveCamera(int x, int y) {
         _offsetX = _offsetX + (int) (x * Gdx.graphics.getDeltaTime());
@@ -140,7 +181,7 @@ public class Renderer {
         renderString(content, location, filter, scale, depth);
     }
 
-    private void renderString(String content, Point2 location, Color filter, float scale, DrawDepth depth) {
+    public void renderString(String content, Point2 location, Color filter, float scale, DrawDepth depth) {
         Assets.get().font().setScale(scale);
         Assets.get().font().setColor(filter);
         Assets.get().font().draw(_batch, content, location.PosX, location.PosY);

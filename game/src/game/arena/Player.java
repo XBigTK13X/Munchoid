@@ -89,6 +89,8 @@ public class Player extends Entity implements IActor {
         boolean willBeInBufferX = inXBuffer(adjustedXVelocity);
         float nextX = getLocation().X + adjustedXVelocity;
 
+
+        //TODO correct the movement
         boolean devMove = true;
 
         if (devMove) {

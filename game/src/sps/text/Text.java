@@ -14,6 +14,7 @@ public class Text {
 
     private State _createdDuring;
 
+    private boolean _canMove;
     private Point2 position;
     private String message;
     private float scale;
@@ -61,7 +62,7 @@ public class Text {
     }
 
     public void draw() {
-        Renderer.get().draw(message, position, _color, scale, DrawDepths.get(Sps.DrawDepths.Default_Text));
+        Renderer.get(!_canMove).draw(message, position, _color, scale, DrawDepths.get(Sps.DrawDepths.Default_Text));
     }
 
     public boolean isVisible() {
@@ -110,5 +111,9 @@ public class Text {
 
     public void setPosition(int x, int y) {
         position.reset(x, y);
+    }
+
+    public void setMoveable(boolean moveable) {
+        _canMove = moveable;
     }
 }

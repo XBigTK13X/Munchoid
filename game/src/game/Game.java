@@ -27,9 +27,9 @@ public class Game implements ApplicationListener {
     public void create() {
         RNG.seed((int) System.currentTimeMillis());
         Sps.setup();
-        Renderer.get().setWindowsBackground(Color.BLACK);
-        Renderer.get().setStrategy(new FrameStrategy());
-        Renderer.get().setRefreshInstance(this);
+        Renderer.setAllWindowBackground(Color.BLACK);
+        Renderer.setAllStrategy(new FrameStrategy());
+        Renderer.setAllRefreshInstance(this);
         Input.get().setup(new DefaultStateProvider());
         SpriteSheetManager.setup(SpriteTypes.getDefs());
         StateManager.get().push(new PreGame());
@@ -38,7 +38,7 @@ public class Game implements ApplicationListener {
 
     @Override
     public void resize(int width, int height) {
-        Renderer.get().resize(width, height);
+        Renderer.resizeAll(width, height);
         StateManager.get().resize(width, height);
     }
 
@@ -69,13 +69,13 @@ public class Game implements ApplicationListener {
 
             if (_preUpdateState == StateManager.get().current()) {
                 // Render
-                Renderer.get().begin();
+                Renderer.beginAll();
                 StateManager.get().draw();
                 ParticleEngine.get().draw();
                 UiElements.get().draw();
                 TextPool.get().draw();
                 DevConsole.get().draw();
-                Renderer.get().end();
+                Renderer.endAll();
             }
 
 
