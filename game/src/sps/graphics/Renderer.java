@@ -33,16 +33,13 @@ public class Renderer {
         return instance;
     }
 
-    private int _xOffset;
-    private int _yOffset;
-
-    public SpriteBatch batch;
-    public OrthographicCamera camera;
+    private SpriteBatch _batch;
+    private OrthographicCamera _camera;
     private RenderStrategy strategy;
     private Color bgColor;
 
     private Renderer(int width, int height) {
-        batch = new SpriteBatch();
+        _batch = new SpriteBatch();
         bgColor = Color.WHITE;
         strategy = new StretchStrategy();
         resize(width, height);
@@ -50,7 +47,7 @@ public class Renderer {
     }
 
     public void setShader(ShaderProgram shader) {
-        batch.setShader(shader);
+        _batch.setShader(shader);
     }
 
     public void setRefreshInstance(ApplicationListener app) {
@@ -65,7 +62,7 @@ public class Renderer {
 
     public void setStrategy(RenderStrategy strategy) {
         this.strategy = strategy;
-        camera = strategy.createCamera();
+        _camera = strategy.createCamera();
         if (refreshInstance != null) {
             refreshInstance.resize(Screen.get().VirtualWidth, Screen.get().VirtualHeight);
         }
@@ -85,17 +82,25 @@ public class Renderer {
     public void begin() {
         Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-        camera.update();
-        strategy.begin(camera, batch);
-        batch.begin();
+        _camera.update();
+        strategy.begin(_camera, _batch);
+        _batch.begin();
     }
 
     public void end() {
-        batch.end();
+        _batch.end();
     }
 
     public void resize(int width, int height) {
         strategy.resize(width, height);
+    }
+
+    public void moveCamera(int x, int y) {
+        _camera.translate(x * Gdx.graphics.getDeltaTime(), y * Gdx.graphics.getDeltaTime());
+    }
+
+    public Vector2 getBuffer() {
+        return strategy.getBuffer();
     }
 
     // Sprite rendering
@@ -104,12 +109,7 @@ public class Renderer {
     }
 
     public void draw(Sprite sprite, Point2 position, DrawDepth depth, Color color, boolean flipX, boolean flipY) {
-        try {
-            render(sprite, position, depth, color, sprite.getWidth(), sprite.getHeight(), flipX ? -1 : 1, flipY ? -1 : 1);
-        }
-        catch (Exception e) {
-            int x = 0;
-        }
+        render(sprite, position, depth, color, sprite.getWidth(), sprite.getHeight(), flipX ? -1 : 1, flipY ? -1 : 1);
     }
 
     public void draw(Sprite sprite, Point2 position, DrawDepth depth, Color color, float width, float height) {
@@ -128,7 +128,7 @@ public class Renderer {
         sprite.setSize(width, height);
         sprite.setScale(scaleX, scaleY);
         sprite.setPosition(position.X, position.Y);
-        sprite.draw(batch);
+        sprite.draw(_batch);
     }
 
     // String rendering
@@ -139,32 +139,11 @@ public class Renderer {
     private void renderString(String content, Point2 location, Color filter, float scale, DrawDepth depth) {
         Assets.get().font().setScale(scale);
         Assets.get().font().setColor(filter);
-        Assets.get().font().draw(batch, content, location.PosX, location.PosY);
+        Assets.get().font().draw(_batch, content, location.PosX, location.PosY);
     }
 
     //Texture rendering
     public void draw(Texture texture) {
-        batch.draw(texture, 0, 0);
-    }
-
-    public Color getWindowBackground() {
-        return bgColor;
-    }
-
-    public int getXOffset() {
-        return _xOffset;
-    }
-
-    public int getYOffset() {
-        return _yOffset;
-    }
-
-    public void moveOffsets(int x, int y) {
-        _xOffset -= x * Gdx.graphics.getDeltaTime();
-        _yOffset -= y * Gdx.graphics.getDeltaTime();
-    }
-
-    public Vector2 getBuffer() {
-        return strategy.getBuffer();
+        _batch.draw(texture, 0, 0);
     }
 }

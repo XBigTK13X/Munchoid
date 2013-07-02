@@ -10,7 +10,6 @@ import sps.core.Point2;
 import sps.core.SpsConfig;
 import sps.entities.Entity;
 import sps.entities.IActor;
-import sps.graphics.Renderer;
 import sps.io.Input;
 import sps.text.TextEffects;
 import sps.text.TextPool;
@@ -96,7 +95,7 @@ public class Player extends Entity implements IActor {
         }
         else {
             if (_floor.canMoveToX(nextFloorX) && inBufferX) {
-                Renderer.get().moveOffsets(floorVelocityX, 0);
+                //TODO Move the camera
             }
             else {
                 if (adjustedXVelocity > 0 && nextX < Screen.get().VirtualWidth - getWidth() || adjustedXVelocity < 0 && nextX > 0) {
@@ -116,7 +115,7 @@ public class Player extends Entity implements IActor {
         }
         else {
             if (_floor.canMoveToY(nextFloorY) && inBufferY) {
-                Renderer.get().moveOffsets(0, floorVelocityY);
+                //TODO Move the camera
             }
             else {
                 if (adjustedYVelocity > 0 && nextY < Screen.get().VirtualHeight - getHeight() || adjustedYVelocity < 0 && nextY > 0) {

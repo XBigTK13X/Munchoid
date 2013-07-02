@@ -13,7 +13,6 @@ import sps.bridge.EntityTypes;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.Entity;
-import sps.graphics.Renderer;
 import sps.text.TextEffects;
 import sps.text.TextPool;
 
@@ -120,10 +119,5 @@ public class Catchable extends Entity {
         _creature = creature;
         setSize(_creature.getWidth(), _creature.getHeight());
         _creature.getBody().setScale(GameConfig.ArenaCreatureScale);
-    }
-
-    @Override
-    public Point2 getLocation() {
-        return _location.add(Renderer.get().getXOffset(), Renderer.get().getYOffset());
     }
 }

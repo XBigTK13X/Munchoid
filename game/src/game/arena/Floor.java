@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import sps.bridge.DrawDepths;
 import sps.bridge.EntityTypes;
-import sps.core.Logger;
 import sps.core.Point2;
 import sps.entities.Entity;
 import sps.graphics.Renderer;
@@ -39,11 +38,6 @@ public class Floor extends Entity {
     @Override
     public void draw() {
         Renderer.get().draw(_background);
-    }
-
-    @Override
-    public Point2 getLocation() {
-        return _location.add(Renderer.get().getXOffset(), Renderer.get().getYOffset());
     }
 
     public boolean canMoveToX(float x) {
