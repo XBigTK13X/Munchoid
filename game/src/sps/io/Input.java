@@ -6,6 +6,7 @@ import sps.bridge.Command;
 import sps.bridge.Context;
 import sps.bridge.Contexts;
 import sps.bridge.Sps;
+import sps.core.SpsConfig;
 import sps.graphics.Renderer;
 import sps.util.Screen;
 
@@ -64,7 +65,7 @@ public class Input implements InputProvider {
     @Override
     public boolean detectState(Command command, int playerIndex) {
         boolean gamepadActive = false;
-        if (Controllers.getControllers().size > playerIndex) {
+        if (SpsConfig.get().controllersEnabled && Controllers.getControllers().size > playerIndex) {
             gamepadActive = command.controllerInput().isActive(Controllers.getControllers().get(playerIndex));
         }
         boolean keyboardActive = (playerIndex == provider.getFirstPlayerIndex()) && Gdx.input.isKeyPressed(command.key().getKeyCode());

@@ -33,6 +33,7 @@ public class SpsConfig {
 
     public final boolean viewPaths;
     public final boolean devConsoleEnabled;
+    public final boolean controllersEnabled;
 
 
     private SpsConfig() {
@@ -71,6 +72,6 @@ public class SpsConfig {
         // Dev
         viewPaths = Parse.bool(_settings.get("viewPaths"));
         devConsoleEnabled = Parse.bool(_settings.get("dev_console_enabled"));
-
+        controllersEnabled = Parse.bool(_settings.get("controllersEnabled"));
     }
 }
