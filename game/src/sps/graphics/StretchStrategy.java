@@ -16,7 +16,9 @@ public class StretchStrategy implements RenderStrategy {
     }
 
     @Override
-    public void begin(OrthographicCamera camera, SpriteBatch batch) {
+    public void begin(OrthographicCamera camera, SpriteBatch batch, int offsetX, int offsetY) {
+        camera.translate(offsetX, offsetY);
+        camera.update();
         batch.setProjectionMatrix(camera.combined);
     }
 

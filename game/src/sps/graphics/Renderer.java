@@ -83,7 +83,7 @@ public class Renderer {
         Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         _camera.update();
-        strategy.begin(_camera, _batch);
+        strategy.begin(_camera, _batch, _offsetX, _offsetY);
         _batch.begin();
     }
 
@@ -95,8 +95,12 @@ public class Renderer {
         strategy.resize(width, height);
     }
 
+    private int _offsetX;
+    private int _offsetY;
+
     public void moveCamera(int x, int y) {
-        _camera.translate(x * Gdx.graphics.getDeltaTime(), y * Gdx.graphics.getDeltaTime());
+        _offsetX = _offsetX + (int) (x * Gdx.graphics.getDeltaTime());
+        _offsetY = _offsetY + (int) (y * Gdx.graphics.getDeltaTime());
     }
 
     public Vector2 getBuffer() {

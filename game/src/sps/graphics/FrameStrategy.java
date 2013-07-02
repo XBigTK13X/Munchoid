@@ -17,8 +17,10 @@ public class FrameStrategy implements RenderStrategy {
     }
 
     @Override
-    public void begin(OrthographicCamera camera, SpriteBatch batch) {
+    public void begin(OrthographicCamera camera, SpriteBatch batch, int offsetX, int offsetY) {
         camera.setToOrtho(false, Screen.get().VirtualWidth, Screen.get().VirtualHeight);
+        camera.translate(offsetX, offsetY);
+        camera.update();
         batch.setProjectionMatrix(camera.combined);
     }
 
@@ -27,7 +29,7 @@ public class FrameStrategy implements RenderStrategy {
     @Override
     public void resize(int width, int height) {
         float aspectRatio = (float) width / (float) height;
-        float scale = 1f;
+        float scale;
         crop.set(0, 0);
 
         if (aspectRatio > Screen.get().VirtualAspectRatio) {
@@ -52,6 +54,4 @@ public class FrameStrategy implements RenderStrategy {
     public Vector2 getBuffer() {
         return crop;
     }
-
-
 }
