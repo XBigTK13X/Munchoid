@@ -5,13 +5,13 @@ import sps.util.Screen;
 
 public class GameConfig {
 
-    public final static int CreatureLimit = 10;
+    public final static int CreatureLimit = 1;
     public final static int TournamentMatches = 1;
 
     public final static int SpacePercentPerCreature = 1;
     public static final int ArenaBufferPercent = (int) ((GameConfig.CreatureLimit / 2) * GameConfig.SpacePercentPerCreature);
-    public static final int ArenaHeight = 1080 * 2 + (int) Screen.height(ArenaBufferPercent) * 2;
-    public static final int ArenaWidth = 1920 * 2 + (int) Screen.width(ArenaBufferPercent) * 2;
+    public static final int ArenaHeight = 1080 + (int) Screen.height(ArenaBufferPercent) * 2;
+    public static final int ArenaWidth = 1920 + (int) Screen.width(ArenaBufferPercent) * 2;
     //The length of Quickly.ogg
     public final static float ArenaTimeoutSeconds = 10f;
     public static final float ArenaCreatureScale = .6f;

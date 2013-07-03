@@ -69,18 +69,19 @@ public class Game implements ApplicationListener {
 
             if (_preUpdateState == StateManager.get().current()) {
                 // Render
-                Renderer.beginAll();
+                Renderer.get(true).setListening(true);
+                Renderer.get().begin();
                 StateManager.get().draw();
                 ParticleEngine.get().draw();
                 UiElements.get().draw();
                 TextPool.get().draw();
                 DevConsole.get().draw();
-                Renderer.endAll();
+                Renderer.get().end();
+                Renderer.get(true).processQueue();
             }
 
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Logger.exception(e);
         }
     }

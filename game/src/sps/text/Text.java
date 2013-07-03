@@ -30,9 +30,11 @@ public class Text {
     public Text() {
         _color = Color.WHITE;
         position = new Point2(0, 0);
+        _canMove = true;
     }
 
     public void reset(Point2 position, String message, float scale, float lifeInSeconds, TextEffect effect) {
+        _canMove = true;
         _createdDuring = StateManager.get().current();
         this.position.copy(position);
         this.message = message;

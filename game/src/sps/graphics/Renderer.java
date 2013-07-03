@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -16,10 +15,45 @@ import sps.core.Point2;
 import sps.core.SpsConfig;
 import sps.util.Screen;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Renderer {
     private static RenderStrategy defaultStrategy = new StretchStrategy();
     private static Renderer __dynamic;
     private static Renderer __fixed;
+
+    private List<RenderCommand> _todo;
+
+    public static class RenderCommand {
+        public String Content;
+        public Point2 Location;
+        public Color Filter;
+        public float Scale;
+
+        public RenderCommand(String content, Point2 location, Color filter, float scale) {
+            Content = content;
+            Location = location;
+            Filter = filter;
+            Scale = scale;
+        }
+
+        public Sprite Sprite;
+        public float Width;
+        public float Height;
+        public float ScaleX;
+        public float ScaleY;
+
+        public RenderCommand(Sprite sprite, Point2 position, Color color, float width, float height, float scaleX, float scaleY) {
+            Sprite = sprite;
+            Location = position;
+            Filter = color;
+            Width = width;
+            Height = height;
+            ScaleX = scaleX;
+            ScaleY = scaleY;
+        }
+    }
 
     private static boolean tipHasBeenDisplayed = false;
 
@@ -36,6 +70,7 @@ public class Renderer {
             __dynamic.setStrategy(defaultStrategy);
             __fixed = new Renderer(width, height);
             __fixed.setStrategy(defaultStrategy);
+            __fixed.setListening(true);
         }
         return fixed ? __fixed : __dynamic;
     }
@@ -55,16 +90,6 @@ public class Renderer {
         get(false).setWindowsBackground(color);
     }
 
-    public static void beginAll() {
-        get(true).begin();
-        get(false).begin();
-    }
-
-    public static void endAll() {
-        get(true).end();
-        get(false).end();
-    }
-
     public static void resizeAll(int width, int height) {
         get(true).resize(width, height);
         get(false).resize(width, height);
@@ -78,13 +103,19 @@ public class Renderer {
     private Color bgColor;
     private int _offsetX;
     private int _offsetY;
+    private boolean _queueListening = false;
 
     private Renderer(int width, int height) {
+        _todo = new ArrayList<RenderCommand>();
         _batch = new SpriteBatch();
         bgColor = Color.WHITE;
         strategy = new StretchStrategy();
         resize(width, height);
         setShader(Assets.get().defaultShaders());
+    }
+
+    public void setListening(boolean listening) {
+        _queueListening = listening;
     }
 
     public void centerCamera() {
@@ -123,7 +154,7 @@ public class Renderer {
         resize(Gdx.graphics.getDesktopDisplayMode().width, Gdx.graphics.getDesktopDisplayMode().height);
     }
 
-    private void begin() {
+    public void begin() {
         Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         _camera.update();
@@ -131,7 +162,7 @@ public class Renderer {
         _batch.begin();
     }
 
-    private void end() {
+    public void end() {
         _batch.end();
     }
 
@@ -148,47 +179,69 @@ public class Renderer {
         return strategy.getBuffer();
     }
 
+    public void processQueue() {
+        setListening(false);
+        _batch.begin();
+        for (RenderCommand c : _todo) {
+            if (c.Sprite != null) {
+                render(c.Sprite, c.Location, c.Filter, c.Width, c.Height, c.ScaleX, c.ScaleY);
+            }
+            if (c.Content != null) {
+                render(c.Content, c.Location, c.Filter, c.Scale);
+            }
+        }
+        _batch.end();
+        _todo.clear();
+        setListening(true);
+    }
+
     // Sprite rendering
     public void draw(Sprite sprite, Point2 position, DrawDepth depth, Color color) {
-        render(sprite, position, depth, color, SpsConfig.get().spriteWidth, SpsConfig.get().spriteHeight, 1, 1);
+        render(sprite, position, color, SpsConfig.get().spriteWidth, SpsConfig.get().spriteHeight, 1, 1);
     }
 
     public void draw(Sprite sprite, Point2 position, DrawDepth depth, Color color, boolean flipX, boolean flipY) {
-        render(sprite, position, depth, color, sprite.getWidth(), sprite.getHeight(), flipX ? -1 : 1, flipY ? -1 : 1);
+        render(sprite, position, color, sprite.getWidth(), sprite.getHeight(), flipX ? -1 : 1, flipY ? -1 : 1);
     }
 
     public void draw(Sprite sprite, Point2 position, DrawDepth depth, Color color, float width, float height) {
-        render(sprite, position, depth, color, width, height, 1, 1);
+        render(sprite, position, color, width, height, 1, 1);
     }
 
     Point2 pos = new Point2(0, 0);
 
     public void draw(Sprite sprite) {
         pos.reset(sprite.getX(), sprite.getY());
-        render(sprite, pos, null, sprite.getColor(), sprite.getWidth(), sprite.getHeight(), 1, 1);
+        render(sprite, pos, sprite.getColor(), sprite.getWidth(), sprite.getHeight(), 1, 1);
     }
 
-    private void render(Sprite sprite, Point2 position, DrawDepth depth, Color color, float width, float height, float scaleX, float scaleY) {
-        sprite.setColor(color);
-        sprite.setSize(width, height);
-        sprite.setScale(scaleX, scaleY);
-        sprite.setPosition(position.X, position.Y);
-        sprite.draw(_batch);
+    private void render(Sprite sprite, Point2 position, Color color, float width, float height, float scaleX, float scaleY) {
+        if (_queueListening) {
+            _todo.add(new RenderCommand(sprite, position, color, width, height, scaleX, scaleY));
+        }
+        else {
+            sprite.setColor(color);
+            sprite.setSize(width, height);
+            sprite.setScale(scaleX, scaleY);
+            sprite.setPosition(position.X, position.Y);
+            sprite.draw(_batch);
+        }
+
     }
 
     // String rendering
     public void draw(String content, Point2 location, Color filter, float scale, DrawDepth depth) {
-        renderString(content, location, filter, scale, depth);
+        render(content, location, filter, scale);
     }
 
-    public void renderString(String content, Point2 location, Color filter, float scale, DrawDepth depth) {
-        Assets.get().font().setScale(scale);
-        Assets.get().font().setColor(filter);
-        Assets.get().font().draw(_batch, content, location.PosX, location.PosY);
-    }
-
-    //Texture rendering
-    public void draw(Texture texture) {
-        _batch.draw(texture, 0, 0);
+    private void render(String content, Point2 location, Color filter, float scale) {
+        if (_queueListening) {
+            _todo.add(new RenderCommand(content, location, filter, scale));
+        }
+        else {
+            Assets.get().font().setScale(scale);
+            Assets.get().font().setColor(filter);
+            Assets.get().font().draw(_batch, content, location.PosX, location.PosY);
+        }
     }
 }
