@@ -29,20 +29,18 @@ public class FrameStrategy implements RenderStrategy {
     @Override
     public void resize(int width, int height) {
         float aspectRatio = (float) width / (float) height;
-        float scale;
+        float scale = (float) width / (float) Screen.get().VirtualWidth;
         crop.set(0, 0);
 
         if (aspectRatio > Screen.get().VirtualAspectRatio) {
             scale = (float) height / (float) Screen.get().VirtualHeight;
             crop.x = (width - Screen.get().VirtualWidth * scale) / 2f;
         }
-        else if (aspectRatio < Screen.get().VirtualAspectRatio) {
-            scale = (float) width / (float) Screen.get().VirtualWidth;
-            crop.y = (height - Screen.get().VirtualHeight * scale) / 2f;
-        }
-        else {
-            scale = (float) width / (float) Screen.get().VirtualWidth;
-        }
+        else
+            if (aspectRatio < Screen.get().VirtualAspectRatio) {
+                scale = (float) width / (float) Screen.get().VirtualWidth;
+                crop.y = (height - Screen.get().VirtualHeight * scale) / 2f;
+            }
 
         float w = (float) Screen.get().VirtualWidth * scale;
         float h = (float) Screen.get().VirtualHeight * scale;

@@ -5,7 +5,7 @@ import sps.util.Screen;
 
 public class GameConfig {
 
-    public final static int CreatureLimit = 1;
+    public final static int CreatureLimit = 50;
     public final static int TournamentMatches = 1;
 
     public final static int SpacePercentPerCreature = 1;

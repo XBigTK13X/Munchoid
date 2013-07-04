@@ -1,6 +1,5 @@
 package sps.graphics;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -9,21 +8,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import sps.bridge.DrawDepth;
-import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.SpsConfig;
-import sps.util.Screen;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Renderer {
-    private static boolean __tipHasBeenDisplayed = false;
-
     private List<RenderCommand> _todo;
     private boolean _queueListening = false;
 
-    private ApplicationListener _refreshInstance;
     private SpriteBatch _batch;
     private OrthographicCamera _camera;
     private RenderStrategy _strategy;
@@ -43,22 +37,10 @@ public class Renderer {
         _batch.setShader(shader);
     }
 
-    public void setRefreshInstance(ApplicationListener app) {
-        _refreshInstance = app;
-    }
-
     public void setStrategy(RenderStrategy strategy) {
         this._strategy = strategy;
         _camera = strategy.createCamera();
-        if (_refreshInstance != null) {
-            _refreshInstance.resize(Screen.get().VirtualWidth, Screen.get().VirtualHeight);
-        }
-        else {
-            if (!__tipHasBeenDisplayed) {
-                Logger.info("If the app is registered with Renderer.get().setRefreshInstance(this); in the create method, then the screen will update without a manual resizing.");
-                __tipHasBeenDisplayed = true;
-            }
-        }
+
     }
 
     public void toggleFullScreen() {
@@ -94,17 +76,18 @@ public class Renderer {
     }
 
     public void processQueue() {
+
         setListening(false);
-        _batch.begin();
-        for (RenderCommand c : _todo) {
-            if (c.Sprite != null) {
-                render(c.Sprite, c.Location, c.Filter, c.Width, c.Height, c.ScaleX, c.ScaleY);
+        begin();
+        for (RenderCommand command : _todo) {
+            if (command.Sprite != null) {
+                render(command.Sprite, command.Location, command.Filter, command.Width, command.Height, command.ScaleX, command.ScaleY);
             }
-            if (c.Content != null) {
-                render(c.Content, c.Location, c.Filter, c.Scale);
+            if (command.Content != null) {
+                render(command.Content, command.Location, command.Filter, command.Scale);
             }
         }
-        _batch.end();
+        end();
         _todo.clear();
         setListening(true);
     }

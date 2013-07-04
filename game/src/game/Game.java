@@ -28,8 +28,9 @@ public class Game implements ApplicationListener {
         RNG.seed((int) System.currentTimeMillis());
         Sps.setup();
         Window.setWindowBackground(Color.BLACK);
-        Window.setAllStrategy(new FrameStrategy());
-        Window.setAllRefreshInstance(this);
+        Window.get(false).setStrategy(new FrameStrategy());
+        Window.get(true).setStrategy(new FrameStrategy());
+        Window.setRefreshInstance(this);
         Input.get().setup(new DefaultStateProvider());
         SpriteSheetManager.setup(SpriteTypes.getDefs());
         StateManager.get().push(new PreGame());
@@ -38,50 +39,56 @@ public class Game implements ApplicationListener {
 
     @Override
     public void resize(int width, int height) {
-        Window.resizeAll(width, height);
+        Window.resize(width, height);
         StateManager.get().resize(width, height);
     }
 
 
     State _preUpdateState;
 
+    private void update() {
+        Input.get().update();
+
+        if (Input.get().isActive(Commands.get("ToggleDevConsole"), 0)) {
+            DevConsole.get().toggle();
+        }
+        if (Input.get().isActive(Commands.get("ToggleFullScreen"), 0)) {
+            Window.get().toggleFullScreen();
+        }
+
+        _preUpdateState = StateManager.get().current();
+        StateManager.get().asyncUpdate();
+        StateManager.get().update();
+        ParticleEngine.get().update();
+        TextPool.get().update();
+        UiElements.get().update();
+    }
+
+    private void draw() {
+        if (_preUpdateState == StateManager.get().current()) {
+            Window.clear();
+            Window.get(true).setListening(true);
+
+            Window.get().begin();
+
+            StateManager.get().draw();
+            ParticleEngine.get().draw();
+            UiElements.get().draw();
+            TextPool.get().draw();
+            DevConsole.get().draw();
+
+            Window.get().end();
+
+            Window.get(true).processQueue();
+        }
+    }
+
     @Override
     public void render() {
         try {
             //Logger.devConsole("" + Gdx.graphics.getFramesPerSecond() + ": " + Gdx.graphics.getDeltaTime());
-
-            // Update
-            Input.get().update();
-
-            if (Input.get().isActive(Commands.get("ToggleDevConsole"), 0)) {
-                DevConsole.get().toggle();
-            }
-            if (Input.get().isActive(Commands.get("ToggleFullScreen"), 0)) {
-                Window.get().toggleFullScreen();
-            }
-
-            _preUpdateState = StateManager.get().current();
-            StateManager.get().asyncUpdate();
-            StateManager.get().update();
-            ParticleEngine.get().update();
-            TextPool.get().update();
-            UiElements.get().update();
-
-            if (_preUpdateState == StateManager.get().current()) {
-                // Render
-                Window.clear();
-                Window.get(true).setListening(true);
-                Window.get().begin();
-                StateManager.get().draw();
-                ParticleEngine.get().draw();
-                UiElements.get().draw();
-                TextPool.get().draw();
-                DevConsole.get().draw();
-                Window.get().end();
-                Window.get(true).processQueue();
-            }
-
-
+            update();
+            draw();
         } catch (Exception e) {
             Logger.exception(e);
         }

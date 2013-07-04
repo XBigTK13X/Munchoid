@@ -11,6 +11,8 @@ public class Window {
     private static RenderStrategy __defaultStrategy = new StretchStrategy();
     private static Renderer __dynamic;
     private static Renderer __fixed;
+    private static boolean __tipHasBeenDisplayed = false;
+    private static ApplicationListener __app;
     private static Color __bgColor = Color.BLACK;
 
     private Window() {
@@ -40,21 +42,25 @@ public class Window {
         return fixed ? __fixed : __dynamic;
     }
 
-    public static void setAllRefreshInstance(ApplicationListener app) {
-        get(true).setRefreshInstance(app);
-        get(false).setRefreshInstance(app);
-    }
-
-    public static void setAllStrategy(RenderStrategy strategy) {
-        get(true).setStrategy(strategy);
-        get(false).setStrategy(strategy);
+    public static void setRefreshInstance(ApplicationListener app) {
+        __app = app;
     }
 
     public static void setWindowBackground(Color color) {
         __bgColor = color;
     }
 
-    public static void resizeAll(int width, int height) {
+    public static void resize(int width, int height) {
+        if (__app != null) {
+            //TODO See if this is still needed
+            // __app.resize(Screen.get().VirtualWidth, Screen.get().VirtualHeight);
+        }
+        else {
+            if (!__tipHasBeenDisplayed) {
+                Logger.info("If the app is registered with Renderer.get().setRefreshInstance(this); in the create method, then the screen will update without a manual resizing.");
+                __tipHasBeenDisplayed = true;
+            }
+        }
         get(true).resize(width, height);
         get(false).resize(width, height);
     }
