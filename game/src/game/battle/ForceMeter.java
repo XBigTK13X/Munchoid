@@ -11,7 +11,7 @@ import game.states.ForceSelection;
 import sps.bridge.Commands;
 import sps.core.Point2;
 import sps.entities.HitTest;
-import sps.graphics.Renderer;
+import sps.graphics.Window;
 import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
@@ -92,28 +92,29 @@ public class ForceMeter {
                     }
                 });
             }
-            else if (StateManager.get().current() instanceof ForceSelection) {
-                if (!_owner.getStats().isEnabled(_force) || _owner.getStats().get(_force) <= GameConfig.DisableStat) {
-                    moveToRightSide();
-                }
-                Buttons.get().add(new Buttons.User() {
-                    @Override
-                    public Sprite getSprite() {
-                        return _bg;
+            else
+                if (StateManager.get().current() instanceof ForceSelection) {
+                    if (!_owner.getStats().isEnabled(_force) || _owner.getStats().get(_force) <= GameConfig.DisableStat) {
+                        moveToRightSide();
                     }
+                    Buttons.get().add(new Buttons.User() {
+                        @Override
+                        public Sprite getSprite() {
+                            return _bg;
+                        }
 
-                    @Override
-                    public void onClick() {
-                        _owner.getStats().toggleEnabled(_force);
-                        if (!_owner.getStats().isEnabled(_force)) {
-                            moveToRightSide();
+                        @Override
+                        public void onClick() {
+                            _owner.getStats().toggleEnabled(_force);
+                            if (!_owner.getStats().isEnabled(_force)) {
+                                moveToRightSide();
+                            }
+                            else {
+                                moveToLeftSide();
+                            }
                         }
-                        else {
-                            moveToLeftSide();
-                        }
-                    }
-                });
-            }
+                    });
+                }
         }
     }
 
@@ -139,7 +140,7 @@ public class ForceMeter {
     }
 
     public void draw() {
-        Renderer.get().draw(_bg);
-        Renderer.get().draw(_sprite);
+        Window.get().draw(_bg);
+        Window.get().draw(_sprite);
     }
 }

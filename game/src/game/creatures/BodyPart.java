@@ -8,7 +8,7 @@ import game.creatures.style.BodyRules;
 import game.creatures.style.Outline;
 import sps.bridge.DrawDepths;
 import sps.core.Point2;
-import sps.graphics.Renderer;
+import sps.graphics.Window;
 import sps.util.SpriteMaker;
 
 import java.util.ArrayList;
@@ -117,10 +117,11 @@ public class BodyPart {
             scaleDelta = GameConfig.MaxScaleDeath - _scale;
             scaleDeltaThreshold = GameConfig.MaxScaleDeath - __scaleBase;
         }
-        else if (_scale < __scaleBase) {
-            scaleDelta = _scale - GameConfig.MinScaleDeath;
-            scaleDeltaThreshold = __scaleBase - GameConfig.MinScaleDeath;
-        }
+        else
+            if (_scale < __scaleBase) {
+                scaleDelta = _scale - GameConfig.MinScaleDeath;
+                scaleDeltaThreshold = __scaleBase - GameConfig.MinScaleDeath;
+            }
         int scaleHealth = (int) ((scaleDelta / scaleDeltaThreshold) * _healthMax);
 
         _health = (atomHealth + scaleHealth) / 2;
@@ -131,7 +132,7 @@ public class BodyPart {
 
     public void draw() {
         float dirScale = _scale * (_owner.isFlipX() ? -1 : 1);
-        Renderer.get().draw(_sprite, getGlobalPosition(), DrawDepths.get("Atom"), _owner.getHighlight(), _width * dirScale, _height * _scale);
+        Window.get().draw(_sprite, getGlobalPosition(), DrawDepths.get("Atom"), _owner.getHighlight(), _width * dirScale, _height * _scale);
     }
 
     public Point2 getGlobalPosition() {

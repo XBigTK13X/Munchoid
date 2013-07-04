@@ -8,7 +8,7 @@ import sps.bridge.EntityTypes;
 import sps.core.Logger;
 import sps.core.Point2;
 import sps.entities.Entity;
-import sps.graphics.Renderer;
+import sps.graphics.Window;
 import sps.util.Colors;
 import sps.util.Screen;
 import sps.util.SpriteMaker;
@@ -39,7 +39,7 @@ public class Floor extends Entity {
 
     @Override
     public void draw() {
-        Renderer.get().draw(_background);
+        Window.get().draw(_background);
     }
 
     public boolean canMoveToX(float x) {

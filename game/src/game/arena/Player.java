@@ -10,7 +10,7 @@ import sps.core.Point2;
 import sps.core.SpsConfig;
 import sps.entities.Entity;
 import sps.entities.IActor;
-import sps.graphics.Renderer;
+import sps.graphics.Window;
 import sps.io.Input;
 import sps.text.TextEffects;
 import sps.text.TextPool;
@@ -95,7 +95,7 @@ public class Player extends Entity implements IActor {
 
         if (devMove) {
             if (!_keyVelocity.isZero()) {
-                Renderer.get().moveCamera((int) _keyVelocity.X, (int) _keyVelocity.Y);
+                Window.get().moveCamera((int) _keyVelocity.X, (int) _keyVelocity.Y);
             }
         }
         else {

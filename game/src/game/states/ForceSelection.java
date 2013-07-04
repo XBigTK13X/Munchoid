@@ -11,7 +11,7 @@ import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
 import sps.entities.EntityManager;
 import sps.entities.HitTest;
-import sps.graphics.Renderer;
+import sps.graphics.Window;
 import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
@@ -99,7 +99,7 @@ public class ForceSelection implements State {
 
     @Override
     public void draw() {
-        Renderer.get().draw(_accept);
+        Window.get().draw(_accept);
         _forces.draw();
     }
 
@@ -108,12 +108,13 @@ public class ForceSelection implements State {
         if (diff > 0) {
             return "Please disable " + (_pet.getStats().enabledCount() - _pet.getStats().maxEnabled()) + " of the forces on the left.";
         }
-        else if (diff == 0) {
-            return "Please press the green button to accept your changes.";
-        }
-        else {
-            return "Please enable " + (_pet.getStats().maxEnabled() - _pet.getStats().enabledCount()) + " of the forces on the right";
-        }
+        else
+            if (diff == 0) {
+                return "Please press the green button to accept your changes.";
+            }
+            else {
+                return "Please enable " + (_pet.getStats().maxEnabled() - _pet.getStats().enabledCount()) + " of the forces on the right";
+            }
     }
 
     private int _lastEnabledCount;

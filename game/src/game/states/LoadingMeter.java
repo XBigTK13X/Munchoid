@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.creatures.style.Outline;
 import sps.core.Point2;
-import sps.graphics.Renderer;
+import sps.graphics.Window;
 import sps.util.Colors;
 import sps.util.Screen;
 import sps.util.SpriteMaker;
@@ -45,7 +45,7 @@ public class LoadingMeter {
     }
 
     public void draw() {
-        Renderer.get().draw(_bg);
-        Renderer.get().draw(_sprite);
+        Window.get().draw(_bg);
+        Window.get().draw(_sprite);
     }
 }

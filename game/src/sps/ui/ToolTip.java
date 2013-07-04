@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.bridge.DrawDepths;
 import sps.core.Point2;
-import sps.graphics.Renderer;
+import sps.graphics.Window;
 import sps.io.Input;
 import sps.text.Text;
 import sps.text.TextPool;
@@ -67,7 +67,7 @@ public class ToolTip {
 
     public void draw() {
         if (_active) {
-            Renderer.get().draw(__bg, _position.add(-__fontWidth / 2, -(int) (__fontHeight * .45)), DrawDepths.get("TooltipBackground"), Color.WHITE, _messageWidth, __fontHeight);
+            Window.get().draw(__bg, _position.add(-__fontWidth / 2, -(int) (__fontHeight * .45)), DrawDepths.get("TooltipBackground"), Color.WHITE, _messageWidth, __fontHeight);
         }
     }
 

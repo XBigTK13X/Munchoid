@@ -7,7 +7,7 @@ import sps.bridge.Sps;
 import sps.core.Point2;
 import sps.core.SpsConfig;
 import sps.graphics.Assets;
-import sps.graphics.Renderer;
+import sps.graphics.Window;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -55,7 +55,7 @@ public class Path {
                 _t = Assets.get().sprite(0);
             }
             for (Point2 step : _steps) {
-                Renderer.get().draw(_t, new Point2(step.PosX, step.PosY), DrawDepths.get(Sps.DrawDepths.Debug), Color.ORANGE);
+                Window.get().draw(_t, new Point2(step.PosX, step.PosY), DrawDepths.get(Sps.DrawDepths.Debug), Color.ORANGE);
             }
         }
     }

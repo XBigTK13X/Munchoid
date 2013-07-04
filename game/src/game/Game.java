@@ -11,8 +11,8 @@ import sps.core.DevConsole;
 import sps.core.Logger;
 import sps.core.RNG;
 import sps.graphics.FrameStrategy;
-import sps.graphics.Renderer;
 import sps.graphics.SpriteSheetManager;
+import sps.graphics.Window;
 import sps.io.DefaultStateProvider;
 import sps.io.Input;
 import sps.particles.ParticleEngine;
@@ -27,9 +27,9 @@ public class Game implements ApplicationListener {
     public void create() {
         RNG.seed((int) System.currentTimeMillis());
         Sps.setup();
-        Renderer.setWindowBackground(Color.BLACK);
-        Renderer.setAllStrategy(new FrameStrategy());
-        Renderer.setAllRefreshInstance(this);
+        Window.setWindowBackground(Color.BLACK);
+        Window.setAllStrategy(new FrameStrategy());
+        Window.setAllRefreshInstance(this);
         Input.get().setup(new DefaultStateProvider());
         SpriteSheetManager.setup(SpriteTypes.getDefs());
         StateManager.get().push(new PreGame());
@@ -38,7 +38,7 @@ public class Game implements ApplicationListener {
 
     @Override
     public void resize(int width, int height) {
-        Renderer.resizeAll(width, height);
+        Window.resizeAll(width, height);
         StateManager.get().resize(width, height);
     }
 
@@ -57,7 +57,7 @@ public class Game implements ApplicationListener {
                 DevConsole.get().toggle();
             }
             if (Input.get().isActive(Commands.get("ToggleFullScreen"), 0)) {
-                Renderer.get().toggleFullScreen();
+                Window.get().toggleFullScreen();
             }
 
             _preUpdateState = StateManager.get().current();
@@ -69,16 +69,16 @@ public class Game implements ApplicationListener {
 
             if (_preUpdateState == StateManager.get().current()) {
                 // Render
-                Renderer.clear();
-                Renderer.get(true).setListening(true);
-                Renderer.get().begin();
+                Window.clear();
+                Window.get(true).setListening(true);
+                Window.get().begin();
                 StateManager.get().draw();
                 ParticleEngine.get().draw();
                 UiElements.get().draw();
                 TextPool.get().draw();
                 DevConsole.get().draw();
-                Renderer.get().end();
-                Renderer.get(true).processQueue();
+                Window.get().end();
+                Window.get(true).processQueue();
             }
 
 

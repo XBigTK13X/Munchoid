@@ -4,7 +4,7 @@ import sps.bridge.*;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.core.SpsConfig;
-import sps.graphics.Renderer;
+import sps.graphics.Window;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -238,7 +238,7 @@ public class EntityManager {
     }
 
     public void draw() {
-        if (Renderer.get() != null) {
+        if (Window.get() != null) {
             for (Entity component : _contents) {
                 component.draw();
             }
@@ -246,7 +246,7 @@ public class EntityManager {
     }
 
     public void loadContent() {
-        if (Renderer.get() != null) {
+        if (Window.get() != null) {
             for (Entity component : _contents) {
                 component.loadContent();
             }

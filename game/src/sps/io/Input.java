@@ -7,7 +7,7 @@ import sps.bridge.Context;
 import sps.bridge.Contexts;
 import sps.bridge.Sps;
 import sps.core.SpsConfig;
-import sps.graphics.Renderer;
+import sps.graphics.Window;
 import sps.util.Screen;
 
 import java.util.ArrayList;
@@ -160,10 +160,10 @@ public class Input implements InputProvider {
     }
 
     private void translateMouseCoords() {
-        float percentX = ((float) Gdx.input.getX() - Renderer.get().getBuffer().x) / (Gdx.graphics.getWidth() - Renderer.get().getBuffer().x * 2);
+        float percentX = ((float) Gdx.input.getX() - Window.get().getBuffer().x) / (Gdx.graphics.getWidth() - Window.get().getBuffer().x * 2);
         mouseX = (int) (percentX * Screen.get().VirtualWidth);
 
-        float percentY = ((float) Gdx.input.getY() - Renderer.get().getBuffer().y) / (Gdx.graphics.getHeight() - Renderer.get().getBuffer().y * 2);
+        float percentY = ((float) Gdx.input.getY() - Window.get().getBuffer().y) / (Gdx.graphics.getHeight() - Window.get().getBuffer().y * 2);
         mouseY = Screen.get().VirtualHeight - (int) (percentY * Screen.get().VirtualHeight);
     }
 

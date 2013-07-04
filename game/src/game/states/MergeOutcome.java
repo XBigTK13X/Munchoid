@@ -13,7 +13,7 @@ import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
 import sps.entities.EntityManager;
 import sps.entities.HitTest;
-import sps.graphics.Renderer;
+import sps.graphics.Window;
 import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
@@ -147,8 +147,8 @@ public class MergeOutcome implements State {
         _pet.draw();
         _defeated.draw();
         _merged.draw();
-        Renderer.get().draw(_accept);
-        Renderer.get().draw(_reject);
+        Window.get().draw(_accept);
+        Window.get().draw(_reject);
     }
 
     private void acceptMerge() {

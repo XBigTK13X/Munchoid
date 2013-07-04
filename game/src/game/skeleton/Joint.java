@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.creatures.BodyPart;
 import sps.entities.HitTest;
-import sps.graphics.Renderer;
+import sps.graphics.Window;
 import sps.util.SpriteMaker;
 
 import java.util.LinkedList;
@@ -53,7 +53,7 @@ public class Joint {
         sprite.setSize(_width, _height);
         sprite.setRotation(Degrees);
         sprite.setPosition(X, Y);
-        Renderer.get().draw(sprite);
+        Window.get().draw(sprite);
         if (_outbound.size() > 0) {
             for (Joint out : _outbound) {
                 Degrees = (float) (180 * Math.atan2(out.Y - Y, out.X - X) / Math.PI) - 90;
@@ -62,7 +62,7 @@ public class Joint {
                 sprite.setSize(boneWidth, dist);
                 sprite.setRotation(Degrees);
                 sprite.setPosition(X + _width / 2 - boneWidth / 2, Y + _height / 2 - boneWidth / 2);
-                Renderer.get().draw(sprite);
+                Window.get().draw(sprite);
             }
         }
     }

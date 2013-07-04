@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.Entity;
-import sps.graphics.Renderer;
+import sps.graphics.Window;
 import sps.util.MathHelper;
 import sps.util.SpriteMaker;
 
@@ -42,7 +42,7 @@ public class Particle2 extends PEComponent {
             _sprite.setColor(_color);
             _sprite.setRotation((float) (Angle * 180 / Math.PI));
             _sprite.setPosition(Position.X, Position.Y);
-            Renderer.get().draw(_sprite);
+            Window.get().draw(_sprite);
         }
     }
 

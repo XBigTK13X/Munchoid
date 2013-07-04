@@ -70,7 +70,7 @@ public class Animation {
                 }
             }
             Color renderColor = (alternate) ? _color.tmp().mul(flashColor) : _color;
-            Renderer.get().draw(_sprite, _position, _depth, renderColor, flipX, flipY);
+            Window.get().draw(_sprite, _position, _depth, renderColor, flipX, flipY);
         }
     }
 

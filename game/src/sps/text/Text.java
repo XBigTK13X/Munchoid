@@ -4,8 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import sps.bridge.DrawDepths;
 import sps.bridge.Sps;
+import sps.core.Logger;
 import sps.core.Point2;
-import sps.graphics.Renderer;
+import sps.graphics.Window;
 import sps.states.State;
 import sps.states.StateManager;
 
@@ -64,7 +65,8 @@ public class Text {
     }
 
     public void draw() {
-        Renderer.get(!_canMove).draw(message, position, _color, scale, DrawDepths.get(Sps.DrawDepths.Default_Text));
+        Logger.info("Writing: " + message + " at " + position);
+        Window.get(!_canMove).draw(message, position, _color, scale, DrawDepths.get(Sps.DrawDepths.Default_Text));
     }
 
     public boolean isVisible() {
