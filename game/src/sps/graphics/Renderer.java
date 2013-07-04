@@ -76,7 +76,6 @@ public class Renderer {
     }
 
     public void processQueue() {
-
         setListening(false);
         begin();
         for (RenderCommand command : _todo) {

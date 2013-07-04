@@ -84,8 +84,8 @@ public class DevConsole {
         if (_isVisible) {
             Window.get(true).draw(_consoleBase, Point2.Zero, DrawDepths.get("DevConsole"), _bgColor, Screen.get().VirtualWidth, Screen.get().VirtualHeight);
             for (ConsoleText _content : _contents) {
-                _content.getContent().setMoveable(false);
                 if (_content != null) {
+                    _content.getContent().setMoveable(false);
                     _content.draw();
                 }
             }
