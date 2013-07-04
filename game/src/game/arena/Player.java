@@ -6,6 +6,7 @@ import game.Game;
 import game.GameConfig;
 import game.creatures.Creature;
 import sps.bridge.*;
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.SpsConfig;
 import sps.entities.Entity;
@@ -90,58 +91,51 @@ public class Player extends Entity implements IActor {
         float nextX = getLocation().X + adjustedXVelocity;
 
 
-        //TODO correct the movement
-        boolean devMove = true;
-
-        if (devMove) {
-            if (!_keyVelocity.isZero()) {
-                Window.get().moveCamera((int) _keyVelocity.X, (int) _keyVelocity.Y);
-            }
+        int floorVelocityX = _keyVelocity.X == 0 ? 0 : (_keyVelocity.X > 0 ? __scrollSpeedX : -__scrollSpeedX);
+        float nextFloorX = _floor.getLocation().X - floorVelocityX * Gdx.graphics.getDeltaTime();
+        if (willBeInBufferX) {
+            move(_keyVelocity.X, 0);
         }
         else {
-            int floorVelocityX = _keyVelocity.X == 0 ? 0 : (_keyVelocity.X > 0 ? __scrollSpeedX : -__scrollSpeedX);
-            float nextFloorX = _floor.getLocation().X - floorVelocityX * Gdx.graphics.getDeltaTime();
-            if (willBeInBufferX) {
-                move(_keyVelocity.X, 0);
+            if (_floor.canMoveToX(nextFloorX) && inBufferX) {
+                Window.get().moveCamera((int) _keyVelocity.X, 0);
             }
             else {
-                if (_floor.canMoveToX(nextFloorX) && inBufferX) {
-                    //TODO Move the camera
-                }
-                else {
-                    if (adjustedXVelocity > 0 && nextX < Screen.get().VirtualWidth - getWidth() || adjustedXVelocity < 0 && nextX > 0) {
-                        move(_keyVelocity.X, 0);
-                    }
+                if (adjustedXVelocity > 0 && nextX < Screen.get().VirtualWidth - getWidth() || adjustedXVelocity < 0 && nextX > 0) {
+                    move(_keyVelocity.X, 0);
                 }
             }
+        }
 
-            float adjustedYVelocity = _keyVelocity.Y * Gdx.graphics.getDeltaTime();
-            boolean inBufferY = inYBuffer(0);
-            int floorVelocityY = _keyVelocity.Y == 0 ? 0 : _keyVelocity.Y > 0 ? __scrollSpeedY : -__scrollSpeedY;
-            float nextFloorY = _floor.getLocation().Y - floorVelocityY * Gdx.graphics.getDeltaTime();
-            float nextY = getLocation().Y + adjustedYVelocity;
+        float adjustedYVelocity = _keyVelocity.Y * Gdx.graphics.getDeltaTime();
+        boolean inBufferY = inYBuffer(0);
+        int floorVelocityY = _keyVelocity.Y == 0 ? 0 : _keyVelocity.Y > 0 ? __scrollSpeedY : -__scrollSpeedY;
+        float nextFloorY = _floor.getLocation().Y - floorVelocityY * Gdx.graphics.getDeltaTime();
+        float nextY = getLocation().Y + adjustedYVelocity;
 
-            if (inYBuffer(adjustedYVelocity)) {
-                move(0, _keyVelocity.Y);
+        if (inYBuffer(adjustedYVelocity)) {
+            Logger.devConsole("InY");
+            move(0, _keyVelocity.Y);
+        }
+        else {
+            if (_floor.canMoveToY(nextFloorY) && inBufferY) {
+                Logger.devConsole("CanMoveY");
+                Window.get().moveCamera(0, (int) _keyVelocity.Y);
             }
             else {
-                if (_floor.canMoveToY(nextFloorY) && inBufferY) {
-                    //TODO Move the camera
-                }
-                else {
-                    if (adjustedYVelocity > 0 && nextY < Screen.get().VirtualHeight - getHeight() || adjustedYVelocity < 0 && nextY > 0) {
-                        move(0, _keyVelocity.Y);
-                    }
+                if (adjustedYVelocity > 0 && nextY < Screen.get().VirtualHeight - getHeight() || adjustedYVelocity < 0 && nextY > 0) {
+                    Logger.devConsole("InArena");
+                    move(0, _keyVelocity.Y);
                 }
             }
+        }
 
-            if (Input.get().isActive(Commands.get("Confirm")) && !_net.isInUse()) {
-                _net.use();
-            }
+        if (Input.get().isActive(Commands.get("Confirm")) && !_net.isInUse()) {
+            _net.use();
+        }
 
-            if (_pet != null) {
-                _pet.update();
-            }
+        if (_pet != null) {
+            _pet.update();
         }
     }
 
