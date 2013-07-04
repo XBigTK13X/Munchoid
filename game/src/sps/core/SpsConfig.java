@@ -54,7 +54,7 @@ public class SpsConfig {
         }
 
         // Audio
-        musicEnabled = Parse.bool(_settings.get("music_enabled"));
+        musicEnabled = Parse.bool(_settings.get("musicEnabled"));
 
         // Display
         spriteHeight = Parse.inte(_settings.get("spriteHeight"));
@@ -71,7 +71,7 @@ public class SpsConfig {
 
         // Dev
         viewPaths = Parse.bool(_settings.get("viewPaths"));
-        devConsoleEnabled = Parse.bool(_settings.get("dev_console_enabled"));
+        devConsoleEnabled = Parse.bool(_settings.get("devConsoleEnabled"));
         controllersEnabled = Parse.bool(_settings.get("controllersEnabled"));
     }
 }
