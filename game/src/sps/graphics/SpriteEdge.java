@@ -2,7 +2,6 @@ package sps.graphics;
 
 import sps.bridge.EntityType;
 import sps.core.Point2;
-import sps.entities.EntityManager;
 
 //Using this class requires 6 different sprites in this horizontal order:
 //Direction is the side on which a neighbor exists
@@ -46,18 +45,7 @@ public enum SpriteEdge {
         }
 
         bIndex = 0;
-        if (EntityManager.get().anyAt(location.add(-1, 0), type)) {
-            bIndex += 1;
-        }
-        if (EntityManager.get().anyAt(location.add(0, 1), type)) {
-            bIndex += 2;
-        }
-        if (EntityManager.get().anyAt(location.add(1, 0), type)) {
-            bIndex += 4;
-        }
-        if (EntityManager.get().anyAt(location.add(0, -1), type)) {
-            bIndex += 8;
-        }
+
         return edges[bIndex];
     }
 }

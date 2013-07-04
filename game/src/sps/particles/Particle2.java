@@ -66,8 +66,8 @@ public class Particle2 extends PEComponent {
         }
         if (entity != null) {
             Entity = entity;
-            Origin.reset(Entity.getLocation().PosX, Entity.getLocation().PosY);
-            Position.reset(Entity.getLocation().PosX, Entity.getLocation().PosY);
+            Origin.reset(Entity.getLocation().X, Entity.getLocation().Y);
+            Position.reset(Entity.getLocation().X, Entity.getLocation().Y);
         }
         if (baseColor != null) {
             _color = darken(baseColor, (RNG.next(10, 50)) / 100f);

@@ -81,7 +81,7 @@ public class Text {
     public void accel() {
         xVel += dX;
         yVel += dY;
-        position.reset(position.PosX + xVel, position.PosY + yVel, false);
+        position.reset(position.X + xVel, position.Y + yVel);
     }
 
     public void setAccel(float dX, float dY) {

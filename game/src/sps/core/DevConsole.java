@@ -19,7 +19,7 @@ public class DevConsole {
 
 
         public ConsoleText(int x, int y, String content) {
-            this.position.reset(x, y, false);
+            this.position.reset(x, y);
             this.content = TextPool.get().write(content, position);
             this.content.setVisible(_isVisible);
         }

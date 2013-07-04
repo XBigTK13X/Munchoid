@@ -155,7 +155,7 @@ public class Renderer {
         else {
             Assets.get().font().setScale(scale);
             Assets.get().font().setColor(filter);
-            Assets.get().font().draw(_batch, content, location.PosX, location.PosY);
+            Assets.get().font().draw(_batch, content, location.X, location.Y);
         }
     }
 }

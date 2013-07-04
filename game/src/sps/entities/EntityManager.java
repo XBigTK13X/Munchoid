@@ -2,8 +2,6 @@ package sps.entities;
 
 import sps.bridge.*;
 import sps.core.Point2;
-import sps.core.RNG;
-import sps.core.SpsConfig;
 import sps.graphics.Window;
 
 import java.util.ArrayList;
@@ -34,7 +32,6 @@ public class EntityManager {
     }
 
     private List<Entity> _contents = new ArrayList<Entity>();
-    private HashMap<Point2, List<Entity>> _gridContents = new HashMap<Point2, List<Entity>>();
     private List<Entity> players = new ArrayList<Entity>();
     private HashMap<EntityType, List<Entity>> entityBuckets = new HashMap<EntityType, List<Entity>>();
     private HashMap<ActorType, List<IActor>> actorBuckets = new HashMap<ActorType, List<IActor>>();
@@ -43,7 +40,6 @@ public class EntityManager {
         entity.loadContent();
         _contents.add(entity);
         Collections.sort(_contents);
-        addToGrid(entity);
         addToBuckets(entity);
         return entity;
     }
@@ -71,13 +67,6 @@ public class EntityManager {
         entityBuckets.get(entity.getEntityType()).add(entity);
     }
 
-    private void addToGrid(Entity entity) {
-        if (!_gridContents.containsKey(entity.getLocation())) {
-            _gridContents.put(entity.getLocation(), new ArrayList<Entity>());
-        }
-        _gridContents.get(entity.getLocation()).add(entity);
-    }
-
     public Entity getEntity(EntityType type) {
         if (_contents != null) {
             return entityBuckets.get(type).get(0);
@@ -96,7 +85,6 @@ public class EntityManager {
         if (_contents != null) {
             _gopResults.clear();
             _goResults.clear();
-            _goResults.addAll(_gridContents.get(target));
             for (Entity goResult : _goResults) {
                 if (goResult.getEntityType() == type) {
                     _gopResults.add(goResult);
@@ -139,72 +127,11 @@ public class EntityManager {
 
     private IActor _nextResult;
 
-    public List<IActor> getActorsAt(Point2 target, ActorType actorType) {
-        _creatures.clear();
-        if (_gridContents.get(target) != null) {
-            for (Entity elem : _gridContents.get(target)) {
-                if (elem.getEntityType() == EntityTypes.get(Sps.Entities.Actor)) {
-                    _nextResult = (IActor) elem;
-                    if (actorType == null || _nextResult.getActorType() == actorType || (actorType == ActorTypes.get(Sps.ActorGroups.Non_Player) && _nextResult.getActorType() != ActorTypes.get(Sps.Actors.Player))) {
-                        _creatures.add(_nextResult);
-                    }
-                }
-            }
-        }
-        return _creatures;
-    }
-
-    public List<IActor> getActorsAt(Point2 target) {
-        return getActorsAt(target, null);
-    }
-
     private final List<IActor> _creatures2 = new ArrayList<IActor>();
     private Point2 buffer = new Point2(0, 0);
 
-    public List<IActor> getActorsSurrounding(Point2 target, int distance) {
-        _creatures2.clear();
-        for (int ii = -distance; ii < distance + 1; ii++) {
-            for (int jj = -distance; jj < distance + 1; jj++) {
-                if (ii != 0 || jj != 0) {
-                    buffer.copy(target.addGrid(new Point2(ii, jj)));
-                    if (CoordVerifier.isValid(buffer)) {
-                        for (IActor creature : getActorsAt(buffer, null)) {
-                            _creatures2.add(creature);
-                        }
-                    }
-                }
-            }
-        }
-        return _creatures2;
-    }
-
-    public boolean isLocationBlocked(Point2 location) {
-        if (_gridContents.get(location) != null) {
-            for (Entity elem : _gridContents.get(location)) {
-                if (elem.isBlocking()) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public boolean anyAt(Point2 target, EntityType type) {
-        if (CoordVerifier.isValid(target)) {
-            for (Entity entity : _gridContents.get(target)) {
-                if (entity.getEntityType() == type && entity.isActive()) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     public void removeEntity(Entity target) {
         _contents.remove(target);
-        if (SpsConfig.get().entityGridEnabled) {
-            _gridContents.get(target.getLocation()).remove(target);
-        }
         if (target.getEntityType() == EntityTypes.get(Sps.Entities.Actor)) {
             IActor actor = (IActor) target;
             if (actor.getActorType() == ActorTypes.get(Sps.Actors.Player)) {
@@ -217,7 +144,6 @@ public class EntityManager {
 
     public void clear() {
         _contents.clear();
-        _gridContents.clear();
         actorBuckets.clear();
         entityBuckets.clear();
         players.clear();
@@ -253,13 +179,6 @@ public class EntityManager {
         }
     }
 
-    public void updateGridLocation(Entity Entity, Point2 oldLocation) {
-        if (_gridContents != null && oldLocation != null) {
-            _gridContents.get(oldLocation).remove(Entity);
-            addToGrid(Entity);
-        }
-    }
-
     public List<Entity> getPlayers() {
         return players;
     }
@@ -281,35 +200,6 @@ public class EntityManager {
                 }
             }
             return (IActor) closest;
-        }
-        return null;
-    }
-
-    public Point2 getEmptyLocation() {
-        List<Point2> emptyLocations = new ArrayList<Point2>();
-        for (Point2 location : _gridContents.keySet()) {
-            if (location.GridX > 0 && location.GridY > 0 && location.GridX < SpsConfig.get().tileMapWidth - 1 && location.GridY < SpsConfig.get().tileMapHeight - 1) {
-                boolean exclude = false;
-                for (int ii = 0; ii < _gridContents.get(location).size(); ii++) {
-                    if (_gridContents.get(location).get(ii).getEntityType() == EntityTypes.get(Sps.Entities.Actor)) {
-                        exclude = true;
-                    }
-                }
-                if (!exclude) {
-                    emptyLocations.add(location);
-                }
-            }
-        }
-        return emptyLocations.get(RNG.next(0, emptyLocations.size()));
-    }
-
-    public IActor getTouchingCreature(Entity entity) {
-        for (Entity _content : _contents) {
-            if (_content.getEntityType() == EntityTypes.get(Sps.Entities.Actor)) {
-                if (_content.contains(entity.getLocation())) {
-                    return (IActor) _content;
-                }
-            }
         }
         return null;
     }

@@ -13,7 +13,7 @@ public class HitTest {
     }
 
     private static boolean isClose(Entity source, Entity target) {
-        return isClose(source.getLocation().PosX, target.getLocation().PosX, source.getLocation().PosY, target.getLocation().PosY);
+        return isClose(source.getLocation().X, target.getLocation().X, source.getLocation().Y, target.getLocation().Y);
     }
 
     private static boolean isClose(float x1, float x2, float y1, float y2) {
@@ -25,11 +25,11 @@ public class HitTest {
     }
 
     public static float getDistanceSquare(Entity source, Entity target) {
-        return getDistanceSquare(source.getLocation().PosX, target.getLocation().PosX, source.getLocation().PosY, target.getLocation().PosY);
+        return getDistanceSquare(source.getLocation().X, target.getLocation().X, source.getLocation().Y, target.getLocation().Y);
     }
 
     public static float getDistanceSquare(Point2 source, Point2 target) {
-        return getDistanceSquare(source.GridX, target.GridX, source.GridY, target.GridY);
+        return getDistanceSquare(source.X, target.X, source.Y, target.Y);
     }
 
     public static float getDistanceSquare(float x1, float x2, float y1, float y2) {

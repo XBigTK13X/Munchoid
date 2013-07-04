@@ -24,10 +24,11 @@ public class FollowBehavior extends ParticleBehavior {
                 particle.Radius = 5;
                 particle.Toggle = true;
             }
-            else if (particle.Radius > 16) {
-                particle.Radius = 16;
-                particle.Toggle = false;
-            }
+            else
+                if (particle.Radius > 16) {
+                    particle.Radius = 16;
+                    particle.Toggle = false;
+                }
             if (particle.Toggle) {
                 particle.Radius += particle.MoveSpeed / 10;
                 particle.Angle += Math.PI / 300;
@@ -37,8 +38,8 @@ public class FollowBehavior extends ParticleBehavior {
                 particle.Angle -= Math.PI / 150;
             }
 
-            particle.Position.setX(particle.Entity.getLocation().PosCenterX - particle.Width / 2 + (float) Math.cos(particle.Angle) * particle.Radius);
-            particle.Position.setY(particle.Entity.getLocation().PosCenterY - particle.Height / 2 + (float) Math.sin(particle.Angle) * particle.Radius);
+            particle.Position.setX(particle.Entity.getLocation().X - particle.Width / 2 + (float) Math.cos(particle.Angle) * particle.Radius);
+            particle.Position.setY(particle.Entity.getLocation().Y - particle.Height / 2 + (float) Math.sin(particle.Angle) * particle.Radius);
         }
     }
 

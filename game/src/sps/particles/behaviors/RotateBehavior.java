@@ -24,8 +24,8 @@ public class RotateBehavior extends ParticleBehavior {
             particle.Radius = 18;
             particle.setSize(15f, 15f);
             particle.Angle += Math.PI / 30;
-            particle.Position.setX(particle.Entity.getLocation().PosCenterX - particle.Width / 2 + (float) Math.cos(particle.Angle) * particle.Radius);
-            particle.Position.setY(particle.Entity.getLocation().PosCenterY - particle.Height / 2 + (float) Math.sin(particle.Angle) * particle.Radius);
+            particle.Position.setX(particle.Entity.getLocation().X - particle.Width / 2 + (float) Math.cos(particle.Angle) * particle.Radius);
+            particle.Position.setY(particle.Entity.getLocation().Y - particle.Height / 2 + (float) Math.sin(particle.Angle) * particle.Radius);
         }
     }
 

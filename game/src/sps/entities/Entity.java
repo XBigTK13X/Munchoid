@@ -70,12 +70,9 @@ public class Entity implements Comparable {
     }
 
     public void updateLocation(Point2 location) {
-        oldLocation.reset(_location.X, _location.Y, false);
+        oldLocation.reset(_location.X, _location.Y);
         _graphic.setPosition(location);
-        _location.reset(location.X, location.Y, false);
-        if (SpsConfig.get().entityGridEnabled) {
-            EntityManager.get().updateGridLocation(this, oldLocation);
-        }
+        _location.reset(location.X, location.Y);
     }
 
     public void setFacingLeft(boolean value) {
@@ -94,7 +91,7 @@ public class Entity implements Comparable {
         }
         amountX *= Gdx.graphics.getDeltaTime();
         amountY *= Gdx.graphics.getDeltaTime();
-        target.reset(_location.X + amountX, _location.Y + amountY, false);
+        target.reset(_location.X + amountX, _location.Y + amountY);
         if (amountX > 0) {
             setFacingLeft(false);
         }
@@ -142,10 +139,6 @@ public class Entity implements Comparable {
 
     public DrawDepth getDepth() {
         return _graphic.getDepth();
-    }
-
-    public boolean contains(Point2 target) {
-        return target.GridX == getLocation().GridX && target.GridY == getLocation().GridY;
     }
 
     public void setInteraction(boolean isInteracting) {
