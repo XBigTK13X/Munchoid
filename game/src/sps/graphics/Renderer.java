@@ -23,6 +23,12 @@ public class Renderer {
     private static Renderer __dynamic;
     private static Renderer __fixed;
 
+    private static Color __bgColor = Color.BLACK;
+
+    private void setWindowsBackground(Color bgColor) {
+        __bgColor = bgColor;
+    }
+
     private List<RenderCommand> _todo;
 
     public static class RenderCommand {
@@ -57,6 +63,11 @@ public class Renderer {
 
     private static boolean tipHasBeenDisplayed = false;
 
+    public static void clear() {
+        Gdx.gl.glClearColor(__bgColor.r, __bgColor.g, __bgColor.b, __bgColor.a);
+        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+    }
+
     public static Renderer get() {
         return get(false);
     }
@@ -85,16 +96,14 @@ public class Renderer {
         get(false).setStrategy(strategy);
     }
 
-    public static void setAllWindowBackground(Color color) {
-        get(true).setWindowsBackground(color);
-        get(false).setWindowsBackground(color);
+    public static void setWindowBackground(Color color) {
+
     }
 
     public static void resizeAll(int width, int height) {
         get(true).resize(width, height);
         get(false).resize(width, height);
     }
-
 
     private ApplicationListener refreshInstance;
     private SpriteBatch _batch;
@@ -131,10 +140,6 @@ public class Renderer {
         refreshInstance = app;
     }
 
-    private void setWindowsBackground(Color bgColor) {
-        this.bgColor = bgColor;
-    }
-
     private void setStrategy(RenderStrategy strategy) {
         this.strategy = strategy;
         _camera = strategy.createCamera();
@@ -155,8 +160,6 @@ public class Renderer {
     }
 
     public void begin() {
-        Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
-        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         _camera.update();
         strategy.begin(_camera, _batch, _offsetX, _offsetY);
         _batch.begin();

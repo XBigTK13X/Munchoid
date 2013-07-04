@@ -27,7 +27,7 @@ public class Game implements ApplicationListener {
     public void create() {
         RNG.seed((int) System.currentTimeMillis());
         Sps.setup();
-        Renderer.setAllWindowBackground(Color.BLACK);
+        Renderer.setWindowBackground(Color.BLACK);
         Renderer.setAllStrategy(new FrameStrategy());
         Renderer.setAllRefreshInstance(this);
         Input.get().setup(new DefaultStateProvider());
@@ -69,6 +69,7 @@ public class Game implements ApplicationListener {
 
             if (_preUpdateState == StateManager.get().current()) {
                 // Render
+                Renderer.clear();
                 Renderer.get(true).setListening(true);
                 Renderer.get().begin();
                 StateManager.get().draw();
