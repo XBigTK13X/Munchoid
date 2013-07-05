@@ -2,7 +2,7 @@ package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
 import sps.core.Logger;
-import sps.ui.Bounds;
+import sps.util.Bounds;
 
 public class AtomHelper {
     public static Color[][] getColors(Atom[][] atoms) {
@@ -110,6 +110,6 @@ public class AtomHelper {
                 break;
             }
         }
-        return new Bounds(leftX, bottomY, rightX, topY);
+        return Bounds.fromPoints(leftX, bottomY, rightX, topY);
     }
 }

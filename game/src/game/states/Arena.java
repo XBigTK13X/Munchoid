@@ -23,7 +23,7 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
-import sps.ui.Bounds;
+import sps.util.Bounds;
 import sps.util.Screen;
 
 import java.util.List;
@@ -45,7 +45,7 @@ public class Arena implements State {
         if (Bounds == null) {
             Point2 ArenaMin = Screen.pos(-GameConfig.ArenaBufferPercent, -GameConfig.ArenaBufferPercent);
             Point2 ArenaMax = Screen.pos(100 + GameConfig.ArenaBufferPercent, 100 + GameConfig.ArenaBufferPercent);
-            Bounds = new Bounds((int) ArenaMin.X, (int) ArenaMin.Y, (int) ArenaMax.X, (int) ArenaMax.Y);
+            Bounds = Bounds.fromPoints((int) ArenaMin.X, (int) ArenaMin.Y, (int) ArenaMax.X, (int) ArenaMax.Y);
         }
         return Bounds;
     }

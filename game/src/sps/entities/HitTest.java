@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import sps.bridge.Sps;
 import sps.core.Point2;
 import sps.io.Input;
-import sps.ui.Bounds;
+import sps.util.Bounds;
 
 public class HitTest {
     public static boolean isTouching(Entity source, Entity target) {
@@ -51,7 +51,7 @@ public class HitTest {
     }
 
     public static boolean mouseInside(Sprite sprite) {
-        return inBox(Input.get().x(), Input.get().y(), new Bounds(sprite.getX(), sprite.getY(), (int) sprite.getWidth(), (int) sprite.getHeight()));
+        return inBox(Input.get().x(), Input.get().y(), Bounds.fromDimensions(sprite.getX(), sprite.getY(), (int) sprite.getWidth(), (int) sprite.getHeight()));
     }
 
     public static float getDistance(float x, float y, float x1, float y1) {

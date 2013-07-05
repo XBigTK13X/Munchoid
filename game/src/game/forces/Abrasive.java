@@ -7,7 +7,7 @@ import game.creatures.BodyPart;
 import sps.core.RNG;
 import sps.particles.ParticleEngine;
 import sps.particles.behaviors.ScrubBehavior;
-import sps.ui.Bounds;
+import sps.util.Bounds;
 
 public class Abrasive extends BaseForce {
     private int _adjustedMagnitude;

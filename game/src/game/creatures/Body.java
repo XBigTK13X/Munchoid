@@ -6,7 +6,7 @@ import game.creatures.style.BodyRules;
 import game.skeleton.Skeleton;
 import game.states.Arena;
 import sps.core.RNG;
-import sps.ui.Bounds;
+import sps.util.Bounds;
 import sps.util.Colors;
 
 import java.util.ArrayList;
@@ -221,7 +221,7 @@ public class Body {
         Bounds b;
         String d = "";
         for (BodyPart p : _parts) {
-            b = new Bounds(dX + p.getGlobalPosition().X, dY + p.getGlobalPosition().Y, p.getWidth(), p.getHeight());
+            b = Bounds.fromDimensions(dX + p.getGlobalPosition().X, dY + p.getGlobalPosition().Y, p.getWidth(), p.getHeight());
             d += "," + b.debug();
             //TODO REMove debug
             // Logger.info("(" + p.getPosition().X + "," + p.getPosition().Y + "),(" + p.getGlobalPosition().X + "," + p.getGlobalPosition().Y + "),");

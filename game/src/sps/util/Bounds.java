@@ -1,4 +1,4 @@
-package sps.ui;
+package sps.util;
 
 import sps.entities.HitTest;
 
@@ -11,11 +11,15 @@ public class Bounds {
     public final int Height;
 
 
-    public Bounds(int x, int y, int x2, int y2) {
-        this((float) x, (float) y, x2 - x, y2 - y);
+    public static Bounds fromPoints(int x, int y, int x2, int y2) {
+        return new Bounds((float) x, (float) y, x2 - x, y2 - y);
     }
 
-    public Bounds(float x, float y, int width, int height) {
+    public static Bounds fromDimensions(float x, float y, int width, int height) {
+        return new Bounds(x, y, width, height);
+    }
+
+    private Bounds(float x, float y, int width, int height) {
         X = (int) x;
         Y = (int) y;
         Width = width;

@@ -14,7 +14,7 @@ import sps.graphics.Window;
 import sps.io.Input;
 import sps.text.TextEffects;
 import sps.text.TextPool;
-import sps.ui.Bounds;
+import sps.util.Bounds;
 import sps.util.Screen;
 
 public class Player extends Entity implements IActor {
@@ -77,8 +77,8 @@ public class Player extends Entity implements IActor {
     private void tryMoving(float x, float y) {
         float camX = Window.get().getCameraPosition().X + x * Gdx.graphics.getDeltaTime();
         float camY = Window.get().getCameraPosition().Y + y * Gdx.graphics.getDeltaTime();
-        Bounds cam = new Bounds(camX, camY, Screen.get().VirtualWidth, Screen.get().VirtualHeight);
-        Bounds arena = new Bounds(_floor.getLocation().X, _floor.getLocation().Y, _floor.getWidth(), _floor.getHeight());
+        Bounds cam = Bounds.fromDimensions(camX, camY, Screen.get().VirtualWidth, Screen.get().VirtualHeight);
+        Bounds arena = Bounds.fromDimensions(_floor.getLocation().X, _floor.getLocation().Y, _floor.getWidth(), _floor.getHeight());
 
         if (arena.envelopes(cam)) {
             Window.get().moveCamera((int) x, (int) y);
