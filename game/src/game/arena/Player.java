@@ -6,7 +6,6 @@ import game.Game;
 import game.GameConfig;
 import game.creatures.Creature;
 import sps.bridge.*;
-import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.SpsConfig;
 import sps.entities.Entity;
@@ -15,6 +14,7 @@ import sps.graphics.Window;
 import sps.io.Input;
 import sps.text.TextEffects;
 import sps.text.TextPool;
+import sps.ui.Bounds;
 import sps.util.Screen;
 
 public class Player extends Entity implements IActor {
@@ -74,6 +74,17 @@ public class Player extends Entity implements IActor {
         _keyVelocity.setY(upVelocity + downVelocity);
     }
 
+    private void tryMoving(float x, float y) {
+        float camX = Window.get().getCameraPosition().X + x * Gdx.graphics.getDeltaTime();
+        float camY = Window.get().getCameraPosition().Y + y * Gdx.graphics.getDeltaTime();
+        Bounds cam = new Bounds(camX, camY, Screen.get().VirtualWidth, Screen.get().VirtualHeight);
+        Bounds arena = new Bounds(_floor.getLocation().X, _floor.getLocation().Y, _floor.getWidth(), _floor.getHeight());
+
+        if (arena.envelopes(cam)) {
+            Window.get().moveCamera((int) x, (int) y);
+        }
+    }
+
     @Override
     public void update() {
         if (_frozenSeconds > 0) {
@@ -85,50 +96,8 @@ public class Player extends Entity implements IActor {
         }
         calculateKeyVelocity();
 
-        float adjustedXVelocity = _keyVelocity.X * Gdx.graphics.getDeltaTime();
-        boolean inBufferX = inXBuffer(0);
-        boolean willBeInBufferX = inXBuffer(adjustedXVelocity);
-        float nextX = getLocation().X + adjustedXVelocity;
-
-
-        int floorVelocityX = _keyVelocity.X == 0 ? 0 : (_keyVelocity.X > 0 ? __scrollSpeedX : -__scrollSpeedX);
-        float nextFloorX = _floor.getLocation().X - floorVelocityX * Gdx.graphics.getDeltaTime();
-        if (willBeInBufferX) {
-            move(_keyVelocity.X, 0);
-        }
-        else {
-            if (_floor.canMoveToX(nextFloorX) && inBufferX) {
-                Window.get().moveCamera((int) _keyVelocity.X, 0);
-            }
-            else {
-                if (adjustedXVelocity > 0 && nextX < Screen.get().VirtualWidth - getWidth() || adjustedXVelocity < 0 && nextX > 0) {
-                    move(_keyVelocity.X, 0);
-                }
-            }
-        }
-
-        float adjustedYVelocity = _keyVelocity.Y * Gdx.graphics.getDeltaTime();
-        boolean inBufferY = inYBuffer(0);
-        int floorVelocityY = _keyVelocity.Y == 0 ? 0 : _keyVelocity.Y > 0 ? __scrollSpeedY : -__scrollSpeedY;
-        float nextFloorY = _floor.getLocation().Y - floorVelocityY * Gdx.graphics.getDeltaTime();
-        float nextY = getLocation().Y + adjustedYVelocity;
-
-        if (inYBuffer(adjustedYVelocity)) {
-            Logger.devConsole("InY");
-            move(0, _keyVelocity.Y);
-        }
-        else {
-            if (_floor.canMoveToY(nextFloorY) && inBufferY) {
-                Logger.devConsole("CanMoveY");
-                Window.get().moveCamera(0, (int) _keyVelocity.Y);
-            }
-            else {
-                if (adjustedYVelocity > 0 && nextY < Screen.get().VirtualHeight - getHeight() || adjustedYVelocity < 0 && nextY > 0) {
-                    Logger.devConsole("InArena");
-                    move(0, _keyVelocity.Y);
-                }
-            }
-        }
+        tryMoving(_keyVelocity.X, 0);
+        tryMoving(0, _keyVelocity.Y);
 
         if (Input.get().isActive(Commands.get("Confirm")) && !_net.isInUse()) {
             _net.use();

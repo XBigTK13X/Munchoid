@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Vector2;
 import sps.bridge.DrawDepth;
 import sps.core.Point2;
 import sps.core.SpsConfig;
+import sps.entities.HitTest;
+import sps.util.Screen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +23,7 @@ public class Renderer {
     private SpriteBatch _batch;
     private OrthographicCamera _camera;
     private RenderStrategy _strategy;
-    private int _offsetX;
-    private int _offsetY;
+    private Point2 _offset = new Point2(0, 0);
 
 
     public Renderer(int width, int height) {
@@ -50,7 +51,7 @@ public class Renderer {
 
     public void begin() {
         _camera.update();
-        _strategy.begin(_camera, _batch, _offsetX, _offsetY);
+        _strategy.begin(_camera, _batch, (int) _offset.X, (int) _offset.Y);
         _batch.begin();
     }
 
@@ -63,8 +64,14 @@ public class Renderer {
     }
 
     public void moveCamera(int x, int y) {
-        _offsetX = _offsetX + (int) (x * Gdx.graphics.getDeltaTime());
-        _offsetY = _offsetY + (int) (y * Gdx.graphics.getDeltaTime());
+        if (x != 0 || y != 0) {
+            _offset.X = _offset.X + (int) (x * Gdx.graphics.getDeltaTime());
+            _offset.Y = _offset.Y + (int) (y * Gdx.graphics.getDeltaTime());
+        }
+    }
+
+    public Point2 getCameraPosition() {
+        return _offset;
     }
 
     public Vector2 getBuffer() {
@@ -139,5 +146,11 @@ public class Renderer {
             Assets.get().font().setColor(filter);
             Assets.get().font().draw(_batch, content, location.X, location.Y);
         }
+    }
+
+    public boolean canMoveCamera(float x, float y) {
+        float x2 = _camera.position.x + x;
+        float y2 = _camera.position.y + y;
+        return HitTest.inBox((int) x2, (int) y2, 0, 0, Screen.get().VirtualWidth, Screen.get().VirtualHeight);
     }
 }

@@ -10,43 +10,24 @@ import sps.core.Point2;
 import sps.entities.Entity;
 import sps.graphics.Window;
 import sps.util.Colors;
-import sps.util.Screen;
 import sps.util.SpriteMaker;
 
 public class Floor extends Entity {
     private static final int __fieldSmoothness = 6;
     Sprite _background;
-    private final int _marginX;
-    private final int _marginY;
 
     public Floor() {
         initialize(0, 0, Point2.Zero, null, EntityTypes.get("Floor"), DrawDepths.get("Floor"));
-        _marginX = (GameConfig.ArenaWidth - Screen.get().VirtualWidth) / 2;
-        _marginY = (GameConfig.ArenaHeight - Screen.get().VirtualHeight) / 2;
         Color dirt = Colors.rgb(55, 30, 15);
         Color grass = Colors.rgb(15, 55, 15);
         Color[][] base = Colors.genPerlinGrid(GameConfig.ArenaWidth, GameConfig.ArenaHeight, grass, dirt, __fieldSmoothness);
         _background = SpriteMaker.get().fromColors(base);
         setSize((int) _background.getWidth(), (int) _background.getHeight());
-        setLocation(new Point2(-_marginX, -_marginY));
         Logger.info("Arena size: (W,H): (" + _background.getWidth() + "," + _background.getHeight() + ")");
-    }
-
-    @Override
-    public void update() {
-        _background.setPosition(getLocation().X, getLocation().Y);
     }
 
     @Override
     public void draw() {
         Window.get().draw(_background);
-    }
-
-    public boolean canMoveToX(float x) {
-        return x > _marginX * -2 && x < 0;
-    }
-
-    public boolean canMoveToY(float y) {
-        return y > _marginY * -2 && y < 0;
     }
 }
