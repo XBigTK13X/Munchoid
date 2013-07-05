@@ -83,6 +83,7 @@ public class Player extends Entity implements IActor {
         if (arena.envelopes(cam)) {
             Window.get().moveCamera((int) x, (int) y);
         }
+        //TODO replace everything you deleted before. Only now use the above block instead of moving the offsets.
     }
 
     @Override
