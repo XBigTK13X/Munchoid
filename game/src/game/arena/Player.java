@@ -14,7 +14,6 @@ import sps.graphics.Window;
 import sps.io.Input;
 import sps.text.TextEffects;
 import sps.text.TextPool;
-import sps.util.Bounds;
 import sps.util.MathHelper;
 import sps.util.Screen;
 
@@ -77,26 +76,26 @@ public class Player extends Entity implements IActor {
 
 
     private void moveInBothDirections(float x, float y) {
-        Bounds arena = Bounds.fromDimensions(_floor.getLocation().X, _floor.getLocation().Y, _floor.getWidth(), _floor.getHeight());
+
 
         //X Movement
         float adjustedXVelocity = x * Gdx.graphics.getDeltaTime();
         float nextX = getLocation().X + adjustedXVelocity;
 
-        if (adjustedXVelocity > 0 && nextX < arena.Width - getWidth() || adjustedXVelocity < 0 && nextX > 0) {
+        if (adjustedXVelocity > 0 && nextX < _floor.getBounds().Width - getWidth() || adjustedXVelocity < 0 && nextX > 0) {
             move(x, 0);
             float camX = getLocation().X - Screen.get().VirtualWidth / 2;
-            Window.get().setCameraX(MathHelper.clamp(camX, 0, arena.Width - Screen.get().VirtualWidth));
+            Window.get().setCameraX(MathHelper.clamp(camX, 0, _floor.getBounds().Width - Screen.get().VirtualWidth));
         }
 
         //Y Movement
         float adjustedYVelocity = y * Gdx.graphics.getDeltaTime();
         float nextY = getLocation().Y + adjustedYVelocity;
 
-        if (adjustedYVelocity > 0 && nextY < arena.Height - getHeight() || adjustedYVelocity < 0 && nextY > 0) {
+        if (adjustedYVelocity > 0 && nextY < _floor.getBounds().Height - getHeight() || adjustedYVelocity < 0 && nextY > 0) {
             move(0, y);
             float camY = getLocation().Y - Screen.get().VirtualHeight / 2;
-            Window.get().setCameraY(MathHelper.clamp(camY, 0, arena.Height - Screen.get().VirtualHeight));
+            Window.get().setCameraY(MathHelper.clamp(camY, 0, _floor.getBounds().Height - Screen.get().VirtualHeight));
         }
     }
 

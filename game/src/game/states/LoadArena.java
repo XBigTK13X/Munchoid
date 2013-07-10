@@ -50,7 +50,7 @@ public class LoadArena implements State {
                 _preload.cache(new Player(_preload.getFloor()));
                 break;
             default:
-                _preload.cache(new Catchable(_preload.getPlayer()));
+                _preload.cache(new Catchable(_preload.getPlayer(), _preload.getFloor()));
                 break;
         }
 

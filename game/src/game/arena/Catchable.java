@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.Score;
 import game.creatures.Creature;
-import game.states.Arena;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.DrawDepths;
@@ -23,17 +22,19 @@ public class Catchable extends Entity {
     private Creature _creature;
     private float _dX = 0;
     private float _dY = 0;
+    private static final float __spawnBuffer = .10f;
 
     private float _changeDirectionsSeconds = 0;
 
-    public Catchable(Player player) {
+    public Catchable(Player player, Floor floor) {
         __player = player;
         initialize(0, 0, Point2.Zero, null, EntityTypes.get("Catchable"), DrawDepths.get("Catchable"));
         _creature = new Creature();
+        _creature.getBody().setFloor(floor);
         _creature.getBody().setScale(GameConfig.ArenaCreatureScale);
         _creature.orientX((GameConfig.DevFlipEnabled) ? RNG.coinFlip() : false, false);
         setSize(_creature.getWidth(), _creature.getHeight());
-        setLocation(new Point2(RNG.next(Arena.getBounds().X, Arena.getBounds().X2), RNG.next(Arena.getBounds().Y, Arena.getBounds().Y2)));
+        setLocation(new Point2(RNG.next((int) (floor.getBounds().X2 * __spawnBuffer), (int) (floor.getBounds().X2 * (1f - __spawnBuffer))), RNG.next((int) (floor.getBounds().Y2 * __spawnBuffer), (int) (floor.getBounds().Y2 * (1f - __spawnBuffer)))));
     }
 
     private void interactWithPlayer() {
@@ -80,7 +81,7 @@ public class Catchable extends Entity {
 
         _changeDirectionsSeconds -= Gdx.graphics.getDeltaTime();
 
-        boolean anyPartOutside = _creature.getBody().anyPartOutsideArena(_dX, _dY);
+        boolean anyPartOutside = _creature.getBody().anyPartOutsideArena(_dX * Gdx.graphics.getDeltaTime(), _dY * Gdx.graphics.getDeltaTime());
         if (!anyPartOutside) {
             move(_dX, _dY);
         }
@@ -91,8 +92,8 @@ public class Catchable extends Entity {
             _dX = RNG.next(-GameConfig.PlayerTopSpeed, GameConfig.PlayerTopSpeed) * playerSpeedPercent;
             _dY = RNG.next(-GameConfig.PlayerTopSpeed, GameConfig.PlayerTopSpeed) * playerSpeedPercent;
         }
-        _dX = -GameConfig.PlayerTopSpeed * .5f;
         _dY = 0;
+        _dX = GameConfig.PlayerTopSpeed * .5f;
     }
 
     @Override

@@ -2,9 +2,9 @@ package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
+import game.arena.Floor;
 import game.creatures.style.BodyRules;
 import game.skeleton.Skeleton;
-import game.states.Arena;
 import sps.core.RNG;
 import sps.util.Bounds;
 import sps.util.Colors;
@@ -19,6 +19,7 @@ public class Body {
     private float _height;
     private boolean _flipX;
     private Color _color;
+    private static Floor __floor;
 
     private Color _highlight = Color.WHITE;
 
@@ -217,15 +218,18 @@ public class Body {
         }
     }
 
+    public void setFloor(Floor floor) {
+        __floor = floor;
+    }
+
     public boolean anyPartOutsideArena(float dX, float dY) {
+        if (__floor == null) {
+            return false;
+        }
         Bounds b;
-        String d = "";
         for (BodyPart p : _parts) {
             b = Bounds.fromDimensions(dX + p.getGlobalPosition().X, dY + p.getGlobalPosition().Y, p.getWidth(), p.getHeight());
-            d += "," + b.debug();
-            //TODO REMove debug
-            // Logger.info("(" + p.getPosition().X + "," + p.getPosition().Y + "),(" + p.getGlobalPosition().X + "," + p.getGlobalPosition().Y + "),");
-            if (!Arena.getBounds().envelopes(b)) {
+            if (!__floor.getBounds().envelopes(b)) {
                 return true;
             }
         }

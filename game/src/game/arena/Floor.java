@@ -9,11 +9,13 @@ import sps.core.Logger;
 import sps.core.Point2;
 import sps.entities.Entity;
 import sps.graphics.Window;
+import sps.util.Bounds;
 import sps.util.Colors;
 import sps.util.SpriteMaker;
 
 public class Floor extends Entity {
     private static final int __fieldSmoothness = 6;
+    private final Bounds _bounds;
     Sprite _background;
 
     public Floor() {
@@ -21,13 +23,19 @@ public class Floor extends Entity {
         Color dirt = Colors.rgb(55, 30, 15);
         Color grass = Colors.rgb(15, 55, 15);
         Color[][] base = Colors.genPerlinGrid(GameConfig.ArenaWidth, GameConfig.ArenaHeight, grass, dirt, __fieldSmoothness);
+
         _background = SpriteMaker.get().fromColors(base);
         setSize((int) _background.getWidth(), (int) _background.getHeight());
+        _bounds = Bounds.fromDimensions(0, 0, getWidth(), getHeight());
         Logger.info("Arena size: (W,H): (" + _background.getWidth() + "," + _background.getHeight() + ")");
     }
 
     @Override
     public void draw() {
         Window.get().draw(_background);
+    }
+
+    public Bounds getBounds() {
+        return _bounds;
     }
 }

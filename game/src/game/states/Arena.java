@@ -23,7 +23,6 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
-import sps.util.Bounds;
 import sps.util.Screen;
 
 import java.util.List;
@@ -38,17 +37,6 @@ public class Arena implements State {
     private static final Point2 __creatureTextPos = Screen.pos(55, 95);
     private Text _creatureText;
     private int _lastCreatureCount;
-
-    private static Bounds Bounds;
-
-    public static Bounds getBounds() {
-        if (Bounds == null) {
-            Point2 ArenaMin = Screen.pos(-GameConfig.ArenaBufferPercent, -GameConfig.ArenaBufferPercent);
-            Point2 ArenaMax = Screen.pos(100 + GameConfig.ArenaBufferPercent, 100 + GameConfig.ArenaBufferPercent);
-            Bounds = Bounds.fromPoints((int) ArenaMin.X, (int) ArenaMin.Y, (int) ArenaMax.X, (int) ArenaMax.Y);
-        }
-        return Bounds;
-    }
 
     private Preload _preload;
 
