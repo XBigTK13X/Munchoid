@@ -74,16 +74,51 @@ public class Player extends Entity implements IActor {
         _keyVelocity.setY(upVelocity + downVelocity);
     }
 
-    private void tryMoving(float x, float y) {
+
+    private void moveInBothDirections(float x, float y) {
         float camX = Window.get().getCameraPosition().X + x * Gdx.graphics.getDeltaTime();
         float camY = Window.get().getCameraPosition().Y + y * Gdx.graphics.getDeltaTime();
         Bounds cam = Bounds.fromDimensions(camX, camY, Screen.get().VirtualWidth, Screen.get().VirtualHeight);
         Bounds arena = Bounds.fromDimensions(_floor.getLocation().X, _floor.getLocation().Y, _floor.getWidth(), _floor.getHeight());
 
-        if (arena.envelopes(cam)) {
-            Window.get().moveCamera((int) x, (int) y);
+        //X Movement
+        float adjustedXVelocity = x * Gdx.graphics.getDeltaTime();
+        boolean inBufferX = inXBuffer(0);
+        boolean willBeInBufferX = inXBuffer(adjustedXVelocity);
+        float nextX = getLocation().X + adjustedXVelocity;
+
+        if (willBeInBufferX) {
+            move(x, 0);
         }
-        //TODO replace everything you deleted before. Only now use the above block instead of moving the offsets.
+        else {
+            if (arena.envelopes(cam) && inBufferX) {
+                Window.get().moveCamera((int) x, (int) y);
+            }
+            else {
+                if (adjustedXVelocity > 0 && nextX < arena.Width - getWidth() || adjustedXVelocity < 0 && nextX > 0) {
+                    move(x, 0);
+                }
+            }
+        }
+
+        //Y Movement
+        float adjustedYVelocity = y * Gdx.graphics.getDeltaTime();
+        boolean inBufferY = inYBuffer(0);
+        float nextY = getLocation().Y + adjustedYVelocity;
+
+        if (inYBuffer(adjustedYVelocity)) {
+            move(0, y);
+        }
+        else {
+            if (arena.envelopes(cam) && inBufferY) {
+                Window.get().moveCamera((int) x, (int) y);
+            }
+            else {
+                if (adjustedYVelocity > 0 && nextY < arena.Height - getHeight() || adjustedYVelocity < 0 && nextY > 0) {
+                    move(0, y);
+                }
+            }
+        }
     }
 
     @Override
@@ -97,8 +132,8 @@ public class Player extends Entity implements IActor {
         }
         calculateKeyVelocity();
 
-        tryMoving(_keyVelocity.X, 0);
-        tryMoving(0, _keyVelocity.Y);
+        moveInBothDirections(_keyVelocity.X, 0);
+        moveInBothDirections(0, _keyVelocity.Y);
 
         if (Input.get().isActive(Commands.get("Confirm")) && !_net.isInUse()) {
             _net.use();
