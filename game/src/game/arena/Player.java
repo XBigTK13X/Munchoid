@@ -15,6 +15,7 @@ import sps.io.Input;
 import sps.text.TextEffects;
 import sps.text.TextPool;
 import sps.util.Bounds;
+import sps.util.MathHelper;
 import sps.util.Screen;
 
 public class Player extends Entity implements IActor {
@@ -76,48 +77,26 @@ public class Player extends Entity implements IActor {
 
 
     private void moveInBothDirections(float x, float y) {
-        float camX = Window.get().getCameraPosition().X + x * Gdx.graphics.getDeltaTime();
-        float camY = Window.get().getCameraPosition().Y + y * Gdx.graphics.getDeltaTime();
-        Bounds cam = Bounds.fromDimensions(camX, camY, Screen.get().VirtualWidth, Screen.get().VirtualHeight);
         Bounds arena = Bounds.fromDimensions(_floor.getLocation().X, _floor.getLocation().Y, _floor.getWidth(), _floor.getHeight());
 
         //X Movement
         float adjustedXVelocity = x * Gdx.graphics.getDeltaTime();
-        boolean inBufferX = inXBuffer(0);
-        boolean willBeInBufferX = inXBuffer(adjustedXVelocity);
         float nextX = getLocation().X + adjustedXVelocity;
 
-        if (willBeInBufferX) {
+        if (adjustedXVelocity > 0 && nextX < arena.Width - getWidth() || adjustedXVelocity < 0 && nextX > 0) {
             move(x, 0);
-        }
-        else {
-            if (arena.envelopes(cam) && inBufferX) {
-                Window.get().moveCamera((int) x, (int) y);
-            }
-            else {
-                if (adjustedXVelocity > 0 && nextX < arena.Width - getWidth() || adjustedXVelocity < 0 && nextX > 0) {
-                    move(x, 0);
-                }
-            }
+            float camX = getLocation().X - Screen.get().VirtualWidth / 2;
+            Window.get().setCameraX(MathHelper.clamp(camX, 0, arena.Width - Screen.get().VirtualWidth));
         }
 
         //Y Movement
         float adjustedYVelocity = y * Gdx.graphics.getDeltaTime();
-        boolean inBufferY = inYBuffer(0);
         float nextY = getLocation().Y + adjustedYVelocity;
 
-        if (inYBuffer(adjustedYVelocity)) {
+        if (adjustedYVelocity > 0 && nextY < arena.Height - getHeight() || adjustedYVelocity < 0 && nextY > 0) {
             move(0, y);
-        }
-        else {
-            if (arena.envelopes(cam) && inBufferY) {
-                Window.get().moveCamera((int) x, (int) y);
-            }
-            else {
-                if (adjustedYVelocity > 0 && nextY < arena.Height - getHeight() || adjustedYVelocity < 0 && nextY > 0) {
-                    move(0, y);
-                }
-            }
+            float camY = getLocation().Y - Screen.get().VirtualHeight / 2;
+            Window.get().setCameraY(MathHelper.clamp(camY, 0, arena.Height - Screen.get().VirtualHeight));
         }
     }
 

@@ -153,4 +153,12 @@ public class Renderer {
         float y2 = _camera.position.y + y;
         return HitTest.inBox((int) x2, (int) y2, 0, 0, Screen.get().VirtualWidth, Screen.get().VirtualHeight);
     }
+
+    public void setCameraX(int x) {
+        _offset.setX(x);
+    }
+
+    public void setCameraY(int y) {
+        _offset.setY(y);
+    }
 }
