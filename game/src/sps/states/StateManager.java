@@ -4,6 +4,7 @@ import game.GameConfig;
 import sps.audio.MusicPlayer;
 import sps.core.Logger;
 import sps.entities.EntityManager;
+import sps.graphics.Window;
 import sps.particles.ParticleEngine;
 import sps.text.TextPool;
 import sps.ui.UiElements;
@@ -63,6 +64,7 @@ public class StateManager {
             Logger.info("Pushing: " + state.getName() + ". Time since last: " + ((System.currentTimeMillis() - lastMil)) / 1000f);
             lastMil = System.currentTimeMillis();
         }
+        Window.get().resetCamera();
         boolean isNewState = false;
         if (_states.size() > 0) {
             _components.put(current(), new StateDependentComponents(EntityManager.get(), ParticleEngine.get(), TextPool.get(), MusicPlayer.get()));

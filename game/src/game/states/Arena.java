@@ -144,6 +144,7 @@ public class Arena implements State {
                     }
                 }
             }
+            EntityManager.get().getPlayer().setLocation(Screen.pos(50, 50));
         }
         _countDownSeconds = GameConfig.ArenaTimeoutSeconds;
         if (EntityManager.get().getPlayer() == null) {

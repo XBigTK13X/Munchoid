@@ -161,4 +161,9 @@ public class Renderer {
     public void setCameraY(int y) {
         _offset.setY(y);
     }
+
+    public void resetCamera() {
+        _offset.setY(0);
+        _offset.setX(0);
+    }
 }
