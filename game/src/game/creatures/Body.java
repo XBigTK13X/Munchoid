@@ -228,7 +228,7 @@ public class Body {
         }
         Bounds b;
         for (BodyPart p : _parts) {
-            b = Bounds.fromDimensions(dX + p.getGlobalPosition().X, dY + p.getGlobalPosition().Y, p.getWidth(), p.getHeight());
+            b = Bounds.fromDimensions(dX + p.getGlobalPosition().X, dY + p.getGlobalPosition().Y, (int) (p.getWidth() * p.getScale()), (int) (p.getHeight() * p.getScale()));
             if (!__floor.getBounds().envelopes(b)) {
                 return true;
             }
