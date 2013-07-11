@@ -1,6 +1,7 @@
 package game.creatures.style;
 
 import com.badlogic.gdx.graphics.Color;
+import game.GameConfig;
 import sps.util.Colors;
 
 public class Outline {
@@ -41,9 +42,14 @@ public class Outline {
     }
 
     public static void apply(Color[][] colors, ColorPicker picker) {
+        if (GameConfig.OptDisableOutlines) {
+            return;
+        }
+
         int thicknessX = (int) (colors.length * (__thicknessPercent / 100f) + 1);
         int thicknessY = (int) (colors[0].length * (__thicknessPercent / 100f) + 1);
         boolean[][] shifted = new boolean[colors.length][colors[0].length];
+
 
         for (int ii = 0; ii < colors.length; ii++) {
             for (int jj = 0; jj < colors[0].length; jj++) {

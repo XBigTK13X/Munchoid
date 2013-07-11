@@ -1,6 +1,8 @@
 package sps.states;
 
+import game.GameConfig;
 import sps.audio.MusicPlayer;
+import sps.core.Logger;
 import sps.entities.EntityManager;
 import sps.particles.ParticleEngine;
 import sps.text.TextPool;
@@ -54,7 +56,13 @@ public class StateManager {
         current().load();
     }
 
+    private static long lastMil = System.currentTimeMillis();
+
     public void push(State state) {
+        if (GameConfig.DevTimeStates) {
+            Logger.info("Pushing: " + state.getName() + ". Time since last: " + ((System.currentTimeMillis() - lastMil)) / 1000f);
+            lastMil = System.currentTimeMillis();
+        }
         boolean isNewState = false;
         if (_states.size() > 0) {
             _components.put(current(), new StateDependentComponents(EntityManager.get(), ParticleEngine.get(), TextPool.get(), MusicPlayer.get()));

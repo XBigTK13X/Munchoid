@@ -78,7 +78,7 @@ public class LoadArena implements State {
 
     @Override
     public String getName() {
-        return null;
+        return "LoadArena";
     }
 
     @Override

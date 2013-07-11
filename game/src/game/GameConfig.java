@@ -60,6 +60,11 @@ public class GameConfig {
     public static final boolean DevPlaythroughTest = false;
     public static final boolean DevFlipEnabled = false;
     public static final boolean DevDrawSkeleton = false;
+    public static final boolean DevTimeStates = false;
+
+    //Optimizations -> These need to be fixed before release
+    public static final boolean OptDisableOutlines = true;
+
 
     public static final float FirstFightMult = 1.5f;
 }

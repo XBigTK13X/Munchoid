@@ -40,7 +40,7 @@ public class PreGame implements State {
 
     @Override
     public String getName() {
-        return null;
+        return "PreGame";
     }
 
     @Override
