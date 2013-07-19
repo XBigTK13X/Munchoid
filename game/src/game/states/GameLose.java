@@ -23,7 +23,7 @@ public class GameLose implements State {
     @Override
     public void update() {
         if (Input.get().isActive(Commands.get("Confirm"))) {
-            StateManager.reset().push(new PreGame());
+            StateManager.reset().push(new MainMenu());
         }
     }
 

@@ -24,7 +24,7 @@ public class GameWin implements State {
     @Override
     public void update() {
         if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.DevPlaythroughTest) {
-            StateManager.reset().push(new PreGame());
+            StateManager.reset().push(new MainMenu());
         }
     }
 

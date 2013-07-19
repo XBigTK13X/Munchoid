@@ -3,7 +3,7 @@ package game;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.graphics.Color;
-import game.states.PreGame;
+import game.states.MainMenu;
 import sps.bridge.Commands;
 import sps.bridge.SpriteTypes;
 import sps.bridge.Sps;
@@ -33,7 +33,7 @@ public class Game implements ApplicationListener {
         Window.setRefreshInstance(this);
         Input.get().setup(new DefaultStateProvider());
         SpriteSheetManager.setup(SpriteTypes.getDefs());
-        StateManager.get().push(new PreGame());
+        StateManager.get().push(new MainMenu());
         ParticleEngine.reset();
     }
 
@@ -89,8 +89,7 @@ public class Game implements ApplicationListener {
             //Logger.devConsole("" + Gdx.graphics.getFramesPerSecond() + ": " + Gdx.graphics.getDeltaTime());
             update();
             draw();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Logger.exception(e);
         }
     }
