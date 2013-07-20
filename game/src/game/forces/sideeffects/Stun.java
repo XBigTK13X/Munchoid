@@ -3,7 +3,7 @@ package game.forces.sideeffects;
 import game.creatures.Creature;
 
 public class Stun extends SideEffect {
-    private static final float __coolDownDelaySeconds = 3f;
+    private static final float __coolDownDelaySeconds = .05f;
 
     public Stun() {
         super(SideEffectType.DelayNextAttack);
