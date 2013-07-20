@@ -2,9 +2,7 @@ package game.states;
 
 import game.GameConfig;
 import game.Score;
-import game.battle.EnergyMeter;
-import game.battle.ForcesHUD;
-import game.battle.HealthMeter;
+import game.battle.BattleHUD;
 import game.creatures.Creature;
 import game.forces.Force;
 import sps.audio.MusicPlayer;
@@ -15,7 +13,6 @@ import sps.entities.EntityManager;
 import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
-import sps.text.Text;
 import sps.text.TextEffects;
 import sps.text.TextPool;
 import sps.ui.ToolTip;
@@ -25,14 +22,10 @@ public class Battle implements State {
     private static SingleSongPlayer __battleMusic;
     private Creature _left;
     private Creature _right;
-    private ForcesHUD _leftUI;
-    private ForcesHUD _rightUI;
-    private HealthMeter _leftHealth;
-    private HealthMeter _rightHealth;
-    private EnergyMeter _leftEnergy;
-    private EnergyMeter _rightEnergy;
-    private Text _leftCoolDown;
-    private Text _rightCoolDown;
+
+    private BattleHUD _leftHud;
+    private BattleHUD _rightHud;
+
     private boolean _isFinalBattle;
 
     public Battle() {
@@ -62,36 +55,17 @@ public class Battle implements State {
         _right.setOpponent(_left);
         _left.setOpponent(_right);
 
-        _leftUI = new ForcesHUD(_left);
-        _rightUI = new ForcesHUD(_right);
+        _leftHud = new BattleHUD(_left, true);
+        _rightHud = new BattleHUD(_right, false);
 
-        _leftHealth = new HealthMeter(_left);
-        _rightHealth = new HealthMeter(_right);
-
-        _leftEnergy = new EnergyMeter(_left);
-        _rightEnergy = new EnergyMeter(_right);
-
-        _leftCoolDown = TextPool.get().write(coolDownText(_left), Screen.pos(15, 15));
-        _rightCoolDown = TextPool.get().write(coolDownText(_right), Screen.pos(65, 15));
-
-        TextPool.get().write(_left.getName(), Screen.pos(0, 50).add((int) _left.getLocation().X, 0));
-        TextPool.get().write(_right.getName(), Screen.pos(0, 50).add((int) _right.getLocation().X, 0));
     }
 
-    private String coolDownText(Creature creature) {
-        return String.format("%.2f", creature.getCoolDown().getTimeLeft()) + " sec";
-    }
 
     @Override
     public void draw() {
         EntityManager.get().draw();
-        //TODO makes these proper entities to enable depth sorting
-        _leftUI.draw();
-        _rightUI.draw();
-        _leftHealth.draw();
-        _rightHealth.draw();
-        _leftEnergy.draw();
-        _rightEnergy.draw();
+        _leftHud.draw();
+        _rightHud.draw();
     }
 
     public void playerAttack(Force force) {
@@ -103,16 +77,9 @@ public class Battle implements State {
     @Override
     public void update() {
         EntityManager.get().update();
-        _leftHealth.update();
-        _rightHealth.update();
-        _rightEnergy.update();
-        _leftEnergy.update();
+        _leftHud.update();
+        _rightHud.update();
 
-
-        _rightCoolDown.setMessage(coolDownText(_right));
-        _leftCoolDown.setMessage(coolDownText(_left));
-        _rightCoolDown.setVisible(_right.getCoolDown().getTimeLeft() != 0);
-        _leftCoolDown.setVisible(_left.getCoolDown().getTimeLeft() != 0);
         if (_left.getCoolDown().isCooled()) {
             for (Force force : Force.values()) {
                 if (Input.get().isActive(Commands.get(force.Command), 0) && _left.getStats().isEnabled(force)) {
