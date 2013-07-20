@@ -11,19 +11,23 @@ import java.util.List;
 
 public enum Force {
 
-    Abrasive(Colors.rgbToColor(GameConfig.ForceColorIntensity, GameConfig.ForceColorMix, GameConfig.ForceColorMix)),
-    Expansion(Colors.rgbToColor(GameConfig.ForceColorMix, GameConfig.ForceColorIntensity, GameConfig.ForceColorMix)),
-    Explosive(Colors.rgbToColor(GameConfig.ForceColorMix, GameConfig.ForceColorMix, GameConfig.ForceColorIntensity)),
-    Slice(Colors.rgbToColor(GameConfig.ForceColorIntensity, GameConfig.ForceColorIntensity, GameConfig.ForceColorMix)),
-    Contraction(Colors.rgbToColor(GameConfig.ForceColorIntensity, GameConfig.ForceColorMix, GameConfig.ForceColorIntensity)),
-    Vaporize(Colors.rgbToColor(GameConfig.ForceColorMix, GameConfig.ForceColorIntensity, GameConfig.ForceColorIntensity));
+    Abrasive(0, 1, 1),
+    Expansion(1, 0, 1),
+    Explosive(1, 1, 0),
+    Slice(0, 0, 1),
+    Contraction(0, 1, 0),
+    Vaporize(1, 0, 0);
 
     public final String Command;
     public final Color Color;
 
-    private Force(Color color) {
+    private Force(float rT, float gT, float bT) {
         Command = "Force" + (ordinal() + 1);
-        Color = color;
+        Color = Colors.rgbToColor(tToC(rT), tToC(gT), tToC(bT));
+    }
+
+    private static float tToC(float t) {
+        return t == 0 ? GameConfig.ForceColorIntensity : GameConfig.ForceColorMix;
     }
 
     public static BaseForce create(Force force, int magnitude) {
@@ -78,10 +82,6 @@ public enum Force {
                 return Force.Contraction;
         }
         return null;
-    }
-
-    public static BaseForce createRandom(int magnitude) {
-        return create(Force.values()[RNG.next(0, Force.values().length)], magnitude);
     }
 
     public static Force random() {
