@@ -21,12 +21,15 @@ public class Creature extends Entity {
     private int _bonusPoints;
     private Creature _opponent;
     private String _name;
+
     private float _energyRegenSeconds = 1;
     private int _energyRegenAmount = 1;
-
     private float _regenTimer = 0;
     private int _energyMax = 100;
     private int _energy = _energyMax;
+
+    private float _coolDown;
+    private float _coolDownMaxSeconds = 1f + RNG.next(1, 5);
 
     public Creature(int partCount) {
         this(new Body(partCount));
@@ -81,7 +84,6 @@ public class Creature extends Entity {
 
     public void update() {
         _body.update();
-        regenEnergy();
         useBonus();
     }
 
@@ -109,6 +111,8 @@ public class Creature extends Entity {
             }
 
             Force.create(force, magnitude).apply(_opponent.getBody().getRandomPart());
+
+            _coolDown = _coolDownMaxSeconds;
         }
     }
 
@@ -178,6 +182,21 @@ public class Creature extends Entity {
             if (_energy >= _energyMax) {
                 _energy = _energyMax;
             }
+        }
+    }
+
+    public boolean cooledDown() {
+        return _coolDown <= 0;
+    }
+
+    public float getCoolDown() {
+        return _coolDown;
+    }
+
+    public void coolDown() {
+        _coolDown -= Gdx.graphics.getDeltaTime();
+        if (_coolDown < 0) {
+            _coolDown = 0;
         }
     }
 }

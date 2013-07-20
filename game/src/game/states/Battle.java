@@ -15,6 +15,7 @@ import sps.entities.EntityManager;
 import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
+import sps.text.Text;
 import sps.text.TextEffects;
 import sps.text.TextPool;
 import sps.ui.ToolTip;
@@ -22,7 +23,6 @@ import sps.util.Screen;
 
 public class Battle implements State {
     private static SingleSongPlayer __battleMusic;
-    private boolean _isPlayerTurn = true;
     private Creature _left;
     private Creature _right;
     private ForcesHUD _leftUI;
@@ -31,6 +31,8 @@ public class Battle implements State {
     private HealthMeter _rightHealth;
     private EnergyMeter _leftEnergy;
     private EnergyMeter _rightEnergy;
+    private Text _leftCoolDown;
+    private Text _rightCoolDown;
     private boolean _isFinalBattle;
 
     public Battle() {
@@ -69,8 +71,15 @@ public class Battle implements State {
         _leftEnergy = new EnergyMeter(_left);
         _rightEnergy = new EnergyMeter(_right);
 
+        _leftCoolDown = TextPool.get().write(coolDownText(_left), Screen.pos(15, 15));
+        _rightCoolDown = TextPool.get().write(coolDownText(_right), Screen.pos(65, 15));
+
         TextPool.get().write(_left.getName(), Screen.pos(0, 50).add((int) _left.getLocation().X, 0));
         TextPool.get().write(_right.getName(), Screen.pos(0, 50).add((int) _right.getLocation().X, 0));
+    }
+
+    private String coolDownText(Creature creature) {
+        return String.format("%.2f", creature.getCoolDown()) + " sec";
     }
 
     @Override
@@ -86,9 +95,8 @@ public class Battle implements State {
     }
 
     public void playerAttack(Force force) {
-        if (_isPlayerTurn) {
+        if (_left.cooledDown()) {
             _left.attack(force);
-            _isPlayerTurn = false;
         }
     }
 
@@ -100,7 +108,12 @@ public class Battle implements State {
         _rightEnergy.update();
         _leftEnergy.update();
 
-        if (_isPlayerTurn) {
+
+        _rightCoolDown.setMessage(coolDownText(_right));
+        _leftCoolDown.setMessage(coolDownText(_left));
+        _rightCoolDown.setVisible(_right.getCoolDown() != 0);
+        _leftCoolDown.setVisible(_left.getCoolDown() != 0);
+        if (_left.cooledDown()) {
             for (Force force : Force.values()) {
                 if (Input.get().isActive(Commands.get(force.Command), 0) && _left.getStats().isEnabled(force)) {
                     if (_left.canUse(force)) {
@@ -120,11 +133,17 @@ public class Battle implements State {
                 victory();
             }
         }
-        else {
+        else if (_right.cooledDown()) {
             //TODO Smarter attacks
             _right.attack(_right.getStats().randomEnabledForce());
-            _isPlayerTurn = true;
         }
+        else {
+            _right.regenEnergy();
+            _left.regenEnergy();
+            _right.coolDown();
+            _left.coolDown();
+        }
+
 
         if (!_right.getBody().isAlive() || GameConfig.DevPlaythroughTest) {
             victory();
