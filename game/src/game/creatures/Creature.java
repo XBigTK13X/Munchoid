@@ -1,5 +1,6 @@
 package game.creatures;
 
+import com.badlogic.gdx.Gdx;
 import game.GameConfig;
 import game.forces.Force;
 import sps.bridge.EntityTypes;
@@ -20,6 +21,12 @@ public class Creature extends Entity {
     private int _bonusPoints;
     private Creature _opponent;
     private String _name;
+    private float _energyRegenSeconds = 1;
+    private int _energyRegenAmount = 1;
+
+    private float _regenTimer = 0;
+    private int _energyMax = 100;
+    private int _energy = _energyMax;
 
     public Creature(int partCount) {
         this(new Body(partCount));
@@ -74,11 +81,13 @@ public class Creature extends Entity {
 
     public void update() {
         _body.update();
+        regenEnergy();
         useBonus();
     }
 
     public void attack(Force force) {
         if (_opponent != null && _opponent.getBody().isAlive()) {
+            _energy -= _stats.get(force);
             int weakness = _opponent.getStats().get(Force.beatenBy(force));
             int strength = _opponent.getStats().get(Force.beats(force));
 
@@ -147,5 +156,28 @@ public class Creature extends Entity {
 
     public String getName() {
         return _name;
+    }
+
+    public int getEnergy() {
+        return _energy;
+    }
+
+    public boolean canUse(Force force) {
+        return getEnergy() >= getStats().get(force);
+    }
+
+    public float getPercentEnergy() {
+        return (float) _energy / _energyMax;
+    }
+
+    public void regenEnergy() {
+        _regenTimer += Gdx.graphics.getDeltaTime();
+        if (_regenTimer >= _energyRegenSeconds) {
+            _regenTimer = 0;
+            _energy += _energyRegenAmount;
+            if (_energy >= _energyMax) {
+                _energy = _energyMax;
+            }
+        }
     }
 }

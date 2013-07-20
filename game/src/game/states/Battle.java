@@ -2,6 +2,7 @@ package game.states;
 
 import game.GameConfig;
 import game.Score;
+import game.battle.EnergyMeter;
 import game.battle.ForcesHUD;
 import game.battle.HealthMeter;
 import game.creatures.Creature;
@@ -28,6 +29,8 @@ public class Battle implements State {
     private ForcesHUD _rightUI;
     private HealthMeter _leftHealth;
     private HealthMeter _rightHealth;
+    private EnergyMeter _leftEnergy;
+    private EnergyMeter _rightEnergy;
     private boolean _isFinalBattle;
 
     public Battle() {
@@ -63,6 +66,9 @@ public class Battle implements State {
         _leftHealth = new HealthMeter(_left);
         _rightHealth = new HealthMeter(_right);
 
+        _leftEnergy = new EnergyMeter(_left);
+        _rightEnergy = new EnergyMeter(_right);
+
         TextPool.get().write(_left.getName(), Screen.pos(0, 50).add((int) _left.getLocation().X, 0));
         TextPool.get().write(_right.getName(), Screen.pos(0, 50).add((int) _right.getLocation().X, 0));
     }
@@ -75,6 +81,8 @@ public class Battle implements State {
         _rightUI.draw();
         _leftHealth.draw();
         _rightHealth.draw();
+        _leftEnergy.draw();
+        _rightEnergy.draw();
     }
 
     public void playerAttack(Force force) {
@@ -89,15 +97,22 @@ public class Battle implements State {
         EntityManager.get().update();
         _leftHealth.update();
         _rightHealth.update();
+        _rightEnergy.update();
+        _leftEnergy.update();
 
         if (_isPlayerTurn) {
             for (Force force : Force.values()) {
                 if (Input.get().isActive(Commands.get(force.Command), 0) && _left.getStats().isEnabled(force)) {
-                    if (_left.getStats().get(force) > 0) {
-                        playerAttack(force);
+                    if (_left.canUse(force)) {
+                        if (_left.getStats().get(force) > 0) {
+                            playerAttack(force);
+                        }
+                        else {
+                            TextPool.get().write(force.name() + " Disabled", Screen.pos(10, 50), 1f, TextEffects.Fountain);
+                        }
                     }
                     else {
-                        TextPool.get().write(force.name() + " Disabled", Screen.pos(10, 50), 1f, TextEffects.Fountain);
+                        TextPool.get().write("Not enough energy", Screen.pos(10, 50), 1f, TextEffects.Fountain);
                     }
                 }
             }

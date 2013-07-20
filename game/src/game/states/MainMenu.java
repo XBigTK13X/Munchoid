@@ -22,7 +22,7 @@ public class MainMenu implements State {
     @Override
     public void update() {
         if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.DevPlaythroughTest) {
-            StateManager.get().push(new LoadArena());
+            StateManager.get().push(new Battle());
         }
     }
 

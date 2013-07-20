@@ -10,7 +10,7 @@ import sps.util.Colors;
 import sps.util.Screen;
 import sps.util.SpriteMaker;
 
-public class HealthMeter {
+public class EnergyMeter {
     private static int __widthPercent = 5;
     private static int __heightPercent = 40;
 
@@ -22,23 +22,23 @@ public class HealthMeter {
     private Point2 _position;
     private int _scaledHeight;
 
-    private int _lastHealth;
+    private int _lastEnergy;
 
-    public HealthMeter(Creature owner) {
+    public EnergyMeter(Creature owner) {
         _owner = owner;
         _width = (int) Screen.width(__widthPercent);
         _height = (int) Screen.height(__heightPercent);
         if (owner.getLocation().X < Screen.width(50)) {
-            _position = Screen.pos(5, 5);
+            _position = Screen.pos(5, 55);
         }
         else {
-            _position = Screen.pos(95 - __widthPercent, 5);
+            _position = Screen.pos(95 - __widthPercent, 55);
         }
 
         Color[][] bg = Colors.genArr(__widthPercent, __heightPercent, Color.LIGHT_GRAY);
         _bg = SpriteMaker.get().fromColors(bg);
 
-        Color[][] base = Colors.genArr(__widthPercent, __heightPercent, Color.GREEN);
+        Color[][] base = Colors.genArr(__widthPercent, __heightPercent, Color.BLUE);
         Outline.single(base, Color.WHITE);
         _sprite = SpriteMaker.get().fromColors(base);
         _bg.setSize(_width, _height);
@@ -48,10 +48,10 @@ public class HealthMeter {
     }
 
     private void scaleHeight() {
-        if (_lastHealth == 0 || _lastHealth != _owner.getBody().getHealth()) {
-            _scaledHeight = (int) (_height * _owner.getBody().getPercentHealth());
+        if (_lastEnergy == 0 || _lastEnergy != _owner.getEnergy()) {
+            _scaledHeight = (int) (_height * _owner.getPercentEnergy());
             _sprite.setSize(_width, _scaledHeight);
-            _lastHealth = _owner.getBody().getHealth();
+            _lastEnergy = _owner.getEnergy();
         }
     }
 
