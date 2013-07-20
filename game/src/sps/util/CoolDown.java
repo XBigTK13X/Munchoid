@@ -5,24 +5,63 @@ import com.badlogic.gdx.Gdx;
 public class CoolDown {
     private float _coolDown;
     private float _coolDownMax;
+    private final float _initialCoolDownMax;
 
     public CoolDown(float lengthInSeconds) {
+        if (lengthInSeconds < 0) {
+            lengthInSeconds = 0;
+        }
         _coolDownMax = lengthInSeconds;
+        _coolDown = _coolDownMax;
+        _initialCoolDownMax = _coolDownMax;
+    }
+
+    public void reset() {
         _coolDown = _coolDownMax;
     }
 
-    public boolean isCool() {
-        _coolDown -= Gdx.graphics.getDeltaTime();
-        boolean result = false;
-        if (_coolDown <= 0) {
-            result = true;
-            _coolDown = _coolDownMax;
-        }
-        return result;
-    }
-
     public void reset(float lengthInSeconds) {
+        if (lengthInSeconds < 0) {
+            lengthInSeconds = 0;
+        }
         _coolDown = lengthInSeconds;
         _coolDownMax = lengthInSeconds;
+    }
+
+    public boolean updateAndCheck() {
+        update();
+        if (isCooled()) {
+            reset();
+            return true;
+        }
+        return false;
+    }
+
+    public void update() {
+        _coolDown -= Gdx.graphics.getDeltaTime();
+        if (_coolDown <= 0) {
+            _coolDown = 0;
+        }
+    }
+
+    public boolean isCooled() {
+        return _coolDown <= 0;
+    }
+
+    public float getTimeLeft() {
+        return _coolDown;
+    }
+
+    public float getTimeMax() {
+        return _coolDownMax;
+    }
+
+
+    public float getInitialTimeMax() {
+        return _initialCoolDownMax;
+    }
+
+    public void delay(float lengthInSeconds) {
+        _coolDown += lengthInSeconds;
     }
 }

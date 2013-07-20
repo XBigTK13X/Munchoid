@@ -34,6 +34,7 @@ public class GameConfig {
     public static final int BonusAmount = 1;
     public static final int BonusAward = 15;
 
+    public static final int InitEnabledStats = 6;
     public static final int MinStatInit = 2;
     public static final int MaxStatInit = 5;
     public static final int DisableStat = 0;
@@ -56,11 +57,13 @@ public class GameConfig {
     public static final int MaxForcesEnabled = 4;
 
     //Debugging / Development
+    public static final boolean DevBattleLog = true;
     public static final boolean DevShortcutsEnabled = true;
     public static final boolean DevPlaythroughTest = false;
     public static final boolean DevFlipEnabled = false;
     public static final boolean DevDrawSkeleton = false;
     public static final boolean DevTimeStates = false;
+
 
     //Optimizations -> These need to be fixed before release
     public static final boolean OptDisableOutlines = true;

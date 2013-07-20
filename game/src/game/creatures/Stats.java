@@ -29,7 +29,7 @@ public class Stats {
             _stats.put(force, GameConfig.MinStat);
             _enabled.put(force, true);
         }
-        for (Force force : Force.random(1)) {
+        for (Force force : Force.random(GameConfig.InitEnabledStats)) {
             _stats.put(force, RNG.next(GameConfig.MinStatInit, GameConfig.MaxStatInit));
         }
     }

@@ -172,6 +172,7 @@ public class Body {
         for (BodyPart part : _parts) {
             part.restore();
         }
+        _owner.addHealthOffset(-_owner.getHealthOffset());
         recalculateHealth();
     }
 

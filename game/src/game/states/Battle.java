@@ -79,7 +79,7 @@ public class Battle implements State {
     }
 
     private String coolDownText(Creature creature) {
-        return String.format("%.2f", creature.getCoolDown()) + " sec";
+        return String.format("%.2f", creature.getCoolDown().getTimeLeft()) + " sec";
     }
 
     @Override
@@ -95,7 +95,7 @@ public class Battle implements State {
     }
 
     public void playerAttack(Force force) {
-        if (_left.cooledDown()) {
+        if (_left.getCoolDown().isCooled()) {
             _left.attack(force);
         }
     }
@@ -111,9 +111,9 @@ public class Battle implements State {
 
         _rightCoolDown.setMessage(coolDownText(_right));
         _leftCoolDown.setMessage(coolDownText(_left));
-        _rightCoolDown.setVisible(_right.getCoolDown() != 0);
-        _leftCoolDown.setVisible(_left.getCoolDown() != 0);
-        if (_left.cooledDown()) {
+        _rightCoolDown.setVisible(_right.getCoolDown().getTimeLeft() != 0);
+        _leftCoolDown.setVisible(_left.getCoolDown().getTimeLeft() != 0);
+        if (_left.getCoolDown().isCooled()) {
             for (Force force : Force.values()) {
                 if (Input.get().isActive(Commands.get(force.Command), 0) && _left.getStats().isEnabled(force)) {
                     if (_left.canUse(force)) {
@@ -133,15 +133,15 @@ public class Battle implements State {
                 victory();
             }
         }
-        else if (_right.cooledDown()) {
+        else if (_right.getCoolDown().isCooled()) {
             //TODO Smarter attacks
             _right.attack(_right.getStats().randomEnabledForce());
         }
         else {
             _right.regenEnergy();
             _left.regenEnergy();
-            _right.coolDown();
-            _left.coolDown();
+            _right.getCoolDown().update();
+            _left.getCoolDown().update();
         }
 
 

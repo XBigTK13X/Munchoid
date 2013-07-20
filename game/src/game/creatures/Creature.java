@@ -6,12 +6,14 @@ import game.forces.Force;
 import game.forces.sideeffects.SideEffectType;
 import game.forces.sideeffects.SideEffects;
 import sps.bridge.EntityTypes;
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.Entity;
 import sps.graphics.Assets;
 import sps.text.TextEffects;
 import sps.text.TextPool;
+import sps.util.CoolDown;
 import sps.util.Markov;
 import sps.util.Screen;
 
@@ -32,23 +34,12 @@ public class Creature extends Entity {
 
     private int _healthOffset;
 
-    private float _coolDown;
-    private float _coolDownMaxSeconds = 1f + RNG.next(1, 5);
+    private CoolDown _coolDown;
 
     private SideEffects _sideEffects;
 
     public Creature(int partCount) {
         this(new Body(partCount));
-    }
-
-    public Creature(Body body) {
-        _body = body;
-        _body.setOwner(this);
-        _entityType = EntityTypes.get("Creature");
-        _stats = new Stats();
-        _name = __nameGenerator.makeWord(RNG.next(6, 10));
-        _name = _name.substring(0, 1).toUpperCase() + _name.substring(1);
-        _sideEffects = new SideEffects(this);
     }
 
     public Creature(boolean faceLeft, Point2 minDimensions, Point2 maxDimensions) {
@@ -62,6 +53,17 @@ public class Creature extends Entity {
 
     public Creature() {
         this(true, GameConfig.MinBodyPartSize, GameConfig.MaxBodyPartSize);
+    }
+
+    public Creature(Body body) {
+        _body = body;
+        _body.setOwner(this);
+        _entityType = EntityTypes.get("Creature");
+        _stats = new Stats();
+        _name = __nameGenerator.makeWord(RNG.next(6, 10));
+        _name = _name.substring(0, 1).toUpperCase() + _name.substring(1);
+        _sideEffects = new SideEffects(this);
+        _coolDown = new CoolDown(1f + RNG.next(1, 5));
     }
 
     public void orientX(boolean faceLeft, boolean updatePos) {
@@ -92,12 +94,12 @@ public class Creature extends Entity {
     public void update() {
         _body.update();
         _sideEffects.update();
-        _sideEffects.act(SideEffectType.ModHealth);
         useBonus();
     }
 
     public void attack(Force force) {
         if (_opponent != null && _opponent.getBody().isAlive()) {
+
             _energy -= _stats.get(force);
             int weakness = _opponent.getStats().get(Force.beatenBy(force));
             int strength = _opponent.getStats().get(Force.beats(force));
@@ -114,15 +116,24 @@ public class Creature extends Entity {
             }
 
 
-            int magnitude = _stats.get(force) + strength - weakness;
+            int magnitude = _stats.get(force) + strength - weakness + (int) (_opponent.getSideEffects().act(SideEffectType.DamageTaken) + getSideEffects().act(SideEffectType.DamageCaused));
             if (magnitude < 1) {
                 magnitude = 1;
             }
 
+            if (GameConfig.DevBattleLog) {
+                Logger.info(getName() + " attacking " + _opponent.getName() + " with " + force.name() + " queuing " + Force.sideEffect(force).getClass().getName().replace("game.forces.sideeffects.", ""));
+            }
             Force.create(force, magnitude).apply(_opponent.getBody().getRandomPart());
+            _opponent.getSideEffects().add(Force.sideEffect(force));
 
-            _coolDown = _coolDownMaxSeconds;
+            _coolDown.reset(_coolDown.getInitialTimeMax() + _sideEffects.act(SideEffectType.CoolDown));
+            _sideEffects.act(SideEffectType.DelayNextAttack);
         }
+    }
+
+    private SideEffects getSideEffects() {
+        return _sideEffects;
     }
 
     public Stats getStats() {
@@ -185,7 +196,8 @@ public class Creature extends Entity {
 
     public void regenEnergy() {
         _regenTimer += Gdx.graphics.getDeltaTime();
-        if (_regenTimer >= (_energyRegenSeconds + _sideEffects.act(SideEffectType.ModEnergy))) {
+        _sideEffects.act(SideEffectType.Health);
+        if (_regenTimer >= (_energyRegenSeconds + _sideEffects.act(SideEffectType.EnergyRegenRate))) {
             _regenTimer = 0;
             _energy += _energyRegenAmount;
             if (_energy >= _energyMax) {
@@ -194,19 +206,8 @@ public class Creature extends Entity {
         }
     }
 
-    public boolean cooledDown() {
-        return _coolDown <= 0;
-    }
-
-    public float getCoolDown() {
+    public CoolDown getCoolDown() {
         return _coolDown;
-    }
-
-    public void coolDown() {
-        _coolDown -= Gdx.graphics.getDeltaTime();
-        if (_coolDown < 0) {
-            _coolDown = 0;
-        }
     }
 
     public void addHealthOffset(int offset) {

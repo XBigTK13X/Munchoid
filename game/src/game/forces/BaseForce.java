@@ -2,7 +2,6 @@ package game.forces;
 
 import game.creatures.Atom;
 import game.creatures.BodyPart;
-import game.forces.sideeffects.SideEffect;
 
 public abstract class BaseForce {
     protected static int NoScale = 1;
@@ -33,8 +32,6 @@ public abstract class BaseForce {
 
     public void prepareCalculations(BodyPart part) {
     }
-
-    public abstract SideEffect getSideEffect();
 
     public int getMagnitude() {
         return _magnitude;

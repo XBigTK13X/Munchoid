@@ -3,33 +3,6 @@ package game.forces.sideeffects;
 import game.creatures.Creature;
 
 public abstract class SideEffect {
-    /*
-
-Explosive
-Burn
-Health lost over time
-
-Slice
-Cripple
-Increase wait time for next attack
-
-Contraction
-Quickening
-Speed increase
-
-Expansion
-Burdon
-Increased damage from
-
-Vaporize
-Ethereal
-Decrease energy regen
-
-Abrasive
-Weak Flesh
-Increased damage to on next hit
-
-     */
     private SideEffectType _effect;
     private boolean _used;
 

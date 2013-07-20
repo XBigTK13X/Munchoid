@@ -2,6 +2,7 @@ package game.forces;
 
 import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
+import game.forces.sideeffects.*;
 import sps.core.RNG;
 import sps.util.Colors;
 
@@ -80,6 +81,24 @@ public enum Force {
                 return Force.Vaporize;
             case Vaporize:
                 return Force.Contraction;
+        }
+        return null;
+    }
+
+    public static SideEffect sideEffect(Force force) {
+        switch (force) {
+            case Abrasive:
+                return new WeakFlesh();
+            case Expansion:
+                return new Burden();
+            case Explosive:
+                return new Burn();
+            case Slice:
+                return new Stun();
+            case Contraction:
+                return new Quickening();
+            case Vaporize:
+                return new Ethereal();
         }
         return null;
     }
