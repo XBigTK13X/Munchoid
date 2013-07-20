@@ -63,7 +63,7 @@ public class Creature extends Entity {
         _name = __nameGenerator.makeWord(RNG.next(6, 10));
         _name = _name.substring(0, 1).toUpperCase() + _name.substring(1);
         _sideEffects = new SideEffects(this);
-        _coolDown = new CoolDown(1f + RNG.next(1, 5));
+        _coolDown = new CoolDown(RNG.next(GameConfig.MinInitCooldown, GameConfig.MaxInitCooldown));
     }
 
     public void orientX(boolean faceLeft, boolean updatePos) {
