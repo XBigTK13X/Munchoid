@@ -8,6 +8,7 @@ import game.skeleton.Skeleton;
 import sps.core.RNG;
 import sps.util.Bounds;
 import sps.util.Colors;
+import sps.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -200,7 +201,7 @@ public class Body {
     }
 
     public int getHealth() {
-        return _health;
+        return MathHelper.clamp(_health + _owner.getHealthOffset(), 0, _healthMax);
     }
 
     public int getHealthMax() {

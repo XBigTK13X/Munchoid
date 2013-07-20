@@ -3,6 +3,8 @@ package game.creatures;
 import com.badlogic.gdx.Gdx;
 import game.GameConfig;
 import game.forces.Force;
+import game.forces.sideeffects.SideEffectType;
+import game.forces.sideeffects.SideEffects;
 import sps.bridge.EntityTypes;
 import sps.core.Point2;
 import sps.core.RNG;
@@ -28,8 +30,12 @@ public class Creature extends Entity {
     private int _energyMax = 100;
     private int _energy = _energyMax;
 
+    private int _healthOffset;
+
     private float _coolDown;
     private float _coolDownMaxSeconds = 1f + RNG.next(1, 5);
+
+    private SideEffects _sideEffects;
 
     public Creature(int partCount) {
         this(new Body(partCount));
@@ -42,6 +48,7 @@ public class Creature extends Entity {
         _stats = new Stats();
         _name = __nameGenerator.makeWord(RNG.next(6, 10));
         _name = _name.substring(0, 1).toUpperCase() + _name.substring(1);
+        _sideEffects = new SideEffects(this);
     }
 
     public Creature(boolean faceLeft, Point2 minDimensions, Point2 maxDimensions) {
@@ -84,6 +91,8 @@ public class Creature extends Entity {
 
     public void update() {
         _body.update();
+        _sideEffects.update();
+        _sideEffects.act(SideEffectType.ModHealth);
         useBonus();
     }
 
@@ -176,7 +185,7 @@ public class Creature extends Entity {
 
     public void regenEnergy() {
         _regenTimer += Gdx.graphics.getDeltaTime();
-        if (_regenTimer >= _energyRegenSeconds) {
+        if (_regenTimer >= (_energyRegenSeconds + _sideEffects.act(SideEffectType.ModEnergy))) {
             _regenTimer = 0;
             _energy += _energyRegenAmount;
             if (_energy >= _energyMax) {
@@ -198,5 +207,13 @@ public class Creature extends Entity {
         if (_coolDown < 0) {
             _coolDown = 0;
         }
+    }
+
+    public void addHealthOffset(int offset) {
+        _healthOffset += offset;
+    }
+
+    public int getHealthOffset() {
+        return _healthOffset;
     }
 }
