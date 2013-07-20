@@ -24,6 +24,16 @@ public class SideEffects {
         return result;
     }
 
+    public int getCount(SideEffectType effect) {
+        int result = 0;
+        for (SideEffect e : _effects) {
+            if (e.getEffect() == effect) {
+                result++;
+            }
+        }
+        return result;
+    }
+
     public void update() {
         for (int ii = 0; ii < _effects.size(); ii++) {
             if (_effects.get(ii).isUsed()) {

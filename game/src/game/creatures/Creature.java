@@ -132,7 +132,7 @@ public class Creature extends Entity {
         }
     }
 
-    private SideEffects getSideEffects() {
+    public SideEffects getSideEffects() {
         return _sideEffects;
     }
 

@@ -70,8 +70,14 @@ public class Battle implements State {
 
     public void playerAttack(Force force) {
         if (_left.getCoolDown().isCooled()) {
-            _left.attack(force);
+            attack(_left, force);
         }
+    }
+
+    private void attack(Creature creature, Force force) {
+        creature.attack(force);
+        _rightHud.updateAttackBasedState();
+        _leftHud.updateAttackBasedState();
     }
 
     @Override
@@ -102,7 +108,7 @@ public class Battle implements State {
         }
         else if (_right.getCoolDown().isCooled()) {
             //TODO Smarter attacks
-            _right.attack(_right.getStats().randomEnabledForce());
+            attack(_right, _right.getStats().randomEnabledForce());
         }
         else {
             _right.regenEnergy();
