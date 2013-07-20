@@ -90,7 +90,7 @@ public enum Force {
             case Abrasive:
                 return new WeakFlesh();
             case Expansion:
-                return new Burden();
+                return new Growth();
             case Explosive:
                 return new Burn();
             case Slice:

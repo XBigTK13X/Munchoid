@@ -2,10 +2,10 @@ package game.forces.sideeffects;
 
 import game.creatures.Creature;
 
-public class Burden extends SideEffect {
+public class Growth extends SideEffect {
     private static final int __extraDamage = 2;
 
-    public Burden() {
+    public Growth() {
         super(SideEffectType.DamageCaused);
     }
 
