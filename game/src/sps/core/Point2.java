@@ -44,6 +44,10 @@ public class Point2 {
         return new Point2(X + target.X, Y + target.Y);
     }
 
+    public Point2 add(float dX, float dY) {
+        return add((int) dX, (int) dY);
+    }
+
     public Point2 add(int dX, int dY) {
         return new Point2(X + dX, Y + dY);
     }

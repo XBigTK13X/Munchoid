@@ -27,10 +27,12 @@ public class Stats {
         _enabled = new HashMap<Force, Boolean>();
         for (Force force : Force.values()) {
             _stats.put(force, GameConfig.MinStat);
-            _enabled.put(force, true);
         }
         for (Force force : Force.random(GameConfig.InitEnabledStats)) {
             _stats.put(force, RNG.next(GameConfig.MinStatInit, GameConfig.MaxStatInit));
+        }
+        for (Force force : Force.values()) {
+            setEnabled(force, canBeEnabled(force));
         }
     }
 
@@ -87,10 +89,14 @@ public class Stats {
         _enabled.put(force, enabled);
     }
 
+    private boolean canBeEnabled(Force force) {
+        return get(force) > GameConfig.DisableStat;
+    }
+
     public int possibleActiveForces() {
         int max = 0;
         for (Force force : Force.values()) {
-            if (get(force) > GameConfig.DisableStat) {
+            if (canBeEnabled(force)) {
                 max++;
             }
         }

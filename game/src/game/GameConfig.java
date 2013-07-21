@@ -19,6 +19,7 @@ public class GameConfig {
     public static final int ArenaMergeChance = 60;
     //TODO Convert into easier to manipulate units
     public static final int PlayerTopSpeed = 500;
+    public static final float FirstFightMult = 1.5f;
 
     //TODO Smoother movement
     public static final int playerAcceleration = 50;
@@ -34,7 +35,7 @@ public class GameConfig {
     public static final int BonusAmount = 1;
     public static final int BonusAward = 15;
 
-    public static final int InitEnabledStats = 1;
+    public static final int InitEnabledStats = 6;
     public static final int MinStatInit = 2;
     public static final int MaxStatInit = 5;
     public static final int DisableStat = 0;
@@ -67,11 +68,10 @@ public class GameConfig {
     public static final boolean DevDrawSkeleton = false;
     public static final boolean DevTimeStates = false;
 
-
-    //Optimizations -> These need to be fixed before release
-    public static final boolean OptDisableOutlines = false;
+    //Optimizations
+    //TODO Make them toggleable in the options menu,
+    //     helps on Mac with large amounts of creatures
+    public static final boolean OptDisableOutlines = true;
+    public static final boolean OptDisableCloudyTextures = true;
     public static final boolean OptFastOutlineAlg = false;
-
-
-    public static final float FirstFightMult = 1.5f;
 }

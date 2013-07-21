@@ -9,21 +9,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ForcesHUD {
-    private static final int __widthPercent = 30;
-    private static final int __heightPercent = 5;
+    private static final int __widthPercent = 10;
+    private static final int __heightPercent = 7;
+    private static final int __paddingPercent = 2;
 
     private Creature _owner;
     private List<ForceMeter> _meters;
     private Point2 _origin;
 
+    private static final Point2[] __order = {new Point2(0, 0), new Point2(0, 1), new Point2(1, 0), new Point2(1, 1), new Point2(2, 0), new Point2(2, 1)};
+
     public ForcesHUD(Creature owner) {
         _owner = owner;
-        _origin = new Point2(owner.getLocation().X, Screen.get().VirtualHeight - __heightPercent * Force.values().length - Screen.height(42));
+        if (_owner.getLocation().X < Screen.width(50)) {
+            _origin = Screen.pos(15, 90);
+        }
+        else {
+            _origin = Screen.pos(55, 90);
+        }
+
         _meters = new ArrayList<ForceMeter>();
-        int row = Force.values().length;
+        int activeCount = 0;
         for (Force force : Force.values()) {
-            row--;
-            _meters.add(new ForceMeter(force, _owner, __widthPercent, __heightPercent, _origin, row));
+            if (_owner.getStats().isEnabled(force)) {
+                Point2 origin = _origin.add(__order[activeCount].X * Screen.width(__widthPercent) + __order[activeCount].X * Screen.width(__paddingPercent), -__order[activeCount].Y * Screen.height(__heightPercent) - __order[activeCount].Y * Screen.height(__paddingPercent));
+                _meters.add(new ForceMeter(force, _owner, __widthPercent, __heightPercent, origin));
+                activeCount++;
+            }
         }
     }
 

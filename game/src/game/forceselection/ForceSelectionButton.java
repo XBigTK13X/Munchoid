@@ -1,4 +1,4 @@
-package game.battle;
+package game.forceselection;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -6,7 +6,6 @@ import game.GameConfig;
 import game.creatures.Creature;
 import game.creatures.style.Outline;
 import game.forces.Force;
-import game.states.Battle;
 import game.states.ForceSelection;
 import sps.bridge.Commands;
 import sps.core.Point2;
@@ -21,7 +20,7 @@ import sps.util.Colors;
 import sps.util.Screen;
 import sps.util.SpriteMaker;
 
-public class ForceMeter {
+public class ForceSelectionButton {
     private Sprite _bg;
     private Sprite _sprite;
     private int _height;
@@ -34,12 +33,12 @@ public class ForceMeter {
 
     private String _message;
 
-    public ForceMeter(Force force, Creature owner, int width, int height, Point2 origin) {
+    public ForceSelectionButton(Force force, Creature owner, int width, int height, Point2 origin, int row) {
         _owner = owner;
         _force = force;
         _width = (int) Screen.width(width);
         _height = (int) Screen.height(height);
-        _position = origin;
+        _position = new Point2(origin.X, (row * (int) (_height * 1.5)) + origin.Y);
         int stat = _owner.getStats().get(force);
         float statPercent = stat / ((float) GameConfig.MaxStat);
         _scaledWidth = (int) (statPercent * _width);
@@ -58,41 +57,54 @@ public class ForceMeter {
 
         _bg.setColor(Color.GRAY);
         _sprite.setColor(Color.GRAY);
-        boolean isPlayer = _position.X < Screen.width(50);
-        if (isPlayer) {
-            String input = "[" + Commands.get(force.Command).key().name() + "]";
+        String input = "[" + Commands.get(force.Command).key().name() + "]";
 
-            _message = (stat > GameConfig.DisableStat && _owner.getStats().isEnabled(_force)) ? force.name() + ": " + strength() + input : "Disabled";
-            ToolTip.get().add(new ToolTip.User() {
-                @Override
-                public boolean isActive() {
-                    return HitTest.inBox(Input.get().x(), Input.get().y(), (int) _sprite.getX(), (int) _sprite.getY(), _width, _height);
-                }
-
-                @Override
-                public String message() {
-                    setTooltip();
-                    return _message;
-                }
-            });
-
-            if (stat > GameConfig.DisableStat && _owner.getStats().isEnabled(_force)) {
-                Buttons.get().add(new Buttons.User() {
-                    @Override
-                    public Sprite getSprite() {
-                        return _bg;
-                    }
-
-                    @Override
-                    public void onClick() {
-                        State state = StateManager.get().current();
-
-                        Battle battle = (Battle) state;
-                        battle.playerAttack(_force);
-                    }
-                });
+        _message = (stat > GameConfig.DisableStat && _owner.getStats().isEnabled(_force)) ? force.name() + ": " + strength() + input : "Disabled";
+        ToolTip.get().add(new ToolTip.User() {
+            @Override
+            public boolean isActive() {
+                return HitTest.inBox(Input.get().x(), Input.get().y(), (int) _sprite.getX(), (int) _sprite.getY(), _width, _height);
             }
+
+            @Override
+            public String message() {
+                setTooltip();
+                return _message;
+            }
+        });
+
+
+        if (!_owner.getStats().isEnabled(_force) || _owner.getStats().get(_force) <= GameConfig.DisableStat) {
+            moveToRightSide();
         }
+        Buttons.get().add(new Buttons.User() {
+            @Override
+            public Sprite getSprite() {
+                return _bg;
+            }
+
+            @Override
+            public void onClick() {
+                _owner.getStats().toggleEnabled(_force);
+                if (!_owner.getStats().isEnabled(_force)) {
+                    moveToRightSide();
+                }
+                else {
+                    moveToLeftSide();
+                }
+            }
+        });
+
+    }
+
+    private void moveToRightSide() {
+        _bg.setPosition(_position.X + Screen.width(50), _position.Y);
+        _sprite.setPosition(_position.X + Screen.width(50), _position.Y);
+    }
+
+    private void moveToLeftSide() {
+        _bg.setPosition(_position.X, _position.Y);
+        _sprite.setPosition(_position.X, _position.Y);
     }
 
     private String strength() {
