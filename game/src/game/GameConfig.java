@@ -5,7 +5,7 @@ import sps.util.Screen;
 
 public class GameConfig {
 
-    public final static int CreatureLimit = 100;
+    public final static int CreatureLimit = 50;
     public final static int TournamentMatches = 1;
 
     public final static int SpacePercentPerCreature = 1;
@@ -61,8 +61,8 @@ public class GameConfig {
     public static final int MaxForcesEnabled = 4;
 
     //Debugging / Development
-    public static final boolean DevBattleLog = true;
     public static final boolean DevShortcutsEnabled = true;
+    public static final boolean DevBattleLog = false;
     public static final boolean DevPlaythroughTest = false;
     public static final boolean DevFlipEnabled = false;
     public static final boolean DevDrawSkeleton = false;

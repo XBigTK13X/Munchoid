@@ -4,7 +4,9 @@ import game.GameConfig;
 import game.forces.Force;
 import sps.core.RNG;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Stats {
@@ -12,10 +14,12 @@ public class Stats {
         Stats result = new Stats();
         for (Force f : Force.values()) {
             result.set(f, 0);
+            result.setEnabled(f, false);
         }
         Force strength = stats.randomEnabledForce();
         Force weakness = Force.beats(strength);
         result.set(weakness, stats.get(strength) / 2);
+        result.setEnabled(weakness, true);
         return result;
     }
 
@@ -57,6 +61,9 @@ public class Stats {
 
     public Force randomEnabledForce() {
         Force force;
+        if (maxEnabled() == 0) {
+            throw new RuntimeException("No forces can be selected.");
+        }
         while (true) {
             force = Force.random();
             if (get(force) > GameConfig.DisableStat && isEnabled(force)) {
@@ -89,7 +96,7 @@ public class Stats {
         _enabled.put(force, enabled);
     }
 
-    private boolean canBeEnabled(Force force) {
+    public boolean canBeEnabled(Force force) {
         return get(force) > GameConfig.DisableStat;
     }
 
@@ -101,5 +108,22 @@ public class Stats {
             }
         }
         return max;
+    }
+
+    public void activateRandom() {
+        int remainingPicks = maxEnabled();
+        List<Force> forces = new ArrayList<Force>();
+        for (Force f : Force.values()) {
+            if (canBeEnabled(f)) {
+                forces.add(f);
+            }
+            setEnabled(f, false);
+        }
+        while (remainingPicks > 0) {
+            int pick = RNG.next(forces.size());
+            setEnabled(forces.get(pick), true);
+            forces.remove(pick);
+            remainingPicks--;
+        }
     }
 }

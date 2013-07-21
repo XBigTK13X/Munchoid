@@ -49,7 +49,7 @@ public class Merge {
             }
 
             result.set(force, a.get(force) + impact);
-            result.setEnabled(force, a.isEnabled(force));
+            result.setEnabled(force, result.canBeEnabled(force));
         }
         return result;
     }

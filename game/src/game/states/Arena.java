@@ -141,6 +141,7 @@ public class Arena implements State {
                         Creature merged = Merge.creatures(c1.getCreature(), c2.getCreature());
                         c1.setCreature(merged);
                         opponents.get(ii + 1).setInactive();
+                        c1.getCreature().getStats().activateRandom();
                     }
                 }
             }
