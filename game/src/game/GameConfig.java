@@ -69,7 +69,8 @@ public class GameConfig {
 
 
     //Optimizations -> These need to be fixed before release
-    public static final boolean OptDisableOutlines = true;
+    public static final boolean OptDisableOutlines = false;
+    public static final boolean OptFastOutlineAlg = false;
 
 
     public static final float FirstFightMult = 1.5f;
