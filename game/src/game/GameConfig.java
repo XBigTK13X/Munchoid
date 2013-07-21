@@ -10,8 +10,8 @@ public class GameConfig {
 
     public final static int SpacePercentPerCreature = 1;
     public static final int ArenaBufferPercent = (int) ((GameConfig.CreatureLimit / 2) * GameConfig.SpacePercentPerCreature);
-    public static final int ArenaHeight = 1380 + (int) Screen.height(ArenaBufferPercent) * 2;
-    public static final int ArenaWidth = 2320 + (int) Screen.width(ArenaBufferPercent) * 2;
+    public static final int ArenaHeight = Screen.get().VirtualHeight + (int) Screen.height(ArenaBufferPercent) * 2;
+    public static final int ArenaWidth = Screen.get().VirtualWidth + (int) Screen.width(ArenaBufferPercent) * 2;
     //The length of Quickly.ogg
     public final static float ArenaTimeoutSeconds = 10f;
     public static final float ArenaCreatureScale = .6f;
