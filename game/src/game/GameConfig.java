@@ -34,7 +34,7 @@ public class GameConfig {
     public static final int BonusAmount = 1;
     public static final int BonusAward = 15;
 
-    public static final int InitEnabledStats = 6;
+    public static final int InitEnabledStats = 1;
     public static final int MinStatInit = 2;
     public static final int MaxStatInit = 5;
     public static final int DisableStat = 0;

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import game.UI;
-import game.battle.ForcesHUD;
+import game.battle.ForcesSelectionUI;
 import game.creatures.Creature;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
@@ -26,7 +26,7 @@ public class ForceSelection implements State {
     private Creature _pet;
 
     private Sprite _accept;
-    private ForcesHUD _forces;
+    private ForcesSelectionUI _forces;
     private Text _wrongCountMessage;
 
     public ForceSelection(Creature pet) {
@@ -73,7 +73,7 @@ public class ForceSelection implements State {
                 return "Confirm";
             }
         });
-        _forces = new ForcesHUD(_pet);
+        _forces = new ForcesSelectionUI(_pet);
         if (GameConfig.DevPlaythroughTest) {
             while (!confirmSelection()) {
                 _pet.getStats().setEnabled(_pet.getStats().randomEnabledForce(), false);
@@ -108,13 +108,12 @@ public class ForceSelection implements State {
         if (diff > 0) {
             return "Please disable " + (_pet.getStats().enabledCount() - _pet.getStats().maxEnabled()) + " of the forces on the left.";
         }
-        else
-            if (diff == 0) {
-                return "Please press the green button to accept your changes.";
-            }
-            else {
-                return "Please enable " + (_pet.getStats().maxEnabled() - _pet.getStats().enabledCount()) + " of the forces on the right";
-            }
+        else if (diff == 0) {
+            return "Please press the green button to accept your changes.";
+        }
+        else {
+            return "Please enable " + (_pet.getStats().maxEnabled() - _pet.getStats().enabledCount()) + " of the forces on the right";
+        }
     }
 
     private int _lastEnabledCount;
