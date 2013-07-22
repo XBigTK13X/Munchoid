@@ -1,5 +1,6 @@
 package targets;
 
+import game.GameConfig;
 import sps.core.Logger;
 import sps.util.Commander;
 
@@ -37,6 +38,6 @@ public class DistributedBots {
 
     private static Commander launch() {
         total++;
-        return new Commander(gameCmd, "game");
+        return new Commander(gameCmd, "game", GameConfig.DevBotCatchIO);
     }
 }

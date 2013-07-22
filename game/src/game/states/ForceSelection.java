@@ -40,6 +40,11 @@ public class ForceSelection implements State {
             exitMenu();
             return;
         }
+        if (GameConfig.DevBotEnabled) {
+            while (!confirmSelection()) {
+                _pet.getStats().setEnabled(_pet.getStats().randomEnabledForce(), false);
+            }
+        }
         TextPool.get().write("ENABLED", Screen.pos(20, 100));
         TextPool.get().write("DISABLED", Screen.pos(70, 100));
 

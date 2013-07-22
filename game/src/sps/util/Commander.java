@@ -19,8 +19,10 @@ public class Commander {
                 InputStreamReader isr = new InputStreamReader(is);
                 BufferedReader br = new BufferedReader(isr);
                 String line = null;
-                while ((line = br.readLine()) != null)
+                while ((line = br.readLine()) != null) {
+
                     Logger.info(type + ">" + line);
+                }
             }
             catch (IOException ioe) {
                 Logger.exception(ioe);
@@ -33,14 +35,16 @@ public class Commander {
     private StreamGobbler _error;
     private Process _process;
 
-    public Commander(String command, String workingDir) {
+    public Commander(String command, String workingDir, boolean watchOutput) {
         _command = command;
         try {
             _process = Runtime.getRuntime().exec(command, null, new File(workingDir));
-            _error = new StreamGobbler(_process.getErrorStream(), "ERROR");
-            _output = new StreamGobbler(_process.getInputStream(), "OUTPUT");
-            _error.start();
-            _output.start();
+            if (watchOutput) {
+                _error = new StreamGobbler(_process.getErrorStream(), "ERROR");
+                _output = new StreamGobbler(_process.getInputStream(), "OUTPUT");
+                _error.start();
+                _output.start();
+            }
         }
         catch (IOException e) {
             Logger.exception(e);

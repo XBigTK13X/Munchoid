@@ -77,6 +77,7 @@ public class GameConfig {
     public static final boolean DevShortcutsEnabled = true;
     public static final boolean DevBattleLog = false;
     public static final boolean DevBotEnabled = true;
+    public static final boolean DevBotCatchIO = false;
     public static final boolean DevBotAlwaysMerge = true;
     public static final boolean DevEndToEndStateLoadTest = false;
     public static final boolean DevFlipEnabled = false;
