@@ -85,9 +85,6 @@ public class Battle implements State {
             if (_left.getStats().get(force) > 0) {
                 playerAttack(force);
             }
-            else {
-                TextPool.get().write(force.name() + " Disabled", Screen.pos(10, 50), 1f, TextEffects.Fountain);
-            }
         }
         else {
             TextPool.get().write("Not enough energy", Screen.pos(10, 50), 1f, TextEffects.Fountain);

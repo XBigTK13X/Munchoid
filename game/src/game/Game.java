@@ -56,6 +56,11 @@ public class Game implements ApplicationListener {
             Window.get().toggleFullScreen();
         }
 
+        //TODO Remove debugging helper
+        if (Input.get().isActive(Commands.get("Debug"))) {
+            MetaData.printWin();
+        }
+
         _preUpdateState = StateManager.get().current();
         StateManager.get().asyncUpdate();
         StateManager.get().update();
@@ -89,7 +94,8 @@ public class Game implements ApplicationListener {
             //Logger.devConsole("" + Gdx.graphics.getFramesPerSecond() + ": " + Gdx.graphics.getDeltaTime());
             update();
             draw();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Logger.exception(e);
         }
     }

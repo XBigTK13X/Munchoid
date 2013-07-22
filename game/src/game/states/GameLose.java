@@ -1,6 +1,7 @@
 package game.states;
 
 import game.GameConfig;
+import game.MetaData;
 import game.Score;
 import sps.bridge.Commands;
 import sps.io.Input;
@@ -15,7 +16,7 @@ public class GameLose implements State {
         TextPool.get().write("You Lose", Screen.pos(10, 80));
         TextPool.get().write(Score.get().message(), Screen.pos(10, 60));
         TextPool.get().write("SPACE to restart", Screen.pos(10, 40));
-        Score.get().printDebug(false);
+        MetaData.printLose();
     }
 
     @Override

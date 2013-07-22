@@ -1,8 +1,9 @@
 package game;
 
+import game.arena.Player;
+import game.creatures.Creature;
 import game.creatures.Stats;
-import sps.core.Logger;
-import sps.states.StateManager;
+import sps.entities.EntityManager;
 
 public class Score {
     private static Score __instance;
@@ -50,6 +51,16 @@ public class Score {
         return _victories;
     }
 
+    public Stats petStats() {
+        if (_petStats == null) {
+            Player p = (Player) EntityManager.get().getPlayer();
+            Creature c = p.getPet();
+            _petStats = c.getStats();
+            setPlayerPetStats(_petStats);
+        }
+        return _petStats;
+    }
+
     public int total() {
         return (__scoreMult) * (
                 _victories * __victoryWeight +
@@ -64,32 +75,12 @@ public class Score {
         return "Total score: " + total() + " point" + ((total() == 1) ? "" : "s");
     }
 
-    public void printDebug(boolean win) {
-        if (GameConfig.DevBotEnabled) {
-            Logger.info("====");
-            Logger.info(win ? "-GAME-WIN-" : "-GAME-LOSE-");
-            Logger.info(Score.get().debug());
-        }
-    }
-
     public String debug() {
-        return "{" +
-
-                "\"score\":{" +
+        return "\"score\":{" +
                 "\"total\":\"" + total() +
                 "\",\"victories\":\"" + _victories +
                 "\",\"chomps\":\"" + _chomps +
                 "\",\"healthRemaining\":" + _healthRemaining +
-                "}" +
-
-                "," +
-
-                _petStats.debug() +
-
-                "," +
-
-                StateManager.debug() +
-
                 "}";
     }
 

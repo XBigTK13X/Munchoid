@@ -1,11 +1,14 @@
 package game;
 
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.util.Screen;
 
+import java.lang.reflect.Field;
+
 public class GameConfig {
 
-    public final static int CreatureLimit = 5;
+    public final static int CreatureLimit = 50;
     public final static int TournamentMatches = 3;
 
     public final static int SpacePercentPerCreature = 1;
@@ -51,6 +54,7 @@ public class GameConfig {
 
     public static final int MinInitCooldown = 1;
     public static final int MaxInitCooldown = 1;
+    public static final float MinCoolDown = .1f;
 
     public static final float MinScaleDeath = .5f;
     public static final float MaxScaleDeath = 1.5f;
@@ -70,11 +74,30 @@ public class GameConfig {
     //Debugging / Development
     public static final boolean DevShortcutsEnabled = true;
     public static final boolean DevBattleLog = false;
-    public static final boolean DevBotEnabled = false;
+    public static final boolean DevBotEnabled = true;
     public static final boolean DevBotAlwaysMerge = true;
     public static final boolean DevEndToEndStateLoadTest = false;
     public static final boolean DevFlipEnabled = false;
     public static final boolean DevDrawSkeleton = false;
     public static final boolean DevTimeStates = false;
     public static final boolean DevPrintArenaSize = false;
+
+    public static String debug() {
+        String config = "\"gameConfig\":{";
+        Field[] fields = GameConfig.class.getDeclaredFields();
+        int c = 0;
+        for (Field f : fields) {
+            try {
+                config += "\"" + f.getName() + "\":\"" + f.get(null) + "\"";
+                if (c++ < fields.length - 1) {
+                    config += ",";
+                }
+            }
+            catch (IllegalAccessException e) {
+                Logger.exception(e);
+            }
+        }
+        config += "}";
+        return config;
+    }
 }

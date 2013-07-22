@@ -101,6 +101,9 @@ public class Creature extends Entity {
         if (_opponent != null && _opponent.getBody().isAlive()) {
 
             _energy -= _stats.get(force);
+            if (_energy < 0) {
+                _energy = 0;
+            }
             int weakness = _opponent.getStats().get(Force.beatenBy(force));
             int strength = _opponent.getStats().get(Force.beats(force));
 
@@ -127,7 +130,8 @@ public class Creature extends Entity {
             Force.create(force, magnitude).apply(_opponent.getBody().getRandomPart());
             _opponent.getSideEffects().add(Force.sideEffect(force));
 
-            _coolDown.reset(_coolDown.getInitialTimeMax() + _sideEffects.act(SideEffectType.CoolDown));
+            _coolDown.reset(Math.max(_coolDown.getInitialTimeMax() + _sideEffects.act(SideEffectType.CoolDown), GameConfig.MinCoolDown));
+
             _sideEffects.act(SideEffectType.DelayNextAttack);
         }
     }
