@@ -129,10 +129,10 @@ public class Stats {
 
     public String debug() {
         int fC = 0;
-        String stats = "stats:{";
+        String stats = "\"stats\":{";
         for (Force f : Force.values()) {
-            stats += f + ":{strength:" + get(f) + ",enabled:" + isEnabled(f) + "}";
-            if (fC++ < Force.values().length) {
+            stats += "\"" + f + "\"" + ":{\"strength\":\"" + get(f) + "\",\"enabled\":\"" + isEnabled(f) + "\"}";
+            if (fC++ < Force.values().length - 1) {
                 stats += ",";
             }
         }

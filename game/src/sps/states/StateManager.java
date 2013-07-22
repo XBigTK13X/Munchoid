@@ -34,11 +34,11 @@ public class StateManager {
     }
 
     public static String debug() {
-        String result = "stateTimes:{";
+        String result = "\"stateTimes\":{";
         int c = 0;
         for (String k : stateTimes.keySet()) {
-            result += k + ":" + stateTimes.get(k);
-            if (c++ < stateTimes.keySet().size()) {
+            result += "\"" + k + "\":\"" + stateTimes.get(k) + "\"";
+            if (c++ < stateTimes.keySet().size() - 1) {
                 result += ",";
             }
         }

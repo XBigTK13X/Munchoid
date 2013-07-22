@@ -6,7 +6,7 @@ import sps.util.Screen;
 public class GameConfig {
 
     public final static int CreatureLimit = 5;
-    public final static int TournamentMatches = 1;
+    public final static int TournamentMatches = 3;
 
     public final static int SpacePercentPerCreature = 1;
     public static final int ArenaBufferPercent = (int) ((GameConfig.CreatureLimit / 2) * GameConfig.SpacePercentPerCreature);

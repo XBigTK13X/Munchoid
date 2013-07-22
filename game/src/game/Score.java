@@ -75,11 +75,11 @@ public class Score {
     public String debug() {
         return "{" +
 
-                "score:{" +
-                "total:" + total() +
-                ",victories:" + _victories +
-                ",chomps:" + _chomps +
-                ",healthRemaining:" + _healthRemaining +
+                "\"score\":{" +
+                "\"total\":\"" + total() +
+                "\",\"victories\":\"" + _victories +
+                "\",\"chomps\":\"" + _chomps +
+                "\",\"healthRemaining\":" + _healthRemaining +
                 "}" +
 
                 "," +
