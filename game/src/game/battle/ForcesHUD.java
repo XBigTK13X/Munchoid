@@ -29,13 +29,11 @@ public class ForcesHUD {
         }
 
         _meters = new ArrayList<ForceMeter>();
-        int activeCount = 0;
+        int forceOrder = 0;
         for (Force force : Force.values()) {
-            if (_owner.getStats().isEnabled(force)) {
-                Point2 origin = _origin.add(__order[activeCount].X * Screen.width(__widthPercent) + __order[activeCount].X * Screen.width(__paddingPercent), -__order[activeCount].Y * Screen.height(__heightPercent) - __order[activeCount].Y * Screen.height(__paddingPercent));
-                _meters.add(new ForceMeter(force, _owner, __widthPercent, __heightPercent, origin));
-                activeCount++;
-            }
+            Point2 origin = _origin.add(__order[forceOrder].X * Screen.width(__widthPercent) + __order[forceOrder].X * Screen.width(__paddingPercent), -__order[forceOrder].Y * Screen.height(__heightPercent) - __order[forceOrder].Y * Screen.height(__paddingPercent));
+            _meters.add(new ForceMeter(force, _owner, __widthPercent, __heightPercent, origin));
+            forceOrder++;
         }
     }
 

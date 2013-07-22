@@ -56,8 +56,14 @@ public class ForceMeter {
         _sprite.setSize(_scaledWidth, _height);
         _sprite.setPosition(_position.X, _position.Y);
 
-        _bg.setColor(Color.GRAY);
-        _sprite.setColor(Color.GRAY);
+
+        Color core = new Color(Color.GRAY);
+        if (!owner.getStats().isEnabled(force)) {
+            core.a = .33f;
+        }
+        _bg.setColor(core);
+        _sprite.setColor(core);
+
         boolean isPlayer = _position.X < Screen.width(50);
         if (isPlayer) {
             String input = "[" + Commands.get(force.Command).key().name() + "]";
