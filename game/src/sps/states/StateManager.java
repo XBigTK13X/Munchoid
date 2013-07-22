@@ -82,7 +82,7 @@ public class StateManager {
             Logger.info("Pushing: " + state.getName() + ". Time since last: " + ((System.currentTimeMillis() - lastMil)) / 1000f);
             lastMil = System.currentTimeMillis();
         }
-        if (GameConfig.DevBotEnabled) {
+        if (GameConfig.OptCollectMetaData) {
             if (lastMil != 0) {
                 if (!stateTimes.containsKey(state.getName())) {
                     stateTimes.put(state.getName(), 0L);

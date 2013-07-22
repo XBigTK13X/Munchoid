@@ -13,7 +13,7 @@ public class MetaData {
     }
 
     private static void print(String end) {
-        if (GameConfig.DevBotEnabled) {
+        if (GameConfig.OptCollectMetaData) {
             String metaData = "{";
 
             metaData += end + ",";

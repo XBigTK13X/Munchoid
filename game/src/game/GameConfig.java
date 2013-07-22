@@ -67,14 +67,16 @@ public class GameConfig {
     //Optimizations
     //TODO Make them toggleable in the options menu,
     //     helps on Mac with large amounts of creatures
+    public static final boolean OptCollectMetaData = true;
     public static final boolean OptDisableOutlines = true;
     public static final boolean OptDisableCloudyTextures = true;
     public static final boolean OptFastOutlineAlg = false;
 
+
     //Debugging / Development
     public static final boolean DevShortcutsEnabled = true;
     public static final boolean DevBattleLog = false;
-    public static final boolean DevBotEnabled = true;
+    public static final boolean DevBotEnabled = false;
     public static final boolean DevBotAlwaysMerge = true;
     public static final boolean DevEndToEndStateLoadTest = false;
     public static final boolean DevFlipEnabled = false;
