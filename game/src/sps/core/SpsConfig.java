@@ -38,14 +38,12 @@ public class SpsConfig {
 
     private SpsConfig() {
         try {
+            Logger.info("Parsing sps-gamelib.cfg");
             for (String line : FileUtils.readLines(Loader.get().data("sps-gamelib.cfg"))) {
                 if (!line.contains("##") && line.length() > 1) {
                     String key = line.split("=")[0];
                     String value = line.split("=")[1];
                     _settings.put(key, value);
-                }
-                if (line.contains("##")) {
-                    Logger.info("SETTINGS: Parsing section '" + line.replace("##", "") + "'");
                 }
             }
         }
