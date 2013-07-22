@@ -26,7 +26,8 @@ public class DistributedBots {
                     Logger.info("New bot launched, " + total + " bots since launch");
                 }
             }
-            if (ps.size() < numBots) {
+            while (ps.size() < numBots) {
+                ps.add(launch());
             }
         }
     }
