@@ -167,7 +167,7 @@ public class Arena implements State {
 
     @Override
     public String getName() {
-        return "World";
+        return "Arena";
     }
 
     @Override
