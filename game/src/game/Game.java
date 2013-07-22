@@ -121,5 +121,6 @@ public class Game implements ApplicationListener {
         public final static String MoveDown = "MoveDown";
         public final static String MoveLeft = "MoveLeft";
         public final static String MoveRight = "MoveRight";
+        public final static String Debug = "Debug";
     }
 }
