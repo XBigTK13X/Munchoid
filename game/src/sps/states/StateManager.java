@@ -33,7 +33,7 @@ public class StateManager {
         stateTimes = new HashMap<String, Long>();
     }
 
-    public static String debug() {
+    public static String json() {
         String result = "\"stateTimes\":{";
         int c = 0;
         for (String k : stateTimes.keySet()) {

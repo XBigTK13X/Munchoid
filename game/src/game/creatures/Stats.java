@@ -127,7 +127,7 @@ public class Stats {
         }
     }
 
-    public String debug() {
+    public String json() {
         int fC = 0;
         String stats = "\"stats\":{";
         for (Force f : Force.values()) {

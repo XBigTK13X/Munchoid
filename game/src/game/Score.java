@@ -75,7 +75,7 @@ public class Score {
         return "Total score: " + total() + " point" + ((total() == 1) ? "" : "s");
     }
 
-    public String debug() {
+    public String json() {
         return "\"score\":{" +
                 "\"total\":\"" + total() +
                 "\",\"victories\":\"" + _victories +

@@ -17,10 +17,10 @@ public class MetaData {
             String metaData = "{";
 
             metaData += end + ",";
-            metaData += Score.get().debug() + ",";
-            metaData += Score.get().petStats().debug() + ",";
-            metaData += StateManager.debug() + ",";
-            metaData += GameConfig.debug() + "}";
+            metaData += Score.get().json() + ",";
+            metaData += Score.get().petStats().json() + ",";
+            metaData += StateManager.json() + ",";
+            metaData += GameConfig.json() + "}";
 
             Logger.info(metaData);
         }

@@ -84,7 +84,7 @@ public class GameConfig {
     public static final boolean DevTimeStates = false;
     public static final boolean DevPrintArenaSize = false;
 
-    public static String debug() {
+    public static String json() {
         String config = "\"gameConfig\":{";
         Field[] fields = GameConfig.class.getDeclaredFields();
         int c = 0;
