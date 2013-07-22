@@ -1,5 +1,6 @@
 package game.states;
 
+import game.GameConfig;
 import game.Score;
 import sps.bridge.Commands;
 import sps.io.Input;
@@ -14,6 +15,7 @@ public class GameLose implements State {
         TextPool.get().write("You Lose", Screen.pos(10, 80));
         TextPool.get().write(Score.get().message(), Screen.pos(10, 60));
         TextPool.get().write("SPACE to restart", Screen.pos(10, 40));
+        Score.get().printDebug(false);
     }
 
     @Override
@@ -22,7 +24,7 @@ public class GameLose implements State {
 
     @Override
     public void update() {
-        if (Input.get().isActive(Commands.get("Confirm"))) {
+        if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.DevEndToEndStateLoadTest || GameConfig.DevBotEnabled) {
             StateManager.reset().push(new MainMenu());
         }
     }

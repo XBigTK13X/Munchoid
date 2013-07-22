@@ -74,7 +74,7 @@ public class ForceSelection implements State {
             }
         });
         _forces = new ForcesSelectionUI(_pet);
-        if (GameConfig.DevPlaythroughTest) {
+        if (GameConfig.DevEndToEndStateLoadTest) {
             while (!confirmSelection()) {
                 _pet.getStats().setEnabled(_pet.getStats().randomEnabledForce(), false);
             }

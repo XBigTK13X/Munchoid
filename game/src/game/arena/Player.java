@@ -49,35 +49,33 @@ public class Player extends Entity implements IActor {
         setLocation(Screen.pos(50, 50));
     }
 
-    private boolean inXBuffer(float offset) {
-        return getLocation().X + offset > _movementBuffer.X
-                && getLocation().X + offset < Screen.get().VirtualWidth - _movementBuffer.X;
-    }
-
-    private boolean inYBuffer(float offset) {
-        return getLocation().Y + offset > _movementBuffer.Y
-                && getLocation().Y + offset < Screen.get().VirtualHeight - _movementBuffer.Y;
-    }
-
     private void calculateKeyVelocity() {
-        float leftVelocity = (Input.get().isActive(Commands.get(Game.CommandNames.MoveLeft)) ? -_moveDistance : 0);
-        float rightVelocity = (Input.get().isActive(Commands.get(Game.CommandNames.MoveRight)) ? _moveDistance : 0);
-        _keyVelocity.setX(rightVelocity + leftVelocity);
+        if (GameConfig.DevBotEnabled) {
+            Entity e = _arrow.getClosest();
+            if (e != null) {
+                float xVel = (e.getLocation().X - getLocation().X > 0) ? _moveDistance : -_moveDistance;
+                float yVel = (e.getLocation().Y - getLocation().Y > 0) ? _moveDistance : -_moveDistance;
+                _keyVelocity.reset(xVel, yVel);
+            }
+        }
+        else {
+            float leftVelocity = (Input.get().isActive(Commands.get(Game.CommandNames.MoveLeft)) ? -_moveDistance : 0);
+            float rightVelocity = (Input.get().isActive(Commands.get(Game.CommandNames.MoveRight)) ? _moveDistance : 0);
+            _keyVelocity.setX(rightVelocity + leftVelocity);
+            float downVelocity = (Input.get().isActive(Commands.get(Game.CommandNames.MoveDown)) ? -_moveDistance : 0);
+            float upVelocity = (Input.get().isActive(Commands.get(Game.CommandNames.MoveUp)) ? _moveDistance : 0);
+            _keyVelocity.setY(upVelocity + downVelocity);
+        }
         if (_keyVelocity.X > 0) {
             setFacingLeft(false);
         }
         if (_keyVelocity.X < 0) {
             setFacingLeft(true);
         }
-        float downVelocity = (Input.get().isActive(Commands.get(Game.CommandNames.MoveDown)) ? -_moveDistance : 0);
-        float upVelocity = (Input.get().isActive(Commands.get(Game.CommandNames.MoveUp)) ? _moveDistance : 0);
-        _keyVelocity.setY(upVelocity + downVelocity);
     }
 
 
     private void moveInBothDirections(float x, float y) {
-
-
         //X Movement
         float adjustedXVelocity = x * Gdx.graphics.getDeltaTime();
         float nextX = getLocation().X + adjustedXVelocity;
@@ -113,7 +111,7 @@ public class Player extends Entity implements IActor {
         moveInBothDirections(_keyVelocity.X, 0);
         moveInBothDirections(0, _keyVelocity.Y);
 
-        if (Input.get().isActive(Commands.get("Confirm")) && !_net.isInUse()) {
+        if ((GameConfig.DevBotEnabled || Input.get().isActive(Commands.get("Confirm"))) && !_net.isInUse()) {
             _net.use();
         }
 

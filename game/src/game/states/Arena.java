@@ -71,7 +71,7 @@ public class Arena implements State {
 
         _creatureText = TextPool.get().write(creatureDisplay(GameConfig.CreatureLimit), __creatureTextPos);
         _creatureText.setMoveable(false);
-        if (GameConfig.DevPlaythroughTest) {
+        if (GameConfig.DevEndToEndStateLoadTest) {
             _preload.getPlayer().setPet(new Creature());
         }
     }
@@ -98,7 +98,7 @@ public class Arena implements State {
                 StateManager.get().push(new Tournament((Player) EntityManager.get().getPlayer()));
             }
             else {
-                if ((_countDownSeconds <= 0 && opponents.size() > 0) || (Input.get().isActive(Commands.get("Push")) && GameConfig.DevShortcutsEnabled) || GameConfig.DevPlaythroughTest) {
+                if ((_countDownSeconds <= 0 && opponents.size() > 0) || (Input.get().isActive(Commands.get("Push")) && GameConfig.DevShortcutsEnabled) || GameConfig.DevEndToEndStateLoadTest) {
                     Creature opponent = ((Catchable) opponents.get(RNG.next(0, opponents.size()))).getCreature();
                     if (Score.get().victories() == 0) {
                         opponent.setStats(Stats.createWeakling(player.getPet().getStats()));

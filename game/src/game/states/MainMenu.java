@@ -13,6 +13,7 @@ public class MainMenu implements State {
     public void create() {
         TextPool.get().write("Munchoid", Screen.pos(20, 70));
         TextPool.get().write("Press SPACE to enter the arena.", Screen.pos(10, 60));
+        StateManager.clearTimes();
     }
 
     @Override
@@ -21,7 +22,7 @@ public class MainMenu implements State {
 
     @Override
     public void update() {
-        if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.DevPlaythroughTest) {
+        if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.DevEndToEndStateLoadTest || GameConfig.DevBotEnabled) {
             StateManager.get().push(new LoadArena());
         }
     }

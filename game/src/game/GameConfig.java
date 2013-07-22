@@ -5,7 +5,7 @@ import sps.util.Screen;
 
 public class GameConfig {
 
-    public final static int CreatureLimit = 50;
+    public final static int CreatureLimit = 5;
     public final static int TournamentMatches = 1;
 
     public final static int SpacePercentPerCreature = 1;
@@ -60,18 +60,21 @@ public class GameConfig {
 
     public static final int MaxForcesEnabled = 4;
 
-    //Debugging / Development
-    public static final boolean DevShortcutsEnabled = true;
-    public static final boolean DevBattleLog = false;
-    public static final boolean DevPlaythroughTest = false;
-    public static final boolean DevFlipEnabled = false;
-    public static final boolean DevDrawSkeleton = false;
-    public static final boolean DevTimeStates = false;
-
     //Optimizations
     //TODO Make them toggleable in the options menu,
     //     helps on Mac with large amounts of creatures
     public static final boolean OptDisableOutlines = true;
     public static final boolean OptDisableCloudyTextures = true;
     public static final boolean OptFastOutlineAlg = false;
+
+    //Debugging / Development
+    public static final boolean DevShortcutsEnabled = true;
+    public static final boolean DevBattleLog = false;
+    public static final boolean DevBotEnabled = false;
+    public static final boolean DevBotAlwaysMerge = true;
+    public static final boolean DevEndToEndStateLoadTest = false;
+    public static final boolean DevFlipEnabled = false;
+    public static final boolean DevDrawSkeleton = false;
+    public static final boolean DevTimeStates = false;
+    public static final boolean DevPrintArenaSize = false;
 }

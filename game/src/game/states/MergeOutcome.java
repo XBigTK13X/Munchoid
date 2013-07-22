@@ -137,7 +137,7 @@ public class MergeOutcome implements State {
                 return "Prevent Merge";
             }
         });
-        if (GameConfig.DevPlaythroughTest) {
+        if (GameConfig.DevEndToEndStateLoadTest) {
             acceptMerge();
         }
     }
@@ -173,6 +173,14 @@ public class MergeOutcome implements State {
         }
         if (Input.get().isActive(Commands.get("Push"))) {
             rejectMerge();
+        }
+        if (GameConfig.DevBotEnabled) {
+            if (GameConfig.DevBotAlwaysMerge) {
+                acceptMerge();
+            }
+            else {
+                rejectMerge();
+            }
         }
     }
 

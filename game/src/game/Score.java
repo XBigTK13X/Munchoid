@@ -1,6 +1,8 @@
 package game;
 
 import game.creatures.Stats;
+import sps.core.Logger;
+import sps.states.StateManager;
 
 public class Score {
     private static Score __instance;
@@ -29,6 +31,8 @@ public class Score {
     private int _petVariety;
     private int _petPower;
     private int _healthRemaining;
+
+    private Stats _petStats;
 
     private Score() {
 
@@ -60,9 +64,39 @@ public class Score {
         return "Total score: " + total() + " point" + ((total() == 1) ? "" : "s");
     }
 
+    public void printDebug(boolean win) {
+        if (GameConfig.DevBotEnabled) {
+            Logger.info("====");
+            Logger.info(win ? "-GAME-WIN-" : "-GAME-LOSE-");
+            Logger.info(Score.get().debug());
+        }
+    }
+
+    public String debug() {
+        return "{" +
+
+                "score:{" +
+                "total:" + total() +
+                ",victories:" + _victories +
+                ",chomps:" + _chomps +
+                ",healthRemaining:" + _healthRemaining +
+                "}" +
+
+                "," +
+
+                _petStats.debug() +
+
+                "," +
+
+                StateManager.debug() +
+
+                "}";
+    }
+
     public void setPlayerPetStats(Stats stats) {
         _petVariety = stats.possibleActiveForces();
         _petPower = stats.power();
+        _petStats = stats;
     }
 
     public void addHealthRemaining(float percentHealth) {

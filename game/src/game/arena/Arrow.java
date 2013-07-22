@@ -30,10 +30,14 @@ public class Arrow extends Entity {
         if (catchables.size() > 0) {
             _closest = catchables.get(0);
             float dist = Float.MAX_VALUE;
+            Catchable c = null;
             for (Entity catchable : catchables) {
-                if (HitTest.getDistance(this, catchable) < dist) {
-                    dist = HitTest.getDistance(this, catchable);
-                    _closest = catchable;
+                c = (Catchable) catchable;
+                if (_owner.getPet() == null || _owner.getPet().isLargerThan(c.getCreature())) {
+                    if (HitTest.getDistance(this, catchable) < dist) {
+                        dist = HitTest.getDistance(this, catchable);
+                        _closest = catchable;
+                    }
                 }
             }
             double rads = Math.atan2(getLocation().Y - _closest.getLocation().Y, getLocation().X - _closest.getLocation().X);
@@ -56,5 +60,9 @@ public class Arrow extends Entity {
         if (_isOnBoard) {
             _graphic.draw();
         }
+    }
+
+    public Entity getClosest() {
+        return _closest;
     }
 }

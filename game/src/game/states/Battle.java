@@ -80,6 +80,22 @@ public class Battle implements State {
         _leftHud.updateAttackBasedState();
     }
 
+    private void playerActivate(Force force) {
+        if (_left.canUse(force)) {
+            if (_left.getStats().get(force) > 0) {
+                playerAttack(force);
+            }
+            else {
+                TextPool.get().write(force.name() + " Disabled", Screen.pos(10, 50), 1f, TextEffects.Fountain);
+            }
+        }
+        else {
+            TextPool.get().write("Not enough energy", Screen.pos(10, 50), 1f, TextEffects.Fountain);
+            //TODO A more skillful means of waiting
+            _left.getCoolDown().reset();
+        }
+    }
+
     @Override
     public void update() {
         EntityManager.get().update();
@@ -87,19 +103,13 @@ public class Battle implements State {
         _rightHud.update();
 
         if (_left.getCoolDown().isCooled()) {
+            if (GameConfig.DevBotEnabled) {
+                Force f = _left.getStats().randomEnabledForce();
+                playerActivate(f);
+            }
             for (Force force : Force.values()) {
                 if (Input.get().isActive(Commands.get(force.Command), 0) && _left.getStats().isEnabled(force)) {
-                    if (_left.canUse(force)) {
-                        if (_left.getStats().get(force) > 0) {
-                            playerAttack(force);
-                        }
-                        else {
-                            TextPool.get().write(force.name() + " Disabled", Screen.pos(10, 50), 1f, TextEffects.Fountain);
-                        }
-                    }
-                    else {
-                        TextPool.get().write("Not enough energy", Screen.pos(10, 50), 1f, TextEffects.Fountain);
-                    }
+                    playerActivate(force);
                 }
             }
             if (Input.get().isActive(Commands.get("Pop")) && GameConfig.DevShortcutsEnabled) {
@@ -118,7 +128,7 @@ public class Battle implements State {
         }
 
 
-        if (!_right.getBody().isAlive() || GameConfig.DevPlaythroughTest) {
+        if (!_right.getBody().isAlive() || GameConfig.DevEndToEndStateLoadTest) {
             victory();
         }
         if (!_left.getBody().isAlive()) {

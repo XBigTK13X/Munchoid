@@ -29,6 +29,23 @@ public class StateManager {
         return get();
     }
 
+    public static void clearTimes() {
+        stateTimes = new HashMap<String, Long>();
+    }
+
+    public static String debug() {
+        String result = "stateTimes:{";
+        int c = 0;
+        for (String k : stateTimes.keySet()) {
+            result += k + ":" + stateTimes.get(k);
+            if (c++ < stateTimes.keySet().size()) {
+                result += ",";
+            }
+        }
+        result += "}";
+        return result;
+    }
+
     private Stack<State> _states;
     private Map<State, StateDependentComponents> _components;
 
@@ -58,10 +75,20 @@ public class StateManager {
     }
 
     private static long lastMil = System.currentTimeMillis();
+    private static Map<String, Long> stateTimes = new HashMap<String, Long>();
 
     public void push(State state) {
         if (GameConfig.DevTimeStates) {
             Logger.info("Pushing: " + state.getName() + ". Time since last: " + ((System.currentTimeMillis() - lastMil)) / 1000f);
+            lastMil = System.currentTimeMillis();
+        }
+        if (GameConfig.DevBotEnabled) {
+            if (lastMil != 0) {
+                if (!stateTimes.containsKey(state.getName())) {
+                    stateTimes.put(state.getName(), 0L);
+                }
+                stateTimes.put(state.getName(), stateTimes.get(state.getName()) + (System.currentTimeMillis() - lastMil));
+            }
             lastMil = System.currentTimeMillis();
         }
         Window.get().resetCamera();

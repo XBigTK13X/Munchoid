@@ -126,4 +126,17 @@ public class Stats {
             remainingPicks--;
         }
     }
+
+    public String debug() {
+        int fC = 0;
+        String stats = "stats:{";
+        for (Force f : Force.values()) {
+            stats += f + ":{strength:" + get(f) + ",enabled:" + isEnabled(f) + "}";
+            if (fC++ < Force.values().length) {
+                stats += ",";
+            }
+        }
+        stats += "}";
+        return stats;
+    }
 }

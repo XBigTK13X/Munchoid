@@ -27,7 +27,9 @@ public class Floor extends Entity {
         _background = SpriteMaker.get().fromColors(base);
         setSize((int) _background.getWidth(), (int) _background.getHeight());
         _bounds = Bounds.fromDimensions(0, 0, getWidth(), getHeight());
-        Logger.info("Arena size: (W,H): (" + _background.getWidth() + "," + _background.getHeight() + ")");
+        if (GameConfig.DevPrintArenaSize) {
+            Logger.info("Arena size: (W,H): (" + _background.getWidth() + "," + _background.getHeight() + ")");
+        }
     }
 
     @Override

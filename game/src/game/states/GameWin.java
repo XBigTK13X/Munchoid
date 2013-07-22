@@ -15,6 +15,7 @@ public class GameWin implements State {
         TextPool.get().write("A WINNER IS YOU", Screen.pos(10, 80));
         TextPool.get().write(Score.get().message(), Screen.pos(10, 60));
         TextPool.get().write("Press SPACE to restart", Screen.pos(10, 40));
+        Score.get().printDebug(true);
     }
 
     @Override
@@ -23,7 +24,7 @@ public class GameWin implements State {
 
     @Override
     public void update() {
-        if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.DevPlaythroughTest) {
+        if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.DevEndToEndStateLoadTest || GameConfig.DevBotEnabled) {
             StateManager.reset().push(new MainMenu());
         }
     }
