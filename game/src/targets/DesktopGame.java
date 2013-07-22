@@ -14,7 +14,7 @@ public class DesktopGame {
 
     public static void main(String[] args) {
         if (GameConfig.DevBotEnabled) {
-            Logger.setLogFile(UUID.randomUUID().toString() + ".log");
+            Logger.setLogFile("logs/" + UUID.randomUUID().toString() + ".log");
         }
         else {
             Logger.setLogFile("game.log");
