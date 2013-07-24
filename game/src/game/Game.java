@@ -35,6 +35,7 @@ public class Game implements ApplicationListener {
         SpriteSheetManager.setup(SpriteTypes.getDefs());
         StateManager.get().push(new MainMenu());
         ParticleEngine.reset();
+        StateManager.get().setPaused(false);
     }
 
     @Override
@@ -57,16 +58,22 @@ public class Game implements ApplicationListener {
         }
 
         //TODO Remove debugging helper
-        if (Input.get().isActive(Commands.get("Debug"))) {
+        if (Input.get().isActive(Commands.get(CommandNames.Debug))) {
             MetaData.printWin();
         }
 
-        _preUpdateState = StateManager.get().current();
-        StateManager.get().asyncUpdate();
-        StateManager.get().update();
-        ParticleEngine.get().update();
-        TextPool.get().update();
-        UiElements.get().update();
+        if (Input.get().isActive(Commands.get(CommandNames.Pause))) {
+            StateManager.get().setPaused(!StateManager.get().isPaused());
+        }
+
+        if (!StateManager.get().isPaused()) {
+            _preUpdateState = StateManager.get().current();
+            StateManager.get().asyncUpdate();
+            StateManager.get().update();
+            ParticleEngine.get().update();
+            TextPool.get().update();
+            UiElements.get().update();
+        }
     }
 
     private void draw() {
@@ -94,8 +101,7 @@ public class Game implements ApplicationListener {
             //Logger.devConsole("" + Gdx.graphics.getFramesPerSecond() + ": " + Gdx.graphics.getDeltaTime());
             update();
             draw();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Logger.exception(e);
         }
     }
@@ -122,5 +128,6 @@ public class Game implements ApplicationListener {
         public final static String MoveLeft = "MoveLeft";
         public final static String MoveRight = "MoveRight";
         public final static String Debug = "Debug";
+        public final static String Pause = "Pause";
     }
 }
