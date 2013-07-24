@@ -76,7 +76,7 @@ public class GameConfig {
     //Debugging / Development
     public static final boolean DevShortcutsEnabled = true;
     public static final boolean DevBattleLog = false;
-    public static final boolean DevBotEnabled = true;
+    public static final boolean DevBotEnabled = false;
     public static final boolean DevBotCatchIO = false;
     public static final boolean DevBotAlwaysMerge = true;
     public static final boolean DevEndToEndStateLoadTest = false;
@@ -95,8 +95,7 @@ public class GameConfig {
                 if (c++ < fields.length - 1) {
                     config += ",";
                 }
-            }
-            catch (IllegalAccessException e) {
+            } catch (IllegalAccessException e) {
                 Logger.exception(e);
             }
         }
