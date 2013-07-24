@@ -52,7 +52,7 @@ public class Logger {
         }
 
         private String format(String message) {
-            return name() + ": " + message;
+            return message;
         }
 
         public void log(String message) {
