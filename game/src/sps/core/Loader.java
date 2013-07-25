@@ -22,6 +22,7 @@ public class Loader {
     private final String data = "data";
     private final String music = "music";
     private final String sound = "sound";
+    private final String font = "font";
 
     private File get(String dir, String target) {
         return new File(root + "/" + dir + "/" + target);
@@ -41,5 +42,9 @@ public class Loader {
 
     public File sound(String target) {
         return get(sound, target);
+    }
+
+    public File font(String target){
+        return get(font,target);
     }
 }

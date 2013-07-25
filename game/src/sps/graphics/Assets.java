@@ -43,7 +43,7 @@ public class Assets {
     private final HashMap<Integer, String> spriteNames = new HashMap<Integer, String>();
 
     private Assets() {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(new FileHandle(Loader.get().graphics("Molot.otf")));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(new FileHandle(Loader.get().font("Economica-Regular.ttf")));
         _font = generator.generateFont(60);
         generator.dispose();
 
