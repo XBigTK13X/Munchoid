@@ -174,10 +174,9 @@ public class Colors {
     public static Color[][] genPerlinGrid(int width, int height, Color start, Color end, int smoothness) {
         if (GameConfig.OptDisableCloudyTextures) {
             Color[][] result = new Color[width][height];
-            Color choice = RNG.coinFlip() ? start : end;
             for (int ii = 0; ii < width; ii++) {
                 for (int jj = 0; jj < height; jj++) {
-                    result[ii][jj] = choice;
+                    result[ii][jj] = start;
                 }
             }
             return result;
