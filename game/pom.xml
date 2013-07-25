@@ -78,6 +78,21 @@
             <artifactId>gdx-controllers-desktop-natives</artifactId>
             <version>${libgdx-version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.badlogic</groupId>
+            <artifactId>gdx-freetype-natives</artifactId>
+            <version>2013.07.25</version>
+        </dependency>
+        <dependency>
+            <groupId>com.badlogic</groupId>
+            <artifactId>gdx-freetype</artifactId>
+            <version>2013.07.25</version>
+        </dependency>
+        <dependency>
+            <groupId>com.badlogic</groupId>
+            <artifactId>gdx-controllers-desktop-natives</artifactId>
+            <version>${libgdx-version}</version>
+        </dependency>
     </dependencies>
 
     <build>
