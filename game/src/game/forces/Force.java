@@ -11,19 +11,26 @@ import java.util.LinkedList;
 import java.util.List;
 
 public enum Force {
-
-    Abrasive(0, 1, 1),
-    Expansion(1, 0, 1),
-    Explosive(1, 1, 0),
-    Slice(0, 0, 1),
-    Contraction(0, 1, 0),
-    Vaporize(1, 0, 0);
+    /*
+    Force1,Q-NULL
+    Force2,W-NULL
+    Force3,E-NULL
+    Force4,A-NULL
+    Force5,S-NULL
+    Force6,D-NULL
+     */
+    Abrasive(0, 1, 1, 1),
+    Expansion(1, 0, 1, 4),
+    Explosive(1, 1, 0, 2),
+    Slice(0, 0, 1, 5),
+    Contraction(0, 1, 0, 3),
+    Vaporize(1, 0, 0, 6);
 
     public final String Command;
     public final Color Color;
 
-    private Force(float rT, float gT, float bT) {
-        Command = "Force" + (ordinal() + 1);
+    private Force(float rT, float gT, float bT, int inputId) {
+        Command = "Force" + inputId;
         Color = Colors.rgbToColor(tToC(rT), tToC(gT), tToC(bT));
     }
 
