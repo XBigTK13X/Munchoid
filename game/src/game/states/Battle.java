@@ -68,7 +68,7 @@ public class Battle implements State {
         _rightHud.draw();
     }
 
-    public void playerAttack(Force force) {
+    private void playerAttack(Force force) {
         if (_left.getCoolDown().isCooled()) {
             attack(_left, force);
         }
@@ -80,7 +80,7 @@ public class Battle implements State {
         _leftHud.updateAttackBasedState();
     }
 
-    private void playerActivate(Force force) {
+    public void playerActivate(Force force) {
         if (_left.canUse(force)) {
             if (_left.getStats().get(force) > 0) {
                 playerAttack(force);

@@ -94,7 +94,7 @@ public class ForceMeter {
                         State state = StateManager.get().current();
 
                         Battle battle = (Battle) state;
-                        battle.playerAttack(_force);
+                        battle.playerActivate(_force);
                     }
                 });
             }
