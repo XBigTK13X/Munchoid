@@ -1,5 +1,7 @@
 package sps.states;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import sps.audio.MusicPlayer;
 import sps.core.Logger;
@@ -8,6 +10,9 @@ import sps.graphics.Window;
 import sps.particles.ParticleEngine;
 import sps.text.TextPool;
 import sps.ui.UiElements;
+import sps.util.Colors;
+import sps.util.Screen;
+import sps.util.SpriteMaker;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,12 +51,27 @@ public class StateManager {
         return result;
     }
 
+    private static Sprite __pausedScreen;
+
     private Stack<State> _states;
     private Map<State, StateDependentComponents> _components;
+    private boolean _paused = false;
 
     private StateManager() {
         _states = new Stack<State>();
         _components = new HashMap<State, StateDependentComponents>();
+    }
+
+    public void setPaused(boolean value) {
+        if (__pausedScreen == null) {
+            Color[][] tbg = Colors.genArr((int) Screen.width(50), (int) Screen.height(50), new Color(.5f, .1f, .5f, .7f));
+            __pausedScreen = SpriteMaker.get().fromColors(tbg);
+        }
+        _paused = value;
+    }
+
+    public boolean isPaused() {
+        return _paused;
     }
 
     private void loadCurrent() {
@@ -128,15 +148,24 @@ public class StateManager {
     }
 
     public void draw() {
-        current().draw();
+        if (!_paused) {
+            current().draw();
+        }
+        else {
+            Window.get().draw(__pausedScreen);
+        }
     }
 
     public void update() {
-        current().update();
+        if (!_paused) {
+            current().update();
+        }
     }
 
     public void asyncUpdate() {
-        current().asyncUpdate();
+        if (!_paused) {
+            current().asyncUpdate();
+        }
     }
 
     public void resize(int width, int height) {
@@ -146,5 +175,4 @@ public class StateManager {
     public State current() {
         return _states.peek();
     }
-
 }

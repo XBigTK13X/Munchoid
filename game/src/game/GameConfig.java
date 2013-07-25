@@ -97,8 +97,7 @@ public class GameConfig {
                 if (c++ < fields.length - 1) {
                     config += ",";
                 }
-            }
-            catch (IllegalAccessException e) {
+            } catch (IllegalAccessException e) {
                 Logger.exception(e);
             }
         }
