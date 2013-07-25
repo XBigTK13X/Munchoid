@@ -74,6 +74,25 @@ public class Renderer {
         return _offset;
     }
 
+    public boolean canMoveCamera(float x, float y) {
+        float x2 = _camera.position.x + x;
+        float y2 = _camera.position.y + y;
+        return HitTest.inBox((int) x2, (int) y2, 0, 0, Screen.get().VirtualWidth, Screen.get().VirtualHeight);
+    }
+
+    public void setCameraX(int x) {
+        _offset.setX(x);
+    }
+
+    public void setCameraY(int y) {
+        _offset.setY(y);
+    }
+
+    public void resetCamera() {
+        _offset.setY(0);
+        _offset.setX(0);
+    }
+
     public Vector2 getBuffer() {
         return _strategy.getBuffer();
     }
@@ -146,24 +165,5 @@ public class Renderer {
             Assets.get().font().setColor(filter);
             Assets.get().font().draw(_batch, content, location.X, location.Y);
         }
-    }
-
-    public boolean canMoveCamera(float x, float y) {
-        float x2 = _camera.position.x + x;
-        float y2 = _camera.position.y + y;
-        return HitTest.inBox((int) x2, (int) y2, 0, 0, Screen.get().VirtualWidth, Screen.get().VirtualHeight);
-    }
-
-    public void setCameraX(int x) {
-        _offset.setX(x);
-    }
-
-    public void setCameraY(int y) {
-        _offset.setY(y);
-    }
-
-    public void resetCamera() {
-        _offset.setY(0);
-        _offset.setX(0);
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import sps.bridge.SpriteType;
 import sps.bridge.SpriteTypes;
@@ -42,7 +43,9 @@ public class Assets {
     private final HashMap<Integer, String> spriteNames = new HashMap<Integer, String>();
 
     private Assets() {
-        _font = new BitmapFont(new FileHandle(Loader.get().graphics("main.fnt").getAbsolutePath()), false);
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(new FileHandle(Loader.get().graphics("Molot.otf")));
+        _font = generator.generateFont(60);
+        generator.dispose();
 
         for (File spriteTile : Loader.get().graphics("sprites").listFiles()) {
             if (!spriteTile.isHidden()) {
