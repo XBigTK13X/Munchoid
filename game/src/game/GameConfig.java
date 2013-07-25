@@ -55,8 +55,8 @@ public class GameConfig {
     public static final int VaporizeScale = 10;
     public static final int ExpansionScale = 4;
 
-    public static final int MinInitCooldown = 1;
-    public static final int MaxInitCooldown = 1;
+    public static final int MinInitCooldownMilliSeconds = 500;
+    public static final int MaxInitCooldownMilliSeconds = 800;
     public static final float MinCoolDown = .1f;
 
     public static final float MinScaleDeath = .5f;

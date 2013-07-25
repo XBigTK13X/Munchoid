@@ -42,7 +42,7 @@ public class Tournament implements State {
         if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.DevEndToEndStateLoadTest || GameConfig.DevBotEnabled) {
             _boutNumber++;
             _entranceInfo.setMessage(boutMessage());
-            // Run all of the EvE matches and Bys, then load the next PvE match
+            // Run all of the EvE matches and Byes, then load the next PvE match
             while (!_bracket.runNextMatch()) {
             }
         }
