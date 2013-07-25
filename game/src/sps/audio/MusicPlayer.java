@@ -1,5 +1,6 @@
 package sps.audio;
 
+import com.badlogic.gdx.audio.Music;
 import sps.core.SpsConfig;
 
 public abstract class MusicPlayer {
@@ -57,7 +58,13 @@ public abstract class MusicPlayer {
         __instance.start();
     }
 
+    protected Music _song;
+
     public abstract void start();
 
     public abstract void stop();
+
+    public Music getMusic() {
+        return _song;
+    }
 }

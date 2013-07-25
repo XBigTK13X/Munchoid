@@ -16,26 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Assets {
-    private FileHandle fragmentShader() {
-        return new FileHandle(Loader.get().graphics("fragment.glsl"));
-    }
-
-    private FileHandle vertexShader() {
-        return new FileHandle(Loader.get().graphics("vertex.glsl"));
-    }
-
-    public ShaderProgram defaultShaders() {
-        ShaderProgram shaders = new ShaderProgram(vertexShader(), fragmentShader());
-        if (!shaders.isCompiled()) {
-            Logger.exception(new Exception("Shader compilation failed. GLSL log:\n\t" + shaders.getLog()));
-        }
-        return shaders;
-    }
-
-    public File markovSeed() {
-        return Loader.get().data("markov-seed.txt");
-    }
-
     private enum Sprites {
         Particle,
         Pixel,
@@ -60,7 +40,6 @@ public class Assets {
 
     private final HashMap<Integer, HashMap<Integer, Sprite>> indexedSprites = new HashMap<Integer, HashMap<Integer, Sprite>>();
     private final HashMap<Integer, String> spriteNames = new HashMap<Integer, String>();
-
 
     private Assets() {
         _font = new BitmapFont(new FileHandle(Loader.get().graphics("main.fnt").getAbsolutePath()), false);
@@ -106,6 +85,26 @@ public class Assets {
         catch (Exception e) {
             Logger.exception("ERROR: Exception while loading the menu base sprite. The HUDs that use it might not be functional.", e, false);
         }
+    }
+
+    private FileHandle fragmentShader() {
+        return new FileHandle(Loader.get().graphics("fragment.glsl"));
+    }
+
+    private FileHandle vertexShader() {
+        return new FileHandle(Loader.get().graphics("vertex.glsl"));
+    }
+
+    public ShaderProgram defaultShaders() {
+        ShaderProgram shaders = new ShaderProgram(vertexShader(), fragmentShader());
+        if (!shaders.isCompiled()) {
+            Logger.exception(new Exception("Shader compilation failed. GLSL log:\n\t" + shaders.getLog()));
+        }
+        return shaders;
+    }
+
+    public File markovSeed() {
+        return Loader.get().data("markov-seed.txt");
     }
 
     public BitmapFont font() {

@@ -14,13 +14,14 @@ public class Loader {
         return instance;
     }
 
-    private HashMap<String, File> files = new HashMap<String, File>();
+    private final HashMap<String, File> files = new HashMap<String, File>();
 
-    private String root = "assets";
+    private final String root = "assets";
 
-    private String graphics = "graphics";
-    private String data = "data";
-    private String music = "music";
+    private final String graphics = "graphics";
+    private final String data = "data";
+    private final String music = "music";
+    private final String sound = "sound";
 
     private File get(String dir, String target) {
         return new File(root + "/" + dir + "/" + target);
@@ -36,5 +37,9 @@ public class Loader {
 
     public File music(String target) {
         return get(music, target);
+    }
+
+    public File sound(String target) {
+        return get(sound, target);
     }
 }
