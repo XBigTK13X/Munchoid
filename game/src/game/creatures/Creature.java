@@ -210,6 +210,10 @@ public class Creature extends Entity {
         }
     }
 
+    public void restoreEnergy() {
+        _energy = _energyMax;
+    }
+
     public CoolDown getCoolDown() {
         return _coolDown;
     }

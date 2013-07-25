@@ -173,6 +173,7 @@ public class Body {
             part.restore();
         }
         _owner.addHealthOffset(-_owner.getHealthOffset());
+        _owner.restoreEnergy();
         recalculateHealth();
     }
 
