@@ -28,7 +28,11 @@ public class Colors {
     private static float base = 255f;
 
     public static Color rgb(int r, int g, int b) {
-        return new Color(r / base, g / base, b / base, 1f);
+        return rgb(r, g, b, 255);
+    }
+
+    public static Color rgb(int r, int g, int b, int a) {
+        return new Color(r / base, g / base, b / base, a / base);
     }
 
     private static float __shadePercent = .65f;

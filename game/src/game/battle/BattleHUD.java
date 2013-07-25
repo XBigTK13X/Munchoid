@@ -34,7 +34,7 @@ public class BattleHUD {
         _health.update();
         _energy.update();
         _coolDown.setMessage(coolDownText(_owner));
-        _coolDown.setVisible(_owner.getCoolDown().getTimeLeft() != 0);
+        _coolDown.setVisible(_owner.getCoolDown().getSecondsLeft() != 0);
     }
 
     public void draw() {
@@ -44,7 +44,7 @@ public class BattleHUD {
     }
 
     private String coolDownText(Creature creature) {
-        return String.format("%.2f", creature.getCoolDown().getTimeLeft()) + " sec";
+        return String.format("%.2f", creature.getCoolDown().getSecondsLeft()) + " sec";
     }
 
     public void updateAttackBasedState() {

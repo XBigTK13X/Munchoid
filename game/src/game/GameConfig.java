@@ -8,6 +8,8 @@ import java.lang.reflect.Field;
 
 public class GameConfig {
 
+    public final static float IntroVideoSkipSeconds = 2f;
+
     public final static int CreatureLimit = 50;
     public final static int TournamentMatches = 3;
 

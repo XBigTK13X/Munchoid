@@ -48,11 +48,11 @@ public class CoolDown {
         return _coolDown <= 0;
     }
 
-    public float getTimeLeft() {
+    public float getSecondsLeft() {
         return _coolDown;
     }
 
-    public float getTimeMax() {
+    public float getSecondsMax() {
         return _coolDownMax;
     }
 
