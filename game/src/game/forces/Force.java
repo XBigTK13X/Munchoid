@@ -11,14 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public enum Force {
-    /*
-    Force1,Q-NULL
-    Force2,W-NULL
-    Force3,E-NULL
-    Force4,A-NULL
-    Force5,S-NULL
-    Force6,D-NULL
-     */
     Abrasive(0, 1, 1, 1),
     Expansion(1, 0, 1, 4),
     Explosive(1, 1, 0, 2),

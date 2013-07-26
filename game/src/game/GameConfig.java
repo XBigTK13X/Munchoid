@@ -48,12 +48,12 @@ public class GameConfig {
     public static final int MinStat = 0;
     public static final int MaxStat = 100;
 
-    public static final int SliceScale = 4;
-    public static final int AbrasiveScale = 5;
-    public static final int ExplosiveScale = 15;
+    public static final int SliceScale = 8;
+    public static final int AbrasiveScale = 10;
+    public static final int ExplosiveScale = 30;
     public static final int ContractionScale = 3;
-    public static final int VaporizeScale = 10;
-    public static final int ExpansionScale = 4;
+    public static final int VaporizeScale = 15;
+    public static final int ExpansionScale = 6;
 
     public static final int MinInitCooldownMilliSeconds = 500;
     public static final int MaxInitCooldownMilliSeconds = 800;
@@ -76,12 +76,14 @@ public class GameConfig {
     public static final boolean OptFastOutlineAlg = false;
 
 
+    //Bots
+    public static final boolean DevBotEnabled = true;
+    public static final boolean DevBotCatchIO = false;
+    public static final boolean DevBotAlwaysMerge = true;
+
     //Debugging / Development
     public static final boolean DevShortcutsEnabled = true;
     public static final boolean DevBattleLog = false;
-    public static final boolean DevBotEnabled = false;
-    public static final boolean DevBotCatchIO = false;
-    public static final boolean DevBotAlwaysMerge = true;
     public static final boolean DevEndToEndStateLoadTest = false;
     public static final boolean DevFlipEnabled = false;
     public static final boolean DevDrawSkeleton = false;
