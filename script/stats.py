@@ -46,6 +46,8 @@ def genStats(data):
             wins[f] = 0
             loses[f] = 0
 
+        tWins = 0
+        tLoses = 0
         for d in data:
             m = 0
             mf = ''
@@ -55,9 +57,13 @@ def genStats(data):
                     mf = f
             if 'WIN' in d['endResult']:
                 wins[mf] = wins[mf] + 1
+                tWins += 1
             if 'LOSE' in d['endResult']:
                 loses[mf] = loses[mf] + 1
+                tLoses += 1
             
+        print "Total W/L: "+str(tWins)+"/"+str(tLoses)
+        print "Total W %: "+"{0:.2f}".format(100*float(tWins)/len(data))+"%"
         print "WIN: "+str(wins)
         print "LOSE: "+str(loses)
         ratio = ''
