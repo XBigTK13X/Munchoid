@@ -48,7 +48,7 @@ public class GameConfig {
     public static final int MinStat = 0;
     public static final int MaxStat = 100;
 
-    public static final int SliceScale = 8;
+    public static final int SliceScale = 12;
     public static final int AbrasiveScale = 10;
     public static final int ExplosiveScale = 30;
     public static final int ContractionScale = 3;
