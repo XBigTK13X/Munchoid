@@ -28,6 +28,7 @@ public class SpsConfig {
     public final int virtualHeight;
     public final int virtualWidth;
     public final boolean fullScreen;
+    public final boolean vSyncEnabled;
 
     public final boolean entityGridEnabled;
 
@@ -64,6 +65,7 @@ public class SpsConfig {
         virtualHeight = Parse.inte(_settings.get("virtualHeight"));
         virtualWidth = Parse.inte(_settings.get("virtualWidth"));
         fullScreen = Parse.bool(_settings.get("fullScreen"));
+        vSyncEnabled = Parse.bool(_settings.get("vSyncEnabled"));
 
         entityGridEnabled = Parse.bool(_settings.get("entityGridEnabled"));
 

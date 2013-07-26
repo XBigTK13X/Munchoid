@@ -2,6 +2,7 @@ package game;
 
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import game.states.Intro;
 import sps.bridge.Commands;
@@ -22,7 +23,6 @@ import sps.text.TextPool;
 import sps.ui.UiElements;
 
 public class Game implements ApplicationListener {
-
     @Override
     public void create() {
         RNG.seed((int) System.currentTimeMillis());
@@ -78,6 +78,9 @@ public class Game implements ApplicationListener {
 
     private void draw() {
         if (_preUpdateState == StateManager.get().current()) {
+            if (GameConfig.OptShowFPS) {
+                Logger.devConsole("" + Gdx.graphics.getFramesPerSecond() + ": " + Gdx.graphics.getDeltaTime());
+            }
             Window.clear();
             Window.get(true).setListening(true);
 
@@ -98,10 +101,11 @@ public class Game implements ApplicationListener {
     @Override
     public void render() {
         try {
-            //Logger.devConsole("" + Gdx.graphics.getFramesPerSecond() + ": " + Gdx.graphics.getDeltaTime());
+            Logger.devConsole("" + Gdx.graphics.getFramesPerSecond() + ": " + Gdx.graphics.getDeltaTime());
             update();
             draw();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Logger.exception(e);
         }
     }

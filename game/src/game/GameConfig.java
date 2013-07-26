@@ -74,10 +74,11 @@ public class GameConfig {
     public static final boolean OptDisableOutlines = true;
     public static final boolean OptDisableCloudyTextures = true;
     public static final boolean OptFastOutlineAlg = false;
-
+    public static final boolean OptEnableFrameLimit = false;
+    public static final boolean OptShowFPS = true;
 
     //Bots
-    public static final boolean DevBotEnabled = true;
+    public static final boolean DevBotEnabled = false;
     public static final boolean DevBotCatchIO = false;
     public static final boolean DevBotAlwaysMerge = true;
 

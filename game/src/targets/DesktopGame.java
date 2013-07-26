@@ -30,6 +30,7 @@ public class DesktopGame {
             cfg.width = SpsConfig.get().resolutionWidth;
             cfg.height = SpsConfig.get().resolutionHeight;
         }
+        cfg.vSyncEnabled = SpsConfig.get().vSyncEnabled;
         cfg.useGL20 = true;
         instance = new LwjglApplication(new Game(), cfg);
     }

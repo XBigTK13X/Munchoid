@@ -3,7 +3,6 @@ import os,json,sys
 def dirToJson(dir):
     res = []
     for root,dirs,files in os.walk(dir):
-        print '== Working in: '+root
         for f in files:
             path = os.path.join(root,f)
             for line in open(path,'r').readlines():
