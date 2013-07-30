@@ -3,7 +3,7 @@ package sps.bridge;
 import org.apache.commons.io.FileUtils;
 import sps.core.Loader;
 import sps.core.Logger;
-import sps.graphics.Assets;
+import sps.display.Assets;
 
 public class Bridge {
     private static Bridge __instance;

@@ -3,11 +3,11 @@ package sps.core;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.bridge.DrawDepths;
-import sps.graphics.Assets;
-import sps.graphics.Window;
+import sps.display.Assets;
+import sps.display.Window;
 import sps.text.Text;
 import sps.text.TextPool;
-import sps.util.Screen;
+import sps.display.Screen;
 
 public class DevConsole {
 

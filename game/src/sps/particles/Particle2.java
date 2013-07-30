@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.Entity;
-import sps.graphics.Window;
+import sps.display.Window;
 import sps.util.MathHelper;
-import sps.util.SpriteMaker;
+import sps.draw.SpriteMaker;
 
 public class Particle2 extends PEComponent {
     public static final int DefaultLife = 100;

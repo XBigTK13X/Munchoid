@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.creatures.BodyPart;
 import sps.entities.HitTest;
-import sps.graphics.Window;
-import sps.util.SpriteMaker;
+import sps.display.Window;
+import sps.draw.SpriteMaker;
 
 import java.util.LinkedList;
 import java.util.List;

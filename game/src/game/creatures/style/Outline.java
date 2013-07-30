@@ -2,7 +2,7 @@ package game.creatures.style;
 
 import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
-import sps.util.Colors;
+import sps.draw.Colors;
 
 public class Outline {
     private static final float __thicknessPercent = 2f;

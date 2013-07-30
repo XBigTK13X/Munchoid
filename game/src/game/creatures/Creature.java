@@ -10,12 +10,12 @@ import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.Entity;
-import sps.graphics.Assets;
+import sps.display.Assets;
 import sps.text.TextEffects;
 import sps.text.TextPool;
 import sps.util.CoolDown;
 import sps.util.Markov;
-import sps.util.Screen;
+import sps.display.Screen;
 
 public class Creature extends Entity {
     private static final Markov __nameGenerator = Markov.get(Assets.get().markovSeed(), 2);

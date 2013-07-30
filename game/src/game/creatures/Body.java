@@ -7,7 +7,7 @@ import game.creatures.style.BodyRules;
 import game.skeleton.Skeleton;
 import sps.core.RNG;
 import sps.util.Bounds;
-import sps.util.Colors;
+import sps.draw.Colors;
 import sps.util.MathHelper;
 
 import java.util.ArrayList;

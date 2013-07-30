@@ -8,7 +8,7 @@ import sps.core.SpsConfig;
 import sps.entities.Entity;
 import sps.entities.EntityManager;
 import sps.entities.HitTest;
-import sps.util.Screen;
+import sps.display.Screen;
 
 import java.util.List;
 

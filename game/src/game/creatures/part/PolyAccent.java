@@ -1,7 +1,7 @@
 package game.creatures.part;
 
 import sps.core.RNG;
-import sps.util.Shapes;
+import sps.draw.Shapes;
 
 import java.awt.*;
 

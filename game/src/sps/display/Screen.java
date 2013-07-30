@@ -1,9 +1,8 @@
-package sps.util;
+package sps.display;
 
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.core.SpsConfig;
-import sps.graphics.Window;
 
 public class Screen {
     public static float height(int percent) {

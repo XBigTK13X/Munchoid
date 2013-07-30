@@ -11,15 +11,15 @@ import game.states.ForceSelection;
 import sps.bridge.Commands;
 import sps.core.Point2;
 import sps.entities.HitTest;
-import sps.graphics.Window;
+import sps.display.Window;
 import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.ui.Buttons;
 import sps.ui.ToolTip;
-import sps.util.Colors;
-import sps.util.Screen;
-import sps.util.SpriteMaker;
+import sps.draw.Colors;
+import sps.display.Screen;
+import sps.draw.SpriteMaker;
 
 public class ForceMeter {
     private Sprite _bg;

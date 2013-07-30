@@ -3,7 +3,7 @@ package game.forceselection;
 import game.creatures.Creature;
 import game.forces.Force;
 import sps.core.Point2;
-import sps.util.Screen;
+import sps.display.Screen;
 
 import java.util.ArrayList;
 import java.util.List;

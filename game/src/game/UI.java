@@ -3,9 +3,9 @@ package game;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.creatures.style.Outline;
-import sps.util.Colors;
-import sps.util.Screen;
-import sps.util.SpriteMaker;
+import sps.draw.Colors;
+import sps.display.Screen;
+import sps.draw.SpriteMaker;
 
 public class UI {
     public static Sprite button(Color color) {

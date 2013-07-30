@@ -7,8 +7,8 @@ import sps.bridge.Context;
 import sps.bridge.Contexts;
 import sps.bridge.Sps;
 import sps.core.SpsConfig;
-import sps.graphics.Window;
-import sps.util.Screen;
+import sps.display.Window;
+import sps.display.Screen;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -13,14 +13,14 @@ import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
 import sps.entities.EntityManager;
 import sps.entities.HitTest;
-import sps.graphics.Window;
+import sps.display.Window;
 import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.TextPool;
 import sps.ui.Buttons;
 import sps.ui.ToolTip;
-import sps.util.Screen;
+import sps.display.Screen;
 
 public class MergeOutcome implements State {
     private static SingleSongPlayer __mergeMusic;

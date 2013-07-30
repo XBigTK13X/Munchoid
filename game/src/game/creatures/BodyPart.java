@@ -8,8 +8,8 @@ import game.creatures.style.BodyRules;
 import game.creatures.style.Outline;
 import sps.bridge.DrawDepths;
 import sps.core.Point2;
-import sps.graphics.Window;
-import sps.util.SpriteMaker;
+import sps.display.Window;
+import sps.draw.SpriteMaker;
 
 import java.util.ArrayList;
 import java.util.List;

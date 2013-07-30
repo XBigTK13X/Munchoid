@@ -23,7 +23,7 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
-import sps.util.Screen;
+import sps.display.Screen;
 
 import java.util.List;
 

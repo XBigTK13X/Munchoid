@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import sps.bridge.DrawDepths;
 import sps.bridge.Sps;
 import sps.core.Point2;
-import sps.graphics.Window;
+import sps.display.Window;
 import sps.states.State;
 import sps.states.StateManager;
 

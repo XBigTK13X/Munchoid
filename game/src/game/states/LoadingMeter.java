@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.creatures.style.Outline;
 import sps.core.Point2;
-import sps.graphics.Window;
-import sps.util.Colors;
-import sps.util.Screen;
-import sps.util.SpriteMaker;
+import sps.display.Window;
+import sps.draw.Colors;
+import sps.display.Screen;
+import sps.draw.SpriteMaker;
 
 public class LoadingMeter {
     private static int __widthPercent = 90;

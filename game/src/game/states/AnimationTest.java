@@ -6,7 +6,7 @@ import sps.core.RNG;
 import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
-import sps.util.Screen;
+import sps.display.Screen;
 
 public class AnimationTest implements State {
 

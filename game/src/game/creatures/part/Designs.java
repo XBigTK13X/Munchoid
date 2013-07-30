@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import game.creatures.Atom;
 import game.creatures.PartFunction;
 import sps.core.RNG;
-import sps.util.Colors;
+import sps.draw.Colors;
 
 import java.util.*;
 

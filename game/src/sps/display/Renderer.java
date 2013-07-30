@@ -1,4 +1,4 @@
-package sps.graphics;
+package sps.display;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -11,7 +11,6 @@ import sps.bridge.DrawDepth;
 import sps.core.Point2;
 import sps.core.SpsConfig;
 import sps.entities.HitTest;
-import sps.util.Screen;
 
 import java.util.ArrayList;
 import java.util.List;

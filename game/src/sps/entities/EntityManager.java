@@ -2,7 +2,7 @@ package sps.entities;
 
 import sps.bridge.*;
 import sps.core.Point2;
-import sps.graphics.Window;
+import sps.display.Window;
 
 import java.util.ArrayList;
 import java.util.Collections;

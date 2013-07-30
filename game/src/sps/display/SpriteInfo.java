@@ -1,4 +1,4 @@
-package sps.graphics;
+package sps.display;
 
 import sps.core.SpsConfig;
 

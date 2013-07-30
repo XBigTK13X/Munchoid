@@ -12,7 +12,7 @@ import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
 import sps.util.CoolDown;
-import sps.util.Screen;
+import sps.display.Screen;
 
 public class Intro implements State {
     private Movie _movie;

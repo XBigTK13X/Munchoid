@@ -8,7 +8,7 @@ import sps.io.Input;
 import sps.states.State;
 import sps.text.Text;
 import sps.text.TextPool;
-import sps.util.Screen;
+import sps.display.Screen;
 
 public class Tournament implements State {
 

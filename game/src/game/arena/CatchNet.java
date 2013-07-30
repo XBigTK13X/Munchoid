@@ -9,7 +9,7 @@ import sps.bridge.SpriteTypes;
 import sps.core.SpsConfig;
 import sps.entities.Entity;
 import sps.entities.HitTest;
-import sps.util.Screen;
+import sps.display.Screen;
 
 public class CatchNet extends Entity {
 

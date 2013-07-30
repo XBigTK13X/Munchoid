@@ -8,10 +8,10 @@ import sps.bridge.EntityTypes;
 import sps.core.Logger;
 import sps.core.Point2;
 import sps.entities.Entity;
-import sps.graphics.Window;
+import sps.display.Window;
 import sps.util.Bounds;
-import sps.util.Colors;
-import sps.util.SpriteMaker;
+import sps.draw.Colors;
+import sps.draw.SpriteMaker;
 
 public class Floor extends Entity {
     private static final int __fieldSmoothness = 6;

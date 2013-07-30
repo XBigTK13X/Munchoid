@@ -8,7 +8,7 @@ import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.TextPool;
-import sps.util.Screen;
+import sps.display.Screen;
 
 public class GameLose implements State {
     @Override

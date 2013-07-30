@@ -1,4 +1,4 @@
-package sps.graphics;
+package sps.display;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;

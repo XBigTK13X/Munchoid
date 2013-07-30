@@ -2,7 +2,7 @@ package game.skeleton;
 
 import game.creatures.BodyPart;
 import sps.core.Point2;
-import sps.util.Screen;
+import sps.display.Screen;
 
 public class Skeleton {
 

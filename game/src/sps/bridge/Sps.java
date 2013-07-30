@@ -2,7 +2,7 @@ package sps.bridge;
 
 import com.badlogic.gdx.utils.GdxNativesLoader;
 import sps.core.SpsConfig;
-import sps.graphics.Assets;
+import sps.display.Assets;
 
 public class Sps {
     public static void setup() {

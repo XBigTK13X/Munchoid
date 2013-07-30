@@ -10,12 +10,12 @@ import sps.core.Point2;
 import sps.core.SpsConfig;
 import sps.entities.Entity;
 import sps.entities.IActor;
-import sps.graphics.Window;
+import sps.display.Window;
 import sps.io.Input;
 import sps.text.TextEffects;
 import sps.text.TextPool;
 import sps.util.MathHelper;
-import sps.util.Screen;
+import sps.display.Screen;
 
 public class Player extends Entity implements IActor {
     private static int __scrollSpeedX;

@@ -1,6 +1,6 @@
 package sps.core;
 
-import sps.util.Screen;
+import sps.display.Screen;
 
 public class Point2 {
     public static final Point2 Zero = new Point2(0, 0);

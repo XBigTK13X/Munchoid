@@ -1,4 +1,4 @@
-package sps.util;
+package sps.draw;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;

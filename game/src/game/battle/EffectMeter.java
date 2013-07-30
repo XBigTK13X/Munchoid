@@ -4,7 +4,7 @@ import game.creatures.Creature;
 import game.forces.sideeffects.SideEffectType;
 import sps.text.Text;
 import sps.text.TextPool;
-import sps.util.Screen;
+import sps.display.Screen;
 
 public class EffectMeter {
     private Creature _creature;

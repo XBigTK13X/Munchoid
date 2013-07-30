@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.forces.Force;
 import sps.core.RNG;
-import sps.util.Colors;
+import sps.draw.Colors;
 
 import java.util.ArrayList;
 import java.util.List;

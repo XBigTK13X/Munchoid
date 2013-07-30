@@ -3,7 +3,7 @@ package game.battle;
 import game.creatures.Creature;
 import sps.text.Text;
 import sps.text.TextPool;
-import sps.util.Screen;
+import sps.display.Screen;
 
 public class BattleHUD {
     private boolean _leftSide;

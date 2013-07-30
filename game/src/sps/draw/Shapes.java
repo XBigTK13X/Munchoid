@@ -1,4 +1,4 @@
-package sps.util;
+package sps.draw;
 
 
 import java.awt.*;

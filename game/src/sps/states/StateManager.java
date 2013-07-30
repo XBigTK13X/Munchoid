@@ -6,13 +6,13 @@ import game.GameConfig;
 import sps.audio.MusicPlayer;
 import sps.core.Logger;
 import sps.entities.EntityManager;
-import sps.graphics.Window;
+import sps.display.Window;
 import sps.particles.ParticleEngine;
 import sps.text.TextPool;
 import sps.ui.UiElements;
-import sps.util.Colors;
-import sps.util.Screen;
-import sps.util.SpriteMaker;
+import sps.draw.Colors;
+import sps.display.Screen;
+import sps.draw.SpriteMaker;
 
 import java.util.HashMap;
 import java.util.Map;

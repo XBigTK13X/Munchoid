@@ -1,4 +1,4 @@
-package sps.graphics;
+package sps.display;
 
 import sps.bridge.EntityType;
 import sps.core.Point2;

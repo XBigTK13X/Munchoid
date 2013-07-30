@@ -2,7 +2,7 @@ package game.movie;
 
 import sps.text.Text;
 import sps.text.TextPool;
-import sps.util.Screen;
+import sps.display.Screen;
 
 import java.util.ArrayList;
 import java.util.List;

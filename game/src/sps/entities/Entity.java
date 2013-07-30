@@ -6,9 +6,9 @@ import sps.bridge.EntityType;
 import sps.bridge.SpriteType;
 import sps.core.Point2;
 import sps.core.SpsConfig;
-import sps.graphics.Animation;
-import sps.graphics.SpriteEdge;
-import sps.graphics.SpriteInfo;
+import sps.display.Animation;
+import sps.display.SpriteEdge;
+import sps.display.SpriteInfo;
 
 public class Entity implements Comparable {
 

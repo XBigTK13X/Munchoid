@@ -1,6 +1,6 @@
 package sps.bridge;
 
-import sps.graphics.SpriteDefinition;
+import sps.display.SpriteDefinition;
 
 import java.util.ArrayList;
 import java.util.HashMap;
