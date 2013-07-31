@@ -204,6 +204,22 @@ public class EntityManager {
         return null;
     }
 
+    public Entity getNearest(Entity source, EntityType type) {
+        List<Entity> targets = entityBuckets.get(type);
+        if (targets.size() > 0) {
+            Entity closest = targets.get(0);
+            for (Entity target : targets) {
+                if (target != source) {
+                    if (HitTest.getDistanceSquare(source, target) < HitTest.getDistanceSquare(source, closest)) {
+                        closest = target;
+                    }
+                }
+            }
+            return closest;
+        }
+        return null;
+    }
+
     public void removeFromPlay(Entity entity) {
         //EntityCache.get().addToCache(entity);
         removeEntity(entity);

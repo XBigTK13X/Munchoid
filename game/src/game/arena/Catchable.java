@@ -12,8 +12,12 @@ import sps.bridge.EntityTypes;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.Entity;
+import sps.entities.EntityManager;
+import sps.entities.HitTest;
 import sps.text.TextEffects;
 import sps.text.TextPool;
+
+import java.util.List;
 
 public class Catchable extends Entity {
     private static Player __player;
@@ -26,6 +30,8 @@ public class Catchable extends Entity {
 
     private float _changeDirectionsSeconds = 0;
 
+    private float _radius;
+
     public Catchable(Player player, Floor floor) {
         __player = player;
         initialize(0, 0, Point2.Zero, null, EntityTypes.get("Catchable"), DrawDepths.get("Catchable"));
@@ -34,6 +40,7 @@ public class Catchable extends Entity {
         _creature.getBody().setScale(GameConfig.ArenaCreatureScale);
         _creature.orientX((GameConfig.DevFlipEnabled) ? RNG.coinFlip() : false, false);
         setSize(_creature.getWidth(), _creature.getHeight());
+        _radius = Math.max(_creature.getWidth(), _creature.getHeight()) / 2;
         setLocation(new Point2(RNG.next((int) (floor.getBounds().X2 * __spawnBuffer), (int) (floor.getBounds().X2 * (1f - __spawnBuffer))), RNG.next((int) (floor.getBounds().Y2 * __spawnBuffer), (int) (floor.getBounds().Y2 * (1f - __spawnBuffer)))));
     }
 
@@ -86,7 +93,11 @@ public class Catchable extends Entity {
             move(_dX, _dY);
         }
 
-        if (_changeDirectionsSeconds <= 0 || anyPartOutside) {
+        //TODO Break arena into virtual tiles and only check against catchables in neighboring tiles
+        Entity nearest = EntityManager.get().getNearest(this,EntityTypes.get("Catchable"));
+        float dist = HitTest.getDistance(this,nearest);
+
+        if (_changeDirectionsSeconds <= 0 || anyPartOutside || dist <= _radius) {
             _changeDirectionsSeconds = RNG.next(__changeDirectionSecondsMax / 2, __changeDirectionSecondsMax);
             float playerSpeedPercent = .5f;
             _dX = RNG.next(-GameConfig.PlayerTopSpeed, GameConfig.PlayerTopSpeed) * playerSpeedPercent;
