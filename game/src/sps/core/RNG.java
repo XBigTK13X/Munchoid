@@ -33,8 +33,7 @@ public class RNG {
         }
         try {
             throw new RuntimeException("You cannot generate a random number if max is less than min!");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Logger.exception(e);
         }
         return 0;
@@ -81,5 +80,9 @@ public class RNG {
 
     public static int next(int max) {
         return next(0, max);
+    }
+
+    public static Object pick(Object[] choices) {
+        return choices[RNG.next(choices.length)];
     }
 }
