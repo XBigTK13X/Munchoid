@@ -38,21 +38,14 @@ public class Creature extends Entity {
 
     private SideEffects _sideEffects;
 
-    public Creature(int partCount) {
-        this(new Body(partCount));
-    }
-
-    public Creature(boolean faceLeft, Point2 minDimensions, Point2 maxDimensions) {
-        this(new Body(RNG.next(GameConfig.MinBodyParts, GameConfig.MaxBodyParts), (int) minDimensions.X, (int) minDimensions.Y, (int) maxDimensions.X, (int) maxDimensions.Y));
-        orientX(faceLeft, true);
-    }
 
     public Creature(boolean faceLeft) {
-        this(faceLeft, GameConfig.MinBodyPartSize, GameConfig.MaxBodyPartSize);
+        this(new Body());
+        orientX(faceLeft, faceLeft);
     }
 
     public Creature() {
-        this(true, GameConfig.MinBodyPartSize, GameConfig.MaxBodyPartSize);
+        this(false);
     }
 
     public Creature(Body body) {

@@ -55,8 +55,8 @@ public class Battle implements State {
         _right.setOpponent(_left);
         _left.setOpponent(_right);
 
-        _leftHud = new BattleHUD(_left, true);
-        _rightHud = new BattleHUD(_right, false);
+        _leftHud = new BattleHUD(_left);
+        _rightHud = new BattleHUD(_right);
 
     }
 

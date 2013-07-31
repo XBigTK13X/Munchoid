@@ -2,11 +2,10 @@ package game.states;
 
 import game.creatures.Creature;
 import sps.bridge.Commands;
-import sps.core.RNG;
+import sps.display.Screen;
 import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
-import sps.display.Screen;
 
 public class AnimationTest implements State {
 
@@ -14,8 +13,7 @@ public class AnimationTest implements State {
 
     @Override
     public void create() {
-        int partCount = RNG.next(4, 8);
-        creature = new Creature(partCount);
+        creature = new Creature();
         creature.setLocation(Screen.pos(20, 50));
     }
 

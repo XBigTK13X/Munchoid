@@ -54,7 +54,7 @@ public class Renderer {
 
     public void begin() {
         _camera.update();
-        DrawAPI.get().update(_camera.combined,_batch.getProjectionMatrix());
+        DrawAPI.get().update(_camera.combined, _batch.getProjectionMatrix());
         _strategy.begin(_camera, _batch, (int) _offset.X, (int) _offset.Y);
         _batch.begin();
     }
@@ -97,11 +97,11 @@ public class Renderer {
         _offset.setX(0);
     }
 
-    public OrthographicCamera getCamera(){
+    public OrthographicCamera getCamera() {
         return _camera;
     }
 
-    public SpriteBatch getBatch(){
+    public SpriteBatch getBatch() {
         return _batch;
     }
 
@@ -113,7 +113,7 @@ public class Renderer {
         _queueListening = listening;
     }
 
-    public void processQueues() {
+    public void processDelayedCalls() {
         //Delayed renders
         setListening(false);
         begin();
@@ -128,21 +128,23 @@ public class Renderer {
         end();
         _todo.clear();
         setListening(true);
+    }
 
+    public void processDrawAPICalls() {
         //Draw API calls
-        for(DrawAPICall call:_drawApiCalls){
+        for (DrawAPICall call : _drawApiCalls) {
             DrawAPI.get().setColor(call.Color);
-            if(call.Radius == null){
-                DrawAPI.get().line(call.X,call.Y,call.X2,call.Y2);
+            if (call.Radius == null) {
+                DrawAPI.get().line(call.X, call.Y, call.X2, call.Y2);
             }
-            else{
-                DrawAPI.get().circle(call.X,call.Y,call.Radius);
+            else {
+                DrawAPI.get().circle(call.X, call.Y, call.Radius);
             }
         }
         _drawApiCalls.clear();
     }
 
-    public void schedule(DrawAPICall apiCall){
+    public void schedule(DrawAPICall apiCall) {
         _drawApiCalls.add(apiCall);
     }
 

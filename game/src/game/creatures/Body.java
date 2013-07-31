@@ -3,9 +3,7 @@ package game.creatures;
 import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.arena.Floor;
-import game.creatures.style.BodyRules;
 import game.skeleton.Skeleton;
-import sps.core.RNG;
 import sps.draw.Colors;
 import sps.util.MathHelper;
 
@@ -27,23 +25,11 @@ public class Body {
     private int _health;
     private int _healthMax;
 
-    public Body(int numberOfParts) {
-        this(numberOfParts, (int) GameConfig.MaxBodyPartSize.Y, (int) GameConfig.MinBodyPartSize.Y, (int) GameConfig.MaxBodyPartSize.X, (int) GameConfig.MinBodyPartSize.X);
-    }
-
-    public Body(int numberOfParts, int partWidthMin, int partHeightMin, int partWidthMax, int partHeightMax) {
+    public Body() {
         this(Colors.randomPleasant());
 
-        for (int ii = 0; ii < numberOfParts; ii++) {
-            BodyPart parent = _parts.getAParent();
-            PartFunction function = BodyRules.getChildFunction(parent);
-            BodyPart part = new BodyPart(function, RNG.next((int) (partWidthMin * function.Mult), (int) (partWidthMax * function.Mult)), RNG.next((int) (partHeightMin * function.Mult), (int) (partHeightMax * function.Mult)), this);
-            if (parent != null) {
-                parent.addChild(part);
-                _parts.assignDepth(part);
-            }
-            _parts.add(part);
-        }
+        _parts = Engineer.designParts(this);
+
         calculateSize();
     }
 

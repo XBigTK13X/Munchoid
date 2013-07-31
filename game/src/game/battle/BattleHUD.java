@@ -1,12 +1,11 @@
 package game.battle;
 
 import game.creatures.Creature;
+import sps.display.Screen;
 import sps.text.Text;
 import sps.text.TextPool;
-import sps.display.Screen;
 
 public class BattleHUD {
-    private boolean _leftSide;
     private Creature _owner;
 
     private ForcesHUD _forces;
@@ -17,9 +16,8 @@ public class BattleHUD {
     private Text _coolDown;
 
 
-    public BattleHUD(Creature owner, boolean leftSide) {
+    public BattleHUD(Creature owner) {
         _owner = owner;
-        _leftSide = leftSide;
 
         TextPool.get().write(_owner.getName(), Screen.pos(0, 50).add((int) _owner.getLocation().X, 0));
 
