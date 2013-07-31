@@ -208,10 +208,6 @@ public class BodyPart {
     }
 
     public void addChild(BodyPart child) {
-        if (!_connections.hasSpace()) {
-            throw new RuntimeException("No connections are open to place the BodyPart.");
-        }
-
         _connections.addChild(child);
         child.setParent(this);
     }

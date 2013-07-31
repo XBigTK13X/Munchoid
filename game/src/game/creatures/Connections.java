@@ -21,12 +21,17 @@ public class Connections {
 
     //TODO Have a separate method that informs as to whether or not children will fit ahead of time
     public void addChild(BodyPart child) {
-        Connection c = null;
-        while (c == null || !c.hasRoomForChildren()) {
+        Connection c;
+        int maxTries = 100;
+        while (maxTries-- > 0) {
             c = _connections.get(RNG.next(_connections.size()));
-            c.addChild(child);
-            _children.add(child);
+            if (c.hasRoomForChildren()) {
+                c.addChild(child);
+                _children.add(child);
+                return;
+            }
         }
+        throw new RuntimeException("No open connections were found");
     }
 
     public boolean hasSpace() {
