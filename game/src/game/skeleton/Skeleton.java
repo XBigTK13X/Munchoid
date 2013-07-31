@@ -14,9 +14,9 @@ public class Skeleton {
     }
 
     private void grow(BodyPart start, Joint parent) {
-        if (start.getChildren() != null) {
-            if (start.getChildren().size() > 0) {
-                for (BodyPart part : start.getChildren()) {
+        if (start.getConnections().getChildren() != null) {
+            if (start.getConnections().getChildren().size() > 0) {
+                for (BodyPart part : start.getConnections().getChildren()) {
                     Joint out = new Joint(part);
                     parent.addOutbound(out);
                     grow(part, parent);

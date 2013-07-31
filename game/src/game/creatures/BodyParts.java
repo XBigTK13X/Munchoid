@@ -15,7 +15,6 @@ public class BodyParts {
     private List<BodyPart> _front;
     private List<BodyPart> _back;
 
-
     public BodyParts(Body owner) {
         _owner = owner;
         _parts = new ArrayList<BodyPart>();
@@ -56,17 +55,18 @@ public class BodyParts {
         _parts.add(part);
     }
 
-    public BodyPart getAParent() {
+    public BodyPart getAnOpenParent() {
         if (_parts.size() == 0) {
             return null;
         }
         while (true) {
             BodyPart target = _parts.get(RNG.next(0, _parts.size()));
-            if (BodyRules.supports(target.getFunction())) {
+            if (BodyRules.supports(target.getFunction()) && target.getConnections().hasSpace()) {
                 return target;
             }
         }
     }
+
 
     public void draw() {
         for (BodyPart part : _back) {

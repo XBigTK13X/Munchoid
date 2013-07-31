@@ -7,19 +7,19 @@ import game.creatures.part.Designs;
 import game.creatures.style.BodyRules;
 import game.creatures.style.Outline;
 import sps.bridge.DrawDepths;
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.display.Window;
 import sps.draw.SpriteMaker;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class BodyPart {
+    private static final float __scaleBase = 1f;
+    private static final float _percentRequiredToLive = .15f;
+
     private Sprite _sprite;
     private Atom[][] _atoms;
     private int _width;
     private int _height;
-    private float _percentRequiredToLive = .15f;
     private boolean _isAlive = true;
     private Color _color;
     private float _scale;
@@ -27,16 +27,16 @@ public class BodyPart {
     private Body _owner;
     private Point2 _position;
     private BodyPart _parent;
-    private List<BodyPart> _children;
     private int _health;
     private int _healthMax = 100;
-    private static final float __scaleBase = 1f;
+
+    private Connections _connections;
 
     public BodyPart(PartFunction function, int width, int height, Body owner) {
         this(function, owner, owner.getColor(), new Point2(0, 0));
-        _children = new ArrayList<BodyPart>();
 
         int[][] design = Designs.get(_function).create(width, height);
+
         _atoms = Designs.toAtoms(design, _color);
         _width = _atoms.length;
         _height = _atoms[0].length;
@@ -66,6 +66,8 @@ public class BodyPart {
         _color = color;
         _position = position;
         _health = _healthMax;
+        _connections = new Connections();
+
     }
 
     private void applyStyle() {
@@ -117,11 +119,10 @@ public class BodyPart {
             scaleDelta = GameConfig.MaxScaleDeath - _scale;
             scaleDeltaThreshold = GameConfig.MaxScaleDeath - __scaleBase;
         }
-        else
-            if (_scale < __scaleBase) {
-                scaleDelta = _scale - GameConfig.MinScaleDeath;
-                scaleDeltaThreshold = __scaleBase - GameConfig.MinScaleDeath;
-            }
+        else if (_scale < __scaleBase) {
+            scaleDelta = _scale - GameConfig.MinScaleDeath;
+            scaleDeltaThreshold = __scaleBase - GameConfig.MinScaleDeath;
+        }
         int scaleHealth = (int) ((scaleDelta / scaleDeltaThreshold) * _healthMax);
 
         _health = (atomHealth + scaleHealth) / 2;
@@ -190,12 +191,27 @@ public class BodyPart {
         _position = position;
     }
 
+    public void calculateOrigins() {
+        setPosition(BodyRules.getOrigin(this));
+        if (_connections != null && _connections.getChildren().size() > 0) {
+            for (BodyPart part : _connections.getChildren()) {
+                part.calculateOrigins();
+            }
+        }
+    }
+
     public PartFunction getFunction() {
         return _function;
     }
 
     public void addChild(BodyPart child) {
-        _children.add(child);
+        int warnCount = 0;
+        while (!_connections.addChildIfPossible(child)) {
+            warnCount++;
+            if (warnCount > 100) {
+                Logger.info("WARNING: See the TODO to fix this. " + warnCount);
+            }
+        }
         child.setParent(this);
     }
 
@@ -207,17 +223,8 @@ public class BodyPart {
         _parent = parent;
     }
 
-    public List<BodyPart> getChildren() {
-        return _children;
-    }
-
-    public void calculateOrigins() {
-        setPosition(BodyRules.getOrigin(this));
-        if (_children != null && _children.size() > 0) {
-            for (BodyPart part : _children) {
-                part.calculateOrigins();
-            }
-        }
+    public Connections getConnections() {
+        return _connections;
     }
 
     public int getHealth() {

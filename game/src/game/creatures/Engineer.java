@@ -14,11 +14,13 @@ public class Engineer {
         int pWMax = (int) GameConfig.MaxBodyPartSize.X;
         int pHMax = (int) GameConfig.MaxBodyPartSize.Y;
 
+
         for (int ii = 0; ii < numberOfParts; ii++) {
-            BodyPart parent = result.getAParent();
+            BodyPart parent = result.getAnOpenParent();
             PartFunction f = BodyRules.getChildFunction(parent);
             BodyPart part = new BodyPart(f, RNG.next((int) (pwMin * f.Mult), (int) (pWMax * f.Mult)), RNG.next((int) (pHMin * f.Mult), (int) (pHMax * f.Mult)), body);
-            if (parent != null) {
+
+            if (f != PartFunction.Body) {
                 parent.addChild(part);
                 result.assignDepth(part);
             }
