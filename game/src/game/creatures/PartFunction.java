@@ -9,10 +9,13 @@ public enum PartFunction {
     HeadDetail(.7f, 0);
 
     public final float Mult;
-    public final int MaxChildren;
+    public final int MaxChildPerJoint;
+    public final int MaxConnections;
 
-    private PartFunction(float sizeMultiplier, int maxChildren) {
+    private PartFunction(float sizeMultiplier, int maxConnections) {
         Mult = sizeMultiplier;
-        MaxChildren = maxChildren;
+        MaxConnections = maxConnections;
+        //TODO Supprt for multiple children per joint;
+        MaxChildPerJoint = 1;
     }
 }

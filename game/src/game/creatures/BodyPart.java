@@ -7,8 +7,8 @@ import game.creatures.part.Designs;
 import game.creatures.style.BodyRules;
 import game.creatures.style.Outline;
 import sps.bridge.DrawDepths;
-import sps.core.Logger;
 import sps.core.Point2;
+import sps.core.RNG;
 import sps.display.Window;
 import sps.draw.SpriteMaker;
 
@@ -66,8 +66,6 @@ public class BodyPart {
         _color = color;
         _position = position;
         _health = _healthMax;
-        _connections = new Connections();
-
     }
 
     private void applyStyle() {
@@ -76,6 +74,11 @@ public class BodyPart {
         AtomHelper.setColors(_atoms, atomColors);
         _width = _atoms.length;
         _height = _atoms[0].length;
+        _connections = new Connections();
+        for (int ii = 0; ii < _function.MaxConnections; ii++) {
+            Connection c = new Connection(RNG.next(0, _width), RNG.next(0, _height), _function.MaxChildPerJoint);
+            _connections.addConnection(c);
+        }
         createSprite();
     }
 
@@ -205,13 +208,11 @@ public class BodyPart {
     }
 
     public void addChild(BodyPart child) {
-        int warnCount = 0;
-        while (!_connections.addChildIfPossible(child)) {
-            warnCount++;
-            if (warnCount > 100) {
-                Logger.info("WARNING: See the TODO to fix this. " + warnCount);
-            }
+        if (!_connections.hasSpace()) {
+            throw new RuntimeException("No connections are open to place the BodyPart.");
         }
+
+        _connections.addChild(child);
         child.setParent(this);
     }
 

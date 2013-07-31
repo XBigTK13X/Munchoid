@@ -84,10 +84,10 @@ public class GameConfig {
 
     //Debugging / Development
     public static final boolean DevShortcutsEnabled = true;
+    public static final boolean DevDrawSkeleton = true;
     public static final boolean DevBattleLog = false;
     public static final boolean DevEndToEndStateLoadTest = false;
     public static final boolean DevFlipEnabled = false;
-    public static final boolean DevDrawSkeleton = true;
     public static final boolean DevTimeStates = false;
     public static final boolean DevPrintArenaSize = false;
 
