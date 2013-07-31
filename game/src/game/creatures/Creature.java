@@ -9,13 +9,13 @@ import sps.bridge.EntityTypes;
 import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
-import sps.entities.Entity;
 import sps.display.Assets;
+import sps.display.Screen;
+import sps.entities.Entity;
 import sps.text.TextEffects;
 import sps.text.TextPool;
 import sps.util.CoolDown;
 import sps.util.Markov;
-import sps.display.Screen;
 
 public class Creature extends Entity {
     private static final Markov __nameGenerator = Markov.get(Assets.get().markovSeed(), 2);
@@ -99,7 +99,7 @@ public class Creature extends Entity {
     }
 
     public void attack(Force force) {
-        if (_opponent != null && _opponent.getBody().isAlive()) {
+        if (_opponent != null && _opponent.getBody().getParts().anyAlive()) {
 
             _energy -= _stats.get(force);
             if (_energy < 0) {
@@ -128,7 +128,7 @@ public class Creature extends Entity {
             if (GameConfig.DevBattleLog) {
                 Logger.info(getName() + " attacking " + _opponent.getName() + " with " + force.name() + " queuing " + Force.sideEffect(force).getClass().getName().replace("game.forces.sideeffects.", ""));
             }
-            Force.create(force, magnitude).apply(_opponent.getBody().getRandomPart());
+            Force.create(force, magnitude).apply(_opponent.getBody().getParts().getRandom());
             _opponent.getSideEffects().add(Force.sideEffect(force));
 
             _coolDown.reset(Math.max(_coolDown.getInitialTimeMax() + _sideEffects.act(SideEffectType.CoolDown), GameConfig.MinCoolDown));

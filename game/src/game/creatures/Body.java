@@ -6,15 +6,13 @@ import game.arena.Floor;
 import game.creatures.style.BodyRules;
 import game.skeleton.Skeleton;
 import sps.core.RNG;
-import sps.util.Bounds;
 import sps.draw.Colors;
 import sps.util.MathHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Body {
-    private List<BodyPart> _parts;
+    private BodyParts _parts;
     private Creature _owner;
     private float _width;
     private float _height;
@@ -23,9 +21,6 @@ public class Body {
     private static Floor __floor;
 
     private Color _highlight = Color.WHITE;
-
-    private List<BodyPart> _front;
-    private List<BodyPart> _back;
 
     private Skeleton _skeleton;
 
@@ -40,12 +35,12 @@ public class Body {
         this(Colors.randomPleasant());
 
         for (int ii = 0; ii < numberOfParts; ii++) {
-            BodyPart parent = BodyRules.getParent(_parts);
+            BodyPart parent = _parts.getAParent();
             PartFunction function = BodyRules.getChildFunction(parent);
             BodyPart part = new BodyPart(function, RNG.next((int) (partWidthMin * function.Mult), (int) (partWidthMax * function.Mult)), RNG.next((int) (partHeightMin * function.Mult), (int) (partHeightMax * function.Mult)), this);
             if (parent != null) {
                 parent.addChild(part);
-                assignDepth(part);
+                _parts.assignDepth(part);
             }
             _parts.add(part);
         }
@@ -55,40 +50,20 @@ public class Body {
     public Body(List<BodyPart> parts, Color color) {
         this(color);
 
-        for (BodyPart part : parts) {
-            BodyPart copiedPart = new BodyPart(part, this, _color);
-            _parts.add(copiedPart);
-            if (_parts.size() > 1) {
-                assignDepth(copiedPart);
-            }
-        }
+        _parts.copy(parts);
 
         calculateSize();
     }
 
     private Body(Color color) {
-        _parts = new ArrayList<BodyPart>();
-        _front = new ArrayList<BodyPart>();
-        _back = new ArrayList<BodyPart>();
+        _parts = new BodyParts(this);
         _color = color;
     }
 
-    private void assignDepth(BodyPart part) {
-        if (_parts.size() > 1) {
-            if (RNG.coinFlip()) {
-                _front.add(part);
-            }
-            else {
-                _back.add(part);
-            }
-        }
-    }
-
     private void calculateSize() {
-        //This needs to be the body!
-        _parts.get(0).calculateOrigins();
+        _parts.getCore().calculateOrigins();
 
-        for (BodyPart part : _parts) {
+        for (BodyPart part : _parts.getAll()) {
             if (part.getWidth() + part.getPosition().X > _width) {
                 _width = part.getWidth() + part.getPosition().X;
             }
@@ -97,57 +72,21 @@ public class Body {
             }
         }
 
-        _skeleton = new Skeleton(_parts.get(0));
+        _skeleton = new Skeleton(_parts.getCore());
         recalculateHealth();
     }
 
-    private void drawPart(BodyPart part) {
-        if (part.isAlive()) {
-            part.draw();
-        }
+    public void draw() {
+        _parts.draw();
         if (GameConfig.DevDrawSkeleton) {
             _skeleton.draw();
         }
-    }
-
-    public void draw() {
-        for (BodyPart part : _back) {
-            drawPart(part);
-        }
-        if (_parts.size() > 0) {
-            drawPart(_parts.get(0));
-        }
-        for (BodyPart part : _front) {
-            drawPart(part);
-        }
-    }
-
-    public BodyPart getRandomPart() {
-        if (_parts.size() == 0) {
-            return null;
-        }
-        List<Integer> validIndices = new ArrayList<Integer>();
-        for (int ii = 0; ii < _parts.size(); ii++) {
-            if (_parts.get(ii).isAlive()) {
-                validIndices.add(ii);
-            }
-        }
-        return _parts.get(validIndices.get(RNG.next(0, validIndices.size())));
     }
 
     public void update() {
         if (GameConfig.DevDrawSkeleton) {
             _skeleton.update();
         }
-    }
-
-    public boolean isAlive() {
-        for (BodyPart part : _parts) {
-            if (part.isAlive()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public float getWidth() {
@@ -163,13 +102,13 @@ public class Body {
     }
 
     public void setScale(float scale) {
-        for (BodyPart part : _parts) {
+        for (BodyPart part : _parts.getAll()) {
             part.setScale(scale);
         }
     }
 
     public void restore() {
-        for (BodyPart part : _parts) {
+        for (BodyPart part : _parts.getAll()) {
             part.restore();
         }
         _owner.addHealthOffset(-_owner.getHealthOffset());
@@ -198,7 +137,7 @@ public class Body {
         _owner = owner;
     }
 
-    public List<BodyPart> getParts() {
+    public BodyParts getParts() {
         return _parts;
     }
 
@@ -213,7 +152,7 @@ public class Body {
     public void recalculateHealth() {
         _health = 0;
         _healthMax = 0;
-        for (BodyPart part : _parts) {
+        for (BodyPart part : _parts.getAll()) {
             if (part.isAlive()) {
                 _health += part.getHealth();
             }
@@ -226,17 +165,7 @@ public class Body {
     }
 
     public boolean anyPartOutsideArena(float dX, float dY) {
-        if (__floor == null) {
-            return false;
-        }
-        Bounds b;
-        for (BodyPart p : _parts) {
-            b = Bounds.fromDimensions(dX + p.getGlobalPosition().X, dY + p.getGlobalPosition().Y, (int) (p.getWidth() * p.getScale()), (int) (p.getHeight() * p.getScale()));
-            if (!__floor.getBounds().envelopes(b)) {
-                return true;
-            }
-        }
-        return false;
+        return _parts.areAnyOutside(dX, dY, __floor);
     }
 
     public void setHighlight(Color color) {

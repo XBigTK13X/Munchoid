@@ -7,9 +7,9 @@ import sps.bridge.DrawDepths;
 import sps.bridge.EntityTypes;
 import sps.bridge.SpriteTypes;
 import sps.core.SpsConfig;
+import sps.display.Screen;
 import sps.entities.Entity;
 import sps.entities.HitTest;
-import sps.display.Screen;
 
 public class CatchNet extends Entity {
 
@@ -50,7 +50,7 @@ public class CatchNet extends Entity {
     }
 
     public boolean isTouching(Creature creature) {
-        for (BodyPart part : creature.getBody().getParts()) {
+        for (BodyPart part : creature.getBody().getParts().getAll()) {
             if (HitTest.overlap(getLocation().X, getLocation().Y, getWidth(), getHeight(), part.getGlobalPosition().X, part.getGlobalPosition().Y, part.getWidth(), part.getHeight())) {
                 return true;
             }

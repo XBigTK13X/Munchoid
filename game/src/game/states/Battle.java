@@ -9,6 +9,7 @@ import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
 import sps.core.Logger;
+import sps.display.Screen;
 import sps.entities.EntityManager;
 import sps.io.Input;
 import sps.states.State;
@@ -16,7 +17,6 @@ import sps.states.StateManager;
 import sps.text.TextEffects;
 import sps.text.TextPool;
 import sps.ui.ToolTip;
-import sps.display.Screen;
 
 public class Battle implements State {
     private static SingleSongPlayer __battleMusic;
@@ -125,10 +125,10 @@ public class Battle implements State {
         }
 
 
-        if (!_right.getBody().isAlive() || GameConfig.DevEndToEndStateLoadTest) {
+        if (!_right.getBody().getParts().anyAlive() || GameConfig.DevEndToEndStateLoadTest) {
             victory();
         }
-        if (!_left.getBody().isAlive()) {
+        if (!_left.getBody().getParts().anyAlive()) {
             Score.get().setPlayerPetStats(_left.getStats());
             StateManager.reset().push(new GameLose());
         }

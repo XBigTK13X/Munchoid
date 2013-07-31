@@ -19,17 +19,6 @@ public class BodyRules {
         __supports.put(PartFunction.Head, Arrays.asList(PartFunction.HeadDetail));
     }
 
-    public static BodyPart getParent(List<BodyPart> parts) {
-        if (parts.size() == 0) {
-            return null;
-        }
-        while (true) {
-            BodyPart target = parts.get(RNG.next(0, parts.size()));
-            if (__supports.containsKey(target.getFunction())) {
-                return target;
-            }
-        }
-    }
 
     public static PartFunction getChildFunction(BodyPart parent) {
         if (parent == null) {
@@ -44,6 +33,10 @@ public class BodyRules {
 
     private static int p(int dimension, int percent) {
         return (int) (dimension * (percent / 100f));
+    }
+
+    public static boolean supports(PartFunction function) {
+        return __supports.containsKey(function);
     }
 
     private static class Contrib {

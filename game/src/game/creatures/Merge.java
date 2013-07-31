@@ -13,8 +13,8 @@ public class Merge {
     public static Creature creatures(Creature a, Creature b) {
         //Create a new body from the two inputs
         List<BodyPart> pool = new ArrayList<BodyPart>();
-        pool.addAll(a.getBody().getParts());
-        pool.addAll(b.getBody().getParts());
+        pool.addAll(a.getBody().getParts().getAll());
+        pool.addAll(b.getBody().getParts().getAll());
 
         List<BodyPart> bodies = new ArrayList<BodyPart>();
         for (int ii = 0; ii < pool.size(); ii++) {

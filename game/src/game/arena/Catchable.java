@@ -17,8 +17,6 @@ import sps.entities.HitTest;
 import sps.text.TextEffects;
 import sps.text.TextPool;
 
-import java.util.List;
-
 public class Catchable extends Entity {
     private static Player __player;
     private static final int __changeDirectionSecondsMax = 3;
@@ -94,8 +92,8 @@ public class Catchable extends Entity {
         }
 
         //TODO Break arena into virtual tiles and only check against catchables in neighboring tiles
-        Entity nearest = EntityManager.get().getNearest(this,EntityTypes.get("Catchable"));
-        float dist = HitTest.getDistance(this,nearest);
+        Entity nearest = EntityManager.get().getNearest(this, EntityTypes.get("Catchable"));
+        float dist = HitTest.getDistance(this, nearest);
 
         if (_changeDirectionsSeconds <= 0 || anyPartOutside || dist <= _radius) {
             _changeDirectionsSeconds = RNG.next(__changeDirectionSecondsMax / 2, __changeDirectionSecondsMax);
@@ -107,7 +105,7 @@ public class Catchable extends Entity {
 
     @Override
     public void update() {
-        if (!_creature.getBody().isAlive()) {
+        if (!_creature.getBody().getParts().anyAlive()) {
             setInactive();
         }
         _creature.setLocation(getLocation());

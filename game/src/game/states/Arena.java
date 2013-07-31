@@ -16,6 +16,7 @@ import sps.bridge.Commands;
 import sps.bridge.EntityTypes;
 import sps.core.Point2;
 import sps.core.RNG;
+import sps.display.Screen;
 import sps.entities.Entity;
 import sps.entities.EntityManager;
 import sps.io.Input;
@@ -23,7 +24,6 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
-import sps.display.Screen;
 
 import java.util.List;
 
@@ -137,7 +137,7 @@ public class Arena implements State {
                 if (opponents.get(ii).isActive() && opponents.get(ii + 1).isActive() && RNG.percent(GameConfig.ArenaMergeChance)) {
                     Catchable c1 = (Catchable) opponents.get(ii);
                     Catchable c2 = (Catchable) opponents.get(ii + 1);
-                    if (c1.getCreature().getBody().isAlive() && c2.getCreature().getBody().isAlive()) {
+                    if (c1.getCreature().getBody().getParts().anyAlive() && c2.getCreature().getBody().getParts().anyAlive()) {
                         Creature merged = Merge.creatures(c1.getCreature(), c2.getCreature());
                         c1.setCreature(merged);
                         opponents.get(ii + 1).setInactive();
