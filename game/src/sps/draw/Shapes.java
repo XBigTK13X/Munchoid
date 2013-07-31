@@ -1,10 +1,12 @@
 package sps.draw;
 
 
+import com.badlogic.gdx.math.Circle;
+
 import java.awt.*;
 
 public class Shapes {
-    public static Polygon regular(int sides, int radius, int rotationDeg) {
+    public static Polygon regular(int sides, float radius, int rotationDeg) {
         double rotRads = rotationDeg * Math.PI / 180;
         int[] xs = new int[sides];
         int[] ys = new int[sides];

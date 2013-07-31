@@ -16,7 +16,7 @@ public class AnimationTest implements State {
     public void create() {
         int partCount = RNG.next(4, 8);
         creature = new Creature(partCount);
-        creature.setLocation(Screen.pos(50, 50));
+        creature.setLocation(Screen.pos(20, 50));
     }
 
     @Override

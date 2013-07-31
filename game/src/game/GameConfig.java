@@ -71,8 +71,8 @@ public class GameConfig {
     //TODO Make them toggleable in the options menu,
     //     helps on Mac with large amounts of creatures
     public static final boolean OptCollectMetaData = true;
-    public static final boolean OptDisableOutlines = true;
-    public static final boolean OptDisableCloudyTextures = true;
+    public static final boolean OptDisableOutlines = false;
+    public static final boolean OptDisableCloudyTextures = false;
     public static final boolean OptFastOutlineAlg = false;
     public static final boolean OptEnableFrameLimit = false;
     public static final boolean OptShowFPS = true;
@@ -87,7 +87,7 @@ public class GameConfig {
     public static final boolean DevBattleLog = false;
     public static final boolean DevEndToEndStateLoadTest = false;
     public static final boolean DevFlipEnabled = false;
-    public static final boolean DevDrawSkeleton = false;
+    public static final boolean DevDrawSkeleton = true;
     public static final boolean DevTimeStates = false;
     public static final boolean DevPrintArenaSize = false;
 

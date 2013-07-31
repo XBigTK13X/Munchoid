@@ -10,14 +10,17 @@ import com.badlogic.gdx.math.Vector2;
 import sps.bridge.DrawDepth;
 import sps.core.Point2;
 import sps.core.SpsConfig;
+import sps.draw.DrawAPI;
 import sps.entities.HitTest;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Renderer {
-    private List<RenderCommand> _todo;
+    private List<RenderCall> _todo;
     private boolean _queueListening = false;
+
+    private List<DrawAPICall> _drawApiCalls;
 
     private SpriteBatch _batch;
     private OrthographicCamera _camera;
@@ -26,7 +29,8 @@ public class Renderer {
 
 
     public Renderer(int width, int height) {
-        _todo = new ArrayList<RenderCommand>();
+        _drawApiCalls = new ArrayList<DrawAPICall>();
+        _todo = new ArrayList<RenderCall>();
         _batch = new SpriteBatch();
         _strategy = new StretchStrategy();
         resize(width, height);
@@ -50,6 +54,7 @@ public class Renderer {
 
     public void begin() {
         _camera.update();
+        DrawAPI.get().update(_camera.combined,_batch.getProjectionMatrix());
         _strategy.begin(_camera, _batch, (int) _offset.X, (int) _offset.Y);
         _batch.begin();
     }
@@ -92,6 +97,14 @@ public class Renderer {
         _offset.setX(0);
     }
 
+    public OrthographicCamera getCamera(){
+        return _camera;
+    }
+
+    public SpriteBatch getBatch(){
+        return _batch;
+    }
+
     public Vector2 getBuffer() {
         return _strategy.getBuffer();
     }
@@ -100,10 +113,11 @@ public class Renderer {
         _queueListening = listening;
     }
 
-    public void processQueue() {
+    public void processQueues() {
+        //Delayed renders
         setListening(false);
         begin();
-        for (RenderCommand command : _todo) {
+        for (RenderCall command : _todo) {
             if (command.Sprite != null) {
                 render(command.Sprite, command.Location, command.Filter, command.Width, command.Height, command.ScaleX, command.ScaleY);
             }
@@ -114,7 +128,24 @@ public class Renderer {
         end();
         _todo.clear();
         setListening(true);
+
+        //Draw API calls
+        for(DrawAPICall call:_drawApiCalls){
+            DrawAPI.get().setColor(call.Color);
+            if(call.Radius == null){
+                DrawAPI.get().line(call.X,call.Y,call.X2,call.Y2);
+            }
+            else{
+                DrawAPI.get().circle(call.X,call.Y,call.Radius);
+            }
+        }
+        _drawApiCalls.clear();
     }
+
+    public void schedule(DrawAPICall apiCall){
+        _drawApiCalls.add(apiCall);
+    }
+
 
     // Sprite rendering
     public void draw(Sprite sprite, Point2 position, DrawDepth depth, Color color) {
@@ -138,7 +169,7 @@ public class Renderer {
 
     private void render(Sprite sprite, Point2 position, Color color, float width, float height, float scaleX, float scaleY) {
         if (_queueListening) {
-            _todo.add(new RenderCommand(sprite, position, color, width, height, scaleX, scaleY));
+            _todo.add(new RenderCall(sprite, position, color, width, height, scaleX, scaleY));
         }
         else {
             sprite.setColor(color);
@@ -157,7 +188,7 @@ public class Renderer {
 
     private void render(String content, Point2 location, Color filter, float scale) {
         if (_queueListening) {
-            _todo.add(new RenderCommand(content, location, filter, scale));
+            _todo.add(new RenderCall(content, location, filter, scale));
         }
         else {
             Assets.get().font().setScale(scale);

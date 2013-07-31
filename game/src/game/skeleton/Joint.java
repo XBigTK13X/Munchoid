@@ -3,9 +3,9 @@ package game.skeleton;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.creatures.BodyPart;
-import sps.entities.HitTest;
+import sps.display.DrawAPICall;
 import sps.display.Window;
-import sps.draw.SpriteMaker;
+import sps.draw.DrawAPI;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,22 +13,17 @@ import java.util.List;
 public class Joint {
     private BodyPart _part;
 
-    private float _width = 10;
-    private float _height = 10;
-    private Sprite sprite;
+    private static final float __radius = 5;
     public float X;
     public float Y;
-    public float Degrees;
     private List<Joint> _outbound;
 
     public Joint(float x, float y) {
         _outbound = new LinkedList<Joint>();
         X = x;
         Y = y;
-        Color color = new Color(Color.WHITE);
-        color.a = .5f;
-        sprite = SpriteMaker.get().pixel(color);
-
+        Color color = new Color(Color.GREEN);
+        DrawAPI.get().setColor(color);
     }
 
     public Joint(BodyPart part) {
@@ -50,19 +45,10 @@ public class Joint {
     }
 
     public void draw() {
-        sprite.setSize(_width, _height);
-        sprite.setRotation(Degrees);
-        sprite.setPosition(X, Y);
-        Window.get().draw(sprite);
+        Window.get().schedule(new DrawAPICall(Color.GREEN,X,Y,__radius));
         if (_outbound.size() > 0) {
             for (Joint out : _outbound) {
-                Degrees = (float) (180 * Math.atan2(out.Y - Y, out.X - X) / Math.PI) - 90;
-                float dist = HitTest.getDistance(X, Y, out.X, out.Y);
-                int boneWidth = 3;
-                sprite.setSize(boneWidth, dist);
-                sprite.setRotation(Degrees);
-                sprite.setPosition(X + _width / 2 - boneWidth / 2, Y + _height / 2 - boneWidth / 2);
-                Window.get().draw(sprite);
+                Window.get().schedule(new DrawAPICall(Color.BLUE,X,Y,out.X,out.Y));
             }
         }
     }
