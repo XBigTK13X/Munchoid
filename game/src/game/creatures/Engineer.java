@@ -16,8 +16,8 @@ public class Engineer {
 
         for (int ii = 0; ii < numberOfParts; ii++) {
             BodyPart parent = result.getAParent();
-            PartFunction function = BodyRules.getChildFunction(parent);
-            BodyPart part = new BodyPart(function, RNG.next((int) (pwMin * function.Mult), (int) (pWMax * function.Mult)), RNG.next((int) (pHMin * function.Mult), (int) (pHMax * function.Mult)), body);
+            PartFunction f = BodyRules.getChildFunction(parent);
+            BodyPart part = new BodyPart(f, RNG.next((int) (pwMin * f.Mult), (int) (pWMax * f.Mult)), RNG.next((int) (pHMin * f.Mult), (int) (pHMax * f.Mult)), body);
             if (parent != null) {
                 parent.addChild(part);
                 result.assignDepth(part);
