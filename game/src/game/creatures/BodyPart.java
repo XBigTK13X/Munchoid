@@ -8,7 +8,6 @@ import game.creatures.style.BodyRules;
 import game.creatures.style.Outline;
 import sps.bridge.DrawDepths;
 import sps.core.Point2;
-import sps.core.RNG;
 import sps.display.Window;
 import sps.draw.SpriteMaker;
 
@@ -66,6 +65,7 @@ public class BodyPart {
         _color = color;
         _position = position;
         _health = _healthMax;
+        _connections = new Connections();
     }
 
     private void applyStyle() {
@@ -75,8 +75,9 @@ public class BodyPart {
         _width = _atoms.length;
         _height = _atoms[0].length;
         _connections = new Connections();
-        for (int ii = 0; ii < _function.MaxConnections; ii++) {
-            Connection c = new Connection(RNG.next(0, _width), RNG.next(0, _height), _function.MaxChildPerJoint);
+        for (Integer jointLoc : PartFunction.jointLocations(_function)) {
+            Point2 gridPos = BodyRules.gridRange(jointLoc, _width, _height);
+            Connection c = new Connection((int) gridPos.X, (int) gridPos.Y, jointLoc, _function.MaxChildPerJoint);
             _connections.addConnection(c);
         }
         createSprite();

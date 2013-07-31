@@ -38,21 +38,26 @@ public class BodyRules {
         if (parent == null) {
             return new Point2(0, 0);
         }
-        //Math to convert a grid location (1->9) into coordinate ranges.
+
+        int gridLoc = PartFunction.GridSize + 1 - (Integer) RNG.pick(PartFunction.jointLocations(parent.getFunction()));
+        return parent.getConnections().getOpenJointPosition(gridLoc).add(part.getConnections().getOpenJointPosition());
+    }
+
+    public static Point2 gridRange(Integer gridLoc, int width, int height) {
+        //Convert a grid location (1->9) into coordinate ranges.
         // For example, location 1 corresponds to the range (0,0)->(33,33)
         // Using this calculation makes it easier to break the grid into smaller pieces
         // and increase control over part placement
 
         //Subtracting here inverts the Y axis
-        int i = PartFunction.GridSize + 1 - (Integer) RNG.pick(part.getFunction().GridLocs);
-        int j = i - 1;
+        int j = gridLoc - 1;
         int n = PartFunction.GridSize / 3;
         float m = 100 / (float) (n);
         int xMin = (int) (m * (j % n));
         int yMin = (int) (m * Math.floor(j / n));
         int xMax = (int) (m * (1 + (j % n)));
         int yMax = (int) (m * (1 + (j / n)));
-        return pointInside(parent.getWidth(), parent.getHeight(), xMin, xMax, yMin, yMax);
+        return pointInside(width, height, xMin, xMax, yMin, yMax);
     }
 
     private static Point2 pointInside(int width, int height, int minXPercent, int maxXPercent, int minYPercent, int maxYPercent) {

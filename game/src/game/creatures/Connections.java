@@ -1,5 +1,6 @@
 package game.creatures;
 
+import sps.core.Point2;
 import sps.core.RNG;
 
 import java.util.ArrayList;
@@ -45,5 +46,25 @@ public class Connections {
 
     public void addConnection(Connection connection) {
         _connections.add(connection);
+    }
+
+    public Point2 getOpenJointPosition() {
+        int maxTries = 100;
+        while (maxTries-- >= 0) {
+            Connection c = _connections.get(RNG.next(_connections.size()));
+            if (c.hasRoomForChildren()) {
+                return c.Position;
+            }
+        }
+        throw new RuntimeException("Unable to find an open joint");
+    }
+
+    public Point2 getOpenJointPosition(int gridLoc) {
+        for (Connection c : _connections) {
+            if (c.hasRoomForChildren() && c.GridLoc == gridLoc) {
+                return c.Position;
+            }
+        }
+        throw new RuntimeException("No open joints supporting that gridLoc were found");
     }
 }
