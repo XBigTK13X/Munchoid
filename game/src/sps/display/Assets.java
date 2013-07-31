@@ -17,15 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Assets {
-    private enum Sprites {
-        Particle,
-        Pixel,
-        MenuBase
-    }
-
     private static Assets instance;
-    private static final String __menuBaseSprite = "MenuBase.png";
-    private static final String __pixelSprite = "Pixel.png";
 
     public static Assets get() {
         if (instance == null) {
@@ -37,7 +29,6 @@ public class Assets {
     private final BitmapFont _font;
 
     private Map<String, Texture> textures = new HashMap<String, Texture>();
-    private Map<Sprites, Sprite> sprites = new HashMap<Sprites, Sprite>();
 
     private final HashMap<Integer, HashMap<Integer, Sprite>> indexedSprites = new HashMap<Integer, HashMap<Integer, Sprite>>();
     private final HashMap<Integer, String> spriteNames = new HashMap<Integer, String>();
@@ -73,20 +64,6 @@ public class Assets {
             int frames = indexedSprites.get(index).keySet().size();
             String id = spriteNames.get(index);
             SpriteTypes.add(new SpriteType(id, index, frames));
-        }
-
-        try {
-            sprites.put(Sprites.MenuBase, new Sprite(image(__menuBaseSprite)));
-        }
-        catch (Exception e) {
-            Logger.exception("ERROR: Exception while loading the menu base sprite. The HUDs that use it might not be functional.", e, false);
-        }
-
-        try {
-            sprites.put(Sprites.Pixel, new Sprite(image(__pixelSprite)));
-        }
-        catch (Exception e) {
-            Logger.exception("ERROR: Exception while loading the menu base sprite. The HUDs that use it might not be functional.", e, false);
         }
     }
 
@@ -127,13 +104,5 @@ public class Assets {
 
     public Sprite sprite(int frame, int index) {
         return indexedSprites.get(index).get(frame);
-    }
-
-    public Sprite baseMenu() {
-        return sprites.get(Sprites.MenuBase);
-    }
-
-    public Sprite pixel() {
-        return sprites.get(Sprites.Pixel);
     }
 }

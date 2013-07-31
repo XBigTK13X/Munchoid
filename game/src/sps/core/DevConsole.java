@@ -3,11 +3,11 @@ package sps.core;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.bridge.DrawDepths;
-import sps.display.Assets;
+import sps.display.Screen;
 import sps.display.Window;
+import sps.draw.SpriteMaker;
 import sps.text.Text;
 import sps.text.TextPool;
-import sps.display.Screen;
 
 public class DevConsole {
 
@@ -59,7 +59,7 @@ public class DevConsole {
     private DevConsole() {
         _bgColor = Color.BLACK;
         _bgColor.a = (byte) 180;
-        _consoleBase = Assets.get().baseMenu();
+        _consoleBase = SpriteMaker.get().pixel(Color.WHITE);
         _isVisible = false;
         add("The development console has been started.");
     }
