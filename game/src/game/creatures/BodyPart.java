@@ -208,8 +208,8 @@ public class BodyPart {
         return _function;
     }
 
-    public void addChild(BodyPart child) {
-        _connections.addChild(child);
+    public void addChild(BodyPart child, Connection connection) {
+        _connections.addChild(child, connection);
         child.setParent(this);
     }
 

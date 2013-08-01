@@ -5,31 +5,7 @@ import game.creatures.PartFunction;
 import sps.core.Point2;
 import sps.core.RNG;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class BodyRules {
-    public static Map<PartFunction, List<PartFunction>> __supports = new HashMap<PartFunction, List<PartFunction>>();
-
-    static {
-        __supports.put(PartFunction.Body, Arrays.asList(PartFunction.BodyDetail, PartFunction.UpperLimb, PartFunction.LowerLimb, PartFunction.Head));
-        __supports.put(PartFunction.Head, Arrays.asList(PartFunction.HeadDetail));
-    }
-
-
-    public static PartFunction getChildFunction(BodyPart parent) {
-        if (parent == null) {
-            return PartFunction.Body;
-        }
-        return __supports.get(parent.getFunction()).get(RNG.next(0, __supports.get(parent.getFunction()).size()));
-    }
-
-    public static boolean supports(PartFunction function) {
-        return __supports.containsKey(function);
-    }
-
     //Each part is divided into a 3x3 grid.
     //Children are placed randomly within any point
     //that lies within that part function's possible grid locs
@@ -39,8 +15,12 @@ public class BodyRules {
             return new Point2(0, 0);
         }
 
-        int gridLoc = PartFunction.GridSize + 1 - (Integer) RNG.pick(PartFunction.jointLocations(parent.getFunction()));
-        return parent.getConnections().getOpenJointPosition(gridLoc).add(part.getConnections().getOpenJointPosition());
+        Point2 gridParXChildY = parent.getConnections().getGridConnectionTo(part);
+        Point2 parPos = BodyRules.gridRange((int) gridParXChildY.X, parent.getWidth(), parent.getHeight());
+        Point2 offset = BodyRules.gridRange((int) gridParXChildY.Y, part.getWidth(), part.getHeight());
+
+        return parPos.add(offset);
+
     }
 
     public static Point2 gridRange(Integer gridLoc, int width, int height) {
@@ -51,7 +31,7 @@ public class BodyRules {
 
         //Subtracting here inverts the Y axis
         int j = gridLoc - 1;
-        int n = PartFunction.GridSize / 3;
+        int n = (int) Math.sqrt(PartFunction.GridSize);
         float m = 100 / (float) (n);
         int xMin = (int) (m * (j % n));
         int yMin = (int) (m * Math.floor(j / n));

@@ -1,7 +1,6 @@
 package game.creatures;
 
 import game.arena.Floor;
-import game.creatures.style.BodyRules;
 import sps.core.RNG;
 import sps.util.Bounds;
 
@@ -62,7 +61,7 @@ public class BodyParts {
         int maxTries = 100;
         while (maxTries-- >= 0) {
             BodyPart target = _parts.get(RNG.next(0, _parts.size()));
-            if (BodyRules.supports(target.getFunction()) && target.getConnections().hasSpace()) {
+            if (target.getConnections().hasSpace()) {
                 return target;
             }
         }

@@ -19,20 +19,9 @@ public class Connections {
         return _children;
     }
 
-
-    //TODO Have a separate method that informs as to whether or not children will fit ahead of time
-    public void addChild(BodyPart child) {
-        Connection c;
-        int maxTries = 100;
-        while (maxTries-- > 0) {
-            c = _connections.get(RNG.next(_connections.size()));
-            if (c.hasRoomForChildren()) {
-                c.addChild(child);
-                _children.add(child);
-                return;
-            }
-        }
-        throw new RuntimeException("No open connections were found");
+    public void addChild(BodyPart child, Connection c) {
+        c.addChild(child);
+        _children.add(child);
     }
 
     public boolean hasSpace() {
@@ -48,23 +37,24 @@ public class Connections {
         _connections.add(connection);
     }
 
-    public Point2 getOpenJointPosition() {
+    public Connection getOpenJoint() {
         int maxTries = 100;
         while (maxTries-- >= 0) {
             Connection c = _connections.get(RNG.next(_connections.size()));
             if (c.hasRoomForChildren()) {
-                return c.Position;
+                return c;
             }
         }
         throw new RuntimeException("Unable to find an open joint");
     }
 
-    public Point2 getOpenJointPosition(int gridLoc) {
+    public Point2 getGridConnectionTo(BodyPart part) {
         for (Connection c : _connections) {
-            if (c.hasRoomForChildren() && c.GridLoc == gridLoc) {
-                return c.Position;
+            Point2 origin = c.getOrigin(part);
+            if (origin != null) {
+                return origin;
             }
         }
-        throw new RuntimeException("No open joints supporting that gridLoc were found");
+        throw new RuntimeException("Part not found in connection");
     }
 }
