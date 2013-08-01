@@ -23,12 +23,14 @@ public class BodyParts {
     }
 
     public void assignDepth(BodyPart part) {
-        if (_parts.size() > 1) {
-            if (RNG.coinFlip()) {
-                _front.add(part);
-            }
-            else {
-                _back.add(part);
+        if (GameConfig.DevPartSortingEnabled) {
+            if (_parts.size() > 1) {
+                if (RNG.coinFlip()) {
+                    _front.add(part);
+                }
+                else {
+                    _back.add(part);
+                }
             }
         }
     }

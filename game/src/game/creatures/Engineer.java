@@ -1,10 +1,13 @@
 package game.creatures;
 
 import game.GameConfig;
+import sps.core.Logger;
 import sps.core.RNG;
 
 public class Engineer {
     public static BodyParts designParts(Body body) {
+        Logger.info("NEW");
+
         BodyParts result = new BodyParts(body);
 
         int numberOfParts = RNG.next(GameConfig.MinBodyParts, GameConfig.MaxBodyParts);
@@ -19,7 +22,7 @@ public class Engineer {
             Connection openLoc = null;
             if (parent != null) {
                 openLoc = parent.getConnections().getOpenJoint();
-                f = PartFunction.random(openLoc.GridLoc);
+                f = PartFunction.random(openLoc.GridLoc, parent.getFunction());
             }
             BodyPart part = new BodyPart(f, RNG.next((int) (pwMin * f.Mult), (int) (pWMax * f.Mult)), RNG.next((int) (pHMin * f.Mult), (int) (pHMax * f.Mult)), body);
 

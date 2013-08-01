@@ -1,7 +1,9 @@
 package game.creatures.style;
 
+import game.GameConfig;
 import game.creatures.BodyPart;
 import game.creatures.PartFunction;
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 
@@ -21,6 +23,10 @@ public class BodyRules {
         offset.setX(-offset.X);
         offset.setY(-offset.Y);
 
+        Logger.info("Part: " + part.getFunction() + "," + gridParXChildY);
+
+        part.setRotation(part.getFunction().RotationOffset);
+
         return parPos.add(offset);
 
     }
@@ -35,14 +41,17 @@ public class BodyRules {
         int j = gridLoc - 1;
         int n = (int) Math.sqrt(PartFunction.GridSize);
         float m = 100 / (float) (n);
-        int xMin = (int) (m * (j % n));
-        int yMin = (int) (m * Math.floor(j / n));
-        int xMax = (int) (m * (1 + (j % n)));
-        int yMax = (int) (m * (1 + (j / n)));
+        int yMin = (int) (m * (j % n));
+        int xMin = (int) (m * Math.floor(j / n));
+        int yMax = (int) (m * (1 + (j % n)));
+        int xMax = (int) (m * (1 + (j / n)));
         return pointInside(width, height, xMin, xMax, yMin, yMax);
     }
 
     private static Point2 pointInside(int width, int height, int minXPercent, int maxXPercent, int minYPercent, int maxYPercent) {
+        if (GameConfig.DevPlaceInGridCenter) {
+            return new Point2(p(width, (maxXPercent + minXPercent) / 2), p(height, (maxYPercent + minYPercent) / 2));
+        }
         return RNG.point(p(width, minXPercent), p(width, maxXPercent), p(height, minYPercent), p(height, maxYPercent));
     }
 

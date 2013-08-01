@@ -7,6 +7,7 @@ import game.creatures.part.Designs;
 import game.creatures.style.BodyRules;
 import game.creatures.style.Outline;
 import sps.bridge.DrawDepths;
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.display.Window;
 import sps.draw.SpriteMaker;
@@ -28,6 +29,7 @@ public class BodyPart {
     private BodyPart _parent;
     private int _health;
     private int _healthMax = 100;
+    private int _rotationDegrees = 0;
 
     private Connections _connections;
 
@@ -89,6 +91,7 @@ public class BodyPart {
         _sprite = SpriteMaker.get().fromAtoms(_atoms);
     }
 
+
     public Atom[][] getAtoms() {
         return _atoms;
     }
@@ -136,6 +139,7 @@ public class BodyPart {
 
     public void draw() {
         float dirScale = _scale * (_owner.isFlipX() ? -1 : 1);
+        _sprite.setRotation(_rotationDegrees);
         Window.get().draw(_sprite, getGlobalPosition(), DrawDepths.get("Atom"), _owner.getHighlight(), _width * dirScale, _height * _scale);
         if (GameConfig.DevDrawSkeleton) {
             _connections.draw();
@@ -199,6 +203,7 @@ public class BodyPart {
 
     public void calculateOrigins() {
         setPosition(BodyRules.getOrigin(this));
+        Logger.info("ORIG: f:" + getFunction() + "," + getPosition());
         if (_connections != null && _connections.getChildren().size() > 0) {
             for (BodyPart part : _connections.getChildren()) {
                 part.calculateOrigins();
@@ -233,5 +238,9 @@ public class BodyPart {
 
     public int getHealthMax() {
         return _healthMax;
+    }
+
+    public void setRotation(int degrees) {
+        _rotationDegrees = degrees;
     }
 }
