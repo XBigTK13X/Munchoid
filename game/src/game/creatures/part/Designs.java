@@ -18,11 +18,9 @@ public class Designs {
         }
         tmp.get(PartFunction.Head).add(new RoundHead());
         tmp.get(PartFunction.HeadDetail).add(new RoundEye());
-        tmp.get(PartFunction.UpperLimb).add(new QuadArm());
-        tmp.get(PartFunction.BodyDetail).add(new PolyAccent());
-        tmp.get(PartFunction.Body).add(new RoundedRectangleBody());
-        tmp.get(PartFunction.Body).add(new CannonShotBody());
-        tmp.get(PartFunction.LowerLimb).add(new QuadLeg());
+        tmp.get(PartFunction.UpperLimb).add(new LimbSegment());
+        tmp.get(PartFunction.Body).add(new RectangleBody());
+        tmp.get(PartFunction.LowerLimb).add(new LimbSegment());
         __designs = Collections.unmodifiableMap(tmp);
     }
 

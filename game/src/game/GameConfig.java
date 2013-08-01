@@ -90,6 +90,7 @@ public class GameConfig {
     public static final boolean DevFlipEnabled = false;
     public static final boolean DevTimeStates = false;
     public static final boolean DevPrintArenaSize = false;
+    public static final boolean DevPartSortingEnabled = false;
 
     public static String json() {
         String config = "\"gameConfig\":{";

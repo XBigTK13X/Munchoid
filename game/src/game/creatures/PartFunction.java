@@ -12,7 +12,6 @@ public enum PartFunction {
     Head(1, 4),
     UpperLimb(1, 1),
     LowerLimb(1, 1),
-    BodyDetail(1, 0),
     HeadDetail(.7f, 0);
 
     //Must be a square number
@@ -39,8 +38,6 @@ public enum PartFunction {
                 return new Integer[]{1, 3, 4, 6};
             case LowerLimb:
                 return new Integer[]{3, 6, 7, 9};
-            case BodyDetail:
-                return new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
             case HeadDetail:
                 return new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
             default:
@@ -73,7 +70,6 @@ public enum PartFunction {
             __joints.put(Head, new Integer[]{1, 2, 3, 5});
             __joints.put(UpperLimb, new Integer[]{2, 8});
             __joints.put(LowerLimb, new Integer[]{2, 8});
-            __joints.put(BodyDetail, new Integer[]{5});
             __joints.put(HeadDetail, new Integer[]{5});
         }
         return __joints.get(function);

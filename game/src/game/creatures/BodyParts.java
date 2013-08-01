@@ -1,5 +1,6 @@
 package game.creatures;
 
+import game.GameConfig;
 import game.arena.Floor;
 import sps.core.RNG;
 import sps.util.Bounds;
@@ -70,14 +71,23 @@ public class BodyParts {
 
 
     public void draw() {
-        for (BodyPart part : _back) {
-            drawPart(part);
+        if (GameConfig.DevPartSortingEnabled) {
+            for (BodyPart part : _back) {
+                drawPart(part);
+            }
+            if (_parts.size() > 0) {
+                drawPart(_parts.get(0));
+            }
+            for (BodyPart part : _front) {
+                drawPart(part);
+            }
         }
-        if (_parts.size() > 0) {
-            drawPart(_parts.get(0));
-        }
-        for (BodyPart part : _front) {
-            drawPart(part);
+        else {
+            if (_parts.size() > 0) {
+                for (BodyPart part : _parts) {
+                    drawPart(part);
+                }
+            }
         }
     }
 
