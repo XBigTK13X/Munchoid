@@ -1,7 +1,6 @@
 package game.creatures;
 
 import game.GameConfig;
-import sps.core.Logger;
 import sps.core.RNG;
 
 public class Engineer {
@@ -11,8 +10,6 @@ public class Engineer {
     private static final int pHMax = (int) GameConfig.MaxBodyPartSize.Y;
 
     public static BodyParts designParts(Body body) {
-        Logger.info("Creating a new body");
-
         int maxParts = RNG.next(GameConfig.MinBodyParts, GameConfig.MaxBodyParts);
         BodyParts result = new BodyParts(body);
         BodyPart core = construct(body, PartFunction.Body);
