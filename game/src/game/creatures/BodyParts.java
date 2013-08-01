@@ -57,21 +57,6 @@ public class BodyParts {
         _parts.add(part);
     }
 
-    public BodyPart getAnOpenParent() {
-        if (_parts.size() == 0) {
-            return null;
-        }
-        int maxTries = 100;
-        while (maxTries-- >= 0) {
-            BodyPart target = _parts.get(RNG.next(0, _parts.size()));
-            if (target.getConnections().hasSpace()) {
-                return target;
-            }
-        }
-        throw new RuntimeException("No space available in body");
-    }
-
-
     public void draw() {
         if (GameConfig.DevPartSortingEnabled) {
             for (BodyPart part : _back) {

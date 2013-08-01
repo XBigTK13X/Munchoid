@@ -3,7 +3,6 @@ package game.creatures.style;
 import game.GameConfig;
 import game.creatures.BodyPart;
 import game.creatures.PartFunction;
-import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 
@@ -17,13 +16,11 @@ public class BodyRules {
             return new Point2(0, 0);
         }
 
-        Point2 gridParXChildY = parent.getConnections().getGridConnectionTo(part);
+        Point2 gridParXChildY = parent.getJoints().getGridConnectionTo(part);
         Point2 parPos = BodyRules.gridRange((int) gridParXChildY.X, parent.getWidth(), parent.getHeight());
         Point2 offset = BodyRules.gridRange((int) gridParXChildY.Y, part.getWidth(), part.getHeight());
         offset.setX(-offset.X);
         offset.setY(-offset.Y);
-
-        Logger.info("Part: " + part.getFunction() + "," + gridParXChildY);
 
         part.setRotation(part.getFunction().RotationOffset);
 
@@ -41,10 +38,10 @@ public class BodyRules {
         int j = gridLoc - 1;
         int n = (int) Math.sqrt(PartFunction.GridSize);
         float m = 100 / (float) (n);
-        int yMin = (int) (m * (j % n));
-        int xMin = (int) (m * Math.floor(j / n));
-        int yMax = (int) (m * (1 + (j % n)));
-        int xMax = (int) (m * (1 + (j / n)));
+        int xMin = (int) (m * (j % n));
+        int yMin = (int) (m * Math.floor(j / n));
+        int xMax = (int) (m * (1 + (j % n)));
+        int yMax = (int) (m * (1 + (j / n)));
         return pointInside(width, height, xMin, xMax, yMin, yMax);
     }
 

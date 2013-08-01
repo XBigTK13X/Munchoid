@@ -20,7 +20,7 @@ public class GameConfig {
     public static final int ArenaWidth = Screen.get().VirtualWidth + (int) Screen.width(ArenaBufferPercent) * 2;
     //The length of Quickly.ogg
     public final static float ArenaTimeoutSeconds = 10f;
-    public static final float ArenaCreatureScale = 1f;
+    public static final float ArenaCreatureScale = 3f;
     public static final float PlayerFrozenSecondsMax = .5f;
     public static final int ArenaMergeChance = 60;
     //TODO Convert into easier to manipulate units
@@ -84,7 +84,7 @@ public class GameConfig {
 
     //Debugging / Development
     public static final boolean DevShortcutsEnabled = true;
-    public static final boolean DevDrawSkeleton = false;
+    public static final boolean DevDrawSkeleton = true;
     public static final boolean DevBattleLog = false;
     public static final boolean DevEndToEndStateLoadTest = false;
     public static final boolean DevFlipEnabled = false;
@@ -103,7 +103,8 @@ public class GameConfig {
                 if (c++ < fields.length - 1) {
                     config += ",";
                 }
-            } catch (IllegalAccessException e) {
+            }
+            catch (IllegalAccessException e) {
                 Logger.exception(e);
             }
         }
