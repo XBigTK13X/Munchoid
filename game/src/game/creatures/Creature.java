@@ -86,7 +86,6 @@ public class Creature extends Entity {
     }
 
     public void update() {
-        _body.update();
         _sideEffects.update();
         useBonus();
     }

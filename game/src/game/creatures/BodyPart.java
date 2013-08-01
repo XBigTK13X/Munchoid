@@ -65,7 +65,6 @@ public class BodyPart {
         _color = color;
         _position = position;
         _health = _healthMax;
-        _connections = new Connections();
     }
 
     private void applyStyle() {
@@ -74,7 +73,7 @@ public class BodyPart {
         AtomHelper.setColors(_atoms, atomColors);
         _width = _atoms.length;
         _height = _atoms[0].length;
-        _connections = new Connections();
+        _connections = new Connections(this);
         for (Integer jointLoc : PartFunction.jointLocations(_function)) {
             Point2 gridPos = BodyRules.gridRange(jointLoc, _width, _height);
             Connection c = new Connection((int) gridPos.X, (int) gridPos.Y, jointLoc, _function.MaxChildPerJoint);
@@ -138,6 +137,9 @@ public class BodyPart {
     public void draw() {
         float dirScale = _scale * (_owner.isFlipX() ? -1 : 1);
         Window.get().draw(_sprite, getGlobalPosition(), DrawDepths.get("Atom"), _owner.getHighlight(), _width * dirScale, _height * _scale);
+        if (GameConfig.DevDrawSkeleton) {
+            _connections.draw();
+        }
     }
 
     public Point2 getGlobalPosition() {

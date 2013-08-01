@@ -1,9 +1,7 @@
 package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
-import game.GameConfig;
 import game.arena.Floor;
-import game.skeleton.Skeleton;
 import sps.draw.Colors;
 import sps.util.MathHelper;
 
@@ -19,8 +17,6 @@ public class Body {
     private static Floor __floor;
 
     private Color _highlight = Color.WHITE;
-
-    private Skeleton _skeleton;
 
     private int _health;
     private int _healthMax;
@@ -58,21 +54,11 @@ public class Body {
             }
         }
 
-        _skeleton = new Skeleton(_parts.getCore());
         recalculateHealth();
     }
 
     public void draw() {
         _parts.draw();
-        if (GameConfig.DevDrawSkeleton) {
-            _skeleton.draw();
-        }
-    }
-
-    public void update() {
-        if (GameConfig.DevDrawSkeleton) {
-            _skeleton.update();
-        }
     }
 
     public float getWidth() {

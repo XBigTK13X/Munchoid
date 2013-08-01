@@ -9,8 +9,10 @@ import java.util.List;
 public class Connections {
     private List<BodyPart> _children;
     private List<Connection> _connections;
+    private BodyPart _owner;
 
-    public Connections() {
+    public Connections(BodyPart owner) {
+        _owner = owner;
         _children = new ArrayList<BodyPart>();
         _connections = new ArrayList<Connection>();
     }
@@ -34,6 +36,7 @@ public class Connections {
     }
 
     public void addConnection(Connection connection) {
+        connection.setContainer(this);
         _connections.add(connection);
     }
 
@@ -56,5 +59,15 @@ public class Connections {
             }
         }
         throw new RuntimeException("Part has no connections.");
+    }
+
+    public void draw() {
+        for (Connection c : _connections) {
+            c.draw();
+        }
+    }
+
+    public BodyPart getOwner() {
+        return _owner;
     }
 }
