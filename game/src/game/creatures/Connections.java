@@ -45,7 +45,7 @@ public class Connections {
                 return c;
             }
         }
-        throw new RuntimeException("Unable to find an open joint");
+        throw new RuntimeException("No open joints found.");
     }
 
     public Point2 getGridConnectionTo(BodyPart part) {
@@ -55,6 +55,6 @@ public class Connections {
                 return origin;
             }
         }
-        throw new RuntimeException("Part not found in connection");
+        throw new RuntimeException("Part has no connections.");
     }
 }

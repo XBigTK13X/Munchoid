@@ -18,6 +18,8 @@ public class BodyRules {
         Point2 gridParXChildY = parent.getConnections().getGridConnectionTo(part);
         Point2 parPos = BodyRules.gridRange((int) gridParXChildY.X, parent.getWidth(), parent.getHeight());
         Point2 offset = BodyRules.gridRange((int) gridParXChildY.Y, part.getWidth(), part.getHeight());
+        offset.setX(-offset.X);
+        offset.setY(-offset.Y);
 
         return parPos.add(offset);
 

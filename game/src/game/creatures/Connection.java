@@ -36,6 +36,6 @@ public class Connection {
                 return new Point2(GridLoc, _childLocs.get(ii));
             }
         }
-        throw new RuntimeException("No child loc association was found");
+        return null;
     }
 }
