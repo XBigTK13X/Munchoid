@@ -40,6 +40,7 @@ public enum PartFunction {
             __joints.put(UpperLimb, new Integer[]{8});
             __joints.put(LowerLimb, new Integer[]{8});
             __joints.put(HeadDetail, new Integer[]{5});
+
             __possibleChildren = new HashMap<PartFunction, PartFunction[]>();
             __possibleChildren.put(Body, new PartFunction[]{UpperLimb, LowerLimb, Head});
             __possibleChildren.put(Head, new PartFunction[]{HeadDetail});

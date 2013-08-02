@@ -1,6 +1,7 @@
 package game.creatures;
 
 import game.GameConfig;
+import sps.core.Logger;
 import sps.core.RNG;
 
 public class Engineer {
@@ -16,6 +17,7 @@ public class Engineer {
 
         fill(maxParts, body, result, core);
 
+        Logger.info("Pieces:" + result.getAll().size());
 
         return result;
     }
@@ -25,17 +27,19 @@ public class Engineer {
     }
 
     private static void fill(int maxParts, Body owner, BodyParts result, BodyPart parent) {
-        result.add(parent);
         if (maxParts <= result.getAll().size()) {
             return;
         }
+        result.add(parent);
         for (Joint j : parent.getJoints().getAll()) {
-            PartFunction f = PartFunction.random(j.GridLoc, parent.getFunction());
-            if (f != null) {
-                BodyPart child = construct(owner, f);
-                j.setChild(child);
-                child.setParent(parent);
-                fill(maxParts, owner, result, child);
+            if (RNG.coinFlip()) {
+                PartFunction f = PartFunction.random(j.GridLoc, parent.getFunction());
+                if (f != null) {
+                    BodyPart child = construct(owner, f);
+                    j.setChild(child);
+                    child.setParent(parent);
+                    fill(maxParts, owner, result, child);
+                }
             }
         }
     }
