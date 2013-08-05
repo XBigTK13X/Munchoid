@@ -4,10 +4,10 @@ import sps.draw.Shapes;
 
 import java.awt.*;
 
-public class DebugDie implements Design {
+public class DebugPoly implements Design {
     int _dots;
 
-    public DebugDie(int dots) {
+    public DebugPoly(int dots) {
         _dots = dots;
     }
 
@@ -20,7 +20,7 @@ public class DebugDie implements Design {
         for (int ii = 0; ii < width; ii++) {
             for (int jj = 0; jj < height; jj++) {
                 if (p.contains(ii, jj)) {
-                    result[ii][jj] = Design.Black;
+                    result[ii][jj] = Design.BaseColor;
                 }
                 else {
                     result[ii][jj] = Design.Empty;

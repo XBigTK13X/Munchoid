@@ -51,7 +51,6 @@ public class Outline {
         thicknessX = thicknessY = Math.min(thicknessX, thicknessY);
         boolean[][] shifted = new boolean[colors.length][colors[0].length];
 
-
         if (GameConfig.OptFastOutlineAlg) {
             //TODO a faster outline alg
         }
@@ -69,6 +68,8 @@ public class Outline {
                                     for (int ll = -thicknessY; ll < thicknessY; ll++) {
                                         if (kk != 0 || ll != 0) {
                                             //TODO also check if active, so that outlines will change after destruction
+                                            // This doesn't really work in cases like Vaporize, where the outline
+                                            // basically makes the entire part turn white
                                             if (colors[ii + kk][jj + ll] == null) {
                                                 shift = true;
                                             }

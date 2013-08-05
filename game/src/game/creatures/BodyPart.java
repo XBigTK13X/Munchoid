@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import game.creatures.part.Design;
 import game.creatures.part.Designs;
-import game.creatures.style.BodyRules;
+import game.creatures.style.GridRules;
 import game.creatures.style.Outline;
 import sps.bridge.DrawDepths;
 import sps.core.Point2;
@@ -78,7 +78,7 @@ public class BodyPart {
         _joints = new Joints(this);
         //TODO Fix this
         for (Integer jointLoc : PartFunction.jointLocations(_function)) {
-            Joint j = new Joint(jointLoc);
+            Joint j = new Joint(jointLoc, this);
             _joints.add(j);
         }
         createSprite();
@@ -89,7 +89,7 @@ public class BodyPart {
     }
 
     public void calculateOrigins() {
-        setPosition(BodyRules.getOrigin(this));
+        setPosition(GridRules.getOrigin(this));
 
         if (_joints != null && _joints.getAll().size() > 0) {
             for (Joint joint : _joints.getAll()) {

@@ -26,10 +26,11 @@ public class Joints {
     }
 
     public void draw() {
-        Window.get().schedule(new DrawAPICall(Color.GREEN, _owner.getGlobalPosition().X, _owner.getGlobalPosition().Y, 10));
         for (Joint j : _joints) {
+            Window.get().schedule(new DrawAPICall(Color.GREEN, j.getGlobalCenter().X, j.getGlobalCenter().Y, 10));
             if (j.getChild() != null) {
-                Window.get().schedule(new DrawAPICall(Color.YELLOW, _owner.getGlobalPosition().X, _owner.getGlobalPosition().Y, j.getChild().getGlobalPosition().X, j.getChild().getGlobalPosition().Y));
+                //TODO Figure out which joint we are connected to, and draw a line to that.
+                //Window.get().schedule(new DrawAPICall(Color.YELLOW, jgetGlobalCenter().X, j.getGlobalCenter().Y, j.getGlobalCenter().X, j.getGlobalCenter().Y));
                 j.getChild().getJoints().draw();
             }
         }

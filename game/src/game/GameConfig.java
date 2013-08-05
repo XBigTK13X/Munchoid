@@ -85,14 +85,14 @@ public class GameConfig {
     //Debugging / Development
     public static final boolean DevShortcutsEnabled = true;
     public static final boolean DevDrawSkeleton = true;
+    public static final boolean DevDebugJointGrid = true;
     public static final boolean DevBattleLog = false;
     public static final boolean DevEndToEndStateLoadTest = false;
     public static final boolean DevFlipEnabled = false;
     public static final boolean DevTimeStates = false;
     public static final boolean DevPrintArenaSize = false;
     public static final boolean DevPartSortingEnabled = false;
-    public static final boolean DevPlaceInGridCenter = true;
-    public static final boolean DevDebugJointGrid = true;
+
 
     public static String json() {
         String config = "\"gameConfig\":{";

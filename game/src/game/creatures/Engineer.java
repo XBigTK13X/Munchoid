@@ -1,10 +1,9 @@
 package game.creatures;
 
 import game.GameConfig;
-import game.creatures.part.DebugDie;
+import game.creatures.part.DebugPoly;
 import game.creatures.part.Design;
 import game.creatures.part.Designs;
-import sps.core.Logger;
 import sps.core.RNG;
 
 public class Engineer {
@@ -19,8 +18,6 @@ public class Engineer {
         BodyPart core = construct(body, PartFunction.Body, null);
 
         fill(maxParts, body, result, core);
-
-        Logger.info("Pieces:" + result.getAll().size());
 
         return result;
     }
@@ -43,7 +40,7 @@ public class Engineer {
                 if (f != null) {
                     Design design = Designs.get(f);
                     if (GameConfig.DevDebugJointGrid) {
-                        design = new DebugDie(j.GridLoc);
+                        design = new DebugPoly(j.GridLoc);
                     }
                     BodyPart child = construct(owner, f, design);
                     j.setChild(child);

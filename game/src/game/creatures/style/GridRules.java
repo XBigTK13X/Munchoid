@@ -1,12 +1,12 @@
 package game.creatures.style;
 
-import game.GameConfig;
 import game.creatures.BodyPart;
 import game.creatures.PartFunction;
 import sps.core.Point2;
 import sps.core.RNG;
+import sps.util.Bounds;
 
-public class BodyRules {
+public class GridRules {
     //Each part is divided into a 3x3 grid.
     //Children are placed randomly within any point
     //that lies within that part function's possible grid locs
@@ -17,8 +17,8 @@ public class BodyRules {
         }
 
         Point2 gridParXChildY = parent.getJoints().getGridConnectionTo(part);
-        Point2 parPos = BodyRules.gridRange((int) gridParXChildY.X, parent.getWidth(), parent.getHeight());
-        Point2 offset = BodyRules.gridRange((int) gridParXChildY.Y, part.getWidth(), part.getHeight());
+        Point2 parPos = GridRules.randomPointInside((int) gridParXChildY.X, parent.getWidth(), parent.getHeight());
+        Point2 offset = GridRules.randomPointInside((int) gridParXChildY.Y, part.getWidth(), part.getHeight());
         //TODO Better centering
         //offset.setX(-offset.X);
         //offset.setY(-offset.Y);
@@ -29,7 +29,7 @@ public class BodyRules {
 
     }
 
-    public static Point2 gridRange(Integer gridLoc, int width, int height) {
+    private static Bounds gridRange(Integer gridLoc, int width, int height) {
         //Convert a grid location (1->9) into coordinate ranges.
         // For example, location 1 corresponds to the range (0,0)->(33,33)
         // Using this calculation makes it easier to break the grid into smaller pieces
@@ -43,13 +43,24 @@ public class BodyRules {
         int yMin = (int) (m * Math.floor(j / n));
         int xMax = (int) (m * (1 + (j % n)));
         int yMax = (int) (m * (1 + (j / n)));
-        return pointInside(width, height, xMin, xMax, yMin, yMax);
+        return Bounds.fromPoints(xMin, yMin, xMax, yMax);
+    }
+
+    public static Point2 randomPointInside(Integer gridLoc, int width, int height) {
+        Bounds b = gridRange(gridLoc, width, height);
+        return pointInside(width, height, b.X, b.X2, b.Y, b.Y2);
+    }
+
+    public static Point2 centerOf(Integer gridLoc, BodyPart part) {
+        int width = part.getWidth();
+        int height = part.getHeight();
+        Bounds b = gridRange(gridLoc, width, height);
+        int xMid = (b.X + b.X2) / 2;
+        int yMid = (b.Y + b.Y2) / 2;
+        return pointInside(width, height, xMid, xMid, yMid, yMid);
     }
 
     private static Point2 pointInside(int width, int height, int minXPercent, int maxXPercent, int minYPercent, int maxYPercent) {
-        if (GameConfig.DevPlaceInGridCenter) {
-            return new Point2(p(width, (maxXPercent + minXPercent) / 2), p(height, (maxYPercent + minYPercent) / 2));
-        }
         return RNG.point(p(width, minXPercent), p(width, maxXPercent), p(height, minYPercent), p(height, maxYPercent));
     }
 
