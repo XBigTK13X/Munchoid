@@ -15,6 +15,7 @@ public class Joint {
 
     public void setChild(BodyPart child) {
         _child = child;
+        //TODO Attach and base rotation on that
     }
 
     public BodyPart getChild() {
@@ -23,5 +24,9 @@ public class Joint {
 
     public Point2 getGlobalCenter() {
         return GridRules.centerOf(GridLoc, _owner).add(_owner.getGlobalPosition());
+    }
+
+    public Point2 getChildGlobalCenter() {
+        return _child.getJoints().getAll().get(0).getGlobalCenter();
     }
 }
