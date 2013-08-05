@@ -29,4 +29,8 @@ public class Joint {
     public Point2 getChildGlobalCenter() {
         return _child.getJoints().getAll().get(0).getGlobalCenter();
     }
+
+    public BodyPart getOwner() {
+        return _owner;
+    }
 }

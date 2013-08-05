@@ -46,9 +46,31 @@ public class Joints {
 
                 Window.get().schedule(new DrawAPICall(bg, j.getChildGlobalCenter().X, j.getChildGlobalCenter().Y, radBG));
                 Window.get().schedule(new DrawAPICall(fg, j.getChildGlobalCenter().X, j.getChildGlobalCenter().Y, radFG));
+
                 j.getChild().getJoints().draw();
             }
         }
+    }
+
+    public String debug() {
+        return "====== New Joints Debug======\nBody" + debug(1);
+    }
+
+    public String debug(int level) {
+        String result = "";
+        for (Joint j : _joints) {
+            if (j.getChild() != null) {
+
+                result += "\n";
+                for (int ii = 0; ii < level; ii++) {
+                    result += "----";
+                }
+                result += "(" + j.GridLoc + ") " + j.getChild().getFunction();
+                result += j.getChild().getJoints().debug(level + 1);
+                result = result.replace("[]", "");
+            }
+        }
+        return result;
     }
 
     public Point2 getGridConnectionTo(BodyPart part) {

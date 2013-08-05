@@ -4,6 +4,7 @@ import game.GameConfig;
 import game.creatures.part.DebugPoly;
 import game.creatures.part.Design;
 import game.creatures.part.Designs;
+import sps.core.Logger;
 import sps.core.RNG;
 
 public class Engineer {
@@ -18,6 +19,10 @@ public class Engineer {
         BodyPart core = construct(body, PartFunction.Body, null);
 
         fill(maxParts, body, result, core);
+
+        if (GameConfig.DevDrawSkeleton) {
+            Logger.info(result.getCore().getJoints().debug());
+        }
 
         return result;
     }
