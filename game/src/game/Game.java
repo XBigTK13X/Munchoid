@@ -97,7 +97,6 @@ public class Game implements ApplicationListener {
     @Override
     public void render() {
         try {
-            Logger.devConsole("" + Gdx.graphics.getFramesPerSecond() + ": " + Gdx.graphics.getDeltaTime());
             update();
             draw();
         }
