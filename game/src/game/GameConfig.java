@@ -92,6 +92,7 @@ public class GameConfig {
     public static final boolean DevPrintArenaSize = false;
     public static final boolean DevPartSortingEnabled = false;
     public static final boolean DevPlaceInGridCenter = true;
+    public static final boolean DevDebugJointGrid = true;
 
     public static String json() {
         String config = "\"gameConfig\":{";

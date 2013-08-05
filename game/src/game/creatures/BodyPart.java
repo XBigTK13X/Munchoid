@@ -3,6 +3,7 @@ package game.creatures;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
+import game.creatures.part.Design;
 import game.creatures.part.Designs;
 import game.creatures.style.BodyRules;
 import game.creatures.style.Outline;
@@ -32,12 +33,12 @@ public class BodyPart {
 
     private Joints _joints;
 
-    public BodyPart(PartFunction function, int width, int height, Body owner) {
+    public BodyPart(PartFunction function, int width, int height, Body owner, Design design) {
         this(function, owner, owner.getColor(), new Point2(0, 0));
 
-        int[][] design = Designs.get(_function).create(width, height);
+        int[][] designResult = design.create(width, height);
 
-        _atoms = Designs.toAtoms(design, _color);
+        _atoms = Designs.toAtoms(designResult, _color);
         _width = _atoms.length;
         _height = _atoms[0].length;
         applyStyle();
