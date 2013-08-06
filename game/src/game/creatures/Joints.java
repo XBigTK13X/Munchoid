@@ -73,10 +73,21 @@ public class Joints {
         return result;
     }
 
+    //X is the parent's gridLoc, Y is where the child is joined
     public Point2 getGridConnectionTo(BodyPart part) {
         for (Joint j : _joints) {
             if (j.getChild() == part) {
                 return new Point2(j.GridLoc, j.getChild().getFunction().LocAttach);
+            }
+        }
+        return null;
+    }
+
+    //TODO Hash lookup
+    public Joint get(int gridLoc) {
+        for (Joint j : _joints) {
+            if (j.GridLoc == gridLoc) {
+                return j;
             }
         }
         return null;

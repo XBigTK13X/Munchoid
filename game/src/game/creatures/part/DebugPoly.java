@@ -9,6 +9,9 @@ public class DebugPoly implements Design {
 
     public DebugPoly(int dots) {
         _dots = dots;
+        if (dots == 0) {
+            int x = 0;
+        }
     }
 
     @Override

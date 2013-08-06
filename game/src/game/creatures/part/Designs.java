@@ -29,26 +29,31 @@ public class Designs {
     }
 
     public static Atom[][] toAtoms(int[][] design, Color color) {
-        design = Common.trim(design);
-        int width = design.length;
-        int height = design[0].length;
-        Color[][] textureBase = Designs.getTexture(width, height, color);
-        Atom[][] result = new Atom[width][height];
-        for (int ii = 0; ii < width; ii++) {
-            for (int jj = 0; jj < height; jj++) {
-                if (design[ii][jj] != Design.Empty) {
-                    Color c = textureBase[ii][jj];
-                    if (design[ii][jj] == Design.White) {
-                        c = Color.WHITE;
+        try {
+            design = Common.trim(design);
+            int width = design.length;
+            int height = design[0].length;
+            Color[][] textureBase = Designs.getTexture(width, height, color);
+            Atom[][] result = new Atom[width][height];
+            for (int ii = 0; ii < width; ii++) {
+                for (int jj = 0; jj < height; jj++) {
+                    if (design[ii][jj] != Design.Empty) {
+                        Color c = textureBase[ii][jj];
+                        if (design[ii][jj] == Design.White) {
+                            c = Color.WHITE;
+                        }
+                        if (design[ii][jj] == Design.Black) {
+                            c = Color.BLACK;
+                        }
+                        result[ii][jj] = new Atom(ii, jj, c);
                     }
-                    if (design[ii][jj] == Design.Black) {
-                        c = Color.BLACK;
-                    }
-                    result[ii][jj] = new Atom(ii, jj, c);
                 }
             }
+            return result;
         }
-        return result;
+        catch (Exception e) {
+            return null;
+        }
     }
 
     public static Color[][] toColors(int[][] design, Color color) {

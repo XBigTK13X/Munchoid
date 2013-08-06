@@ -1,6 +1,6 @@
 package game.creatures;
 
-import game.creatures.style.GridRules;
+import game.creatures.style.Grid;
 import sps.core.Point2;
 
 public class Joint {
@@ -23,14 +23,10 @@ public class Joint {
     }
 
     public Point2 getGlobalCenter() {
-        return GridRules.centerOf(GridLoc, _owner).add(_owner.getGlobalPosition());
+        return Grid.centerOf(GridLoc, _owner).add(_owner.getGlobalPosition());
     }
 
     public Point2 getChildGlobalCenter() {
-        return _child.getJoints().getAll().get(0).getGlobalCenter();
-    }
-
-    public BodyPart getOwner() {
-        return _owner;
+        return _child.getJoints().get(_child.getFunction().LocAttach).getGlobalCenter();
     }
 }

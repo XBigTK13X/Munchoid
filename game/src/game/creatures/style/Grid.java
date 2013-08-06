@@ -6,7 +6,7 @@ import sps.core.Point2;
 import sps.core.RNG;
 import sps.util.Bounds;
 
-public class GridRules {
+public class Grid {
     //Each part is divided into a 3x3 grid.
     //Children are placed randomly within any point
     //that lies within that part function's possible grid locs
@@ -17,8 +17,8 @@ public class GridRules {
         }
 
         Point2 gridParXChildY = parent.getJoints().getGridConnectionTo(part);
-        Point2 parPos = GridRules.randomPointInside((int) gridParXChildY.X, parent.getWidth(), parent.getHeight());
-        Point2 offset = GridRules.randomPointInside((int) gridParXChildY.Y, part.getWidth(), part.getHeight());
+        Point2 parPos = Grid.randomPointInside((int) gridParXChildY.X, parent.getWidth(), parent.getHeight());
+        Point2 offset = Grid.randomPointInside((int) gridParXChildY.Y, part.getWidth(), part.getHeight());
         //TODO Better centering
         //offset.setX(-offset.X);
         //offset.setY(-offset.Y);
@@ -35,7 +35,16 @@ public class GridRules {
         // Using this calculation makes it easier to break the grid into smaller pieces
         // and increase control over part placement
 
-        //Subtracting here inverts the Y axis
+        /*
+        A 3x3 grid would look like
+
+           789
+           456
+           123
+
+        */
+
+
         int j = gridLoc - 1;
         int n = (int) Math.sqrt(PartFunction.GridSize);
         float m = 100 / (float) (n);

@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import game.creatures.part.Design;
 import game.creatures.part.Designs;
-import game.creatures.style.GridRules;
+import game.creatures.style.Grid;
 import game.creatures.style.Outline;
 import sps.bridge.DrawDepths;
 import sps.core.Point2;
@@ -76,11 +76,21 @@ public class BodyPart {
         _width = _atoms.length;
         _height = _atoms[0].length;
         _joints = new Joints(this);
+
         //TODO Fix this
+        boolean locAttachCreated = false;
         for (Integer jointLoc : PartFunction.jointLocations(_function)) {
+            if (jointLoc == _function.LocAttach) {
+                locAttachCreated = true;
+            }
             Joint j = new Joint(jointLoc, this);
             _joints.add(j);
         }
+        if (!locAttachCreated && _function.LocAttach != 0) {
+            Joint j = new Joint(_function.LocAttach, this);
+            _joints.add(j);
+        }
+
         createSprite();
     }
 
@@ -89,7 +99,7 @@ public class BodyPart {
     }
 
     public void calculateOrigins() {
-        setPosition(GridRules.getOrigin(this));
+        setPosition(Grid.getOrigin(this));
 
         if (_joints != null && _joints.getAll().size() > 0) {
             for (Joint joint : _joints.getAll()) {
