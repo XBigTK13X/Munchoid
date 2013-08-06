@@ -1,5 +1,6 @@
 package game.creatures.part;
 
+import game.GameConfig;
 import sps.draw.Shapes;
 
 import java.awt.*;
@@ -8,10 +9,8 @@ public class DebugPoly implements Design {
     int _dots;
 
     public DebugPoly(int dots) {
-        _dots = dots;
-        if (dots == 0) {
-            int x = 0;
-        }
+        _dots = GameConfig.DevDebugJointGridWithSquares ? 2 : dots;
+
     }
 
     @Override
