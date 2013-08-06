@@ -30,7 +30,7 @@ public class GameConfig {
     //TODO Smoother movement
     public static final int playerAcceleration = 50;
 
-    public static final Point2 MinBodyPartSize = Screen.pos(5, 5);
+    public static final Point2 MinBodyPartSize = Screen.pos(7, 7);
     public static final Point2 MaxBodyPartSize = Screen.pos(13, 13);
     public static final int MinBodyParts = 6;
     public static final int MaxBodyParts = 9;

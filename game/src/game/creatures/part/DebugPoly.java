@@ -14,7 +14,9 @@ public class DebugPoly implements Design {
     @Override
     public int[][] create(int width, int height) {
         int rad = Math.min(width, height) / 2;
-        Polygon p = Shapes.regular(_dots + 2, rad, 0);
+        int sides = _dots + 2;
+        int rotDegs = -90 + 180 / -sides;
+        Polygon p = Shapes.regular(sides, rad, rotDegs);
         p.translate(rad, rad);
         int[][] result = Common.rectangle(width, height);
         for (int ii = 0; ii < width; ii++) {
