@@ -41,6 +41,7 @@ public class BodyPart {
         _atoms = Designs.toAtoms(designResult, _color);
         _width = _atoms.length;
         _height = _atoms[0].length;
+
         applyStyle();
     }
 

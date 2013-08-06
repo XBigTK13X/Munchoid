@@ -8,8 +8,18 @@ import sps.util.Bounds;
 
 public class Grid {
     //Each part is divided into a 3x3 grid.
-    //Children are placed randomly within any point
-    //that lies within that part function's possible grid locs
+    /*
+        The default grid looks like
+
+           789
+           456
+           123
+
+        */
+
+    private static final int[] gridRots = {-135, -90, -45, 180, 0, 0, 135, 90, 45};
+
+    //Based on the attached joints, determine a part's location
     public static Point2 getOrigin(BodyPart part) {
         BodyPart parent = part.getParent();
         if (parent == null) {
@@ -17,16 +27,21 @@ public class Grid {
         }
 
         Point2 gridParXChildY = parent.getJoints().getGridConnectionTo(part);
-        Point2 parPos = Grid.randomPointInside((int) gridParXChildY.X, parent.getWidth(), parent.getHeight());
-        Point2 offset = Grid.randomPointInside((int) gridParXChildY.Y, part.getWidth(), part.getHeight());
-        //TODO Better centering
-        //offset.setX(-offset.X);
-        //offset.setY(-offset.Y);
 
-        //part.setRotation(part.getFunction().RotationOffset);
+        if (gridParXChildY.X == 5) {
+            Point2 partCenterOffset = new Point2(-part.getWidth() / 2, -part.getHeight() / 2);
+            Point2 parentCenterOffset = new Point2(parent.getWidth() / 2, parent.getHeight() / 2);
+            return partCenterOffset.add(parentCenterOffset);
+        }
+        else {
+            float rotRads = (float) ((gridRots[(int) gridParXChildY.X - 1]) * Math.PI / 180);
+            int radius = Math.min(part.getWidth() / 2, part.getHeight() / 2);
+            Point2 mult = new Point2((float) Math.cos(rotRads), (float) Math.sin(rotRads));
+            Point2 parentGridDist = new Point2((parent.getWidth() / PartFunction.GridLocFraction) / 2, (parent.getHeight() / PartFunction.GridLocFraction) / 2);
+            Point2 jointCenter = parent.getJoints().get((int) gridParXChildY.X).getLocalCenter();
 
-        return parPos.add(offset);
-
+            return jointCenter.add(radius * mult.X + parentGridDist.X * mult.X, radius * mult.Y + parentGridDist.Y * mult.Y);
+        }
     }
 
     private static Bounds gridRange(Integer gridLoc, int width, int height) {
@@ -35,18 +50,8 @@ public class Grid {
         // Using this calculation makes it easier to break the grid into smaller pieces
         // and increase control over part placement
 
-        /*
-        A 3x3 grid would look like
-
-           789
-           456
-           123
-
-        */
-
-
         int j = gridLoc - 1;
-        int n = (int) Math.sqrt(PartFunction.GridSize);
+        int n = PartFunction.GridLocFraction;
         float m = 100 / (float) (n);
         int xMin = (int) (m * (j % n));
         int yMin = (int) (m * Math.floor(j / n));

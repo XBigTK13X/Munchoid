@@ -14,6 +14,7 @@ public enum PartFunction {
 
     //Must be a square number
     public static final int GridSize = 9;
+    public static final int GridLocFraction = (int) Math.sqrt(GridSize);
 
     public final float Mult;
     public final int MaxChildPerJoint;
