@@ -40,6 +40,9 @@ public class Engineer {
         }
         result.add(parent);
         for (Joint j : parent.getJoints().getAll()) {
+            if (maxParts <= result.getAll().size()) {
+                return;
+            }
             if (RNG.coinFlip()) {
                 PartFunction f = PartFunction.random(j.GridLoc, parent.getFunction());
                 if (f != null) {
