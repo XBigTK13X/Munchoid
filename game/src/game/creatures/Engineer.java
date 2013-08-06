@@ -46,7 +46,7 @@ public class Engineer {
             if (RNG.coinFlip()) {
                 PartFunction f = PartFunction.random(j.GridLoc, parent.getFunction());
                 if (f != null) {
-                    Design design;
+                    Design design = Designs.get(f);
                     if (GameConfig.DevDebugJointGrid) {
                         design = new DebugPoly(j.GridLoc);
                     }

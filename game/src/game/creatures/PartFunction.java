@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum PartFunction {
-    Body(2, 7, 0, 0),
+    Body(1.5f, 7, 0, 0),
     Head(1, 4, 0, 2),
     UpperLimb(1, 1, 15, 2),
     LowerLimb(1, 1, 90, 2),

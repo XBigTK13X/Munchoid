@@ -32,8 +32,8 @@ public class GameConfig {
 
     public static final Point2 MinBodyPartSize = Screen.pos(7, 7);
     public static final Point2 MaxBodyPartSize = Screen.pos(13, 13);
-    public static final int MinBodyParts = 12;
-    public static final int MaxBodyParts = 17;
+    public static final int MinBodyParts = 6;
+    public static final int MaxBodyParts = 10;
 
     public static final int MinMergeImpactPercent = 15;
     public static final int MaxMergeImpactPercent = 40;
@@ -83,15 +83,18 @@ public class GameConfig {
 
     //Debugging / Development
     public static final boolean DevShortcutsEnabled = true;
-    public static final boolean DevDrawSkeleton = true;
-    public static final boolean DevDebugJointGrid = true;
-    public static final boolean DevDebugJointGridWithSquares = true;
-    public static final boolean DevBattleLog = false;
     public static final boolean DevEndToEndStateLoadTest = false;
     public static final boolean DevFlipEnabled = false;
+    public static final boolean DevPartSortingEnabled = false;
+    public static final boolean DevDrawSkeleton = false;
+    public static final boolean DevDebugJointGrid = false;
+    public static final boolean DevDebugJointGridWithSquares = false;
+
+    //Debug/Development Logging toggles
+    public static final boolean DevDebugGridOriginCalc = false;
+    public static final boolean DevBattleLog = false;
     public static final boolean DevTimeStates = false;
     public static final boolean DevPrintArenaSize = false;
-    public static final boolean DevPartSortingEnabled = false;
 
 
     public static String json() {
