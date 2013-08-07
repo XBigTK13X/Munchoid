@@ -1,6 +1,5 @@
 package game.creatures.style;
 
-import game.GameConfig;
 import game.creatures.BodyPart;
 import game.creatures.PartFunction;
 import sps.core.Logger;
@@ -11,16 +10,23 @@ import sps.util.Bounds;
 public class Grid {
     //Each part is divided into a 3x3 grid.
     /*
-        The grid is oriented as shown below
-
+    When displaying the grid, it is oriented as
            789
            456
            123
+    */
 
-        */
+    /* This init lists the grid as
+        123
+        456
+        789
+     */
 
-    //TODO Convert this to a calc so that growing the grid is easier
-    private static final int[] gridRots = {-135, -90, -45, 180, 0, 0, 135, 90, 45};
+    private static final Point2[] __gridRots = {
+            new Point2(-1, -1), new Point2(0, -1), new Point2(1, -1),
+            new Point2(-1, 0), new Point2(0, 0), new Point2(1, 0),
+            new Point2(-1, 1), new Point2(0, 1), new Point2(1, 1)
+    };
 
     //Based on the attached joints, determine a part's location
     public static Point2 getOrigin(BodyPart part) {
@@ -30,26 +36,17 @@ public class Grid {
         }
 
         Point2 gridParXChildY = parent.getJoints().getGridConnectionTo(part);
+        Point2 mult = __gridRots[(int) gridParXChildY.X - 1];
 
-        if (gridParXChildY.X == 5) {
-            Point2 partCenterOffset = new Point2(-part.getWidth() / 2, -part.getHeight() / 2);
-            Point2 parentCenterOffset = new Point2(parent.getWidth() / 2, parent.getHeight() / 2);
-            return partCenterOffset.add(parentCenterOffset);
-        }
-        else {
-            float rotRads = (float) ((gridRots[(int) gridParXChildY.X - 1]) * Math.PI / 180);
-            int radius = Math.min(part.getWidth() / 2, part.getHeight() / 2);
-            Point2 mult = new Point2((float) Math.cos(rotRads), (float) Math.sin(rotRads));
-            Point2 parentGridDist = new Point2((parent.getWidth() / PartFunction.GridLocFraction) / 2, (parent.getHeight() / PartFunction.GridLocFraction) / 2);
-            Point2 jointCenter = parent.getJoints().get((int) gridParXChildY.X).getLocalCenter();
+        int radius = Math.min(-part.getWidth() / 2, part.getHeight() / 2);
+        Point2 attachmentCenter = new Point2(-part.getWidth() / 2, -part.getHeight() / 2);
+        Point2 jointCenter = parent.getJoints().get((int) gridParXChildY.X).getLocalCenter().add(attachmentCenter);
+        Point2 base = new Point2(mult.X * radius, mult.Y * radius);
+        Point2 result = base;
 
-            Point2 result = jointCenter.add(radius * mult.X + parentGridDist.X * mult.X, radius * mult.Y + parentGridDist.Y * mult.Y);
-            if (GameConfig.DevDebugGridOriginCalc) {
-                Logger.info("G: " + gridParXChildY.X + ", Par: " + parent.getFunction() + ", chil: " + part.getFunction() + ", jc: " + jointCenter + ",pgd: " + parentGridDist + ", rad: " + radius + ", res: " + result);
-            }
+        Logger.info("Par: " + part.getFunction() + ", gl:  " + gridParXChildY.X + ", res: " + result + ", mult: " + mult + ", rad: " + radius + ", base: " + base);
 
-            return result;
-        }
+        return result;
     }
 
     private static Bounds gridRange(Integer gridLoc, int width, int height) {

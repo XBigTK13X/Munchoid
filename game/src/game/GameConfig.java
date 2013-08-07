@@ -86,12 +86,12 @@ public class GameConfig {
     public static final boolean DevEndToEndStateLoadTest = false;
     public static final boolean DevFlipEnabled = false;
     public static final boolean DevPartSortingEnabled = false;
-    public static final boolean DevDrawSkeleton = false;
+    public static final boolean DevDrawSkeleton = true;
     public static final boolean DevDebugJointGrid = false;
     public static final boolean DevDebugJointGridWithSquares = false;
 
     //Debug/Development Logging toggles
-    public static final boolean DevDebugGridOriginCalc = false;
+    public static final boolean DevDebugGridOriginCalc = true;
     public static final boolean DevBattleLog = false;
     public static final boolean DevTimeStates = false;
     public static final boolean DevPrintArenaSize = false;

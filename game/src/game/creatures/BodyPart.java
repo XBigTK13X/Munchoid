@@ -181,6 +181,7 @@ public class BodyPart {
         float xOffset = _owner.isFlipX() ? _owner.getWidth() : 0;
         float parentX = 0;
         float parentY = 0;
+
         BodyPart p = _parent;
 
         while (p != null) {

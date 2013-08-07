@@ -4,6 +4,7 @@ package game;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import game.creatures.PartFunction;
 import game.states.AnimationTest;
 import sps.bridge.Commands;
 import sps.bridge.SpriteTypes;
@@ -33,9 +34,13 @@ public class Game implements ApplicationListener {
         Window.setRefreshInstance(this);
         Input.get().setup(new DefaultStateProvider());
         SpriteSheetManager.setup(SpriteTypes.getDefs());
+
+        PartFunction.initJointSpecs();
+
         StateManager.get().push(new AnimationTest());
         ParticleEngine.reset();
         StateManager.get().setPaused(false);
+
     }
 
     @Override
