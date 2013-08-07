@@ -15,6 +15,7 @@ public class Body {
     private boolean _flipX;
     private Color _color;
     private static Floor __floor;
+    private float _scale;
 
     private Color _highlight = Color.WHITE;
 
@@ -74,6 +75,7 @@ public class Body {
     }
 
     public void setScale(float scale) {
+        _scale = scale;
         for (BodyPart part : _parts.getAll()) {
             part.setScale(scale);
         }
@@ -150,5 +152,9 @@ public class Body {
 
     public float getPercentHealth() {
         return (getHealth() / (float) getHealthMax());
+    }
+
+    public float getScale() {
+        return _scale;
     }
 }

@@ -14,6 +14,7 @@ public class AnimationTest implements State {
     @Override
     public void create() {
         creature = new Creature();
+        creature.getBody().setScale(.6f);
         creature.setLocation(Screen.pos(20, 50));
     }
 
@@ -30,6 +31,12 @@ public class AnimationTest implements State {
         }
         if (Input.get().isActive(Commands.get("Pop"))) {
             creature.getBody().flipX(!creature.getBody().isFlipX());
+        }
+        if (Input.get().isActive(Commands.get("MoveUp"))) {
+            creature.getBody().setScale(creature.getBody().getScale() + .1f);
+        }
+        if (Input.get().isActive(Commands.get("MoveDown"))) {
+            creature.getBody().setScale(creature.getBody().getScale() - .1f);
         }
         creature.update();
     }

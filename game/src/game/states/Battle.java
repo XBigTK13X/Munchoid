@@ -49,8 +49,8 @@ public class Battle implements State {
         _right.orientX(true, true);
 
         EntityManager.get().addEntity(_right);
-        _right.getBody().setScale(1);
-        _left.getBody().setScale(1);
+        _right.getBody().setScale(GameConfig.BattleCreatureScale);
+        _left.getBody().setScale(GameConfig.BattleCreatureScale);
         EntityManager.get().addEntity(_left);
         _right.setOpponent(_left);
         _left.setOpponent(_right);
