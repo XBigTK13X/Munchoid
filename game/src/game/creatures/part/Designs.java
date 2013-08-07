@@ -19,7 +19,7 @@ public class Designs {
         tmp.get(PartFunction.Head).add(new RoundHead());
         tmp.get(PartFunction.HeadDetail).add(new RoundEye());
         tmp.get(PartFunction.UpperLimb).add(new LimbSegment());
-        tmp.get(PartFunction.Body).add(new RectangleBody());
+        tmp.get(PartFunction.Core).add(new RectangleBody());
         tmp.get(PartFunction.LowerLimb).add(new LimbSegment());
         __designs = Collections.unmodifiableMap(tmp);
     }

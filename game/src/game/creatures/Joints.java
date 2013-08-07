@@ -52,7 +52,7 @@ public class Joints {
     }
 
     public String debug() {
-        return "====== New Joints Debug======\nBody" + debug(1);
+        return "====== New Joints Debug======\nCore" + debug(1);
     }
 
     public String debug(int level) {

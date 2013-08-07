@@ -185,6 +185,7 @@ public class BodyPart {
         float parentX = 0;
         float parentY = 0;
 
+        //TODO This is really ugly. Should be able to account for Creature pos in the Core
         if (_parent != null) {
             parentX += _parentConnection.getGlobalCenter().X;
             parentY += _parentConnection.getGlobalCenter().Y;

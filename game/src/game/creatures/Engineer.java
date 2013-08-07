@@ -16,7 +16,7 @@ public class Engineer {
     public static BodyParts designParts(Body body) {
         int maxParts = RNG.next(GameConfig.MinBodyParts, GameConfig.MaxBodyParts);
         BodyParts result = new BodyParts(body);
-        BodyPart core = construct(body, PartFunction.Body, null);
+        BodyPart core = construct(body, PartFunction.Core, null);
 
         fill(maxParts, body, result, core);
 
@@ -28,7 +28,7 @@ public class Engineer {
     }
 
     private static BodyPart construct(Body owner, PartFunction f, Design design) {
-        if (!GameConfig.DevDebugJointGrid || f == PartFunction.Body) {
+        if (!GameConfig.DevDebugJointGrid || f == PartFunction.Core) {
             design = Designs.get(f);
         }
         return new BodyPart(f, RNG.next((int) (pwMin * f.Mult), (int) (pWMax * f.Mult)), RNG.next((int) (pHMin * f.Mult), (int) (pHMax * f.Mult)), owner, design);

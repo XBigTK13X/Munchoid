@@ -18,7 +18,7 @@ public class Merge {
 
         List<BodyPart> bodies = new ArrayList<BodyPart>();
         for (int ii = 0; ii < pool.size(); ii++) {
-            if (pool.get(ii).getFunction() == PartFunction.Body) {
+            if (pool.get(ii).getFunction() == PartFunction.Core) {
                 bodies.add(pool.remove(ii));
             }
         }

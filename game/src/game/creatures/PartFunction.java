@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public enum PartFunction {
-    Body(1.5f, 7, 0, 0),
+    Core(1.5f, 7, 0, 0),
     Head(1, 4, 0, 2),
     UpperLimb(1, 1, 15, 2),
     LowerLimb(1, 1, 90, 2),
@@ -45,16 +45,16 @@ public enum PartFunction {
         if (__joints == null) {
             //The grid locations on a part where a child can be added
             __joints = new HashMap<PartFunction, Integer[]>();
-            __joints.put(Body, new Integer[]{1, 2, 3, 4, 6, 7, 8, 9});
+            __joints.put(Core, new Integer[]{1, 2, 3, 4, 6, 7, 8, 9});
             __joints.put(Head, new Integer[]{5, 6});
             __joints.put(UpperLimb, new Integer[]{2, 8});
             __joints.put(LowerLimb, new Integer[]{2, 8});
             __joints.put(HeadDetail, new Integer[]{5});
 
             //What a part's children can be
-            //NULL mean a part has no ability to host a child
+            //NULL means a part has no ability to host a child
             __childFunctions = new HashMap<PartFunction, PartFunction[]>();
-            __childFunctions.put(Body, new PartFunction[]{UpperLimb, LowerLimb, Head});
+            __childFunctions.put(Core, new PartFunction[]{UpperLimb, LowerLimb, Head});
             __childFunctions.put(Head, new PartFunction[]{HeadDetail});
             __childFunctions.put(UpperLimb, new PartFunction[]{UpperLimb});
             __childFunctions.put(LowerLimb, new PartFunction[]{LowerLimb});
@@ -62,7 +62,7 @@ public enum PartFunction {
 
             //The places on a parent where a function may connect
             __parentJoints = new HashMap<PartFunction, Integer[]>();
-            __parentJoints.put(Body, null);
+            __parentJoints.put(Core, null);
             __parentJoints.put(Head, new Integer[]{7, 8, 9});
             __parentJoints.put(UpperLimb, new Integer[]{4, 5, 6});
             __parentJoints.put(LowerLimb, new Integer[]{1, 2, 3});
