@@ -2,7 +2,6 @@ package game.creatures.style;
 
 import game.creatures.BodyPart;
 import game.creatures.PartFunction;
-import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.util.Bounds;
@@ -37,15 +36,18 @@ public class Grid {
 
         Point2 mult = __gridRots[part.getParentConnection().GridLoc - 1];
 
-        int m = PartFunction.GridLocFraction;
-        int radius = Math.min(Math.min(part.getWidth() / m, part.getHeight() / m), Math.min(parent.getWidth() / m, parent.getHeight() / m));
+
+        /*TODO Position currently based on the child center.
+        /      It should factor in the parent joint and child joint
+
+        Point2 childJoint = part.getJoints().get(part.getFunction().LocAttach).getLocalCenter();
+        Point2 parentJoint = part.getParentConnection().getLocalCenter();
+        */
+
+        int xOffset = part.getWidth();
+        int yOffset = part.getHeight();
         Point2 partCenterOffset = new Point2(-part.getWidth() / 2, -part.getHeight() / 2);
-        Point2 base = new Point2(mult.X * radius, mult.Y * radius).add(partCenterOffset);
-        Point2 result = base;
-
-        Logger.info("Par: " + part.getFunction() + ", gl:  " + part.getParentConnection().GridLoc + ", res: " + result + ", mult: " + mult + ", rad: " + radius + ", base: " + base);
-
-        return result;
+        return new Point2(mult.X * xOffset, mult.Y * yOffset).add(partCenterOffset);
     }
 
     private static Bounds gridRange(Integer gridLoc, int width, int height) {

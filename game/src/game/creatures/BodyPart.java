@@ -8,7 +8,6 @@ import game.creatures.part.Designs;
 import game.creatures.style.Grid;
 import game.creatures.style.Outline;
 import sps.bridge.DrawDepths;
-import sps.core.Logger;
 import sps.core.Point2;
 import sps.display.Window;
 import sps.draw.SpriteMaker;
@@ -104,7 +103,6 @@ public class BodyPart {
 
     public void calculateOrigins() {
         setPosition(Grid.getOrigin(this));
-        Logger.info("GL: " + getGlobalPosition());
         if (_joints != null && _joints.getAll().size() > 0) {
             for (Joint joint : _joints.getAll()) {
                 if (joint.getChild() != null) {

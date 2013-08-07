@@ -91,7 +91,6 @@ public class GameConfig {
     public static final boolean DevDebugJointGridWithSquares = false;
 
     //Debug/Development Logging toggles
-    public static final boolean DevDebugGridOriginCalc = true;
     public static final boolean DevBattleLog = false;
     public static final boolean DevTimeStates = false;
     public static final boolean DevPrintArenaSize = false;

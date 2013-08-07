@@ -24,6 +24,16 @@ public class Joints {
         return _joints;
     }
 
+    //TODO Hash lookup
+    public Joint get(int gridLoc) {
+        for (Joint j : _joints) {
+            if (j.GridLoc == gridLoc) {
+                return j;
+            }
+        }
+        return null;
+    }
+
     public void draw() {
         for (Joint j : _joints) {
             if (j.getChild() != null) {
@@ -70,15 +80,5 @@ public class Joints {
             }
         }
         return result;
-    }
-
-    //TODO Hash lookup
-    public Joint get(int gridLoc) {
-        for (Joint j : _joints) {
-            if (j.GridLoc == gridLoc) {
-                return j;
-            }
-        }
-        return null;
     }
 }
