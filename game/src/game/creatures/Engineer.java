@@ -51,8 +51,7 @@ public class Engineer {
                         design = new DebugPoly(j.GridLoc);
                     }
                     BodyPart child = construct(owner, f, design);
-                    j.setChild(child);
-                    child.setParent(parent);
+                    child.setParent(parent, j);
                     fill(maxParts, owner, result, child);
                 }
             }

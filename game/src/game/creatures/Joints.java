@@ -1,7 +1,6 @@
 package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
-import sps.core.Point2;
 import sps.display.DrawAPICall;
 import sps.display.Window;
 
@@ -71,16 +70,6 @@ public class Joints {
             }
         }
         return result;
-    }
-
-    //X is the parent's gridLoc, Y is where the child is joined
-    public Point2 getGridConnectionTo(BodyPart part) {
-        for (Joint j : _joints) {
-            if (j.getChild() == part) {
-                return new Point2(j.GridLoc, j.getChild().getFunction().LocAttach);
-            }
-        }
-        return null;
     }
 
     //TODO Hash lookup

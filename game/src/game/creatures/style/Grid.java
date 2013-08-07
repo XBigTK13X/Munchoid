@@ -35,16 +35,15 @@ public class Grid {
             return new Point2(0, 0);
         }
 
-        Point2 gridParXChildY = parent.getJoints().getGridConnectionTo(part);
-        Point2 mult = __gridRots[(int) gridParXChildY.X - 1];
+        Point2 mult = __gridRots[part.getParentConnection().GridLoc - 1];
 
-        int radius = Math.min(-part.getWidth() / 2, part.getHeight() / 2);
-        Point2 attachmentCenter = new Point2(-part.getWidth() / 2, -part.getHeight() / 2);
-        Point2 jointCenter = parent.getJoints().get((int) gridParXChildY.X).getLocalCenter().add(attachmentCenter);
-        Point2 base = new Point2(mult.X * radius, mult.Y * radius);
+        int m = PartFunction.GridLocFraction;
+        int radius = Math.min(Math.min(part.getWidth() / m, part.getHeight() / m), Math.min(parent.getWidth() / m, parent.getHeight() / m));
+        Point2 partCenterOffset = new Point2(-part.getWidth() / 2, -part.getHeight() / 2);
+        Point2 base = new Point2(mult.X * radius, mult.Y * radius).add(partCenterOffset);
         Point2 result = base;
 
-        Logger.info("Par: " + part.getFunction() + ", gl:  " + gridParXChildY.X + ", res: " + result + ", mult: " + mult + ", rad: " + radius + ", base: " + base);
+        Logger.info("Par: " + part.getFunction() + ", gl:  " + part.getParentConnection().GridLoc + ", res: " + result + ", mult: " + mult + ", rad: " + radius + ", base: " + base);
 
         return result;
     }

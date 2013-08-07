@@ -23,7 +23,7 @@ public class Joint {
     }
 
     public Point2 getGlobalCenter() {
-        return Grid.centerOf(GridLoc, _owner).add(_owner.getGlobalPosition());
+        return getLocalCenter().add(_owner.getGlobalPosition());
     }
 
     public Point2 getLocalCenter() {

@@ -8,6 +8,7 @@ import game.creatures.part.Designs;
 import game.creatures.style.Grid;
 import game.creatures.style.Outline;
 import sps.bridge.DrawDepths;
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.display.Window;
 import sps.draw.SpriteMaker;
@@ -26,10 +27,12 @@ public class BodyPart {
     private PartFunction _function;
     private Body _owner;
     private Point2 _position;
-    private BodyPart _parent;
     private int _health;
     private int _healthMax = 100;
     private int _rotationDegrees = 0;
+
+    private BodyPart _parent;
+    private Joint _parentConnection;
 
     private Joints _joints;
 
@@ -101,7 +104,7 @@ public class BodyPart {
 
     public void calculateOrigins() {
         setPosition(Grid.getOrigin(this));
-
+        Logger.info("GL: " + getGlobalPosition());
         if (_joints != null && _joints.getAll().size() > 0) {
             for (Joint joint : _joints.getAll()) {
                 if (joint.getChild() != null) {
@@ -182,12 +185,13 @@ public class BodyPart {
         float parentX = 0;
         float parentY = 0;
 
-        BodyPart p = _parent;
-
-        while (p != null) {
-            parentX += p.getPosition().X;
-            parentY += p.getPosition().Y;
-            p = p.getParent();
+        if (_parent != null) {
+            parentX += _parentConnection.getGlobalCenter().X;
+            parentY += _parentConnection.getGlobalCenter().Y;
+            if (_owner.getOwner() != null) {
+                parentX -= _owner.getOwner().getLocation().X;
+                parentY -= _owner.getOwner().getLocation().Y;
+            }
         }
 
         Point2 scaledLoc = new Point2((getPosition().X + parentX) * dirScale + xOffset, (getPosition().Y + parentY) * _scale);
@@ -243,8 +247,10 @@ public class BodyPart {
         return _parent;
     }
 
-    public void setParent(BodyPart parent) {
+    public void setParent(BodyPart parent, Joint parentConnection) {
+        parentConnection.setChild(this);
         _parent = parent;
+        _parentConnection = parentConnection;
     }
 
     public int getHealth() {
@@ -257,5 +263,9 @@ public class BodyPart {
 
     public void setRotation(int degrees) {
         _rotationDegrees = degrees;
+    }
+
+    public Joint getParentConnection() {
+        return _parentConnection;
     }
 }
