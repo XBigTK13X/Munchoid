@@ -19,6 +19,10 @@ public class Bounds {
         return new Bounds(x, y, width, height);
     }
 
+    public static Bounds fromPoints(float x, float y, float x2, float y2) {
+        return fromPoints((int) x, (int) y, (int) x2, (int) y2);
+    }
+
     private Bounds(float x, float y, int width, int height) {
         X = (int) x;
         Y = (int) y;

@@ -78,7 +78,7 @@ public class BodyPart {
         AtomHelper.setColors(_atoms, atomColors);
         _width = _atoms.length;
         _height = _atoms[0].length;
-        _joints = new Joints(this);
+        _joints = new Joints();
 
         //TODO Fix this
         boolean locAttachCreated = false;
@@ -171,10 +171,8 @@ public class BodyPart {
     public void draw() {
         float dirScale = _scale * (_owner.isFlipX() ? -1 : 1);
         _sprite.setRotation(_rotationDegrees);
+        _joints.draw();
         Window.get().draw(_sprite, getGlobalPosition(), DrawDepths.get("Atom"), _owner.getHighlight(), _width * dirScale, _height * _scale);
-        if (GameConfig.DevDrawSkeleton) {
-            _joints.draw();
-        }
     }
 
     public Point2 getGlobalPosition() {
@@ -266,5 +264,9 @@ public class BodyPart {
 
     public Joint getParentConnection() {
         return _parentConnection;
+    }
+
+    public Color getColor() {
+        return _color;
     }
 }

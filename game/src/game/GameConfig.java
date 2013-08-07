@@ -86,7 +86,7 @@ public class GameConfig {
     public static final boolean DevEndToEndStateLoadTest = false;
     public static final boolean DevFlipEnabled = false;
     public static final boolean DevPartSortingEnabled = false;
-    public static final boolean DevDrawSkeleton = true;
+    public static final boolean DevDrawSkeleton = false;
     public static final boolean DevDebugJointGrid = false;
     public static final boolean DevDebugJointGridWithSquares = false;
 

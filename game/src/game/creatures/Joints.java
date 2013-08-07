@@ -1,6 +1,7 @@
 package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
+import game.GameConfig;
 import sps.display.DrawAPICall;
 import sps.display.Window;
 
@@ -8,11 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Joints {
-    private BodyPart _owner;
     private List<Joint> _joints;
 
-    public Joints(BodyPart owner) {
-        _owner = owner;
+    public Joints() {
         _joints = new ArrayList<Joint>();
     }
 
@@ -37,26 +36,31 @@ public class Joints {
     public void draw() {
         for (Joint j : _joints) {
             if (j.getChild() != null) {
-                int radBG = 7;
-                int radFG = radBG - 2;
+                if (GameConfig.DevDrawSkeleton) {
+                    int radBG = 7;
+                    int radFG = radBG - 2;
 
-                Color bg = Color.BLACK;
-                Color fg = Color.WHITE;
-                Color lbg = Color.WHITE;
-                Color lfg = Color.BLACK;
-                int lO = 2;
+                    Color bg = Color.BLACK;
+                    Color fg = Color.WHITE;
+                    Color lbg = Color.WHITE;
+                    Color lfg = Color.BLACK;
+                    int lO = 2;
 
-                Window.get().schedule(new DrawAPICall(bg, j.getGlobalCenter().X, j.getGlobalCenter().Y, radBG));
-                Window.get().schedule(new DrawAPICall(fg, j.getGlobalCenter().X, j.getGlobalCenter().Y, radFG));
+                    Window.get().schedule(new DrawAPICall(bg, j.getGlobalCenter().X, j.getGlobalCenter().Y, radBG));
+                    Window.get().schedule(new DrawAPICall(fg, j.getGlobalCenter().X, j.getGlobalCenter().Y, radFG));
 
-                Window.get().schedule(new DrawAPICall(lbg, j.getGlobalCenter().X - lO, j.getGlobalCenter().Y - lO, j.getChildGlobalCenter().X - lO, j.getChildGlobalCenter().Y - lO));
-                Window.get().schedule(new DrawAPICall(lfg, j.getGlobalCenter().X, j.getGlobalCenter().Y, j.getChildGlobalCenter().X, j.getChildGlobalCenter().Y));
-                Window.get().schedule(new DrawAPICall(lbg, j.getGlobalCenter().X + lO, j.getGlobalCenter().Y + lO, j.getChildGlobalCenter().X + lO, j.getChildGlobalCenter().Y + lO));
+                    Window.get().schedule(new DrawAPICall(lbg, j.getGlobalCenter().X - lO, j.getGlobalCenter().Y - lO, j.getChildGlobalCenter().X - lO, j.getChildGlobalCenter().Y - lO));
+                    Window.get().schedule(new DrawAPICall(lfg, j.getGlobalCenter().X, j.getGlobalCenter().Y, j.getChildGlobalCenter().X, j.getChildGlobalCenter().Y));
+                    Window.get().schedule(new DrawAPICall(lbg, j.getGlobalCenter().X + lO, j.getGlobalCenter().Y + lO, j.getChildGlobalCenter().X + lO, j.getChildGlobalCenter().Y + lO));
 
-                Window.get().schedule(new DrawAPICall(bg, j.getChildGlobalCenter().X, j.getChildGlobalCenter().Y, radBG));
-                Window.get().schedule(new DrawAPICall(fg, j.getChildGlobalCenter().X, j.getChildGlobalCenter().Y, radFG));
+                    Window.get().schedule(new DrawAPICall(bg, j.getChildGlobalCenter().X, j.getChildGlobalCenter().Y, radBG));
+                    Window.get().schedule(new DrawAPICall(fg, j.getChildGlobalCenter().X, j.getChildGlobalCenter().Y, radFG));
 
-                j.getChild().getJoints().draw();
+                    j.getChild().getJoints().draw();
+                }
+                else {
+                    j.draw();
+                }
             }
         }
     }
