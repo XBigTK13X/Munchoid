@@ -197,7 +197,7 @@ public class BodyPart {
             }
         }
 
-        Point2 scaledLoc = new Point2((getPosition().X + parentX) * getDirScale(), getPosition().Y * _scale + parentY);
+        Point2 scaledLoc = new Point2(getPosition().X * getDirScale() + parentX, getPosition().Y * _scale + parentY);
         if (_owner.getOwner() != null) {
             scaledLoc = scaledLoc.addRaw(_owner.getOwner().getLocation());
         }
