@@ -5,8 +5,6 @@ import game.arena.Floor;
 import sps.draw.Colors;
 import sps.util.MathHelper;
 
-import java.util.List;
-
 public class Body {
     private BodyParts _parts;
     private Creature _owner;
@@ -24,23 +22,13 @@ public class Body {
 
     public Body() {
         this(Colors.randomPleasant());
-
-        _parts = Engineer.designParts(this);
-
-        calculateSize();
     }
 
-    public Body(List<BodyPart> parts, Color color) {
-        this(color);
-
-        _parts.copy(parts);
-
-        calculateSize();
-    }
-
-    private Body(Color color) {
+    public Body(Color color) {
         _parts = new BodyParts(this);
         _color = color;
+        _parts = Engineer.designParts(this);
+        calculateSize();
     }
 
     private void calculateSize() {

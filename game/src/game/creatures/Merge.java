@@ -6,32 +6,11 @@ import game.forces.Force;
 import sps.core.RNG;
 import sps.draw.Colors;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Merge {
     public static Creature creatures(Creature a, Creature b) {
-        //Create a new body from the two inputs
-        List<BodyPart> pool = new ArrayList<BodyPart>();
-        pool.addAll(a.getBody().getParts().getAll());
-        pool.addAll(b.getBody().getParts().getAll());
-
-        List<BodyPart> bodies = new ArrayList<BodyPart>();
-        for (int ii = 0; ii < pool.size(); ii++) {
-            if (pool.get(ii).getFunction() == PartFunction.Core) {
-                bodies.add(pool.remove(ii));
-            }
-        }
-
-        int partMean = pool.size() / 2;
         Color mergedColor = Colors.hsvAverage(a.getBody().getColor(), b.getBody().getColor());
 
-        while (pool.size() > partMean) {
-            pool.remove(RNG.next(0, pool.size()));
-        }
-
-        pool.add(0, bodies.get(RNG.next(0, bodies.size())));
-        Creature result = new Creature(new Body(pool, mergedColor));
+        Creature result = new Creature(new Body(mergedColor));
 
         result.setStats(stats(a.getStats(), b.getStats()));
 
