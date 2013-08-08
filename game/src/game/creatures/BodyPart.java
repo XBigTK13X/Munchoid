@@ -127,10 +127,6 @@ public class BodyPart {
         return (_owner.isFlipX() ? -1 : 1);
     }
 
-    public float getDirScale() {
-        return _scale * getFlipMult();
-    }
-
     public Atom[][] getAtoms() {
         return _atoms;
     }
@@ -177,10 +173,10 @@ public class BodyPart {
     }
 
     public void draw() {
-        float dirScale = _scale * (_owner.isFlipX() ? -1 : 1);
         _sprite.setRotation(_rotationDegrees);
         _joints.draw();
-        Window.get().draw(_sprite, getGlobalPosition(), DrawDepths.get("Atom"), _owner.getHighlight(), _width * dirScale, _height * _scale);
+
+        Window.get().draw(_sprite, getGlobalPosition(), DrawDepths.get("Atom"), _owner.getHighlight(), _width * _scale, _height * _scale);
     }
 
     public Point2 getGlobalPosition() {
@@ -197,7 +193,7 @@ public class BodyPart {
             }
         }
 
-        Point2 scaledLoc = new Point2(getPosition().X * getDirScale() + parentX, getPosition().Y * _scale + parentY);
+        Point2 scaledLoc = new Point2(getPosition().X * _scale + parentX, getPosition().Y * _scale + parentY);
         if (_owner.getOwner() != null) {
             scaledLoc = scaledLoc.addRaw(_owner.getOwner().getLocation());
         }

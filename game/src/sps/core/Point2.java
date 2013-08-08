@@ -93,4 +93,8 @@ public class Point2 {
     public Point2 add(Point2 point2) {
         return addRaw(point2);
     }
+
+    public Point2 mult(float x, float y) {
+        return new Point2(X * x, Y * y);
+    }
 }
