@@ -1,14 +1,13 @@
 package game.states;
 
 import game.GameConfig;
+import game.InputWrapper;
 import game.MetaData;
 import game.Score;
-import sps.bridge.Commands;
-import sps.io.Input;
+import sps.display.Screen;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.TextPool;
-import sps.display.Screen;
 
 public class GameWin implements State {
     @Override
@@ -25,7 +24,7 @@ public class GameWin implements State {
 
     @Override
     public void update() {
-        if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.DevEndToEndStateLoadTest || GameConfig.DevBotEnabled) {
+        if (InputWrapper.confirm() || GameConfig.DevEndToEndStateLoadTest || GameConfig.DevBotEnabled) {
             StateManager.reset().push(new MainMenu());
         }
     }

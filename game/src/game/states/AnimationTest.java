@@ -1,5 +1,6 @@
 package game.states;
 
+import game.InputWrapper;
 import game.creatures.Creature;
 import sps.bridge.Commands;
 import sps.display.Screen;
@@ -32,14 +33,14 @@ public class AnimationTest implements State {
 
     @Override
     public void update() {
-        if (Input.get().isActive(Commands.get("Confirm"))) {
+        if (InputWrapper.confirm()) {
             StateManager.get().push(new AnimationTest());
         }
         float diff = .01f;
-        if (Input.get().isActive(Commands.get("MoveUp"))) {
+        if (InputWrapper.moveUp()) {
             _creature.getBody().setScale(_creature.getBody().getScale() + diff);
         }
-        if (Input.get().isActive(Commands.get("MoveDown"))) {
+        if (InputWrapper.moveDown()) {
             _creature.getBody().setScale(_creature.getBody().getScale() - diff);
         }
         if (Input.get().isActive(Commands.get("Force1"))) {

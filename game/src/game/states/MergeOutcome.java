@@ -3,6 +3,7 @@ package game.states;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
+import game.InputWrapper;
 import game.UI;
 import game.creatures.Creature;
 import game.creatures.Merge;
@@ -10,17 +11,15 @@ import game.creatures.Stats;
 import game.forces.Force;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
-import sps.bridge.Commands;
+import sps.display.Screen;
+import sps.display.Window;
 import sps.entities.EntityManager;
 import sps.entities.HitTest;
-import sps.display.Window;
-import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.TextPool;
 import sps.ui.Buttons;
 import sps.ui.ToolTip;
-import sps.display.Screen;
 
 public class MergeOutcome implements State {
     private static SingleSongPlayer __mergeMusic;
@@ -168,10 +167,10 @@ public class MergeOutcome implements State {
 
     @Override
     public void update() {
-        if (Input.get().isActive(Commands.get("Confirm"))) {
+        if (InputWrapper.confirm()) {
             acceptMerge();
         }
-        if (Input.get().isActive(Commands.get("Push"))) {
+        if (InputWrapper.push()) {
             rejectMerge();
         }
         if (GameConfig.DevBotEnabled) {

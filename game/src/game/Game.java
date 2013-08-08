@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import game.creatures.PartFunction;
 import game.states.MainMenu;
-import sps.bridge.Commands;
 import sps.bridge.SpriteTypes;
 import sps.bridge.Sps;
 import sps.core.DevConsole;
@@ -55,14 +54,14 @@ public class Game implements ApplicationListener {
     private void update() {
         Input.get().update();
 
-        if (Input.get().isActive(Commands.get("ToggleDevConsole"), 0)) {
+        if (InputWrapper.devConsole()) {
             DevConsole.get().toggle();
         }
-        if (Input.get().isActive(Commands.get("ToggleFullScreen"), 0)) {
+        if (InputWrapper.fullScreen()) {
             Window.get().toggleFullScreen();
         }
 
-        if (Input.get().isActive(Commands.get(CommandNames.Pause))) {
+        if (InputWrapper.pause()) {
             StateManager.get().setPaused(!StateManager.get().isPaused());
         }
 
@@ -120,18 +119,5 @@ public class Game implements ApplicationListener {
 
     @Override
     public void dispose() {
-    }
-
-    public class DrawDepths {
-        public final static String Atom = "Atom";
-    }
-
-    public class CommandNames {
-        public final static String MoveUp = "MoveUp";
-        public final static String MoveDown = "MoveDown";
-        public final static String MoveLeft = "MoveLeft";
-        public final static String MoveRight = "MoveRight";
-        public final static String Debug = "Debug";
-        public final static String Pause = "Pause";
     }
 }

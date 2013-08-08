@@ -1,14 +1,13 @@
 package game.states;
 
 import game.GameConfig;
+import game.InputWrapper;
 import game.arena.Player;
 import game.tournament.Bracket;
-import sps.bridge.Commands;
-import sps.io.Input;
+import sps.display.Screen;
 import sps.states.State;
 import sps.text.Text;
 import sps.text.TextPool;
-import sps.display.Screen;
 
 public class Tournament implements State {
 
@@ -39,7 +38,7 @@ public class Tournament implements State {
 
     @Override
     public void update() {
-        if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.DevEndToEndStateLoadTest || GameConfig.DevBotEnabled) {
+        if (InputWrapper.confirm() || GameConfig.DevEndToEndStateLoadTest || GameConfig.DevBotEnabled) {
             _boutNumber++;
             _entranceInfo.setMessage(boutMessage());
             // Run all of the EvE matches and Byes, then load the next PvE match

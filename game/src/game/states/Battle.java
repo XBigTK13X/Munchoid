@@ -1,6 +1,7 @@
 package game.states;
 
 import game.GameConfig;
+import game.InputWrapper;
 import game.Score;
 import game.battle.BattleHUD;
 import game.creatures.Creature;
@@ -109,7 +110,7 @@ public class Battle implements State {
                     playerActivate(force);
                 }
             }
-            if (Input.get().isActive(Commands.get("Pop")) && GameConfig.DevShortcutsEnabled) {
+            if (InputWrapper.pop() && GameConfig.DevShortcutsEnabled) {
                 victory();
             }
         }

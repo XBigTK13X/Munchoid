@@ -2,20 +2,19 @@ package game.arena;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import game.Game;
 import game.GameConfig;
+import game.InputWrapper;
 import game.creatures.Creature;
 import sps.bridge.*;
 import sps.core.Point2;
 import sps.core.SpsConfig;
+import sps.display.Screen;
+import sps.display.Window;
 import sps.entities.Entity;
 import sps.entities.IActor;
-import sps.display.Window;
-import sps.io.Input;
 import sps.text.TextEffects;
 import sps.text.TextPool;
 import sps.util.MathHelper;
-import sps.display.Screen;
 
 public class Player extends Entity implements IActor {
     private static int __scrollSpeedX;
@@ -59,11 +58,11 @@ public class Player extends Entity implements IActor {
             }
         }
         else {
-            float leftVelocity = (Input.get().isActive(Commands.get(Game.CommandNames.MoveLeft)) ? -_moveDistance : 0);
-            float rightVelocity = (Input.get().isActive(Commands.get(Game.CommandNames.MoveRight)) ? _moveDistance : 0);
+            float leftVelocity = InputWrapper.moveLeft() ? -_moveDistance : 0;
+            float rightVelocity = InputWrapper.moveRight() ? _moveDistance : 0;
             _keyVelocity.setX(rightVelocity + leftVelocity);
-            float downVelocity = (Input.get().isActive(Commands.get(Game.CommandNames.MoveDown)) ? -_moveDistance : 0);
-            float upVelocity = (Input.get().isActive(Commands.get(Game.CommandNames.MoveUp)) ? _moveDistance : 0);
+            float downVelocity = InputWrapper.moveDown() ? -_moveDistance : 0;
+            float upVelocity = InputWrapper.moveUp() ? _moveDistance : 0;
             _keyVelocity.setY(upVelocity + downVelocity);
         }
         if (_keyVelocity.X > 0) {
@@ -111,7 +110,7 @@ public class Player extends Entity implements IActor {
         moveInBothDirections(_keyVelocity.X, 0);
         moveInBothDirections(0, _keyVelocity.Y);
 
-        if ((GameConfig.DevBotEnabled || Input.get().isActive(Commands.get("Confirm"))) && !_net.isInUse()) {
+        if ((GameConfig.DevBotEnabled || InputWrapper.confirm()) && !_net.isInUse()) {
             _net.use();
         }
 

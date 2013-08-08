@@ -2,6 +2,7 @@ package game.states;
 
 import com.badlogic.gdx.Gdx;
 import game.GameConfig;
+import game.InputWrapper;
 import game.Score;
 import game.arena.Catchable;
 import game.arena.Player;
@@ -12,14 +13,12 @@ import game.creatures.Stats;
 import game.forces.Force;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
-import sps.bridge.Commands;
 import sps.bridge.EntityTypes;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.display.Screen;
 import sps.entities.Entity;
 import sps.entities.EntityManager;
-import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
@@ -98,7 +97,7 @@ public class Arena implements State {
                 StateManager.get().push(new Tournament((Player) EntityManager.get().getPlayer()));
             }
             else {
-                if ((_countDownSeconds <= 0 && opponents.size() > 0) || (Input.get().isActive(Commands.get("Push")) && GameConfig.DevShortcutsEnabled) || GameConfig.DevEndToEndStateLoadTest) {
+                if ((_countDownSeconds <= 0 && opponents.size() > 0) || (InputWrapper.push() && GameConfig.DevShortcutsEnabled) || GameConfig.DevEndToEndStateLoadTest) {
                     Creature opponent = ((Catchable) opponents.get(RNG.next(0, opponents.size()))).getCreature();
                     if (Score.get().victories() == 0) {
                         opponent.setStats(Stats.createWeakling(player.getPet().getStats()));

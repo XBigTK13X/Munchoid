@@ -1,12 +1,11 @@
 package game.states;
 
 import game.GameConfig;
-import sps.bridge.Commands;
-import sps.io.Input;
+import game.InputWrapper;
+import sps.display.Screen;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.TextPool;
-import sps.display.Screen;
 
 public class MainMenu implements State {
     @Override
@@ -22,7 +21,7 @@ public class MainMenu implements State {
 
     @Override
     public void update() {
-        if (Input.get().isActive(Commands.get("Confirm")) || GameConfig.DevEndToEndStateLoadTest || GameConfig.DevBotEnabled) {
+        if (InputWrapper.confirm() || GameConfig.DevEndToEndStateLoadTest || GameConfig.DevBotEnabled) {
             StateManager.get().push(new LoadArena());
         }
     }
