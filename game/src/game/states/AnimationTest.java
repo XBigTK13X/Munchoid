@@ -34,9 +34,6 @@ public class AnimationTest implements State {
         if (Input.get().isActive(Commands.get("Confirm"))) {
             StateManager.get().push(new AnimationTest());
         }
-        if (Input.get().isActive(Commands.get("Pop"))) {
-            _creature.getBody().flipX(!_creature.getBody().isFlipX());
-        }
         float diff = .01f;
         if (Input.get().isActive(Commands.get("MoveUp"))) {
             _creature.getBody().setScale(_creature.getBody().getScale() + diff);
@@ -47,10 +44,13 @@ public class AnimationTest implements State {
         if (Input.get().isActive(Commands.get("Force1"))) {
             _creature.getBody().setScale(1f);
         }
+        if (Input.get().isActive(Commands.get("Force6"))) {
+            _creature.getBody().flipX(!_creature.getBody().isFlipX());
+        }
 
         _creature.update();
         String display = "Scale: " + _creature.getBody().getScale() + "\n";
-        display += "\n[" + Commands.get("Pop").key() + "] to flipX";
+        display += "\n[" + Commands.get("Force6").key() + "] to flipX";
         display += "\n[" + Commands.get("Confirm").key() + "] new creature";
         display += "\n[" + Commands.get("MoveUp").key() + "] scale up";
         display += "\n[" + Commands.get("MoveDown").key() + "] scale down";
