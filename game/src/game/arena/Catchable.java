@@ -38,7 +38,6 @@ public class Catchable extends Entity {
         _creature.getBody().setScale(GameConfig.ArenaCreatureScale);
         _creature.orientX((GameConfig.DevFlipEnabled) ? RNG.coinFlip() : false, false);
         setSize(_creature.getWidth(), _creature.getHeight());
-        _radius = Math.max(_creature.getWidth(), _creature.getHeight()) / 2;
         setLocation(new Point2(RNG.next((int) (floor.getBounds().X2 * __spawnBuffer), (int) (floor.getBounds().X2 * (1f - __spawnBuffer))), RNG.next((int) (floor.getBounds().Y2 * __spawnBuffer), (int) (floor.getBounds().Y2 * (1f - __spawnBuffer)))));
     }
 
@@ -92,6 +91,7 @@ public class Catchable extends Entity {
         }
 
         //TODO Break arena into virtual tiles and only check against catchables in neighboring tiles
+        _radius = Math.max(_creature.getBody().getWidth(), _creature.getBody().getHeight()) * _creature.getBody().getScale();
         Entity nearest = EntityManager.get().getNearest(this, EntityTypes.get("Catchable"));
         float dist = HitTest.getDistance(this, nearest);
 
