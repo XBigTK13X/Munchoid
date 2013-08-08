@@ -44,9 +44,18 @@ public class AnimationTest implements State {
         if (Input.get().isActive(Commands.get("MoveDown"))) {
             _creature.getBody().setScale(_creature.getBody().getScale() - diff);
         }
-        _creature.update();
+        if (Input.get().isActive(Commands.get("Force1"))) {
+            _creature.getBody().setScale(1f);
+        }
 
-        _scale.setMessage("Scale: " + _creature.getBody().getScale());
+        _creature.update();
+        String display = "Scale: " + _creature.getBody().getScale() + "\n";
+        display += "\n[" + Commands.get("Pop").key() + "] to flipX";
+        display += "\n[" + Commands.get("Confirm").key() + "] new creature";
+        display += "\n[" + Commands.get("MoveUp").key() + "] scale up";
+        display += "\n[" + Commands.get("MoveDown").key() + "] scale down";
+        display += "\n[" + Commands.get("Force1").key() + "] scale reset";
+        _scale.setMessage(display);
     }
 
     @Override
