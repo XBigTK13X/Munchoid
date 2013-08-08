@@ -3,6 +3,7 @@ package game.states;
 import game.creatures.Creature;
 import sps.bridge.Commands;
 import sps.display.Screen;
+import sps.display.Window;
 import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
@@ -46,6 +47,10 @@ public class AnimationTest implements State {
         }
         if (Input.get().isActive(Commands.get("Force6"))) {
             _creature.getBody().flipX(!_creature.getBody().isFlipX());
+        }
+        if (Input.get().isActive(Commands.get("Force2"))) {
+            Window.get().getCamera().zoom += .1f;
+            Window.get().moveCamera(-(int) Screen.width(10), -(int) Screen.height(10));
         }
 
         _creature.update();
