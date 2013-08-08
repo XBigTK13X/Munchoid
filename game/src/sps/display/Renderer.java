@@ -185,7 +185,15 @@ public class Renderer {
 
     // String rendering
     public void draw(String content, Point2 location, Color filter, float scale, DrawDepth depth) {
-        render(content, location, filter, scale);
+        if (content.contains("\n")) {
+            int line = 0;
+            for (String s : content.split("\n")) {
+                render(s, location.add(0, line++ * -50), filter, scale);
+            }
+        }
+        else {
+            render(content, location, filter, scale);
+        }
     }
 
     private void render(String content, Point2 location, Color filter, float scale) {
