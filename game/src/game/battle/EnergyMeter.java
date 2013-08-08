@@ -2,12 +2,13 @@ package game.battle;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import game.GameConfig;
 import game.creatures.Creature;
 import game.creatures.style.Outline;
 import sps.core.Point2;
+import sps.display.Screen;
 import sps.display.Window;
 import sps.draw.Colors;
-import sps.display.Screen;
 import sps.draw.SpriteMaker;
 
 public class EnergyMeter {
@@ -39,7 +40,7 @@ public class EnergyMeter {
         _bg = SpriteMaker.get().fromColors(bg);
 
         Color[][] base = Colors.genArr(__widthPercent, __heightPercent, Color.BLUE);
-        Outline.single(base, Color.WHITE);
+        Outline.single(base, Color.WHITE, GameConfig.MeterOutlinePixelThickness);
         _sprite = SpriteMaker.get().fromColors(base);
         _bg.setSize(_width, _height);
         _bg.setPosition(_position.X, _position.Y);

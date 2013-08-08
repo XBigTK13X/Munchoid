@@ -9,16 +9,16 @@ import game.forces.Force;
 import game.states.ForceSelection;
 import sps.bridge.Commands;
 import sps.core.Point2;
-import sps.entities.HitTest;
+import sps.display.Screen;
 import sps.display.Window;
+import sps.draw.Colors;
+import sps.draw.SpriteMaker;
+import sps.entities.HitTest;
 import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.ui.Buttons;
 import sps.ui.ToolTip;
-import sps.draw.Colors;
-import sps.display.Screen;
-import sps.draw.SpriteMaker;
 
 public class ForceSelectionButton {
     private Sprite _bg;
@@ -47,7 +47,7 @@ public class ForceSelectionButton {
         _bg = SpriteMaker.get().fromColors(bg);
 
         Color[][] base = Colors.genArr(width, height, force.Color);
-        Outline.single(base, Color.WHITE);
+        Outline.single(base, Color.WHITE, GameConfig.MeterOutlinePixelThickness);
         _sprite = SpriteMaker.get().fromColors(base);
 
         _bg.setSize(_width, _height);

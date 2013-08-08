@@ -74,7 +74,7 @@ public class BodyPart {
 
     private void applyStyle() {
         Color[][] atomColors = AtomHelper.getColors(_atoms);
-        Outline.single(atomColors, Color.WHITE);
+        Outline.single(atomColors, Color.WHITE, GameConfig.BodyPartOutlinePixelThickness);
         AtomHelper.setColors(_atoms, atomColors);
         _width = _atoms.length;
         _height = _atoms[0].length;

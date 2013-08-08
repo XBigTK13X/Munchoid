@@ -2,10 +2,11 @@ package game.creatures.style;
 
 import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
+import sps.display.Screen;
 import sps.draw.Colors;
 
 public class Outline {
-    private static final float __thicknessPercent = 2f;
+    private static final int __thicknessPixels = (int) Screen.height(1) / 2;
 
     private interface ColorPicker {
         public Color convert(Color color);
@@ -33,22 +34,21 @@ public class Outline {
 
     private static final Compliment compliment = new Compliment();
 
-    public static void complimentary(Color[][] colors) {
-        apply(colors, compliment);
+    public static void complimentary(Color[][] colors, int pixelThickness) {
+        apply(colors, compliment, pixelThickness);
     }
 
-    public static void single(Color[][] colors, Color outline) {
-        apply(colors, new Single(outline));
+    public static void single(Color[][] colors, Color outline, int pixelThickness) {
+        apply(colors, new Single(outline), pixelThickness);
     }
 
-    public static void apply(Color[][] colors, ColorPicker picker) {
+    public static void apply(Color[][] colors, ColorPicker picker, int pixelThickness) {
         if (GameConfig.OptDisableOutlines) {
             return;
         }
 
-        int thicknessX = (int) (colors.length * (__thicknessPercent / 100f) + 1);
-        int thicknessY = (int) (colors[0].length * (__thicknessPercent / 100f) + 1);
-        thicknessX = thicknessY = Math.min(thicknessX, thicknessY);
+        int thicknessX = pixelThickness;
+        int thicknessY = pixelThickness;
         boolean[][] shifted = new boolean[colors.length][colors[0].length];
 
         if (GameConfig.OptFastOutlineAlg) {
