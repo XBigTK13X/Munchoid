@@ -55,7 +55,7 @@ public class Joint {
         }
         if (_child != null && _child.isAlive() && _owner.isAlive()) {
             if (_childDist == 0 || _lastOwnerScale != _owner.getScale() || _lastChildScale != _child.getScale()) {
-                Bounds b = Bounds.fromPoints(getGlobalCenter().X, getGlobalCenter().Y, _child.getGlobalPosition().X + _child.getWidth() / 2, _child.getGlobalPosition().Y + _child.getHeight() / 2);
+                Bounds b = Bounds.fromPoints(getGlobalCenter().X, getGlobalCenter().Y, _child.getGlobalPosition().X + _child.getWidth() * _child.getScale() / 2, _child.getGlobalPosition().Y + _child.getHeight() * _child.getScale() / 2);
                 _childDist = HitTest.getDistance(b.X, b.Y, b.X2, b.Y2);
                 _childRot = 90 + (int) (180 * Math.atan2(b.Y - b.Y2, b.X - b.X2) / Math.PI);
                 _lastChildScale = _child.getScale();

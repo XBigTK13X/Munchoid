@@ -6,21 +6,26 @@ import sps.display.Screen;
 import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
+import sps.text.Text;
+import sps.text.TextPool;
 
 public class AnimationTest implements State {
 
-    private Creature creature;
+    private Creature _creature;
+    private Text _scale;
 
     @Override
     public void create() {
-        creature = new Creature();
-        creature.getBody().setScale(.6f);
-        creature.setLocation(Screen.pos(20, 50));
+        _creature = new Creature();
+        _creature.getBody().setScale(1f);
+        _creature.setLocation(Screen.pos(50, 50));
+
+        _scale = TextPool.get().write("", Screen.pos(5, 90));
     }
 
     @Override
     public void draw() {
-        creature.draw();
+        _creature.draw();
 
     }
 
@@ -30,15 +35,18 @@ public class AnimationTest implements State {
             StateManager.get().push(new AnimationTest());
         }
         if (Input.get().isActive(Commands.get("Pop"))) {
-            creature.getBody().flipX(!creature.getBody().isFlipX());
+            _creature.getBody().flipX(!_creature.getBody().isFlipX());
         }
+        float diff = .01f;
         if (Input.get().isActive(Commands.get("MoveUp"))) {
-            creature.getBody().setScale(creature.getBody().getScale() + .1f);
+            _creature.getBody().setScale(_creature.getBody().getScale() + diff);
         }
         if (Input.get().isActive(Commands.get("MoveDown"))) {
-            creature.getBody().setScale(creature.getBody().getScale() - .1f);
+            _creature.getBody().setScale(_creature.getBody().getScale() - diff);
         }
-        creature.update();
+        _creature.update();
+
+        _scale.setMessage("Scale: " + _creature.getBody().getScale());
     }
 
     @Override

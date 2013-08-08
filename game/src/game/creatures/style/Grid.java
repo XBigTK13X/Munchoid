@@ -72,8 +72,8 @@ public class Grid {
     }
 
     public static Point2 centerOf(Integer gridLoc, BodyPart part) {
-        int width = part.getWidth();
-        int height = part.getHeight();
+        int width = (int) (part.getWidth() * part.getScale());
+        int height = (int) (part.getHeight() * part.getScale());
         Bounds b = gridRange(gridLoc, width, height);
         int xMid = (b.X + b.X2) / 2;
         int yMid = (b.Y + b.Y2) / 2;

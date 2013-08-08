@@ -191,11 +191,16 @@ public class BodyPart {
             }
         }
 
-        Point2 scaledLoc = new Point2((getPosition().X + parentX) * dirScale + xOffset, (getPosition().Y + parentY) * _scale);
+        Point2 scaledLoc = new Point2(getPosition().X * dirScale + xOffset + parentX, getPosition().Y * dirScale + parentY);
         if (_owner.getOwner() != null) {
             scaledLoc = scaledLoc.addRaw(_owner.getOwner().getLocation());
         }
         return scaledLoc;
+    }
+
+    public void setScale(float scale) {
+        _scale = scale;
+        setPosition(Grid.getOrigin(this));
     }
 
     public Point2 getPosition() {
@@ -204,10 +209,6 @@ public class BodyPart {
 
     public boolean isAlive() {
         return _isAlive;
-    }
-
-    public void setScale(float scale) {
-        _scale = scale;
     }
 
     public float getScale() {
