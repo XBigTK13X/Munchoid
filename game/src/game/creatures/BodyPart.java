@@ -102,7 +102,7 @@ public class BodyPart {
     }
 
     public void calculateOrigins() {
-        setPosition(Grid.getOrigin(this));
+        setPosition(Grid.getPositionRelativeToParent(this));
         if (_joints != null && _joints.getAll().size() > 0) {
             for (Joint joint : _joints.getAll()) {
                 if (joint.getChild() != null) {
@@ -202,7 +202,7 @@ public class BodyPart {
 
     public void setScale(float scale) {
         _scale = scale;
-        setPosition(Grid.getOrigin(this));
+        setPosition(Grid.getPositionRelativeToParent(this));
     }
 
     public Point2 getPosition() {

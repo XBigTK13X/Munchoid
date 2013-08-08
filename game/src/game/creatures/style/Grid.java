@@ -28,7 +28,7 @@ public class Grid {
     };
 
     //Based on the attached joints, determine a part's location
-    public static Point2 getOrigin(BodyPart part) {
+    public static Point2 getPositionRelativeToParent(BodyPart part) {
         BodyPart parent = part.getParent();
         if (parent == null) {
             return new Point2(0, 0);
@@ -44,8 +44,8 @@ public class Grid {
         Point2 parentJoint = part.getParentConnection().getLocalCenter();
         */
 
-        int xOffset = part.getWidth();
-        int yOffset = part.getHeight();
+        int xOffset = part.getWidth() / 2;
+        int yOffset = part.getHeight() / 2;
         Point2 partCenterOffset = new Point2(-part.getWidth() / 2, -part.getHeight() / 2);
         return new Point2(mult.X * xOffset, mult.Y * yOffset).add(partCenterOffset);
     }

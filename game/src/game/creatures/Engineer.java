@@ -18,7 +18,9 @@ public class Engineer {
         BodyParts result = new BodyParts(body);
         BodyPart core = construct(body, PartFunction.Core, null);
 
-        fill(maxParts, body, result, core);
+        while (GameConfig.MinBodyParts > result.getAll().size()) {
+            fill(maxParts, body, result, core);
+        }
 
         if (GameConfig.DevDrawSkeleton) {
             Logger.info(result.getCore().getJoints().debug());
