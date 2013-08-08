@@ -21,3 +21,6 @@ Look through current issues, make suggestions via the issues page, if all else f
 
 ## What licenses are used? ##
 Please refer to LICENSE.txt for more details, which must be contained in any distribution of source code or binaries.
+
+## What is NNUE? ##
+Munchoid was referred to as Project NNUE while it was under private development.
