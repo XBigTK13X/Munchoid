@@ -98,7 +98,7 @@ public class GameConfig {
     public static final boolean DevTimeStates = false;
     public static final boolean DevPrintArenaSize = false;
 
-    public static final int MeterOutlinePixelThickness = 1;
+    public static final int MeterOutlinePixelThickness = 2;
     public static final int BodyPartOutlinePixelThickness = 5;
 
     public static String json() {

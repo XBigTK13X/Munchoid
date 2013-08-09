@@ -2,6 +2,8 @@ package game.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import game.GameConfig;
+import game.creatures.style.Outline;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.display.Window;
@@ -12,16 +14,14 @@ import sps.util.Bounds;
 public class Meter {
     private Sprite _background;
     private Sprite _sprite;
-    private Point2 _position;
+    private Sprite _frame;
 
+    private Point2 _position;
     private int _height;
     private int _width;
-
     private int _scaledWidth;
     private int _scaledHeight;
-
     private Bounds _bounds;
-
     private boolean _isVertical;
 
     public Meter(int screenWidthPercent, int screenHeightPercent, Color color, Point2 position, boolean vertical) {
@@ -33,12 +33,17 @@ public class Meter {
         Color[][] bg = Colors.genArr(_width, _height, Color.LIGHT_GRAY);
         _background = SpriteMaker.get().fromColors(bg);
 
-        Color[][] base = Colors.genArr(_height, _height, color);
+        Color[][] base = Colors.genArr(_width, _height, color);
         _sprite = SpriteMaker.get().fromColors(base);
-        _background.setSize(_width, _height);
+
+        Color[][] frame = Colors.genArr(_width, _height, Color.BLACK);
+        Outline.single(frame, Color.WHITE, GameConfig.MeterOutlinePixelThickness);
+        Colors.remove(frame, Color.BLACK);
+        _frame = SpriteMaker.get().fromColors(frame);
+
         scale(0);
         setPosition(position.X, position.Y);
-        //Outline.single(base, Color.WHITE, GameConfig.MeterOutlinePixelThickness);
+
     }
 
     private void scaleWidth(int percent) {
@@ -65,11 +70,13 @@ public class Meter {
     public void draw() {
         Window.get().draw(_background);
         Window.get().draw(_sprite);
+        Window.get().draw(_frame);
     }
 
     public void shade(Color color) {
         _sprite.setColor(color);
         _background.setColor(color);
+        _frame.setColor(color);
     }
 
     public Sprite getBackground() {
@@ -84,6 +91,7 @@ public class Meter {
         _position.reset(x, y);
         _background.setPosition(_position.X, _position.Y);
         _sprite.setPosition(_position.X, _position.Y);
+        _frame.setPosition(_position.X, _position.Y);
         _bounds = Bounds.fromDimensions(_position.X, _position.Y, _width, _height);
     }
 }

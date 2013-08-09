@@ -165,6 +165,16 @@ public class Colors {
         return base;
     }
 
+    public static void remove(Color[][] arr, Color color) {
+        for (int ii = 0; ii < arr.length; ii++) {
+            for (int jj = 0; jj < arr[ii].length; jj++) {
+                if (arr[ii][jj] == color) {
+                    arr[ii][jj] = null;
+                }
+            }
+        }
+    }
+
     private static final int defaultPerlinSmoothness = 6;
 
     public static Color[][] genPerlinGrid(int width, int height, Color start, Color end) {
