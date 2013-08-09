@@ -11,6 +11,7 @@ import game.creatures.Stats;
 import game.forces.Force;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
+import sps.bridge.Commands;
 import sps.display.Screen;
 import sps.display.Window;
 import sps.entities.EntityManager;
@@ -81,11 +82,11 @@ public class MergeOutcome implements State {
 
         //Accept and reject buttons
         if (_accept == null) {
-            _accept = UI.button(Color.GREEN);
-            _reject = UI.button(Color.RED);
+            _accept = UI.button(Color.GREEN, 50, 65);
+            _reject = UI.button(Color.RED, 50, 65);
 
-            _reject.setPosition(Screen.width(left + 5), Screen.height(35));
-            _accept.setPosition(Screen.width(left + 55), Screen.height(35));
+            _reject.setPosition(0, Screen.height(35));
+            _accept.setPosition(Screen.width(50), Screen.height(35));
 
 
             Buttons.get().add(new Buttons.User() {
@@ -122,7 +123,7 @@ public class MergeOutcome implements State {
 
             @Override
             public String message() {
-                return "Perform Merge";
+                return "Click to perform the merge [" + Commands.get("Confirm").key() + "]";
             }
         });
 
@@ -135,7 +136,7 @@ public class MergeOutcome implements State {
 
             @Override
             public String message() {
-                return "Prevent Merge";
+                return "Click to cancel the merge [" + Commands.get("Push").key() + "]";
             }
         });
         if (GameConfig.DevEndToEndStateLoadTest) {
@@ -146,11 +147,11 @@ public class MergeOutcome implements State {
 
     @Override
     public void draw() {
+        Window.get().draw(_accept);
+        Window.get().draw(_reject);
         _pet.draw();
         _defeated.draw();
         _merged.draw();
-        Window.get().draw(_accept);
-        Window.get().draw(_reject);
     }
 
     private void acceptMerge() {
