@@ -32,4 +32,16 @@ public class Merge {
         }
         return result;
     }
+
+    public static Stats rejectStats(Stats a) {
+        Stats result = new Stats(a);
+        Force target = a.randomEnablePossible();
+        int growth = (int) (Math.ceil(a.get(target) * (GameConfig.MergeRejectGrowthPercent / 100f)));
+        result.set(target, a.get(target) + growth);
+
+        for (Force force : Force.values()) {
+            result.setEnabled(force, result.canBeEnabled(force));
+        }
+        return result;
+    }
 }

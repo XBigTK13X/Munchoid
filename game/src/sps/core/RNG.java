@@ -1,5 +1,6 @@
 package sps.core;
 
+import java.util.List;
 import java.util.Random;
 
 public class RNG {
@@ -33,7 +34,8 @@ public class RNG {
         }
         try {
             throw new RuntimeException("You cannot generate a random number if max is less than min!");
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Logger.exception(e);
         }
         return 0;
@@ -84,5 +86,9 @@ public class RNG {
 
     public static Object pick(Object[] choices) {
         return choices[RNG.next(choices.length)];
+    }
+
+    public static Object pick(List<?> choices) {
+        return choices.get(RNG.next(choices.size()));
     }
 }

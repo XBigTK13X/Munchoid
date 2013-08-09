@@ -40,6 +40,14 @@ public class Stats {
         }
     }
 
+    public Stats(Stats copy) {
+        this();
+        for (Force force : Force.values()) {
+            set(force, copy.get(force));
+            setEnabled(force, canBeEnabled(force));
+        }
+    }
+
     public int get(Force force) {
         return _stats.get(force);
     }
@@ -66,7 +74,7 @@ public class Stats {
         }
         while (true) {
             force = Force.random();
-            if (get(force) > GameConfig.DisableStat && isEnabled(force)) {
+            if (canBeEnabled(force) && isEnabled(force)) {
                 return force;
             }
         }
@@ -98,6 +106,16 @@ public class Stats {
 
     public boolean canBeEnabled(Force force) {
         return get(force) > GameConfig.DisableStat;
+    }
+
+    public Force randomEnablePossible() {
+        List<Force> possible = new ArrayList<Force>();
+        for (Force f : Force.values()) {
+            if (canBeEnabled(f)) {
+                possible.add(f);
+            }
+        }
+        return (Force) RNG.pick(possible);
     }
 
     public int possibleActiveForces() {

@@ -37,7 +37,8 @@ public class GameConfig {
     public static final int MaxBodyParts = 10;
 
     public static final int MinMergeImpactPercent = 15;
-    public static final int MaxMergeImpactPercent = 40;
+    public static final int MaxMergeImpactPercent = 30;
+    public static final int MergeRejectGrowthPercent = 40;
 
     public static final int BonusAmount = 1;
     public static final int BonusAward = 15;

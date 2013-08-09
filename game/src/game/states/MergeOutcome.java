@@ -44,10 +44,12 @@ public class MergeOutcome implements State {
         _defeated.getBody().flipX(false);
         _merged = Merge.creatures(_pet, _defeated);
 
+        Stats cancelStats = Merge.rejectStats(_pet.getStats());
+
         final int left = 5;
         final int top = 90;
+
         //Stat merge display
-        Stats cancelStats = Merge.stats(_pet.getStats(), _pet.getStats());
         TextPool.get().write("Cancel Outcome:", Screen.pos(left, top + 5));
         int forceRow = 2;
         for (Force force : Force.values()) {
@@ -139,6 +141,7 @@ public class MergeOutcome implements State {
         if (GameConfig.DevEndToEndStateLoadTest) {
             acceptMerge();
         }
+        _pet.setStats(cancelStats);
     }
 
     @Override
