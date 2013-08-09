@@ -23,7 +23,9 @@ public class ForcesSelectionUI {
         int row = Force.values().length;
         for (Force force : Force.values()) {
             row--;
-            _meters.add(new ForceSelectionButton(force, _owner, __widthPercent, __heightPercent, _origin, row));
+            if (owner.getStats().canBeEnabled(force)) {
+                _meters.add(new ForceSelectionButton(force, _owner, __widthPercent, __heightPercent, _origin, row));
+            }
         }
     }
 
