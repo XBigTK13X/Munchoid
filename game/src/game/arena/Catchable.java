@@ -95,7 +95,7 @@ public class Catchable extends Entity {
         Entity nearest = EntityManager.get().getNearest(this, EntityTypes.get("Catchable"));
         float dist = HitTest.getDistance(this, nearest);
 
-        if (_changeDirectionsSeconds <= 0 || anyPartOutside || dist <= _radius) {
+        if (_changeDirectionsSeconds <= 0 || anyPartOutside || (_changeDirectionsSeconds <= 0 && dist <= _radius)) {
             _changeDirectionsSeconds = RNG.next(__changeDirectionSecondsMax / 2, __changeDirectionSecondsMax);
             float playerSpeedPercent = .5f;
             _dX = RNG.next(-GameConfig.PlayerTopSpeed, GameConfig.PlayerTopSpeed) * playerSpeedPercent;
