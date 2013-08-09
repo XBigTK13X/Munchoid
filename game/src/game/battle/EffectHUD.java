@@ -2,17 +2,17 @@ package game.battle;
 
 import game.creatures.Creature;
 import game.forces.sideeffects.SideEffectType;
+import sps.display.Screen;
 import sps.text.Text;
 import sps.text.TextPool;
-import sps.display.Screen;
 
-public class EffectMeter {
+public class EffectHUD {
     private Creature _creature;
 
     private String _lastDisplay = "";
     private Text _display;
 
-    public EffectMeter(Creature creature) {
+    public EffectHUD(Creature creature) {
         _creature = creature;
         _display = TextPool.get().write(getDisplay(), _creature.getLocation().add(Screen.pos(0, -10)));
     }

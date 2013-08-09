@@ -4,67 +4,47 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import game.creatures.Creature;
-import game.creatures.style.Outline;
 import game.forces.Force;
 import game.states.ForceSelection;
+import game.ui.Meter;
 import sps.bridge.Commands;
 import sps.core.Point2;
 import sps.display.Screen;
-import sps.display.Window;
-import sps.draw.Colors;
-import sps.draw.SpriteMaker;
 import sps.entities.HitTest;
 import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.ui.Buttons;
 import sps.ui.ToolTip;
+import sps.util.MathHelper;
 
 public class ForceSelectionButton {
-    private Sprite _bg;
-    private Sprite _sprite;
-    private int _height;
-    private int _width;
-    private int _scaledWidth;
-    private Point2 _position;
     private Force _force;
-
+    private Meter _meter;
     private Creature _owner;
-
     private String _message;
+    private Point2 _originalPosition;
 
     public ForceSelectionButton(Force force, Creature owner, int width, int height, Point2 origin, int row) {
         _owner = owner;
         _force = force;
-        _width = (int) Screen.width(width);
-        _height = (int) Screen.height(height);
-        _position = new Point2(origin.X, (row * (int) (_height * 1.5)) + origin.Y);
+
         int stat = _owner.getStats().get(force);
-        float statPercent = stat / ((float) GameConfig.MaxStat);
-        _scaledWidth = (int) (statPercent * _width);
 
-        Color[][] bg = Colors.genArr(width, height, Color.LIGHT_GRAY);
-        _bg = SpriteMaker.get().fromColors(bg);
+        _originalPosition = new Point2(origin.X, (row * (int) (Screen.height(height) * 1.5)) + origin.Y);
 
-        Color[][] base = Colors.genArr(width, height, force.Color);
-        Outline.single(base, Color.WHITE, GameConfig.MeterOutlinePixelThickness);
-        _sprite = SpriteMaker.get().fromColors(base);
+        _meter = new Meter(width, height, force.Color, _originalPosition.add(0, 0), false);
+        _meter.shade(Color.GRAY);
+        _meter.scale(MathHelper.percent(stat / ((float) GameConfig.MaxStat)));
 
-        _bg.setSize(_width, _height);
-        _bg.setPosition(_position.X, _position.Y);
-        _sprite.setSize(_scaledWidth, _height);
-        _sprite.setPosition(_position.X, _position.Y);
-
-        Color core = Color.GRAY;
-        _bg.setColor(core);
-        _sprite.setColor(core);
         String input = "[" + Commands.get(force.Command).key().name() + "]";
+
 
         _message = (stat > GameConfig.DisableStat && _owner.getStats().isEnabled(_force)) ? force.name() + ": " + strength() + input : "Disabled";
         ToolTip.get().add(new ToolTip.User() {
             @Override
             public boolean isActive() {
-                return HitTest.inBox(Input.get().x(), Input.get().y(), (int) _sprite.getX(), (int) _sprite.getY(), _width, _height);
+                return HitTest.inBox(Input.get().x(), Input.get().y(), _meter.getBounds());
             }
 
             @Override
@@ -81,7 +61,7 @@ public class ForceSelectionButton {
         Buttons.get().add(new Buttons.User() {
             @Override
             public Sprite getSprite() {
-                return _bg;
+                return _meter.getBackground();
             }
 
             @Override
@@ -99,13 +79,11 @@ public class ForceSelectionButton {
     }
 
     private void moveToRightSide() {
-        _bg.setPosition(_position.X + Screen.width(50), _position.Y);
-        _sprite.setPosition(_position.X + Screen.width(50), _position.Y);
+        _meter.setPosition(_originalPosition.X + Screen.width(50), _originalPosition.Y);
     }
 
     private void moveToLeftSide() {
-        _bg.setPosition(_position.X, _position.Y);
-        _sprite.setPosition(_position.X, _position.Y);
+        _meter.setPosition(_originalPosition.X, _originalPosition.Y);
     }
 
     private String strength() {
@@ -120,7 +98,6 @@ public class ForceSelectionButton {
     }
 
     public void draw() {
-        Window.get().draw(_bg);
-        Window.get().draw(_sprite);
+        _meter.draw();
     }
 }

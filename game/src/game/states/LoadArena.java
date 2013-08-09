@@ -26,7 +26,7 @@ public class LoadArena implements State {
         _preloadedItemsTarget = 1 + 1 + GameConfig.CreatureLimit;
         _loadingMessage = TextPool.get().write(getMessage(), Screen.pos(10, 60));
         _preload = new Preload();
-        _loadingMeter = new Meter(90, 5, Color.BLUE);
+        _loadingMeter = new Meter(90, 5, Color.BLUE, Screen.pos(5, 30), false);
         _preloadedItems = -1;
     }
 
@@ -61,7 +61,7 @@ public class LoadArena implements State {
             StateManager.get().push(new Arena(_preload));
         }
         else {
-            _loadingMeter.scaleWidth((int) ((_preloadedItems / (float) _preloadedItemsTarget) * 100));
+            _loadingMeter.scale((int) ((_preloadedItems / (float) _preloadedItemsTarget) * 100));
             _loadingMessage.setMessage(getMessage());
         }
     }

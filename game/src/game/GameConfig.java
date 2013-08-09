@@ -43,7 +43,7 @@ public class GameConfig {
     public static final int BonusAmount = 1;
     public static final int BonusAward = 15;
 
-    public static final int InitEnabledStats = 1;
+    public static final int InitEnabledStats = 6;
     public static final int MinStatInit = 2;
     public static final int MaxStatInit = 5;
     public static final int DisableStat = 0;
@@ -91,6 +91,7 @@ public class GameConfig {
     public static final boolean DevDrawSkeleton = false;
     public static final boolean DevDebugJointGrid = false;
     public static final boolean DevDebugJointGridWithSquares = false;
+    public static final boolean DevAlwaysSelectForces = true;
 
     //Debug/Development Logging toggles
     public static final boolean DevBattleLog = false;

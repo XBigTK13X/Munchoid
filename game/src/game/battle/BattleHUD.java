@@ -11,7 +11,7 @@ public class BattleHUD {
     private ForcesHUD _forces;
     private HealthMeter _health;
     private EnergyMeter _energy;
-    private EffectMeter _effects;
+    private EffectHUD _effects;
 
     private Text _coolDown;
 
@@ -25,7 +25,7 @@ public class BattleHUD {
         _health = new HealthMeter(owner);
         _energy = new EnergyMeter(owner);
         _coolDown = TextPool.get().write(coolDownText(owner), Screen.pos(0, 15).add((int) _owner.getLocation().X, 0));
-        _effects = new EffectMeter(owner);
+        _effects = new EffectHUD(owner);
     }
 
     public void update() {

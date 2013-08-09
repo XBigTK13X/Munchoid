@@ -91,6 +91,6 @@ public class Score {
     }
 
     public void addHealthRemaining(float percentHealth) {
-        _healthRemaining += percentHealth * 100;
+        _healthRemaining += percentHealth;
     }
 }

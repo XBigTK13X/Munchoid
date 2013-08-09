@@ -35,7 +35,7 @@ public class ForceSelection implements State {
     @Override
     public void create() {
         //TODO Option that automatically chooses
-        if (_pet.getStats().possibleActiveForces() <= 4) {
+        if (_pet.getStats().possibleActiveForces() <= 4 && !GameConfig.DevAlwaysSelectForces) {
             exitMenu();
             return;
         }

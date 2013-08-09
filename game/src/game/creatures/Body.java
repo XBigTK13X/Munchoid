@@ -138,8 +138,8 @@ public class Body {
         return _highlight;
     }
 
-    public float getPercentHealth() {
-        return (getHealth() / (float) getHealthMax());
+    public int getPercentHealth() {
+        return MathHelper.percent(getHealth() / (float) getHealthMax());
     }
 
     public float getScale() {

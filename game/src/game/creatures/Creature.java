@@ -16,6 +16,7 @@ import sps.text.TextEffects;
 import sps.text.TextPool;
 import sps.util.CoolDown;
 import sps.util.Markov;
+import sps.util.MathHelper;
 
 public class Creature extends Entity {
     private static final Markov __nameGenerator = Markov.get(Assets.get().markovSeed(), 2);
@@ -187,8 +188,8 @@ public class Creature extends Entity {
         return getEnergy() >= getStats().get(force);
     }
 
-    public float getPercentEnergy() {
-        return (float) _energy / _energyMax;
+    public int getPercentEnergy() {
+        return MathHelper.percent((float) _energy / _energyMax);
     }
 
     public void regenEnergy() {

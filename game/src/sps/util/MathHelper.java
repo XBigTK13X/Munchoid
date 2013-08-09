@@ -31,4 +31,8 @@ public class MathHelper {
 
         return new Point2(target.X - (float) intersection.getX(), target.Y - (float) intersection.getY());
     }
+
+    public static int percent(float zeroToOnePercent) {
+        return MathHelper.clamp(zeroToOnePercent * 100, 0, 100);
+    }
 }
