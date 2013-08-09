@@ -1,7 +1,8 @@
-package game;
+package game.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import game.GameConfig;
 import game.creatures.style.Outline;
 import sps.display.Screen;
 import sps.draw.Colors;

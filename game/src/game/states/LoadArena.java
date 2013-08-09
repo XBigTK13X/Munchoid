@@ -1,22 +1,24 @@
 package game.states;
 
+import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.arena.Catchable;
 import game.arena.Floor;
 import game.arena.Player;
 import game.arena.Preload;
+import game.ui.Meter;
+import sps.display.Screen;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
-import sps.display.Screen;
 
 public class LoadArena implements State {
     private Preload _preload;
     private int _preloadedItems;
     private int _preloadedItemsTarget;
     private Text _loadingMessage;
-    private LoadingMeter _meter;
+    private Meter _loadingMeter;
 
     @Override
     public void create() {
@@ -24,7 +26,7 @@ public class LoadArena implements State {
         _preloadedItemsTarget = 1 + 1 + GameConfig.CreatureLimit;
         _loadingMessage = TextPool.get().write(getMessage(), Screen.pos(10, 60));
         _preload = new Preload();
-        _meter = new LoadingMeter();
+        _loadingMeter = new Meter(90, 5, Color.BLUE);
         _preloadedItems = -1;
     }
 
@@ -34,7 +36,7 @@ public class LoadArena implements State {
 
     @Override
     public void draw() {
-        _meter.draw();
+        _loadingMeter.draw();
     }
 
     @Override
@@ -59,7 +61,7 @@ public class LoadArena implements State {
             StateManager.get().push(new Arena(_preload));
         }
         else {
-            _meter.scaleWidth((int) ((_preloadedItems / (float) _preloadedItemsTarget) * 100));
+            _loadingMeter.scaleWidth((int) ((_preloadedItems / (float) _preloadedItemsTarget) * 100));
             _loadingMessage.setMessage(getMessage());
         }
     }
