@@ -71,7 +71,7 @@ public class GameConfig {
 
     //Optimizations
     //TODO Make them toggleable in the options menu,
-    //     helps on Mac with large amounts of creatures
+    //     helps with lots of creatures running on weaker computers
     public static final boolean OptCollectMetaData = true;
     public static final boolean OptDisableOutlines = false;
     public static final boolean OptDisableCloudyTextures = false;
@@ -91,7 +91,8 @@ public class GameConfig {
     public static final boolean DevDrawSkeleton = false;
     public static final boolean DevDebugJointGrid = false;
     public static final boolean DevDebugJointGridWithSquares = false;
-    public static final boolean DevAlwaysSelectForces = true;
+    public static final boolean DevAlwaysSelectForces = false;
+    public static final boolean DevDrainEnergyCommand = false;
 
     //Debug/Development Logging toggles
     public static final boolean DevBattleLog = false;

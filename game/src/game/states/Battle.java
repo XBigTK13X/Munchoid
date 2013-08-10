@@ -99,7 +99,31 @@ public class Battle implements State {
         EntityManager.get().update();
         _leftHud.update();
         _rightHud.update();
+        if (InputWrapper.confirm() && GameConfig.DevDrainEnergyCommand) {
+            _left.burnEnergy();
+        }
 
+        if (_left.getCoolDown().isCooled()) {
+            int usableForces = 0;
+            for (Force f : Force.values()) {
+                if (_left.canUse(f)) {
+                    usableForces++;
+                }
+            }
+            if (usableForces == 0) {
+                TextPool.get().write("Recharging...", _left.getLocation().add(Screen.pos(0, 10)).add(0, _left.getBody().getHeight()), _left.getCoolDown().getSecondsMax());
+                _left.getCoolDown().reset();
+            }
+        }
+
+        /*
+         This clause is meant to be separate from the check above
+         In the above case, player is checked to be cooled.
+         If no forces could have been used, then we reset the cooldown.
+         This prevents the player from having priority when no forces
+         could be used. Instead, let the player know that the creature
+         is recharging energy.
+        */
         if (_left.getCoolDown().isCooled()) {
             if (GameConfig.DevBotEnabled) {
                 Force f = _left.getStats().randomEnabledForce();
@@ -113,6 +137,7 @@ public class Battle implements State {
             if (InputWrapper.pop() && GameConfig.DevShortcutsEnabled) {
                 victory();
             }
+
         }
         else if (_right.getCoolDown().isCooled()) {
             //TODO Smarter attacks

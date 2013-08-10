@@ -184,8 +184,12 @@ public class Creature extends Entity {
         return _energy;
     }
 
+    public void burnEnergy() {
+        _energy -= 10;
+    }
+
     public boolean canUse(Force force) {
-        return getEnergy() >= getStats().get(force);
+        return _stats.isEnabled(force) && getEnergy() >= getStats().get(force) && _stats.canBeEnabled(force);
     }
 
     public int getPercentEnergy() {
