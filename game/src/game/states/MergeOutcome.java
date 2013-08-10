@@ -12,6 +12,7 @@ import game.ui.UI;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
+import sps.core.RNG;
 import sps.display.Screen;
 import sps.display.Window;
 import sps.entities.EntityManager;
@@ -178,6 +179,15 @@ public class MergeOutcome implements State {
             rejectMerge();
         }
         if (GameConfig.DevBotEnabled) {
+            if (GameConfig.DevBotRandomlyMerges) {
+                if (RNG.coinFlip()) {
+                    acceptMerge();
+                }
+                else {
+                    rejectMerge();
+                }
+                return;
+            }
             if (GameConfig.DevBotAlwaysMerge) {
                 acceptMerge();
             }

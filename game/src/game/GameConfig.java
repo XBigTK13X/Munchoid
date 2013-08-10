@@ -83,7 +83,8 @@ public class GameConfig {
     //Bots
     public static final boolean DevBotEnabled = false;
     public static final boolean DevBotCatchIO = false;
-    public static final boolean DevBotAlwaysMerge = true;
+    public static final boolean DevBotAlwaysMerge = false;
+    public static final boolean DevBotRandomlyMerges = true;
 
     //Debugging / Development
     public static final boolean DevShortcutsEnabled = true;
