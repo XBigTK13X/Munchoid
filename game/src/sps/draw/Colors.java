@@ -75,4 +75,14 @@ public class Colors {
     public static Color fromRGB(float r, float g, float b) {
         return new Color(r, g, b, 1);
     }
+
+    public static Color[] gradient(Color start, Color end, int steps) {
+        Color[] gradient = new Color[steps];
+        for (int ii = 0; ii < steps; ii++) {
+            float sP = (float) ii / steps;
+            float eP = 1 - sP;
+            gradient[ii] = Colors.fromRGB((start.r * sP + end.r * eP), (start.g * sP + end.g * eP), (start.b * sP + end.b * eP));
+        }
+        return gradient;
+    }
 }

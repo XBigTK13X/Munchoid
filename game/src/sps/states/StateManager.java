@@ -5,14 +5,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import sps.audio.MusicPlayer;
 import sps.core.Logger;
-import sps.draw.ProcTextures;
-import sps.entities.EntityManager;
+import sps.display.Screen;
 import sps.display.Window;
+import sps.draw.ProcTextures;
+import sps.draw.SpriteMaker;
+import sps.entities.EntityManager;
 import sps.particles.ParticleEngine;
 import sps.text.TextPool;
 import sps.ui.UiElements;
-import sps.display.Screen;
-import sps.draw.SpriteMaker;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,7 +64,7 @@ public class StateManager {
 
     public void setPaused(boolean value) {
         if (__pausedScreen == null) {
-            Color[][] tbg = ProcTextures.genArr((int) Screen.width(50), (int) Screen.height(50), new Color(.5f, .1f, .5f, .7f));
+            Color[][] tbg = ProcTextures.monotone((int) Screen.width(50), (int) Screen.height(50), new Color(.5f, .1f, .5f, .7f));
             __pausedScreen = SpriteMaker.get().fromColors(tbg);
         }
         _paused = value;

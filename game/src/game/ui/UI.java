@@ -12,7 +12,7 @@ public class UI {
     public static Sprite button(Color color, int screenWidthPercent, int screenHeightPercent) {
         int width = (int) Screen.width(screenWidthPercent);
         int height = (int) Screen.height(screenHeightPercent);
-        Color[][] base = ProcTextures.genPerlinGrid(width, height, color, Color.BLACK, 8);
+        Color[][] base = ProcTextures.perlin(width, height, color, Color.BLACK, 8);
         Outline.single(base, Color.WHITE, GameConfig.MeterOutlinePixelThickness);
         return SpriteMaker.get().fromColors(base);
     }

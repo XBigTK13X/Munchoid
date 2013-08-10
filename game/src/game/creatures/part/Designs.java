@@ -76,6 +76,6 @@ public class Designs {
     }
 
     public static Color[][] getTexture(int width, int height, Color color) {
-        return ProcTextures.genPerlinGrid(width, height, Colors.darken(color), Colors.lighten(color));
+        return ProcTextures.perlin(width, height, Colors.darken(color), Colors.lighten(color));
     }
 }
