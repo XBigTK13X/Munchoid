@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
+import game.GameConfig;
 import sps.bridge.DrawDepth;
 import sps.core.Point2;
 import sps.core.SpsConfig;
@@ -201,6 +202,16 @@ public class Renderer {
             _todo.add(new RenderCall(content, location, filter, scale));
         }
         else {
+            if (GameConfig.OptEnableFontOutlines) {
+                Assets.get().font().setScale(scale);
+                Assets.get().font().setColor(0, 0, 0, 1);
+                int offset = 2;
+                Assets.get().font().draw(_batch, content, location.X + offset, location.Y);
+                Assets.get().font().draw(_batch, content, location.X - offset, location.Y);
+                Assets.get().font().draw(_batch, content, location.X, location.Y + offset);
+                Assets.get().font().draw(_batch, content, location.X, location.Y - offset);
+            }
+
             Assets.get().font().setScale(scale);
             Assets.get().font().setColor(filter);
             Assets.get().font().draw(_batch, content, location.X, location.Y);
