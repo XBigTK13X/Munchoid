@@ -60,18 +60,22 @@ public class Outline {
                     if (colors[ii][jj] != null) {
                         boolean shift = false;
                         for (int mm = 1; mm <= thicknessX; mm++) {
-                            if (ii - thicknessX < 0 || jj - thicknessY < 0 || ii + thicknessX > colors.length - 1 || jj + thicknessY > colors[0].length - 1) {
+                            if (ii - thicknessX <= 0 || jj - thicknessY <= 0 || ii + thicknessX >= colors.length || jj + thicknessY >= colors[0].length) {
                                 shift = true;
                             }
                             else {
                                 for (int kk = -thicknessX; kk < thicknessX; kk++) {
                                     for (int ll = -thicknessY; ll < thicknessY; ll++) {
                                         if (kk != 0 || ll != 0) {
-                                            //TODO also check if active, so that outlines will change after destruction
-                                            // This doesn't really work in cases like Vaporize, where the outline
-                                            // basically makes the entire part turn white
-                                            if (colors[ii + kk][jj + ll] == null) {
-                                                shift = true;
+                                            int adjX = ii + kk;
+                                            int adjY = jj + ll;
+                                            if (adjX >= 0 && adjX < colors.length - 1 && adjY >= 0 && adjY < colors[0].length) {
+                                                //TODO also check if active, so that outlines will change after destruction
+                                                // This doesn't really work in cases like Vaporize, where the outline
+                                                // basically makes the entire part turn white
+                                                if (colors[ii + kk][jj + ll] == null) {
+                                                    shift = true;
+                                                }
                                             }
                                         }
                                     }
