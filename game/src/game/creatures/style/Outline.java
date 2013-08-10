@@ -73,7 +73,7 @@ public class Outline {
                                                 //TODO also check if active, so that outlines will change after destruction
                                                 // This doesn't really work in cases like Vaporize, where the outline
                                                 // basically makes the entire part turn white
-                                                if (colors[ii + kk][jj + ll] == null) {
+                                                if (colors[adjX][adjY] == null) {
                                                     shift = true;
                                                 }
                                             }
