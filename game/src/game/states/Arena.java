@@ -123,6 +123,32 @@ public class Arena implements State {
     public void asyncUpdate() {
     }
 
+    private void simulateCreatureGrowth(List<Entity> opponents) {
+        if (GameConfig.DevUseOldCatchableMergeAlgorithm) {
+            if (opponents.size() > 1) {
+                for (int ii = 0; ii + 1 < opponents.size(); ii += 2) {
+                    if (opponents.get(ii).isActive() && opponents.get(ii + 1).isActive() && RNG.percent(GameConfig.ArenaMergeChance)) {
+                        Catchable c1 = (Catchable) opponents.get(ii);
+                        Catchable c2 = (Catchable) opponents.get(ii + 1);
+                        if (c1.getCreature().getBody().getParts().anyAlive() && c2.getCreature().getBody().getParts().anyAlive()) {
+                            Creature merged = Merge.creatures(c1.getCreature(), c2.getCreature());
+                            c1.setCreature(merged);
+                            opponents.get(ii + 1).setInactive();
+                            c1.getCreature().getStats().activateRandom();
+                        }
+                    }
+                }
+                EntityManager.get().getPlayer().setLocation(Screen.pos(50, 50));
+            }
+        }
+        else {
+            for (Entity e : opponents) {
+                Catchable c = (Catchable) e;
+                c.getCreature().getStats().grow();
+            }
+        }
+    }
+
     @Override
     public void load() {
         List<Entity> opponents = EntityManager.get().getEntities(EntityTypes.get("Catchable"));
@@ -131,21 +157,8 @@ public class Arena implements State {
             StateManager.get().push(new Tournament((Player) EntityManager.get().getPlayer()));
         }
 
-        if (opponents.size() > 1) {
-            for (int ii = 0; ii + 1 < opponents.size(); ii += 2) {
-                if (opponents.get(ii).isActive() && opponents.get(ii + 1).isActive() && RNG.percent(GameConfig.ArenaMergeChance)) {
-                    Catchable c1 = (Catchable) opponents.get(ii);
-                    Catchable c2 = (Catchable) opponents.get(ii + 1);
-                    if (c1.getCreature().getBody().getParts().anyAlive() && c2.getCreature().getBody().getParts().anyAlive()) {
-                        Creature merged = Merge.creatures(c1.getCreature(), c2.getCreature());
-                        c1.setCreature(merged);
-                        opponents.get(ii + 1).setInactive();
-                        c1.getCreature().getStats().activateRandom();
-                    }
-                }
-            }
-            EntityManager.get().getPlayer().setLocation(Screen.pos(50, 50));
-        }
+        simulateCreatureGrowth(opponents);
+
         _countDownSeconds = GameConfig.ArenaTimeoutSeconds;
         if (EntityManager.get().getPlayer() == null) {
             MusicPlayer.get(new SingleSongPlayer("Anticipation.ogg"));

@@ -39,6 +39,7 @@ public class GameConfig {
     public static final int MinMergeImpactPercent = 15;
     public static final int MaxMergeImpactPercent = 30;
     public static final int MergeRejectGrowthPercent = 40;
+    public static final int NaturalStatGrowthPercent = 10;
 
     public static final int BonusAmount = 1;
     public static final int BonusAward = 15;
@@ -94,6 +95,7 @@ public class GameConfig {
     public static final boolean DevDebugJointGridWithSquares = false;
     public static final boolean DevAlwaysSelectForces = false;
     public static final boolean DevDrainEnergyCommand = false;
+    public static final boolean DevUseOldCatchableMergeAlgorithm = false;
 
     //Debug/Development Logging toggles
     public static final boolean DevBattleLog = false;

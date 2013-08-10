@@ -145,6 +145,14 @@ public class Stats {
         }
     }
 
+    public void grow() {
+        Force f = Force.random();
+        int base = get(f);
+        base += Math.max(1, base * (GameConfig.NaturalStatGrowthPercent / 100f));
+        set(f, base);
+        activateRandom();
+    }
+
     public String json() {
         int fC = 0;
         String stats = "\"stats\":{";
