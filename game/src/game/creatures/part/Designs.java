@@ -5,6 +5,7 @@ import game.creatures.Atom;
 import game.creatures.PartFunction;
 import sps.core.RNG;
 import sps.draw.Colors;
+import sps.draw.ProcTextures;
 
 import java.util.*;
 
@@ -75,6 +76,6 @@ public class Designs {
     }
 
     public static Color[][] getTexture(int width, int height, Color color) {
-        return Colors.genPerlinGrid(width, height, Colors.darken(color), Colors.lighten(color));
+        return ProcTextures.genPerlinGrid(width, height, Colors.darken(color), Colors.lighten(color));
     }
 }

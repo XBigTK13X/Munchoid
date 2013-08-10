@@ -5,10 +5,11 @@ import game.GameConfig;
 import game.forces.Force;
 import sps.core.RNG;
 import sps.draw.Colors;
+import sps.draw.HSV;
 
 public class Merge {
     public static Creature creatures(Creature a, Creature b) {
-        Color mergedColor = Colors.hsvAverage(a.getBody().getColor(), b.getBody().getColor());
+        Color mergedColor = HSV.average(a.getBody().getColor(), b.getBody().getColor());
 
         Creature result = new Creature(new Body(mergedColor));
 

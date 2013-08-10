@@ -23,7 +23,7 @@ public enum Force {
 
     private Force(float rT, float gT, float bT, int inputId) {
         Command = "Force" + inputId;
-        Color = Colors.rgbToColor(tToC(rT), tToC(gT), tToC(bT));
+        Color = Colors.fromRGB(tToC(rT), tToC(gT), tToC(bT));
     }
 
     private static float tToC(float t) {

@@ -7,7 +7,7 @@ import game.creatures.style.Outline;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.display.Window;
-import sps.draw.Colors;
+import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
 import sps.util.Bounds;
 
@@ -30,15 +30,15 @@ public class Meter {
         _width = (int) Screen.width(screenWidthPercent);
         _height = (int) Screen.height(screenHeightPercent);
 
-        Color[][] bg = Colors.genArr(_width, _height, Color.LIGHT_GRAY);
+        Color[][] bg = ProcTextures.genArr(_width, _height, Color.LIGHT_GRAY);
         _background = SpriteMaker.get().fromColors(bg);
 
-        Color[][] base = Colors.genArr(_width, _height, color);
+        Color[][] base = ProcTextures.genArr(_width, _height, color);
         _sprite = SpriteMaker.get().fromColors(base);
 
-        Color[][] frame = Colors.genArr(_width, _height, Color.BLACK);
+        Color[][] frame = ProcTextures.genArr(_width, _height, Color.BLACK);
         Outline.single(frame, Color.WHITE, GameConfig.MeterOutlinePixelThickness);
-        Colors.remove(frame, Color.BLACK);
+        ProcTextures.remove(frame, Color.BLACK);
         _frame = SpriteMaker.get().fromColors(frame);
 
         scale(0);

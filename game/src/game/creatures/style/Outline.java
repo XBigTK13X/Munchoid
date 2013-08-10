@@ -77,6 +77,9 @@ public class Outline {
                                                     shift = true;
                                                 }
                                             }
+                                            else{
+                                                shift = true;
+                                            }
                                         }
                                     }
                                 }

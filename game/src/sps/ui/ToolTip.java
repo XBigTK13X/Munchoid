@@ -5,10 +5,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.bridge.DrawDepths;
 import sps.core.Point2;
 import sps.display.Window;
+import sps.draw.ProcTextures;
 import sps.io.Input;
 import sps.text.Text;
 import sps.text.TextPool;
-import sps.draw.Colors;
 import sps.display.Screen;
 import sps.draw.SpriteMaker;
 
@@ -49,7 +49,7 @@ public class ToolTip {
 
     private ToolTip() {
         if (__bg == null) {
-            Color[][] tbg = Colors.genArr(2, 2, new Color(.1f, .1f, .1f, .7f));
+            Color[][] tbg = ProcTextures.genArr(2, 2, new Color(.1f, .1f, .1f, .7f));
             __bg = SpriteMaker.get().fromColors(tbg);
         }
         _position = new Point2(0, 0);
