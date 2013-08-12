@@ -5,7 +5,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import game.creatures.PartFunction;
-import game.states.MainMenu;
+import game.states.PopulationOverview;
 import sps.bridge.SpriteTypes;
 import sps.bridge.Sps;
 import sps.core.DevConsole;
@@ -36,7 +36,7 @@ public class Game implements ApplicationListener {
 
         PartFunction.initJointSpecs();
 
-        StateManager.get().push(new MainMenu());
+        StateManager.get().push(new PopulationOverview());
         ParticleEngine.reset();
         StateManager.get().setPaused(false);
 

@@ -132,6 +132,12 @@ public class StateManager {
         }
     }
 
+    public void rollBackTo(Class state) {
+        while (current().getClass() != state) {
+            pop();
+        }
+    }
+
     public void pop() {
         pop(false);
     }

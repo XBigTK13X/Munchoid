@@ -156,7 +156,7 @@ public class Battle implements State {
         }
         if (!_left.getBody().getParts().anyAlive()) {
             Score.get().setPlayerPetStats(_left.getStats());
-            StateManager.reset().push(new GameLose());
+            StateManager.reset().push(new TournamentEnd(false));
         }
     }
 
@@ -167,7 +167,7 @@ public class Battle implements State {
         StateManager.get().pop();
         if (_isFinalBattle) {
             Score.get().setPlayerPetStats(_left.getStats());
-            StateManager.get().push(new GameWin());
+            StateManager.get().push(new TournamentEnd(true));
         }
         else {
             StateManager.get().push(new MergeOutcome(_left, _right));
