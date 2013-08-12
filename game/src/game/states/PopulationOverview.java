@@ -1,11 +1,14 @@
 package game.states;
 
 import game.GameConfig;
+import game.InputWrapper;
 import game.population.Disease;
 import game.population.Diseases;
 import game.population.Population;
+import sps.bridge.Commands;
 import sps.display.Screen;
 import sps.states.State;
+import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
 
@@ -42,7 +45,7 @@ public class PopulationOverview implements State {
         _bottomDisplay = TextPool.get().write(bD, Screen.pos(75, 95));
         _bottomDisplay.setScale(.5f);
 
-
+        TextPool.get().write("Press [" + Commands.get("Confirm").key() + "] to enter the next tournament", Screen.pos(10, 10));
     }
 
     public void addWin() {
@@ -59,6 +62,9 @@ public class PopulationOverview implements State {
 
     @Override
     public void update() {
+        if (InputWrapper.confirm()) {
+            StateManager.get().push(new LoadArena());
+        }
     }
 
     @Override

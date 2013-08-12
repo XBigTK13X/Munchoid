@@ -133,9 +133,10 @@ public class StateManager {
     }
 
     public void rollBackTo(Class state) {
-        while (current().getClass() != state) {
-            pop();
+        while (current().getClass() != state && _states.size() > 1) {
+            pop(true);
         }
+        loadCurrent();
     }
 
     public void pop() {
@@ -180,5 +181,14 @@ public class StateManager {
 
     public State current() {
         return _states.peek();
+    }
+
+    public boolean hasAny(Class state) {
+        for (State s : _states.subList(0, _states.size())) {
+            if (s.getClass() == state) {
+                return true;
+            }
+        }
+        return false;
     }
 }

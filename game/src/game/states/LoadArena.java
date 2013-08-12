@@ -23,7 +23,8 @@ public class LoadArena implements State {
     @Override
     public void create() {
         //Floor + Player + Creatures
-        _preloadedItemsTarget = 1 + 1 + GameConfig.CreatureLimit;
+        int creatureCount = GameConfig.DevTournyTest ? 0 : GameConfig.CreatureLimit;
+        _preloadedItemsTarget = 1 + 1 + creatureCount;
         _loadingMessage = TextPool.get().write(getMessage(), Screen.pos(10, 60));
         _preload = new Preload();
         _loadingMeter = new Meter(90, 5, Color.BLUE, Screen.pos(5, 30), false);
@@ -31,7 +32,7 @@ public class LoadArena implements State {
     }
 
     private String getMessage() {
-        return "Preparing the game: " + _preloadedItems + "/" + _preloadedItemsTarget + " objects loaded";
+        return "Collecting mental fragments from all combatants. " + _preloadedItems + "/" + _preloadedItemsTarget + " fragments gathered.";
     }
 
     @Override

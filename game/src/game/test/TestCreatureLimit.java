@@ -1,4 +1,4 @@
-package game.states;
+package game.test;
 
 import game.GameConfig;
 import game.creatures.Atom;

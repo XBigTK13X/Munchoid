@@ -1,4 +1,4 @@
-package game.states;
+package game.test;
 
 import game.InputWrapper;
 import game.creatures.Creature;

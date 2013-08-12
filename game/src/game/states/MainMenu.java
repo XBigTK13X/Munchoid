@@ -22,7 +22,7 @@ public class MainMenu implements State {
     @Override
     public void update() {
         if (InputWrapper.confirm() || GameConfig.DevEndToEndStateLoadTest || GameConfig.DevBotEnabled) {
-            StateManager.get().push(new LoadArena());
+            StateManager.get().push(new PopulationOverview());
         }
     }
 

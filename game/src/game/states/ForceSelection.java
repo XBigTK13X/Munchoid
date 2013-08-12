@@ -81,7 +81,7 @@ public class ForceSelection implements State {
     }
 
     private void exitMenu() {
-        StateManager.get().rollBackTo(Arena.class);
+        StateManager.get().rollBackTo(StateManager.get().hasAny(Tournament.class) ? Tournament.class : Arena.class);
     }
 
     private boolean confirmSelection() {

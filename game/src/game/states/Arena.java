@@ -12,7 +12,6 @@ import game.creatures.Merge;
 import game.creatures.Stats;
 import game.forces.Force;
 import sps.audio.MusicPlayer;
-import sps.audio.SingleSongPlayer;
 import sps.bridge.EntityTypes;
 import sps.core.Point2;
 import sps.core.RNG;
@@ -70,8 +69,11 @@ public class Arena implements State {
 
         _creatureText = TextPool.get().write(creatureDisplay(GameConfig.CreatureLimit), __creatureTextPos);
         _creatureText.setMoveable(false);
-        if (GameConfig.DevEndToEndStateLoadTest) {
+        if (GameConfig.DevEndToEndStateLoadTest || GameConfig.DevTournyTest) {
             _preload.getPlayer().setPet(new Creature());
+            if (GameConfig.DevTournyTest) {
+                StateManager.get().push(new Tournament(_preload.getPlayer()));
+            }
         }
     }
 
@@ -161,7 +163,7 @@ public class Arena implements State {
 
         _countDownSeconds = GameConfig.ArenaTimeoutSeconds;
         if (EntityManager.get().getPlayer() == null) {
-            MusicPlayer.get(new SingleSongPlayer("Anticipation.ogg"));
+            MusicPlayer.get();
         }
         MusicPlayer.get().start();
     }
