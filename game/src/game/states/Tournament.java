@@ -3,7 +3,7 @@ package game.states;
 import game.GameConfig;
 import game.InputWrapper;
 import game.arena.Player;
-import game.tournament.Bracket;
+import game.tournament.Matches;
 import sps.display.Screen;
 import sps.states.State;
 import sps.text.Text;
@@ -11,7 +11,7 @@ import sps.text.TextPool;
 
 public class Tournament implements State {
 
-    private Bracket _bracket;
+    private Matches _matches;
     private Player _player;
 
     private int _boutNumber = 1;
@@ -24,7 +24,7 @@ public class Tournament implements State {
 
     @Override
     public void create() {
-        _bracket = new Bracket(_player, GameConfig.TournamentMatches);
+        _matches = new Matches(_player, GameConfig.TournamentMatches);
         _entranceInfo = TextPool.get().write(boutMessage(), Screen.pos(5, 50));
     }
 
@@ -42,8 +42,8 @@ public class Tournament implements State {
             _boutNumber++;
             _entranceInfo.setMessage(boutMessage());
             // Run all of the EvE matches and Byes, then load the next PvE match
-            while (!_bracket.runNextMatch()) {
-            }
+            _matches.simulateCpuOnlyRounds();
+            _matches.beginPlayerMatch();
         }
     }
 
@@ -55,8 +55,8 @@ public class Tournament implements State {
     public void load() {
         //This should only be called after popping
         //the merge results state after a player victory
-        if (_bracket != null) {
-            _bracket.removeLastOpponent();
+        if (_matches != null) {
+            _matches.removeLastOpponent();
         }
     }
 
