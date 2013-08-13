@@ -17,6 +17,10 @@ public class Population {
     }
 
     public void applyDisease(Disease disease) {
-        _hope -= disease.MortalityRate;
+        _hope -= disease.PercentOfDeaths;
+    }
+
+    public int getSize() {
+        return _size;
     }
 }

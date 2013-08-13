@@ -5,7 +5,9 @@ import game.InputWrapper;
 import game.population.Disease;
 import game.population.Diseases;
 import game.population.Population;
+import game.population.PopulationHUD;
 import sps.bridge.Commands;
+import sps.core.Point2;
 import sps.display.Screen;
 import sps.states.State;
 import sps.states.StateManager;
@@ -19,9 +21,10 @@ public class PopulationOverview implements State {
     private Population _population;
     private List<Disease> _top;
     private List<Disease> _bottom;
-
     private Text _topDisplay;
     private Text _bottomDisplay;
+
+    private PopulationHUD _populationHud;
 
     private int _wins;
     private int _losses;
@@ -29,6 +32,9 @@ public class PopulationOverview implements State {
     @Override
     public void create() {
         _population = new Population();
+        Point2 hudSize = Screen.pos(40, 70);
+        Point2 hudPosition = Screen.pos(30, 15);
+        _populationHud = new PopulationHUD(_population, hudSize, hudPosition);
         _top = Diseases.get().getRandomTop(GameConfig.NumberOfTournaments);
         _bottom = Diseases.get().getRandomBottom(GameConfig.NumberOfTournaments);
 
@@ -59,6 +65,8 @@ public class PopulationOverview implements State {
         _topDisplay.setScale(.5f);
         _bottomDisplay.setMessage(bD);
         _bottomDisplay.setScale(.5f);
+
+        _populationHud.recalcIcons();
     }
 
     private void disableTopDisease() {
@@ -67,7 +75,12 @@ public class PopulationOverview implements State {
 
     private void disableBottomDisease() {
         _bottom.get(_wins + _losses).setActive(false);
+        simluatePopulationChange();
         updateDiseaseDisplay();
+    }
+
+    private void simluatePopulationChange() {
+
     }
 
     public void addWin() {
@@ -83,6 +96,7 @@ public class PopulationOverview implements State {
 
     @Override
     public void draw() {
+        _populationHud.draw();
     }
 
     @Override
