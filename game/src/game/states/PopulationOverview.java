@@ -23,37 +23,62 @@ public class PopulationOverview implements State {
     private Text _topDisplay;
     private Text _bottomDisplay;
 
+    private int _wins;
+    private int _losses;
+
     @Override
     public void create() {
         _population = new Population();
         _top = Diseases.get().getRandomTop(GameConfig.NumberOfTournaments);
         _bottom = Diseases.get().getRandomBottom(GameConfig.NumberOfTournaments);
 
+        _topDisplay = TextPool.get().write("", Screen.pos(5, 95));
+        _bottomDisplay = TextPool.get().write("", Screen.pos(75, 95));
 
-        String tD = "TOP\n";
-        for (Disease d : _top) {
-            tD += d.Name + "\n";
-        }
-
-        String bD = "BOTTOM\n";
-        for (Disease d : _bottom) {
-            bD += d.Name + "\n";
-        }
-
-        _topDisplay = TextPool.get().write(tD, Screen.pos(5, 95));
-        _topDisplay.setScale(.5f);
-        _bottomDisplay = TextPool.get().write(bD, Screen.pos(75, 95));
-        _bottomDisplay.setScale(.5f);
+        updateDiseaseDisplay();
 
         TextPool.get().write("Press [" + Commands.get("Confirm").key() + "] to enter the next tournament", Screen.pos(10, 10));
     }
 
+    private String diseaseDisplay(Disease d) {
+        return d.Name + (d.isActive() ? "" : "(D)") + "\n";
+    }
+
+    private void updateDiseaseDisplay() {
+        String tD = "TOP\n";
+        for (Disease d : _top) {
+            tD += diseaseDisplay(d);
+        }
+
+        String bD = "BOTTOM\n";
+        for (Disease d : _bottom) {
+            bD += diseaseDisplay(d);
+        }
+
+        _topDisplay.setMessage(tD);
+        _topDisplay.setScale(.5f);
+        _bottomDisplay.setMessage(bD);
+        _bottomDisplay.setScale(.5f);
+    }
+
+    private void disableTopDisease() {
+        _top.get(_wins).setActive(false);
+    }
+
+    private void disableBottomDisease() {
+        _bottom.get(_wins + _losses).setActive(false);
+        updateDiseaseDisplay();
+    }
+
     public void addWin() {
-        //TODO simulate pop changes and disease negation
+        disableTopDisease();
+        disableBottomDisease();
+        _wins++;
     }
 
     public void addLoss() {
-
+        disableBottomDisease();
+        _losses++;
     }
 
     @Override
