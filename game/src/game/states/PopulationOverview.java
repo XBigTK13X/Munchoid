@@ -76,11 +76,11 @@ public class PopulationOverview implements State {
     private void disableBottomDisease() {
         _bottom.get(_wins + _losses).setActive(false);
         simluatePopulationChange();
-        updateDiseaseDisplay();
     }
 
     private void simluatePopulationChange() {
         _population.grow();
+        updateDiseaseDisplay();
     }
 
     public void addWin() {
@@ -103,6 +103,11 @@ public class PopulationOverview implements State {
     public void update() {
         if (InputWrapper.confirm()) {
             StateManager.get().push(new LoadArena());
+        }
+        if (GameConfig.DevPopulationTest) {
+            if (InputWrapper.pop()) {
+                simluatePopulationChange();
+            }
         }
     }
 
