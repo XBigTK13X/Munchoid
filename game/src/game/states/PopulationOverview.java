@@ -80,7 +80,7 @@ public class PopulationOverview implements State {
     }
 
     private void simluatePopulationChange() {
-
+        _population.grow();
     }
 
     public void addWin() {

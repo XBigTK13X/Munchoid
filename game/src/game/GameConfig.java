@@ -76,11 +76,13 @@ public class GameConfig {
     //TODO Make them toggleable in the options menu,
     //     helps with lots of creatures running on weaker computers
     public static final boolean OptCollectMetaData = true;
-    public static final boolean OptDisableOutlines = false;
-    public static final boolean OptDisableCloudyTextures = false;
+    public static final boolean OptDisableOutlines = GameConfig.OptPerformanceGraphicsSettings ? true : false;
+    public static final boolean OptDisableCloudyTextures = GameConfig.OptPerformanceGraphicsSettings ? true : false;
     public static final boolean OptFastOutlineAlg = false;
     public static final boolean OptShowFPS = false;
-    public static final boolean OptEnableFontOutlines = true;
+    public static final boolean OptEnableFontOutlines = GameConfig.OptPerformanceGraphicsSettings ? false : true;
+
+    public static final boolean OptPerformanceGraphicsSettings = true;
 
     //Bots
     public static final boolean DevBotEnabled = false;
@@ -99,7 +101,7 @@ public class GameConfig {
     public static final boolean DevAlwaysSelectForces = false;
     public static final boolean DevDrainEnergyCommand = false;
     public static final boolean DevUseOldCatchableMergeAlgorithm = false;
-    public static final boolean DevTournyTest = true;
+    public static final boolean DevTournyTest = false;
 
     //Debug/Development Logging toggles
     public static final boolean DevBattleLog = false;
@@ -119,8 +121,7 @@ public class GameConfig {
                 if (c++ < fields.length - 1) {
                     config += ",";
                 }
-            }
-            catch (IllegalAccessException e) {
+            } catch (IllegalAccessException e) {
                 Logger.exception(e);
             }
         }
