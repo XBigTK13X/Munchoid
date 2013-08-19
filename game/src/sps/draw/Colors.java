@@ -81,7 +81,7 @@ public class Colors {
         for (int ii = 0; ii < steps; ii++) {
             float sP = (float) ii / steps;
             float eP = 1 - sP;
-            gradient[ii] = Colors.fromRGB((start.r * sP + end.r * eP), (start.g * sP + end.g * eP), (start.b * sP + end.b * eP));
+            gradient[ii] = new Color(start.r * sP + end.r * eP, start.g * sP + end.g * eP, start.b * sP + end.b * eP, start.a * sP + end.a * eP);
         }
         return gradient;
     }
