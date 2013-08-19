@@ -188,11 +188,13 @@ public class MergeOutcome implements State {
                 }
                 return;
             }
-            if (GameConfig.DevBotAlwaysMerge) {
-                acceptMerge();
-            }
             else {
-                rejectMerge();
+                if (GameConfig.DevBotAlwaysMerge) {
+                    acceptMerge();
+                }
+                else {
+                    rejectMerge();
+                }
             }
         }
     }

@@ -102,7 +102,7 @@ public class GameConfig {
     public static final boolean DevDrainEnergyCommand = false;
     public static final boolean DevUseOldCatchableMergeAlgorithm = false;
     public static final boolean DevTournyTest = false;
-    public static final boolean DevPopulationTest = true;
+    public static final boolean DevPopulationTest = false;
 
     //Debug/Development Logging toggles
     public static final boolean DevBattleLog = false;
