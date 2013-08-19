@@ -14,6 +14,7 @@ import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
 
+import java.text.NumberFormat;
 import java.util.List;
 
 public class PopulationOverview implements State {
@@ -71,7 +72,9 @@ public class PopulationOverview implements State {
 
         _populationHud.recalcIcons();
 
-        _populationCountDisplay.setMessage("Population Size: " + _population.getSize() + " people");
+        NumberFormat f = NumberFormat.getNumberInstance();
+
+        _populationCountDisplay.setMessage("Population: " + f.format(_population.getSize()) + " people");
     }
 
     private void disableTopDisease() {
