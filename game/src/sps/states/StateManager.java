@@ -136,6 +136,9 @@ public class StateManager {
         while (current().getClass() != state && _states.size() > 1) {
             pop(true);
         }
+        if (current().getClass() != state) {
+            throw new RuntimeException("Attempted to rollback to a state that isn't on the stack: " + state);
+        }
         loadCurrent();
     }
 

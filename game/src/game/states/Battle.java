@@ -29,6 +29,9 @@ public class Battle implements State {
 
     private boolean _isFinalBattle;
 
+    private boolean _isBattleOver;
+    private boolean _playerWon;
+
     public Battle() {
         this(new Creature(), new Creature());
         Logger.error("ONLY USE Battle() FOR DEBUGGING!!!");
@@ -96,11 +99,35 @@ public class Battle implements State {
 
     @Override
     public void update() {
+        if (_isBattleOver) {
+            if (InputWrapper.confirm()) {
+                if (_playerWon) {
+                    victory();
+                }
+                else {
+                    loss();
+                }
+            }
+        }
+        else {
+            battleStep();
+        }
+    }
+
+    private void battleStep() {
         EntityManager.get().update();
         _leftHud.update();
         _rightHud.update();
         if (InputWrapper.confirm() && GameConfig.DevDrainEnergyCommand) {
             _left.burnEnergy();
+        }
+
+        if (InputWrapper.pop() && GameConfig.DevShortcutsEnabled) {
+            waitForPlayerToAdvance(true);
+        }
+
+        if (InputWrapper.push() && GameConfig.DevShortcutsEnabled) {
+            waitForPlayerToAdvance(false);
         }
 
         if (_left.getCoolDown().isCooled()) {
@@ -118,6 +145,7 @@ public class Battle implements State {
 
         /*
          This clause is meant to be separate from the check above
+
          In the above case, player is checked to be cooled.
          If no forces could have been used, then we reset the cooldown.
          This prevents the player from having priority when no forces
@@ -134,9 +162,6 @@ public class Battle implements State {
                     playerActivate(force);
                 }
             }
-            if (InputWrapper.pop() && GameConfig.DevShortcutsEnabled) {
-                victory();
-            }
 
         }
         else if (_right.getCoolDown().isCooled()) {
@@ -152,11 +177,18 @@ public class Battle implements State {
 
 
         if (!_right.getBody().getParts().anyAlive() || GameConfig.DevEndToEndStateLoadTest) {
-            victory();
+            waitForPlayerToAdvance(true);
         }
         if (!_left.getBody().getParts().anyAlive()) {
-            loss();
+            waitForPlayerToAdvance(false);
         }
+    }
+
+    private void waitForPlayerToAdvance(boolean win) {
+        _playerWon = win;
+        _isBattleOver = true;
+        String battleResult = "The battle is over. You have " + (win ? "won!" : "lost.") + " Press " + Commands.get("Confirm").key() + " to continue";
+        TextPool.get().write(battleResult, Screen.pos(15, 65));
     }
 
     private void victory() {
@@ -173,9 +205,9 @@ public class Battle implements State {
         }
     }
 
-    private void loss(){
+    private void loss() {
         Score.get().setPlayerPetStats(_left.getStats());
-        StateManager.reset().push(new TournamentEnd(false));
+        StateManager.get().push(new TournamentEnd(false));
     }
 
     @Override
