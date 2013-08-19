@@ -1,6 +1,7 @@
 package game.population;
 
 import game.GameConfig;
+import sps.util.MathHelper;
 
 public class Population {
 
@@ -14,6 +15,7 @@ public class Population {
 
     public void grow() {
         _size += _size * (GameConfig.NaturalPopulationGrowthPercent / 100f) * (_hope / 100f);
+        _size = MathHelper.clamp(_size, 0, GameConfig.PopulationMax);
     }
 
     public void applyDisease(Disease disease) {

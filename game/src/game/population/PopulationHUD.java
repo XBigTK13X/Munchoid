@@ -2,6 +2,7 @@ package game.population;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import game.GameConfig;
 import game.creatures.style.Outline;
 import sps.core.Point2;
 import sps.display.Screen;
@@ -9,6 +10,7 @@ import sps.display.Window;
 import sps.draw.Colors;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
+import sps.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,14 +40,17 @@ public class PopulationHUD {
 
         _maxIconsHigh = (int) (_bg.getHeight() / _popIcon.getHeight()) - 1;
         _maxIconsWide = (int) (_bg.getWidth() / _popIcon.getWidth()) - 1;
+        _maxIcons = _maxIconsHigh * _maxIconsWide;
     }
 
     public void recalcIcons() {
-        _iconPositions = new ArrayList<Point2>();
-        _maxIcons = _population.getSize() / 1000;
+        _iconPositions = new ArrayList<>();
+
+        int iconsToDraw = MathHelper.clamp((int) (_maxIcons * ((float) _population.getSize()) / GameConfig.PopulationMax), 1, _maxIcons);
+
         int iconCount = 0;
         for (int ii = 0; ii < _maxIconsHigh; ii++) {
-            for (int jj = 0; jj < _maxIconsWide && iconCount < _maxIcons; jj++) {
+            for (int jj = 0; jj < _maxIconsWide && iconCount < iconsToDraw; jj++) {
                 iconCount++;
                 _iconPositions.add(new Point2(_bg.getX() + jj * _popIcon.getWidth() + _popIcon.getWidth() / 2, _bg.getY() + ii * _popIcon.getHeight() + _popIcon.getHeight() / 2));
             }

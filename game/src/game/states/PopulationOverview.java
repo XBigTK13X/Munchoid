@@ -25,6 +25,7 @@ public class PopulationOverview implements State {
     private Text _bottomDisplay;
 
     private PopulationHUD _populationHud;
+    private Text _populationCountDisplay;
 
     private int _wins;
     private int _losses;
@@ -40,6 +41,8 @@ public class PopulationOverview implements State {
 
         _topDisplay = TextPool.get().write("", Screen.pos(5, 95));
         _bottomDisplay = TextPool.get().write("", Screen.pos(75, 95));
+
+        _populationCountDisplay = TextPool.get().write("", Screen.pos(30, 90));
 
         updateDiseaseDisplay();
 
@@ -67,6 +70,8 @@ public class PopulationOverview implements State {
         _bottomDisplay.setScale(.5f);
 
         _populationHud.recalcIcons();
+
+        _populationCountDisplay.setMessage("Population Size: " + _population.getSize() + " people");
     }
 
     private void disableTopDisease() {
