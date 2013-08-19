@@ -8,6 +8,33 @@ import java.lang.reflect.Field;
 
 public class GameConfig {
 
+    //Bots
+    public static final boolean DevBotEnabled = false;
+    public static final boolean DevBotCatchIO = false;
+    public static final boolean DevBotAlwaysMerge = false;
+    public static final boolean DevBotRandomlyMerges = true;
+
+    //Debugging / Development
+    public static final boolean DevShortcutsEnabled = true;
+    public static final boolean DevEndToEndStateLoadTest = false;
+    public static final boolean DevFlipEnabled = false;
+    public static final boolean DevPartSortingEnabled = false;
+    public static final boolean DevDrawSkeleton = false;
+    public static final boolean DevDebugJointGrid = false;
+    public static final boolean DevDebugJointGridWithSquares = false;
+    public static final boolean DevAlwaysSelectForces = false;
+    public static final boolean DevDrainEnergyCommand = false;
+    public static final boolean DevUseOldCatchableMergeAlgorithm = false;
+    public static final boolean DevTournyTest = false;
+    public static final boolean DevPopulationTest = true;
+    public static final boolean DevBattleTest = false;
+
+    //Debug/Development Logging toggles
+    public static final boolean DevBattleLog = false;
+    public static final boolean DevTimeStates = false;
+    public static final boolean DevPrintArenaSize = false;
+
+    //Intro
     public final static float IntroVideoSkipSeconds = 2f;
     public final static boolean IntroVideoEnabled = false;
 
@@ -73,8 +100,9 @@ public class GameConfig {
     public final static int StartingPopulationHopePercent = 100;
 
     //Optimizations
-    //TODO Make them toggleable in the options menu,
+    //TODO Make these toggleable in the options menu,
     //     helps with lots of creatures running on weaker computers
+    public static final boolean OptPerformanceGraphicsSettings = true;
     public static final boolean OptCollectMetaData = true;
     public static final boolean OptDisableOutlines = GameConfig.OptPerformanceGraphicsSettings ? true : false;
     public static final boolean OptDisableCloudyTextures = GameConfig.OptPerformanceGraphicsSettings ? true : false;
@@ -82,34 +110,8 @@ public class GameConfig {
     public static final boolean OptShowFPS = false;
     public static final boolean OptEnableFontOutlines = GameConfig.OptPerformanceGraphicsSettings ? false : true;
 
-    public static final boolean OptPerformanceGraphicsSettings = true;
-
-    //Bots
-    public static final boolean DevBotEnabled = false;
-    public static final boolean DevBotCatchIO = false;
-    public static final boolean DevBotAlwaysMerge = false;
-    public static final boolean DevBotRandomlyMerges = true;
-
-    //Debugging / Development
-    public static final boolean DevShortcutsEnabled = true;
-    public static final boolean DevEndToEndStateLoadTest = false;
-    public static final boolean DevFlipEnabled = false;
-    public static final boolean DevPartSortingEnabled = false;
-    public static final boolean DevDrawSkeleton = false;
-    public static final boolean DevDebugJointGrid = false;
-    public static final boolean DevDebugJointGridWithSquares = false;
-    public static final boolean DevAlwaysSelectForces = false;
-    public static final boolean DevDrainEnergyCommand = false;
-    public static final boolean DevUseOldCatchableMergeAlgorithm = false;
-    public static final boolean DevTournyTest = false;
-    public static final boolean DevPopulationTest = false;
-    public static final boolean DevBattleTest = false;
-
-    //Debug/Development Logging toggles
-    public static final boolean DevBattleLog = false;
-    public static final boolean DevTimeStates = false;
-    public static final boolean DevPrintArenaSize = false;
-
+    //Style
+    //TODO Make this scale with resolution like everything else?
     public static final int MeterOutlinePixelThickness = 2;
     public static final int BodyPartOutlinePixelThickness = 5;
 
