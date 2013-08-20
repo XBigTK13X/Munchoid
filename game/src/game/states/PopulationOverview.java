@@ -79,10 +79,14 @@ public class PopulationOverview implements State {
         _populationHud.draw();
     }
 
+    private boolean gameFinished() {
+        return _tournamentsPlayed >= GameConfig.NumberOfTournaments;
+    }
+
     @Override
     public void update() {
         if (InputWrapper.confirm()) {
-            if (_tournamentsPlayed < GameConfig.NumberOfTournaments) {
+            if (!gameFinished()) {
                 StateManager.get().push(new LoadArena());
             }
             else {
@@ -90,11 +94,15 @@ public class PopulationOverview implements State {
             }
         }
         if (GameConfig.DevPopulationTest) {
-            if (InputWrapper.pop()) {
-                tournamentResult(true);
-            }
-            if (InputWrapper.push()) {
-                tournamentResult(false);
+            boolean a = InputWrapper.pop();
+            boolean b = InputWrapper.push();
+            if (a || b) {
+                if (gameFinished()) {
+                    StateManager.reset().push(new PopulationOverview());
+                }
+                else {
+                    tournamentResult(a);
+                }
             }
         }
     }

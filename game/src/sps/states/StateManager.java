@@ -58,8 +58,8 @@ public class StateManager {
     private boolean _paused = false;
 
     private StateManager() {
-        _states = new Stack<State>();
-        _components = new HashMap<State, StateDependentComponents>();
+        _states = new Stack<>();
+        _components = new HashMap<>();
     }
 
     public void setPaused(boolean value) {
@@ -151,6 +151,7 @@ public class StateManager {
             State dying = _states.pop();
             TextPool.get().clear(dying);
             dying.unload();
+            _components.remove(dying);
             if (_states.size() > 0 && !force) {
                 loadCurrent();
             }
