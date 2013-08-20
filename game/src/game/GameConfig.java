@@ -96,7 +96,7 @@ public class GameConfig {
     public final static int NumberOfTournaments = 5;
     public final static int TournamentMatches = 3;
     public final static int StartingPopulationSize = 1_000_000;
-    public final static int NaturalPopulationGrowthPercent = 33;
+    public final static int NaturalPopulationGrowthPercent = 27;
     public final static int StartingPopulationHopePercent = 100;
     public final static int PopulationPeoplePerIcon = 1_000;
     public final static int PopulationMax = 70_000_000;

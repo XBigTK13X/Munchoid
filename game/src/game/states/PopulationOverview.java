@@ -7,6 +7,7 @@ import game.population.Diseases;
 import game.population.Population;
 import game.population.PopulationHUD;
 import sps.bridge.Commands;
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.states.State;
@@ -37,6 +38,8 @@ public class PopulationOverview implements State {
         Point2 hudSize = Screen.pos(40, 70);
         Point2 hudPosition = Screen.pos(30, 15);
         _populationHud = new PopulationHUD(_population, hudSize, hudPosition);
+
+
         _top = Diseases.get().getRandomTop(GameConfig.NumberOfTournaments);
         _bottom = Diseases.get().getRandomBottom(GameConfig.NumberOfTournaments);
 
@@ -87,6 +90,19 @@ public class PopulationOverview implements State {
     }
 
     private void simluatePopulationChange() {
+        int totalDeaths = 0;
+        for (Disease d : _bottom) {
+            if (d.isActive()) {
+                totalDeaths += _population.deathsCausedBy(d);
+            }
+        }
+        for (Disease d : _top) {
+            if (d.isActive()) {
+                totalDeaths += _population.deathsCausedBy(d);
+                Logger.info(d.Name + " caused " + _population.deathsCausedBy(d));
+            }
+        }
+        _population.setSize(_population.getSize() - totalDeaths);
         _population.grow();
         updateDiseaseDisplay();
     }
