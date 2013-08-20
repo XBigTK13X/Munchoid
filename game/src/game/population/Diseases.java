@@ -31,9 +31,9 @@ public class Diseases {
                 if (!line.contains("##") && line.length() > 1) {
                     String[] values = line.split(",");
                     String name = values[0];
-                    float mortalityRate = Parse.floa(values[1]);
+                    float deathPercentRate = Parse.floa(values[1]);
                     float deathsPer100000 = Parse.floa(values[2]);
-                    _diseases.add(new Disease(name, mortalityRate, deathsPer100000));
+                    _diseases.add(new Disease(name, deathsPer100000));
                 }
             }
             Collections.sort(_diseases);
@@ -48,9 +48,6 @@ public class Diseases {
                     _bottom.add(_diseases.get(ii));
                 }
             }
-
-            Collections.shuffle(_top);
-            Collections.shuffle(_bottom);
         }
         catch (IOException e) {
             Logger.exception(e);
@@ -59,11 +56,14 @@ public class Diseases {
 
     public List<Disease> getRandom(boolean top, int diseaseCount) {
         if (diseaseCount > _diseases.size() / 2) {
-            throw new RuntimeException("There are more matches than available diseases. It is impossible to clear them all");
+            throw new RuntimeException("There are more tournaments than available diseases. It is impossible to clear them all");
         }
-        List<Disease> result = new ArrayList<Disease>();
+        Collections.shuffle(_top);
+        Collections.shuffle(_bottom);
+        List<Disease> result = new ArrayList<>();
         for (int ii = 0; ii < diseaseCount; ii++) {
             result.add(top ? _top.get(ii) : _bottom.get(ii));
+            result.get(result.size() - 1).setActive(true);
         }
         return result;
     }

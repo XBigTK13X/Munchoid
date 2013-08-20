@@ -33,6 +33,7 @@ public class GameConfig {
     public static final boolean DevBattleLog = false;
     public static final boolean DevTimeStates = false;
     public static final boolean DevPrintArenaSize = false;
+    public static final boolean DevDebugPopulationGrowth = false;
 
     //Intro
     public final static float IntroVideoSkipSeconds = 2f;

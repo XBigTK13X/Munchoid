@@ -184,12 +184,14 @@ public class Renderer {
 
     }
 
+    private static final int __lineHeightPixels = 50;
+
     // String rendering
     public void draw(String content, Point2 location, Color filter, float scale, DrawDepth depth) {
         if (content.contains("\n")) {
             int line = 0;
             for (String s : content.split("\n")) {
-                render(s, location.add(0, line++ * -50), filter, scale);
+                render(s, location.add(0, line++ * -__lineHeightPixels), filter, scale);
             }
         }
         else {

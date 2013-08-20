@@ -30,7 +30,9 @@ public class DiseaseMonitor {
         for (Disease d : _diseases) {
             if (d.isActive()) {
                 totalDeaths += population.deathsCausedBy(d);
-                Logger.info(d.Name + " caused " + population.deathsCausedBy(d) + " deaths");
+                if (GameConfig.DevDebugPopulationGrowth) {
+                    Logger.info(d.Name + " caused " + population.deathsCausedBy(d) + " deaths");
+                }
             }
         }
         return totalDeaths;

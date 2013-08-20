@@ -5,14 +5,13 @@ public class Disease implements Comparable {
     //TODO this might need to increase as the population growths larger
     public static final int InfluenceMultiplier = 63;
 
-    public final float PercentOfDeaths;
     public final float DeathsPerInfluence;
     public final String Name;
+
     private boolean _active;
 
-    public Disease(String name, float percentOfDeaths, float deathsPerInfluence) {
+    public Disease(String name, float deathsPerInfluence) {
         _active = true;
-        PercentOfDeaths = percentOfDeaths;
         Name = name;
         DeathsPerInfluence = deathsPerInfluence;
     }

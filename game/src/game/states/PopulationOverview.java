@@ -19,8 +19,8 @@ public class PopulationOverview implements State {
 
     private Population _population;
 
-    private DiseaseMonitor _topMonitor;
-    private DiseaseMonitor _bottomMonitor;
+    private DiseaseMonitor _topDiseases;
+    private DiseaseMonitor _bottomDiseases;
 
     private PopulationHUD _populationHud;
     private Text _populationCountDisplay;
@@ -37,8 +37,8 @@ public class PopulationOverview implements State {
         Point2 hudPosition = Screen.pos(30, 15);
         _populationHud = new PopulationHUD(_population, hudSize, hudPosition);
 
-        _topMonitor = new DiseaseMonitor(true);
-        _bottomMonitor = new DiseaseMonitor(false);
+        _topDiseases = new DiseaseMonitor(true);
+        _bottomDiseases = new DiseaseMonitor(false);
 
 
         _populationCountDisplay = TextPool.get().write("", Screen.pos(30, 90));
@@ -49,8 +49,8 @@ public class PopulationOverview implements State {
     }
 
     private void updateDiseaseDisplay() {
-        _topMonitor.update();
-        _bottomMonitor.update();
+        _topDiseases.update();
+        _bottomDiseases.update();
 
         _populationHud.recalcIcons();
         NumberFormat f = NumberFormat.getNumberInstance();
@@ -58,7 +58,7 @@ public class PopulationOverview implements State {
     }
 
     private void simluatePopulationChange() {
-        int totalDeaths = _bottomMonitor.totalDeaths(_population) + _topMonitor.totalDeaths(_population);
+        int totalDeaths = _bottomDiseases.totalDeaths(_population) + _topDiseases.totalDeaths(_population);
         _population.setSize(_population.getSize() - totalDeaths);
         _population.grow();
         updateDiseaseDisplay();
@@ -66,10 +66,10 @@ public class PopulationOverview implements State {
 
     public void tournamentResult(boolean win) {
         if (win) {
-            _topMonitor.disableOne();
+            _topDiseases.disableOne();
             _tournamentWins++;
         }
-        _bottomMonitor.disableOne();
+        _bottomDiseases.disableOne();
         simluatePopulationChange();
         _tournamentsPlayed++;
     }

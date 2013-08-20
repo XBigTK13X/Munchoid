@@ -151,7 +151,10 @@ public class StateManager {
             State dying = _states.pop();
             TextPool.get().clear(dying);
             dying.unload();
-            _components.remove(dying);
+            StateDependentComponents sdc = _components.get(dying);
+            if (sdc != null) {
+                _components.remove(dying);
+            }
             if (_states.size() > 0 && !force) {
                 loadCurrent();
             }
