@@ -74,7 +74,7 @@ public class Player extends Entity implements IActor {
     }
 
 
-    private void moveInBothDirections(float x, float y) {
+    public void moveInBothDirections(float x, float y) {
         //X Movement
         float adjustedXVelocity = x * Gdx.graphics.getDeltaTime();
         float nextX = getLocation().X + adjustedXVelocity;

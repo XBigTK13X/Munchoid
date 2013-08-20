@@ -162,8 +162,20 @@ public class Arena implements State {
         simulateCreatureGrowth(opponents);
 
         _countDownSeconds = GameConfig.ArenaTimeoutSeconds;
-        if (EntityManager.get().getPlayer() == null) {
+        Player p = (Player) EntityManager.get().getPlayer();
+        if (p == null) {
             MusicPlayer.get();
+        }
+        else {
+            //FIXME this is ugly.
+
+            //Instead, should be a one liner to re-center the camera.
+            //However, that would result in a lot of positions being gathered,
+            //so the method below was chosen instead to save some time.
+
+            //Recenter the camera on the player
+            p.moveInBothDirections(-1, -1);
+            p.moveInBothDirections(1, 1);
         }
         MusicPlayer.get().start();
     }
