@@ -56,11 +56,11 @@ public class AnimationTest implements State {
 
         _creature.update();
         String display = "Scale: " + _creature.getBody().getScale() + "\n";
-        display += "\n[" + Commands.get("Force6").key() + "] to flipX";
-        display += "\n[" + Commands.get("Confirm").key() + "] new creature";
-        display += "\n[" + Commands.get("MoveUp").key() + "] scale up";
-        display += "\n[" + Commands.get("MoveDown").key() + "] scale down";
-        display += "\n[" + Commands.get("Force1").key() + "] scale reset";
+        display += "\n" + Commands.get("Force6") + " to flipX";
+        display += "\n" + Commands.get("Confirm") + " new creature";
+        display += "\n" + Commands.get("MoveUp") + " scale up";
+        display += "\n" + Commands.get("MoveDown") + " scale down";
+        display += "\n" + Commands.get("Force1") + " scale reset";
         _scale.setMessage(display);
     }
 

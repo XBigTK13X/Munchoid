@@ -54,6 +54,9 @@ public class Score {
     public Stats petStats() {
         if (_petStats == null) {
             Player p = (Player) EntityManager.get().getPlayer();
+            if (p == null) {
+                return new Stats();
+            }
             Creature c = p.getPet();
             _petStats = c.getStats();
             setPlayerPetStats(_petStats);

@@ -2,12 +2,10 @@ package game.states;
 
 import game.GameConfig;
 import game.InputWrapper;
-import game.population.Disease;
-import game.population.Diseases;
+import game.population.DiseaseMonitor;
 import game.population.Population;
 import game.population.PopulationHUD;
 import sps.bridge.Commands;
-import sps.core.Logger;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.states.State;
@@ -16,21 +14,21 @@ import sps.text.Text;
 import sps.text.TextPool;
 
 import java.text.NumberFormat;
-import java.util.List;
 
 public class PopulationOverview implements State {
 
     private Population _population;
-    private List<Disease> _top;
-    private List<Disease> _bottom;
-    private Text _topDisplay;
-    private Text _bottomDisplay;
+
+    private DiseaseMonitor _topMonitor;
+    private DiseaseMonitor _bottomMonitor;
 
     private PopulationHUD _populationHud;
     private Text _populationCountDisplay;
 
-    private int _wins;
-    private int _losses;
+    private Text _continuePrompt;
+
+    private int _tournamentsPlayed = 0;
+    private int _tournamentWins = 0;
 
     @Override
     public void create() {
@@ -39,83 +37,41 @@ public class PopulationOverview implements State {
         Point2 hudPosition = Screen.pos(30, 15);
         _populationHud = new PopulationHUD(_population, hudSize, hudPosition);
 
+        _topMonitor = new DiseaseMonitor(true);
+        _bottomMonitor = new DiseaseMonitor(false);
 
-        _top = Diseases.get().getRandomTop(GameConfig.NumberOfTournaments);
-        _bottom = Diseases.get().getRandomBottom(GameConfig.NumberOfTournaments);
-
-        _topDisplay = TextPool.get().write("", Screen.pos(5, 95));
-        _bottomDisplay = TextPool.get().write("", Screen.pos(75, 95));
 
         _populationCountDisplay = TextPool.get().write("", Screen.pos(30, 90));
 
         updateDiseaseDisplay();
 
-        TextPool.get().write("Press [" + Commands.get("Confirm").key() + "] to enter the next tournament", Screen.pos(10, 10));
-    }
-
-    private String diseaseDisplay(Disease d) {
-        return d.Name + (d.isActive() ? "" : "(D)") + "\n";
+        _continuePrompt = TextPool.get().write("Press " + Commands.get("Confirm") + " to enter the next tournament", Screen.pos(10, 10));
     }
 
     private void updateDiseaseDisplay() {
-        String tD = "TOP\n";
-        for (Disease d : _top) {
-            tD += diseaseDisplay(d);
-        }
-
-        String bD = "BOTTOM\n";
-        for (Disease d : _bottom) {
-            bD += diseaseDisplay(d);
-        }
-
-        _topDisplay.setMessage(tD);
-        _topDisplay.setScale(.5f);
-        _bottomDisplay.setMessage(bD);
-        _bottomDisplay.setScale(.5f);
+        _topMonitor.update();
+        _bottomMonitor.update();
 
         _populationHud.recalcIcons();
-
         NumberFormat f = NumberFormat.getNumberInstance();
-
         _populationCountDisplay.setMessage("Population: " + f.format(_population.getSize()) + " people");
     }
 
-    private void disableTopDisease() {
-        _top.get(_wins).setActive(false);
-    }
-
-    private void disableBottomDisease() {
-        _bottom.get(_wins + _losses).setActive(false);
-        simluatePopulationChange();
-    }
-
     private void simluatePopulationChange() {
-        int totalDeaths = 0;
-        for (Disease d : _bottom) {
-            if (d.isActive()) {
-                totalDeaths += _population.deathsCausedBy(d);
-            }
-        }
-        for (Disease d : _top) {
-            if (d.isActive()) {
-                totalDeaths += _population.deathsCausedBy(d);
-                Logger.info(d.Name + " caused " + _population.deathsCausedBy(d));
-            }
-        }
+        int totalDeaths = _bottomMonitor.totalDeaths(_population) + _topMonitor.totalDeaths(_population);
         _population.setSize(_population.getSize() - totalDeaths);
         _population.grow();
         updateDiseaseDisplay();
     }
 
-    public void addWin() {
-        disableTopDisease();
-        disableBottomDisease();
-        _wins++;
-    }
-
-    public void addLoss() {
-        disableBottomDisease();
-        _losses++;
+    public void tournamentResult(boolean win) {
+        if (win) {
+            _topMonitor.disableOne();
+            _tournamentWins++;
+        }
+        _bottomMonitor.disableOne();
+        simluatePopulationChange();
+        _tournamentsPlayed++;
     }
 
     @Override
@@ -126,11 +82,19 @@ public class PopulationOverview implements State {
     @Override
     public void update() {
         if (InputWrapper.confirm()) {
-            StateManager.get().push(new LoadArena());
+            if (_tournamentsPlayed < GameConfig.NumberOfTournaments) {
+                StateManager.get().push(new LoadArena());
+            }
+            else {
+                StateManager.get().push(new EndGame(_tournamentWins));
+            }
         }
         if (GameConfig.DevPopulationTest) {
             if (InputWrapper.pop()) {
-                simluatePopulationChange();
+                tournamentResult(true);
+            }
+            if (InputWrapper.push()) {
+                tournamentResult(false);
             }
         }
     }
@@ -141,6 +105,9 @@ public class PopulationOverview implements State {
 
     @Override
     public void load() {
+        if (_tournamentsPlayed >= GameConfig.NumberOfTournaments - 1) {
+            _continuePrompt.setMessage("Press " + Commands.get("Confirm") + " to see the outcome of your efforts.");
+        }
     }
 
     @Override

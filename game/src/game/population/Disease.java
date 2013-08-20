@@ -2,6 +2,7 @@ package game.population;
 
 public class Disease implements Comparable {
     public static final int PopulationInfluence = 100_000;
+    //TODO this might need to increase as the population growths larger
     public static final int InfluenceMultiplier = 63;
 
     public final float PercentOfDeaths;

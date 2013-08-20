@@ -29,13 +29,13 @@ public class PopulationHUD {
     public PopulationHUD(Population population, Point2 size, Point2 position) {
         _population = population;
 
-        Color[][] bgBase = ProcTextures.gradient((int) size.X, (int) size.Y, Color.BLACK, Colors.rgb(255, 255, 255, 10), true);
-        Outline.single(bgBase, Color.WHITE, 2);
+        Color[][] bgBase = ProcTextures.gradient((int) size.X, (int) size.Y, Colors.rgb(255, 255, 255, 200), Colors.rgb(255, 255, 255, 70), true);
+        //TODO Outline seems to be failing on this gradient
+        Outline.single(bgBase, Color.WHITE, 3);
         _bg = SpriteMaker.get().fromColors(bgBase);
         _bg.setPosition(position.X, position.Y);
 
-
-        Color[][] popIconBase = ProcTextures.monotone((int) Screen.width(1), (int) Screen.height(1), Color.WHITE);
+        Color[][] popIconBase = ProcTextures.monotone((int) Screen.width(1), (int) Screen.width(1), Color.WHITE);
         Outline.single(popIconBase, Color.BLACK, 1);
         _popIcon = SpriteMaker.get().fromColors(popIconBase);
 

@@ -57,15 +57,7 @@ public class Diseases {
         }
     }
 
-    public List<Disease> getRandomTop(int diseaseCount) {
-        return getRandom(true, diseaseCount);
-    }
-
-    public List<Disease> getRandomBottom(int diseaseCount) {
-        return getRandom(false, diseaseCount);
-    }
-
-    private List<Disease> getRandom(boolean top, int diseaseCount) {
+    public List<Disease> getRandom(boolean top, int diseaseCount) {
         if (diseaseCount > _diseases.size() / 2) {
             throw new RuntimeException("There are more matches than available diseases. It is impossible to clear them all");
         }

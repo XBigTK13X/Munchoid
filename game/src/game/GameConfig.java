@@ -26,7 +26,7 @@ public class GameConfig {
     public static final boolean DevDrainEnergyCommand = false;
     public static final boolean DevUseOldCatchableMergeAlgorithm = false;
     public static final boolean DevTournyTest = false;
-    public static final boolean DevPopulationTest = true;
+    public static final boolean DevPopulationTest = false;
     public static final boolean DevBattleTest = false;
 
     //Debug/Development Logging toggles
@@ -97,8 +97,6 @@ public class GameConfig {
     public final static int TournamentMatches = 3;
     public final static int StartingPopulationSize = 1_000_000;
     public final static int NaturalPopulationGrowthPercent = 27;
-    public final static int StartingPopulationHopePercent = 100;
-    public final static int PopulationPeoplePerIcon = 1_000;
     public final static int PopulationMax = 70_000_000;
 
     //Optimizations
@@ -127,7 +125,8 @@ public class GameConfig {
                 if (c++ < fields.length - 1) {
                     config += ",";
                 }
-            } catch (IllegalAccessException e) {
+            }
+            catch (IllegalAccessException e) {
                 Logger.exception(e);
             }
         }

@@ -14,12 +14,7 @@ public class TournamentEnd implements State {
     public void create() {
         StateManager.get().rollBackTo(PopulationOverview.class);
         PopulationOverview state = (PopulationOverview) StateManager.get().current();
-        if (_win) {
-            state.addWin();
-        }
-        else {
-            state.addLoss();
-        }
+        state.tournamentResult(_win);
     }
 
     @Override

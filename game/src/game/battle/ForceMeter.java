@@ -44,9 +44,7 @@ public class ForceMeter {
 
         boolean isPlayer = _position.X < Screen.width(50);
         if (isPlayer) {
-            String input = "[" + Commands.get(force.Command).key().name() + "]";
-
-            _message = (stat > GameConfig.DisableStat && _owner.getStats().isEnabled(_force)) ? force.name() + ": " + strength() + input : "Disabled";
+            _message = (stat > GameConfig.DisableStat && _owner.getStats().isEnabled(_force)) ? force.name() + ": " + strength() + Commands.get(force.Command) : "Disabled";
             ToolTip.get().add(new ToolTip.User() {
                 @Override
                 public boolean isActive() {

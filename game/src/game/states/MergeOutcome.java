@@ -124,7 +124,7 @@ public class MergeOutcome implements State {
 
             @Override
             public String message() {
-                return "Click to perform the merge [" + Commands.get("Confirm").key() + "]";
+                return "Click here or press" + Commands.get("Confirm") + " to perform the merge.";
             }
         });
 
@@ -137,7 +137,7 @@ public class MergeOutcome implements State {
 
             @Override
             public String message() {
-                return "Click to cancel the merge [" + Commands.get("Push").key() + "]";
+                return "Click here or press" + Commands.get("Push") + " to cancel the merge.";
             }
         });
         if (GameConfig.DevEndToEndStateLoadTest) {
