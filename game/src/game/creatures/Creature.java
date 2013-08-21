@@ -155,10 +155,10 @@ public class Creature extends Entity {
     }
 
     public void useBonus() {
-        while (_bonusPoints > GameConfig.BonusAward) {
-            _bonusPoints -= GameConfig.BonusAward;
+        while (_bonusPoints > GameConfig.ChompPointsRewardCost) {
+            _bonusPoints -= GameConfig.ChompPointsRewardCost;
             Force bonus = _stats.randomEnabledForce();
-            _stats.set(bonus, _stats.get(bonus) + GameConfig.BonusAmount);
+            _stats.set(bonus, _stats.get(bonus) + GameConfig.ChompRewardStatsImpact);
 
             TextPool.get().write("BONUS!", Screen.rand(40, 60, 40, 60), 2f, TextEffects.Fountain);
         }

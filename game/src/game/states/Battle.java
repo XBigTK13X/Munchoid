@@ -99,6 +99,10 @@ public class Battle implements State {
 
     @Override
     public void update() {
+        EntityManager.get().update();
+        _leftHud.update();
+        _rightHud.update();
+
         if (_isBattleOver) {
             if (InputWrapper.confirm()) {
                 if (_playerWon) {
@@ -115,9 +119,6 @@ public class Battle implements State {
     }
 
     private void battleStep() {
-        EntityManager.get().update();
-        _leftHud.update();
-        _rightHud.update();
         if (InputWrapper.confirm() && GameConfig.DevDrainEnergyCommand) {
             _left.burnEnergy();
         }

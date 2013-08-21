@@ -15,7 +15,7 @@ public class GameConfig {
     public static final boolean DevBotRandomlyMerges = true;
 
     //Debugging / Development
-    public static final boolean DevShortcutsEnabled = true;
+    public static final boolean DevShortcutsEnabled = false;
     public static final boolean DevEndToEndStateLoadTest = false;
     public static final boolean DevFlipEnabled = false;
     public static final boolean DevPartSortingEnabled = false;
@@ -26,7 +26,7 @@ public class GameConfig {
     public static final boolean DevDrainEnergyCommand = false;
     public static final boolean DevUseOldCatchableMergeAlgorithm = false;
     public static final boolean DevTournyTest = false;
-    public static final boolean DevPopulationTest = true;
+    public static final boolean DevPopulationTest = false;
     public static final boolean DevBattleTest = false;
 
     //Debug/Development Logging toggles
@@ -48,16 +48,15 @@ public class GameConfig {
     //The length of Quickly.ogg
     public final static float ArenaTimeoutSeconds = 10f;
     public static final float ArenaCreatureScale = .6f;
-    public static final float BattleCreatureScale = 1f;
+
     public static final float PlayerFrozenSecondsMax = .5f;
     public static final int ArenaMergeChance = 60;
     //TODO Convert into easier to manipulate units
     public static final int PlayerTopSpeed = 500;
-    public static final float FirstFightMult = 1.5f;
-    //TODO Smoother movement
-    public static final int playerAcceleration = 50;
-    public static final int BonusAmount = 1;
-    public static final int BonusAward = 15;
+
+    public static final int ChompRewardStatsImpact = 2;
+    public static final int ChompPointsRewardCost = GameConfig.CreatureLimit / 10;
+    public static final int ChompPoints = 1;
 
     //Creature construction
     public static final Point2 MinBodyPartSize = Screen.pos(7, 7);
@@ -72,6 +71,8 @@ public class GameConfig {
     public static final int NaturalStatGrowthPercent = 10;
 
     //Battle
+    public static final float BattleCreatureScale = 1f;
+    public static final float FirstFightMult = 1.5f;
     public static final int MaxForcesEnabled = 4;
     public static final int InitEnabledStats = 1;
     public static final int MinStatInit = 2;

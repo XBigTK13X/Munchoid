@@ -63,12 +63,12 @@ public class Catchable extends Entity {
                         //TODO Chomping sound effect here
                         TextPool.get().write("*CHOMP*", __player.getLocation(), 1f, TextEffects.Fountain);
                         Score.get().addChomp();
-                        __player.getPet().addBonus(Math.min(__player.getPet().getStats().power() - _creature.getStats().power(), _creature.getStats().power()));
+                        __player.getPet().addBonus(GameConfig.ChompPoints);
                         setInactive();
                     }
                     else {
                         __player.freeze();
-                        _creature.addBonus(Math.min(_creature.getStats().power() - __player.getPet().getStats().power(), __player.getPet().getStats().power()));
+                        _creature.addBonus(GameConfig.ChompPoints);
                     }
                 }
             }
