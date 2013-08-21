@@ -125,6 +125,7 @@ public class Player extends Entity implements IActor {
 
     public void setPet(Creature pet) {
         _pet = pet;
+        _pet.setOwner(this);
     }
 
     @Override

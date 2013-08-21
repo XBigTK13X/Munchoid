@@ -2,6 +2,7 @@ package game.creatures;
 
 import com.badlogic.gdx.Gdx;
 import game.GameConfig;
+import game.arena.Player;
 import game.forces.Force;
 import game.forces.sideeffects.SideEffectType;
 import game.forces.sideeffects.SideEffects;
@@ -20,6 +21,8 @@ import sps.util.MathHelper;
 
 public class Creature extends Entity {
     private static final Markov __nameGenerator = Markov.get(Assets.get().markovSeed(), 2);
+
+    private Player _owner;
 
     private Body _body;
     private Stats _stats;
@@ -159,8 +162,9 @@ public class Creature extends Entity {
             _bonusPoints -= GameConfig.ChompPointsRewardCost;
             Force bonus = _stats.randomEnabledForce();
             _stats.set(bonus, _stats.get(bonus) + GameConfig.ChompRewardStatsImpact);
-
-            TextPool.get().write("BONUS!", Screen.rand(40, 60, 40, 60), 2f, TextEffects.Fountain);
+            if (_owner != null) {
+                TextPool.get().write("CHOMP REWARD!\n  STAT + " + GameConfig.ChompRewardStatsImpact, _owner.getLocation().add(Screen.pos(0, 15)), 3f, TextEffects.Fountain);
+            }
         }
     }
 
@@ -222,5 +226,9 @@ public class Creature extends Entity {
 
     public int getHealthOffset() {
         return _healthOffset;
+    }
+
+    public void setOwner(Player player) {
+        _owner = player;
     }
 }
