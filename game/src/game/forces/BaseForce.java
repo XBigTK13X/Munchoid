@@ -2,6 +2,7 @@ package game.forces;
 
 import game.creatures.Atom;
 import game.creatures.BodyPart;
+import sps.core.Logger;
 
 public abstract class BaseForce {
     protected static int NoScale = 1;
@@ -18,12 +19,21 @@ public abstract class BaseForce {
         Atom[][] atoms = part.getAtoms();
         animate(part);
         prepareCalculations(part);
+        boolean anyChanged = false;
         for (int ii = 0; ii < atoms.length; ii++) {
             for (int jj = 0; jj < atoms[ii].length; jj++) {
                 if (atoms[ii][jj] != null) {
-                    atoms[ii][jj].setActive(forceSpecifics(part, ii, jj));
+                    boolean active = forceSpecifics(part, ii, jj);
+                    if (active != atoms[ii][jj].isActive()) {
+                        anyChanged = true;
+                    }
+                    atoms[ii][jj].setActive(active);
                 }
             }
+        }
+        if (!anyChanged) {
+            apply(part);
+            Logger.info("No atoms were changed. The force was: " + getClass());
         }
         part.setAtoms(atoms);
     }

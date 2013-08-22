@@ -15,7 +15,7 @@ public class GameConfig {
     public static final boolean DevBotRandomlyMerges = true;
 
     //Debugging / Development
-    public static final boolean DevShortcutsEnabled = false;
+    public static final boolean DevShortcutsEnabled = true;
     public static final boolean DevEndToEndStateLoadTest = false;
     public static final boolean DevFlipEnabled = false;
     public static final boolean DevPartSortingEnabled = false;
@@ -63,6 +63,10 @@ public class GameConfig {
     public static final Point2 MaxBodyPartSize = Screen.pos(13, 13);
     public static final int MinBodyParts = 6;
     public static final int MaxBodyParts = 10;
+    public static final int InitEnabledStats = 6;
+    public static final int MinStatInit = 2;
+    public static final int MaxStatInit = 5;
+    public static final int DisableStat = 0;
 
     //Merging
     public static final int MinMergeImpactPercent = 15;
@@ -74,10 +78,6 @@ public class GameConfig {
     public static final float BattleCreatureScale = 1f;
     public static final float FirstFightMult = 1.5f;
     public static final int MaxForcesEnabled = 4;
-    public static final int InitEnabledStats = 1;
-    public static final int MinStatInit = 2;
-    public static final int MaxStatInit = 5;
-    public static final int DisableStat = 0;
     public static final int MinStat = 0;
     public static final int MaxStat = 100;
     public static final float ForceColorIntensity = .85f;
