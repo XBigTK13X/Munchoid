@@ -4,17 +4,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.InputWrapper;
+import game.Score;
 import game.creatures.Creature;
+import sps.audio.MusicPlayer;
+import sps.audio.SingleSongPlayer;
 import sps.bridge.*;
 import sps.core.Point2;
 import sps.core.SpsConfig;
 import sps.display.Screen;
 import sps.display.Window;
 import sps.entities.Entity;
+import sps.entities.EntityManager;
 import sps.entities.IActor;
 import sps.text.TextEffects;
 import sps.text.TextPool;
 import sps.util.MathHelper;
+
+import java.util.List;
 
 public class Player extends Entity implements IActor {
     private static int __scrollSpeedX;
@@ -96,6 +102,49 @@ public class Player extends Entity implements IActor {
         }
     }
 
+    //Only used for chomp detections to avoid lots of garbage collecting
+    Creature _creature;
+    List<Entity> _catchables;
+
+    private void interactWithCatchables() {
+        _catchables = EntityManager.get().getEntities(EntityTypes.get("Catchable"));
+        int chompCount = 0;
+        for (Entity e : _catchables) {
+            _creature = ((Catchable) e).getCreature();
+            if (_net.isTouching(_creature) && _net.isInUse()) {
+                if (_pet == null) {
+                    _creature.getBody().setHighlight(Color.WHITE);
+                    setPet(_creature);
+                    e.setInactive();
+                    MusicPlayer.get(new SingleSongPlayer("Quickly.ogg"));
+                    MusicPlayer.get().start();
+                    _net.disable();
+                    break;
+                }
+                else {
+                    if (_pet.isLargerThan(_creature)) {
+                        //TODO Chomping sound effect here
+                        TextPool.get().write("*CHOMP*", getLocation(), 1f, TextEffects.Fountain);
+                        Score.get().addChomp();
+                        _pet.addBonus(GameConfig.ChompPoints);
+                        e.setInactive();
+                        chompCount++;
+                        _net.disable();
+                        break;
+                    }
+                    else {
+                        _creature.addBonus(GameConfig.ChompPoints);
+                        chompCount--;
+                    }
+                }
+            }
+        }
+        if (chompCount < 0) {
+            _net.disable();
+            freeze();
+        }
+    }
+
     @Override
     public void update() {
         if (_frozenSeconds > 0) {
@@ -113,6 +162,8 @@ public class Player extends Entity implements IActor {
         if ((GameConfig.DevBotEnabled || InputWrapper.confirm()) && !_net.isInUse()) {
             _net.use();
         }
+
+        interactWithCatchables();
 
         if (_pet != null) {
             _pet.update();
