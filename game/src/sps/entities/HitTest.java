@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import sps.bridge.Sps;
 import sps.core.Point2;
 import sps.io.Input;
-import sps.util.Bounds;
+import sps.util.BoundingBox;
 
 public class HitTest {
     public static boolean isTouching(Entity source, Entity target) {
@@ -46,16 +46,20 @@ public class HitTest {
         return inX && inY;
     }
 
-    public static boolean inBox(int x, int y, Bounds bounds) {
-        return inBox(x, y, bounds.X, bounds.Y, bounds.Width, bounds.Height);
+    public static boolean inBox(int x, int y, BoundingBox boundingBox) {
+        return inBox(x, y, boundingBox.X, boundingBox.Y, boundingBox.Width, boundingBox.Height);
     }
 
     public static boolean mouseInside(Sprite sprite) {
-        return inBox(Input.get().x(), Input.get().y(), Bounds.fromDimensions(sprite.getX(), sprite.getY(), (int) sprite.getWidth(), (int) sprite.getHeight()));
+        return inBox(Input.get().x(), Input.get().y(), BoundingBox.fromDimensions(sprite.getX(), sprite.getY(), (int) sprite.getWidth(), (int) sprite.getHeight()));
     }
 
     public static float getDistance(float x, float y, float x1, float y1) {
         return (float) Math.sqrt(getDistanceSquare(x, x1, y, y1));
+    }
+
+    public static float getDistance(Point2 a, Point2 b) {
+        return (float) Math.sqrt(getDistanceSquare(a.X, b.X, a.Y, b.Y));
     }
 
     public static boolean overlap(float x, float y, int w, int h, float x2, float y2, int w2, int h2) {

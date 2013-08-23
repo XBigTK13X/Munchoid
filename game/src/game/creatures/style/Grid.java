@@ -4,7 +4,7 @@ import game.creatures.BodyPart;
 import game.creatures.PartFunction;
 import sps.core.Point2;
 import sps.core.RNG;
-import sps.util.Bounds;
+import sps.util.BoundingBox;
 
 public class Grid {
     //Each part is divided into a 3x3 grid.
@@ -50,7 +50,7 @@ public class Grid {
         return new Point2(mult.X * xOffset, mult.Y * yOffset).add(partCenterOffset);
     }
 
-    private static Bounds gridRange(Integer gridLoc, int width, int height) {
+    private static BoundingBox gridRange(Integer gridLoc, int width, int height) {
         //Convert a grid location (1->9) into coordinate ranges.
         // For example, location 1 corresponds to the range (0,0)->(33,33)
         // Using this calculation makes it easier to break the grid into smaller pieces
@@ -63,18 +63,18 @@ public class Grid {
         int yMin = (int) (m * Math.floor(j / n));
         int xMax = (int) (m * (1 + (j % n)));
         int yMax = (int) (m * (1 + (j / n)));
-        return Bounds.fromPoints(xMin, yMin, xMax, yMax);
+        return BoundingBox.fromPoints(xMin, yMin, xMax, yMax);
     }
 
     public static Point2 randomPointInside(Integer gridLoc, int width, int height) {
-        Bounds b = gridRange(gridLoc, width, height);
+        BoundingBox b = gridRange(gridLoc, width, height);
         return pointInside(width, height, b.X, b.X2, b.Y, b.Y2);
     }
 
     public static Point2 centerOf(Integer gridLoc, BodyPart part) {
         int width = (int) (part.getWidth() * part.getScale());
         int height = (int) (part.getHeight() * part.getScale());
-        Bounds b = gridRange(gridLoc, width, height);
+        BoundingBox b = gridRange(gridLoc, width, height);
         int xMid = (b.X + b.X2) / 2;
         int yMid = (b.Y + b.Y2) / 2;
         return pointInside(width, height, xMid, xMid, yMid, yMid);

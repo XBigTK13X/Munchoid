@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.entities.HitTest;
 import sps.io.Input;
-import sps.util.Bounds;
+import sps.util.BoundingBox;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,8 +25,8 @@ public class Buttons {
             getSprite().setColor(Color.LIGHT_GRAY);
         }
 
-        public Bounds getBounds() {
-            return Bounds.fromDimensions(getSprite().getX(), getSprite().getY(), (int) getSprite().getWidth(), (int) getSprite().getHeight());
+        public BoundingBox getBounds() {
+            return BoundingBox.fromDimensions(getSprite().getX(), getSprite().getY(), (int) getSprite().getWidth(), (int) getSprite().getHeight());
         }
     }
 

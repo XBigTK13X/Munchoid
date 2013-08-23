@@ -3,7 +3,7 @@ package game.creatures;
 import game.GameConfig;
 import game.arena.Floor;
 import sps.core.RNG;
-import sps.util.Bounds;
+import sps.util.BoundingBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,9 +101,9 @@ public class BodyParts {
         if (floor == null) {
             return false;
         }
-        Bounds b;
+        BoundingBox b;
         for (BodyPart p : _parts) {
-            b = Bounds.fromDimensions(dX + p.getGlobalPosition().X, dY + p.getGlobalPosition().Y, (int) (p.getWidth() * p.getScale()), (int) (p.getHeight() * p.getScale()));
+            b = BoundingBox.fromDimensions(dX + p.getGlobalPosition().X, dY + p.getGlobalPosition().Y, (int) (p.getWidth() * p.getScale()), (int) (p.getHeight() * p.getScale()));
             if (!floor.getBounds().envelopes(b)) {
                 return true;
             }

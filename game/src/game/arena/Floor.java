@@ -12,11 +12,11 @@ import sps.draw.Colors;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
 import sps.entities.Entity;
-import sps.util.Bounds;
+import sps.util.BoundingBox;
 
 public class Floor extends Entity {
     private static final int __fieldSmoothness = 6;
-    private final Bounds _bounds;
+    private final BoundingBox _boundingBox;
     Sprite _background;
 
     public Floor() {
@@ -27,7 +27,7 @@ public class Floor extends Entity {
 
         _background = SpriteMaker.get().fromColors(base);
         setSize((int) _background.getWidth(), (int) _background.getHeight());
-        _bounds = Bounds.fromDimensions(0, 0, getWidth(), getHeight());
+        _boundingBox = BoundingBox.fromDimensions(0, 0, getWidth(), getHeight());
         if (GameConfig.DevPrintArenaSize) {
             Logger.info("Arena size: (W,H): (" + _background.getWidth() + "," + _background.getHeight() + ")");
         }
@@ -38,7 +38,7 @@ public class Floor extends Entity {
         Window.get().draw(_background);
     }
 
-    public Bounds getBounds() {
-        return _bounds;
+    public BoundingBox getBounds() {
+        return _boundingBox;
     }
 }

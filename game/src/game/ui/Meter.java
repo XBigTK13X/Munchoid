@@ -10,7 +10,7 @@ import sps.display.Window;
 import sps.draw.Colors;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
-import sps.util.Bounds;
+import sps.util.BoundingBox;
 
 public class Meter {
     private Sprite _background;
@@ -22,7 +22,7 @@ public class Meter {
     private int _width;
     private int _scaledWidth;
     private int _scaledHeight;
-    private Bounds _bounds;
+    private BoundingBox _boundingBox;
     private boolean _isVertical;
 
     public Meter(int screenWidthPercent, int screenHeightPercent, Color color, Point2 position, boolean vertical) {
@@ -85,8 +85,8 @@ public class Meter {
         return _background;
     }
 
-    public Bounds getBounds() {
-        return _bounds;
+    public BoundingBox getBounds() {
+        return _boundingBox;
     }
 
     public void setPosition(float x, float y) {
@@ -94,6 +94,6 @@ public class Meter {
         _background.setPosition(_position.X, _position.Y);
         _sprite.setPosition(_position.X, _position.Y);
         _frame.setPosition(_position.X, _position.Y);
-        _bounds = Bounds.fromDimensions(_position.X, _position.Y, _width, _height);
+        _boundingBox = BoundingBox.fromDimensions(_position.X, _position.Y, _width, _height);
     }
 }

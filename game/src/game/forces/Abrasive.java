@@ -7,7 +7,7 @@ import game.creatures.BodyPart;
 import sps.core.RNG;
 import sps.particles.ParticleEngine;
 import sps.particles.behaviors.ScrubBehavior;
-import sps.util.Bounds;
+import sps.util.BoundingBox;
 
 public class Abrasive extends BaseForce {
     private int _adjustedMagnitude;
@@ -15,7 +15,7 @@ public class Abrasive extends BaseForce {
     private static final int __wiggleImpact = 3;
     boolean rubX;
     boolean rubBehind;
-    private Bounds _edges;
+    private BoundingBox _edges;
 
     public Abrasive(int magnitude) {
         super(magnitude, GameConfig.AbrasiveScale);
