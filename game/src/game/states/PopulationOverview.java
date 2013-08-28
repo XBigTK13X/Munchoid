@@ -49,7 +49,7 @@ public class PopulationOverview implements State {
         _bottomDiseases = new DiseaseMonitor(false);
 
 
-        _populationCountDisplay = TextPool.get().write("", Screen.pos(30, 90));
+        _populationCountDisplay = TextPool.get().write("", Screen.pos(30, 95));
 
         _regionName = __regionNames.makeWord(RNG.next(7, 10));
         _regionName = WordUtils.capitalize(_regionName);
@@ -67,7 +67,7 @@ public class PopulationOverview implements State {
 
         _populationHud.recalcIcons();
         NumberFormat f = NumberFormat.getNumberInstance();
-        _populationCountDisplay.setMessage("Population of " + _regionName + ": " + f.format(_population.getSize()) + " people");
+        _populationCountDisplay.setMessage("Population of " + _regionName + "\n" + f.format(_population.getSize()) + " people");
     }
 
     private void simluatePopulationChange() {
