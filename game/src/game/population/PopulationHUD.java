@@ -17,7 +17,7 @@ import java.util.List;
 public class PopulationHUD {
     private Population _population;
 
-    private WorldMap _map;
+    private Map _map;
     private Sprite _popIcon;
     private int _maxIconsWide;
     private int _maxIconsHigh;
@@ -30,7 +30,7 @@ public class PopulationHUD {
     public PopulationHUD(Population population, Point2 size, Point2 position) {
         _population = population;
 
-        _map = new WorldMap((int) size.X, (int) size.Y, position);
+        _map = new Map((int) size.X, (int) size.Y, position);
 
         Color[][] popIconBase = ProcTextures.monotone((int) Screen.width(1), (int) Screen.width(1), _iconColor);
         Outline.single(popIconBase, Color.BLACK, 2);

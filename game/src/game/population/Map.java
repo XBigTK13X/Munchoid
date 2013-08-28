@@ -10,7 +10,7 @@ import sps.draw.Colors;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
 
-public class WorldMap {
+public class Map {
     public static final int __c = 255;
 
     private static enum Biome {
@@ -78,7 +78,7 @@ public class WorldMap {
     private static final int __habitBuffer = 25;
 
 
-    public WorldMap(int width, int height, Point2 position) {
+    public Map(int width, int height, Point2 position) {
         _position = position;
         Color[][] base = ProcTextures.perlin(width, height, Colors.rgb(0, 255, 255), Colors.rgb(255, 255, 255), 9);
         _habitableZones = new int[width][height];
