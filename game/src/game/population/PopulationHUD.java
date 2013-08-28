@@ -49,7 +49,7 @@ public class PopulationHUD {
         while (iconsToDraw < _iconPositions.size()) {
             Point2 kill = _iconPositions.get(_iconPositions.size() - 1);
             _iconPositions.remove(_iconPositions.size() - 1);
-            _map.resetSpace(kill.add(-_map.getPosition().X, _map.getPosition().Y).add(_popIcon.getWidth() / 2, _popIcon.getHeight() / 2));
+            _map.resetSpace(kill.add(-_map.getPosition().X, -_map.getPosition().Y).add(_popIcon.getWidth() / 2, _popIcon.getHeight() / 2));
         }
 
         while (iconsToDraw > _iconPositions.size()) {
