@@ -21,7 +21,7 @@ public class DesktopGame {
         }
         Logger.info("Launching the main game loop");
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.title = "Game";
+        cfg.title = "Munchoid";
         if (SpsConfig.get().fullScreen) {
             cfg.setFromDisplayMode(LwjglApplicationConfiguration.getDesktopDisplayMode());
             cfg.fullscreen = SpsConfig.get().fullScreen;
