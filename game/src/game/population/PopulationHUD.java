@@ -16,20 +16,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PopulationHUD {
+    private static Color elevationToColor(int elevation) {
+        if (elevation < 255 / 2) {
+            return Colors.rgb(0, 0, elevation);
+        }
+        else {
+            return Colors.rgb(0, elevation, 0);
+        }
+    }
+
     private static Color[][] world(int width, int height) {
         Color[][] base = ProcTextures.perlin(width, height, Colors.rgb(0, 255, 255), Colors.rgb(255, 255, 255), 9);
 
         for (int ii = 0; ii < width; ii++) {
             for (int jj = 0; jj < height; jj++) {
                 int elevation = (int) (255 * base[ii][jj].r);
-                Color tile;
-                if (elevation < 255 / 2) {
-                    tile = Colors.rgb(0, 0, elevation);
-                }
-                else {
-                    tile = Colors.rgb(0, elevation, 0);
-                }
-                base[ii][jj] = tile;
+                base[ii][jj] = elevationToColor(elevation);
             }
         }
 

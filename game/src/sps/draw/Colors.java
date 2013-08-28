@@ -85,4 +85,8 @@ public class Colors {
         }
         return gradient;
     }
+
+    public static int percentDifference(Color c1, Color c2) {
+        return (int) (25 * (Math.abs(c1.a - c2.a) + Math.abs(c1.b - c2.b) + Math.abs(c1.r - c2.r) + Math.abs(c1.g - c2.g)));
+    }
 }
