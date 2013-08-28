@@ -64,4 +64,34 @@ public class ProcTextures {
             }
         }
     }
+
+    public static void blur(Color[][] base, int blurriness) {
+        for (int ii = 0; ii < base.length; ii++) {
+            for (int jj = 0; jj < base[0].length; jj++) {
+                float r = 0;
+                float g = 0;
+                float b = 0;
+                float a = 0;
+                int hits = 0;
+                for (int kk = -blurriness; kk < blurriness; kk++) {
+                    for (int ll = -blurriness; ll < blurriness; ll++) {
+                        if (kk != 0 || ll != 0) {
+                            int x = ii + kk;
+                            int y = jj + ll;
+                            if (x >= 0 && x < base.length && y >= 0 && y < base[0].length) {
+                                r += base[x][y].r;
+                                g += base[x][y].g;
+                                b += base[x][y].b;
+                                a += base[x][y].a;
+                                hits++;
+                            }
+                        }
+                    }
+                }
+                if (hits > 0) {
+                    base[ii][jj] = new Color(r / hits, g / hits, b / hits, a / hits);
+                }
+            }
+        }
+    }
 }

@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PopulationHUD {
-    private static final int __colorMin = 20;
-    private static final int __colorMax = 235;
+    private static final int __colorMin = 10;
+    private static final int __colorMax = 245;
     //Elevation base (single color range in perlin noise)
     private static final int __c = 255;
 
@@ -27,12 +27,12 @@ public class PopulationHUD {
         int g = 0;
         int b = 0;
         if (elevation < __c / 2) {
-            if (elevation > __c / 4) {
+            if (elevation > __c / 3) {
                 b = __c - elevation;
             }
             else {
-                r = g = __c - elevation / 3 - 20;
-                b = __c - elevation / 3 - 10;
+                r = g = __c - elevation - 30;
+                b = __c - elevation / 2 + 30;
             }
         }
         else {
@@ -55,12 +55,17 @@ public class PopulationHUD {
     private static Color[][] world(int width, int height) {
         Color[][] base = ProcTextures.perlin(width, height, Colors.rgb(0, 255, 255), Colors.rgb(255, 255, 255), 9);
 
+        if (GameConfig.OptSmoothRegionMap) {
+            ProcTextures.blur(base, 2);
+        }
+
         for (int ii = 0; ii < width; ii++) {
             for (int jj = 0; jj < height; jj++) {
                 int elevation = (int) (255 * base[ii][jj].r);
                 base[ii][jj] = elevationToColor(elevation);
             }
         }
+
 
         return base;
     }
