@@ -96,8 +96,9 @@ public class PopulationOverview implements State {
         if (GameConfig.DevPopulationTest) {
             boolean a = InputWrapper.pop();
             boolean b = InputWrapper.push();
-            if (a || b) {
-                if (gameFinished()) {
+            boolean c = InputWrapper.moveRight();
+            if (a || b || c) {
+                if (gameFinished() || c) {
                     StateManager.reset().push(new PopulationOverview());
                 }
                 else {

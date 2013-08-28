@@ -111,7 +111,7 @@ public class Noise {
             }
         }
 
-        //normalisation
+        //normalization
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 perlinNoise[i][j] /= totalAmplitude;

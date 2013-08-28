@@ -7,7 +7,6 @@ import game.creatures.style.Outline;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.display.Window;
-import sps.draw.Colors;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
 import sps.util.MathHelper;
@@ -29,9 +28,7 @@ public class PopulationHUD {
     public PopulationHUD(Population population, Point2 size, Point2 position) {
         _population = population;
 
-        Color[][] bgBase = ProcTextures.gradient((int) size.X, (int) size.Y, Colors.rgb(255, 255, 255, 200), Colors.rgb(255, 255, 255, 70), true);
-        //TODO Outline seems to be failing on this gradient
-        Outline.single(bgBase, Color.WHITE, 3);
+        Color[][] bgBase = ProcTextures.world((int) size.X, (int) size.Y);
         _bg = SpriteMaker.get().fromColors(bgBase);
         _bg.setPosition(position.X, position.Y);
 
