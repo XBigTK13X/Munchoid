@@ -17,7 +17,7 @@ public class Markov {
     private static final String __startId = "$$start$$";
 
     public static void main(String[] args) throws IOException {
-        File corpus = new File("game/assets/data/markov-seed.txt");
+        File corpus = new File("game/assets/data/creature_name_seed.txt");
         for (int ii = 0; ii < 100000; ii++) {
             int gramSize = 2;
             int wordLength = RNG.next(6, 10);
@@ -87,7 +87,7 @@ public class Markov {
         for (int ii = 0; ii < nGrams.length - 1; ii++) {
             ArrayList<String> suffix = _chain.get(nGrams[ii]);
             if (suffix == null) {
-                suffix = new ArrayList<String>();
+                suffix = new ArrayList<>();
             }
             if (!nGrams[ii].equals(nGrams[ii + 1])) {
                 suffix.add(nGrams[ii + 1]);

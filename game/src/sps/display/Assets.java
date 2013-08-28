@@ -83,10 +83,6 @@ public class Assets {
         return shaders;
     }
 
-    public File markovSeed() {
-        return Loader.get().data("markov-seed.txt");
-    }
-
     public BitmapFont font() {
         return _font;
     }

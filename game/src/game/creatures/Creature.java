@@ -7,10 +7,10 @@ import game.forces.Force;
 import game.forces.sideeffects.SideEffectType;
 import game.forces.sideeffects.SideEffects;
 import sps.bridge.EntityTypes;
+import sps.core.Loader;
 import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
-import sps.display.Assets;
 import sps.display.Screen;
 import sps.entities.Entity;
 import sps.text.TextEffects;
@@ -20,7 +20,7 @@ import sps.util.Markov;
 import sps.util.MathHelper;
 
 public class Creature extends Entity {
-    private static final Markov __nameGenerator = Markov.get(Assets.get().markovSeed(), 2);
+    private static final Markov __nameGenerator = Markov.get(Loader.get().data("creature_name_seed.txt"), 2);
 
     private Player _owner;
 

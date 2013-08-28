@@ -5,17 +5,23 @@ import game.InputWrapper;
 import game.population.DiseaseMonitor;
 import game.population.Population;
 import game.population.PopulationHUD;
+import org.apache.commons.lang3.text.WordUtils;
 import sps.bridge.Commands;
+import sps.core.Loader;
 import sps.core.Point2;
+import sps.core.RNG;
 import sps.display.Screen;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
+import sps.util.Markov;
 
 import java.text.NumberFormat;
 
 public class PopulationOverview implements State {
+
+    private static final Markov __regionNames = Markov.get(Loader.get().data("region_name_seed.txt"), 2);
 
     private Population _population;
 
@@ -30,6 +36,8 @@ public class PopulationOverview implements State {
     private int _tournamentsPlayed = 0;
     private int _tournamentWins = 0;
 
+    private String _regionName;
+
     @Override
     public void create() {
         _population = new Population();
@@ -43,9 +51,14 @@ public class PopulationOverview implements State {
 
         _populationCountDisplay = TextPool.get().write("", Screen.pos(30, 90));
 
+        _regionName = __regionNames.makeWord(RNG.next(7, 10));
+        _regionName = WordUtils.capitalize(_regionName);
+
         updateDiseaseDisplay();
 
         _continuePrompt = TextPool.get().write("Press " + Commands.get("Confirm") + " to enter the next tournament", Screen.pos(10, 10));
+
+
     }
 
     private void updateDiseaseDisplay() {
@@ -54,7 +67,7 @@ public class PopulationOverview implements State {
 
         _populationHud.recalcIcons();
         NumberFormat f = NumberFormat.getNumberInstance();
-        _populationCountDisplay.setMessage("Population: " + f.format(_population.getSize()) + " people");
+        _populationCountDisplay.setMessage("Population of " + _regionName + ": " + f.format(_population.getSize()) + " people");
     }
 
     private void simluatePopulationChange() {
