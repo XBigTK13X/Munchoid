@@ -27,7 +27,7 @@ public class GameConfig {
     public static final boolean DevUseOldCatchableMergeAlgorithm = false;
     public static final boolean DevTournyTest = false;
     public static final boolean DevPopulationTest = false;
-    public static final boolean DevBattleTest = true;
+    public static final boolean DevBattleTest = false;
 
     //Debug/Development Logging toggles
     public static final boolean DevBattleLog = false;
@@ -104,7 +104,7 @@ public class GameConfig {
     //Optimizations
     //TODO Make these toggleable in the options menu,
     //     helps with lots of creatures running on weaker computers
-    public static final boolean OptPerformanceGraphicsSettings = true;
+    public static final boolean OptPerformanceGraphicsSettings = false;
     public static final boolean OptCollectMetaData = true;
     public static final boolean OptDisableOutlines = GameConfig.OptPerformanceGraphicsSettings ? true : false;
     public static final boolean OptDisableCloudyTextures = GameConfig.OptPerformanceGraphicsSettings ? true : false;
