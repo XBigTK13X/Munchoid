@@ -16,13 +16,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PopulationHUD {
+    private static final int __colorMin = 20;
+    private static final int __colorMax = 235;
+    //Elevation base (single color range in perlin noise)
+    private static final int __c = 255;
+
+
     private static Color elevationToColor(int elevation) {
-        if (elevation < 255 / 2) {
-            return Colors.rgb(0, 0, elevation);
+        int r = 0;
+        int g = 0;
+        int b = 0;
+        if (elevation < __c / 2) {
+            if (elevation > __c / 4) {
+                b = __c - elevation;
+            }
+            else {
+                r = g = __c - elevation / 3 - 20;
+                b = __c - elevation / 3 - 10;
+            }
         }
         else {
-            return Colors.rgb(0, elevation, 0);
+            if (elevation > 180) {
+                r = g = elevation;
+                b = elevation - 50;
+            }
+            else {
+                g = elevation;
+            }
         }
+
+        return Colors.rgb(cap(r), cap(g), cap(b));
+    }
+
+    private static int cap(int colorComponent) {
+        return Math.min(Math.max(__colorMin, colorComponent), __colorMax);
     }
 
     private static Color[][] world(int width, int height) {
