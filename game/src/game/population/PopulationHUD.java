@@ -7,6 +7,7 @@ import game.creatures.style.Outline;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.display.Window;
+import sps.draw.Colors;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
 import sps.util.MathHelper;
@@ -15,6 +16,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PopulationHUD {
+    private static Color[][] world(int width, int height) {
+        Color[][] base = ProcTextures.perlin(width, height, Colors.rgb(0, 255, 255), Colors.rgb(255, 255, 255), 9);
+
+        for (int ii = 0; ii < width; ii++) {
+            for (int jj = 0; jj < height; jj++) {
+                int elevation = (int) (255 * base[ii][jj].r);
+                Color tile;
+                if (elevation < 255 / 2) {
+                    tile = Colors.rgb(0, 0, elevation);
+                }
+                else {
+                    tile = Colors.rgb(0, elevation, 0);
+                }
+                base[ii][jj] = tile;
+            }
+        }
+
+        return base;
+    }
+
     private Population _population;
 
     private Sprite _bg;
@@ -28,7 +49,7 @@ public class PopulationHUD {
     public PopulationHUD(Population population, Point2 size, Point2 position) {
         _population = population;
 
-        Color[][] bgBase = ProcTextures.world((int) size.X, (int) size.Y);
+        Color[][] bgBase = PopulationHUD.world((int) size.X, (int) size.Y);
         _bg = SpriteMaker.get().fromColors(bgBase);
         _bg.setPosition(position.X, position.Y);
 

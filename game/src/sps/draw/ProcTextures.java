@@ -138,9 +138,12 @@ public class ProcTextures {
         for (int ix = 0; ix < width; ix++) {
             for (int iy = 0; iy < height; iy++) {
                 // Multiply the outer edge and the second outer edge by some constants to ensure the world does not touch the edges.
-                if (ix == 0 || ix == width - 1 || iy == 0 || iy == height - 1) mask[ix][iy].a *= __outerBlur;
-                else if (ix == 1 || ix == width - 2 || iy == 1 || iy == height - 2)
+                if (ix == 0 || ix == width - 1 || iy == 0 || iy == height - 1) {
+                    mask[ix][iy].a *= __outerBlur;
+                }
+                else if (ix == 1 || ix == width - 2 || iy == 1 || iy == height - 2) {
                     mask[ix][iy].a *= __innerBlur;
+                }
             }
         }
     }
@@ -151,25 +154,5 @@ public class ProcTextures {
                 base[ii][jj] = new Color(1f - base[ii][jj].r, 1f - base[ii][jj].g, 1f - base[ii][jj].b, 1f - base[ii][jj].a);
             }
         }
-    }
-
-    public static Color[][] world(int width, int height) {
-        Color[][] base = ProcTextures.perlin(width, height, Colors.rgb(0, 255, 255), Colors.rgb(255, 255, 255), 9);
-
-        for (int ii = 0; ii < width; ii++) {
-            for (int jj = 0; jj < height; jj++) {
-                int elevation = (int) (255 * base[ii][jj].r);
-                Color tile;
-                if (elevation < 255 / 2) {
-                    tile = Colors.rgb(0, 0, 255);
-                }
-                else {
-                    tile = Colors.rgb(0, 255, 0);
-                }
-                base[ii][jj] = tile;
-            }
-        }
-
-        return base;
     }
 }
