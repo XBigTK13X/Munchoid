@@ -3,29 +3,22 @@ package targets;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.math.Vector3;
-import sps.core.SpsConfig;
 
 public class GamepadTest extends InputAdapter implements ApplicationListener {
+    private static DummyApp _context;
     public static void main(String[] args) {
-        LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.useGL20 = true;
-        cfg.width = SpsConfig.get().resolutionWidth;
-        cfg.height = SpsConfig.get().resolutionHeight;
-        new LwjglApplication(new GamepadTest(), cfg);
+        _context = new DummyApp(new GamepadTest());
     }
-
-    String descriptor;
 
     @Override
     public void create() {
+        _context.setup();
         // print the currently connected controllers to the console
         print("Controllers: " + Controllers.getControllers().size);
         int i = 0;
