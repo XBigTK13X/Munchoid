@@ -13,6 +13,7 @@ import sps.bridge.Sps;
 import sps.core.DevConsole;
 import sps.core.Logger;
 import sps.core.RNG;
+import sps.display.Assets;
 import sps.display.FrameStrategy;
 import sps.display.SpriteSheetManager;
 import sps.display.Window;
@@ -29,6 +30,10 @@ public class Game implements ApplicationListener {
     public void create() {
         RNG.seed((int) System.currentTimeMillis());
         Sps.setup();
+
+        Assets.get().fontPack().setDefault("Economica-Regular.ttf", 60);
+        Assets.get().fontPack().cacheFont("keys", "yourkeys.ttf", 30);
+
         Window.setWindowBackground(Color.BLACK);
         Window.get(false).setStrategy(new FrameStrategy());
         Window.get(true).setStrategy(new FrameStrategy());
@@ -116,7 +121,8 @@ public class Game implements ApplicationListener {
         try {
             update();
             draw();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Logger.exception(e);
         }
     }

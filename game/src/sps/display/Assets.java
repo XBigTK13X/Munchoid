@@ -4,7 +4,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import sps.bridge.SpriteType;
 import sps.bridge.SpriteTypes;
@@ -26,7 +25,7 @@ public class Assets {
         return instance;
     }
 
-    private final BitmapFont _font;
+    private final FontPack _fonts;
 
     private Map<String, Texture> textures = new HashMap<String, Texture>();
 
@@ -34,10 +33,7 @@ public class Assets {
     private final HashMap<Integer, String> spriteNames = new HashMap<Integer, String>();
 
     private Assets() {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(new FileHandle(Loader.get().font("Economica-Regular.ttf")));
-        _font = generator.generateFont(60);
-        generator.dispose();
-
+        _fonts = new FontPack();
         for (File spriteTile : Loader.get().graphics("sprites").listFiles()) {
             if (!spriteTile.isHidden()) {
                 String[] comps = spriteTile.getName().split("-");
@@ -83,8 +79,12 @@ public class Assets {
         return shaders;
     }
 
-    public BitmapFont font() {
-        return _font;
+    public BitmapFont defaultFont() {
+        return _fonts.getDefault();
+    }
+
+    public FontPack fontPack() {
+        return _fonts;
     }
 
     public Texture image(String fileName) {

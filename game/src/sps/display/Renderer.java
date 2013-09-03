@@ -205,18 +205,18 @@ public class Renderer {
         }
         else {
             if (GameConfig.OptEnableFontOutlines) {
-                Assets.get().font().setScale(scale);
-                Assets.get().font().setColor(0, 0, 0, 1);
+                Assets.get().defaultFont().setScale(scale);
+                Assets.get().defaultFont().setColor(0, 0, 0, 1);
                 int offset = 2;
-                Assets.get().font().draw(_batch, content, location.X + offset, location.Y);
-                Assets.get().font().draw(_batch, content, location.X - offset, location.Y);
-                Assets.get().font().draw(_batch, content, location.X, location.Y + offset);
-                Assets.get().font().draw(_batch, content, location.X, location.Y - offset);
+                Assets.get().defaultFont().draw(_batch, content, location.X + offset, location.Y);
+                Assets.get().defaultFont().draw(_batch, content, location.X - offset, location.Y);
+                Assets.get().defaultFont().draw(_batch, content, location.X, location.Y + offset);
+                Assets.get().defaultFont().draw(_batch, content, location.X, location.Y - offset);
             }
 
-            Assets.get().font().setScale(scale);
-            Assets.get().font().setColor(filter);
-            Assets.get().font().draw(_batch, content, location.X, location.Y);
+            Assets.get().defaultFont().setScale(scale);
+            Assets.get().defaultFont().setColor(filter);
+            Assets.get().defaultFont().draw(_batch, content, location.X, location.Y);
         }
     }
 }
