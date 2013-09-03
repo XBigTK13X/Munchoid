@@ -59,7 +59,7 @@ public class TextPool {
     }
 
     public Text write(String message, Point2 position, float lifeInSeconds, TextEffect effect, Color color, float scale) {
-        return write(message, position, lifeInSeconds, null, null, effect, color, scale);
+        return write(message, position, lifeInSeconds, null, 0, effect, color, scale);
     }
 
     public Text write(String message, Point2 position, float lifeInSeconds, String fontLabel, Integer fontPointSize, TextEffect effect, Color color, float scale) {
