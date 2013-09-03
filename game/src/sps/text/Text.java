@@ -2,8 +2,6 @@ package sps.text;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import sps.bridge.DrawDepths;
-import sps.bridge.Sps;
 import sps.core.Point2;
 import sps.display.Window;
 import sps.states.State;
@@ -15,76 +13,82 @@ public class Text {
     private State _createdDuring;
 
     private boolean _canMove;
-    private Point2 position;
-    private String message;
-    private float scale;
-    private boolean visible = false;
-    private float lifeInSeconds;
-    private TextEffect effect;
-    private float xVel;
-    private float yVel;
-    private float dX;
-    private float dY;
+    private Point2 _position;
+    private String _message;
+    private float _scale;
+    private boolean _visible = false;
+    private float _lifeInSeconds;
+    private TextEffect _effect;
+    private float _xVel;
+    private float _yVel;
+    private float _dX;
+    private float _dY;
     private Color _color;
+
+    private String _fontLabel;
+    private int _fontPointSize;
 
     public Text() {
         _color = Color.WHITE;
-        position = new Point2(0, 0);
+        _position = new Point2(0, 0);
         _canMove = true;
     }
 
-    public void reset(Point2 position, String message, float scale, float lifeInSeconds, TextEffect effect) {
+    public void reset(Point2 position, String message, String fontLabel, int fontPointSize, float scale, float lifeInSeconds, TextEffect effect) {
         _canMove = true;
         _createdDuring = StateManager.get().current();
-        this.position.copy(position);
-        this.message = message;
-        this.scale = scale;
-        visible = true;
-        this.lifeInSeconds = lifeInSeconds;
-        this.effect = effect;
+        _position.copy(position);
+        _message = message;
+        _scale = scale;
+        _visible = true;
+        _lifeInSeconds = lifeInSeconds;
+        _effect = effect;
+        _fontLabel = fontLabel;
+        _fontPointSize = fontPointSize;
         effect.init(this);
+
     }
 
     public void hide() {
-        visible = false;
+        _visible = false;
     }
 
     public void setVisible(boolean visible) {
-        this.visible = visible;
+        this._visible = visible;
     }
 
     public void update() {
-        if (lifeInSeconds != NotTimed && (position.X != 0 || position.Y != 0)) {
-            effect.update(this);
-            lifeInSeconds -= Gdx.graphics.getDeltaTime();
-            if (lifeInSeconds <= 0) {
-                visible = false;
+        if (_lifeInSeconds != NotTimed && (_position.X != 0 || _position.Y != 0)) {
+            _effect.update(this);
+            _lifeInSeconds -= Gdx.graphics.getDeltaTime();
+            if (_lifeInSeconds <= 0) {
+                _visible = false;
             }
         }
     }
 
     public void draw() {
-        Window.get(!_canMove).draw(message, position, _color, scale, DrawDepths.get(Sps.DrawDepths.Default_Text));
+        Window.get(!_canMove).draw(_message, _position, _color, _fontLabel, _fontPointSize, _scale);
     }
 
     public boolean isVisible() {
-        return visible && isCurrent();
+        return _visible && isCurrent();
     }
 
     public void setVel(float x, float y) {
-        xVel = x;
-        yVel = y;
+        _xVel = x;
+        _yVel = y;
     }
 
     public void accel() {
-        xVel += dX;
-        yVel += dY;
-        position.reset(position.X + xVel, position.Y + yVel);
+        _xVel += _dX;
+        _yVel += _dY;
+        _position.reset(_position.X + _xVel, _position.Y + _yVel);
     }
 
     public void setAccel(float dX, float dY) {
-        this.dX = dX;
-        this.dY = dY;
+        this._dX = dX;
+        this._dY = dY;
     }
 
     public void setColor(Color color) {
@@ -92,15 +96,15 @@ public class Text {
     }
 
     public void setScale(float scale) {
-        this.scale = scale;
+        this._scale = scale;
     }
 
     public String getMessage() {
-        return message;
+        return _message;
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        this._message = message;
     }
 
     public boolean createdDuring(State state) {
@@ -112,7 +116,7 @@ public class Text {
     }
 
     public void setPosition(int x, int y) {
-        position.reset(x, y);
+        _position.reset(x, y);
     }
 
     public void setMoveable(boolean moveable) {

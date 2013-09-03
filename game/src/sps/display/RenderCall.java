@@ -8,12 +8,16 @@ public class RenderCall {
     public String Content;
     public Point2 Location;
     public Color Filter;
+    public int PointSize;
+    public String FontLabel;
     public float Scale;
 
-    public RenderCall(String content, Point2 location, Color filter, float scale) {
+    public RenderCall(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale) {
         Content = content;
         Location = location;
         Filter = filter;
+        PointSize = pointSize;
+        FontLabel = fontLabel;
         Scale = scale;
     }
 

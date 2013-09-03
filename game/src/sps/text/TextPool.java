@@ -59,11 +59,15 @@ public class TextPool {
     }
 
     public Text write(String message, Point2 position, float lifeInSeconds, TextEffect effect, Color color, float scale) {
+        return write(message, position, lifeInSeconds, null, null, effect, color, scale);
+    }
+
+    public Text write(String message, Point2 position, float lifeInSeconds, String fontLabel, Integer fontPointSize, TextEffect effect, Color color, float scale) {
         Text result = texts.get(index);
-        result.reset(position, message, 1, lifeInSeconds, effect);
+        result.reset(position, message, fontLabel, fontPointSize, 1, lifeInSeconds, effect);
         result.setColor(color);
         result.setScale(scale);
-        //TODO A log entry when all texts are in use
+        //FIXME A log entry when all texts are in use
         index = (index + 1) % texts.size();
         return result;
     }

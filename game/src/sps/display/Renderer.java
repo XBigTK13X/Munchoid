@@ -3,6 +3,7 @@ package sps.display;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -123,7 +124,7 @@ public class Renderer {
                 render(command.Sprite, command.Location, command.Filter, command.Width, command.Height, command.ScaleX, command.ScaleY);
             }
             if (command.Content != null) {
-                render(command.Content, command.Location, command.Filter, command.Scale);
+                render(command.Content, command.Location, command.Filter, command.FontLabel, command.PointSize, command.Scale);
             }
         }
         end();
@@ -187,36 +188,45 @@ public class Renderer {
     private static final int __lineHeightPixels = 50;
 
     // String rendering
-    public void draw(String content, Point2 location, Color filter, float scale, DrawDepth depth) {
+    public void draw(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale) {
         if (content.contains("\n")) {
             int line = 0;
             for (String s : content.split("\n")) {
-                render(s, location.add(0, line++ * -__lineHeightPixels), filter, scale);
+                render(s, location.add(0, line++ * -__lineHeightPixels), filter, fontLabel, pointSize, scale);
             }
         }
         else {
-            render(content, location, filter, scale);
+            render(content, location, filter, fontLabel, pointSize, scale);
         }
     }
 
-    private void render(String content, Point2 location, Color filter, float scale) {
+    private BitmapFont _nextToWrite;
+
+    private void render(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale) {
         if (_queueListening) {
-            _todo.add(new RenderCall(content, location, filter, scale));
+            _todo.add(new RenderCall(content, location, filter, fontLabel, pointSize, scale));
         }
         else {
+            if (fontLabel == null) {
+                _nextToWrite = Assets.get().defaultFont();
+            }
+            else {
+                _nextToWrite = Assets.get().fontPack().getFont(fontLabel, pointSize);
+            }
+            _nextToWrite.setScale(scale);
+
             if (GameConfig.OptEnableFontOutlines) {
-                Assets.get().defaultFont().setScale(scale);
-                Assets.get().defaultFont().setColor(0, 0, 0, 1);
+                _nextToWrite.setColor(0, 0, 0, 1);
+
                 int offset = 2;
-                Assets.get().defaultFont().draw(_batch, content, location.X + offset, location.Y);
-                Assets.get().defaultFont().draw(_batch, content, location.X - offset, location.Y);
-                Assets.get().defaultFont().draw(_batch, content, location.X, location.Y + offset);
-                Assets.get().defaultFont().draw(_batch, content, location.X, location.Y - offset);
+                _nextToWrite.draw(_batch, content, location.X + offset, location.Y);
+                _nextToWrite.draw(_batch, content, location.X - offset, location.Y);
+                _nextToWrite.draw(_batch, content, location.X, location.Y + offset);
+                _nextToWrite.draw(_batch, content, location.X, location.Y - offset);
             }
 
-            Assets.get().defaultFont().setScale(scale);
-            Assets.get().defaultFont().setColor(filter);
-            Assets.get().defaultFont().draw(_batch, content, location.X, location.Y);
+            _nextToWrite.setColor(filter);
+            _nextToWrite.draw(_batch, content, location.X, location.Y);
         }
     }
 }
