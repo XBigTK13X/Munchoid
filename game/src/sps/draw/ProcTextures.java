@@ -32,7 +32,11 @@ public class ProcTextures {
     }
 
     public static Color[][] perlin(int width, int height, Color start, Color end, int smoothness) {
-        if (GameConfig.OptDisableCloudyTextures) {
+        return perlin(width, height, start, end, smoothness, false);
+    }
+
+    public static Color[][] perlin(int width, int height, Color start, Color end, int smoothness, boolean ignoreOptimizationsConfig) {
+        if (GameConfig.OptDisableCloudyTextures && !ignoreOptimizationsConfig) {
             Color[][] result = new Color[width][height];
             for (int ii = 0; ii < width; ii++) {
                 for (int jj = 0; jj < height; jj++) {

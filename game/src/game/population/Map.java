@@ -80,7 +80,7 @@ public class Map {
 
     public Map(int width, int height, Point2 position) {
         _position = position;
-        Color[][] base = ProcTextures.perlin(width, height, Colors.rgb(0, 255, 255), Colors.rgb(255, 255, 255), 9);
+        Color[][] base = ProcTextures.perlin(width, height, Colors.rgb(0, 255, 255), Colors.rgb(255, 255, 255), 9, true);
         _habitableZones = new int[width][height];
 
         if (GameConfig.OptSmoothRegionMap) {
