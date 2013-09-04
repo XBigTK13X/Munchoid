@@ -23,8 +23,6 @@ public class ToolTip {
     }
 
     private static final Point2 __tooltipOffset = Screen.pos(1, 1);
-    private static final int __fontWidth = 25;
-    private static final int __fontHeight = __fontWidth * 4;
     private static Sprite __bg;
 
     private static ToolTip __instance;
@@ -43,7 +41,8 @@ public class ToolTip {
     private Text _message;
     private Point2 _position;
     private boolean _active;
-    private int _messageWidth;
+    private float _messageWidth;
+    private float _messageHeight;
 
     private List<User> _users;
 
@@ -55,19 +54,22 @@ public class ToolTip {
         _position = new Point2(0, 0);
         _message = TextPool.get().write("NOTHING", _position);
         _message.hide();
-        _users = new ArrayList<User>();
+        _users = new ArrayList<>();
     }
 
     public void display(String message) {
         _message.setMessage(message);
-        _messageWidth = _message.getMessage().length() * __fontWidth;
+        _messageWidth = _message.getBounds().width;
+        _messageHeight = _message.getBounds().heightx;
         _position.reset(Input.get().x() + (int) __tooltipOffset.X, Input.get().y() + (int) __tooltipOffset.Y);
         _message.setPosition((int) _position.X, (int) _position.Y);
     }
 
     public void draw() {
         if (_active) {
-            Window.get().draw(__bg, _position.add(-__fontWidth / 2, -(int) (__fontHeight * .45)), DrawDepths.get("TooltipBackground"), Color.WHITE, _messageWidth, __fontHeight);
+            int fontWidthOffset = 0;//-__fontWidth / 2
+            int fontHeightOffset = 0;//-(int) (_message.getBounds().height * .45))
+            Window.get().draw(__bg, _position.add(fontWidthOffset, fontHeightOffset), DrawDepths.get("TooltipBackground"), Color.WHITE, _messageWidth, _messageHeight);
         }
     }
 

@@ -28,6 +28,9 @@ public class FontPack {
     }
 
     public BitmapFont getFont(String label, Integer pointSize) {
+        if (label == null) {
+            return getDefault();
+        }
         return _fonts.get(label).get(pointSize);
     }
 

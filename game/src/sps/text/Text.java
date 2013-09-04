@@ -2,7 +2,9 @@ package sps.text;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import sps.core.Point2;
+import sps.display.Assets;
 import sps.display.Window;
 import sps.states.State;
 import sps.states.StateManager;
@@ -27,6 +29,9 @@ public class Text {
 
     private String _fontLabel;
     private int _fontPointSize;
+    private BitmapFont _font;
+
+    private BitmapFont.TextBounds _bounds;
 
     public Text() {
         _color = Color.WHITE;
@@ -38,13 +43,14 @@ public class Text {
         _canMove = true;
         _createdDuring = StateManager.get().current();
         _position.copy(position);
-        _message = message;
         _scale = scale;
         _visible = true;
         _lifeInSeconds = lifeInSeconds;
         _effect = effect;
         _fontLabel = fontLabel;
         _fontPointSize = fontPointSize;
+        _font = Assets.get().fontPack().getFont(fontLabel, fontPointSize);
+        setMessage(message);
         effect.init(this);
 
     }
@@ -104,7 +110,12 @@ public class Text {
     }
 
     public void setMessage(String message) {
-        this._message = message;
+        _message = message;
+        _bounds = _font.getMultiLineBounds(_message);
+    }
+
+    public BitmapFont.TextBounds getBounds() {
+        return _bounds;
     }
 
     public boolean createdDuring(State state) {

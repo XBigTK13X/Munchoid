@@ -207,12 +207,7 @@ public class Renderer {
             _todo.add(new RenderCall(content, location, filter, fontLabel, pointSize, scale));
         }
         else {
-            if (fontLabel == null) {
-                _nextToWrite = Assets.get().defaultFont();
-            }
-            else {
-                _nextToWrite = Assets.get().fontPack().getFont(fontLabel, pointSize);
-            }
+            _nextToWrite = Assets.get().fontPack().getFont(fontLabel, pointSize);
             _nextToWrite.setScale(scale);
 
             if (GameConfig.OptEnableFontOutlines) {
