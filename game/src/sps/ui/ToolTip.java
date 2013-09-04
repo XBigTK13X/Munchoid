@@ -60,7 +60,8 @@ public class ToolTip {
     public void display(String message) {
         _message.setMessage(message);
         _messageWidth = _message.getBounds().width;
-        _messageHeight = _message.getBounds().heightx;
+        //TODO This is nasty. Height should work the same as width. Libgdx not returning correct value?
+        _messageHeight = _message.getBounds().height * 3;
         _position.reset(Input.get().x() + (int) __tooltipOffset.X, Input.get().y() + (int) __tooltipOffset.Y);
         _message.setPosition((int) _position.X, (int) _position.Y);
     }
@@ -68,7 +69,7 @@ public class ToolTip {
     public void draw() {
         if (_active) {
             int fontWidthOffset = 0;//-__fontWidth / 2
-            int fontHeightOffset = 0;//-(int) (_message.getBounds().height * .45))
+            int fontHeightOffset = -(int) (_messageHeight * .45);
             Window.get().draw(__bg, _position.add(fontWidthOffset, fontHeightOffset), DrawDepths.get("TooltipBackground"), Color.WHITE, _messageWidth, _messageHeight);
         }
     }
