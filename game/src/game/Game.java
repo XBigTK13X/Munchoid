@@ -20,6 +20,7 @@ import sps.display.Window;
 import sps.io.DefaultStateProvider;
 import sps.io.Input;
 import sps.particles.ParticleEngine;
+import sps.particles.ParticleWrapper;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.TextPool;
@@ -88,6 +89,7 @@ public class Game implements ApplicationListener {
             StateManager.get().asyncUpdate();
             StateManager.get().update();
             ParticleEngine.get().update();
+            ParticleWrapper.get().update();
             TextPool.get().update();
             UiElements.get().update();
         }
@@ -105,6 +107,7 @@ public class Game implements ApplicationListener {
 
             StateManager.get().draw();
             ParticleEngine.get().draw();
+            ParticleWrapper.get().draw();
             UiElements.get().draw();
             TextPool.get().draw();
             DevConsole.get().draw();

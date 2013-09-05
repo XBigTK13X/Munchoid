@@ -7,6 +7,7 @@ import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.HitTest;
 import sps.particles.ParticleEngine;
+import sps.particles.ParticleWrapper;
 import sps.particles.behaviors.ExplodeBehavior;
 
 public class Explosive extends BaseForce {
@@ -32,6 +33,6 @@ public class Explosive extends BaseForce {
 
     @Override
     public void animate(BodyPart part) {
-        ParticleEngine.get().emit(ExplodeBehavior.getInstance(), part.getGlobalPosition(), Color.WHITE);
+        ParticleWrapper.get().emit("Explosion",part.getGlobalPosition());
     }
 }
