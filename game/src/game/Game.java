@@ -33,7 +33,7 @@ public class Game implements ApplicationListener {
         Sps.setup();
 
         Assets.get().fontPack().setDefault("Economica-Regular.ttf", 60);
-        Assets.get().fontPack().cacheFont("keys", "yourkeys.ttf", 30);
+        Assets.get().fontPack().cacheFont("keys", "Keycaps Regular.ttf", 30);
 
         Window.setWindowBackground(Color.BLACK);
         Window.get(false).setStrategy(new FrameStrategy());

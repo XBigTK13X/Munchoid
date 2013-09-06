@@ -104,7 +104,7 @@ public class GameConfig {
     //Optimizations
     //TODO Make these toggleable in the options menu,
     //     helps with lots of creatures running on weaker computers
-    public static final boolean OptPerformanceGraphicsSettings = true;
+    public static final boolean OptPerformanceGraphicsSettings = false;
     public static final boolean OptCollectMetaData = true;
     public static final boolean OptDisableOutlines = GameConfig.OptPerformanceGraphicsSettings ? true : false;
     public static final boolean OptDisableCloudyTextures = GameConfig.OptPerformanceGraphicsSettings ? true : false;

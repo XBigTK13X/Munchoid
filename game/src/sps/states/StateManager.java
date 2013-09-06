@@ -187,6 +187,9 @@ public class StateManager {
     }
 
     public State current() {
+        if (_states.size() == 0) {
+            return null;
+        }
         return _states.peek();
     }
 

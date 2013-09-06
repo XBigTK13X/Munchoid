@@ -16,7 +16,8 @@ import sps.io.Input;
 
 public class DummyApp {
     private ApplicationListener _app;
-    public DummyApp(ApplicationListener sideloadedApp){
+
+    public DummyApp(ApplicationListener sideloadedApp) {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.useGL20 = true;
         cfg.width = SpsConfig.get().resolutionWidth;
@@ -25,7 +26,7 @@ public class DummyApp {
         _app = sideloadedApp;
     }
 
-    public void setup(){
+    public void create() {
         RNG.seed((int) System.currentTimeMillis());
         Sps.setup();
         Window.setWindowBackground(Color.BLACK);

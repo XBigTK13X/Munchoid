@@ -1,11 +1,9 @@
 package game.forces;
 
-import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.creatures.BodyPart;
 import sps.core.RNG;
-import sps.particles.ParticleEngine;
-import sps.particles.behaviors.RadiateBehavior;
+import sps.particles.ParticleWrapper;
 
 public class Expansion extends BaseForce {
     public Expansion(int magnitude) {
@@ -24,6 +22,6 @@ public class Expansion extends BaseForce {
 
     @Override
     public void animate(BodyPart part) {
-        ParticleEngine.get().emit(RadiateBehavior.getInstance(), part.getGlobalPosition(), Color.WHITE);
+        ParticleWrapper.get().emit("expansion", part.getGlobalPosition());
     }
 }

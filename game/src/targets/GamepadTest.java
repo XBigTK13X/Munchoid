@@ -12,13 +12,14 @@ import com.badlogic.gdx.math.Vector3;
 
 public class GamepadTest extends InputAdapter implements ApplicationListener {
     private static DummyApp _context;
+
     public static void main(String[] args) {
         _context = new DummyApp(new GamepadTest());
     }
 
     @Override
     public void create() {
-        _context.setup();
+        _context.create();
         // print the currently connected controllers to the console
         print("Controllers: " + Controllers.getControllers().size);
         int i = 0;

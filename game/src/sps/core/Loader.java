@@ -44,7 +44,7 @@ public class Loader {
         return get(sound, target);
     }
 
-    public File font(String target){
-        return get(font,target);
+    public File font(String target) {
+        return get(graphics + "/" + font, target);
     }
 }

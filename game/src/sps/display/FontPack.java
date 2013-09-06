@@ -27,6 +27,7 @@ public class FontPack {
         cacheFont(__defaultLabel, fontName, pointSize);
     }
 
+    //TODO If a font point is requested that hasn't been cached, generate a cached copy instead of returning null
     public BitmapFont getFont(String label, Integer pointSize) {
         if (label == null) {
             return getDefault();
