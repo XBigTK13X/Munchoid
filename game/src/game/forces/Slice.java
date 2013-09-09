@@ -1,13 +1,12 @@
 package game.forces;
 
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import game.GameConfig;
 import game.creatures.Atom;
 import game.creatures.BodyPart;
 import sps.core.Point2;
 import sps.core.RNG;
-import sps.particles.ParticleEngine;
-import sps.particles.behaviors.SliceBehavior;
+import sps.particles.ParticleWrapper;
 
 import java.awt.*;
 
@@ -62,14 +61,19 @@ public class Slice extends BaseForce {
         boundsX[3] = (int) (_end.X + Math.cos(rotRads + Math.PI / 2) * thickness);
         boundsY[3] = (int) (_end.Y + Math.sin(rotRads + Math.PI / 2) * thickness);
 
-        _blade = new
-
-                Polygon(boundsX, boundsY, 4);
+        _blade = new Polygon(boundsX, boundsY, 4);
 
     }
 
     @Override
     public void animate(BodyPart part) {
-        ParticleEngine.get().emit(SliceBehavior.getInstance(), part.getGlobalPosition(), Color.WHITE);
+        ParticleEffect effect = ParticleWrapper.get().emit("slice", part.getGlobalPosition());
+        int degrees = (int) (Math.atan2(_start.Y - _end.Y, _start.X - _end.X) / Math.PI * 180);
+        for (int i = 0; i < effect.getEmitters().size; i++) {
+            effect.getEmitters().get(i).getAngle().setLow(degrees);
+            effect.getEmitters().get(i).getAngle().setHigh(degrees);
+        }
+        effect.setPosition(_start.X + part.getGlobalPosition().X, part.getHeight() - _start.Y + part.getGlobalPosition().Y);
+        effect.start();
     }
 }

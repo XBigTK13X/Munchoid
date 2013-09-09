@@ -52,12 +52,13 @@ public class ParticleWrapper {
         }
     }
 
-    public void emit(String effectLabel, Point2 position) {
+    public ParticleEffect emit(String effectLabel, Point2 position) {
         String label = effectLabel.toLowerCase();
         ParticleEffectPool.PooledEffect effect = _effectPools.get(label).obtain();
         effect.setPosition(position.X, position.Y);
         effect.start();
         _leasedEffects.add(new ParticleLease(effect, label));
+        return effect;
     }
 
     public void update() {

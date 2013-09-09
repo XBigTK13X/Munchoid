@@ -16,8 +16,8 @@ public abstract class BaseForce {
 
     public void apply(BodyPart part) {
         Atom[][] atoms = part.getAtoms();
-        animate(part);
         prepareCalculations(part);
+        animate(part);
         for (int ii = 0; ii < atoms.length; ii++) {
             for (int jj = 0; jj < atoms[ii].length; jj++) {
                 if (atoms[ii][jj] != null) {

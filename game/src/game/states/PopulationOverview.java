@@ -48,7 +48,6 @@ public class PopulationOverview implements State {
         _topDiseases = new DiseaseMonitor(true);
         _bottomDiseases = new DiseaseMonitor(false);
 
-
         _populationCountDisplay = TextPool.get().write("", Screen.pos(30, 95));
 
         _regionName = __regionNames.makeWord(RNG.next(7, 10));
