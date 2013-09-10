@@ -105,11 +105,16 @@ public class Battle implements State {
 
         if (_isBattleOver) {
             if (InputWrapper.confirm()) {
-                if (_playerWon) {
-                    victory();
+                if (GameConfig.DevBattleTest) {
+                    StateManager.reset().push(new Battle());
                 }
                 else {
-                    loss();
+                    if (_playerWon) {
+                        victory();
+                    }
+                    else {
+                        loss();
+                    }
                 }
             }
         }
