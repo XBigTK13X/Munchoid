@@ -92,8 +92,6 @@ public class Battle implements State {
         }
         else {
             TextPool.get().write("Not enough energy", Screen.pos(10, 50), 1f, TextEffects.Fountain);
-            //TODO A more skillful means of waiting
-            _left.getCoolDown().reset();
         }
     }
 
