@@ -82,7 +82,7 @@ public class GameConfig {
     public static final int MaxStat = 100;
     public static final float ForceColorIntensity = .85f;
     public static final float ForceColorMix = .4f;
-    public static final int SliceScale = 12;
+    public static final int SliceScale = 6;
     public static final int AbrasiveScale = 10;
     public static final int ExplosiveScale = 30;
     public static final int ContractionScale = 3;
