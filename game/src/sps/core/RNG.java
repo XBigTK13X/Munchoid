@@ -84,11 +84,11 @@ public class RNG {
         return next(0, max);
     }
 
-    public static Object pick(Object[] choices) {
+    public static <T extends Object> T pick(T[] choices) {
         return choices[RNG.next(choices.length)];
     }
 
-    public static Object pick(List<?> choices) {
+    public static <T extends Object> T pick(List<T> choices) {
         return choices.get(RNG.next(choices.size()));
     }
 }

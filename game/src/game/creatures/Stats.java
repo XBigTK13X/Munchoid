@@ -115,7 +115,7 @@ public class Stats {
                 possible.add(f);
             }
         }
-        return (Force) RNG.pick(possible);
+        return RNG.pick(possible);
     }
 
     public int possibleActiveForces() {
