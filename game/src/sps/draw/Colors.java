@@ -17,15 +17,11 @@ public class Colors {
     private static float __shadePercent = .65f;
 
     public static Color lighten(Color color) {
-        HSV hsv = HSV.fromRGB(color);
-        hsv.S = hsv.S * __shadePercent;
-        return hsv.toRGBColor();
+        return new Color(color.r * (1 + __shadePercent), color.g * (1 + __shadePercent), color.b * (1 + __shadePercent), color.a);
     }
 
     public static Color darken(Color color) {
-        HSV hsv = HSV.fromRGB(color);
-        hsv.V = hsv.V * __shadePercent;
-        return hsv.toRGBColor();
+        return new Color(color.r * __shadePercent, color.g * __shadePercent, color.b * __shadePercent, color.a);
     }
 
     public static Color shade(Color color, int breadth) {
