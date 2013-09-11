@@ -64,8 +64,8 @@ public class GameConfig {
     public static final int MinBodyParts = 6;
     public static final int MaxBodyParts = 10;
     public static final int InitEnabledStats = 6;
-    public static final int MinStatInit = 20;
-    public static final int MaxStatInit = 50;
+    public static final int MinStatInit = 2;
+    public static final int MaxStatInit = 5;
     public static final int DisableStat = 0;
 
     //Merging

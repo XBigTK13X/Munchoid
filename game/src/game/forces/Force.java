@@ -25,7 +25,6 @@ public enum Force {
     private Force(float rT, float gT, float bT, int inputId) {
         Command = "Force" + inputId;
         Color = Colors.fromRGB(tToC(rT), tToC(gT), tToC(bT));
-        Logger.info(name() + ": " + Color.r + "," + Color.g + "," + Color.b);
     }
 
     private static float tToC(float t) {

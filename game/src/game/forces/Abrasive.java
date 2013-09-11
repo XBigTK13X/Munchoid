@@ -1,20 +1,19 @@
 package game.forces;
 
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import game.GameConfig;
 import game.creatures.AtomHelper;
 import game.creatures.BodyPart;
 import sps.core.RNG;
-import sps.particles.ParticleEngine;
-import sps.particles.behaviors.ScrubBehavior;
+import sps.particles.ParticleWrapper;
 import sps.util.BoundingBox;
 
 public class Abrasive extends BaseForce {
     private int _adjustedMagnitude;
     private int wiggleRoom = 10;
     private static final int __wiggleImpact = 3;
-    boolean rubX;
-    boolean rubBehind;
+    boolean _rubX;
+    boolean _rubBehind;
     private BoundingBox _edges;
 
     public Abrasive(int magnitude) {
@@ -30,10 +29,10 @@ public class Abrasive extends BaseForce {
                 || _adjustedMagnitude < getScaledMagnitude() - wiggleRoom * __wiggleImpact) {
             _adjustedMagnitude = getScaledMagnitude() + getPartScale(part) + RNG.next(0, wiggleRoom * (__wiggleImpact - 1)) - wiggleRoom;
         }
-        if ((rubX && jj < _adjustedMagnitude + _edges.Y && !rubBehind)
-                || (rubX && jj > part.getAtoms()[0].length - _adjustedMagnitude - _edges.Y2 && rubBehind)
-                || (!rubX && ii < _adjustedMagnitude + _edges.X && !rubBehind)
-                || (!rubX && ii > part.getAtoms().length - _adjustedMagnitude - _edges.X2 && rubBehind)) {
+        if ((_rubX && jj < _adjustedMagnitude + _edges.Y && !_rubBehind)
+                || (_rubX && jj > part.getAtoms()[0].length - _adjustedMagnitude - _edges.Y2 && _rubBehind)
+                || (!_rubX && ii < _adjustedMagnitude + _edges.X && !_rubBehind)
+                || (!_rubX && ii > part.getAtoms().length - _adjustedMagnitude - _edges.X2 && _rubBehind)) {
             return false;
         }
 
@@ -42,13 +41,20 @@ public class Abrasive extends BaseForce {
 
     @Override
     public void prepareCalculations(BodyPart part) {
-        rubX = RNG.coinFlip();
-        rubBehind = RNG.coinFlip();
+        _rubX = RNG.coinFlip();
+        _rubBehind = RNG.coinFlip();
         _edges = AtomHelper.getEdges(part.getAtoms());
     }
 
     @Override
     public void animate(BodyPart part) {
-        ParticleEngine.get().emit(ScrubBehavior.getInstance(), part.getGlobalPosition(), Color.WHITE);
+        ParticleEffect effect = ParticleWrapper.get().emit("abrasive", part.getGlobalPosition());
+        //TODO Rewrite forceSpecs and copy the rotation from there
+        int degrees = 0;
+        for (int i = 0; i < effect.getEmitters().size; i++) {
+            effect.getEmitters().get(i).getAngle().setLow(degrees);
+            effect.getEmitters().get(i).getAngle().setHigh(degrees);
+        }
+        effect.start();
     }
 }
