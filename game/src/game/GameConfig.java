@@ -9,8 +9,7 @@ import java.lang.reflect.Field;
 public class GameConfig {
 
     //Bots
-    public static final boolean DevBotEnabled = false;
-    public static final boolean DevBotCatchIO = false;
+    public static boolean DevBotEnabled = false;
     public static final boolean DevBotAlwaysMerge = false;
     public static final boolean DevBotRandomlyMerges = true;
 
@@ -63,7 +62,7 @@ public class GameConfig {
     public static final Point2 MaxBodyPartSize = Screen.pos(13, 13);
     public static final int MinBodyParts = 6;
     public static final int MaxBodyParts = 10;
-    public static final int InitEnabledStats = 6;
+    public static final int InitEnabledStats = 1;
     public static final int MinStatInit = 2;
     public static final int MaxStatInit = 5;
     public static final int DisableStat = 0;
@@ -104,19 +103,26 @@ public class GameConfig {
     //Optimizations
     //TODO Make these toggleable in the options menu,
     //     helps with lots of creatures running on weaker computers
-    public static final boolean OptPerformanceGraphicsSettings = false;
+    public static boolean OptPerformanceGraphicsSettings = false;
     public static final boolean OptCollectMetaData = true;
-    public static final boolean OptDisableOutlines = GameConfig.OptPerformanceGraphicsSettings ? true : false;
-    public static final boolean OptDisableCloudyTextures = GameConfig.OptPerformanceGraphicsSettings ? true : false;
+    public static boolean OptDisableOutlines = GameConfig.OptPerformanceGraphicsSettings ? true : false;
+    public static boolean OptDisableCloudyTextures = GameConfig.OptPerformanceGraphicsSettings ? true : false;
+    public static boolean OptEnableFontOutlines = GameConfig.OptPerformanceGraphicsSettings ? false : true;
     public static final boolean OptFastOutlineAlg = false;
     public static final boolean OptShowFPS = false;
-    public static final boolean OptEnableFontOutlines = GameConfig.OptPerformanceGraphicsSettings ? false : true;
     public static final boolean OptSmoothRegionMap = true;
 
     //Style
     //TODO Make this scale with resolution like everything else?
     public static final int MeterOutlinePixelThickness = 2;
     public static final int BodyPartOutlinePixelThickness = 5;
+
+    public static void setGraphicsMode(boolean performanceMode){
+        OptPerformanceGraphicsSettings = performanceMode;
+        OptDisableOutlines = GameConfig.OptPerformanceGraphicsSettings ? true : false;
+        OptDisableCloudyTextures = GameConfig.OptPerformanceGraphicsSettings ? true : false;
+        OptEnableFontOutlines = GameConfig.OptPerformanceGraphicsSettings ? false : true;
+    }
 
     public static String json() {
         String config = "\"gameConfig\":{";

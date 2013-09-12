@@ -4,6 +4,7 @@ import game.arena.Player;
 import game.creatures.Creature;
 import game.creatures.Stats;
 import sps.entities.EntityManager;
+import sps.util.JSON;
 
 public class Score {
     private static Score __instance;
@@ -24,7 +25,6 @@ public class Score {
     private static final int __petVarietyWeight = 119;
     private static final int __petPowerWeight = 27;
     private static final int __healthRemainingWeight = 16;
-
     private static final int __scoreMult = 13;
 
     private int _victories;
@@ -32,6 +32,9 @@ public class Score {
     private int _petVariety;
     private int _petPower;
     private int _healthRemaining;
+
+    private int _acceptedMerges;
+    private int _rejectedMerges;
 
     private Stats _petStats;
 
@@ -74,16 +77,27 @@ public class Score {
         );
     }
 
+    public void addMergeAccept() {
+        _acceptedMerges++;
+    }
+
+    public void addMergeReject() {
+        _rejectedMerges++;
+    }
+
     public String message() {
         return "Total score: " + total() + " point" + ((total() == 1) ? "" : "s");
     }
 
     public String json() {
         return "\"score\":{" +
-                "\"total\":\"" + total() +
-                "\",\"victories\":\"" + _victories +
-                "\",\"chomps\":\"" + _chomps +
-                "\",\"healthRemaining\":" + _healthRemaining +
+                JSON.delimit(
+                        JSON.pad("total", total()),
+                        JSON.pad("victories", _victories),
+                        JSON.pad("chomps", _chomps),
+                        JSON.pad("healthRemaining", _healthRemaining),
+                        JSON.pad("acceptedMerges", _acceptedMerges),
+                        JSON.pad("rejectedMerges", _rejectedMerges)) +
                 "}";
     }
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import game.InputWrapper;
+import game.Score;
 import game.creatures.Creature;
 import game.creatures.Merge;
 import game.creatures.Stats;
@@ -156,12 +157,14 @@ public class MergeOutcome implements State {
     }
 
     private void acceptMerge() {
+        Score.get().addMergeAccept();
         _defeated.getBody().kill();
         _pet.reset(_merged);
         loadNextScene();
     }
 
     private void rejectMerge() {
+        Score.get().addMergeReject();
         _defeated.getBody().kill();
         loadNextScene();
     }

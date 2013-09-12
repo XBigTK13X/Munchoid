@@ -102,7 +102,7 @@ public class Battle implements State {
         _rightHud.update();
 
         if (_isBattleOver) {
-            if (InputWrapper.confirm()) {
+            if (InputWrapper.confirm() || GameConfig.DevBotEnabled) {
                 if (GameConfig.DevBattleTest) {
                     StateManager.reset().push(new Battle());
                 }

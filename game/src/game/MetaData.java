@@ -12,6 +12,10 @@ public class MetaData {
     private static int version = 1;
     private static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
+    public static void main(String[] args){
+        printWin();
+    }
+
     static {
         dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
     }

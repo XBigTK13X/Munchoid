@@ -13,6 +13,14 @@ public class DesktopGame {
     private static LwjglApplication instance;
 
     public static void main(String[] args) {
+        if (args.length > 0) {
+            for (String s : args) {
+                if (s.equalsIgnoreCase("--play-as-bot")) {
+                    GameConfig.DevBotEnabled = true;
+                    GameConfig.setGraphicsMode(true);
+                }
+            }
+        }
         if (GameConfig.DevBotEnabled) {
             Logger.setLogFile("logs/" + UUID.randomUUID().toString() + ".log");
         }

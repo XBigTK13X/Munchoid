@@ -56,8 +56,6 @@ public class PopulationOverview implements State {
         updateDiseaseDisplay();
 
         _continuePrompt = TextPool.get().write("Press " + Commands.get("Confirm") + " to enter the next tournament", Screen.pos(10, 10));
-
-
     }
 
     private void updateDiseaseDisplay() {
@@ -97,7 +95,7 @@ public class PopulationOverview implements State {
 
     @Override
     public void update() {
-        if (InputWrapper.confirm()) {
+        if (InputWrapper.confirm() || GameConfig.DevBotEnabled) {
             if (!gameFinished()) {
                 StateManager.get().push(new LoadArena());
             }
