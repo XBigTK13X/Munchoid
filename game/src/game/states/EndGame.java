@@ -23,7 +23,6 @@ public class EndGame implements State {
         TextPool.get().write("You were able to win " + _wins + (_wins == 1 ? " tournament" : " tournaments"), Screen.pos(10, 60));
         TextPool.get().write(Score.get().message(), Screen.pos(10, 40));
         TextPool.get().write("Press " + Commands.get("Confirm") + " to play in a parallel universe.", Screen.pos(10, 20));
-        MetaData.printWin();
     }
 
     @Override

@@ -2,6 +2,7 @@ package game.states;
 
 import game.GameConfig;
 import game.InputWrapper;
+import game.MetaData;
 import game.population.DiseaseMonitor;
 import game.population.Population;
 import game.population.PopulationHUD;
@@ -78,6 +79,10 @@ public class PopulationOverview implements State {
         if (win) {
             _topDiseases.disableOne();
             _tournamentWins++;
+            MetaData.printWin();
+        }
+        else{
+            MetaData.printLose();
         }
         _bottomDiseases.disableOne();
         simluatePopulationChange();

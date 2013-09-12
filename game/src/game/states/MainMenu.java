@@ -2,6 +2,7 @@ package game.states;
 
 import game.GameConfig;
 import game.InputWrapper;
+import game.Score;
 import sps.display.Screen;
 import sps.states.State;
 import sps.states.StateManager;
@@ -13,6 +14,7 @@ public class MainMenu implements State {
         TextPool.get().write("Munchoid", Screen.pos(20, 70));
         TextPool.get().write("Press SPACE to begin.", Screen.pos(10, 60));
         StateManager.clearTimes();
+        Score.reset();
     }
 
     @Override
