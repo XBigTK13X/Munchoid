@@ -10,7 +10,7 @@ import game.creatures.Merge;
 import game.creatures.Stats;
 import game.forces.Force;
 import game.forceselection.ForceSelection;
-import game.ui.UI;
+import game.ui.UISprite;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
@@ -85,8 +85,8 @@ public class MergeOutcome implements State {
 
         //Accept and reject buttons
         if (_accept == null) {
-            _accept = UI.button(Color.GREEN, 50, 65);
-            _reject = UI.button(Color.RED, 50, 65);
+            _accept = UISprite.button(Color.GREEN, 50, 65);
+            _reject = UISprite.button(Color.RED, 50, 65);
 
             _reject.setPosition(0, Screen.height(35));
             _accept.setPosition(Screen.width(50), Screen.height(35));

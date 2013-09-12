@@ -7,7 +7,7 @@ import game.InputWrapper;
 import game.arena.Arena;
 import game.creatures.Creature;
 import game.tournament.Tournament;
-import game.ui.UI;
+import game.ui.UISprite;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.display.Screen;
@@ -46,7 +46,7 @@ public class ForceSelection implements State {
         if (_accept == null) {
             //TODO Change the wording to "ENABLE X" if not enough, and "DISABLE X" if too many
             setMessage();
-            _accept = UI.button(Color.GREEN);
+            _accept = UISprite.button(Color.GREEN);
 
             _accept.setPosition(Screen.width(50), Screen.height(10));
 

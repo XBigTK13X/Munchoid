@@ -8,7 +8,7 @@ import sps.display.Screen;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
 
-public class UI {
+public class UISprite {
     public static Sprite button(Color color, int screenWidthPercent, int screenHeightPercent) {
         int width = (int) Screen.width(screenWidthPercent);
         int height = (int) Screen.height(screenHeightPercent);
