@@ -23,12 +23,7 @@ import sps.util.MathHelper;
 import java.util.List;
 
 public class Player extends Entity implements IActor {
-    private static int __scrollSpeedX;
-    private static int __scrollSpeedY;
-
     private ActorType _actorType;
-
-    private Point2 _movementBuffer;
 
     private Point2 _keyVelocity = new Point2(0, 0);
     private float _moveDistance = GameConfig.PlayerTopSpeed;
@@ -40,11 +35,9 @@ public class Player extends Entity implements IActor {
     private float _frozenSeconds;
     private Arrow _arrow;
 
-    public Player(Floor floor) {
-        __scrollSpeedX = GameConfig.PlayerTopSpeed;
-        __scrollSpeedY = GameConfig.PlayerTopSpeed;
-        _movementBuffer = Screen.pos(45, 45);
+    private Color _closestColor;
 
+    public Player(Floor floor) {
         _floor = floor;
 
         initialize(SpsConfig.get().spriteWidth, SpsConfig.get().spriteHeight, Screen.pos(20, 20), SpriteTypes.get("Player_Stand"), EntityTypes.get(Sps.Entities.Actor), DrawDepths.get(Sps.Actors.Player));
@@ -61,6 +54,7 @@ public class Player extends Entity implements IActor {
                 float xVel = (e.getLocation().X - getLocation().X > 0) ? _moveDistance : -_moveDistance;
                 float yVel = (e.getLocation().Y - getLocation().Y > 0) ? _moveDistance : -_moveDistance;
                 _keyVelocity.reset(xVel, yVel);
+                _closestColor = ((Catchable) e).getCreature().getBody().getHighlight();
             }
         }
         else {
@@ -159,7 +153,8 @@ public class Player extends Entity implements IActor {
         moveInBothDirections(_keyVelocity.X, 0);
         moveInBothDirections(0, _keyVelocity.Y);
 
-        if ((GameConfig.DevBotEnabled || InputWrapper.confirm()) && !_net.isInUse()) {
+        boolean botCanSwing = GameConfig.DevBotEnabled && _closestColor == Catchable.CanBeCaughtHighlight;
+        if ((botCanSwing || InputWrapper.confirm()) && !_net.isInUse()) {
             _net.use();
         }
 

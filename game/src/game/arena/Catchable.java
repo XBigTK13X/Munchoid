@@ -14,6 +14,7 @@ import sps.entities.HitTest;
 
 public class Catchable extends Entity {
     private static final int __changeDirectionSecondsMax = 3;
+    public static final Color CanBeCaughtHighlight = new Color(Color.BLUE);
 
     private Creature _creature;
     private float _dX = 0;
@@ -65,7 +66,7 @@ public class Catchable extends Entity {
     private void updateColor() {
         if (__player.getNet().isTouching(_creature)) {
             if (__player.getPet() == null || __player.getPet().isLargerThan(_creature)) {
-                _creature.getBody().setHighlight(Color.BLUE);
+                _creature.getBody().setHighlight(CanBeCaughtHighlight);
             }
             else {
                 _creature.getBody().setHighlight(Color.RED);
