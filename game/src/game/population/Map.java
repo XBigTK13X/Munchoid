@@ -71,12 +71,11 @@ public class Map {
     }
 
     private Sprite _sprite;
+    private Sprite _bg;
     private int[][] _habitableZones;
     private Point2 _position;
 
-
     private static final int __habitBuffer = 25;
-
 
     public Map(int width, int height, Point2 position) {
         _position = position;
@@ -100,6 +99,9 @@ public class Map {
             }
         }
 
+        int frameSizePixels = 6;
+        _bg = SpriteMaker.get().fromColors(ProcTextures.monotone(width + frameSizePixels, height + frameSizePixels, Color.WHITE));
+        _bg.setPosition(position.X - frameSizePixels / 2, position.Y - frameSizePixels / 2);
         _sprite = SpriteMaker.get().fromColors(base);
         _sprite.setPosition(position.X, position.Y);
     }
@@ -141,6 +143,7 @@ public class Map {
     }
 
     public void draw() {
+        Window.get().draw(_bg);
         Window.get().draw(_sprite);
     }
 }
