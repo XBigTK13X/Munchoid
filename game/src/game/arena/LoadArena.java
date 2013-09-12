@@ -1,11 +1,7 @@
-package game.states;
+package game.arena;
 
 import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
-import game.arena.Catchable;
-import game.arena.Floor;
-import game.arena.Player;
-import game.arena.Preload;
 import game.ui.Meter;
 import sps.display.Screen;
 import sps.states.State;

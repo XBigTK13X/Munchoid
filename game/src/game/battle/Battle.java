@@ -1,11 +1,11 @@
-package game.states;
+package game.battle;
 
 import game.GameConfig;
 import game.InputWrapper;
 import game.Score;
-import game.battle.BattleHUD;
 import game.creatures.Creature;
 import game.forces.Force;
+import game.tournament.TournamentEnd;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;

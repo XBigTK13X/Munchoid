@@ -1,11 +1,10 @@
-package game.states;
+package game.population;
 
+import game.EndGame;
 import game.GameConfig;
 import game.InputWrapper;
 import game.MetaData;
-import game.population.DiseaseMonitor;
-import game.population.Population;
-import game.population.PopulationHUD;
+import game.arena.LoadArena;
 import org.apache.commons.lang3.text.WordUtils;
 import sps.bridge.Commands;
 import sps.core.Loader;
@@ -81,7 +80,7 @@ public class PopulationOverview implements State {
             _tournamentWins++;
             MetaData.printWin();
         }
-        else{
+        else {
             MetaData.printLose();
         }
         _bottomDiseases.disableOne();

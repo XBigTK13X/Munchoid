@@ -1,11 +1,12 @@
-package game.states;
+package game.forceselection;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import game.InputWrapper;
+import game.arena.Arena;
 import game.creatures.Creature;
-import game.forceselection.ForcesSelectionUI;
+import game.tournament.Tournament;
 import game.ui.UI;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;

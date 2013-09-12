@@ -1,4 +1,4 @@
-package game.states;
+package game.battle;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -9,6 +9,7 @@ import game.creatures.Creature;
 import game.creatures.Merge;
 import game.creatures.Stats;
 import game.forces.Force;
+import game.forceselection.ForceSelection;
 import game.ui.UI;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;

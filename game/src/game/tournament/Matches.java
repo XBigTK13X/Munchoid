@@ -2,8 +2,8 @@ package game.tournament;
 
 import game.GameConfig;
 import game.arena.Player;
+import game.battle.Battle;
 import game.creatures.Creature;
-import game.states.Battle;
 import sps.core.RNG;
 import sps.states.StateManager;
 

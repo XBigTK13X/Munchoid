@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import game.creatures.Creature;
 import game.forces.Force;
-import game.states.ForceSelection;
 import game.ui.Meter;
 import sps.bridge.Commands;
 import sps.core.Point2;

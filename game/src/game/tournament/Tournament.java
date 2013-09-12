@@ -1,9 +1,8 @@
-package game.states;
+package game.tournament;
 
 import game.GameConfig;
 import game.InputWrapper;
 import game.arena.Player;
-import game.tournament.Matches;
 import sps.display.Screen;
 import sps.states.State;
 import sps.text.Text;

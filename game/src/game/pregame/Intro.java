@@ -1,4 +1,4 @@
-package game.states;
+package game.pregame;
 
 import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
@@ -6,13 +6,13 @@ import game.movie.Movie;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
+import sps.display.Screen;
 import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
 import sps.util.CoolDown;
-import sps.display.Screen;
 
 public class Intro implements State {
     private Movie _movie;

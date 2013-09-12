@@ -1,16 +1,15 @@
-package game.states;
+package game.arena;
 
 import com.badlogic.gdx.Gdx;
 import game.GameConfig;
 import game.InputWrapper;
 import game.Score;
-import game.arena.Catchable;
-import game.arena.Player;
-import game.arena.Preload;
+import game.battle.Battle;
 import game.creatures.Creature;
 import game.creatures.Merge;
 import game.creatures.Stats;
 import game.forces.Force;
+import game.tournament.Tournament;
 import sps.audio.MusicPlayer;
 import sps.bridge.EntityTypes;
 import sps.core.Point2;
