@@ -23,7 +23,7 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.text.TextPool;
 import sps.ui.Buttons;
-import sps.ui.ToolTip;
+import sps.ui.Tooltips;
 
 public class MergeOutcome implements State {
     private static SingleSongPlayer __mergeMusic;
@@ -117,7 +117,7 @@ public class MergeOutcome implements State {
                 }
             });
         }
-        ToolTip.get().add(new ToolTip.User() {
+        Tooltips.get().add(new Tooltips.User() {
 
             @Override
             public boolean isActive() {
@@ -130,7 +130,7 @@ public class MergeOutcome implements State {
             }
         });
 
-        ToolTip.get().add(new ToolTip.User() {
+        Tooltips.get().add(new Tooltips.User() {
 
             @Override
             public boolean isActive() {

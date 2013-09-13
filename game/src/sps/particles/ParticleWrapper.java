@@ -52,6 +52,19 @@ public class ParticleWrapper {
         }
     }
 
+    public void release() {
+        for (int ii = 0; ii < _leasedEffects.size(); ii++) {
+            remove(ii);
+        }
+    }
+
+    private void remove(int ii) {
+        if (ii < _leasedEffects.size()) {
+            _effectPools.get(_leasedEffects.get(ii).Label).free(_leasedEffects.get(ii).Effect);
+            _leasedEffects.remove(ii);
+        }
+    }
+
     public ParticleEffect emit(String effectLabel, Point2 position) {
         String label = effectLabel.toLowerCase();
         ParticleEffectPool.PooledEffect effect = _effectPools.get(label).obtain();
@@ -64,8 +77,7 @@ public class ParticleWrapper {
     public void update() {
         for (int ii = 0; ii < _leasedEffects.size(); ii++) {
             if (_leasedEffects.get(ii).Effect.isComplete()) {
-                _effectPools.get(_leasedEffects.get(ii).Label).free(_leasedEffects.get(ii).Effect);
-                _leasedEffects.remove(ii);
+                remove(ii);
                 ii--;
             }
         }

@@ -17,7 +17,7 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.text.TextEffects;
 import sps.text.TextPool;
-import sps.ui.ToolTip;
+import sps.ui.Tooltips;
 
 public class Battle implements State {
     private static SingleSongPlayer __battleMusic;
@@ -230,7 +230,7 @@ public class Battle implements State {
     @Override
     public void unload() {
         EntityManager.get().clear();
-        ToolTip.reset();
+        Tooltips.reset();
     }
 
     @Override

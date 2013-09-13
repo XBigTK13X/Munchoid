@@ -19,7 +19,7 @@ import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
 import sps.ui.Buttons;
-import sps.ui.ToolTip;
+import sps.ui.Tooltips;
 
 public class ForceSelection implements State {
     private static SingleSongPlayer __mergeMusic;
@@ -62,7 +62,7 @@ public class ForceSelection implements State {
                 }
             });
         }
-        ToolTip.get().add(new ToolTip.User() {
+        Tooltips.get().add(new Tooltips.User() {
             @Override
             public boolean isActive() {
                 return HitTest.mouseInside(_accept);

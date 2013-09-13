@@ -15,7 +15,7 @@ import sps.text.TextPool;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ToolTip {
+public class Tooltips {
     public interface User {
         boolean isActive();
 
@@ -25,17 +25,21 @@ public class ToolTip {
     private static final Point2 __tooltipOffset = Screen.pos(1, 1);
     private static Sprite __bg;
 
-    private static ToolTip __instance;
+    private static Tooltips __instance;
 
-    public static ToolTip get() {
+    public static Tooltips get() {
         if (__instance == null) {
-            __instance = new ToolTip();
+            __instance = new Tooltips();
         }
         return __instance;
     }
 
+    public static void set(Tooltips tooltips) {
+        __instance = tooltips;
+    }
+
     public static void reset() {
-        __instance = new ToolTip();
+        __instance = new Tooltips();
     }
 
     private Text _message;
@@ -46,7 +50,7 @@ public class ToolTip {
 
     private List<User> _users;
 
-    private ToolTip() {
+    private Tooltips() {
         if (__bg == null) {
             Color[][] tbg = ProcTextures.monotone(2, 2, new Color(.1f, .1f, .1f, .7f));
             __bg = SpriteMaker.get().fromColors(tbg);

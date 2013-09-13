@@ -11,7 +11,7 @@ public class UiElements {
     }
 
     public static void reset() {
-        ToolTip.reset();
+        Tooltips.reset();
         Buttons.reset();
     }
 
@@ -20,11 +20,11 @@ public class UiElements {
     }
 
     public void update() {
-        ToolTip.get().update();
+        Tooltips.get().update();
         Buttons.get().update();
     }
 
     public void draw() {
-        ToolTip.get().draw();
+        Tooltips.get().draw();
     }
 }

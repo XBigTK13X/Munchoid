@@ -14,7 +14,7 @@ import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.ui.Buttons;
-import sps.ui.ToolTip;
+import sps.ui.Tooltips;
 import sps.util.MathHelper;
 
 public class ForceSelectionButton {
@@ -37,7 +37,7 @@ public class ForceSelectionButton {
         _meter.scale(MathHelper.percent(stat / ((float) GameConfig.MaxStat)));
 
         _message = (stat > GameConfig.DisableStat && _owner.getStats().isEnabled(_force)) ? force.name() + ": " + strength() + Commands.get(force.Command) : "Disabled";
-        ToolTip.get().add(new ToolTip.User() {
+        Tooltips.get().add(new Tooltips.User() {
             @Override
             public boolean isActive() {
                 return HitTest.inBox(Input.get().x(), Input.get().y(), _meter.getBounds());

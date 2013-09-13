@@ -46,6 +46,10 @@ public class Buttons {
         return __instance;
     }
 
+    public static void set(Buttons buttons) {
+        __instance = buttons;
+    }
+
     public static void reset() {
         __instance = new Buttons();
     }

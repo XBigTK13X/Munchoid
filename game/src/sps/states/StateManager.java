@@ -11,7 +11,10 @@ import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
 import sps.entities.EntityManager;
 import sps.particles.ParticleEngine;
+import sps.particles.ParticleWrapper;
 import sps.text.TextPool;
+import sps.ui.Buttons;
+import sps.ui.Tooltips;
 import sps.ui.UiElements;
 
 import java.util.HashMap;
@@ -78,19 +81,21 @@ public class StateManager {
         //$$$ Logger.info("=== Loading new state: " + state.getName());
         if (_components.containsKey(current())) {
             StateDependentComponents components = _components.get(current());
-            EntityManager.set(components.entityManager);
-            ParticleEngine.set(components.particleEngine);
-            TextPool.set(components.textPool);
-            MusicPlayer.set(components.musicPlayer);
+            EntityManager.set(components.EntityManager);
+            ParticleEngine.set(components.ParticleEngine);
+            TextPool.set(components.TextPool);
+            MusicPlayer.set(components.MusicPlayer);
+            Tooltips.set(components.Tooltips);
+            Buttons.set(components.Buttons);
         }
         else {
             EntityManager.reset();
             ParticleEngine.reset();
             TextPool.reset();
             MusicPlayer.reset();
+            UiElements.reset();
         }
-        //TODO Make UiElements a SDC
-        UiElements.reset();
+        ParticleWrapper.get().release();
         current().load();
     }
 
@@ -114,7 +119,7 @@ public class StateManager {
         Window.get().resetCamera();
         boolean isNewState = false;
         if (_states.size() > 0) {
-            _components.put(current(), new StateDependentComponents(EntityManager.get(), ParticleEngine.get(), TextPool.get(), MusicPlayer.get()));
+            _components.put(current(), new StateDependentComponents(EntityManager.get(), ParticleEngine.get(), TextPool.get(), MusicPlayer.get(), Tooltips.get(), Buttons.get()));
         }
         if (!_states.contains(state)) {
             isNewState = true;
