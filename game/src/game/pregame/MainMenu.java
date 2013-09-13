@@ -3,6 +3,7 @@ package game.pregame;
 import com.badlogic.gdx.Gdx;
 import game.GameConfig;
 import game.InputWrapper;
+import game.save.Persistence;
 import game.Score;
 import game.population.PopulationOverview;
 import game.ui.UIButton;
@@ -16,15 +17,13 @@ public class MainMenu implements State {
     UIButton _start;
     UIButton _options;
     UIButton _exit;
+    UIButton _load;
 
     @Override
     public void create() {
         TextPool.get().write("Munchoid", Screen.pos(20, 90));
         StateManager.clearTimes();
         Score.reset();
-
-        int baseCol = 1;
-        int baseRow = 1;
 
         _start = new UIButton("Start", Commands.get("Confirm")) {
             @Override
@@ -47,9 +46,19 @@ public class MainMenu implements State {
             }
         };
 
-        _start.setColRow(baseCol, baseRow);
-        _options.setColRow(baseCol + 1, baseRow);
-        _exit.setColRow(baseCol + 2, baseRow);
+        _start.setColRow(1, 1);
+        _options.setColRow(2, 1);
+        _exit.setColRow(3, 1);
+
+        if (Persistence.get().saveFileExists()) {
+            _load = new UIButton("Continue") {
+                @Override
+                public void click() {
+                    Persistence.get().load();
+                }
+            };
+            _load.setColRow(2,3);
+        }
     }
 
     @Override
@@ -57,6 +66,9 @@ public class MainMenu implements State {
         _start.draw();
         _options.draw();
         _exit.draw();
+        if (_load != null) {
+            _load.draw();
+        }
     }
 
     @Override

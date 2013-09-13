@@ -3,6 +3,7 @@ package sps.states;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
+import game.save.GameSnapshot;
 import sps.audio.MusicPlayer;
 import sps.core.Logger;
 import sps.display.Screen;
@@ -23,18 +24,26 @@ import java.util.Stack;
 
 public class StateManager {
 
-    private static StateManager instance = new StateManager();
+    private static StateManager __instance = new StateManager();
+    private static long lastMil = System.currentTimeMillis();
+    private static Map<String, Long> stateTimes = new HashMap<>();
+    private static Sprite __pausedScreen;
 
     public static StateManager get() {
-        return instance;
+        return __instance;
     }
 
     public static StateManager reset() {
-        if (instance != null) {
-            instance.removeAll();
+        if (__instance != null) {
+            __instance.removeAll();
         }
-        instance = new StateManager();
+        __instance = new StateManager();
         return get();
+    }
+
+    public static void set(StateManager stateManager){
+        __instance = stateManager;
+        clearTimes();
     }
 
     public static void clearTimes() {
@@ -53,8 +62,6 @@ public class StateManager {
         result += "}";
         return result;
     }
-
-    private static Sprite __pausedScreen;
 
     private Stack<State> _states;
     private Map<State, StateDependentComponents> _components;
@@ -98,9 +105,6 @@ public class StateManager {
         ParticleWrapper.get().release();
         current().load();
     }
-
-    private static long lastMil = System.currentTimeMillis();
-    private static Map<String, Long> stateTimes = new HashMap<String, Long>();
 
     public void push(State state) {
         if (GameConfig.DevTimeStates) {
@@ -205,5 +209,14 @@ public class StateManager {
             }
         }
         return false;
+    }
+
+    public GameSnapshot takeSnapshot() {
+        //TODO Convert game state to loadable textures and such
+        return null;
+    }
+
+    public void loadFrom(GameSnapshot snapshot) {
+        //TODO load the stuff
     }
 }

@@ -1,10 +1,8 @@
 package game.population;
 
-import game.EndGame;
-import game.GameConfig;
-import game.InputWrapper;
-import game.MetaData;
+import game.*;
 import game.arena.LoadArena;
+import game.save.Persistence;
 import org.apache.commons.lang3.text.WordUtils;
 import sps.bridge.Commands;
 import sps.core.Loader;
@@ -56,6 +54,8 @@ public class PopulationOverview implements State {
         updateDiseaseDisplay();
 
         _continuePrompt = TextPool.get().write("Press " + Commands.get("Confirm") + " to enter the next tournament", Screen.pos(10, 10));
+
+        Persistence.get().save();
     }
 
     private void updateDiseaseDisplay() {
