@@ -170,7 +170,7 @@ public class Arena implements State {
 
             //Instead, should be a one liner to re-center the camera.
             //However, that would result in a lot of positions being gathered,
-            //so the method below was chosen instead to autoSave some time.
+            //so the method below was chosen instead to save some time.
 
             //Recenter the camera on the player
             p.moveInBothDirections(-1, -1);

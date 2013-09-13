@@ -49,6 +49,6 @@ public class Loader {
     }
 
     public File save(String target) {
-        return data("autoSave/" + target);
+        return data("save/" + target);
     }
 }
