@@ -31,7 +31,6 @@ public class PopulationOverview implements State {
     private Text _populationCountDisplay;
 
     private Text _continuePrompt;
-    private Text _scorePrompt;
 
     private int _tournamentsPlayed = 0;
     private int _tournamentWins = 0;
@@ -86,7 +85,6 @@ public class PopulationOverview implements State {
         _topDiseases.generateDisplay();
         _bottomDiseases.generateDisplay();
         _populationCountDisplay = TextPool.get().write("", Screen.pos(30, 95));
-        _scorePrompt = TextPool.get().write("SCORE: " + Score.get().total(), Screen.pos(1, 15));
 
         updateDiseaseDisplay();
         _continuePrompt = TextPool.get().write("Press " + Commands.get("Confirm") + " to enter the next tournament", Screen.pos(10, 10));
@@ -100,8 +98,6 @@ public class PopulationOverview implements State {
         _populationHud.recalcIcons();
         NumberFormat f = NumberFormat.getNumberInstance();
         _populationCountDisplay.setMessage("Population of " + _regionName + "\n" + f.format(_population.getSize()) + " people");
-
-        _scorePrompt.setMessage("SCORE: " + Score.get().total());
 
         Persistence.get().autoSave();
     }
