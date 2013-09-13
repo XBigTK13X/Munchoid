@@ -20,6 +20,10 @@ public class Score {
         __instance = new Score();
     }
 
+    public static void set(Score score){
+        __instance = score;
+    }
+
     private static final int __victoryWeight = 11;
     private static final int __chompWeight = 3;
     private static final int __petVarietyWeight = 119;

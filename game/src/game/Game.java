@@ -73,6 +73,11 @@ public class Game implements ApplicationListener {
     private void update() {
         Input.get().update();
 
+        //TODO Disable for production?
+        if(InputWrapper.moveDown() && InputWrapper.moveUp()){
+            StateManager.reset().push(new MainMenu());
+        }
+
         if (InputWrapper.devConsole()) {
             DevConsole.get().toggle();
         }

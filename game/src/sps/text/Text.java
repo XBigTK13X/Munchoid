@@ -29,7 +29,6 @@ public class Text {
 
     private String _fontLabel;
     private int _fontPointSize;
-    private BitmapFont _font;
 
     private BitmapFont.TextBounds _bounds;
 
@@ -49,7 +48,6 @@ public class Text {
         _effect = effect;
         _fontLabel = fontLabel;
         _fontPointSize = fontPointSize;
-        _font = Assets.get().fontPack().getFont(fontLabel, fontPointSize);
         setMessage(message);
         effect.init(this);
 
@@ -111,7 +109,7 @@ public class Text {
 
     public void setMessage(String message) {
         _message = message;
-        _bounds = _font.getMultiLineBounds(_message);
+        _bounds = Assets.get().fontPack().getFont(_fontLabel, _fontPointSize).getMultiLineBounds(_message);
     }
 
     public BitmapFont.TextBounds getBounds() {

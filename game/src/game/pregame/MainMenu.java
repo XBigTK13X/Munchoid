@@ -3,11 +3,12 @@ package game.pregame;
 import com.badlogic.gdx.Gdx;
 import game.GameConfig;
 import game.InputWrapper;
-import game.save.Persistence;
 import game.Score;
 import game.population.PopulationOverview;
+import game.save.Persistence;
 import game.ui.UIButton;
 import sps.bridge.Commands;
+import sps.core.Logger;
 import sps.display.Screen;
 import sps.states.State;
 import sps.states.StateManager;
@@ -54,10 +55,21 @@ public class MainMenu implements State {
             _load = new UIButton("Continue") {
                 @Override
                 public void click() {
-                    Persistence.get().load();
+                    try {
+                        Persistence.get().autoLoad();
+                    }
+                    catch (RuntimeException e) {
+                        _load = null;
+                        if (e.getMessage() != null) {
+                            TextPool.get().write("Unable to autoLoad the autoSave file.\n" + e.getMessage(), Screen.pos(10, 70));
+                        }
+                        else {
+                            Logger.exception(e);
+                        }
+                    }
                 }
             };
-            _load.setColRow(2,3);
+            _load.setColRow(2, 3);
         }
     }
 
@@ -84,6 +96,7 @@ public class MainMenu implements State {
 
     @Override
     public void load() {
+        Persistence.get().configLoad();
     }
 
     @Override

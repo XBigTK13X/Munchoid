@@ -47,4 +47,8 @@ public class Loader {
     public File font(String target) {
         return get(graphics + "/" + font, target);
     }
+
+    public File save(String target) {
+        return data("autoSave/" + target);
+    }
 }

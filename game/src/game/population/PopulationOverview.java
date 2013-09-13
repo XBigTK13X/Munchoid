@@ -2,6 +2,7 @@ package game.population;
 
 import game.*;
 import game.arena.LoadArena;
+import game.save.GameSnapshot;
 import game.save.Persistence;
 import org.apache.commons.lang3.text.WordUtils;
 import sps.bridge.Commands;
@@ -30,32 +31,66 @@ public class PopulationOverview implements State {
     private Text _populationCountDisplay;
 
     private Text _continuePrompt;
+    private Text _scorePrompt;
 
     private int _tournamentsPlayed = 0;
     private int _tournamentWins = 0;
 
     private String _regionName;
 
+    private boolean _restoredFromSaveFile;
+
+    public PopulationOverview() {
+
+    }
+
+    public PopulationOverview(GameSnapshot snapshot) {
+        _restoredFromSaveFile = true;
+
+        _regionName = snapshot.RegionName;
+        _population = snapshot.Population;
+        _populationHud = snapshot.PopulationHud;
+        _populationHud.regenerateTextures();
+        _topDiseases = snapshot.TopDiseases;
+        _bottomDiseases = snapshot.BottomDiseases;
+    }
+
+    public GameSnapshot takeSnapshot() {
+        GameSnapshot result = new GameSnapshot();
+        result.Score = Score.get();
+        result.Population = _population;
+        result.BottomDiseases = _bottomDiseases;
+        result.TopDiseases = _topDiseases;
+        result.RegionName = _regionName;
+        result.PopulationHud = _populationHud;
+        result.Population = _population;
+        result.RecordedVersion = GameSnapshot.Version;
+        return result;
+    }
+
     @Override
     public void create() {
-        _population = new Population();
-        Point2 hudSize = Screen.pos(40, 70);
-        Point2 hudPosition = Screen.pos(30, 15);
-        _populationHud = new PopulationHUD(_population, hudSize, hudPosition);
+        if (!_restoredFromSaveFile) {
+            _population = new Population();
+            Point2 hudSize = Screen.pos(40, 70);
+            Point2 hudPosition = Screen.pos(30, 15);
+            _populationHud = new PopulationHUD(_population, hudSize, hudPosition);
 
-        _topDiseases = new DiseaseMonitor(true);
-        _bottomDiseases = new DiseaseMonitor(false);
+            _topDiseases = new DiseaseMonitor(true);
+            _bottomDiseases = new DiseaseMonitor(false);
 
+            _regionName = __regionNames.makeWord(RNG.next(7, 10));
+            _regionName = WordUtils.capitalize(_regionName);
+        }
+
+        _topDiseases.generateDisplay();
+        _bottomDiseases.generateDisplay();
         _populationCountDisplay = TextPool.get().write("", Screen.pos(30, 95));
-
-        _regionName = __regionNames.makeWord(RNG.next(7, 10));
-        _regionName = WordUtils.capitalize(_regionName);
+        _scorePrompt = TextPool.get().write("SCORE: " + Score.get().total(), Screen.pos(1, 15));
 
         updateDiseaseDisplay();
-
         _continuePrompt = TextPool.get().write("Press " + Commands.get("Confirm") + " to enter the next tournament", Screen.pos(10, 10));
 
-        Persistence.get().save();
     }
 
     private void updateDiseaseDisplay() {
@@ -65,6 +100,10 @@ public class PopulationOverview implements State {
         _populationHud.recalcIcons();
         NumberFormat f = NumberFormat.getNumberInstance();
         _populationCountDisplay.setMessage("Population of " + _regionName + "\n" + f.format(_population.getSize()) + " people");
+
+        _scorePrompt.setMessage("SCORE: " + Score.get().total());
+
+        Persistence.get().autoSave();
     }
 
     private void simluatePopulationChange() {

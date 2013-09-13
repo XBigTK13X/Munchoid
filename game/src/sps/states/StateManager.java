@@ -3,6 +3,9 @@ package sps.states;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
+import game.MetaData;
+import game.Score;
+import game.population.PopulationOverview;
 import game.save.GameSnapshot;
 import sps.audio.MusicPlayer;
 import sps.core.Logger;
@@ -212,11 +215,12 @@ public class StateManager {
     }
 
     public GameSnapshot takeSnapshot() {
-        //TODO Convert game state to loadable textures and such
-        return null;
+        PopulationOverview overview = (PopulationOverview)current();
+        return overview.takeSnapshot();
     }
 
     public void loadFrom(GameSnapshot snapshot) {
-        //TODO load the stuff
+        Score.set(snapshot.Score);
+        push(new PopulationOverview(snapshot));
     }
 }

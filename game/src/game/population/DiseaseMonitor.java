@@ -12,13 +12,19 @@ public class DiseaseMonitor {
     private Text _display;
     private List<Disease> _diseases;
     private String _header;
+    private boolean _top;
 
     private int _disableIndex = 0;
 
     public DiseaseMonitor(boolean top) {
         _diseases = Diseases.get().getRandom(top, GameConfig.NumberOfTournaments);
-        _display = TextPool.get().write("", top ? Screen.pos(5, 95) : Screen.pos(75, 95));
         _header = top ? "TOP" : "BOTTOM";
+        _top = top;
+        generateDisplay();
+    }
+
+    public void generateDisplay() {
+        _display = TextPool.get().write("", _top ? Screen.pos(5, 95) : Screen.pos(75, 95));
     }
 
     public void disableOne() {
@@ -31,7 +37,7 @@ public class DiseaseMonitor {
             if (d.isActive()) {
                 totalDeaths += population.deathsCausedBy(d);
                 if (GameConfig.DevDebugPopulationGrowth) {
-                    Logger.info(d.Name + " caused " + population.deathsCausedBy(d) + " deaths");
+                    Logger.info(d.getName() + " caused " + population.deathsCausedBy(d) + " deaths");
                 }
             }
         }
@@ -48,6 +54,6 @@ public class DiseaseMonitor {
     }
 
     private String diseaseDisplay(Disease d) {
-        return d.Name + (d.isActive() ? "" : "(D)") + "\n";
+        return d.getName() + (d.isActive() ? "" : "(D)") + "\n";
     }
 }

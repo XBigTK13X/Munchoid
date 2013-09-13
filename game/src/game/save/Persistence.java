@@ -1,13 +1,16 @@
 package game.save;
+
 import sps.core.Loader;
 import sps.states.StateManager;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Persistence {
     private static Persistence __instance;
 
-    private static final File __autoSave = Loader.get().data("nnue.save");
+    private static final File __autoSave = Loader.get().save("autosave.dat");
+    private static final File __config = Loader.get().save("config.dat");
 
     public static Persistence get() {
         if (__instance == null) {
@@ -20,15 +23,28 @@ public class Persistence {
 
     }
 
-    public void save() {
+    public void configSave(){
+
+    }
+
+    public void configLoad(){
+
+    }
+
+    public void autoSave() {
         Serialize.toFile(StateManager.get().takeSnapshot(), __autoSave);
     }
 
-    public void load() {
+    public void autoLoad() throws RuntimeException {
         if (saveFileExists()) {
             GameSnapshot snapshot = Serialize.fromFile(__autoSave, GameSnapshot.class);
+            if (snapshot.RecordedVersion != GameSnapshot.Version) {
+                throw new RuntimeException("Save game version mismatch. Recorded version is " + snapshot.RecordedVersion + " but the current version is " + GameSnapshot.Version);
+            }
             StateManager.get().loadFrom(snapshot);
-
+        }
+        else {
+            throw new RuntimeException("Save file does not exist. Checked for: " + __autoSave.getAbsolutePath());
         }
     }
 

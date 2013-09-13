@@ -194,7 +194,6 @@ public class Battle implements State {
         _isBattleOver = true;
         String battleResult = "The battle is over. You have " + (win ? "won!" : "lost.") + " Press " + Commands.get("Confirm") + " to continue";
         TextPool.get().write(battleResult, Screen.pos(15, 65));
-        Persistence.get().save();
     }
 
     private void victory() {

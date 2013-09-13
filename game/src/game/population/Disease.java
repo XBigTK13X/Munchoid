@@ -5,15 +5,23 @@ public class Disease implements Comparable {
     //TODO this might need to increase as the population growths larger
     public static final int InfluenceMultiplier = 63;
 
-    public final float DeathsPerInfluence;
-    public final String Name;
+    private float _deathsPerInfluence;
+    private String _name;
 
     private boolean _active;
 
     public Disease(String name, float deathsPerInfluence) {
         _active = true;
-        Name = name;
-        DeathsPerInfluence = deathsPerInfluence;
+        _name = name;
+        _deathsPerInfluence = deathsPerInfluence;
+    }
+
+    public String getName(){
+        return _name;
+    }
+
+    public float getDeathsPerInfluence(){
+        return _deathsPerInfluence;
     }
 
     public boolean isActive() {
@@ -26,6 +34,6 @@ public class Disease implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-        return (int) DeathsPerInfluence - (int) ((Disease) o).DeathsPerInfluence;
+        return (int) _deathsPerInfluence - (int) ((Disease) o)._deathsPerInfluence;
     }
 }
