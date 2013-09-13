@@ -56,7 +56,7 @@ public class MainMenu implements State {
                 @Override
                 public void click() {
                     try {
-                        Persistence.get().autoLoad();
+                        StateManager.get().loadFrom(Persistence.get().autoLoad());
                     }
                     catch (RuntimeException e) {
                         _load = null;

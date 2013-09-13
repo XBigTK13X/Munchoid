@@ -35,13 +35,13 @@ public class Persistence {
         Serialize.toFile(StateManager.get().takeSnapshot(), __autoSave);
     }
 
-    public void autoLoad() throws RuntimeException {
+    public GameSnapshot autoLoad() throws RuntimeException {
         if (saveFileExists()) {
             GameSnapshot snapshot = Serialize.fromFile(__autoSave, GameSnapshot.class);
             if (snapshot.RecordedVersion != GameSnapshot.Version) {
                 throw new RuntimeException("Save game version mismatch. Recorded version is " + snapshot.RecordedVersion + " but the current version is " + GameSnapshot.Version);
             }
-            StateManager.get().loadFrom(snapshot);
+            return snapshot;
         }
         else {
             throw new RuntimeException("Save file does not exist. Checked for: " + __autoSave.getAbsolutePath());
