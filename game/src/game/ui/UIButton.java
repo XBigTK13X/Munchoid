@@ -32,6 +32,14 @@ public abstract class UIButton {
     private int _height;
     private Command _command;
 
+    public UIButton(String text) {
+        this(text, 0, 0);
+    }
+
+    public UIButton(String text, Command command) {
+        this(text, 0, 0, command);
+    }
+
     public UIButton(String text, int x, int y) {
         this(text, x, y, null);
     }
@@ -43,15 +51,10 @@ public abstract class UIButton {
         _height = (int) Screen.height(20);
 
         _message = TextPool.get().write(text, new Point2(0, 0));
-        int mW = (int) _message.getBounds().width;
-        int mH = (int) _message.getBounds().height;
-
-        _message.setPosition(x + (_width - mW) / 2, y + (_height - mH) / 2 + mH);
 
         Color[][] base = ProcTextures.gradient(_width, _height, Color.WHITE, Color.GRAY, false);
         Outline.single(base, Color.WHITE, 3);
         _sprite = SpriteMaker.get().fromColors(base);
-        _sprite.setPosition(x, y);
 
         Buttons.get().add(new Buttons.User() {
             @Override
@@ -64,6 +67,19 @@ public abstract class UIButton {
                 click();
             }
         });
+
+        setXY(x, y);
+    }
+
+    private void setXY(int x, int y) {
+        int mW = (int) _message.getBounds().width;
+        int mH = (int) _message.getBounds().height;
+        _message.setPosition(x + (_width - mW) / 2, y + (_height - mH) / 2 + mH);
+        _sprite.setPosition(x, y);
+    }
+
+    public void setColRow(int col, int row) {
+        setXY(UIButton.x(col), UIButton.y(row));
     }
 
     public void draw() {
@@ -74,7 +90,6 @@ public abstract class UIButton {
         }
         Window.get().draw(_sprite);
     }
-
 
     public abstract void click();
 }
