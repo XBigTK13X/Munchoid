@@ -78,7 +78,9 @@ public class MainMenu implements State {
         _start.draw();
         _options.draw();
         _exit.draw();
-        _load.draw();
+        if (_load != null) {
+            _load.draw();
+        }
     }
 
     @Override
