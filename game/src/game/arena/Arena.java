@@ -11,6 +11,7 @@ import game.creatures.Stats;
 import game.forces.Force;
 import game.tournament.Tournament;
 import sps.audio.MusicPlayer;
+import sps.audio.SingleSongPlayer;
 import sps.bridge.EntityTypes;
 import sps.core.Point2;
 import sps.core.RNG;
@@ -163,7 +164,7 @@ public class Arena implements State {
         _countDownSeconds = GameConfig.ArenaTimeoutSeconds;
         Player p = (Player) EntityManager.get().getPlayer();
         if (p == null) {
-            MusicPlayer.get();
+            MusicPlayer.set(new SingleSongPlayer("Anticipation.ogg"));
         }
         else {
             //FIXME this is ugly.
