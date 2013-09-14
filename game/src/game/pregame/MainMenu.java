@@ -59,7 +59,7 @@ public class MainMenu implements State {
                         StateManager.get().loadFrom(Persistence.get().autoLoad());
                     }
                     catch (RuntimeException e) {
-                        _load = null;
+                        _load.setVisible(false);
                         if (e.getMessage() != null) {
                             TextPool.get().write("Unable to load the save file.\n" + e.getMessage(), Screen.pos(10, 70));
                         }
@@ -78,9 +78,7 @@ public class MainMenu implements State {
         _start.draw();
         _options.draw();
         _exit.draw();
-        if (_load != null) {
-            _load.draw();
-        }
+        _load.draw();
     }
 
     @Override

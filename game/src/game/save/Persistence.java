@@ -4,7 +4,6 @@ import sps.core.Loader;
 import sps.states.StateManager;
 
 import java.io.File;
-import java.io.IOException;
 
 public class Persistence {
     private static Persistence __instance;
@@ -23,11 +22,11 @@ public class Persistence {
 
     }
 
-    public void configSave(){
+    public void configSave() {
 
     }
 
-    public void configLoad(){
+    public void configLoad() {
 
     }
 
@@ -37,11 +36,16 @@ public class Persistence {
 
     public GameSnapshot autoLoad() throws RuntimeException {
         if (saveFileExists()) {
-            GameSnapshot snapshot = Serialize.fromFile(__autoSave, GameSnapshot.class);
-            if (snapshot.RecordedVersion != GameSnapshot.Version) {
-                throw new RuntimeException("Save game version mismatch. Recorded version is " + snapshot.RecordedVersion + " but the current version is " + GameSnapshot.Version);
+            try {
+                GameSnapshot snapshot = Serialize.fromFile(__autoSave, GameSnapshot.class);
+                if (snapshot.RecordedVersion != GameSnapshot.Version) {
+                    throw new RuntimeException("Save game version mismatch. Recorded version is " + snapshot.RecordedVersion + " but the current version is " + GameSnapshot.Version);
+                }
+                return snapshot;
             }
-            return snapshot;
+            catch (Exception e) {
+                throw new RuntimeException("Save game file out of date.");
+            }
         }
         else {
             throw new RuntimeException("Save file does not exist. Checked for: " + __autoSave.getAbsolutePath());

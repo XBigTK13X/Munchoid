@@ -25,7 +25,7 @@ public class Serialize {
             output.close();
         }
         catch (Exception e) {
-            Logger.exception(e);
+            Logger.exception(e, false);
         }
     }
 
@@ -37,7 +37,7 @@ public class Serialize {
             return result;
         }
         catch (Exception e) {
-            Logger.exception(e);
+            Logger.exception(e, false);
         }
         return null;
     }

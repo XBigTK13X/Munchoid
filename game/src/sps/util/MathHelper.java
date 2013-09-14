@@ -35,4 +35,8 @@ public class MathHelper {
     public static int percent(float zeroToOnePercent) {
         return MathHelper.clamp(zeroToOnePercent * 100, 0, 100);
     }
+
+    public static int percent(int max, int percent) {
+        return (int) (max * (percent / 100f));
+    }
 }

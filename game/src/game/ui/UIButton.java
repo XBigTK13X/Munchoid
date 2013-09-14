@@ -31,6 +31,7 @@ public abstract class UIButton {
     private int _width;
     private int _height;
     private Command _command;
+    private boolean _visible = true;
 
     public UIButton(String text) {
         this(text, 0, 0);
@@ -83,13 +84,20 @@ public abstract class UIButton {
     }
 
     public void draw() {
-        if (_command != null) {
-            if (Input.get().isActive(_command)) {
-                click();
+        if (_visible) {
+            if (_command != null) {
+                if (Input.get().isActive(_command)) {
+                    click();
+                }
             }
+            Window.get().draw(_sprite);
         }
-        Window.get().draw(_sprite);
     }
 
     public abstract void click();
+
+    public void setVisible(boolean visible) {
+        _message.setVisible(visible);
+        _visible = visible;
+    }
 }

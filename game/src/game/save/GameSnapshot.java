@@ -6,7 +6,7 @@ import game.population.Population;
 import game.population.PopulationHUD;
 
 public class GameSnapshot {
-    public static final int Version = 1;
+    public static final int Version = 2;
 
     public Population Population;
     public PopulationHUD PopulationHud;
@@ -15,4 +15,6 @@ public class GameSnapshot {
     public DiseaseMonitor BottomDiseases;
     public Score Score;
     public int RecordedVersion;
+    public int TournamentsPlayed;
+    public int TournamentWins;
 }

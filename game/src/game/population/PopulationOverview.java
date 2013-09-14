@@ -52,6 +52,8 @@ public class PopulationOverview implements State {
         _populationHud.regenerateTextures();
         _topDiseases = snapshot.TopDiseases;
         _bottomDiseases = snapshot.BottomDiseases;
+        _tournamentsPlayed = snapshot.TournamentsPlayed;
+        _tournamentWins = snapshot.TournamentWins;
     }
 
     public GameSnapshot takeSnapshot() {
@@ -64,6 +66,8 @@ public class PopulationOverview implements State {
         result.PopulationHud = _populationHud;
         result.Population = _population;
         result.RecordedVersion = GameSnapshot.Version;
+        result.TournamentsPlayed = _tournamentsPlayed;
+        result.TournamentWins = _tournamentWins;
         return result;
     }
 
@@ -163,7 +167,7 @@ public class PopulationOverview implements State {
 
     @Override
     public void load() {
-        if (_tournamentsPlayed >= GameConfig.NumberOfTournaments - 1) {
+        if (gameFinished()) {
             _continuePrompt.setMessage("Press " + Commands.get("Confirm") + " to see the outcome of your efforts.");
         }
     }

@@ -31,7 +31,7 @@ public class Creature extends Entity {
     private String _name;
 
     private float _energyRegenSeconds = 1;
-    private int _energyRegenAmount = 1;
+    private int _energyRegenPercent = 15;
     private float _regenTimer = 0;
     private int _energyMax = 100;
     private int _energy = _energyMax;
@@ -205,7 +205,7 @@ public class Creature extends Entity {
         _sideEffects.act(SideEffectType.Health);
         if (_regenTimer >= (_energyRegenSeconds + _sideEffects.act(SideEffectType.EnergyRegenRate))) {
             _regenTimer = 0;
-            _energy += _energyRegenAmount;
+            _energy += MathHelper.percent(_energyMax, _energyRegenPercent);
             if (_energy >= _energyMax) {
                 _energy = _energyMax;
             }
