@@ -92,7 +92,6 @@ public class PopulationOverview implements State {
 
         updateDiseaseDisplay();
         _continuePrompt = TextPool.get().write("Press " + Commands.get("Confirm") + " to enter the next tournament", Screen.pos(10, 10));
-
     }
 
     private void updateDiseaseDisplay() {
@@ -123,8 +122,8 @@ public class PopulationOverview implements State {
             MetaData.printLose();
         }
         _bottomDiseases.disableOne();
-        simluatePopulationChange();
         _tournamentsPlayed++;
+        simluatePopulationChange();
     }
 
     @Override
@@ -138,6 +137,9 @@ public class PopulationOverview implements State {
 
     @Override
     public void update() {
+        if (gameFinished()) {
+            _continuePrompt.setMessage("Press " + Commands.get("Confirm") + " to see the outcome of your efforts.");
+        }
         if (InputWrapper.confirm() || GameConfig.DevBotEnabled) {
             if (!gameFinished()) {
                 StateManager.get().push(new LoadArena());
@@ -167,9 +169,6 @@ public class PopulationOverview implements State {
 
     @Override
     public void load() {
-        if (gameFinished()) {
-            _continuePrompt.setMessage("Press " + Commands.get("Confirm") + " to see the outcome of your efforts.");
-        }
     }
 
     @Override

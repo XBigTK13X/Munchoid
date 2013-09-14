@@ -6,6 +6,9 @@ import game.creatures.Stats;
 import sps.entities.EntityManager;
 import sps.util.JSON;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class Score {
     private static Score __instance;
 
@@ -20,7 +23,7 @@ public class Score {
         __instance = new Score();
     }
 
-    public static void set(Score score){
+    public static void set(Score score) {
         __instance = score;
     }
 
@@ -90,7 +93,8 @@ public class Score {
     }
 
     public String message() {
-        return "Total score: " + total() + " point" + ((total() == 1) ? "" : "s");
+        NumberFormat dollars = NumberFormat.getCurrencyInstance(Locale.US);
+        return "Reward from your people: " + dollars.format(total());
     }
 
     public String json() {

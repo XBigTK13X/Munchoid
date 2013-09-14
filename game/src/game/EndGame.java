@@ -17,7 +17,7 @@ public class EndGame implements State {
     @Override
     public void create() {
         TextPool.get().write("The games are complete on this world!", Screen.pos(10, 80));
-        TextPool.get().write("You were able to win " + _wins + (_wins == 1 ? " tournament" : " tournaments"), Screen.pos(10, 60));
+        TextPool.get().write("You were able to win " + _wins + " out of " + GameConfig.NumberOfTournaments + " tournaments", Screen.pos(10, 60));
         TextPool.get().write(Score.get().message(), Screen.pos(10, 40));
         TextPool.get().write("Press " + Commands.get("Confirm") + " to play in a parallel universe.", Screen.pos(10, 20));
     }
