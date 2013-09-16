@@ -8,7 +8,7 @@ import sps.bridge.SpriteTypes;
 import sps.bridge.Sps;
 import sps.core.RNG;
 import sps.core.SpsConfig;
-import sps.display.FrameStrategy;
+import sps.display.render.FrameStrategy;
 import sps.display.SpriteSheetManager;
 import sps.display.Window;
 import sps.io.DefaultStateProvider;

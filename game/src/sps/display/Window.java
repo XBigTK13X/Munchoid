@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import sps.core.Logger;
 import sps.core.SpsConfig;
+import sps.display.render.RenderStrategy;
+import sps.display.render.Renderer;
+import sps.display.render.StretchStrategy;
 
 public class Window {
     private static RenderStrategy __defaultStrategy = new StretchStrategy();
@@ -50,16 +53,15 @@ public class Window {
         __bgColor = color;
     }
 
-    public static void resize(int width, int height) {
-        if (__app != null) {
-            //TODO See if this is still needed
-            // __app.resize(Screen.get().VirtualWidth, Screen.get().VirtualHeight);
-        }
-        else {
+    public static void resize(int width, int height, boolean changeWindow) {
+        if (__app == null) {
             if (!__tipHasBeenDisplayed) {
                 Logger.info("If the app is registered with Renderer.get().setRefreshInstance(this); in the create method, then the screen will update without a manual resizing.");
                 __tipHasBeenDisplayed = true;
             }
+        }
+        if (changeWindow) {
+            Gdx.graphics.setDisplayMode(width, height, Gdx.graphics.isFullscreen());
         }
         get(true).resize(width, height);
         get(false).resize(width, height);

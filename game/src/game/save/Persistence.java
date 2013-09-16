@@ -9,7 +9,6 @@ public class Persistence {
     private static Persistence __instance;
 
     private static final File __autoSave = Loader.get().save("autosave.dat");
-    private static final File __config = Loader.get().save("config.dat");
 
     public static Persistence get() {
         if (__instance == null) {

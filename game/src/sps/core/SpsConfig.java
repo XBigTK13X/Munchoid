@@ -17,7 +17,7 @@ public class SpsConfig {
 
     private HashMap<String, String> _settings = new HashMap<String, String>();
 
-    public final boolean musicEnabled;
+    public boolean musicEnabled;
 
     public final int spriteHeight;
     public final int spriteWidth;

@@ -1,4 +1,4 @@
-package sps.display;
+package sps.display.render;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -12,6 +12,7 @@ import game.GameConfig;
 import sps.bridge.DrawDepth;
 import sps.core.Point2;
 import sps.core.SpsConfig;
+import sps.display.*;
 import sps.draw.DrawAPI;
 import sps.entities.HitTest;
 

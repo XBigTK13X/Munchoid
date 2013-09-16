@@ -8,13 +8,14 @@ import game.battle.Battle;
 import game.creatures.PartFunction;
 import game.population.PopulationOverview;
 import game.pregame.MainMenu;
+import game.save.MunchoidConfig;
 import sps.bridge.SpriteTypes;
 import sps.bridge.Sps;
 import sps.core.DevConsole;
 import sps.core.Logger;
 import sps.core.RNG;
 import sps.display.Assets;
-import sps.display.FrameStrategy;
+import sps.display.render.FrameStrategy;
 import sps.display.SpriteSheetManager;
 import sps.display.Window;
 import sps.io.DefaultStateProvider;
@@ -59,11 +60,12 @@ public class Game implements ApplicationListener {
         ParticleEngine.reset();
         StateManager.get().setPaused(false);
 
+        MunchoidConfig.reload();
     }
 
     @Override
     public void resize(int width, int height) {
-        Window.resize(width, height);
+        Window.resize(width, height, false);
         StateManager.get().resize(width, height);
     }
 
@@ -71,10 +73,11 @@ public class Game implements ApplicationListener {
     State _preUpdateState;
 
     private void update() {
+        MunchoidConfig.reload();
         Input.get().update();
 
         //TODO Disable for production?
-        if(InputWrapper.moveDown() && InputWrapper.moveUp()){
+        if (InputWrapper.moveDown() && InputWrapper.moveUp()) {
             StateManager.reset().push(new MainMenu());
         }
 

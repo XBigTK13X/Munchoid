@@ -1,9 +1,11 @@
-package sps.display;
+package sps.display.render;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import sps.display.Screen;
+import sps.display.render.RenderStrategy;
 
 public class StretchStrategy implements RenderStrategy {
     @Override

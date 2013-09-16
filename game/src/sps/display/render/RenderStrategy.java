@@ -1,4 +1,4 @@
-package sps.display;
+package sps.display.render;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
