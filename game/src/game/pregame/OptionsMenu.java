@@ -1,5 +1,6 @@
 package game.pregame;
 
+import game.save.Options;
 import game.ui.UIButton;
 import sps.states.State;
 import sps.states.StateManager;
@@ -8,7 +9,9 @@ public class OptionsMenu implements State {
     private UIButton _gameplay;
     private UIButton _audio;
     private UIButton _video;
+
     private UIButton _back;
+    private UIButton _defaults;
 
     @Override
     public void create() {
@@ -40,9 +43,19 @@ public class OptionsMenu implements State {
             }
         };
 
-        _gameplay.setColRow(1, 1);
-        _video.setColRow(2, 1);
-        _audio.setColRow(3, 1);
+        _defaults = new UIButton("Reset to Defaults") {
+            @Override
+            public void click() {
+                Options.resetToDefaults();
+            }
+        };
+
+        _gameplay.setColRow(1, 2);
+        _video.setColRow(2, 2);
+        _audio.setColRow(3, 2);
+
+        _defaults.setColRow(2, 1);
+
         _back.setColRow(2, 3);
     }
 
@@ -51,6 +64,7 @@ public class OptionsMenu implements State {
         _gameplay.draw();
         _video.draw();
         _audio.draw();
+        _defaults.draw();
         _back.draw();
     }
 

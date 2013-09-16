@@ -41,6 +41,7 @@ public class Window {
             __fixed = new Renderer(width, height);
             __fixed.setStrategy(__defaultStrategy);
             __fixed.setListening(true);
+            Logger.info("Window resolution: " + Gdx.graphics.getWidth() + "W, " + Gdx.graphics.getHeight() + "H");
         }
         return fixed ? __fixed : __dynamic;
     }
@@ -60,10 +61,38 @@ public class Window {
                 __tipHasBeenDisplayed = true;
             }
         }
-        if (changeWindow) {
-            Gdx.graphics.setDisplayMode(width, height, Gdx.graphics.isFullscreen());
+        else {
+            if (changeWindow) {
+                __app.resize(width, height);
+                Gdx.graphics.setDisplayMode(width, height, Gdx.graphics.isFullscreen());
+            }
         }
         get(true).resize(width, height);
         get(false).resize(width, height);
+    }
+
+    public static void toggleFullScreen(boolean enableFullScreen, int width, int height) {
+        int resolutionX = 0;
+        int resolutionY = 0;
+        boolean isFullScreen = Gdx.graphics.isFullscreen();
+
+        boolean apply = false;
+
+        if (isFullScreen && !enableFullScreen) {
+            resolutionX = width;
+            resolutionY = height;
+            apply = true;
+        }
+        else if (!isFullScreen && enableFullScreen) {
+            resolutionX = Gdx.graphics.getDesktopDisplayMode().width;
+            resolutionY = Gdx.graphics.getDesktopDisplayMode().height;
+            apply = true;
+        }
+
+
+        if (apply) {
+            Gdx.graphics.setDisplayMode(resolutionX, resolutionY, enableFullScreen);
+            resize(resolutionX, resolutionY, false);
+        }
     }
 }

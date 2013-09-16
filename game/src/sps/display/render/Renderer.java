@@ -32,8 +32,8 @@ public class Renderer {
 
 
     public Renderer(int width, int height) {
-        _drawApiCalls = new ArrayList<DrawAPICall>();
-        _todo = new ArrayList<RenderCall>();
+        _drawApiCalls = new ArrayList<>();
+        _todo = new ArrayList<>();
         _batch = new SpriteBatch();
         _strategy = new StretchStrategy();
         resize(width, height);
@@ -48,11 +48,6 @@ public class Renderer {
         this._strategy = strategy;
         _camera = strategy.createCamera();
 
-    }
-
-    public void toggleFullScreen() {
-        Gdx.graphics.setDisplayMode(Gdx.graphics.getDesktopDisplayMode().width, Gdx.graphics.getDesktopDisplayMode().height, !Gdx.graphics.isFullscreen());
-        resize(Gdx.graphics.getDesktopDisplayMode().width, Gdx.graphics.getDesktopDisplayMode().height);
     }
 
     public void begin() {
