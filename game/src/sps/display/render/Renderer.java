@@ -187,6 +187,9 @@ public class Renderer {
     public void draw(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale) {
         if (content.contains("\n")) {
             int line = 0;
+            if (pointSize == 0) {
+                pointSize = Assets.get().fontPack().getDefaultPointSize();
+            }
             for (String s : content.split("\n")) {
                 render(s, location.add(0, line++ * -pointSize), filter, fontLabel, pointSize, scale);
             }

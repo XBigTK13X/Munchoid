@@ -24,6 +24,10 @@ public class FontPack {
         return getFont(__defaultLabel, _defaultSize);
     }
 
+    public int getDefaultPointSize() {
+        return _defaultSize;
+    }
+
     public void setDefault(String fontName, int pointSize) {
         _defaultSize = pointSize;
         cacheFont(__defaultLabel, fontName, pointSize);
