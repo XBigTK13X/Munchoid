@@ -1,13 +1,12 @@
 package game.population;
 
 import game.*;
-import game.arena.LoadArena;
+import game.arena.PreloadArena;
 import game.save.GameSnapshot;
 import game.save.Persistence;
 import org.apache.commons.lang3.text.WordUtils;
 import sps.bridge.Commands;
 import sps.core.Loader;
-import sps.core.Point2;
 import sps.core.RNG;
 import sps.display.Screen;
 import sps.states.State;
@@ -19,7 +18,6 @@ import sps.util.Markov;
 import java.text.NumberFormat;
 
 public class PopulationOverview implements State {
-
     private static final Markov __regionNames = Markov.get(Loader.get().data("region_name_seed.txt"), 2);
 
     private Population _population;
@@ -39,8 +37,10 @@ public class PopulationOverview implements State {
 
     private boolean _restoredFromSaveFile;
 
-    public PopulationOverview() {
+    private PreloadPopulationOverview.Payload _preload;
 
+    public PopulationOverview(PreloadPopulationOverview.Payload preload) {
+        _preload = preload;
     }
 
     public PopulationOverview(GameSnapshot snapshot) {
@@ -74,13 +74,11 @@ public class PopulationOverview implements State {
     @Override
     public void create() {
         if (!_restoredFromSaveFile) {
-            _population = new Population();
-            Point2 hudSize = Screen.pos(40, 70);
-            Point2 hudPosition = Screen.pos(30, 15);
-            _populationHud = new PopulationHUD(_population, hudSize, hudPosition);
+            _population = _preload.getPopulation();
+            _populationHud = _preload.getPopulationHud();
 
-            _topDiseases = new DiseaseMonitor(true);
-            _bottomDiseases = new DiseaseMonitor(false);
+            _topDiseases = _preload.getTop();
+            _bottomDiseases = _preload.getBottom();
 
             _regionName = __regionNames.makeWord(RNG.next(7, 10));
             _regionName = WordUtils.capitalize(_regionName);
@@ -142,7 +140,7 @@ public class PopulationOverview implements State {
         }
         if (InputWrapper.confirm() || GameConfig.DevBotEnabled) {
             if (!gameFinished()) {
-                StateManager.get().push(new LoadArena());
+                StateManager.get().push(new PreloadArena());
             }
             else {
                 StateManager.get().push(new EndGame(_tournamentWins));
@@ -154,7 +152,7 @@ public class PopulationOverview implements State {
             boolean c = InputWrapper.moveRight();
             if (a || b || c) {
                 if (gameFinished() || c) {
-                    StateManager.reset().push(new PopulationOverview());
+                    StateManager.reset().push(new PreloadPopulationOverview());
                 }
                 else {
                     tournamentResult(a);

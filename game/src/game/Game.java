@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import game.battle.Battle;
 import game.creatures.PartFunction;
-import game.population.PopulationOverview;
+import game.population.PreloadPopulationOverview;
 import game.pregame.MainMenu;
 import game.save.Options;
 import sps.bridge.SpriteTypes;
@@ -48,7 +48,7 @@ public class Game implements ApplicationListener {
 
         State start;
         if (GameConfig.DevPopulationTest) {
-            start = new PopulationOverview();
+            start = new PreloadPopulationOverview();
         }
         else if (GameConfig.DevBattleTest) {
             start = new Battle();

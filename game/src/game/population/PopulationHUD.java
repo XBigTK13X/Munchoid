@@ -24,12 +24,14 @@ public class PopulationHUD {
     private int _maxIcons;
     private List<Point2> _iconPositions;
     private int _pad = 1;
+    private Point2 _size;
 
     private Color _iconColor = new Color(Color.WHITE);
 
     private Color[][] _popIconBase;
 
     public PopulationHUD(Population population, Point2 size, Point2 position) {
+        _size = size;
         _population = population;
 
         _map = new Map((int) size.X, (int) size.Y, position);
@@ -37,13 +39,7 @@ public class PopulationHUD {
         _popIconBase = ProcTextures.monotone((int) Screen.width(1), (int) Screen.width(1), _iconColor);
         Outline.single(_popIconBase, Color.BLACK, 2);
 
-        regenerateTextures();
-
         _iconPositions = new ArrayList<>();
-
-        _maxIconsHigh = (int) (size.Y / (_popIcon.getHeight() + _pad)) - 1;
-        _maxIconsWide = (int) (size.X / (_popIcon.getWidth() + _pad)) - 1;
-        _maxIcons = _maxIconsHigh * _maxIconsWide;
     }
 
     public void recalcIcons() {
@@ -70,8 +66,11 @@ public class PopulationHUD {
         }
     }
 
-    public void regenerateTextures(){
+    public void regenerateTextures() {
         _popIcon = SpriteMaker.get().fromColors(_popIconBase);
         _map.regenerateTextures();
+        _maxIconsHigh = (int) (_size.Y / (_popIcon.getHeight() + _pad)) - 1;
+        _maxIconsWide = (int) (_size.X / (_popIcon.getWidth() + _pad)) - 1;
+        _maxIcons = _maxIconsHigh * _maxIconsWide;
     }
 }

@@ -36,9 +36,9 @@ public class Arena implements State {
     private Text _creatureText;
     private int _lastCreatureCount;
 
-    private Preload _preload;
+    private PreloadArena.Payload _preload;
 
-    public Arena(Preload preload) {
+    public Arena(PreloadArena.Payload preload) {
         _preload = preload;
     }
 

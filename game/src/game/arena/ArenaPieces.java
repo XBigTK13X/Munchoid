@@ -3,7 +3,7 @@ package game.arena;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Preload {
+public class ArenaPieces {
     private List<Catchable> _catchables = new ArrayList<Catchable>();
     private Floor _floor;
     private Player _player;
