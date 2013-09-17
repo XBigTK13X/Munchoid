@@ -29,15 +29,14 @@ public class VideoOptionsMenu implements State {
             }
         };
 
-        _graphicsMode = new UIButton("Graphics Mode\n" + (Options.load().GraphicsLowQuality ? "Performance" : "Presentation")) {
+        _graphicsMode = new UIButton(qualityMessage(Options.load())) {
             @Override
             public void click() {
                 Options options = Options.load();
                 options.GraphicsLowQuality = !options.GraphicsLowQuality;
                 options.save();
                 options.apply();
-                String message = options.GraphicsLowQuality ? "Performance" : "Presentation";
-                getMessage().setMessage("Graphics Mode\n" + message);
+                getMessage().setMessage(qualityMessage(options));
             }
         };
 
@@ -46,6 +45,10 @@ public class VideoOptionsMenu implements State {
         _back.setColRow(2, 3);
 
         _fullScreen.setColRow(2, 1);
+    }
+
+    private String qualityMessage(Options options) {
+        return "Graphics Mode\n" + (options.GraphicsLowQuality ? "Fast" : "Pretty");
     }
 
     @Override
