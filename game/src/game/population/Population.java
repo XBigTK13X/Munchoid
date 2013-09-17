@@ -24,8 +24,8 @@ public class Population {
         _size = size;
     }
 
-    public int deathsCausedBy(Disease disease) {
-        return (int) (Disease.InfluenceMultiplier * disease.getDeathsPerInfluence() * (_size / Disease.PopulationInfluence));
+    public int deathsCausedBy(DeathCause deathCause) {
+        return (int) (DeathCause.InfluenceMultiplier * deathCause.getDeathsPerInfluence() * (_size / DeathCause.PopulationInfluence));
 
     }
 }

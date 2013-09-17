@@ -61,7 +61,7 @@ public class MainMenu implements State {
                     catch (RuntimeException e) {
                         _load.setVisible(false);
                         if (e.getMessage() != null) {
-                            TextPool.get().write("Unable to load the save file.\n" + e.getMessage(), Screen.pos(10, 70));
+                            TextPool.get().write("Unable to load the save file.\n" + e.getMessage(), Screen.pos(40, 70));
                         }
                         else {
                             Logger.exception(e);

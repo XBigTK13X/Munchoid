@@ -15,8 +15,8 @@ public class PreloadPopulationOverview implements State {
     public class Payload {
         private Population _population;
         private PopulationHUD _populationHud;
-        private DiseaseMonitor _top;
-        private DiseaseMonitor _bottom;
+        private DeathCauseMonitor _top;
+        private DeathCauseMonitor _bottom;
 
         public void cache(Population population) {
             _population = population;
@@ -35,7 +35,7 @@ public class PreloadPopulationOverview implements State {
             return _populationHud;
         }
 
-        public void cache(DiseaseMonitor monitor, boolean top) {
+        public void cache(DeathCauseMonitor monitor, boolean top) {
             if (top) {
                 _top = monitor;
             }
@@ -44,11 +44,11 @@ public class PreloadPopulationOverview implements State {
             }
         }
 
-        public DiseaseMonitor getTop() {
+        public DeathCauseMonitor getTop() {
             return _top;
         }
 
-        public DiseaseMonitor getBottom() {
+        public DeathCauseMonitor getBottom() {
             return _bottom;
         }
     }
@@ -111,10 +111,10 @@ public class PreloadPopulationOverview implements State {
                 _payload.cache(new PopulationHUD(_payload.getPopulation(), hudSize, hudPosition));
                 break;
             case 2:
-                _payload.cache(new DiseaseMonitor(false), false);
+                _payload.cache(new DeathCauseMonitor(false), false);
                 break;
             case 3:
-                _payload.cache(new DiseaseMonitor(true), true);
+                _payload.cache(new DeathCauseMonitor(true), true);
             case 4:
                 _payload.getPopulationHud().regenerateTextures();
                 break;

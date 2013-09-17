@@ -15,6 +15,10 @@ public class GameConfig {
 
     //Debugging / Development
     public static final boolean DevShortcutsEnabled = true;
+    public static final boolean DevTournyTest = false;
+    public static final boolean DevPopulationTest = false;
+    public static final boolean DevBattleTest = false;
+
     public static final boolean DevEndToEndStateLoadTest = false;
     public static final boolean DevFlipEnabled = false;
     public static final boolean DevPartSortingEnabled = false;
@@ -23,9 +27,6 @@ public class GameConfig {
     public static final boolean DevDebugJointGridWithSquares = false;
     public static final boolean DevAlwaysSelectForces = false;
     public static final boolean DevUseOldCatchableMergeAlgorithm = false;
-    public static final boolean DevTournyTest = false;
-    public static final boolean DevPopulationTest = false;
-    public static final boolean DevBattleTest = false;
 
     //Debug/Development Logging toggles
     public static final boolean DevBattleLog = false;

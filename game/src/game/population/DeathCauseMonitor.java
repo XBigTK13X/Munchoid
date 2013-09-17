@@ -8,16 +8,16 @@ import sps.text.TextPool;
 
 import java.util.List;
 
-public class DiseaseMonitor {
+public class DeathCauseMonitor {
     private Text _display;
-    private List<Disease> _diseases;
+    private List<DeathCause> _deathCauses;
     private String _header;
     private boolean _top;
 
     private int _disableIndex = 0;
 
-    public DiseaseMonitor(boolean top) {
-        _diseases = Diseases.get().getRandom(top, GameConfig.NumberOfTournaments);
+    public DeathCauseMonitor(boolean top) {
+        _deathCauses = DeathCauses.get().getRandom(top, GameConfig.NumberOfTournaments);
         _header = top ? "TOP" : "BOTTOM";
         _top = top;
         generateDisplay();
@@ -27,13 +27,15 @@ public class DiseaseMonitor {
         _display = TextPool.get().write("", _top ? Screen.pos(5, 95) : Screen.pos(75, 95));
     }
 
-    public void disableOne() {
-        _diseases.get(_disableIndex++).setActive(false);
+    public DeathCause disableOne() {
+        DeathCause disabled = _deathCauses.get(_disableIndex++);
+        disabled.setActive(false);
+        return disabled;
     }
 
     public int totalDeaths(Population population) {
         int totalDeaths = 0;
-        for (Disease d : _diseases) {
+        for (DeathCause d : _deathCauses) {
             if (d.isActive()) {
                 totalDeaths += population.deathsCausedBy(d);
                 if (GameConfig.DevDebugPopulationGrowth) {
@@ -46,14 +48,14 @@ public class DiseaseMonitor {
 
     public void update() {
         String tD = _header + "\n";
-        for (Disease d : _diseases) {
-            tD += diseaseDisplay(d);
+        for (DeathCause d : _deathCauses) {
+            tD += display(d);
         }
         _display.setMessage(tD);
         _display.setScale(.5f);
     }
 
-    private String diseaseDisplay(Disease d) {
+    private String display(DeathCause d) {
         return d.getName() + (d.isActive() ? "" : "(D)") + "\n";
     }
 }

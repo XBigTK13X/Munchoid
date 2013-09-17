@@ -1,18 +1,18 @@
 package game.save;
 
 import game.Score;
-import game.population.DiseaseMonitor;
+import game.population.DeathCauseMonitor;
 import game.population.Population;
 import game.population.PopulationHUD;
 
 public class GameSnapshot {
-    public static final int Version = 2;
+    public static final int Version = 3;
 
     public Population Population;
     public PopulationHUD PopulationHud;
     public String RegionName;
-    public DiseaseMonitor TopDiseases;
-    public DiseaseMonitor BottomDiseases;
+    public DeathCauseMonitor TopDeathCauses;
+    public DeathCauseMonitor BottomDeathCauses;
     public Score Score;
     public int RecordedVersion;
     public int TournamentsPlayed;

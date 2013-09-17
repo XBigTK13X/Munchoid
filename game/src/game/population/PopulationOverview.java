@@ -22,9 +22,10 @@ public class PopulationOverview implements State {
 
     private Population _population;
 
-    private DiseaseMonitor _topDiseases;
-    private DiseaseMonitor _bottomDiseases;
+    private DeathCauseMonitor _topCauses;
+    private DeathCauseMonitor _bottomCauses;
 
+    private String _regionName;
     private PopulationHUD _populationHud;
     private Text _populationCountDisplay;
 
@@ -33,7 +34,9 @@ public class PopulationOverview implements State {
     private int _tournamentsPlayed = 0;
     private int _tournamentWins = 0;
 
-    private String _regionName;
+    private boolean _resultAnnouncement = false;
+    private DeathCause _topEradicated;
+    private DeathCause _bottomEradicated;
 
     private boolean _restoredFromSaveFile;
 
@@ -50,8 +53,8 @@ public class PopulationOverview implements State {
         _population = snapshot.Population;
         _populationHud = snapshot.PopulationHud;
         _populationHud.regenerateTextures();
-        _topDiseases = snapshot.TopDiseases;
-        _bottomDiseases = snapshot.BottomDiseases;
+        _topCauses = snapshot.TopDeathCauses;
+        _bottomCauses = snapshot.BottomDeathCauses;
         _tournamentsPlayed = snapshot.TournamentsPlayed;
         _tournamentWins = snapshot.TournamentWins;
     }
@@ -60,8 +63,8 @@ public class PopulationOverview implements State {
         GameSnapshot result = new GameSnapshot();
         result.Score = Score.get();
         result.Population = _population;
-        result.BottomDiseases = _bottomDiseases;
-        result.TopDiseases = _topDiseases;
+        result.BottomDeathCauses = _bottomCauses;
+        result.TopDeathCauses = _topCauses;
         result.RegionName = _regionName;
         result.PopulationHud = _populationHud;
         result.Population = _population;
@@ -77,24 +80,24 @@ public class PopulationOverview implements State {
             _population = _preload.getPopulation();
             _populationHud = _preload.getPopulationHud();
 
-            _topDiseases = _preload.getTop();
-            _bottomDiseases = _preload.getBottom();
+            _topCauses = _preload.getTop();
+            _bottomCauses = _preload.getBottom();
 
             _regionName = __regionNames.makeWord(RNG.next(7, 10));
             _regionName = WordUtils.capitalize(_regionName);
         }
 
-        _topDiseases.generateDisplay();
-        _bottomDiseases.generateDisplay();
+        _topCauses.generateDisplay();
+        _bottomCauses.generateDisplay();
         _populationCountDisplay = TextPool.get().write("", Screen.pos(30, 95));
 
-        updateDiseaseDisplay();
+        updateDeathDisplays();
         _continuePrompt = TextPool.get().write("Press " + Commands.get("Confirm") + " to enter the next tournament", Screen.pos(10, 10));
     }
 
-    private void updateDiseaseDisplay() {
-        _topDiseases.update();
-        _bottomDiseases.update();
+    private void updateDeathDisplays() {
+        _topCauses.update();
+        _bottomCauses.update();
 
         _populationHud.recalcIcons();
         NumberFormat f = NumberFormat.getNumberInstance();
@@ -104,24 +107,25 @@ public class PopulationOverview implements State {
     }
 
     private void simluatePopulationChange() {
-        int totalDeaths = _bottomDiseases.totalDeaths(_population) + _topDiseases.totalDeaths(_population);
+        int totalDeaths = _bottomCauses.totalDeaths(_population) + _topCauses.totalDeaths(_population);
         _population.setSize(_population.getSize() - totalDeaths);
         _population.grow();
-        updateDiseaseDisplay();
+        updateDeathDisplays();
     }
 
     public void tournamentResult(boolean win) {
+        _topEradicated = null;
         if (win) {
-            _topDiseases.disableOne();
+            _topEradicated = _topCauses.disableOne();
             _tournamentWins++;
             MetaData.printWin();
         }
         else {
             MetaData.printLose();
         }
-        _bottomDiseases.disableOne();
+        _bottomEradicated = _bottomCauses.disableOne();
         _tournamentsPlayed++;
-        simluatePopulationChange();
+        _resultAnnouncement = true;
     }
 
     @Override
@@ -135,27 +139,34 @@ public class PopulationOverview implements State {
 
     @Override
     public void update() {
-        if (gameFinished()) {
-            _continuePrompt.setMessage("Press " + Commands.get("Confirm") + " to see the outcome of your efforts.");
+        if (_resultAnnouncement) {
+            //TODO DeathCause eradicated notification
+            simluatePopulationChange();
+            _resultAnnouncement = false;
         }
-        if (InputWrapper.confirm() || GameConfig.DevBotEnabled) {
-            if (!gameFinished()) {
-                StateManager.get().push(new PreloadArena());
+        else {
+            if (gameFinished()) {
+                _continuePrompt.setMessage("Press " + Commands.get("Confirm") + " to see the outcome of your efforts.");
             }
-            else {
-                StateManager.get().push(new EndGame(_tournamentWins));
-            }
-        }
-        if (GameConfig.DevPopulationTest) {
-            boolean a = InputWrapper.pop();
-            boolean b = InputWrapper.push();
-            boolean c = InputWrapper.moveRight();
-            if (a || b || c) {
-                if (gameFinished() || c) {
-                    StateManager.reset().push(new PreloadPopulationOverview());
+            if (InputWrapper.confirm() || GameConfig.DevBotEnabled) {
+                if (!gameFinished()) {
+                    StateManager.get().push(new PreloadArena());
                 }
                 else {
-                    tournamentResult(a);
+                    StateManager.get().push(new EndGame(_tournamentWins));
+                }
+            }
+            if (GameConfig.DevPopulationTest) {
+                boolean a = InputWrapper.pop();
+                boolean b = InputWrapper.push();
+                boolean c = InputWrapper.moveRight();
+                if (a || b || c) {
+                    if (gameFinished() || c) {
+                        StateManager.reset().push(new PreloadPopulationOverview());
+                    }
+                    else {
+                        tournamentResult(a);
+                    }
                 }
             }
         }
