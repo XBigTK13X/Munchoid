@@ -35,6 +35,7 @@ public class Game implements ApplicationListener {
 
         Assets.get().fontPack().setDefault("Economica-Regular.ttf", 60);
         Assets.get().fontPack().cacheFont("keys", "Keycaps Regular.ttf", 30);
+        Assets.get().fontPack().cacheFont("UIButton", "verdanab.ttf", 70);
 
         Window.setWindowBackground(Color.BLACK);
         Window.get(false).setStrategy(new FrameStrategy());
@@ -74,17 +75,17 @@ public class Game implements ApplicationListener {
     private void update() {
         Input.get().update();
 
-        //TODO Disable for production?
-        if (InputWrapper.moveDown() && InputWrapper.moveUp()) {
-            StateManager.reset().push(new MainMenu());
-        }
-
-        if (InputWrapper.devConsole()) {
-            DevConsole.get().toggle();
-        }
-        if (InputWrapper.fullScreen()) {
-            Options options = Options.load();
-            Window.toggleFullScreen(options.FullScreen, options.WindowResolutionX, options.WindowResolutionY);
+        if (GameConfig.DevShortcutsEnabled) {
+            if (InputWrapper.moveDown() && InputWrapper.moveUp()) {
+                StateManager.reset().push(new MainMenu());
+            }
+            if (InputWrapper.fullScreen()) {
+                Options options = Options.load();
+                Window.toggleFullScreen(!options.FullScreen, options.WindowResolutionX, options.WindowResolutionY);
+            }
+            if (InputWrapper.devConsole()) {
+                DevConsole.get().toggle();
+            }
         }
 
         if (InputWrapper.pause()) {
@@ -107,6 +108,7 @@ public class Game implements ApplicationListener {
             if (GameConfig.OptShowFPS) {
                 Logger.devConsole("" + Gdx.graphics.getFramesPerSecond() + ": " + Gdx.graphics.getDeltaTime());
             }
+
             Window.clear();
             Window.get(true).setListening(true);
 

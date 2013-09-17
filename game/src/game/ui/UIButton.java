@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.creatures.style.Outline;
 import sps.bridge.Command;
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.display.Window;
@@ -52,6 +53,7 @@ public abstract class UIButton {
         _height = (int) Screen.height(20);
 
         _message = TextPool.get().write(text, new Point2(0, 0));
+        _message.setFont("UIButton", 60);
 
         Color[][] base = ProcTextures.gradient(_width, _height, Color.WHITE, Color.GRAY, false);
         Outline.single(base, Color.WHITE, 3);
@@ -70,12 +72,18 @@ public abstract class UIButton {
         });
 
         setXY(x, y);
+
+        int tries = 5;
+        Logger.info(_message.getMessage() + "," + _width + "," + _message.getBounds().width);
+        while (_width < _message.getBounds().width && tries-- > 0) {
+            _message.setMessage(_message.getMessage().replace(" ", "\n"));
+        }
     }
 
     private void setXY(int x, int y) {
         int mW = (int) _message.getBounds().width;
         int mH = (int) _message.getBounds().height;
-        _message.setPosition(x + (_width - mW) / 2, y + (_height - mH) / 2 + mH);
+        _message.setPosition(x + 5, y + mH + ((_height - mH) / 2));
         _sprite.setPosition(x, y);
     }
 

@@ -50,7 +50,6 @@ public class Text {
         _fontPointSize = fontPointSize;
         setMessage(message);
         effect.init(this);
-
     }
 
     public void hide() {
@@ -109,7 +108,7 @@ public class Text {
 
     public void setMessage(String message) {
         _message = message;
-        _bounds = Assets.get().fontPack().getFont(_fontLabel, _fontPointSize).getMultiLineBounds(_message);
+        recalcBounds();
     }
 
     public BitmapFont.TextBounds getBounds() {
@@ -130,5 +129,15 @@ public class Text {
 
     public void setMoveable(boolean moveable) {
         _canMove = moveable;
+    }
+
+    public void setFont(String fontLabel,int pointSize){
+        _fontPointSize = pointSize;
+        _fontLabel = fontLabel;
+        recalcBounds();
+    }
+
+    private void recalcBounds(){
+        _bounds = Assets.get().fontPack().getFont(_fontLabel, _fontPointSize).getMultiLineBounds(_message);
     }
 }

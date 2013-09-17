@@ -10,12 +10,14 @@ import java.util.Map;
 
 public class FontPack {
     Map<String, Map<Integer, BitmapFont>> _fonts;
+    Map<String, String> _fontLabels;
     private int _defaultSize;
 
     private static final String __defaultLabel = "default";
 
     public FontPack() {
         _fonts = new HashMap<>();
+        _fontLabels = new HashMap<>();
     }
 
     public BitmapFont getDefault() {
@@ -27,15 +29,30 @@ public class FontPack {
         cacheFont(__defaultLabel, fontName, pointSize);
     }
 
-    //TODO If a font point is requested that hasn't been cached, generate a cached copy instead of returning null
     public BitmapFont getFont(String label, Integer pointSize) {
         if (label == null) {
             return getDefault();
         }
+        cacheFont(label, pointSize);
         return _fonts.get(label).get(pointSize);
     }
 
+    private void cacheFont(String label, int pointSize) {
+        cacheFont(label, _fontLabels.get(label), pointSize);
+    }
+
     public void cacheFont(String label, String fontName, int pointSize) {
+        if (_fonts.containsKey(label) && _fonts.get(label).containsKey(pointSize)) {
+            return;
+        }
+
+        if (!_fontLabels.containsKey(label)) {
+            if (fontName == null) {
+                throw new RuntimeException("A font must be cached with a label and font name before it can be referenced.");
+            }
+            _fontLabels.put(label, fontName);
+        }
+
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(new FileHandle(Loader.get().font(fontName)));
         if (!_fonts.containsKey(label)) {
             _fonts.put(label, new HashMap<Integer, BitmapFont>());
