@@ -12,7 +12,9 @@ import game.GameConfig;
 import sps.bridge.DrawDepth;
 import sps.core.Point2;
 import sps.core.SpsConfig;
-import sps.display.*;
+import sps.display.Assets;
+import sps.display.DrawAPICall;
+import sps.display.Screen;
 import sps.draw.DrawAPI;
 import sps.entities.HitTest;
 
@@ -181,14 +183,12 @@ public class Renderer {
 
     }
 
-    private static final int __lineHeightPixels = 50;
-
     // String rendering
     public void draw(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale) {
         if (content.contains("\n")) {
             int line = 0;
             for (String s : content.split("\n")) {
-                render(s, location.add(0, line++ * -__lineHeightPixels), filter, fontLabel, pointSize, scale);
+                render(s, location.add(0, line++ * -pointSize), filter, fontLabel, pointSize, scale);
             }
         }
         else {
