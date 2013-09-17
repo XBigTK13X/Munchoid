@@ -210,6 +210,7 @@ public class Renderer {
             _nextToWrite.setScale(scale);
 
             if (GameConfig.OptEnableFontOutlines) {
+                //FIXME Really messy. Distance field fonts might remove the need for an outline.
                 _nextToWrite.setColor(0, 0, 0, 1);
 
                 int offset = 2;
