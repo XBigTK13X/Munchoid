@@ -44,6 +44,10 @@ public class InputWrapper {
         return isDown("Push");
     }
 
+    public static boolean pass() {
+        return isDown("Pass");
+    }
+
     private static boolean isDown(String command) {
         return Input.get().isActive(Commands.get(command));
     }

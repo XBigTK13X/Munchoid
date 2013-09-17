@@ -79,6 +79,9 @@ public class Game implements ApplicationListener {
             if (InputWrapper.moveDown() && InputWrapper.moveUp()) {
                 StateManager.reset().push(new MainMenu());
             }
+            if (InputWrapper.moveRight() && InputWrapper.moveLeft()) {
+                StateManager.reset().push(new Battle());
+            }
             if (InputWrapper.fullScreen()) {
                 Options options = Options.load();
                 Window.toggleFullScreen(!options.FullScreen, options.WindowResolutionX, options.WindowResolutionY);

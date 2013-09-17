@@ -22,7 +22,6 @@ public class GameConfig {
     public static final boolean DevDebugJointGrid = false;
     public static final boolean DevDebugJointGridWithSquares = false;
     public static final boolean DevAlwaysSelectForces = false;
-    public static final boolean DevDrainEnergyCommand = false;
     public static final boolean DevUseOldCatchableMergeAlgorithm = false;
     public static final boolean DevTournyTest = false;
     public static final boolean DevPopulationTest = false;

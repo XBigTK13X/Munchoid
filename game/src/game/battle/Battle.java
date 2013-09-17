@@ -2,7 +2,6 @@ package game.battle;
 
 import game.GameConfig;
 import game.InputWrapper;
-import game.save.Persistence;
 import game.Score;
 import game.creatures.Creature;
 import game.forces.Force;
@@ -123,16 +122,14 @@ public class Battle implements State {
     }
 
     private void battleStep() {
-        if (InputWrapper.confirm() && GameConfig.DevDrainEnergyCommand) {
-            _left.burnEnergy();
-        }
+        if (GameConfig.DevShortcutsEnabled) {
+            if (InputWrapper.pop()) {
+                waitForPlayerToAdvance(true);
+            }
 
-        if (InputWrapper.pop() && GameConfig.DevShortcutsEnabled) {
-            waitForPlayerToAdvance(true);
-        }
-
-        if (InputWrapper.push() && GameConfig.DevShortcutsEnabled) {
-            waitForPlayerToAdvance(false);
+            if (InputWrapper.push()) {
+                waitForPlayerToAdvance(false);
+            }
         }
 
         if (_left.getCoolDown().isCooled()) {
@@ -142,7 +139,7 @@ public class Battle implements State {
                     usableForces++;
                 }
             }
-            if (usableForces == 0) {
+            if (usableForces == 0 || InputWrapper.pass()) {
                 TextPool.get().write("Recharging...", _left.getLocation().add(Screen.pos(0, 10)).add(0, _left.getBody().getHeight()), _left.getCoolDown().getSecondsMax());
                 _left.getCoolDown().reset();
             }
@@ -167,7 +164,6 @@ public class Battle implements State {
                     playerActivate(force);
                 }
             }
-
         }
         else if (_right.getCoolDown().isCooled()) {
             //TODO Smarter attacks
