@@ -8,6 +8,7 @@ import sps.states.StateManager;
 public class VideoOptionsMenu implements State {
     UIButton _back;
     UIButton _fullScreen;
+    UIButton _graphicsMode;
 
     @Override
     public void create() {
@@ -28,6 +29,20 @@ public class VideoOptionsMenu implements State {
             }
         };
 
+        _graphicsMode = new UIButton("Graphics Mode\n" + (Options.load().GraphicsLowQuality ? "Performance" : "Presentation")) {
+            @Override
+            public void click() {
+                Options options = Options.load();
+                options.GraphicsLowQuality = !options.GraphicsLowQuality;
+                options.save();
+                options.apply();
+                String message = options.GraphicsLowQuality ? "Performance" : "Presentation";
+                getMessage().setMessage("Graphics Mode\n" + message);
+            }
+        };
+
+        _graphicsMode.setColRow(1, 1);
+
         _back.setColRow(2, 3);
 
         _fullScreen.setColRow(2, 1);
@@ -37,6 +52,7 @@ public class VideoOptionsMenu implements State {
     public void draw() {
         _back.draw();
         _fullScreen.draw();
+        _graphicsMode.draw();
     }
 
     @Override

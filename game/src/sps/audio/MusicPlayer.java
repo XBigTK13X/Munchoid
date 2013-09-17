@@ -9,7 +9,12 @@ public abstract class MusicPlayer {
 
     public static void set(MusicPlayer musicPlayer) {
         reset();
-        __instance = musicPlayer;
+        if (SpsConfig.get().musicEnabled) {
+            __instance = musicPlayer;
+        }
+        else {
+            __instance = new MuteMusicPlayer();
+        }
     }
 
     public static void reset() {
@@ -21,18 +26,23 @@ public abstract class MusicPlayer {
 
     public static MusicPlayer get(MusicPlayer player) {
 
-        if (__instance == null) {
-            if (SpsConfig.get().musicEnabled && player != null) {
-                __instance = player;
-            }
-            else {
-                __instance = new MuteMusicPlayer();
-            }
+        if (!SpsConfig.get().musicEnabled) {
+            __instance = new MuteMusicPlayer();
         }
         else {
-            if (SpsConfig.get().musicEnabled) {
-                __instance.stop();
-                __instance = player;
+            if (__instance == null) {
+                if (SpsConfig.get().musicEnabled && player != null) {
+                    __instance = player;
+                }
+                else {
+                    __instance = new MuteMusicPlayer();
+                }
+            }
+            else {
+                if (SpsConfig.get().musicEnabled) {
+                    __instance.stop();
+                    __instance = player;
+                }
             }
         }
         return __instance;

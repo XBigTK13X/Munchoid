@@ -100,4 +100,8 @@ public abstract class UIButton {
         _message.setVisible(visible);
         _visible = visible;
     }
+
+    public Text getMessage() {
+        return _message;
+    }
 }
