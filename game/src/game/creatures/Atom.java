@@ -1,12 +1,10 @@
 package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
-import sps.core.RNG;
 
 public class Atom {
     public static int count = 0;
     private Color _color;
-    private int survivalChance = 5;
     private float _localX;
     private float _localY;
     private boolean _isActive = true;
@@ -31,10 +29,6 @@ public class Atom {
 
     public void setActive(boolean active) {
         _isActive = active;
-    }
-
-    public boolean isLucky() {
-        return RNG.percent(survivalChance);
     }
 
     public void setColor(Color color) {
