@@ -26,7 +26,7 @@ public class GameConfig {
     public static final boolean DevUseOldCatchableMergeAlgorithm = false;
     public static final boolean DevTournyTest = false;
     public static final boolean DevPopulationTest = false;
-    public static final boolean DevBattleTest = true;
+    public static final boolean DevBattleTest = false;
 
     //Debug/Development Logging toggles
     public static final boolean DevBattleLog = false;
@@ -60,7 +60,7 @@ public class GameConfig {
     //Creature construction
     public static final Point2 MinBodyPartSize = Screen.pos(7, 7);
     public static final Point2 MaxBodyPartSize = Screen.pos(13, 13);
-    public static final int MinBodyParts = 6;
+    public static final int MinBodyParts = 1;
     public static final int MaxBodyParts = 10;
     public static final int InitEnabledStats = 6;
     public static final int MinStatInit = 2;
