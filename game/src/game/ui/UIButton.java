@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.creatures.style.Outline;
 import sps.bridge.Command;
-import sps.core.Logger;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.display.Window;
@@ -74,7 +73,6 @@ public abstract class UIButton {
         setXY(x, y);
 
         int tries = 5;
-        Logger.info(_message.getMessage() + "," + _width + "," + _message.getBounds().width);
         while (_width < _message.getBounds().width && tries-- > 0) {
             _message.setMessage(_message.getMessage().replace(" ", "\n"));
         }
