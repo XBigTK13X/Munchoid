@@ -34,9 +34,7 @@ public class PopulationOverview implements State {
     private int _tournamentsPlayed = 0;
     private int _tournamentWins = 0;
 
-    private boolean _resultAnnouncement = false;
-    private DeathCause _topEradicated;
-    private DeathCause _bottomEradicated;
+    private DeathCauseEradicated _eradicated;
 
     private boolean _restoredFromSaveFile;
 
@@ -114,23 +112,25 @@ public class PopulationOverview implements State {
     }
 
     public void tournamentResult(boolean win) {
-        _topEradicated = null;
+        DeathCause top = null;
         if (win) {
-            _topEradicated = _topCauses.disableOne();
+            top = _topCauses.disableOne();
             _tournamentWins++;
             MetaData.printWin();
         }
         else {
             MetaData.printLose();
         }
-        _bottomEradicated = _bottomCauses.disableOne();
+        _eradicated = new DeathCauseEradicated(top, _bottomCauses.disableOne());
         _tournamentsPlayed++;
-        _resultAnnouncement = true;
     }
 
     @Override
     public void draw() {
         _populationHud.draw();
+        if (_eradicated != null) {
+            _eradicated.draw();
+        }
     }
 
     private boolean gameFinished() {
@@ -139,10 +139,14 @@ public class PopulationOverview implements State {
 
     @Override
     public void update() {
-        if (_resultAnnouncement) {
-            //TODO DeathCause eradicated notification
-            simluatePopulationChange();
-            _resultAnnouncement = false;
+        if (_eradicated != null) {
+            if (_eradicated.isActive()) {
+                _eradicated.update();
+            }
+            else {
+                simluatePopulationChange();
+                _eradicated = null;
+            }
         }
         else {
             if (gameFinished()) {
