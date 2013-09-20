@@ -50,6 +50,18 @@ public class Grid {
         return new Point2(mult.X * xOffset, mult.Y * yOffset).add(partCenterOffset);
     }
 
+    //Based on the attached joints, determine a part's rotation in degrees
+    public static int getRotationRelativeToParentInDegrees(BodyPart part) {
+        BodyPart parent = part.getParent();
+        if (parent == null) {
+            return 0;
+        }
+
+        Point2 mult = __gridRots[part.getParentConnection().GridLoc - 1];
+
+        return (int) (Math.atan2(mult.Y, mult.X) * 180 / Math.PI);
+    }
+
     private static BoundingBox gridRange(Integer gridLoc, int width, int height) {
         //Convert a grid location (1->9) into coordinate ranges.
         // For example, location 1 corresponds to the range (0,0)->(33,33)

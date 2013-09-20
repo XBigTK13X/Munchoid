@@ -103,6 +103,7 @@ public class BodyPart {
 
     public void calculateOrigins() {
         setPosition(Grid.getPositionRelativeToParent(this));
+        setRotation(Grid.getRotationRelativeToParentInDegrees(this));
         if (_joints != null && _joints.getAll().size() > 0) {
             for (Joint joint : _joints.getAll()) {
                 if (joint.getChild() != null) {
