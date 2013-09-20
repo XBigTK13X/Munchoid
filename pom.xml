@@ -10,6 +10,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
     <name>Game Meta</name>
     <url>http://maven.apache.org</url>
@@ -26,7 +28,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.0</version>
                 <configuration>
-                    <compilerVersion>1.6</compilerVersion>
+                    <compilerVersion>1.7</compilerVersion>
                 </configuration>
             </plugin>
             <plugin>
