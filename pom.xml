@@ -17,7 +17,6 @@
     <url>http://maven.apache.org</url>
     <modules>
         <module>game</module>
-        <module>launcher</module>
     </modules>
 
     <build>
