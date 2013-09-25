@@ -1,6 +1,6 @@
 package game.population;
 
-public class DeathCause implements Comparable {
+public class DeathCause implements Comparable<DeathCause> {
     public static final int PopulationInfluence = 100_000;
     //TODO this might need to increase as the population growths larger
     public static final int InfluenceMultiplier = 63;
@@ -33,7 +33,7 @@ public class DeathCause implements Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
-        return (int) _deathsPerInfluence - (int) ((DeathCause) o)._deathsPerInfluence;
+    public int compareTo(DeathCause o) {
+        return (int) (_deathsPerInfluence - o._deathsPerInfluence);
     }
 }

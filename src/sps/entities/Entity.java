@@ -10,7 +10,7 @@ import sps.display.Animation;
 import sps.display.SpriteEdge;
 import sps.display.SpriteInfo;
 
-public class Entity implements Comparable {
+public class Entity implements Comparable<Entity> {
 
     private static int isNeg = 1;
     private static int factorsOfSpriteHeight = 0;
@@ -157,12 +157,6 @@ public class Entity implements Comparable {
         return _entityType;
     }
 
-    @Override
-    public int compareTo(Object o) {
-        Entity e = (Entity) o;
-        return getDepth().DrawDepth - e.getDepth().DrawDepth;
-    }
-
     public void recalculateEdge() {
         if (_graphic.hasDynamicEdges()) {
             _graphic.setEdge(SpriteEdge.determine(_entityType, _location));
@@ -180,5 +174,10 @@ public class Entity implements Comparable {
     public void setSize(int width, int height) {
         _width = width;
         _height = height;
+    }
+
+    @Override
+    public int compareTo(Entity entity) {
+        return getDepth().DrawDepth - entity.getDepth().DrawDepth;
     }
 }
