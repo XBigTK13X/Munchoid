@@ -1,8 +1,11 @@
 package sps.io;
 
+import com.badlogic.gdx.files.FileHandle;
 import org.apache.commons.io.FileUtils;
 import sps.bridge.Command;
 import sps.bridge.Commands;
+import sps.bridge.Contexts;
+import sps.bridge.Sps;
 import sps.core.Loader;
 import sps.core.Logger;
 
@@ -21,34 +24,42 @@ public class InputBindings {
     }
 
     public InputBindings() {
+        Logger.info("Parsing input.cfg");
         try {
-            Logger.info("Parsing input.cfg");
-            for (String line : FileUtils.readLines(Loader.get().data("input.cfg"))) {
-                if (!line.contains("##") && line.length() > 1) {
-                    String key = line.split(",")[0];
-                    String value = line.split(",")[1];
-                    Keys keyBinding = Keys.get(value.split("-")[0]);
-                    ControllerInput controllerInput = ControllerInput.parse(value.split("-")[1]);
-                    Commands.get(key).bind(controllerInput, keyBinding);
-                }
-            }
+            fromConfig(FileUtils.readLines(Loader.get().data("input.cfg")));
         }
         catch (Exception e) {
             Logger.exception(e);
         }
     }
 
-    public static void persistCommandsToConfig() {
-        File input = Loader.get().data("input.cfg");
-        List<String> lines = new ArrayList<String>();
+    public static List<String> toConfig() {
+        List<String> result = new ArrayList<>();
         for (Command command : Commands.values()) {
-            lines.add(command.name() + "," + command.key().name() + "-" + command.controllerInput().serialize());
+            result.add(command.name() + "," + command.key().name() + "-" + command.controllerInput().serialize());
         }
+        return result;
+    }
+
+    public static void fromConfig(List<String> config) {
         try {
-            FileUtils.writeLines(input, lines);
+            for (String line : config) {
+                if (!line.contains("##") && line.length() > 1) {
+                    String key = line.split(",")[0];
+                    String value = line.split(",")[1];
+                    Keys keyBinding = Keys.get(value.split("-")[0]);
+                    ControllerInput controllerInput = ControllerInput.parse(value.split("-")[1]);
+                    //Unless otherwise defined in bridge.cfg already,
+                    // init a new binding to always lock after 1 press
+                    if (Commands.get(key) == null) {
+                        Commands.add(new Command(key, Contexts.get(Sps.Contexts.All)));
+                    }
+                    Commands.get(key).bind(controllerInput, keyBinding);
+                }
+            }
         }
-        catch (IOException e) {
-            Logger.exception(e, false);
+        catch (Exception e) {
+            Logger.exception(e);
         }
     }
 }

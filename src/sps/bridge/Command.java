@@ -45,11 +45,15 @@ public class Command implements Comparable<Command> {
         if (obj == null) {
             return false;
         }
-        return obj.hashCode() == hashCode();
+        Command c = (Command) obj;
+        return c._name.equalsIgnoreCase(_name);
     }
 
     @Override
     public String toString() {
+        if (key() == null) {
+            return "[Undefined]";
+        }
         return "[" + key().toString() + "]";
     }
 

@@ -9,6 +9,7 @@ import game.creatures.PartFunction;
 import game.population.PreloadPopulationOverview;
 import game.pregame.MainMenu;
 import game.save.Options;
+import game.test.SkeletonTest;
 import sps.bridge.SpriteTypes;
 import sps.bridge.Sps;
 import sps.core.DevConsole;
@@ -31,7 +32,7 @@ public class Game implements ApplicationListener {
     @Override
     public void create() {
         RNG.seed((int) System.currentTimeMillis());
-        Sps.setup();
+        Sps.setup(true);
 
         Assets.get().fontPack().setDefault("Economica-Regular.ttf", 60);
         Assets.get().fontPack().cacheFont("keys", "Keycaps Regular.ttf", 30);
@@ -52,6 +53,9 @@ public class Game implements ApplicationListener {
         }
         else if (GameConfig.DevBattleTest) {
             start = new Battle();
+        }
+        else if (GameConfig.DevSkeletonTest) {
+            start = new SkeletonTest();
         }
         else {
             start = new MainMenu();
@@ -76,10 +80,10 @@ public class Game implements ApplicationListener {
         Input.get().update();
 
         if (GameConfig.DevShortcutsEnabled) {
-            if (InputWrapper.moveDown() && InputWrapper.moveUp()) {
-                StateManager.reset().push(new MainMenu());
+            if (InputWrapper.moveDown() && InputWrapper.moveUp() && InputWrapper.debug1()){
+                    StateManager.reset().push(new MainMenu());
             }
-            if (InputWrapper.moveRight() && InputWrapper.moveLeft()) {
+            if (InputWrapper.moveRight() && InputWrapper.moveLeft() && InputWrapper.debug2()) {
                 StateManager.reset().push(new Battle());
             }
             if (InputWrapper.fullScreen()) {

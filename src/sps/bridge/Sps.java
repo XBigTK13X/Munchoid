@@ -5,10 +5,9 @@ import sps.core.SpsConfig;
 import sps.display.Assets;
 
 public class Sps {
-    public static void setup() {
-        Bridge.get();
+    public static void setup(boolean enableGraphics) {
         GdxNativesLoader.load();
-        Assets.get();
+        Bridge.setup(enableGraphics);
     }
 
     public static class Entities {

@@ -3,6 +3,7 @@ package game.test;
 import game.InputWrapper;
 import game.creatures.Creature;
 import sps.bridge.Commands;
+import sps.core.Logger;
 import sps.display.Screen;
 import sps.display.Window;
 import sps.io.Input;
@@ -11,7 +12,7 @@ import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
 
-public class AnimationTest implements State {
+public class SkeletonTest implements State {
 
     private Creature _creature;
     private Text _scale;
@@ -34,7 +35,8 @@ public class AnimationTest implements State {
     @Override
     public void update() {
         if (InputWrapper.confirm()) {
-            StateManager.get().push(new AnimationTest());
+            Logger.info("What");
+            StateManager.get().push(new SkeletonTest());
         }
         float diff = .01f;
         if (InputWrapper.moveUp()) {

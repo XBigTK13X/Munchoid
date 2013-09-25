@@ -1,6 +1,7 @@
 package game;
 
 import sps.bridge.Commands;
+import sps.core.Logger;
 import sps.io.Input;
 
 public class InputWrapper {
@@ -50,5 +51,13 @@ public class InputWrapper {
 
     private static boolean isDown(String command) {
         return Input.get().isActive(Commands.get(command));
+    }
+
+    public static boolean debug1() {
+        return isDown("Debug1");
+    }
+
+    public static boolean debug2() {
+        return isDown("Debug2");
     }
 }

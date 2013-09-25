@@ -28,7 +28,7 @@ public class DummyApp {
 
     public void create() {
         RNG.seed((int) System.currentTimeMillis());
-        Sps.setup();
+        Sps.setup(true);
         Window.setWindowBackground(Color.BLACK);
         Window.get(false).setStrategy(new FrameStrategy());
         Window.get(true).setStrategy(new FrameStrategy());

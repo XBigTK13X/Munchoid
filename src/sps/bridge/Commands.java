@@ -42,6 +42,9 @@ public class Commands {
     }
 
     public Command resolve(String name) {
+        if(name.equalsIgnoreCase("Confirm")){
+            int x = 0;
+        }
         return commands.get(name);
     }
 
@@ -49,7 +52,7 @@ public class Commands {
 
     public List<Command> all() {
         if (values == null) {
-            values = new ArrayList<Command>();
+            values = new ArrayList<>();
             for (String key : commands.keySet()) {
                 values.add(commands.get(key));
             }
