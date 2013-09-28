@@ -119,7 +119,7 @@ public class Renderer {
         begin();
         for (RenderCall command : _todo) {
             if (command.Sprite != null) {
-                render(command.Sprite, command.Location, command.Filter, command.Width, command.Height, command.ScaleX, command.ScaleY);
+                render(command.Sprite, command.Location, command.Filter, command.Width, command.Height, command.ScaleX, command.ScaleY, 0);
             }
             if (command.Content != null) {
                 render(command.Content, command.Location, command.Filter, command.FontLabel, command.PointSize, command.Scale);
@@ -148,35 +148,44 @@ public class Renderer {
         _drawApiCalls.add(apiCall);
     }
 
+    //TODO Push sprite manipulation into draw() calls outside of Renderer
+    // render() should only draw a passed in sprite
+    // and maybe handle draw order
 
     // Sprite rendering
     public void draw(Sprite sprite, Point2 position, DrawDepth depth, Color color) {
-        render(sprite, position, color, SpsConfig.get().spriteWidth, SpsConfig.get().spriteHeight, 1, 1);
+        render(sprite, position, color, SpsConfig.get().spriteWidth, SpsConfig.get().spriteHeight, 1, 1, 0);
     }
 
     public void draw(Sprite sprite, Point2 position, DrawDepth depth, Color color, boolean flipX, boolean flipY) {
-        render(sprite, position, color, sprite.getWidth(), sprite.getHeight(), flipX ? -1 : 1, flipY ? -1 : 1);
+        render(sprite, position, color, sprite.getWidth(), sprite.getHeight(), flipX ? -1 : 1, flipY ? -1 : 1, 0);
     }
 
     public void draw(Sprite sprite, Point2 position, DrawDepth depth, Color color, float width, float height) {
-        render(sprite, position, color, width, height, 1, 1);
+        render(sprite, position, color, width, height, 1, 1, 0);
     }
 
     Point2 pos = new Point2(0, 0);
 
     public void draw(Sprite sprite) {
         pos.reset(sprite.getX(), sprite.getY());
-        render(sprite, pos, sprite.getColor(), sprite.getWidth(), sprite.getHeight(), 1, 1);
+        render(sprite, pos, sprite.getColor(), sprite.getWidth(), sprite.getHeight(), 1, 1, 0);
     }
 
-    private void render(Sprite sprite, Point2 position, Color color, float width, float height, float scaleX, float scaleY) {
+    public void render(Sprite sprite, Point2 position, Color color, float width, float height, float scaleX, float scaleY, int rotationDegrees) {
+        render(sprite, position, color, width, height, scaleX, scaleY, rotationDegrees, 0, 0);
+    }
+
+    public void render(Sprite sprite, Point2 position, Color color, float width, float height, float scaleX, float scaleY, int rotationDegrees, int pivotX, int pivotY) {
         if (_queueListening) {
             _todo.add(new RenderCall(sprite, position, color, width, height, scaleX, scaleY));
         }
         else {
             sprite.setColor(color);
-            sprite.setSize(width, height);
-            sprite.setScale(scaleX, scaleY);
+            sprite.setOrigin(0, 0);
+            sprite.setRotation(rotationDegrees);
+            sprite.setOrigin(0, 0);
+            sprite.setSize(width * scaleX, height * scaleY);
             sprite.setPosition(position.X, position.Y);
             sprite.draw(_batch);
         }
@@ -184,6 +193,7 @@ public class Renderer {
     }
 
     // String rendering
+
     public void draw(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale) {
         if (content.contains("\n")) {
             int line = 0;

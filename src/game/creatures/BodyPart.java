@@ -7,7 +7,6 @@ import game.creatures.part.Design;
 import game.creatures.part.Designs;
 import game.creatures.style.Grid;
 import game.creatures.style.Outline;
-import sps.bridge.DrawDepths;
 import sps.core.Point2;
 import sps.display.Window;
 import sps.draw.SpriteMaker;
@@ -29,6 +28,7 @@ public class BodyPart {
     private int _health;
     private int _healthMax = 100;
     private int _rotationDegrees = 0;
+    private Point2 _pivot;
 
     private BodyPart _parent;
     private Joint _parentConnection;
@@ -103,7 +103,8 @@ public class BodyPart {
 
     public void calculateOrigins() {
         setPosition(Grid.getPositionRelativeToParent(this));
-        setRotation(Grid.getRotationRelativeToParentInDegrees(this));
+        _rotationDegrees = Grid.getRotationRelativeToParentInDegrees(this);
+        _pivot = Grid.getRotationPivot(this);
         if (_joints != null && _joints.getAll().size() > 0) {
             for (Joint joint : _joints.getAll()) {
                 if (joint.getChild() != null) {
@@ -174,10 +175,8 @@ public class BodyPart {
     }
 
     public void draw() {
-        _sprite.setRotation(_rotationDegrees);
         _joints.draw();
-
-        Window.get().draw(_sprite, getGlobalPosition(), DrawDepths.get("Atom"), _owner.getHighlight(), _width * _scale, _height * _scale);
+        Window.get().render(_sprite, getGlobalPosition(), _owner.getHighlight(), _width * _scale, _height * _scale, 1f, 1f, _rotationDegrees, (int) _pivot.X, (int) _pivot.Y);
     }
 
     public Point2 getGlobalPosition() {

@@ -36,7 +36,6 @@ public class Grid {
 
         Point2 mult = __gridRots[part.getParentConnection().GridLoc - 1];
 
-
         /*TODO Position currently based on the child center.
         /      It should factor in the parent joint and child joint
 
@@ -60,6 +59,13 @@ public class Grid {
         Point2 mult = __gridRots[part.getParentConnection().GridLoc - 1];
 
         return (int) (Math.atan2(mult.Y, mult.X) * 180 / Math.PI);
+    }
+
+    public static Point2 getRotationPivot(BodyPart part) {
+        if (part.getParent() == null) {
+            return new Point2(0, 0);
+        }
+        return __gridRots[part.getParentConnection().GridLoc - 1];
     }
 
     private static BoundingBox gridRange(Integer gridLoc, int width, int height) {
