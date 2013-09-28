@@ -1,6 +1,5 @@
 package sps.io;
 
-import com.badlogic.gdx.files.FileHandle;
 import org.apache.commons.io.FileUtils;
 import sps.bridge.Command;
 import sps.bridge.Commands;
@@ -9,8 +8,6 @@ import sps.bridge.Sps;
 import sps.core.Loader;
 import sps.core.Logger;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,11 +47,12 @@ public class InputBindings {
                     Keys keyBinding = Keys.get(value.split("-")[0]);
                     ControllerInput controllerInput = ControllerInput.parse(value.split("-")[1]);
                     //Unless otherwise defined in bridge.cfg already,
-                    // init a new binding to always lock after 1 press
+                    // init a new binding to always lock after 1 pressF
                     if (Commands.get(key) == null) {
                         Commands.add(new Command(key, Contexts.get(Sps.Contexts.All)));
                     }
                     Commands.get(key).bind(controllerInput, keyBinding);
+
                 }
             }
         }

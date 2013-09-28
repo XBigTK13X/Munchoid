@@ -42,16 +42,13 @@ public class Commands {
     }
 
     public Command resolve(String name) {
-        if(name.equalsIgnoreCase("Confirm")){
-            int x = 0;
-        }
         return commands.get(name);
     }
 
     private List<Command> values;
 
     public List<Command> all() {
-        if (values == null) {
+        if (values == null || values.size() != commands.entrySet().size()) {
             values = new ArrayList<>();
             for (String key : commands.keySet()) {
                 values.add(commands.get(key));

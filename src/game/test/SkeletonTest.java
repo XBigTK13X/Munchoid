@@ -3,7 +3,6 @@ package game.test;
 import game.InputWrapper;
 import game.creatures.Creature;
 import sps.bridge.Commands;
-import sps.core.Logger;
 import sps.display.Screen;
 import sps.display.Window;
 import sps.io.Input;
@@ -35,7 +34,6 @@ public class SkeletonTest implements State {
     @Override
     public void update() {
         if (InputWrapper.confirm()) {
-            Logger.info("What");
             StateManager.get().push(new SkeletonTest());
         }
         float diff = .01f;
