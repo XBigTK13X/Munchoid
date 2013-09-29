@@ -182,7 +182,7 @@ public class Renderer {
         }
         else {
             sprite.setColor(color);
-            sprite.setOrigin(0, 0);
+            sprite.setOrigin(pivotX, pivotY);
             sprite.setRotation(rotationDegrees);
             sprite.setOrigin(0, 0);
             sprite.setSize(width * scaleX, height * scaleY);
@@ -193,7 +193,6 @@ public class Renderer {
     }
 
     // String rendering
-
     public void draw(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale) {
         if (content.contains("\n")) {
             int line = 0;
