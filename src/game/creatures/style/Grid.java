@@ -65,7 +65,8 @@ public class Grid {
         if (part.getParent() == null) {
             return new Point2(0, 0);
         }
-        return __gridRots[part.getParentConnection().GridLoc - 1];
+        return centerOf(part.getParentConnection().GridLoc - 1, part);
+
     }
 
     private static BoundingBox gridRange(Integer gridLoc, int width, int height) {

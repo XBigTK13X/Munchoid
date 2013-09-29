@@ -23,7 +23,7 @@ public class GameConfig {
     public static final boolean DevEndToEndStateLoadTest = false;
     public static final boolean DevFlipEnabled = false;
     public static final boolean DevPartSortingEnabled = false;
-    public static final boolean DevDrawSkeleton = false;
+    public static final boolean DevDrawSkeleton = true;
     public static final boolean DevDebugJointGrid = false;
     public static final boolean DevDebugJointGridWithSquares = false;
     public static final boolean DevAlwaysSelectForces = false;
@@ -61,7 +61,7 @@ public class GameConfig {
     //Creature construction
     public static final Point2 MinBodyPartSize = Screen.pos(7, 7);
     public static final Point2 MaxBodyPartSize = Screen.pos(13, 13);
-    public static final int MinBodyParts = 1;
+    public static final int MinBodyParts = 3;
     public static final int MaxBodyParts = 10;
     public static final int InitEnabledStats = 6;
     public static final int MinStatInit = 2;
