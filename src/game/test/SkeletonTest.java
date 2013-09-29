@@ -54,9 +54,13 @@ public class SkeletonTest implements State {
             Window.get().getCamera().zoom += .1f;
             Window.get().moveCamera(-(int) Screen.width(10), -(int) Screen.height(10));
         }
-        if (Input.get().isActive(Commands.get("Debug2"), 0, false)) {
+        if (Input.get().isActive(Commands.get("Force3"), 0, false)) {
             BodyPart target = _creature.getBody().getParts().getAll().get(1);
             target.setRotation(target.getRotation() + 5);
+        }
+        if (Input.get().isActive(Commands.get("Force4"))) {
+            BodyPart target = _creature.getBody().getParts().getAll().get(1);
+            target.setRotation(0);
         }
 
         _creature.update();
@@ -66,7 +70,8 @@ public class SkeletonTest implements State {
         display += "\n" + Commands.get("MoveUp") + " scale up";
         display += "\n" + Commands.get("MoveDown") + " scale down";
         display += "\n" + Commands.get("Force1") + " scale reset";
-        display += "\n" + Commands.get("Debug2") + " pRotation++";
+        display += "\n" + Commands.get("Force3") + " pRotation++";
+        display += "\n" + Commands.get("Force4") + " pRotation=0";
         _scale.setMessage(display);
     }
 
