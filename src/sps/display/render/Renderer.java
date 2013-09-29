@@ -9,9 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import game.GameConfig;
-import sps.bridge.DrawDepth;
 import sps.core.Point2;
-import sps.core.SpsConfig;
 import sps.display.Assets;
 import sps.display.DrawAPICall;
 import sps.display.Screen;
@@ -119,7 +117,10 @@ public class Renderer {
         begin();
         for (RenderCall command : _todo) {
             if (command.Sprite != null) {
-                render(command.Sprite, command.Location, command.Filter, command.Width, command.Height, command.ScaleX, command.ScaleY, 0);
+                command.Sprite.setPosition(command.Location.X, command.Location.Y);
+                command.Sprite.setColor(command.Filter);
+                command.Sprite.setSize(command.Width * command.ScaleX, command.Height * command.ScaleY);
+                draw(command.Sprite);
             }
             if (command.Content != null) {
                 render(command.Content, command.Location, command.Filter, command.FontLabel, command.PointSize, command.Scale);
@@ -153,43 +154,20 @@ public class Renderer {
     // and maybe handle draw order
 
     // Sprite rendering
-    public void draw(Sprite sprite, Point2 position, DrawDepth depth, Color color) {
-        render(sprite, position, color, SpsConfig.get().spriteWidth, SpsConfig.get().spriteHeight, 1, 1, 0);
-    }
-
-    public void draw(Sprite sprite, Point2 position, DrawDepth depth, Color color, boolean flipX, boolean flipY) {
-        render(sprite, position, color, sprite.getWidth(), sprite.getHeight(), flipX ? -1 : 1, flipY ? -1 : 1, 0);
-    }
-
-    public void draw(Sprite sprite, Point2 position, DrawDepth depth, Color color, float width, float height) {
-        render(sprite, position, color, width, height, 1, 1, 0);
-    }
-
     Point2 pos = new Point2(0, 0);
 
     public void draw(Sprite sprite) {
         pos.reset(sprite.getX(), sprite.getY());
-        render(sprite, pos, sprite.getColor(), sprite.getWidth(), sprite.getHeight(), 1, 1, 0);
+        render(sprite);
     }
 
-    public void render(Sprite sprite, Point2 position, Color color, float width, float height, float scaleX, float scaleY, int rotationDegrees) {
-        render(sprite, position, color, width, height, scaleX, scaleY, rotationDegrees, 0, 0);
-    }
-
-    public void render(Sprite sprite, Point2 position, Color color, float width, float height, float scaleX, float scaleY, int rotationDegrees, int pivotX, int pivotY) {
+    private void render(Sprite sprite) {
         if (_queueListening) {
-            _todo.add(new RenderCall(sprite, position, color, width, height, scaleX, scaleY));
+            _todo.add(new RenderCall(sprite));
         }
         else {
-            sprite.setColor(color);
-            sprite.setOrigin(pivotX, pivotY);
-            sprite.setRotation(rotationDegrees);
-            sprite.setOrigin(0, 0);
-            sprite.setSize(width * scaleX, height * scaleY);
-            sprite.setPosition(position.X, position.Y);
             sprite.draw(_batch);
         }
-
     }
 
     // String rendering

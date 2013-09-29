@@ -28,7 +28,7 @@ public class BodyPart {
     private int _health;
     private int _healthMax = 100;
     private int _rotationDegrees = 0;
-    private Point2 _pivot;
+    private Point2 _pivot = new Point2(0, 0);
 
     private BodyPart _parent;
     private Joint _parentConnection;
@@ -176,7 +176,13 @@ public class BodyPart {
 
     public void draw() {
         _joints.draw();
-        Window.get().render(_sprite, getGlobalPosition(), _owner.getHighlight(), _width * _scale, _height * _scale, 1f, 1f, _rotationDegrees, (int) _pivot.X, (int) _pivot.Y);
+        _sprite.setColor(_owner.getHighlight());
+        _sprite.setOrigin(_pivot.X, _pivot.Y);
+        _sprite.setRotation(_rotationDegrees);
+        _sprite.setOrigin(0, 0);
+        _sprite.setSize(_width * _scale, _height * _scale);
+        _sprite.setPosition(getGlobalPosition().X, getGlobalPosition().Y);
+        Window.get().draw(_sprite);
     }
 
     public Point2 getGlobalPosition() {

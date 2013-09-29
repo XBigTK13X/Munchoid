@@ -2,7 +2,6 @@ package sps.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import sps.bridge.DrawDepths;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.display.Window;
@@ -74,7 +73,9 @@ public class Tooltips {
         if (_active) {
             int fontWidthOffset = 0;//-__fontWidth / 2
             int fontHeightOffset = -(int) (_messageHeight * .45);
-            Window.get().draw(__bg, _position.add(fontWidthOffset, fontHeightOffset), DrawDepths.get("TooltipBackground"), Color.WHITE, _messageWidth, _messageHeight);
+            __bg.setPosition(_position.X + fontWidthOffset, _position.Y + fontHeightOffset);
+            __bg.setSize(_messageWidth, _messageHeight);
+            Window.get().draw(__bg);
         }
     }
 

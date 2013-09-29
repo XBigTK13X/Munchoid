@@ -18,12 +18,12 @@ public class GameConfig {
     public static final boolean DevTournyTest = false;
     public static final boolean DevPopulationTest = false;
     public static final boolean DevBattleTest = false;
-    public static final boolean DevSkeletonTest = true;
+    public static final boolean DevSkeletonTest = false;
 
     public static final boolean DevEndToEndStateLoadTest = false;
     public static final boolean DevFlipEnabled = false;
     public static final boolean DevPartSortingEnabled = false;
-    public static final boolean DevDrawSkeleton = true;
+    public static final boolean DevDrawSkeleton = false;
     public static final boolean DevDebugJointGrid = false;
     public static final boolean DevDebugJointGridWithSquares = false;
     public static final boolean DevAlwaysSelectForces = false;

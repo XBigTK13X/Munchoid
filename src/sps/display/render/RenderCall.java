@@ -27,13 +27,7 @@ public class RenderCall {
     public float ScaleX;
     public float ScaleY;
 
-    public RenderCall(Sprite sprite, Point2 position, Color color, float width, float height, float scaleX, float scaleY) {
+    public RenderCall(Sprite sprite) {
         Sprite = sprite;
-        Location = position;
-        Filter = color;
-        Width = width;
-        Height = height;
-        ScaleX = scaleX;
-        ScaleY = scaleY;
     }
 }

@@ -69,8 +69,12 @@ public class Animation {
                     alternate = false;
                 }
             }
+
             Color renderColor = (alternate) ? _color.tmp().mul(flashColor) : _color;
-            Window.get().draw(_sprite, _position, _depth, renderColor, flipX, flipY);
+            _sprite.setPosition(_position.X, _position.Y);
+            _sprite.setColor(renderColor);
+            _sprite.flip(flipX, flipY);
+            Window.get().draw(_sprite);
         }
     }
 
