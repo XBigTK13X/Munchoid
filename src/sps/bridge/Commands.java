@@ -38,11 +38,11 @@ public class Commands {
     }
 
     public void put(Command command) {
-        commands.put(command.name(), command);
+        commands.put(command.name().toLowerCase(), command);
     }
 
     public Command resolve(String name) {
-        return commands.get(name);
+        return commands.get(name.toLowerCase());
     }
 
     private List<Command> values;
