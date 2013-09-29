@@ -4,6 +4,7 @@ import game.InputWrapper;
 import game.creatures.BodyPart;
 import game.creatures.Creature;
 import sps.bridge.Commands;
+import sps.core.Logger;
 import sps.display.Screen;
 import sps.display.Window;
 import sps.io.Input;
@@ -16,12 +17,16 @@ public class SkeletonTest implements State {
 
     private Creature _creature;
     private Text _scale;
+    private int _rotTarget = 1;
+
 
     @Override
     public void create() {
         _creature = new Creature();
         _creature.getBody().setScale(1f);
         _creature.setLocation(Screen.pos(50, 50));
+
+        _creature.getBody().setScale(2f);
 
         _scale = TextPool.get().write("", Screen.pos(5, 90));
     }
@@ -55,12 +60,19 @@ public class SkeletonTest implements State {
             Window.get().moveCamera(-(int) Screen.width(10), -(int) Screen.height(10));
         }
         if (Input.get().isActive(Commands.get("Force3"), 0, false)) {
-            BodyPart target = _creature.getBody().getParts().getAll().get(1);
+            BodyPart target = _creature.getBody().getParts().getAll().get(_rotTarget);
             target.setRotation(target.getRotation() + 5);
         }
         if (Input.get().isActive(Commands.get("Force4"))) {
-            BodyPart target = _creature.getBody().getParts().getAll().get(1);
+            BodyPart target = _creature.getBody().getParts().getAll().get(_rotTarget);
             target.setRotation(0);
+            Logger.info("Pivot point:" + target.getPivot());
+        }
+        if (Input.get().isActive(Commands.get("Force5"))) {
+            _rotTarget++;
+            if (_rotTarget >= _creature.getBody().getParts().getAll().size()) {
+                _rotTarget = 1;
+            }
         }
 
         _creature.update();
@@ -70,6 +82,7 @@ public class SkeletonTest implements State {
         display += "\n" + Commands.get("MoveUp") + " scale up";
         display += "\n" + Commands.get("MoveDown") + " scale down";
         display += "\n" + Commands.get("Force1") + " scale reset";
+        display += "\n" + Commands.get("Force5") + " select p";
         display += "\n" + Commands.get("Force3") + " pRotation++";
         display += "\n" + Commands.get("Force4") + " pRotation=0";
         _scale.setMessage(display);

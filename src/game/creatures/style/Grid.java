@@ -66,15 +66,13 @@ public class Grid {
             return new Point2(0, 0);
         }
         return centerOf(part.getParentConnection().GridLoc - 1, part);
-
     }
 
+    //Convert a grid location (1->9) into coordinate ranges.
+    // For example, location 1 corresponds to the range (0,0)->(33,33)
+    // Using this calculation makes it easier to break the grid into smaller pieces
+    // and increase control over part placement
     private static BoundingBox gridRange(Integer gridLoc, int width, int height) {
-        //Convert a grid location (1->9) into coordinate ranges.
-        // For example, location 1 corresponds to the range (0,0)->(33,33)
-        // Using this calculation makes it easier to break the grid into smaller pieces
-        // and increase control over part placement
-
         int j = gridLoc - 1;
         int n = PartFunction.GridLocFraction;
         float m = 100 / (float) (n);

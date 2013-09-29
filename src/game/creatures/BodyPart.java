@@ -269,6 +269,10 @@ public class BodyPart {
         return _rotationDegrees;
     }
 
+    public Point2 getPivot() {
+        return _pivot;
+    }
+
     public Joint getParentConnection() {
         return _parentConnection;
     }
