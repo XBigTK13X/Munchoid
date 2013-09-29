@@ -265,6 +265,10 @@ public class BodyPart {
         _rotationDegrees = degrees;
     }
 
+    public int getRotation() {
+        return _rotationDegrees;
+    }
+
     public Joint getParentConnection() {
         return _parentConnection;
     }

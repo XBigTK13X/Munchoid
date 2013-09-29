@@ -1,6 +1,7 @@
 package game.test;
 
 import game.InputWrapper;
+import game.creatures.BodyPart;
 import game.creatures.Creature;
 import sps.bridge.Commands;
 import sps.display.Screen;
@@ -53,6 +54,10 @@ public class SkeletonTest implements State {
             Window.get().getCamera().zoom += .1f;
             Window.get().moveCamera(-(int) Screen.width(10), -(int) Screen.height(10));
         }
+        if (Input.get().isActive(Commands.get("Debug2"), 0, false)) {
+            BodyPart target = _creature.getBody().getParts().getAll().get(1);
+            target.setRotation(target.getRotation() + 5);
+        }
 
         _creature.update();
         String display = "Scale: " + _creature.getBody().getScale() + "\n";
@@ -61,6 +66,7 @@ public class SkeletonTest implements State {
         display += "\n" + Commands.get("MoveUp") + " scale up";
         display += "\n" + Commands.get("MoveDown") + " scale down";
         display += "\n" + Commands.get("Force1") + " scale reset";
+        display += "\n" + Commands.get("Debug2") + " pRotation++";
         _scale.setMessage(display);
     }
 
