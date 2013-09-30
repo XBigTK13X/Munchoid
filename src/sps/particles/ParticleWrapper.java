@@ -84,8 +84,10 @@ public class ParticleWrapper {
     }
 
     public void draw() {
+        Window.get().begin();
         for (ParticleLease lease : _leasedEffects) {
             lease.Effect.draw(Window.get().getBatch(), Gdx.graphics.getDeltaTime());
         }
+        Window.get().end();
     }
 }

@@ -80,8 +80,8 @@ public class Game implements ApplicationListener {
         Input.get().update();
 
         if (GameConfig.DevShortcutsEnabled) {
-            if (InputWrapper.moveDown() && InputWrapper.moveUp() && InputWrapper.debug1()){
-                    StateManager.reset().push(new MainMenu());
+            if (InputWrapper.moveDown() && InputWrapper.moveUp() && InputWrapper.debug1()) {
+                StateManager.reset().push(new MainMenu());
             }
             if (InputWrapper.moveRight() && InputWrapper.moveLeft() && InputWrapper.debug2()) {
                 StateManager.reset().push(new Battle());
@@ -117,21 +117,17 @@ public class Game implements ApplicationListener {
             }
 
             Window.clear();
-            Window.get(true).setListening(true);
-
-            Window.get().begin();
 
             StateManager.get().draw();
             ParticleEngine.get().draw();
-            ParticleWrapper.get().draw();
             UiElements.get().draw();
             TextPool.get().draw();
             DevConsole.get().draw();
 
-            Window.get().end();
+            Window.processDrawCalls();
 
-            Window.get().processDrawAPICalls();
-            Window.get(true).processDelayedCalls();
+            //TODO PartileWrapper should have a draw depth
+            ParticleWrapper.get().draw();
         }
     }
 

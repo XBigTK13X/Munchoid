@@ -95,4 +95,11 @@ public class Window {
             resize(resolutionX, resolutionY, false);
         }
     }
+
+    public static void processDrawCalls() {
+        get().processDrawCalls();
+        get(true).processDrawCalls();
+        get().processDrawAPICalls();
+        get(true).processDrawAPICalls();
+    }
 }

@@ -21,7 +21,7 @@ import java.util.List;
 
 public class Renderer {
     private List<RenderCall> _todo;
-    private boolean _queueListening = false;
+    private boolean _queueListening;
 
     private List<DrawAPICall> _drawApiCalls;
 
@@ -36,6 +36,8 @@ public class Renderer {
         _todo = new ArrayList<>();
         _batch = new SpriteBatch();
         _strategy = new StretchStrategy();
+        _queueListening = true;
+
         resize(width, height);
         setShader(Assets.get().defaultShaders());
     }
@@ -111,18 +113,17 @@ public class Renderer {
         _queueListening = listening;
     }
 
-    public void processDelayedCalls() {
+    public void processDrawCalls() {
         //Delayed renders
         setListening(false);
         begin();
         for (RenderCall command : _todo) {
+            //Sprite render call
             if (command.Sprite != null) {
-                command.Sprite.setPosition(command.Location.X, command.Location.Y);
-                command.Sprite.setColor(command.Filter);
-                command.Sprite.setSize(command.Width * command.ScaleX, command.Height * command.ScaleY);
                 draw(command.Sprite);
             }
-            if (command.Content != null) {
+            //Text render call
+            else if (command.Content != null) {
                 render(command.Content, command.Location, command.Filter, command.FontLabel, command.PointSize, command.Scale);
             }
         }
@@ -143,6 +144,7 @@ public class Renderer {
             }
         }
         _drawApiCalls.clear();
+        setListening(true);
     }
 
     public void schedule(DrawAPICall apiCall) {
