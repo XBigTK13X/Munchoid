@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import game.GameConfig;
+import sps.bridge.DrawDepths;
 import sps.core.Point2;
 import sps.display.Assets;
 import sps.display.DrawAPICall;
@@ -17,6 +18,7 @@ import sps.draw.DrawAPI;
 import sps.entities.HitTest;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Renderer {
@@ -113,18 +115,20 @@ public class Renderer {
         _queueListening = listening;
     }
 
-    public void processDrawCalls() {
-        //Delayed renders
+    public void processRenderCalls() {
+        //While listening, calls are recorded and stored.
+        //When not listening, calls are painted to the Window
+        Collections.sort(_todo);
         setListening(false);
         begin();
         for (RenderCall command : _todo) {
             //Sprite render call
             if (command.Sprite != null) {
-                draw(command.Sprite);
+                render(command.Sprite, command.Depth);
             }
             //Text render call
             else if (command.Content != null) {
-                render(command.Content, command.Location, command.Filter, command.FontLabel, command.PointSize, command.Scale);
+                render(command.Content, command.Location, command.Filter, command.FontLabel, command.PointSize, command.Scale, command.Depth);
             }
         }
         end();
@@ -156,16 +160,17 @@ public class Renderer {
     // and maybe handle draw order
 
     // Sprite rendering
-    Point2 pos = new Point2(0, 0);
-
     public void draw(Sprite sprite) {
-        pos.reset(sprite.getX(), sprite.getY());
-        render(sprite);
+        render(sprite, DrawDepths.get("Default").DrawDepth);
     }
 
-    private void render(Sprite sprite) {
+    public void draw(Sprite sprite, int depth) {
+        render(sprite, depth);
+    }
+
+    private void render(Sprite sprite, int depth) {
         if (_queueListening) {
-            _todo.add(new RenderCall(sprite));
+            _todo.add(new RenderCall(sprite, depth));
         }
         else {
             sprite.draw(_batch);
@@ -173,26 +178,26 @@ public class Renderer {
     }
 
     // String rendering
-    public void draw(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale) {
+    public void draw(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale, int depth) {
         if (content.contains("\n")) {
             int line = 0;
             if (pointSize == 0) {
                 pointSize = Assets.get().fontPack().getDefaultPointSize();
             }
             for (String s : content.split("\n")) {
-                render(s, location.add(0, line++ * -pointSize), filter, fontLabel, pointSize, scale);
+                render(s, location.add(0, line++ * -pointSize), filter, fontLabel, pointSize, scale, depth);
             }
         }
         else {
-            render(content, location, filter, fontLabel, pointSize, scale);
+            render(content, location, filter, fontLabel, pointSize, scale, depth);
         }
     }
 
     private BitmapFont _nextToWrite;
 
-    private void render(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale) {
+    private void render(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale, int depth) {
         if (_queueListening) {
-            _todo.add(new RenderCall(content, location, filter, fontLabel, pointSize, scale));
+            _todo.add(new RenderCall(content, location, filter, fontLabel, pointSize, scale, depth));
         }
         else {
             _nextToWrite = Assets.get().fontPack().getFont(fontLabel, pointSize);

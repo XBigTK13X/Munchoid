@@ -24,10 +24,10 @@ public class DrawDepths {
     }
 
     public DrawDepth resolve(String name) {
-        return drawDepths.get(name);
+        return drawDepths.get(name.toLowerCase());
     }
 
     public void put(DrawDepth DrawDepth) {
-        drawDepths.put(DrawDepth.Name, DrawDepth);
+        drawDepths.put(DrawDepth.Name.toLowerCase(), DrawDepth);
     }
 }

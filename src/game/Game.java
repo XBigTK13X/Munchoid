@@ -116,8 +116,6 @@ public class Game implements ApplicationListener {
                 Logger.devConsole("" + Gdx.graphics.getFramesPerSecond() + ": " + Gdx.graphics.getDeltaTime());
             }
 
-            Window.clear();
-
             StateManager.get().draw();
             ParticleEngine.get().draw();
             UiElements.get().draw();

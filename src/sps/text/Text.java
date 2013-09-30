@@ -3,6 +3,7 @@ package sps.text;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import sps.bridge.DrawDepths;
 import sps.core.Point2;
 import sps.display.Assets;
 import sps.display.Window;
@@ -26,6 +27,7 @@ public class Text {
     private float _dX;
     private float _dY;
     private Color _color;
+    private int _depth;
 
     private String _fontLabel;
     private int _fontPointSize;
@@ -48,6 +50,7 @@ public class Text {
         _effect = effect;
         _fontLabel = fontLabel;
         _fontPointSize = fontPointSize;
+        _depth = DrawDepths.get("Default").DrawDepth;
         setMessage(message);
         effect.init(this);
     }
@@ -71,7 +74,7 @@ public class Text {
     }
 
     public void draw() {
-        Window.get(!_canMove).draw(_message, _position, _color, _fontLabel, _fontPointSize, _scale);
+        Window.get(!_canMove).draw(_message, _position, _color, _fontLabel, _fontPointSize, _scale, _depth);
     }
 
     public boolean isVisible() {
@@ -131,13 +134,17 @@ public class Text {
         _canMove = moveable;
     }
 
-    public void setFont(String fontLabel,int pointSize){
+    public void setFont(String fontLabel, int pointSize) {
         _fontPointSize = pointSize;
         _fontLabel = fontLabel;
         recalcBounds();
     }
 
-    private void recalcBounds(){
+    private void recalcBounds() {
         _bounds = Assets.get().fontPack().getFont(_fontLabel, _fontPointSize).getMultiLineBounds(_message);
+    }
+
+    public void setDepth(int depth) {
+        _depth = depth;
     }
 }

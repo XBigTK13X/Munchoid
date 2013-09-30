@@ -97,8 +97,9 @@ public class Window {
     }
 
     public static void processDrawCalls() {
-        get().processDrawCalls();
-        get(true).processDrawCalls();
+        Window.clear();
+        get().processRenderCalls();
+        get(true).processRenderCalls();
         get().processDrawAPICalls();
         get(true).processDrawAPICalls();
     }
