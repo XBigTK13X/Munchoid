@@ -5,10 +5,10 @@ rm -rf pkg
 rm -rf assets/graphics/sprites/.directory
 mkdir pkg
 
-echo "== Compiling the game and the launcher"
+echo "== Compiling the game"
 mvn -q clean package
 
-echo "== Copying resources"
+echo "== Copying resources to pkg/"
 cp -r assets pkg/assets
 cp -r dist/* pkg
 cp target/game-jar-with-dependencies.jar pkg/game.jar
