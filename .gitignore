@@ -4,7 +4,6 @@ nnue.save
 save.nnue
 *.swp
 offline-tracker.md
-version.dat
 convert/
 *.class
 .metadata/
