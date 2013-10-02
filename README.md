@@ -9,10 +9,10 @@
 ## How to Build the Game##
 Prerequisites:
 
-* Oracle JDK 6
+* Oracle JDK 7
 * Maven 3
 
-Running '''script/create_package.sh''' from the project root  will generate a development snapshot archive. This contains the game and the launcher.
+Running '''script/create_package.sh''' from the project root  will generate a development snapshot archive. This contains a runnable JAR. Native packages are built by [conyay](http://www.github.com/XBigTK13X/conyay).
 
 ## Supported Platforms ##
 Windows 7, Mac OS X Lion+ and Ubuntu 13.04+
