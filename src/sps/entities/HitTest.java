@@ -62,9 +62,12 @@ public class HitTest {
         return (float) Math.sqrt(getDistanceSquare(a.X, b.X, a.Y, b.Y));
     }
 
+    private static Rectangle __r1 = new Rectangle(0, 0, 0, 0);
+    private static Rectangle __r2 = new Rectangle(0, 0, 0, 0);
+
     public static boolean overlap(float x, float y, int w, int h, float x2, float y2, int w2, int h2) {
-        Rectangle r1 = new Rectangle(x, y, w, h);
-        Rectangle r2 = new Rectangle(x2, y2, w2, h2);
-        return r1.overlaps(r2);
+        __r1.set(x, y, w, h);
+        __r2.set(x2, y2, w2, h2);
+        return __r1.overlaps(__r2);
     }
 }
