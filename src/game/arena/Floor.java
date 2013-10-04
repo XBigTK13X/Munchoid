@@ -16,7 +16,7 @@ import sps.util.BoundingBox;
 
 public class Floor extends Entity {
     private static final int __fieldSmoothness = 6;
-    private final BoundingBox _boundingBox;
+    private BoundingBox _boundingBox = BoundingBox.empty();
     Sprite _background;
 
     public Floor() {
@@ -27,7 +27,7 @@ public class Floor extends Entity {
 
         _background = SpriteMaker.get().fromColors(base);
         setSize((int) _background.getWidth(), (int) _background.getHeight());
-        _boundingBox = BoundingBox.fromDimensions(0, 0, getWidth(), getHeight());
+        BoundingBox.fromDimensions(_boundingBox, 0, 0, getWidth(), getHeight());
         if (GameConfig.DevPrintArenaSize) {
             Logger.info("Arena size: (W,H): (" + _background.getWidth() + "," + _background.getHeight() + ")");
         }

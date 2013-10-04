@@ -48,6 +48,8 @@ public class Joint {
         return _child.getJoints().get(_child.getFunction().LocAttach).getGlobalCenter();
     }
 
+    private BoundingBox _bounds = BoundingBox.empty();
+
     public void draw() {
         if (_bone == null) {
             _bone = SpriteMaker.get().pixel(Color.WHITE);
@@ -55,9 +57,9 @@ public class Joint {
         }
         if (_child != null && _child.isAlive() && _owner.isAlive()) {
             if (_childDist == 0 || _lastOwnerScale != _owner.getScale() || _lastChildScale != _child.getScale()) {
-                BoundingBox b = BoundingBox.fromPoints(getGlobalCenter().X, getGlobalCenter().Y, _child.getCheapGlobalPosition().X + _child.getWidth() * _child.getScale() / 2, _child.getCheapGlobalPosition().Y + _child.getHeight() * _child.getScale() / 2);
-                _childDist = HitTest.getDistance(b.X, b.Y, b.X2, b.Y2);
-                _childRot = 90 + (int) (180 * Math.atan2(b.Y - b.Y2, b.X - b.X2) / Math.PI);
+                BoundingBox.fromPoints(_bounds, getGlobalCenter().X, getGlobalCenter().Y, _child.getCheapGlobalPosition().X + _child.getWidth() * _child.getScale() / 2, _child.getCheapGlobalPosition().Y + _child.getHeight() * _child.getScale() / 2);
+                _childDist = HitTest.getDistance(_bounds.X, _bounds.Y, _bounds.X2, _bounds.Y2);
+                _childRot = 90 + (int) (180 * Math.atan2(_bounds.Y - _bounds.Y2, _bounds.X - _bounds.X2) / Math.PI);
                 _lastChildScale = _child.getScale();
                 _lastOwnerScale = _owner.getScale();
             }

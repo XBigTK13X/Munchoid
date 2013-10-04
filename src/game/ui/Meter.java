@@ -22,7 +22,7 @@ public class Meter {
     private int _width;
     private int _scaledWidth;
     private int _scaledHeight;
-    private BoundingBox _boundingBox;
+    private BoundingBox _boundingBox = BoundingBox.empty();
     private boolean _isVertical;
 
     public Meter(int screenWidthPercent, int screenHeightPercent, Color color, Point2 position, boolean vertical) {
@@ -94,6 +94,6 @@ public class Meter {
         _background.setPosition(_position.X, _position.Y);
         _sprite.setPosition(_position.X, _position.Y);
         _frame.setPosition(_position.X, _position.Y);
-        _boundingBox = BoundingBox.fromDimensions(_position.X, _position.Y, _width, _height);
+        BoundingBox.fromDimensions(_boundingBox, _position.X, _position.Y, _width, _height);
     }
 }

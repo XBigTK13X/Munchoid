@@ -3,24 +3,44 @@ package sps.util;
 import sps.entities.HitTest;
 
 public class BoundingBox {
-    public final int X;
-    public final int Y;
-    public final int X2;
-    public final int Y2;
-    public final int Width;
-    public final int Height;
+    public int X;
+    public int Y;
+    public int X2;
+    public int Y2;
+    public int Width;
+    public int Height;
 
+    private static void reset(BoundingBox box, float x, float y, int width, int height) {
+        box.X = (int) x;
+        box.Y = (int) y;
+        box.X2 = (int) (x + width);
+        box.Y2 = (int) (y + height);
+        box.Width = width;
+        box.Height = height;
+    }
 
-    public static BoundingBox fromPoints(int x, int y, int x2, int y2) {
-        return new BoundingBox((float) x, (float) y, x2 - x, y2 - y);
+    public static BoundingBox empty() {
+        return new BoundingBox(0, 0, 0, 0);
+    }
+
+    public static void fromDimensions(BoundingBox reset, float x, float y, int width, int height) {
+        reset(reset, x, y, width, height);
     }
 
     public static BoundingBox fromDimensions(float x, float y, int width, int height) {
         return new BoundingBox(x, y, width, height);
     }
 
+    public static void fromPoints(BoundingBox reset, float x, float y, float x2, float y2) {
+        reset(reset, x, y, (int) (x2 - x), (int) (y2 - y));
+    }
+
     public static BoundingBox fromPoints(float x, float y, float x2, float y2) {
         return fromPoints((int) x, (int) y, (int) x2, (int) y2);
+    }
+
+    public static BoundingBox fromPoints(int x, int y, int x2, int y2) {
+        return new BoundingBox((float) x, (float) y, x2 - x, y2 - y);
     }
 
     private BoundingBox(float x, float y, int width, int height) {

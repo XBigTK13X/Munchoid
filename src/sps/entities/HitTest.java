@@ -50,8 +50,11 @@ public class HitTest {
         return inBox(x, y, boundingBox.X, boundingBox.Y, boundingBox.Width, boundingBox.Height);
     }
 
+    private static BoundingBox _mouseBox = BoundingBox.empty();
+
     public static boolean mouseInside(Sprite sprite) {
-        return inBox(Input.get().x(), Input.get().y(), BoundingBox.fromDimensions(sprite.getX(), sprite.getY(), (int) sprite.getWidth(), (int) sprite.getHeight()));
+        BoundingBox.fromDimensions(_mouseBox, sprite.getX(), sprite.getY(), (int) sprite.getWidth(), (int) sprite.getHeight());
+        return inBox(Input.get().x(), Input.get().y(), _mouseBox);
     }
 
     public static float getDistance(float x, float y, float x1, float y1) {

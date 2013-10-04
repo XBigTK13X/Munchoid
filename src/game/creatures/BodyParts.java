@@ -97,14 +97,16 @@ public class BodyParts {
         return _parts.get(validIndices.get(RNG.next(0, validIndices.size())));
     }
 
+    BoundingBox _partBounds = BoundingBox.empty();
+
     public boolean areAnyOutside(float dX, float dY, Floor floor) {
         if (floor == null) {
             return false;
         }
-        BoundingBox b;
+
         for (BodyPart p : _parts) {
-            b = BoundingBox.fromDimensions(dX + p.getCheapGlobalPosition().X, dY + p.getCheapGlobalPosition().Y, (int) (p.getWidth() * p.getScale()), (int) (p.getHeight() * p.getScale()));
-            if (!floor.getBounds().envelopes(b)) {
+            BoundingBox.fromDimensions(_partBounds, dX + p.getCheapGlobalPosition().X, dY + p.getCheapGlobalPosition().Y, (int) (p.getWidth() * p.getScale()), (int) (p.getHeight() * p.getScale()));
+            if (!floor.getBounds().envelopes(_partBounds)) {
                 return true;
             }
         }

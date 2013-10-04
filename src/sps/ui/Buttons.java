@@ -13,6 +13,8 @@ import java.util.Map;
 
 public class Buttons {
     public static abstract class User {
+        private BoundingBox _bounds = BoundingBox.empty();
+
         public abstract Sprite getSprite();
 
         public abstract void onClick();
@@ -26,7 +28,8 @@ public class Buttons {
         }
 
         public BoundingBox getBounds() {
-            return BoundingBox.fromDimensions(getSprite().getX(), getSprite().getY(), (int) getSprite().getWidth(), (int) getSprite().getHeight());
+            BoundingBox.fromDimensions(_bounds, getSprite().getX(), getSprite().getY(), (int) getSprite().getWidth(), (int) getSprite().getHeight());
+            return _bounds;
         }
     }
 
