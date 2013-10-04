@@ -17,6 +17,6 @@ public class Vaporize extends BaseForce {
 
     @Override
     public void animate(BodyPart part) {
-        ParticleWrapper.get().emit("vaporize", part.getGlobalPosition());
+        ParticleWrapper.get().emit("vaporize", part.getExpensiveGlobalPosition());
     }
 }

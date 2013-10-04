@@ -23,7 +23,7 @@ public class BodyPart {
     private Color _color;
     private float _scale;
     private PartFunction _function;
-    private Body _owner;
+    private Body _body;
     private Point2 _position;
     private int _health;
     private int _healthMax = 100;
@@ -66,7 +66,7 @@ public class BodyPart {
     private BodyPart(PartFunction function, Body owner, Color color, Point2 position) {
         _scale = __scaleBase;
         _function = function;
-        _owner = owner;
+        _body = owner;
         _color = color;
         _position = position;
         _health = _healthMax;
@@ -126,7 +126,7 @@ public class BodyPart {
     }
 
     public int getFlipMult() {
-        return (_owner.isFlipX() ? -1 : 1);
+        return (_body.isFlipX() ? -1 : 1);
     }
 
     public Atom[][] getAtoms() {
@@ -170,22 +170,24 @@ public class BodyPart {
 
         _health = (atomHealth + scaleHealth) / 2;
 
-        _owner.recalculateHealth();
+        _body.recalculateHealth();
         createSprite();
     }
 
     public void draw() {
         _joints.draw();
-        _sprite.setColor(_owner.getHighlight());
+        _sprite.setColor(_body.getHighlight());
         _sprite.setOrigin(_pivot.X, _pivot.Y);
         _sprite.setRotation(_rotationDegrees);
         _sprite.setOrigin(0, 0);
         _sprite.setSize(_width * _scale, _height * _scale);
-        _sprite.setPosition(getGlobalPosition().X, getGlobalPosition().Y);
+        _sprite.setPosition(getCheapGlobalPosition().X, getCheapGlobalPosition().Y);
         Window.get().draw(_sprite);
     }
 
-    public Point2 getGlobalPosition() {
+    private Point2 _expensiveGlobalPosition = new Point2(0, 0);
+
+    public Point2 getExpensiveGlobalPosition() {
         float parentX = 0;
         float parentY = 0;
 
@@ -193,22 +195,35 @@ public class BodyPart {
         if (_parent != null) {
             parentX += _parentConnection.getGlobalCenter().X;
             parentY += _parentConnection.getGlobalCenter().Y;
-            if (_owner.getOwner() != null) {
-                parentX -= _owner.getOwner().getLocation().X;
-                parentY -= _owner.getOwner().getLocation().Y;
+            if (_body.getOwner() != null) {
+                parentX -= _body.getOwner().getLocation().X;
+                parentY -= _body.getOwner().getLocation().Y;
             }
         }
 
-        Point2 scaledLoc = new Point2(getPosition().X * _scale + parentX, getPosition().Y * _scale + parentY);
-        if (_owner.getOwner() != null) {
-            scaledLoc = scaledLoc.addRaw(_owner.getOwner().getLocation());
+        _expensiveGlobalPosition.reset(getPosition().X * _scale + parentX, getPosition().Y * _scale + parentY);
+        if (_body.getOwner() != null) {
+            _expensiveGlobalPosition.reset(_expensiveGlobalPosition.X + _body.getOwner().getLocation().X, _expensiveGlobalPosition.Y + _body.getOwner().getLocation().Y);
         }
-        return scaledLoc;
+        return _expensiveGlobalPosition;
+    }
+
+    private Point2 _cheapPositionCache = new Point2(0, 0);
+    private Point2 _cheapGlobalPosition = new Point2(0, 0);
+
+    public Point2 getCheapGlobalPosition() {
+        _cheapGlobalPosition.reset(_body.getOwner().getLocation().X + _cheapPositionCache.X, _body.getOwner().getLocation().Y + _cheapPositionCache.Y);
+        return _cheapGlobalPosition;
+    }
+
+    public void recalculateCheapPositionCache() {
+        _cheapPositionCache.reset(getExpensiveGlobalPosition().X - _body.getOwner().getLocation().X, getExpensiveGlobalPosition().Y - _body.getOwner().getLocation().Y);
     }
 
     public void setScale(float scale) {
         _scale = scale;
         setPosition(Grid.getPositionRelativeToParent(this));
+        recalculateCheapPositionCache();
     }
 
     public Point2 getPosition() {

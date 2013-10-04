@@ -112,6 +112,7 @@ public class GameConfig {
     public static final boolean OptFastOutlineAlg = false;
     public static final boolean OptShowFPS = false;
     public static final boolean OptSmoothRegionMap = true;
+    public static final boolean OptDrawBones = false;
 
     //Style
     //TODO Make this scale with resolution like everything else?

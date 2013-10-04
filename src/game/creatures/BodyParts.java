@@ -103,7 +103,7 @@ public class BodyParts {
         }
         BoundingBox b;
         for (BodyPart p : _parts) {
-            b = BoundingBox.fromDimensions(dX + p.getGlobalPosition().X, dY + p.getGlobalPosition().Y, (int) (p.getWidth() * p.getScale()), (int) (p.getHeight() * p.getScale()));
+            b = BoundingBox.fromDimensions(dX + p.getCheapGlobalPosition().X, dY + p.getCheapGlobalPosition().Y, (int) (p.getWidth() * p.getScale()), (int) (p.getHeight() * p.getScale()));
             if (!floor.getBounds().envelopes(b)) {
                 return true;
             }

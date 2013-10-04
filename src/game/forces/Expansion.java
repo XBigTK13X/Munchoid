@@ -22,6 +22,6 @@ public class Expansion extends BaseForce {
 
     @Override
     public void animate(BodyPart part) {
-        ParticleWrapper.get().emit("expansion", part.getGlobalPosition());
+        ParticleWrapper.get().emit("expansion", part.getExpensiveGlobalPosition());
     }
 }

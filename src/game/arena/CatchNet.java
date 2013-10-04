@@ -51,7 +51,7 @@ public class CatchNet extends Entity {
 
     public boolean isTouching(Creature creature) {
         for (BodyPart part : creature.getBody().getParts().getAll()) {
-            if (HitTest.overlap(getLocation().X, getLocation().Y, getWidth(), getHeight(), part.getGlobalPosition().X, part.getGlobalPosition().Y, part.getWidth(), part.getHeight())) {
+            if (HitTest.overlap(getLocation().X, getLocation().Y, getWidth(), getHeight(), part.getCheapGlobalPosition().X, part.getCheapGlobalPosition().Y, part.getWidth(), part.getHeight())) {
                 return true;
             }
         }
