@@ -13,6 +13,11 @@ public class Screen {
         return Screen.get().VirtualWidth * ((float) percent / 100);
     }
 
+    public static float centerWidth(int pixelWidth) {
+        float width = width(100);
+        return (width - pixelWidth) / 2;
+    }
+
     public static Point2 pos(int widthPercent, int heightPercent) {
         return new Point2(width(widthPercent), height(heightPercent));
     }

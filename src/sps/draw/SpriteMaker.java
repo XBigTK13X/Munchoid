@@ -1,10 +1,12 @@
 package sps.draw;
 
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.creatures.Atom;
+import sps.core.Loader;
 
 public class SpriteMaker {
     private static SpriteMaker __instance;
@@ -57,5 +59,9 @@ public class SpriteMaker {
         textureBase.setColor(color);
         textureBase.drawPixel(0, 0);
         return new Sprite(new Texture(textureBase));
+    }
+
+    public Sprite fromGraphic(String graphicsPath) {
+        return new Sprite(new Texture(new FileHandle(Loader.get().graphics(graphicsPath))));
     }
 }

@@ -1,6 +1,7 @@
 package game.pregame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import game.InputWrapper;
 import game.Score;
@@ -10,6 +11,8 @@ import game.ui.UIButton;
 import sps.bridge.Commands;
 import sps.core.Logger;
 import sps.display.Screen;
+import sps.display.Window;
+import sps.draw.SpriteMaker;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.TextPool;
@@ -20,11 +23,16 @@ public class MainMenu implements State {
     UIButton _exit;
     UIButton _load;
 
+    private Sprite _logo;
+
     @Override
     public void create() {
-        TextPool.get().write("Munchoid", Screen.pos(20, 90));
         StateManager.clearTimes();
         Score.reset();
+
+        _logo = SpriteMaker.get().fromGraphic("munchoid_logo.png");
+
+        _logo.setPosition(Screen.centerWidth((int) _logo.getWidth()), Screen.height(80));
 
         _start = new UIButton("Start", Commands.get("Confirm")) {
             @Override
@@ -69,12 +77,13 @@ public class MainMenu implements State {
                     }
                 }
             };
-            _load.setColRow(2, 3);
+            _load.setColRow(2, 2);
         }
     }
 
     @Override
     public void draw() {
+        Window.get().draw(_logo);
         _start.draw();
         _options.draw();
         _exit.draw();

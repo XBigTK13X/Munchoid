@@ -14,7 +14,7 @@ public class GameConfig {
     public static final boolean DevBotRandomlyMerges = true;
 
     //Debugging / Development
-    public static final boolean DevShortcutsEnabled = true;
+    public static final boolean DevShortcutsEnabled = false;
     public static final boolean DevTournyTest = false;
     public static final boolean DevPopulationTest = false;
     public static final boolean DevBattleTest = false;
@@ -63,7 +63,7 @@ public class GameConfig {
     public static final Point2 MaxBodyPartSize = Screen.pos(13, 13);
     public static final int MinBodyParts = 3;
     public static final int MaxBodyParts = 10;
-    public static final int InitEnabledStats = 6;
+    public static final int InitEnabledStats = 1;
     public static final int MinStatInit = 2;
     public static final int MaxStatInit = 5;
     public static final int DisableStat = 0;
