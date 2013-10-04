@@ -13,5 +13,8 @@ cp -r assets pkg/assets
 cp -r dist/* pkg
 cp target/game-jar-with-dependencies.jar pkg/game.jar
 
+rm pkg/assets/data/save/autosave.dat
+rm pkg/assets/data/save/munchoid.cfg
+
 git log --max-count=1 > pkg/assets/data/git.txt
 
