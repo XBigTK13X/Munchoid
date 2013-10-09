@@ -74,7 +74,7 @@ public class Text {
     }
 
     public void draw() {
-        Window.get(!_canMove).draw(_message, _position, _color, _fontLabel, _fontPointSize, _scale, _depth);
+        Window.get(!_canMove).render(_message, _position, _color, _fontLabel, _fontPointSize, _scale, _depth);
     }
 
     public boolean isVisible() {

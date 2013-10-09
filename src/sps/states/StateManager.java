@@ -3,7 +3,6 @@ package sps.states;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
-import game.MetaData;
 import game.Score;
 import game.population.PopulationOverview;
 import game.save.GameSnapshot;
@@ -44,7 +43,7 @@ public class StateManager {
         return get();
     }
 
-    public static void set(StateManager stateManager){
+    public static void set(StateManager stateManager) {
         __instance = stateManager;
         clearTimes();
     }
@@ -178,7 +177,7 @@ public class StateManager {
             current().draw();
         }
         else {
-            Window.get().draw(__pausedScreen);
+            Window.get().render(__pausedScreen);
         }
     }
 
@@ -215,7 +214,7 @@ public class StateManager {
     }
 
     public GameSnapshot takeSnapshot() {
-        PopulationOverview overview = (PopulationOverview)current();
+        PopulationOverview overview = (PopulationOverview) current();
         return overview.takeSnapshot();
     }
 

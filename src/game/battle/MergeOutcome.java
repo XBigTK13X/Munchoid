@@ -150,8 +150,8 @@ public class MergeOutcome implements State {
 
     @Override
     public void draw() {
-        Window.get().draw(_accept);
-        Window.get().draw(_reject);
+        Window.get().render(_accept);
+        Window.get().render(_reject);
         _pet.draw();
         _defeated.draw();
         _merged.draw();

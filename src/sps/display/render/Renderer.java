@@ -128,7 +128,7 @@ public class Renderer {
             }
             //Text render call
             else if (command.Content != null) {
-                render(command.Content, command.Location, command.Filter, command.FontLabel, command.PointSize, command.Scale, command.Depth);
+                renderLine(command.Content, command.Location, command.Filter, command.FontLabel, command.PointSize, command.Scale, command.Depth);
             }
         }
         end();
@@ -155,20 +155,12 @@ public class Renderer {
         _drawApiCalls.add(apiCall);
     }
 
-    //TODO Push sprite manipulation into draw() calls outside of Renderer
-    // render() should only draw a passed in sprite
-    // and maybe handle draw order
-
     // Sprite rendering
-    public void draw(Sprite sprite) {
+    public void render(Sprite sprite) {
         render(sprite, DrawDepths.get("Default").DrawDepth);
     }
 
-    public void draw(Sprite sprite, int depth) {
-        render(sprite, depth);
-    }
-
-    private void render(Sprite sprite, int depth) {
+    public void render(Sprite sprite, int depth) {
         if (_queueListening) {
             _todo.add(new RenderCall(sprite, depth));
         }
@@ -178,24 +170,24 @@ public class Renderer {
     }
 
     // String rendering
-    public void draw(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale, int depth) {
+    public void render(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale, int depth) {
         if (content.contains("\n")) {
             int line = 0;
             if (pointSize == 0) {
                 pointSize = Assets.get().fontPack().getDefaultPointSize();
             }
             for (String s : content.split("\n")) {
-                render(s, location.add(0, line++ * -pointSize), filter, fontLabel, pointSize, scale, depth);
+                renderLine(s, location.add(0, line++ * -pointSize), filter, fontLabel, pointSize, scale, depth);
             }
         }
         else {
-            render(content, location, filter, fontLabel, pointSize, scale, depth);
+            renderLine(content, location, filter, fontLabel, pointSize, scale, depth);
         }
     }
 
     private BitmapFont _nextToWrite;
 
-    private void render(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale, int depth) {
+    private void renderLine(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale, int depth) {
         if (_queueListening) {
             _todo.add(new RenderCall(content, location, filter, fontLabel, pointSize, scale, depth));
         }

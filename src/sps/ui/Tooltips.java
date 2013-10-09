@@ -75,7 +75,7 @@ public class Tooltips {
             int fontHeightOffset = -(int) (_messageHeight * .45);
             __bg.setPosition(_position.X + fontWidthOffset, _position.Y + fontHeightOffset);
             __bg.setSize(_messageWidth, _messageHeight);
-            Window.get().draw(__bg);
+            Window.get().render(__bg);
         }
     }
 

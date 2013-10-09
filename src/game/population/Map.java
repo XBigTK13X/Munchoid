@@ -95,7 +95,7 @@ public class Map {
     }
 
     public void draw() {
-        Window.get().draw(_bg);
-        Window.get().draw(_sprite);
+        Window.get().render(_bg);
+        Window.get().render(_sprite);
     }
 }

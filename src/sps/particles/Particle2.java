@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.core.Point2;
 import sps.core.RNG;
-import sps.entities.Entity;
 import sps.display.Window;
-import sps.util.MathHelper;
 import sps.draw.SpriteMaker;
+import sps.entities.Entity;
+import sps.util.MathHelper;
 
 public class Particle2 extends PEComponent {
     public static final int DefaultLife = 100;
@@ -42,7 +42,7 @@ public class Particle2 extends PEComponent {
             _sprite.setColor(_color);
             _sprite.setRotation((float) (Angle * 180 / Math.PI));
             _sprite.setPosition(Position.X, Position.Y);
-            Window.get().draw(_sprite);
+            Window.get().render(_sprite);
         }
     }
 

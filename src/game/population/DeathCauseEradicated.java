@@ -42,6 +42,6 @@ public class DeathCauseEradicated {
     }
 
     public void draw() {
-        Window.get().draw(_bg);
+        Window.get().render(_bg);
     }
 }

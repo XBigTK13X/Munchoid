@@ -29,7 +29,6 @@ public class Joint {
 
     public void setChild(BodyPart child) {
         _child = child;
-        //TODO Attach and base rotation on that
     }
 
     public BodyPart getChild() {
@@ -66,7 +65,7 @@ public class Joint {
             _bone.setSize(__boneThickness, _childDist);
             _bone.setPosition(getGlobalCenter().X, getGlobalCenter().Y);
             _bone.setRotation(_childRot);
-            Window.get().draw(_bone);
+            Window.get().render(_bone);
         }
     }
 }

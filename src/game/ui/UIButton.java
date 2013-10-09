@@ -96,7 +96,7 @@ public abstract class UIButton {
                     click();
                 }
             }
-            Window.get().draw(_sprite);
+            Window.get().render(_sprite);
         }
     }
 

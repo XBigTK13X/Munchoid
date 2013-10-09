@@ -70,9 +70,9 @@ public class Meter {
     }
 
     public void draw() {
-        Window.get().draw(_background);
-        Window.get().draw(_sprite);
-        Window.get().draw(_frame);
+        Window.get().render(_background);
+        Window.get().render(_sprite);
+        Window.get().render(_frame);
     }
 
     public void shade(Color color) {

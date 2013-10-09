@@ -84,7 +84,7 @@ public class DevConsole {
             _consoleBase.setSize(Screen.get().VirtualWidth, Screen.get().VirtualHeight);
             _consoleBase.setColor(_bgColor);
             _consoleBase.setPosition(0, 0);
-            Window.get(true).draw(_consoleBase);
+            Window.get(true).render(_consoleBase);
             for (ConsoleText _content : _contents) {
                 if (_content != null) {
                     _content.getContent().setMoveable(false);

@@ -182,7 +182,7 @@ public class BodyPart {
         _sprite.setOrigin(0, 0);
         _sprite.setSize(_width * _scale, _height * _scale);
         _sprite.setPosition(getCheapGlobalPosition().X, getCheapGlobalPosition().Y);
-        Window.get().draw(_sprite);
+        Window.get().render(_sprite);
     }
 
     private Point2 _expensiveGlobalPosition = new Point2(0, 0);

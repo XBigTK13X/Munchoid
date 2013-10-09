@@ -44,7 +44,6 @@ public class ForceSelection implements State {
         TextPool.get().write("DISABLED", Screen.pos(70, 100));
 
         if (_accept == null) {
-            //TODO Change the wording to "ENABLE X" if not enough, and "DISABLE X" if too many
             setMessage();
             _accept = UISprite.button(Color.GREEN);
 
@@ -98,7 +97,7 @@ public class ForceSelection implements State {
 
     @Override
     public void draw() {
-        Window.get().draw(_accept);
+        Window.get().render(_accept);
         _forces.draw();
     }
 
