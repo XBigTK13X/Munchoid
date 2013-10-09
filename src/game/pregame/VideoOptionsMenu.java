@@ -1,5 +1,6 @@
 package game.pregame;
 
+import com.badlogic.gdx.Gdx;
 import game.save.Options;
 import game.ui.UIButton;
 import sps.states.State;
@@ -23,7 +24,7 @@ public class VideoOptionsMenu implements State {
             @Override
             public void click() {
                 Options options = Options.load();
-                options.FullScreen = !options.FullScreen;
+                options.FullScreen = !Gdx.graphics.isFullscreen();
                 options.save();
                 options.apply();
             }
