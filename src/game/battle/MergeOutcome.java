@@ -14,6 +14,7 @@ import game.ui.UISprite;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
+import sps.bridge.DrawDepths;
 import sps.core.RNG;
 import sps.display.Screen;
 import sps.display.Window;
@@ -150,8 +151,8 @@ public class MergeOutcome implements State {
 
     @Override
     public void draw() {
-        Window.get().render(_accept);
-        Window.get().render(_reject);
+        Window.get().render(_accept, DrawDepths.get("Default").DrawDepth);
+        Window.get().render(_reject, DrawDepths.get("Default").DrawDepth);
         _pet.draw();
         _defeated.draw();
         _merged.draw();

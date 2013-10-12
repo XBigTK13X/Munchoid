@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import game.creatures.style.Outline;
+import sps.bridge.DrawDepths;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.display.Window;
@@ -62,7 +63,7 @@ public class PopulationHUD {
             _popIcon.setPosition(p.X, p.Y);
             _iconColor.a = 1;
             _popIcon.setColor(_iconColor);
-            Window.get().render(_popIcon);
+            Window.get().render(_popIcon, DrawDepths.get("Default").DrawDepth);
         }
     }
 

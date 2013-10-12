@@ -7,6 +7,7 @@ import game.Score;
 import game.population.PopulationOverview;
 import game.save.GameSnapshot;
 import sps.audio.MusicPlayer;
+import sps.bridge.DrawDepths;
 import sps.core.Logger;
 import sps.display.Screen;
 import sps.display.Window;
@@ -177,7 +178,7 @@ public class StateManager {
             current().draw();
         }
         else {
-            Window.get().render(__pausedScreen);
+            Window.get().render(__pausedScreen, DrawDepths.get("Default").DrawDepth);
         }
     }
 

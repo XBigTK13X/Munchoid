@@ -10,6 +10,7 @@ import game.tournament.Tournament;
 import game.ui.UISprite;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
+import sps.bridge.DrawDepths;
 import sps.display.Screen;
 import sps.display.Window;
 import sps.entities.EntityManager;
@@ -97,7 +98,7 @@ public class ForceSelection implements State {
 
     @Override
     public void draw() {
-        Window.get().render(_accept);
+        Window.get().render(_accept, DrawDepths.get("Default").DrawDepth);
         _forces.draw();
     }
 

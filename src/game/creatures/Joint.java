@@ -3,6 +3,7 @@ package game.creatures;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.creatures.style.Grid;
+import sps.bridge.DrawDepths;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.display.Window;
@@ -65,7 +66,7 @@ public class Joint {
             _bone.setSize(__boneThickness, _childDist);
             _bone.setPosition(getGlobalCenter().X, getGlobalCenter().Y);
             _bone.setRotation(_childRot);
-            Window.get().render(_bone);
+            Window.get().render(_bone, DrawDepths.get("Default").DrawDepth);
         }
     }
 }

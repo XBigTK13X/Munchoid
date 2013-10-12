@@ -32,6 +32,6 @@ public class RenderCall implements Comparable<RenderCall> {
 
     @Override
     public int compareTo(RenderCall o) {
-        return Depth - o.Depth;
+        return o.Depth - Depth;
     }
 }

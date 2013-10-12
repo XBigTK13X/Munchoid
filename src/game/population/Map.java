@@ -3,6 +3,7 @@ package game.population;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
+import sps.bridge.DrawDepths;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.display.Window;
@@ -95,7 +96,7 @@ public class Map {
     }
 
     public void draw() {
-        Window.get().render(_bg);
-        Window.get().render(_sprite);
+        Window.get().render(_bg, DrawDepths.get("Default").DrawDepth);
+        Window.get().render(_sprite, DrawDepths.get("Default").DrawDepth);
     }
 }

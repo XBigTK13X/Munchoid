@@ -2,6 +2,7 @@ package sps.core;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import sps.bridge.DrawDepths;
 import sps.display.Screen;
 import sps.display.Window;
 import sps.draw.SpriteMaker;
@@ -84,7 +85,7 @@ public class DevConsole {
             _consoleBase.setSize(Screen.get().VirtualWidth, Screen.get().VirtualHeight);
             _consoleBase.setColor(_bgColor);
             _consoleBase.setPosition(0, 0);
-            Window.get(true).render(_consoleBase);
+            Window.get(true).render(_consoleBase, DrawDepths.get("DevConsole").DrawDepth);
             for (ConsoleText _content : _contents) {
                 if (_content != null) {
                     _content.getContent().setMoveable(false);

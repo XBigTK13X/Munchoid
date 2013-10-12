@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.creatures.style.Outline;
 import sps.bridge.Command;
+import sps.bridge.DrawDepths;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.display.Window;
@@ -96,7 +97,7 @@ public abstract class UIButton {
                     click();
                 }
             }
-            Window.get().render(_sprite);
+            Window.get().render(_sprite, DrawDepths.get("Default").DrawDepth);
         }
     }
 

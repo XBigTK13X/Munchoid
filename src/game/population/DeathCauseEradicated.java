@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.InputWrapper;
 import sps.bridge.Commands;
+import sps.bridge.DrawDepths;
 import sps.display.Screen;
 import sps.display.Window;
 import sps.draw.SpriteMaker;
@@ -42,6 +43,6 @@ public class DeathCauseEradicated {
     }
 
     public void draw() {
-        Window.get().render(_bg);
+        Window.get().render(_bg, DrawDepths.get("Default").DrawDepth);
     }
 }

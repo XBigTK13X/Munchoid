@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import game.GameConfig;
-import sps.bridge.DrawDepths;
 import sps.core.Point2;
 import sps.display.Assets;
 import sps.display.DrawAPICall;
@@ -153,11 +152,6 @@ public class Renderer {
 
     public void schedule(DrawAPICall apiCall) {
         _drawApiCalls.add(apiCall);
-    }
-
-    // Sprite rendering
-    public void render(Sprite sprite) {
-        render(sprite, DrawDepths.get("Default").DrawDepth);
     }
 
     public void render(Sprite sprite, int depth) {

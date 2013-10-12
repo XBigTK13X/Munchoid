@@ -9,6 +9,7 @@ import game.population.PreloadPopulationOverview;
 import game.save.Persistence;
 import game.ui.UIButton;
 import sps.bridge.Commands;
+import sps.bridge.DrawDepths;
 import sps.core.Logger;
 import sps.display.Screen;
 import sps.display.Window;
@@ -83,7 +84,7 @@ public class MainMenu implements State {
 
     @Override
     public void draw() {
-        Window.get().render(_logo);
+        Window.get().render(_logo, DrawDepths.get("Default").DrawDepth);
         _start.draw();
         _options.draw();
         _exit.draw();

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import game.creatures.style.Outline;
+import sps.bridge.DrawDepths;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.display.Window;
@@ -70,9 +71,9 @@ public class Meter {
     }
 
     public void draw() {
-        Window.get().render(_background);
-        Window.get().render(_sprite);
-        Window.get().render(_frame);
+        Window.get().render(_background, DrawDepths.get("Default").DrawDepth);
+        Window.get().render(_sprite, DrawDepths.get("Default").DrawDepth);
+        Window.get().render(_frame, DrawDepths.get("Default").DrawDepth);
     }
 
     public void shade(Color color) {

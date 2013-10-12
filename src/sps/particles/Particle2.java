@@ -2,6 +2,7 @@ package sps.particles;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import sps.bridge.DrawDepths;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.display.Window;
@@ -42,7 +43,7 @@ public class Particle2 extends PEComponent {
             _sprite.setColor(_color);
             _sprite.setRotation((float) (Angle * 180 / Math.PI));
             _sprite.setPosition(Position.X, Position.Y);
-            Window.get().render(_sprite);
+            Window.get().render(_sprite, DrawDepths.get("Default").DrawDepth);
         }
     }
 
