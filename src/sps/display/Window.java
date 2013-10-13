@@ -40,7 +40,7 @@ public class Window {
             __dynamic.setStrategy(__defaultStrategy);
             __fixed = new Renderer(width, height);
             __fixed.setStrategy(__defaultStrategy);
-            __fixed.setListening(true);
+            __fixed.setStoreAllCalls(true);
             Logger.info("Window resolution: " + Gdx.graphics.getWidth() + "W, " + Gdx.graphics.getHeight() + "H");
         }
         return fixed ? __fixed : __dynamic;

@@ -2,7 +2,6 @@ package sps.bridge;
 
 import com.badlogic.gdx.utils.GdxNativesLoader;
 import sps.core.SpsConfig;
-import sps.display.Assets;
 
 public class Sps {
     public static void setup(boolean enableGraphics) {
@@ -31,7 +30,6 @@ public class Sps {
     }
 
     public static class DrawDepths {
-        public static final String Particle = "Particle";
         public static final String Debug = "Debug";
         public static final String Default_Text = "Default_Text";
         public static final String Animated_Texture = "Animated_Texture";
@@ -39,5 +37,4 @@ public class Sps {
 
     public static final float SpriteRadius = (float) Math.sqrt(Math.pow(SpsConfig.get().spriteHeight / 2, 2) + Math.pow(SpsConfig.get().spriteWidth, 2));
     public static final int AnimationFps = 20;
-    public static final String Particle = "Particle";
 }

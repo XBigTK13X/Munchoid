@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.bridge.DrawDepth;
 import sps.core.Point2;
+import sps.particles.ParticleLease;
 
 public class RenderCall implements Comparable<RenderCall> {
     public String Content;
@@ -13,6 +14,7 @@ public class RenderCall implements Comparable<RenderCall> {
     public String FontLabel;
     public float Scale;
     public DrawDepth Depth;
+    public ParticleLease Particles;
 
     public RenderCall(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale, DrawDepth depth) {
         Content = content;
@@ -31,14 +33,13 @@ public class RenderCall implements Comparable<RenderCall> {
         Depth = depth;
     }
 
+    public RenderCall(ParticleLease particles, DrawDepth depth) {
+        Particles = particles;
+        Depth = depth;
+    }
+
     @Override
     public int compareTo(RenderCall o) {
-        try {
-            return Depth.DrawDepth - o.Depth.DrawDepth;
-        }
-        catch (Exception e) {
-            int x = 0;
-        }
-        return 0;
+        return Depth.DrawDepth - o.Depth.DrawDepth;
     }
 }

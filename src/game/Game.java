@@ -121,11 +121,9 @@ public class Game implements ApplicationListener {
             UiElements.get().draw();
             TextPool.get().draw();
             DevConsole.get().draw();
+            ParticleWrapper.get().draw();
 
             Window.processDrawCalls();
-
-            //TODO PartileWrapper should have a draw depth
-            ParticleWrapper.get().draw();
         }
     }
 

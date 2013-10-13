@@ -16,6 +16,7 @@ import sps.display.DrawAPICall;
 import sps.display.Screen;
 import sps.draw.DrawAPI;
 import sps.entities.HitTest;
+import sps.particles.ParticleLease;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +24,7 @@ import java.util.List;
 
 public class Renderer {
     private List<RenderCall> _todo;
-    private boolean _queueListening;
+    private boolean _storeAllCalls;
 
     private List<DrawAPICall> _drawApiCalls;
 
@@ -38,7 +39,7 @@ public class Renderer {
         _todo = new ArrayList<>();
         _batch = new SpriteBatch();
         _strategy = new StretchStrategy();
-        _queueListening = true;
+        _storeAllCalls = true;
 
         resize(width, height);
         setShader(Assets.get().defaultShaders());
@@ -111,15 +112,15 @@ public class Renderer {
         return _strategy.getBuffer();
     }
 
-    public void setListening(boolean listening) {
-        _queueListening = listening;
+    public void setStoreAllCalls(boolean listening) {
+        _storeAllCalls = listening;
     }
 
     public void processRenderCalls() {
         //While listening, calls are recorded and stored.
         //When not listening, calls are painted to the Window
         Collections.sort(_todo);
-        setListening(false);
+        setStoreAllCalls(false);
         begin();
         for (RenderCall command : _todo) {
             //Sprite render call
@@ -130,10 +131,13 @@ public class Renderer {
             else if (command.Content != null) {
                 renderLine(command.Content, command.Location, command.Filter, command.FontLabel, command.PointSize, command.Scale, command.Depth);
             }
+            else if (command.Particles != null) {
+                render(command.Particles, command.Depth);
+            }
         }
         end();
         _todo.clear();
-        setListening(true);
+        setStoreAllCalls(true);
     }
 
     public void processDrawAPICalls() {
@@ -148,7 +152,7 @@ public class Renderer {
             }
         }
         _drawApiCalls.clear();
-        setListening(true);
+        setStoreAllCalls(true);
     }
 
     public void schedule(DrawAPICall apiCall) {
@@ -156,7 +160,7 @@ public class Renderer {
     }
 
     public void render(Sprite sprite, DrawDepth depth) {
-        if (_queueListening) {
+        if (_storeAllCalls) {
             _todo.add(new RenderCall(sprite, depth));
         }
         else {
@@ -183,7 +187,7 @@ public class Renderer {
     private BitmapFont _nextToWrite;
 
     private void renderLine(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale, DrawDepth depth) {
-        if (_queueListening) {
+        if (_storeAllCalls) {
             _todo.add(new RenderCall(content, location, filter, fontLabel, pointSize, scale, depth));
         }
         else {
@@ -203,6 +207,15 @@ public class Renderer {
 
             _nextToWrite.setColor(filter);
             _nextToWrite.draw(_batch, content, location.X, location.Y);
+        }
+    }
+
+    public void render(ParticleLease lease, DrawDepth depth) {
+        if (_storeAllCalls) {
+            _todo.add(new RenderCall(lease, depth));
+        }
+        else {
+            lease.Effect.draw(getBatch(), Gdx.graphics.getDeltaTime());
         }
     }
 }

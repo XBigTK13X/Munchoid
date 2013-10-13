@@ -3,6 +3,7 @@ package sps.particles;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
+import sps.bridge.DrawDepths;
 import sps.core.Loader;
 import sps.core.Point2;
 import sps.core.SpsConfig;
@@ -15,16 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ParticleWrapper {
-    private static class ParticleLease {
-        public final ParticleEffectPool.PooledEffect Effect;
-        public final String Label;
-
-        public ParticleLease(ParticleEffectPool.PooledEffect effect, String label) {
-            Label = label;
-            Effect = effect;
-        }
-    }
-
     private static final int __initialPoolCapacity = 5;
 
     private static ParticleWrapper __instance;
@@ -84,10 +75,8 @@ public class ParticleWrapper {
     }
 
     public void draw() {
-        Window.get().begin();
         for (ParticleLease lease : _leasedEffects) {
-            lease.Effect.draw(Window.get().getBatch(), Gdx.graphics.getDeltaTime());
+            Window.get().render(lease, DrawDepths.get("Particle"));
         }
-        Window.get().end();
     }
 }
