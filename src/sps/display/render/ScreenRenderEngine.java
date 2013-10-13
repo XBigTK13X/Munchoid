@@ -41,6 +41,7 @@ public class ScreenRenderEngine {
     public void render(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale, DrawDepth depth) {
         _nextToWrite = Assets.get().fontPack().getFont(fontLabel, pointSize);
         _nextToWrite.setScale(scale);
+        content = content.replaceAll("\t", "    ");
 
         if (GameConfig.OptEnableFontOutlines) {
             //FIXME Really messy. Distance field fonts might remove the need for an outline.
