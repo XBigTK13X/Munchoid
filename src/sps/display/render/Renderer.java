@@ -19,10 +19,8 @@ public class Renderer {
 
     public void processScheduledApiCalls() {
         _scheduler.sort();
-        for (DrawApiCall call : _scheduler.getDrawApiCalls()) {
-            _screenEngine.render(call);
-        }
         _screenEngine.begin();
+
         for (RenderApiCall call : _scheduler.getRenderApiCalls()) {
             //Sprite
             if (call.Sprite != null) {
@@ -41,6 +39,11 @@ public class Renderer {
             }
         }
         _screenEngine.end();
+
+        for (DrawApiCall call : _scheduler.getDrawApiCalls()) {
+            _screenEngine.render(call);
+        }
+
         _scheduler.clear();
     }
 
