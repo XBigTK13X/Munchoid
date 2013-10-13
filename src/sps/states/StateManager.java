@@ -178,7 +178,7 @@ public class StateManager {
             current().draw();
         }
         else {
-            Window.get().render(__pausedScreen, DrawDepths.get("Default").DrawDepth);
+            Window.get().render(__pausedScreen, DrawDepths.get("PauseScreen"));
         }
     }
 

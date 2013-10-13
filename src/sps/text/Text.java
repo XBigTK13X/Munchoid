@@ -50,7 +50,7 @@ public class Text {
         _effect = effect;
         _fontLabel = fontLabel;
         _fontPointSize = fontPointSize;
-        _depth = DrawDepths.get("Default").DrawDepth;
+        _depth = DrawDepths.get("Default_Text");
         setMessage(message);
         effect.init(this);
     }

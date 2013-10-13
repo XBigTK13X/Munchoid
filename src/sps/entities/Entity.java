@@ -1,7 +1,6 @@
 package sps.entities;
 
 import com.badlogic.gdx.Gdx;
-import sps.bridge.DrawDepth;
 import sps.bridge.EntityType;
 import sps.bridge.SpriteType;
 import sps.core.Point2;
@@ -55,7 +54,7 @@ public class Entity implements Comparable<Entity> {
         _isOnBoard = true;
     }
 
-    protected void initialize(int width, int height, Point2 location, SpriteType spriteType, EntityType entityType, DrawDepth depth) {
+    protected void initialize(int width, int height, Point2 location, SpriteType spriteType, EntityType entityType, int depth) {
         _width = width;
         _height = height;
         _assetName = spriteType;
@@ -137,7 +136,7 @@ public class Entity implements Comparable<Entity> {
         _graphic.setSpriteInfo(sprite);
     }
 
-    public DrawDepth getDepth() {
+    public int getDepth() {
         return _graphic.getDepth();
     }
 
@@ -178,6 +177,6 @@ public class Entity implements Comparable<Entity> {
 
     @Override
     public int compareTo(Entity entity) {
-        return getDepth().DrawDepth - entity.getDepth().DrawDepth;
+        return getDepth() - entity.getDepth();
     }
 }

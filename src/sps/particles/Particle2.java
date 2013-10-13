@@ -43,7 +43,7 @@ public class Particle2 extends PEComponent {
             _sprite.setColor(_color);
             _sprite.setRotation((float) (Angle * 180 / Math.PI));
             _sprite.setPosition(Position.X, Position.Y);
-            Window.get().render(_sprite, DrawDepths.get("Default").DrawDepth);
+            Window.get().render(_sprite, DrawDepths.get("SpsParticle"));
         }
     }
 

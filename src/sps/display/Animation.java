@@ -2,7 +2,6 @@ package sps.display;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import sps.bridge.DrawDepth;
 import sps.bridge.DrawDepths;
 import sps.bridge.SpriteType;
 import sps.bridge.Sps;
@@ -17,7 +16,7 @@ public class Animation {
     private int _animationTimer;
     private Color _color = Color.WHITE;
     private Sprite _sprite;
-    private DrawDepth _depth;
+    private int _depth;
     private int _rotation = 0;
     private boolean animationEnabled = true;
     private boolean flipX = false;
@@ -74,7 +73,7 @@ public class Animation {
             _sprite.setPosition(_position.X, _position.Y);
             _sprite.setColor(renderColor);
             _sprite.flip(flipX, flipY);
-            Window.get().render(_sprite, _depth.DrawDepth);
+            Window.get().render(_sprite, _depth);
         }
     }
 
@@ -111,11 +110,11 @@ public class Animation {
         _color = new Color(_color.r, _color.g, _color.b, alpha);
     }
 
-    public void setDrawDepth(DrawDepth depth) {
+    public void setDrawDepth(int depth) {
         _depth = depth;
     }
 
-    public DrawDepth getDepth() {
+    public int getDepth() {
         return _depth;
     }
 

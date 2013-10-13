@@ -151,8 +151,8 @@ public class MergeOutcome implements State {
 
     @Override
     public void draw() {
-        Window.get().render(_accept, DrawDepths.get("Default").DrawDepth);
-        Window.get().render(_reject, DrawDepths.get("Default").DrawDepth);
+        Window.get().render(_accept, DrawDepths.get("MergeChoice"));
+        Window.get().render(_reject, DrawDepths.get("MergeChoice"));
         _pet.draw();
         _defeated.draw();
         _merged.draw();

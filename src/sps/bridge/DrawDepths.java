@@ -7,8 +7,8 @@ public class DrawDepths {
 
     private static DrawDepths instance;
 
-    public static DrawDepth get(String name) {
-        return instance.resolve(name);
+    public static int get(String name) {
+        return instance.resolve(name).DrawDepth;
     }
 
     public static void add(DrawDepth DrawDepth) {

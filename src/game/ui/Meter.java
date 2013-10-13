@@ -71,9 +71,9 @@ public class Meter {
     }
 
     public void draw() {
-        Window.get().render(_background, DrawDepths.get("Default").DrawDepth);
-        Window.get().render(_sprite, DrawDepths.get("Default").DrawDepth);
-        Window.get().render(_frame, DrawDepths.get("Default").DrawDepth);
+        Window.get().render(_background, DrawDepths.get("MeterBackground"));
+        Window.get().render(_sprite, DrawDepths.get("Meter"));
+        Window.get().render(_frame, DrawDepths.get("MeterFrame"));
     }
 
     public void shade(Color color) {

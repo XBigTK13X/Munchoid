@@ -43,6 +43,6 @@ public class DeathCauseEradicated {
     }
 
     public void draw() {
-        Window.get().render(_bg, DrawDepths.get("Default").DrawDepth);
+        Window.get().render(_bg, DrawDepths.get("DeathCauseResultScreen"));
     }
 }
