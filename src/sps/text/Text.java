@@ -3,6 +3,7 @@ package sps.text;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import sps.bridge.DrawDepth;
 import sps.bridge.DrawDepths;
 import sps.core.Point2;
 import sps.display.Assets;
@@ -27,7 +28,7 @@ public class Text {
     private float _dX;
     private float _dY;
     private Color _color;
-    private int _depth;
+    private DrawDepth _depth;
 
     private String _fontLabel;
     private int _fontPointSize;
@@ -144,7 +145,7 @@ public class Text {
         _bounds = Assets.get().fontPack().getFont(_fontLabel, _fontPointSize).getMultiLineBounds(_message);
     }
 
-    public void setDepth(int depth) {
+    public void setDepth(DrawDepth depth) {
         _depth = depth;
     }
 }

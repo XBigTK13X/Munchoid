@@ -1,5 +1,7 @@
 package sps.bridge;
 
+import sps.core.Logger;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,8 +9,8 @@ public class DrawDepths {
 
     private static DrawDepths instance;
 
-    public static int get(String name) {
-        return instance.resolve(name).DrawDepth;
+    public static DrawDepth get(String name) {
+        return instance.resolve(name);
     }
 
     public static void add(DrawDepth DrawDepth) {
@@ -18,16 +20,19 @@ public class DrawDepths {
         instance.put(DrawDepth);
     }
 
-    private Map<String, DrawDepth> drawDepths = new HashMap<String, DrawDepth>();
+    private Map<String, DrawDepth> drawDepths = new HashMap<>();
 
     private DrawDepths() {
     }
 
     public DrawDepth resolve(String name) {
-        return drawDepths.get(name.toLowerCase());
+        if (!drawDepths.containsKey(name)) {
+            Logger.error("DrawDepth not found: " + name);
+        }
+        return drawDepths.get(name);
     }
 
     public void put(DrawDepth DrawDepth) {
-        drawDepths.put(DrawDepth.Name.toLowerCase(), DrawDepth);
+        drawDepths.put(DrawDepth.Name, DrawDepth);
     }
 }

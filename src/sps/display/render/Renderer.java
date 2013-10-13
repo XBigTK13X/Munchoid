@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import game.GameConfig;
+import sps.bridge.DrawDepth;
 import sps.core.Logger;
 import sps.core.Point2;
 import sps.display.Assets;
@@ -121,12 +122,13 @@ public class Renderer {
         Collections.sort(_todo);
         setListening(false);
         begin();
+        Logger.info("New Render cycle");
         for (RenderCall command : _todo) {
             //Sprite render call
             if (command.Sprite != null) {
                 render(command.Sprite, command.Depth);
-                if (command.Depth != 0) {
-                    Logger.info("Depth: " + command.Depth);
+                if (command.Depth.DrawDepth != 0) {
+                    Logger.info("Depth: " + command.Depth.Name + ", " + command.Depth.DrawDepth);
                 }
             }
             //Text render call
@@ -158,7 +160,7 @@ public class Renderer {
         _drawApiCalls.add(apiCall);
     }
 
-    public void render(Sprite sprite, int depth) {
+    public void render(Sprite sprite, DrawDepth depth) {
         if (_queueListening) {
             _todo.add(new RenderCall(sprite, depth));
         }
@@ -168,7 +170,7 @@ public class Renderer {
     }
 
     // String rendering
-    public void render(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale, int depth) {
+    public void render(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale, DrawDepth depth) {
         if (content.contains("\n")) {
             int line = 0;
             if (pointSize == 0) {
@@ -185,7 +187,7 @@ public class Renderer {
 
     private BitmapFont _nextToWrite;
 
-    private void renderLine(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale, int depth) {
+    private void renderLine(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale, DrawDepth depth) {
         if (_queueListening) {
             _todo.add(new RenderCall(content, location, filter, fontLabel, pointSize, scale, depth));
         }

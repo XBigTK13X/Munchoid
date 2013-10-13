@@ -14,6 +14,8 @@ public class Bridge {
                 if (enableGraphics) {
                     Assets.get();
                 }
+                boolean processDrawDepths = false;
+                int drawDepth = 0;
                 for (String line : FileUtils.readLines(Loader.get().data("bridge.cfg"))) {
                     if (!line.contains("#")) {
                         String[] values = line.split(",");
@@ -27,10 +29,15 @@ public class Bridge {
                             String context = values[2];
                             Commands.add(new Command(id, Contexts.get(context)));
                         }
-                        if (name.equals("drawDepth")) {
-                            String id = values[1];
-                            int depth = Integer.parseInt(values[2]);
-                            DrawDepths.add(new DrawDepth(id, depth));
+                        if (name.equalsIgnoreCase("StartDrawDepths")) {
+                            processDrawDepths = true;
+                        }
+                        if (processDrawDepths) {
+                            String id = values[0];
+                            DrawDepths.add(new DrawDepth(id, drawDepth++));
+                        }
+                        if (name.equalsIgnoreCase("EndDrawDepths")) {
+                            processDrawDepths = false;
                         }
                         if (name.equals("entityType")) {
                             String id = values[1];
