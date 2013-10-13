@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import game.GameConfig;
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.display.Assets;
 import sps.display.DrawAPICall;
@@ -124,6 +125,9 @@ public class Renderer {
             //Sprite render call
             if (command.Sprite != null) {
                 render(command.Sprite, command.Depth);
+                if (command.Depth != 0) {
+                    Logger.info("Depth: " + command.Depth);
+                }
             }
             //Text render call
             else if (command.Content != null) {
