@@ -76,7 +76,7 @@ public class ParticleWrapper {
 
     public void draw() {
         for (ParticleLease lease : _leasedEffects) {
-            Window.get().render(lease, DrawDepths.get("Particle"));
+            Window.get().schedule(lease, DrawDepths.get("Particle"));
         }
     }
 }

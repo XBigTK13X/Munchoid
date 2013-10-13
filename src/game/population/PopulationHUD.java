@@ -63,7 +63,7 @@ public class PopulationHUD {
             _popIcon.setPosition(p.X, p.Y);
             _iconColor.a = 1;
             _popIcon.setColor(_iconColor);
-            Window.get().render(_popIcon, DrawDepths.get("PopulationIcons"));
+            Window.get().schedule(_popIcon, DrawDepths.get("PopulationIcons"));
         }
     }
 

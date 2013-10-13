@@ -35,7 +35,7 @@ public class Floor extends Entity {
 
     @Override
     public void draw() {
-        Window.get().render(_background, DrawDepths.get("Floor"));
+        Window.get().schedule(_background, DrawDepths.get("Floor"));
     }
 
     public BoundingBox getBounds() {

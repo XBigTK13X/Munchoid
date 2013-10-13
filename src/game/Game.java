@@ -39,8 +39,8 @@ public class Game implements ApplicationListener {
         Assets.get().fontPack().cacheFont("UIButton", "verdanab.ttf", 70);
 
         Window.setWindowBackground(Color.BLACK);
-        Window.get(false).setStrategy(new FrameStrategy());
-        Window.get(true).setStrategy(new FrameStrategy());
+        Window.get(false).screenEngine().setStrategy(new FrameStrategy());
+        Window.get(true).screenEngine().setStrategy(new FrameStrategy());
         Window.setRefreshInstance(this);
         Input.get().setup(new DefaultStateProvider());
         SpriteSheetManager.setup(SpriteTypes.getDefs());
@@ -62,7 +62,6 @@ public class Game implements ApplicationListener {
         }
 
         StateManager.get().push(start);
-        ParticleEngine.reset();
         StateManager.get().setPaused(false);
 
         Options.load().apply();
@@ -103,7 +102,6 @@ public class Game implements ApplicationListener {
             _preUpdateState = StateManager.get().current();
             StateManager.get().asyncUpdate();
             StateManager.get().update();
-            ParticleEngine.get().update();
             ParticleWrapper.get().update();
             TextPool.get().update();
             UiElements.get().update();
@@ -117,7 +115,6 @@ public class Game implements ApplicationListener {
             }
 
             StateManager.get().draw();
-            ParticleEngine.get().draw();
             UiElements.get().draw();
             TextPool.get().draw();
             DevConsole.get().draw();

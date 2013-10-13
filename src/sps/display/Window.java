@@ -37,10 +37,9 @@ public class Window {
             int height = SpsConfig.get().virtualHeight;
             Logger.info("Virtual resolution: " + width + "W, " + height + "H");
             __dynamic = new Renderer(width, height);
-            __dynamic.setStrategy(__defaultStrategy);
+            __dynamic.screenEngine().setStrategy(__defaultStrategy);
             __fixed = new Renderer(width, height);
-            __fixed.setStrategy(__defaultStrategy);
-            __fixed.setStoreAllCalls(true);
+            __fixed.screenEngine().setStrategy(__defaultStrategy);
             Logger.info("Window resolution: " + Gdx.graphics.getWidth() + "W, " + Gdx.graphics.getHeight() + "H");
         }
         return fixed ? __fixed : __dynamic;
@@ -67,8 +66,8 @@ public class Window {
                 Gdx.graphics.setDisplayMode(width, height, Gdx.graphics.isFullscreen());
             }
         }
-        get(true).resize(width, height);
-        get(false).resize(width, height);
+        get(true).screenEngine().resize(width, height);
+        get(false).screenEngine().resize(width, height);
     }
 
     public static void toggleFullScreen(boolean enableFullScreen, int width, int height) {
@@ -89,7 +88,6 @@ public class Window {
             apply = true;
         }
 
-
         if (apply) {
             Gdx.graphics.setDisplayMode(resolutionX, resolutionY, enableFullScreen);
             resize(resolutionX, resolutionY, false);
@@ -98,9 +96,7 @@ public class Window {
 
     public static void processDrawCalls() {
         Window.clear();
-        get().processRenderCalls();
-        get(true).processRenderCalls();
-        get().processDrawAPICalls();
-        get(true).processDrawAPICalls();
+        get().processScheduledApiCalls();
+        get(true).processScheduledApiCalls();
     }
 }

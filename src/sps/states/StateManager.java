@@ -123,7 +123,7 @@ public class StateManager {
             }
             lastMil = System.currentTimeMillis();
         }
-        Window.get().resetCamera();
+        Window.get().screenEngine().resetCamera();
         boolean isNewState = false;
         if (_states.size() > 0) {
             _components.put(current(), new StateDependentComponents(EntityManager.get(), ParticleEngine.get(), TextPool.get(), MusicPlayer.get(), Tooltips.get(), Buttons.get()));
@@ -178,7 +178,7 @@ public class StateManager {
             current().draw();
         }
         else {
-            Window.get().render(__pausedScreen, DrawDepths.get("PauseScreen"));
+            Window.get().schedule(__pausedScreen, DrawDepths.get("PauseScreen"));
         }
     }
 

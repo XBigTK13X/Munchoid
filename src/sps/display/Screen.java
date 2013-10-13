@@ -47,7 +47,7 @@ public class Screen {
     }
 
     public boolean isInView(int x, int y) {
-        return x >= Window.get().getCameraPosition().X && y >= Window.get().getCameraPosition().Y && x <= VirtualWidth + Window.get().getCameraPosition().X && y <= VirtualHeight + Window.get().getCameraPosition().Y;
+        return x >= Window.get().screenEngine().getCameraPosition().X && y >= Window.get().screenEngine().getCameraPosition().Y && x <= VirtualWidth + Window.get().screenEngine().getCameraPosition().X && y <= VirtualHeight + Window.get().screenEngine().getCameraPosition().Y;
     }
 
     public boolean isInView(float x, float y) {

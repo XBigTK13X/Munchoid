@@ -30,8 +30,8 @@ public class DummyApp {
         RNG.seed((int) System.currentTimeMillis());
         Sps.setup(true);
         Window.setWindowBackground(Color.BLACK);
-        Window.get(false).setStrategy(new FrameStrategy());
-        Window.get(true).setStrategy(new FrameStrategy());
+        Window.get(false).screenEngine().setStrategy(new FrameStrategy());
+        Window.get(true).screenEngine().setStrategy(new FrameStrategy());
         Window.setRefreshInstance(_app);
         Input.get().setup(new DefaultStateProvider());
         SpriteSheetManager.setup(SpriteTypes.getDefs());

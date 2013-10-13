@@ -97,7 +97,7 @@ public abstract class UIButton {
                     click();
                 }
             }
-            Window.get().render(_sprite, DrawDepths.get("UIButton"));
+            Window.get().schedule(_sprite, DrawDepths.get("UIButton"));
         }
     }
 

@@ -66,7 +66,7 @@ public class Joint {
             _bone.setSize(__boneThickness, _childDist);
             _bone.setPosition(getGlobalCenter().X, getGlobalCenter().Y);
             _bone.setRotation(_childRot);
-            Window.get().render(_bone, DrawDepths.get("Joint"));
+            Window.get().schedule(_bone, DrawDepths.get("Joint"));
         }
     }
 }

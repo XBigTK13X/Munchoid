@@ -96,7 +96,7 @@ public class Map {
     }
 
     public void draw() {
-        Window.get().render(_bg, DrawDepths.get("PopulationMapBackground"));
-        Window.get().render(_sprite, DrawDepths.get("PopulationMap"));
+        Window.get().schedule(_bg, DrawDepths.get("PopulationMapBackground"));
+        Window.get().schedule(_sprite, DrawDepths.get("PopulationMap"));
     }
 }

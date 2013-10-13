@@ -98,7 +98,7 @@ public class ForceSelection implements State {
 
     @Override
     public void draw() {
-        Window.get().render(_accept, DrawDepths.get("ForceAccept"));
+        Window.get().schedule(_accept, DrawDepths.get("ForceAccept"));
         _forces.draw();
     }
 

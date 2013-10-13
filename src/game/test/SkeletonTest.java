@@ -56,8 +56,8 @@ public class SkeletonTest implements State {
             _creature.getBody().flipX(!_creature.getBody().isFlipX());
         }
         if (Input.get().isActive(Commands.get("Force2"))) {
-            Window.get().getCamera().zoom += .1f;
-            Window.get().moveCamera(-(int) Screen.width(10), -(int) Screen.height(10));
+            Window.get().screenEngine().getCamera().zoom += .1f;
+            Window.get().screenEngine().moveCamera(-(int) Screen.width(10), -(int) Screen.height(10));
         }
         if (Input.get().isActive(Commands.get("Force3"), 0, false)) {
             BodyPart target = _creature.getBody().getParts().getAll().get(_rotTarget);

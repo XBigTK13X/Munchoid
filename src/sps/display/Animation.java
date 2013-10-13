@@ -74,7 +74,7 @@ public class Animation {
             _sprite.setPosition(_position.X, _position.Y);
             _sprite.setColor(renderColor);
             _sprite.flip(flipX, flipY);
-            Window.get().render(_sprite, _depth);
+            Window.get().schedule(_sprite, _depth);
         }
     }
 

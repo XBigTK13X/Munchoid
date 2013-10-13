@@ -84,7 +84,7 @@ public class MainMenu implements State {
 
     @Override
     public void draw() {
-        Window.get().render(_logo, DrawDepths.get("Logo"));
+        Window.get().schedule(_logo, DrawDepths.get("Logo"));
         _start.draw();
         _options.draw();
         _exit.draw();

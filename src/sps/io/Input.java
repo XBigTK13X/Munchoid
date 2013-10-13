@@ -160,10 +160,10 @@ public class Input implements InputProvider {
     }
 
     private void translateMouseCoords() {
-        float percentX = ((float) Gdx.input.getX() - Window.get().getBuffer().x) / (Gdx.graphics.getWidth() - Window.get().getBuffer().x * 2);
+        float percentX = ((float) Gdx.input.getX() - Window.get().screenEngine().getBuffer().x) / (Gdx.graphics.getWidth() - Window.get().screenEngine().getBuffer().x * 2);
         mouseX = (int) (percentX * Screen.get().VirtualWidth);
 
-        float percentY = ((float) Gdx.input.getY() - Window.get().getBuffer().y) / (Gdx.graphics.getHeight() - Window.get().getBuffer().y * 2);
+        float percentY = ((float) Gdx.input.getY() - Window.get().screenEngine().getBuffer().y) / (Gdx.graphics.getHeight() - Window.get().screenEngine().getBuffer().y * 2);
         mouseY = Screen.get().VirtualHeight - (int) (percentY * Screen.get().VirtualHeight);
     }
 

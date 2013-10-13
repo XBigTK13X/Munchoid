@@ -64,9 +64,9 @@ public class FontChecker implements ApplicationListener {
     public void render() {
         Input.get().update();
 
-        Window.get().begin();
         TextPool.get().draw();
-        Window.get().end();
+
+        Window.get().processScheduledApiCalls();
     }
 
     @Override
