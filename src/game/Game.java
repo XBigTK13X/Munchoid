@@ -21,7 +21,6 @@ import sps.display.Window;
 import sps.display.render.FrameStrategy;
 import sps.io.DefaultStateProvider;
 import sps.io.Input;
-import sps.particles.ParticleEngine;
 import sps.particles.ParticleWrapper;
 import sps.states.State;
 import sps.states.StateManager;
@@ -47,24 +46,25 @@ public class Game implements ApplicationListener {
 
         PartFunction.initJointSpecs();
 
-        State start;
-        if (GameConfig.DevPopulationTest) {
-            start = new PreloadPopulationOverview();
-        }
-        else if (GameConfig.DevBattleTest) {
-            start = new Battle();
-        }
-        else if (GameConfig.DevSkeletonTest) {
-            start = new SkeletonTest();
-        }
-        else {
-            start = new MainMenu();
-        }
-
-        StateManager.get().push(start);
+        StateManager.get().push(createInitialState());
         StateManager.get().setPaused(false);
 
         Options.load().apply();
+    }
+
+    private State createInitialState() {
+        if (GameConfig.DevPopulationTest) {
+            return new PreloadPopulationOverview();
+        }
+        else if (GameConfig.DevBattleTest) {
+            return new Battle();
+        }
+        else if (GameConfig.DevSkeletonTest) {
+            return new SkeletonTest();
+        }
+        else {
+            return new MainMenu();
+        }
     }
 
     @Override
@@ -83,11 +83,13 @@ public class Game implements ApplicationListener {
                 StateManager.reset().push(new MainMenu());
             }
             if (InputWrapper.moveRight() && InputWrapper.moveLeft() && InputWrapper.debug2()) {
-                StateManager.reset().push(new Battle());
+                StateManager.reset().push(createInitialState());
             }
             if (InputWrapper.fullScreen()) {
                 Options options = Options.load();
                 Window.toggleFullScreen(!options.FullScreen, options.WindowResolutionX, options.WindowResolutionY);
+                options.FullScreen = !options.FullScreen;
+                options.save();
             }
             if (InputWrapper.devConsole()) {
                 DevConsole.get().toggle();
