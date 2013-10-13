@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import game.GameConfig;
 import sps.bridge.DrawDepth;
-import sps.core.Logger;
 import sps.core.Point2;
 import sps.display.Assets;
 import sps.display.DrawAPICall;
@@ -122,14 +121,10 @@ public class Renderer {
         Collections.sort(_todo);
         setListening(false);
         begin();
-        Logger.info("New Render cycle");
         for (RenderCall command : _todo) {
             //Sprite render call
             if (command.Sprite != null) {
                 render(command.Sprite, command.Depth);
-                if (command.Depth.DrawDepth != 0) {
-                    Logger.info("Depth: " + command.Depth.Name + ", " + command.Depth.DrawDepth);
-                }
             }
             //Text render call
             else if (command.Content != null) {

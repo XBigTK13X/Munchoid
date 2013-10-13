@@ -27,7 +27,7 @@ public class DrawDepths {
 
     public DrawDepth resolve(String name) {
         if (!drawDepths.containsKey(name)) {
-            Logger.error("DrawDepth not found: " + name);
+            Logger.exception(new Exception("DrawDepth not found: " + name));
         }
         return drawDepths.get(name);
     }
