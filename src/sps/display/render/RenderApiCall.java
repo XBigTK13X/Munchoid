@@ -6,7 +6,7 @@ import sps.bridge.DrawDepth;
 import sps.core.Point2;
 import sps.particles.ParticleLease;
 
-public class RenderCall implements Comparable<RenderCall> {
+public class RenderApiCall implements Comparable<RenderApiCall> {
     public String Content;
     public Point2 Location;
     public Color Filter;
@@ -16,7 +16,7 @@ public class RenderCall implements Comparable<RenderCall> {
     public DrawDepth Depth;
     public ParticleLease Particles;
 
-    public RenderCall(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale, DrawDepth depth) {
+    public RenderApiCall(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale, DrawDepth depth) {
         Content = content;
         Location = location;
         Filter = filter;
@@ -28,18 +28,18 @@ public class RenderCall implements Comparable<RenderCall> {
 
     public com.badlogic.gdx.graphics.g2d.Sprite Sprite;
 
-    public RenderCall(Sprite sprite, DrawDepth depth) {
+    public RenderApiCall(Sprite sprite, DrawDepth depth) {
         Sprite = sprite;
         Depth = depth;
     }
 
-    public RenderCall(ParticleLease particles, DrawDepth depth) {
+    public RenderApiCall(ParticleLease particles, DrawDepth depth) {
         Particles = particles;
         Depth = depth;
     }
 
     @Override
-    public int compareTo(RenderCall o) {
+    public int compareTo(RenderApiCall o) {
         return Depth.DrawDepth - o.Depth.DrawDepth;
     }
 }

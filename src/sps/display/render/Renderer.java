@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.bridge.DrawDepth;
 import sps.core.Logger;
 import sps.core.Point2;
-import sps.display.DrawAPICall;
+import sps.display.DrawApiCall;
 import sps.particles.ParticleLease;
 
 public class Renderer {
@@ -19,11 +19,11 @@ public class Renderer {
 
     public void processScheduledApiCalls() {
         _scheduler.sort();
-        for (DrawAPICall call : _scheduler.getDrawApiCalls()) {
+        for (DrawApiCall call : _scheduler.getDrawApiCalls()) {
             _screenEngine.render(call);
         }
         _screenEngine.begin();
-        for(RenderCall call : _scheduler.getRenderApiCalls()){
+        for (RenderApiCall call : _scheduler.getRenderApiCalls()) {
             //Sprite
             if (call.Sprite != null) {
                 _screenEngine.render(call.Sprite, call.Depth);
@@ -36,7 +36,7 @@ public class Renderer {
             else if (call.Particles != null) {
                 _screenEngine.render(call.Particles, call.Depth);
             }
-            else{
+            else {
                 Logger.exception(new Exception("Unknown render call"));
             }
         }
@@ -44,7 +44,7 @@ public class Renderer {
         _scheduler.clear();
     }
 
-    public void schedule(DrawAPICall apiCall) {
+    public void schedule(DrawApiCall apiCall) {
         _scheduler.schedule(apiCall);
     }
 

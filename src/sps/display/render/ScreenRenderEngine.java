@@ -12,7 +12,7 @@ import game.GameConfig;
 import sps.bridge.DrawDepth;
 import sps.core.Point2;
 import sps.display.Assets;
-import sps.display.DrawAPICall;
+import sps.display.DrawApiCall;
 import sps.display.Screen;
 import sps.draw.DrawAPI;
 import sps.entities.HitTest;
@@ -37,6 +37,7 @@ public class ScreenRenderEngine {
     }
 
     private BitmapFont _nextToWrite;
+
     public void render(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale, DrawDepth depth) {
         _nextToWrite = Assets.get().fontPack().getFont(fontLabel, pointSize);
         _nextToWrite.setScale(scale);
@@ -60,7 +61,7 @@ public class ScreenRenderEngine {
         lease.Effect.draw(getBatch(), Gdx.graphics.getDeltaTime());
     }
 
-    public void render(DrawAPICall call) {
+    public void render(DrawApiCall call) {
         DrawAPI.get().setColor(call.Color);
         if (call.Radius == null) {
             DrawAPI.get().line(call.X, call.Y, call.X2, call.Y2);

@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.bridge.DrawDepth;
 import sps.core.Point2;
 import sps.display.Assets;
-import sps.display.DrawAPICall;
+import sps.display.DrawApiCall;
 import sps.particles.ParticleLease;
 
 import java.util.ArrayList;
@@ -13,28 +13,28 @@ import java.util.Collections;
 import java.util.List;
 
 public class RenderScheduler {
-    private List<RenderCall> _renderApiCalls;
-    private List<DrawAPICall> _drawApiCalls;
+    private List<RenderApiCall> _renderApiCalls;
+    private List<DrawApiCall> _drawApiCalls;
 
     public RenderScheduler() {
         _drawApiCalls = new ArrayList<>();
         _renderApiCalls = new ArrayList<>();
     }
 
-    public List<DrawAPICall> getDrawApiCalls() {
+    public List<DrawApiCall> getDrawApiCalls() {
         return _drawApiCalls;
     }
 
-    public List<RenderCall> getRenderApiCalls() {
+    public List<RenderApiCall> getRenderApiCalls() {
         return _renderApiCalls;
     }
 
-    public void schedule(DrawAPICall apiCall) {
+    public void schedule(DrawApiCall apiCall) {
         _drawApiCalls.add(apiCall);
     }
 
     public void schedule(Sprite sprite, DrawDepth depth) {
-        _renderApiCalls.add(new RenderCall(sprite, depth));
+        _renderApiCalls.add(new RenderApiCall(sprite, depth));
     }
 
     public void schedule(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale, DrawDepth depth) {
@@ -53,11 +53,11 @@ public class RenderScheduler {
     }
 
     private void renderLine(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale, DrawDepth depth) {
-        _renderApiCalls.add(new RenderCall(content, location, filter, fontLabel, pointSize, scale, depth));
+        _renderApiCalls.add(new RenderApiCall(content, location, filter, fontLabel, pointSize, scale, depth));
     }
 
     public void schedule(ParticleLease lease, DrawDepth depth) {
-        _renderApiCalls.add(new RenderCall(lease, depth));
+        _renderApiCalls.add(new RenderApiCall(lease, depth));
     }
 
     public void clear() {
