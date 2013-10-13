@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import game.GameConfig;
-import sps.bridge.DrawDepth;
 import sps.core.Point2;
 import sps.display.Assets;
 import sps.display.DrawApiCall;
@@ -32,13 +31,13 @@ public class ScreenRenderEngine {
         setShader(Assets.get().defaultShaders());
     }
 
-    public void render(Sprite sprite, DrawDepth depth) {
+    public void render(Sprite sprite) {
         sprite.draw(_batch);
     }
 
     private BitmapFont _nextToWrite;
 
-    public void render(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale, DrawDepth depth) {
+    public void render(String content, Point2 location, Color filter, String fontLabel, int pointSize, float scale) {
         _nextToWrite = Assets.get().fontPack().getFont(fontLabel, pointSize);
         _nextToWrite.setScale(scale);
         content = content.replaceAll("\t", "    ");
@@ -58,7 +57,7 @@ public class ScreenRenderEngine {
         _nextToWrite.draw(_batch, content, location.X, location.Y);
     }
 
-    public void render(ParticleLease lease, DrawDepth depth) {
+    public void render(ParticleLease lease) {
         lease.Effect.draw(getBatch(), Gdx.graphics.getDeltaTime());
     }
 

@@ -24,15 +24,15 @@ public class Renderer {
         for (RenderApiCall call : _scheduler.getRenderApiCalls()) {
             //Sprite
             if (call.Sprite != null) {
-                _screenEngine.render(call.Sprite, call.Depth);
+                _screenEngine.render(call.Sprite);
             }
             //Text
             else if (call.Content != null) {
-                _screenEngine.render(call.Content, call.Location, call.Filter, call.FontLabel, call.PointSize, call.Scale, call.Depth);
+                _screenEngine.render(call.Content, call.Location, call.Filter, call.FontLabel, call.PointSize, call.Scale);
             }
             //Particle
             else if (call.Particles != null) {
-                _screenEngine.render(call.Particles, call.Depth);
+                _screenEngine.render(call.Particles);
             }
             else {
                 Logger.exception(new Exception("Unknown render call"));
