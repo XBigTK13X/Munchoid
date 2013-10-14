@@ -33,6 +33,7 @@ public class Body {
 
     public void reset() {
         _parts.getCore().calculateOrigins();
+        restore();
     }
 
     private void calculateSize() {

@@ -293,7 +293,7 @@ public class BodyPart {
         _rotationDegrees = degrees;
     }
 
-    public int getRotation() {
+    public int getRotationDegrees() {
         return _rotationDegrees;
     }
 

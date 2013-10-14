@@ -79,4 +79,11 @@ public class ParticleWrapper {
             Window.get().schedule(lease, DrawDepths.get("Particle"));
         }
     }
+
+    public static void rotate(ParticleEffect effect, int degrees) {
+        for (int i = 0; i < effect.getEmitters().size; i++) {
+            effect.getEmitters().get(i).getAngle().setLow(degrees);
+            effect.getEmitters().get(i).getAngle().setHigh(degrees);
+        }
+    }
 }

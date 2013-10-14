@@ -75,14 +75,12 @@ public class Abrasive extends BaseForce {
     @Override
     public void animate(BodyPart part) {
         ParticleEffect effect = ParticleWrapper.get().emit("abrasive", part.getExpensiveGlobalPosition());
-        for (int i = 0; i < effect.getEmitters().size; i++) {
-            effect.getEmitters().get(i).getAngle().setLow(_side.Degrees);
-            effect.getEmitters().get(i).getAngle().setHigh(_side.Degrees);
-        }
+        ParticleWrapper.rotate(effect, _side.Degrees + part.getRotationDegrees());
+
         //TODO The edges don't seem to update
         int xOffset = ((_side.Root.X == 0) ? _edges.X : _edges.X2);
         int yOffset = ((_side.Root.Y == 0 ? _edges.Y : _edges.Y2));
-        Point2 pos = part.getExpensiveGlobalPosition().add(xOffset, yOffset);
+        Point2 pos = part.getCheapGlobalPosition().add(xOffset, yOffset);
         effect.setPosition(pos.X, pos.Y);
         effect.start();
     }
