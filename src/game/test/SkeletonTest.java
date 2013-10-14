@@ -21,7 +21,7 @@ public class SkeletonTest implements State {
     private Text _scale;
     private int _rotTarget = 1;
     private boolean _forceMode = false;
-    private int _forceMagnitude = 10;
+    private int _forceMagnitude = 0;
 
     @Override
     public void create() {
@@ -50,13 +50,18 @@ public class SkeletonTest implements State {
             StateManager.get().push(new SkeletonTest());
         }
         float diff = .01f;
-        if (InputWrapper.moveUp()) {
-            _creature.getBody().setScale(_creature.getBody().getScale() + diff);
-        }
-        if (InputWrapper.moveDown()) {
-            _creature.getBody().setScale(_creature.getBody().getScale() - diff);
-        }
         if (_forceMode) {
+            if (Input.get().isActive(Commands.get("MoveDown"), 0, true)) {
+                Input.get().lock(Commands.get("MoveDown"), 0);
+                _forceMagnitude = _forceMagnitude - 1;
+                if (_forceMagnitude < 0) {
+                    _forceMagnitude = 0;
+                }
+            }
+            if (Input.get().isActive(Commands.get("MoveUp"), 0, true)) {
+                Input.get().lock(Commands.get("MoveUp"), 0);
+                _forceMagnitude++;
+            }
             for (Force force : Force.values()) {
                 if (Input.get().isActive(Commands.get(force.Command))) {
                     Force.create(force, _forceMagnitude).apply(getTarget());
@@ -64,6 +69,12 @@ public class SkeletonTest implements State {
             }
         }
         else {
+            if (InputWrapper.moveUp()) {
+                _creature.getBody().setScale(_creature.getBody().getScale() + diff);
+            }
+            if (InputWrapper.moveDown()) {
+                _creature.getBody().setScale(_creature.getBody().getScale() - diff);
+            }
             if (Input.get().isActive(Commands.get("Force1"))) {
                 _creature.getBody().flipX(!_creature.getBody().isFlipX());
             }
@@ -105,12 +116,15 @@ public class SkeletonTest implements State {
         _creature.update();
         String display = "Scale: " + _creature.getBody().getScale() + "\n";
         display += "Window: " + Window.Width + " x " + Window.Height + "\n";
+        display += "Mag: " + _forceMagnitude + "\n";
         display += "\n" + Commands.get("Confirm") + " new creature";
-        display += "\n" + Commands.get("MoveUp") + " scale up";
-        display += "\n" + Commands.get("MoveDown") + " scale down";
+
 
         if (_forceMode) {
             display += "\n" + Commands.get("Debug1") + " rotate mode" + "\n";
+
+            display += "\n" + Commands.get("MoveUp") + " mag up";
+            display += "\n" + Commands.get("MoveDown") + " mag down";
             for (Force force : Force.values()) {
                 display += "\n" + Commands.get(force.Command) + " " + force.name();
             }
@@ -118,6 +132,9 @@ public class SkeletonTest implements State {
         }
         else {
             display += "\n" + Commands.get("Debug1") + " force mode" + "\n";
+
+            display += "\n" + Commands.get("MoveUp") + " scale up";
+            display += "\n" + Commands.get("MoveDown") + " scale down";
             display += "\n" + Commands.get("Force1") + " flipX";
             display += "\n" + Commands.get("Force2") + " zoom out";
             display += "\n" + Commands.get("Force3") + " reset";
