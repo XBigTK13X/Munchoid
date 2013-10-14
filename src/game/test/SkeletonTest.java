@@ -1,5 +1,6 @@
 package game.test;
 
+import com.badlogic.gdx.graphics.Color;
 import game.InputWrapper;
 import game.creatures.BodyPart;
 import game.creatures.Creature;
@@ -19,7 +20,6 @@ public class SkeletonTest implements State {
     private Text _scale;
     private int _rotTarget = 1;
 
-
     @Override
     public void create() {
         _creature = new Creature();
@@ -29,6 +29,8 @@ public class SkeletonTest implements State {
         _creature.getBody().setScale(2f);
 
         _scale = TextPool.get().write("", Screen.pos(5, 90));
+        BodyPart target = _creature.getBody().getParts().getAll().get(_rotTarget);
+        target.setTint(Color.GRAY);
     }
 
     @Override
@@ -49,42 +51,51 @@ public class SkeletonTest implements State {
         if (InputWrapper.moveDown()) {
             _creature.getBody().setScale(_creature.getBody().getScale() - diff);
         }
-        if (Input.get().isActive(Commands.get("Force1"))) {
+        if (Input.get().isActive(Commands.get("Force3"))) {
             _creature.getBody().setScale(1f);
+            _creature.getBody().reset();
+            Window.get().screenEngine().getCamera().zoom = 1f;
+            Window.get().screenEngine().resetCamera();
         }
-        if (Input.get().isActive(Commands.get("Force6"))) {
+        if (Input.get().isActive(Commands.get("Force1"))) {
             _creature.getBody().flipX(!_creature.getBody().isFlipX());
         }
         if (Input.get().isActive(Commands.get("Force2"))) {
             Window.get().screenEngine().getCamera().zoom += .1f;
             Window.get().screenEngine().moveCamera(-(int) Screen.width(10), -(int) Screen.height(10));
         }
-        if (Input.get().isActive(Commands.get("Force3"), 0, false)) {
+        if (Input.get().isActive(Commands.get("Force5"), 0, false)) {
             BodyPart target = _creature.getBody().getParts().getAll().get(_rotTarget);
             target.setRotation(target.getRotation() + 5);
         }
-        if (Input.get().isActive(Commands.get("Force4"))) {
+        if (Input.get().isActive(Commands.get("Force6"))) {
             BodyPart target = _creature.getBody().getParts().getAll().get(_rotTarget);
             target.setRotation(0);
-            Logger.info("Pivot point:" + target.getPivot());
+            Logger.info("Pivot point:" + target.getPivot() + ", " + target.getWidth() + " x " + target.getHeight() + ", " + target.getParentConnection().GridLoc);
         }
-        if (Input.get().isActive(Commands.get("Force5"))) {
+        if (Input.get().isActive(Commands.get("Force4"))) {
+            BodyPart target = _creature.getBody().getParts().getAll().get(_rotTarget);
+            target.setTint(Color.WHITE);
             _rotTarget++;
             if (_rotTarget >= _creature.getBody().getParts().getAll().size()) {
                 _rotTarget = 1;
             }
+            BodyPart newTarget = _creature.getBody().getParts().getAll().get(_rotTarget);
+            newTarget.setTint(Color.GRAY);
         }
 
         _creature.update();
         String display = "Scale: " + _creature.getBody().getScale() + "\n";
-        display += "\n" + Commands.get("Force6") + " to flipX";
+        display += "Window: " + Window.Width + " x " + Window.Height + "\n";
         display += "\n" + Commands.get("Confirm") + " new creature";
         display += "\n" + Commands.get("MoveUp") + " scale up";
         display += "\n" + Commands.get("MoveDown") + " scale down";
-        display += "\n" + Commands.get("Force1") + " scale reset";
-        display += "\n" + Commands.get("Force5") + " select p";
-        display += "\n" + Commands.get("Force3") + " pRotation++";
-        display += "\n" + Commands.get("Force4") + " pRotation=0";
+        display += "\n" + Commands.get("Force1") + " flipX";
+        display += "\n" + Commands.get("Force2") + " zoom out";
+        display += "\n" + Commands.get("Force3") + " reset";
+        display += "\n" + Commands.get("Force4") + " select p";
+        display += "\n" + Commands.get("Force5") + " pRotation++";
+        display += "\n" + Commands.get("Force6") + " pRotation=0";
         _scale.setMessage(display);
     }
 

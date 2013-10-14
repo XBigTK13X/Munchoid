@@ -65,7 +65,7 @@ public class Grid {
         if (part.getParent() == null) {
             return new Point2(0, 0);
         }
-        return centerOf(part.getParentConnection().GridLoc - 1, part);
+        return new Point2(part.getWidth() / 2, part.getHeight() / 2);
     }
 
     //Convert a grid location (1->9) into coordinate ranges.

@@ -22,6 +22,7 @@ public class BodyPart {
     private int _height;
     private boolean _isAlive = true;
     private Color _color;
+    private Color _partTint;
     private float _scale;
     private PartFunction _function;
     private Body _body;
@@ -38,7 +39,7 @@ public class BodyPart {
 
     public BodyPart(PartFunction function, int width, int height, Body owner, Design design) {
         this(function, owner, owner.getColor(), new Point2(0, 0));
-
+        _partTint = Color.WHITE;
         int[][] designResult = design.create(width, height);
 
         _atoms = Designs.toAtoms(designResult, _color);
@@ -177,10 +178,15 @@ public class BodyPart {
 
     public void draw() {
         _joints.draw();
-        _sprite.setColor(_body.getHighlight());
-        _sprite.setOrigin(_pivot.X, _pivot.Y);
+        if (GameConfig.DevSkeletonTest) {
+            _sprite.setColor(_partTint);
+        }
+        else {
+            _sprite.setColor(_body.getHighlight());
+        }
+        _sprite.setOrigin(_pivot.X * _scale, _pivot.Y * _scale);
+        _sprite.setPosition(getCheapGlobalPosition().X, getCheapGlobalPosition().Y);
         _sprite.setRotation(_rotationDegrees);
-        _sprite.setOrigin(0, 0);
         _sprite.setSize(_width * _scale, _height * _scale);
         _sprite.setPosition(getCheapGlobalPosition().X, getCheapGlobalPosition().Y);
         Window.get().schedule(_sprite, DrawDepths.get("BodyPart"));
@@ -299,7 +305,7 @@ public class BodyPart {
         return _parentConnection;
     }
 
-    public Color getColor() {
-        return _color;
+    public void setTint(Color tint) {
+        _partTint = tint;
     }
 }

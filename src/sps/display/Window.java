@@ -18,6 +18,9 @@ public class Window {
     private static ApplicationListener __app;
     private static Color __bgColor = Color.BLACK;
 
+    public static int Height;
+    public static int Width;
+
     private Window() {
 
     }
@@ -41,6 +44,8 @@ public class Window {
             __fixed = new Renderer(width, height);
             __fixed.screenEngine().setStrategy(__defaultStrategy);
             Logger.info("Window resolution: " + Gdx.graphics.getWidth() + "W, " + Gdx.graphics.getHeight() + "H");
+            Width = width;
+            Height = height;
         }
         return fixed ? __fixed : __dynamic;
     }
@@ -66,6 +71,8 @@ public class Window {
                 Gdx.graphics.setDisplayMode(width, height, Gdx.graphics.isFullscreen());
             }
         }
+        Height = height;
+        Width = width;
         get(true).screenEngine().resize(width, height);
         get(false).screenEngine().resize(width, height);
     }
