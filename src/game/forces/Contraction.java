@@ -22,6 +22,6 @@ public class Contraction extends BaseForce {
 
     @Override
     public void animate(BodyPart part) {
-        ParticleWrapper.get().emit("contraction", part.getCheapGlobalPosition());
+        ParticleWrapper.get().emit("contraction", part.getCheapGlobalCenter());
     }
 }

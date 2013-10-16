@@ -223,6 +223,13 @@ public class BodyPart {
         return _cheapGlobalPosition;
     }
 
+    private Point2 _globalCenter = new Point2(0, 0);
+
+    public Point2 getCheapGlobalCenter() {
+        _globalCenter = getCheapGlobalPosition().add(getWidth() / 2, getHeight() / 2);
+        return _globalCenter;
+    }
+
     public void recalculateCheapPositionCache() {
         _cheapPositionCache.reset(getExpensiveGlobalPosition().X - _body.getOwner().getLocation().X, getExpensiveGlobalPosition().Y - _body.getOwner().getLocation().Y);
     }
