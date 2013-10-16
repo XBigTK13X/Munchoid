@@ -74,7 +74,7 @@ public class Abrasive extends BaseForce {
 
     @Override
     public void animate(BodyPart part) {
-        ParticleEffect effect = ParticleWrapper.get().emit("abrasive", part.getExpensiveGlobalPosition());
+        ParticleEffect effect = ParticleWrapper.get().emit("abrasive", part.getCheapGlobalPosition());
         ParticleWrapper.rotate(effect, _side.Degrees + part.getRotationDegrees());
 
         //TODO The edges don't seem to update

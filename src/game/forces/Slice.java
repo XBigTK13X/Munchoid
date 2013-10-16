@@ -68,7 +68,7 @@ public class Slice extends BaseForce {
 
     @Override
     public void animate(BodyPart part) {
-        ParticleEffect effect = ParticleWrapper.get().emit("slice", part.getExpensiveGlobalPosition());
+        ParticleEffect effect = ParticleWrapper.get().emit("slice", part.getCheapGlobalPosition());
         int degrees = (int) (_rotRads / Math.PI * 180) + part.getRotationDegrees();
         ParticleWrapper.rotate(effect, degrees);
         effect.setPosition(_start.X + part.getCheapGlobalPosition().X, _start.Y + part.getCheapGlobalPosition().Y);
