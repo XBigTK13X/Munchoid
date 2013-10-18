@@ -33,6 +33,6 @@ public class Explosive extends BaseForce {
 
     @Override
     public void animate(BodyPart part) {
-        ParticleWrapper.get().emit("Explosion", part.getCheapGlobalPosition());
+        ParticleWrapper.get().emit("Explosion", part.getCheapGlobalCenter());
     }
 }
