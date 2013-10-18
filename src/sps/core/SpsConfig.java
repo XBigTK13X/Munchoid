@@ -37,6 +37,7 @@ public class SpsConfig {
     public final boolean controllersEnabled;
 
     public final int particleEffectPoolLimit;
+    public final int particleEffectPoolStartSize;
 
 
     private SpsConfig() {
@@ -72,6 +73,7 @@ public class SpsConfig {
         entityGridEnabled = Parse.bool(_settings.get("entityGridEnabled"));
 
         particleEffectPoolLimit = Parse.inte(_settings.get("particleEffectPoolLimit"));
+        particleEffectPoolStartSize = Parse.inte(_settings.get("particleEffectPoolStartSize"));
 
         // Dev
         viewPaths = Parse.bool(_settings.get("viewPaths"));

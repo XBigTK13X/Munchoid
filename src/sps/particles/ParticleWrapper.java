@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ParticleWrapper {
-    private static final int __initialPoolCapacity = 5;
+    private static final int __initialPoolCapacity = SpsConfig.get().particleEffectPoolStartSize;
 
     private static ParticleWrapper __instance;
 

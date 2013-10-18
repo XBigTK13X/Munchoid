@@ -11,8 +11,8 @@ import sps.util.BoundingBox;
 
 public class Abrasive extends BaseForce {
     private static enum Side {
-        Top(180, 1, 1),
-        Bottom(0, 0, 0),
+        Top(0, 1, 1),
+        Bottom(-180, 0, 0),
         Left(90, 0, 0),
         Right(-90, 1, 1);
 
