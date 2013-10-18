@@ -31,8 +31,8 @@ public class Sps {
 
     public static class DrawDepths {
         public static final String Debug = "Debug";
-        public static final String Default_Text = "Default_Text";
-        public static final String Animated_Texture = "Animated_Texture";
+        public static final String DefaultText = "DefaultText";
+        public static final String AnimatedTexture = "AnimatedTexture";
     }
 
     public static final float SpriteRadius = (float) Math.sqrt(Math.pow(SpsConfig.get().spriteHeight / 2, 2) + Math.pow(SpsConfig.get().spriteWidth, 2));

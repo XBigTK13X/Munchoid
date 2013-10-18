@@ -52,11 +52,12 @@ public class Tooltips {
 
     private Tooltips() {
         if (__bg == null) {
-            Color[][] tbg = ProcTextures.monotone(2, 2, new Color(.1f, .1f, .1f, .7f));
+            Color[][] tbg = ProcTextures.monotone(2, 2, new Color(.1f, .1f, .1f, .85f));
             __bg = SpriteMaker.get().fromColors(tbg);
         }
         _position = new Point2(0, 0);
         _message = TextPool.get().write("NOTHING", _position);
+        _message.setDepth(DrawDepths.get("TooltipBackground"));
         _message.hide();
         _users = new ArrayList<>();
     }

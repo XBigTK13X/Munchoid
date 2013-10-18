@@ -33,7 +33,7 @@ public class Animation {
     private boolean _dynamicEdges = false;
 
     public Animation() {
-        _depth = DrawDepths.get(Sps.DrawDepths.Animated_Texture);
+        _depth = DrawDepths.get(Sps.DrawDepths.AnimatedTexture);
     }
 
     public void setAnimationEnabled(boolean value) {
