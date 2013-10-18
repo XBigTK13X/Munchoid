@@ -8,7 +8,6 @@ import sps.core.Loader;
 import sps.core.Point2;
 import sps.core.SpsConfig;
 import sps.display.Window;
-import sps.util.BoundingBox;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -88,12 +87,12 @@ public class ParticleWrapper {
         }
     }
 
-    public static void setBounds(ParticleEffect effect, BoundingBox bounds) {
+    public static void setSquareBounds(ParticleEffect effect, int length) {
         for (int i = 0; i < effect.getEmitters().size; i++) {
             effect.getEmitters().get(i).getSpawnWidth().setLow(0);
-            effect.getEmitters().get(i).getSpawnWidth().setHigh(bounds.Width);
+            effect.getEmitters().get(i).getSpawnWidth().setHigh(length);
             effect.getEmitters().get(i).getSpawnHeight().setLow(0);
-            effect.getEmitters().get(i).getSpawnHeight().setHigh(bounds.Height);
+            effect.getEmitters().get(i).getSpawnHeight().setHigh(length);
         }
     }
 }

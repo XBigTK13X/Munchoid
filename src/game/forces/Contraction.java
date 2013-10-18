@@ -1,5 +1,6 @@
 package game.forces;
 
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import game.GameConfig;
 import game.creatures.BodyPart;
 import sps.core.RNG;
@@ -22,6 +23,6 @@ public class Contraction extends BaseForce {
 
     @Override
     public void animate(BodyPart part) {
-        ParticleWrapper.get().emit("contraction", part.getCheapGlobalCenter());
+        ParticleEffect effect = ParticleWrapper.get().emit("contraction", part.getCheapGlobalCenter());
     }
 }

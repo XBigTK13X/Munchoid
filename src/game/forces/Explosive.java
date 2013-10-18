@@ -1,5 +1,6 @@
 package game.forces;
 
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import game.GameConfig;
 import game.creatures.BodyPart;
 import sps.core.Point2;
@@ -33,6 +34,8 @@ public class Explosive extends BaseForce {
 
     @Override
     public void animate(BodyPart part) {
-        ParticleWrapper.get().emit("Explosion", part.getCheapGlobalCenter());
+        ParticleEffect effect = ParticleWrapper.get().emit("Explosion", part.getCheapGlobalCenter());
+        int m = Math.max(part.getWidth(), part.getHeight()) / 2;
+        ParticleWrapper.setSquareBounds(effect, m);
     }
 }

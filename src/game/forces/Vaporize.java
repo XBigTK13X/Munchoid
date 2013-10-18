@@ -5,7 +5,6 @@ import game.GameConfig;
 import game.creatures.BodyPart;
 import sps.core.RNG;
 import sps.particles.ParticleWrapper;
-import sps.util.BoundingBox;
 
 public class Vaporize extends BaseForce {
     public Vaporize(int magnitude) {
@@ -21,7 +20,6 @@ public class Vaporize extends BaseForce {
     public void animate(BodyPart part) {
         ParticleEffect effect = ParticleWrapper.get().emit("vaporize", part.getCheapGlobalCenter());
         int m = Math.max(part.getWidth(), part.getHeight()) / 2;
-        BoundingBox bounds = BoundingBox.fromPoints(-m, -m, m, m);
-        ParticleWrapper.setBounds(effect, bounds);
+        ParticleWrapper.setSquareBounds(effect, m);
     }
 }
