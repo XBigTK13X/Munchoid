@@ -1,7 +1,11 @@
 package sps.core;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Loader {
 
@@ -13,8 +17,6 @@ public class Loader {
         }
         return instance;
     }
-
-    private final HashMap<String, File> files = new HashMap<String, File>();
 
     private final String root = "assets";
 
@@ -48,7 +50,38 @@ public class Loader {
         return get(graphics + "/" + font, target);
     }
 
-    public File save(String target) {
-        return data("save/" + target);
+    private Map<String, File> _userSaveDirs = new HashMap<>();
+
+    private void createUserSaveDir(String game) {
+        String path = System.getProperty("user.home");
+        switch (DesktopApi.getOs()) {
+            case windows:
+                path = new File(path, "My Documents/My Games/").getAbsolutePath();
+                break;
+            case macos:
+                path = new File(path, "Library/Application Support/").getAbsolutePath();
+                break;
+            default:
+                path = new File(path, ".local/share/").getAbsolutePath();
+                break;
+        }
+        path = new File(path, game).getAbsolutePath();
+        File userSaveDir = new File(path);
+        if (!userSaveDir.exists()) {
+            try {
+                FileUtils.forceMkdir(userSaveDir);
+            }
+            catch (IOException e) {
+                Logger.exception(e);
+            }
+        }
+        _userSaveDirs.put(game, userSaveDir);
+    }
+
+    public File userSave(String game, String target) {
+        if (!_userSaveDirs.containsKey(game)) {
+            createUserSaveDir(game);
+        }
+        return new File(_userSaveDirs.get(game), target);
     }
 }

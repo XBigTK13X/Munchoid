@@ -11,8 +11,8 @@ import sps.util.Parse;
 import java.io.File;
 
 public class Options {
-    private static final File __config = Loader.get().save("munchoid.cfg");
-    private static final File __defaultConfig = Loader.get().save("default.munchoid.cfg");
+    private static final File __config = Loader.get().userSave("Munchoid", "munchoid.cfg");
+    private static final File __defaultConfig = Loader.get().data("default.munchoid.cfg");
 
     public static Options load() {
         Options options = new Options();
