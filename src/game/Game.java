@@ -5,6 +5,8 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import game.battle.Battle;
+import game.battle.MergeOutcome;
+import game.creatures.Creature;
 import game.creatures.PartFunction;
 import game.population.PreloadPopulationOverview;
 import game.pregame.MainMenu;
@@ -55,6 +57,9 @@ public class Game implements ApplicationListener {
     private State createInitialState() {
         if (GameConfig.DevPopulationTest) {
             return new PreloadPopulationOverview();
+        }
+        if (GameConfig.DevMergeOutcomeTest) {
+            return new MergeOutcome(new Creature(), new Creature());
         }
         else if (GameConfig.DevBattleTest) {
             return new Battle();

@@ -14,8 +14,9 @@ public class GameConfig {
     public static final boolean DevBotRandomlyMerges = true;
 
     //Debugging / Development
-    public static final boolean DevShortcutsEnabled = true;
+    public static final boolean DevShortcutsEnabled = false;
     public static final boolean DevTournyTest = false;
+    public static final boolean DevMergeOutcomeTest = false;
     public static final boolean DevPopulationTest = false;
     public static final boolean DevBattleTest = false;
     public static final boolean DevSkeletonTest = false;

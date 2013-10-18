@@ -51,11 +51,11 @@ public class MergeOutcome implements State {
 
         Stats cancelStats = Merge.rejectStats(_pet.getStats());
 
-        final int left = 5;
+        final int left = 10;
         final int top = 90;
 
         //Stat merge display
-        TextPool.get().write("Cancel Outcome:", Screen.pos(left, top + 5));
+        TextPool.get().write("Devour Outcome:", Screen.pos(left, top + 5));
         int forceRow = 2;
         for (Force force : Force.values()) {
             String resultText = cancelStats.get(force) == GameConfig.MaxStat ? "MAX" : cancelStats.get(force) + "";
@@ -86,11 +86,11 @@ public class MergeOutcome implements State {
 
         //Accept and reject buttons
         if (_accept == null) {
-            _accept = UISprite.button(Color.GREEN, 50, 65);
-            _reject = UISprite.button(Color.RED, 50, 65);
+            _accept = UISprite.button(Color.GREEN, 40, 50);
+            _reject = UISprite.button(Color.RED, 40, 50);
 
-            _reject.setPosition(0, Screen.height(35));
-            _accept.setPosition(Screen.width(50), Screen.height(35));
+            _reject.setPosition(Screen.width(5), Screen.height(35));
+            _accept.setPosition(Screen.width(55), Screen.height(35));
 
 
             Buttons.get().add(new Buttons.User() {
@@ -127,7 +127,7 @@ public class MergeOutcome implements State {
 
             @Override
             public String message() {
-                return "Click here or press " + Commands.get("Confirm") + " to perform the merge.";
+                return "Click here or press " + Commands.get("Confirm") + "\nto merge with the opponent.";
             }
         });
 
@@ -140,7 +140,7 @@ public class MergeOutcome implements State {
 
             @Override
             public String message() {
-                return "Click here or press " + Commands.get("Push") + " to cancel the merge.";
+                return "Click here or press " + Commands.get("Push") + "\nto devour the opponent";
             }
         });
         if (GameConfig.DevEndToEndStateLoadTest) {
