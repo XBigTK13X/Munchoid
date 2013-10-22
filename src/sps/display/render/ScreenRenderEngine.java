@@ -17,6 +17,7 @@ import sps.draw.DrawAPI;
 import sps.entities.HitTest;
 import sps.particles.ParticleLease;
 
+//TODO Handle multiple shaders. ie: Text shader, sprite shader
 public class ScreenRenderEngine {
     private SpriteBatch _batch;
     private OrthographicCamera _camera;
