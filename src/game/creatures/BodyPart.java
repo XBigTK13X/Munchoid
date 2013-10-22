@@ -304,6 +304,16 @@ public class BodyPart {
         return _rotationDegrees;
     }
 
+    public Point2 calculateRotatedPosition(float x, float y, Point2 origin) {
+        double partRotationRadians = getRotationDegrees() * Math.PI / 180;
+        double offsetRotationRadians = Math.atan2(y - origin.Y, x - origin.X);
+        float radius = (float) Math.sqrt((x * x) + (y * y));
+        double combinedRotationRadians = partRotationRadians + offsetRotationRadians;
+        float xOffset = (float) (Math.cos(combinedRotationRadians) * radius);
+        float yOffset = (float) (Math.sin(combinedRotationRadians) * radius);
+        return new Point2(xOffset, yOffset);
+    }
+
     public Point2 getPivot() {
         return _pivot;
     }

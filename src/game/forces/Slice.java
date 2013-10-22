@@ -50,6 +50,7 @@ public class Slice extends BaseForce {
         }
 
         _rotRads = (float) Math.atan2(_end.Y - _start.Y, _end.X - _start.X);
+
         int[] boundsX = new int[4];
         int[] boundsY = new int[4];
 
@@ -69,9 +70,14 @@ public class Slice extends BaseForce {
     @Override
     public void animate(BodyPart part) {
         ParticleEffect effect = ParticleWrapper.get().emit("slice", part.getCheapGlobalPosition());
+
+        _start = part.calculateRotatedPosition(_start.X, _start.Y, part.getCheapGlobalCenter());
+
+        effect.setPosition(_start.X + part.getCheapGlobalCenter().X, part.getCheapGlobalCenter().Y - _start.Y);
+
         int degrees = (int) (_rotRads / Math.PI * 180) + part.getRotationDegrees();
         ParticleWrapper.rotate(effect, degrees);
-        effect.setPosition(_start.X + part.getCheapGlobalPosition().X, _start.Y + part.getCheapGlobalPosition().Y);
+
         effect.start();
     }
 }

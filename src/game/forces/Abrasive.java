@@ -81,16 +81,8 @@ public class Abrasive extends BaseForce {
         int w = (int) (part.getScale() * part.getWidth() / 2);
         int h = (int) (part.getScale() * part.getHeight() / 2);
 
-        Point2 cgc = part.getCheapGlobalCenter();
-
-        double partRotationRadians = part.getRotationDegrees() * Math.PI / 180;
-        double offsetRotationRadians = Math.atan2(h - cgc.Y, w - cgc.X);
-        float radius = (float) Math.sqrt((w * w) + (h * h));
-        double combinedRotationRadians = partRotationRadians + offsetRotationRadians;
-        float xOffset = (float) (Math.cos(combinedRotationRadians) * radius);
-        float yOffset = (float) (Math.sin(combinedRotationRadians) * radius);
-
-        Point2 pos = part.getCheapGlobalCenter().add(_side.Root.X * xOffset, _side.Root.Y * yOffset);
+        Point2 offset = part.calculateRotatedPosition(w, h, part.getCheapGlobalCenter());
+        Point2 pos = part.getCheapGlobalCenter().add(_side.Root.X * offset.X, _side.Root.Y * offset.Y);
         effect.setPosition(pos.X, pos.Y);
 
         ParticleWrapper.rotate(effect, _side.Degrees + part.getRotationDegrees());
