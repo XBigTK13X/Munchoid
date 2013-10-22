@@ -34,7 +34,7 @@ public class Explosive extends BaseForce {
 
     @Override
     public void animate(BodyPart part) {
-        ParticleEffect effect = ParticleWrapper.get().emit("Explosion", part.getCheapGlobalCenter());
+        ParticleEffect effect = ParticleWrapper.get().emit("explosion", part.getCheapGlobalCenter());
         int m = Math.max(part.getWidth(), part.getHeight()) / 2;
         ParticleWrapper.setSquareBounds(effect, m);
     }

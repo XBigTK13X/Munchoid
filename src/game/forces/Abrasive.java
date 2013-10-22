@@ -11,10 +11,10 @@ import sps.util.BoundingBox;
 
 public class Abrasive extends BaseForce {
     private static enum Side {
-        Top(0, 1, 1),
-        Bottom(-180, 0, 0),
-        Left(90, 0, 0),
-        Right(-90, 1, 1);
+        Top(-90, -1, -1),
+        Bottom(90, 1, 1),
+        Left(180, -1, -1),
+        Right(0, 1, 1);
 
         public int Degrees;
         public Point2 Root;
@@ -69,19 +69,32 @@ public class Abrasive extends BaseForce {
     public void prepareCalculations(BodyPart part) {
         _side = RNG.pick(Side.values());
         _edges = AtomHelper.getEdges(part.getAtoms());
+
         _adjustedMagnitude += getPartScale(part) * __partPercent;
     }
 
     @Override
     public void animate(BodyPart part) {
         ParticleEffect effect = ParticleWrapper.get().emit("abrasive", part.getCheapGlobalPosition());
+
+        //TODO When an edge is partially destroyed the effect still displays on the original edge
+        int w = (int) (part.getScale() * part.getWidth() / 2);
+        int h = (int) (part.getScale() * part.getHeight() / 2);
+
+        Point2 cgc = part.getCheapGlobalCenter();
+
+        double partRotationRadians = part.getRotationDegrees() * Math.PI / 180;
+        double offsetRotationRadians = Math.atan2(h - cgc.Y, w - cgc.X);
+        float radius = (float) Math.sqrt((w * w) + (h * h));
+        double combinedRotationRadians = partRotationRadians + offsetRotationRadians;
+        float xOffset = (float) (Math.cos(combinedRotationRadians) * radius);
+        float yOffset = (float) (Math.sin(combinedRotationRadians) * radius);
+
+        Point2 pos = part.getCheapGlobalCenter().add(_side.Root.X * xOffset, _side.Root.Y * yOffset);
+        effect.setPosition(pos.X, pos.Y);
+
         ParticleWrapper.rotate(effect, _side.Degrees + part.getRotationDegrees());
 
-        //TODO The edges don't seem to update
-        int xOffset = ((_side.Root.X == 0) ? _edges.X : _edges.X2);
-        int yOffset = ((_side.Root.Y == 0 ? _edges.Y : _edges.Y2));
-        Point2 pos = part.getCheapGlobalPosition().add(xOffset, yOffset);
-        effect.setPosition(pos.X, pos.Y);
         effect.start();
     }
 }
