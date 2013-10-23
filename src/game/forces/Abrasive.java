@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import game.GameConfig;
 import game.creatures.AtomHelper;
 import game.creatures.BodyPart;
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.particles.ParticleWrapper;
@@ -11,10 +12,10 @@ import sps.util.BoundingBox;
 
 public class Abrasive extends BaseForce {
     private static enum Side {
-        Top(-90, -1, -1),
-        Bottom(90, 1, 1),
-        Left(180, -1, -1),
-        Right(0, 1, 1);
+        Top(-90, 1, 1),
+        Bottom(90, -1, -1),
+        Left(0, 1, 1),
+        Right(180, -1, -1);
 
         public int Degrees;
         public Point2 Root;
@@ -78,12 +79,14 @@ public class Abrasive extends BaseForce {
         ParticleEffect effect = ParticleWrapper.get().emit("abrasive", part.getCheapGlobalPosition());
 
         //TODO When an edge is partially destroyed the effect still displays on the original edge
-        int w = (int) (part.getScale() * part.getWidth() / 2);
-        int h = (int) (part.getScale() * part.getHeight() / 2);
-
-        Point2 offset = part.calculateRotatedPosition(w, h, part.getCheapGlobalCenter());
-        Point2 pos = part.getCheapGlobalCenter().add(_side.Root.X * offset.X, _side.Root.Y * offset.Y);
+        Point2 dimensions = part.calculateRotatedDimensions();
+        int w = (int) (part.getScale() * (dimensions.X / 2));
+        int h = (int) (part.getScale() * (dimensions.Y / 2));
+        String log = "Side: " + _side + ", WxH: " + w + " x " + h;
+        Point2 pos = part.getCheapGlobalCenter().add(_side.Root.X * w, h * _side.Root.Y);
         effect.setPosition(pos.X, pos.Y);
+
+        Logger.info(log + ", Pos: " + pos);
 
         ParticleWrapper.rotate(effect, _side.Degrees + part.getRotationDegrees());
 

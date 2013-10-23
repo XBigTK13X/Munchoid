@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import game.GameConfig;
 import game.creatures.Atom;
 import game.creatures.BodyPart;
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.particles.ParticleWrapper;
@@ -49,6 +50,10 @@ public class Slice extends BaseForce {
             _end.reset(RNG.next(0, atoms.length), atoms[0].length + thickness);
         }
 
+        //TODO REmove debugging logic
+        _start.reset(0, 0);
+        _end.reset(part.getWidth(), part.getHeight());
+
         _rotRads = (float) Math.atan2(_end.Y - _start.Y, _end.X - _start.X);
 
         int[] boundsX = new int[4];
@@ -70,13 +75,17 @@ public class Slice extends BaseForce {
     @Override
     public void animate(BodyPart part) {
         ParticleEffect effect = ParticleWrapper.get().emit("slice", part.getCheapGlobalPosition());
+        String log = "Start: " + _start;
+        Point2 dimensions = part.calculateRotatedDimensions();
+        dimensions.setY(dimensions.Y / 2);
+        dimensions.setX(dimensions.X / 2);
 
-        _start = part.calculateRotatedPosition(_start.X, _start.Y, part.getCheapGlobalCenter());
+        Logger.info(log + ", new Start: " + _start);
+        Point2 center = part.getCheapGlobalPosition();
+        effect.setPosition(_start.X + center.X, _start.Y + center.Y);
 
-        effect.setPosition(_start.X + part.getCheapGlobalCenter().X, part.getCheapGlobalCenter().Y - _start.Y);
-
-        int degrees = (int) (_rotRads / Math.PI * 180) + part.getRotationDegrees();
-        ParticleWrapper.rotate(effect, degrees);
+        //int degrees = (int) (_rotRads / Math.PI * 180) + part.getRotationDegrees();
+        //ParticleWrapper.rotate(effect, degrees);
 
         effect.start();
     }

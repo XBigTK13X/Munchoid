@@ -7,6 +7,7 @@ import game.creatures.Creature;
 import game.forces.Force;
 import sps.bridge.Commands;
 import sps.core.Logger;
+import sps.core.Point2;
 import sps.display.Screen;
 import sps.display.Window;
 import sps.io.Input;
@@ -18,7 +19,7 @@ import sps.text.TextPool;
 public class SkeletonTest implements State {
 
     private Creature _creature;
-    private Text _scale;
+    private Text _display;
     private int _rotTarget = 1;
     private boolean _forceMode = false;
     private int _forceMagnitude = 0;
@@ -29,7 +30,8 @@ public class SkeletonTest implements State {
         _creature.getBody().setScale(1f);
         _creature.setLocation(Screen.pos(50, 50));
 
-        _scale = TextPool.get().write("", Screen.pos(5, 90));
+        _display = TextPool.get().write("", Screen.pos(5, 90));
+        _display.setFont("default", 35);
         BodyPart target = getTarget();
         target.setTint(Color.GRAY);
     }
@@ -114,8 +116,11 @@ public class SkeletonTest implements State {
         }
 
         _creature.update();
-        String display = "Scale: " + _creature.getBody().getScale() + "\n";
+        String display = "Scale: " + String.format("%.2f", _creature.getBody().getScale()) + "\n";
         display += "Window: " + Window.Width + " x " + Window.Height + "\n";
+        display += "Part Size: " + getTarget().getWidth() + " x " + getTarget().getHeight() + "\n";
+        Point2 rotD = getTarget().calculateRotatedDimensions();
+        display += "Rot  Size: " + String.format("%.0f", rotD.X) + " x " + String.format("%.0f", rotD.Y) + "\n";
         display += "Mag: " + _forceMagnitude + "\n";
         display += "\n" + Commands.get("Confirm") + " new creature";
 
@@ -142,7 +147,7 @@ public class SkeletonTest implements State {
             display += "\n" + Commands.get("Force5") + " pRotation++";
             display += "\n" + Commands.get("Force6") + " pRotation=0";
         }
-        _scale.setMessage(display);
+        _display.setMessage(display);
     }
 
     @Override
@@ -170,3 +175,4 @@ public class SkeletonTest implements State {
     public void pause() {
     }
 }
+

@@ -29,6 +29,10 @@ public class Point2 {
         this(x, y, 0);
     }
 
+    public Point2(double x, double y) {
+        this((float) x, (float) y);
+    }
+
     public void reset(float x, float y) {
         X = x;
         Y = y;
@@ -60,17 +64,19 @@ public class Point2 {
         return X == 0 && Y == 0;
     }
 
-    public Point2 rotate() {
-        return rotate(45);
-    }
+    public Point2 rotateAroundOrigin(int degrees) {
+        double partRotationRadians = degrees * Math.PI / 180;
+        double offsetRotationRadians = Math.atan2(Y, X);
+        double theta = partRotationRadians + offsetRotationRadians;
 
-    public Point2 rotate(int degrees) {
-        double theta = degrees * Math.PI / 180;
-        double currentRotation = Math.atan2(Y, X);
-        currentRotation -= theta;
-        float x = (int) Math.round(Math.cos(currentRotation));
-        float y = (int) Math.round(Math.sin(currentRotation));
-        return new Point2(x, y);
+        double s = Math.sin(theta);
+        double c = Math.cos(theta);
+        double xnew = X * c - Y * s;
+        double ynew = X * s + Y * c;
+
+        Point2 result = new Point2(0, 0);
+        result.reset((float) xnew, (float) ynew);
+        return result;
     }
 
     @Override
