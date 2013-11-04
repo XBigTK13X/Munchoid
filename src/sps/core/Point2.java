@@ -68,18 +68,15 @@ public class Point2 {
         return rotateAround(Point2.Zero, degrees);
     }
 
-    public Point2 rotateAround(Point2 origin, int degrees) {
-        int offset = 0;
-        double partRotationRadians = (degrees + offset) * Math.PI / 180;
-        double offsetRotationRadians = Math.atan2(Y - origin.Y, X - origin.X);
-        double theta = partRotationRadians;
+    public Point2 rotateAround(Point2 pivot, int degrees) {
+        double theta = (degrees) * Math.PI / 180;
 
-        Point2 displacement = add(-origin.X, -origin.Y);
+        Point2 displacement = add(-pivot.X, -pivot.Y);
 
         double x = displacement.X * Math.cos(theta) - displacement.Y * Math.sin(theta);
         double y = displacement.X * Math.sin(theta) + displacement.Y * Math.cos(theta);
 
-        return new Point2(x + origin.X, y + origin.Y);
+        return new Point2(x + pivot.X, y + pivot.Y);
     }
 
     @Override

@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import game.GameConfig;
 import game.creatures.AtomHelper;
 import game.creatures.BodyPart;
-import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.particles.ParticleWrapper;
@@ -12,10 +11,10 @@ import sps.util.BoundingBox;
 
 public class Abrasive extends BaseForce {
     private static enum Side {
-        Top(-90, false),
-        Bottom(90, true),
-        Left(0, true),
-        Right(180, false);
+        Top(0, false),
+        Bottom(180, true),
+        Left(-90, true),
+        Right(90, false);
 
         public final int Degrees;
         public final boolean OppositeCorner;
@@ -80,14 +79,12 @@ public class Abrasive extends BaseForce {
 
         Point2 base = part.getCheapGlobalPosition();
         Point2 center = part.getCheapGlobalCenter();
-        int offsetDegrees = _side.OppositeCorner ? 180 : 0;
 
-        String log = "Base: " + base;
+        int offsetDegrees = _side.OppositeCorner ? 180 : 0;
         base = base.rotateAround(center, part.getRotationDegrees() + offsetDegrees);
-        Logger.info(log + ", Result: " + base);
         effect.setPosition(base.X, base.Y);
 
-        //ParticleWrapper.rotate(effect, _side.Degrees + part.getRotationDegrees());
+        ParticleWrapper.rotate(effect, _side.Degrees + part.getRotationDegrees());
 
         effect.start();
     }
