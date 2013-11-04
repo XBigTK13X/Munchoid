@@ -226,7 +226,7 @@ public class BodyPart {
     private Point2 _globalCenter = new Point2(0, 0);
 
     public Point2 getCheapGlobalCenter() {
-        _globalCenter = getCheapGlobalPosition().add(getWidth() / 2, getHeight() / 2);
+        _globalCenter = getCheapGlobalPosition().add(getWidth() * _scale / 2, getHeight() * _scale / 2);
         return _globalCenter;
     }
 

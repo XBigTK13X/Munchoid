@@ -12,17 +12,17 @@ import sps.util.BoundingBox;
 
 public class Abrasive extends BaseForce {
     private static enum Side {
-        Top(-90, 1, 1),
-        Bottom(90, -1, -1),
-        Left(0, 1, 1),
-        Right(180, -1, -1);
+        Top(-90, false),
+        Bottom(90, true),
+        Left(0, true),
+        Right(180, false);
 
-        public int Degrees;
-        public Point2 Root;
+        public final int Degrees;
+        public final boolean OppositeCorner;
 
-        private Side(int degrees, int x, int y) {
+        private Side(int degrees, boolean oppositeCorner) {
             Degrees = degrees;
-            Root = new Point2(x, y);
+            OppositeCorner = oppositeCorner;
         }
     }
 
@@ -78,17 +78,16 @@ public class Abrasive extends BaseForce {
     public void animate(BodyPart part) {
         ParticleEffect effect = ParticleWrapper.get().emit("abrasive", part.getCheapGlobalPosition());
 
-        //TODO When an edge is partially destroyed the effect still displays on the original edge
-        Point2 dimensions = part.calculateRotatedDimensions();
-        int w = (int) (part.getScale() * (dimensions.X / 2));
-        int h = (int) (part.getScale() * (dimensions.Y / 2));
-        String log = "Side: " + _side + ", WxH: " + w + " x " + h;
-        Point2 pos = part.getCheapGlobalCenter().add(_side.Root.X * w, h * _side.Root.Y);
-        effect.setPosition(pos.X, pos.Y);
+        Point2 base = part.getCheapGlobalPosition();
+        Point2 center = part.getCheapGlobalCenter();
+        int offsetDegrees = _side.OppositeCorner ? 180 : 0;
 
-        Logger.info(log + ", Pos: " + pos);
+        String log = "Base: " + base;
+        base = base.rotateAround(center, part.getRotationDegrees() + offsetDegrees);
+        Logger.info(log + ", Result: " + base);
+        effect.setPosition(base.X, base.Y);
 
-        ParticleWrapper.rotate(effect, _side.Degrees + part.getRotationDegrees());
+        //ParticleWrapper.rotate(effect, _side.Degrees + part.getRotationDegrees());
 
         effect.start();
     }
