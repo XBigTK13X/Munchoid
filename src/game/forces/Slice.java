@@ -49,10 +49,6 @@ public class Slice extends BaseForce {
             _end.reset(RNG.next(0, atoms.length), atoms[0].length + thickness);
         }
 
-        //TODO REmove debugging logic
-        _start.reset(0, 0);
-        _end.reset(part.getWidth(), part.getHeight());
-
         _rotRads = (float) Math.atan2(_end.Y - _start.Y, _end.X - _start.X);
 
         int[] boundsX = new int[4];
