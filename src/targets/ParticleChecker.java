@@ -1,0 +1,64 @@
+package targets;
+
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import game.InputWrapper;
+import sps.core.Logger;
+import sps.core.Point2;
+import sps.display.Assets;
+import sps.display.Screen;
+import sps.display.Window;
+import sps.io.Input;
+import sps.particles.ParticleWrapper;
+import sps.text.Text;
+import sps.text.TextEffects;
+import sps.text.TextPool;
+
+public class ParticleChecker implements ApplicationListener {
+    private static DummyApp _context;
+
+    public static void main(String[] args) {
+        _context = new DummyApp(new ParticleChecker());
+    }
+
+    public ParticleChecker() {
+    }
+
+    @Override
+    public void create() {
+        _context.create();
+
+
+    }
+
+    @Override
+    public void resize(int i, int i2) {
+    }
+
+    @Override
+    public void render() {
+        Input.get().update();
+
+        if (InputWrapper.confirm()) {
+            Logger.info("Emitting...");
+            ParticleEffect effect = ParticleWrapper.get().emit("vaporize", Screen.pos(30, 30));
+            ParticleWrapper.setSquareBounds(effect, 50);
+            effect.start();
+        }
+
+        Window.get().processScheduledApiCalls();
+    }
+
+    @Override
+    public void pause() {
+    }
+
+    @Override
+    public void resume() {
+    }
+
+    @Override
+    public void dispose() {
+    }
+}
