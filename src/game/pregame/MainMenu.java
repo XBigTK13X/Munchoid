@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import game.InputWrapper;
 import game.Score;
-import game.population.PreloadPopulationOverview;
 import game.save.Persistence;
+import game.tutorial.TutorialQuery;
 import game.ui.UIButton;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
@@ -38,7 +38,7 @@ public class MainMenu implements State {
         _start = new UIButton("Start", Commands.get("Confirm")) {
             @Override
             public void click() {
-                StateManager.get().push(new PreloadPopulationOverview());
+                StateManager.get().push(new TutorialQuery());
             }
         };
 
