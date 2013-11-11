@@ -67,9 +67,16 @@ public class ForceMeter {
                     @Override
                     public void onClick() {
                         State state = StateManager.get().current();
-
                         Battle battle = (Battle) state;
                         battle.playerActivate(_force);
+                    }
+
+                    @Override
+                    public void over() {
+                        super.over();
+                        State state = StateManager.get().current();
+                        Battle battle = (Battle) state;
+                        battle.playerShowCost(_force);
                     }
                 });
             }

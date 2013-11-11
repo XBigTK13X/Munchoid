@@ -73,6 +73,7 @@ public class Battle implements State {
     }
 
     private void playerAttack(Force force) {
+        playerShowCost(force);
         if (_left.getCoolDown().isCooled()) {
             attack(_left, force);
         }
@@ -241,5 +242,9 @@ public class Battle implements State {
 
     @Override
     public void pause() {
+    }
+
+    public void playerShowCost(Force force) {
+        _leftHud.flashCost(_left.getCostPercent(force));
     }
 }

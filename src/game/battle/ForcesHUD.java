@@ -28,7 +28,7 @@ public class ForcesHUD {
             _origin = Screen.pos(55, 90);
         }
 
-        _meters = new ArrayList<ForceMeter>();
+        _meters = new ArrayList<>();
         int forceOrder = 0;
         for (Force force : Force.values()) {
             Point2 origin = _origin.add(__order[forceOrder].X * Screen.width(__widthPercent) + __order[forceOrder].X * Screen.width(__paddingPercent), -__order[forceOrder].Y * Screen.height(__heightPercent) - __order[forceOrder].Y * Screen.height(__paddingPercent));

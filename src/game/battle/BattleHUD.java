@@ -11,6 +11,7 @@ public class BattleHUD {
     private ForcesHUD _forces;
     private HealthMeter _health;
     private EnergyMeter _energy;
+    private CostMeter _cost;
     private EffectHUD _effects;
 
     private Text _coolDown;
@@ -24,6 +25,7 @@ public class BattleHUD {
         _forces = new ForcesHUD(owner);
         _health = new HealthMeter(owner);
         _energy = new EnergyMeter(owner);
+        _cost = new CostMeter(owner);
         _coolDown = TextPool.get().write(coolDownText(owner), Screen.pos(0, 15).add((int) _owner.getLocation().X, 0));
         _effects = new EffectHUD(owner);
     }
@@ -39,6 +41,7 @@ public class BattleHUD {
         _forces.draw();
         _health.draw();
         _energy.draw();
+        _cost.draw();
     }
 
     private String coolDownText(Creature creature) {
@@ -47,5 +50,10 @@ public class BattleHUD {
 
     public void updateAttackBasedState() {
         _effects.update();
+    }
+
+    public void flashCost(int costPercent) {
+        _cost.scaleHeight(costPercent);
+        _cost.show();
     }
 }

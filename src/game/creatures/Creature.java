@@ -196,6 +196,10 @@ public class Creature extends Entity {
         return _stats.isEnabled(force) && getEnergy() >= getStats().get(force) && _stats.canBeEnabled(force);
     }
 
+    public int getCostPercent(Force force) {
+        return MathHelper.percent((float) getStats().get(force) / GameConfig.MaxStat);
+    }
+
     public int getPercentEnergy() {
         return MathHelper.percent((float) _energy / _energyMax);
     }
