@@ -1,19 +1,13 @@
 package targets;
 
 import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import game.InputWrapper;
 import sps.core.Logger;
-import sps.core.Point2;
-import sps.display.Assets;
 import sps.display.Screen;
 import sps.display.Window;
 import sps.io.Input;
 import sps.particles.ParticleWrapper;
-import sps.text.Text;
-import sps.text.TextEffects;
-import sps.text.TextPool;
 
 public class ParticleChecker implements ApplicationListener {
     private static DummyApp _context;
@@ -28,8 +22,6 @@ public class ParticleChecker implements ApplicationListener {
     @Override
     public void create() {
         _context.create();
-
-
     }
 
     @Override
@@ -46,6 +38,9 @@ public class ParticleChecker implements ApplicationListener {
             ParticleWrapper.setSquareBounds(effect, 50);
             effect.start();
         }
+
+        ParticleWrapper.get().update();
+        ParticleWrapper.get().draw();
 
         Window.get().processScheduledApiCalls();
     }
