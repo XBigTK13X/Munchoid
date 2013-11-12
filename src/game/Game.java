@@ -11,6 +11,7 @@ import game.creatures.PartFunction;
 import game.population.PreloadPopulationOverview;
 import game.pregame.MainMenu;
 import game.save.Options;
+import game.test.BackgroundGenerationTest;
 import game.test.SkeletonTest;
 import sps.bridge.SpriteTypes;
 import sps.bridge.Sps;
@@ -66,6 +67,9 @@ public class Game implements ApplicationListener {
         }
         else if (GameConfig.DevSkeletonTest) {
             return new SkeletonTest();
+        }
+        else if (GameConfig.DevBackgroundGenerationTest){
+            return new BackgroundGenerationTest();
         }
         else {
             return new MainMenu();
