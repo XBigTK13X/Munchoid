@@ -2,7 +2,6 @@ package game;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.display.Screen;
@@ -24,14 +23,12 @@ public class Background {
         Trace
     }
 
-    private static final int modelScale = 6;
     private static final int viaPixelWidth = 10;
+    private static final int viaPixelMargin = 10;
 
     private static ModelId[][] buildModel(int width, int height) {
         List<Point2> vias = new ArrayList<Point2>();
 
-        width = width / modelScale;
-        height = height / modelScale;
         ModelId[][] result = new ModelId[width][height];
         for (int ii = 0; ii < width; ii++) {
             for (int jj = 0; jj < height; jj++) {
@@ -40,7 +37,8 @@ public class Background {
         }
 
         //Via placement
-        int viaCount = RNG.next(width / 10, width / 8) + RNG.next(height / 10, height / 8);
+        int screenArea = width * height;
+        int viaCount = screenArea / (viaPixelWidth * viaPixelWidth) / (viaPixelMargin * viaPixelMargin);
         while (viaCount > 0) {
             viaCount--;
             Point2 via = new Point2(RNG.next(width), RNG.next(height));
@@ -53,8 +51,6 @@ public class Background {
             Point2 start = RNG.pick(vias);
             Point2 end = RNG.pick(vias);
             if (start != end) {
-                vias.remove(end);
-                vias.remove(start);
                 Point2 max = (start.X > end.X) ? start : end;
                 Point2 min = (start.X > end.X) ? end : start;
                 int xtrace = (int) min.X;
@@ -77,23 +73,30 @@ public class Background {
                     }
                 }
             }
+            vias.remove(end);
+            vias.remove(start);
         }
-
         return result;
     }
 
     private static Sprite convertModelToTexture(ModelId[][] model) {
-        Color[][] base = ProcTextures.monotone((int) Screen.width(100), (int) Screen.height(100), Colors.shade(Colors.randomPleasant(), -80));
         Color via = Colors.randomPleasant();
         Color trace = Colors.randomPleasant();
+        Color board = Colors.shade(Colors.randomPleasant(), -60);
+
+        Color[][] base = ProcTextures.monotone((int) Screen.width(100), (int) Screen.height(100), board);
+
 
         for (int ii = 0; ii < model.length; ii++) {
             for (int jj = 0; jj < model[ii].length; jj++) {
+                if (model[ii][jj] == ModelId.Trace) {
+                    base[ii][jj] = trace;
+                }
                 if (model[ii][jj] == ModelId.Via) {
                     for (int ox = -viaPixelWidth / 2; ox < viaPixelWidth / 2; ox++) {
                         for (int oy = -viaPixelWidth / 2; oy < viaPixelWidth / 2; oy++) {
-                            int x = ii * modelScale + ox;
-                            int y = jj * modelScale + oy;
+                            int x = ii + ox;
+                            int y = jj + oy;
                             if (x >= 0 && y >= 0 && x < base.length && y < base[0].length) {
                                 base[x][y] = via;
                             }
@@ -102,6 +105,7 @@ public class Background {
                 }
             }
         }
+
         return SpriteMaker.get().fromColors(base);
     }
 
