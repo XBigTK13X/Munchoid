@@ -85,4 +85,13 @@ public class Colors {
     public static int percentDifference(Color c1, Color c2) {
         return (int) (25 * (Math.abs(c1.a - c2.a) + Math.abs(c1.b - c2.b) + Math.abs(c1.r - c2.r) + Math.abs(c1.g - c2.g)));
     }
+
+    public static Color divide(Color c, float constant) {
+        Color result = new Color(c);
+        result.r = c.r / constant;
+        result.g = c.g / constant;
+        result.b = c.b / constant;
+        result.a = c.a / constant;
+        return result;
+    }
 }

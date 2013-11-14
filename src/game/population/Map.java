@@ -10,6 +10,7 @@ import sps.display.Window;
 import sps.draw.Colors;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
+import sps.draw.TextureManipulation;
 
 public class Map {
     public static final int C = 255;
@@ -30,7 +31,7 @@ public class Map {
         _habitableZones = new int[width][height];
 
         if (GameConfig.OptSmoothRegionMap) {
-            ProcTextures.blur(_spriteBase, 2);
+            TextureManipulation.blurNaive(_spriteBase, 2);
         }
 
         for (int ii = 0; ii < width; ii++) {

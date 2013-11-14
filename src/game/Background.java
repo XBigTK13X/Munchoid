@@ -8,6 +8,8 @@ import sps.display.Screen;
 import sps.draw.Colors;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
+import sps.draw.TextureManipulation;
+import sps.entities.HitTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +25,9 @@ public class Background {
         Trace
     }
 
-    private static final int viaPixelWidth = 10;
+    private static final int viaPixelWidth = 12;
     private static final int viaPixelMargin = 10;
+    private static final int tracePixelWidth = 3;
 
     private static ModelId[][] buildModel(int width, int height) {
         List<Point2> vias = new ArrayList<Point2>();
@@ -51,25 +54,34 @@ public class Background {
             Point2 start = RNG.pick(vias);
             Point2 end = RNG.pick(vias);
             if (start != end) {
-                Point2 max = (start.X > end.X) ? start : end;
-                Point2 min = (start.X > end.X) ? end : start;
-                int xtrace = (int) min.X;
-                while (xtrace < max.X) {
+                Point2 maxx = (start.X > end.X) ? start : end;
+                Point2 minx = (start.X > end.X) ? end : start;
+                Point2 maxy = (start.Y > end.Y) ? start : end;
+                Point2 miny = (start.Y > end.Y) ? end : start;
+
+                int xtrace = (int) minx.X;
+                while (xtrace < maxx.X) {
                     xtrace++;
-                    int y = (int) min.Y;
-                    if (result[xtrace][y] == ModelId.Empty) {
-                        result[xtrace][y] = ModelId.Trace;
+                    for (int w = -tracePixelWidth / 2; w < tracePixelWidth / 2; w++) {
+                        int y = (int) minx.Y + w;
+                        if (y >= 0 && y < result[0].length) {
+                            if (result[xtrace][y] == ModelId.Empty) {
+                                result[xtrace][y] = ModelId.Trace;
+                            }
+                        }
                     }
                 }
 
-                max = (start.Y > end.Y) ? start : end;
-                min = (start.Y > end.Y) ? end : start;
-                int ytrace = (int) min.Y;
-                while (ytrace < max.Y) {
+                int ytrace = (int) miny.Y;
+                while (ytrace < maxy.Y) {
                     ytrace++;
-                    int x = (int) min.X;
-                    if (result[x][ytrace] == ModelId.Empty) {
-                        result[x][ytrace] = ModelId.Trace;
+                    for (int w = -tracePixelWidth / 2; w < tracePixelWidth / 2; w++) {
+                        int x = (int) maxx.X + w;
+                        if (x >= 0 && x < result.length) {
+                            if (result[x][ytrace] == ModelId.Empty) {
+                                result[x][ytrace] = ModelId.Trace;
+                            }
+                        }
                     }
                 }
             }
@@ -82,29 +94,49 @@ public class Background {
     private static Sprite convertModelToTexture(ModelId[][] model) {
         Color via = Colors.randomPleasant();
         Color trace = Colors.randomPleasant();
-        Color board = Colors.shade(Colors.randomPleasant(), -60);
+        Color board = Color.BLACK;
+        Color board2 = Colors.shade(Color.BLACK, 10);
 
-        Color[][] base = ProcTextures.monotone((int) Screen.width(100), (int) Screen.height(100), board);
+        Color[][] base = ProcTextures.gradient((int) Screen.width(100), (int) Screen.height(100), board, board2, RNG.coinFlip());
 
-
-        for (int ii = 0; ii < model.length; ii++) {
-            for (int jj = 0; jj < model[ii].length; jj++) {
-                if (model[ii][jj] == ModelId.Trace) {
-                    base[ii][jj] = trace;
+        //Create the via texture
+        Color[][] viaBase = new Color[viaPixelWidth][viaPixelWidth];
+        Point2 viaCenter = new Point2(viaPixelWidth / 2, viaPixelWidth / 2);
+        for (int ii = 0; ii < viaBase.length; ii++) {
+            for (int jj = 0; jj < viaBase[0].length; jj++) {
+                float dist = HitTest.getDistance(ii, jj, viaCenter.X, viaCenter.Y);
+                if (dist < viaPixelWidth / 2) {
+                    viaBase[ii][jj] = via;
                 }
-                if (model[ii][jj] == ModelId.Via) {
-                    for (int ox = -viaPixelWidth / 2; ox < viaPixelWidth / 2; ox++) {
-                        for (int oy = -viaPixelWidth / 2; oy < viaPixelWidth / 2; oy++) {
-                            int x = ii + ox;
-                            int y = jj + oy;
-                            if (x >= 0 && y >= 0 && x < base.length && y < base[0].length) {
-                                base[x][y] = via;
+            }
+        }
+
+        //Draw the traces first, then the vias
+        for (int pass = 1; pass < 3; pass++) {
+            for (int ii = 0; ii < model.length; ii++) {
+                for (int jj = 0; jj < model[ii].length; jj++) {
+                    if (pass == 1 && model[ii][jj] == ModelId.Trace) {
+                        base[ii][jj] = trace;
+                    }
+                    if (pass == 2 && model[ii][jj] == ModelId.Via) {
+                        for (int ox = 0; ox < viaBase.length; ox++) {
+                            for (int oy = 0; oy < viaBase[0].length; oy++) {
+                                if (viaBase[ox][oy] == via) {
+                                    int x = ii + ox - viaPixelWidth / 2;
+                                    int y = jj + oy - viaPixelWidth / 2;
+                                    if (x >= 0 && y >= 0 && x < base.length && y < base[0].length) {
+                                        base[x][y] = via;
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
         }
+
+        //Blur the entire texture
+        base = TextureManipulation.blurGaussian(base, 3);
 
         return SpriteMaker.get().fromColors(base);
     }
