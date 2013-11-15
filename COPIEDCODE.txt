@@ -1,0 +1,14 @@
+Some code has been either copy-pasted directly from a website, or converted from pseudo-code into Java.
+The snippets can be found by searching for "http://" across the project, and are repeated here as a credit.
+
+https://gist.github.com/veryphatic/3190969
+
+http://devmag.org.za/2009/04/25/perlin-noise/
+
+http://stackoverflow.com/questions/7896280/converting-from-hsv-hsb-in-java-to-rgb-without-using-java-awt-color-disallowe
+
+http://stackoverflow.com/questions/1664140/js-function-to-calculate-complementary-colour
+
+http://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/
+
+http://stackoverflow.com/questions/18004150/desktop-api-is-not-supported-on-the-current-platform
