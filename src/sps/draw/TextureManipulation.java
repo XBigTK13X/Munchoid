@@ -1,6 +1,10 @@
 package sps.draw;
 
 import com.badlogic.gdx.graphics.Color;
+import sps.draw.filters.GaussianFilter;
+import sps.draw.filters.GlowFilter;
+
+import java.awt.image.BufferedImage;
 
 public class TextureManipulation {
     public static void negative(Color[][] base) {
@@ -41,52 +45,45 @@ public class TextureManipulation {
         }
     }
 
-    //Based on: http://www.blackpawn.com/texts/blur/
-    private static Color[][] blurHorizontal(Color[][] source, int radius, Color[][] result) {
-        for (int y = 0; y < source.length; y++) {
-            Color total = new Color(Color.BLACK);
-
-            // Process entire window for first pixel
-            for (int kx = -radius; kx <= radius && kx >= 0 && kx < source.length; ++kx) {
-                total = total.add(source[kx][y]);
-            }
-            result[0][y] = Colors.divide(total, (radius * 2 + 1));
-
-            // Subsequent pixels just update window total
-            for (int x = 1; x < source[0].length; x++) {
-                // Subtract pixel leaving window
-                int x1 = x + radius;
-                int x2 = x - radius - 1;
-                if (x2 >= 0 && x2 < source.length) {
-                    total.sub(source[x2][y]);
-                }
-                // Add pixel entering window
-                if (x1 >= 0 && x1 < source.length) {
-                    total.add(source[x1][y]);
-                }
-
-                result[x][y] = Colors.divide(total, (radius * 2 + 1));
-            }
-        }
-        return result;
+    public static void blurGaussian(Color[][] base, int radius) {
+        BufferedImage dest = getBuffer(base);
+        GaussianFilter filter = new GaussianFilter();
+        filter.setRadius(radius);
+        filter.filter(getBuffer(base), dest);
+        copyDest(dest, base);
     }
 
-    public static void transpose(Color[][] base) {
-        for (int y = 0; y < base.length; y++) {
-            for (int x = y + 1; x < base[0].length; x++) {
-                Color tmp = base[x][y];
-                base[x][y] = base[y][x];
-                base[y][x] = tmp;
+    public static void glow(Color[][] base, float strength) {
+        BufferedImage dest = getBuffer(base);
+        GlowFilter filter = new GlowFilter();
+        filter.setAmount(strength);
+        filter.filter(getBuffer(base), dest);
+        copyDest(dest, base);
+    }
+
+    private static BufferedImage getBuffer(Color[][] base) {
+        BufferedImage source = new BufferedImage(base.length, base[0].length, BufferedImage.TYPE_INT_ARGB);
+        for (int ii = 0; ii < base.length; ii++) {
+            for (int jj = 0; jj < base[0].length; jj++) {
+                source.setRGB(ii, jj, base[ii][jj].toIntBits());
+            }
+        }
+        return source;
+    }
+
+    private static void copyDest(BufferedImage dest, Color[][] base) {
+        for (int ii = 0; ii < base.length; ii++) {
+            for (int jj = 0; jj < base[0].length; jj++) {
+                base[ii][jj] = new Color(dest.getRGB(ii, jj));
             }
         }
     }
 
-    public static Color[][] blurGaussian(Color[][] base, int radius) {
-        Color[][] result = new Color[base.length][base[0].length];
-        blurHorizontal(base, radius, result);
-        transpose(result);
-        blurHorizontal(base, radius, result);
-        transpose(result);
-        return result;
+    public static void darken(Color[][] base, int darkness) {
+        for (int ii = 0; ii < base.length; ii++) {
+            for (int jj = 0; jj < base[0].length; jj++) {
+                base[ii][jj] = Colors.shade(base[ii][jj], -darkness);
+            }
+        }
     }
 }

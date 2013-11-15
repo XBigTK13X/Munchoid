@@ -92,40 +92,44 @@ public class Background {
     }
 
     private static Sprite convertModelToTexture(ModelId[][] model) {
-        Color via = Colors.randomPleasant();
-        Color trace = Colors.randomPleasant();
-        Color board = Color.BLACK;
-        Color board2 = Colors.shade(Color.BLACK, 10);
 
-        Color[][] base = ProcTextures.gradient((int) Screen.width(100), (int) Screen.height(100), board, board2, RNG.coinFlip());
+
+        Color board = Colors.randomPleasant();
+        Color board2 = Colors.randomPleasant();
+        int w = (int) Screen.width(100);
+        int h = (int) Screen.height(100);
+        Color[][] base = ProcTextures.radial(w, h, board, board2);
 
         //Create the via texture
-        Color[][] viaBase = new Color[viaPixelWidth][viaPixelWidth];
+        boolean[][] viaBase = new boolean[viaPixelWidth][viaPixelWidth];
         Point2 viaCenter = new Point2(viaPixelWidth / 2, viaPixelWidth / 2);
         for (int ii = 0; ii < viaBase.length; ii++) {
             for (int jj = 0; jj < viaBase[0].length; jj++) {
                 float dist = HitTest.getDistance(ii, jj, viaCenter.X, viaCenter.Y);
                 if (dist < viaPixelWidth / 2) {
-                    viaBase[ii][jj] = via;
+                    viaBase[ii][jj] = true;
                 }
             }
         }
-
+        Color trace = Colors.randomPleasant();
+        trace.a = .1f;
         //Draw the traces first, then the vias
         for (int pass = 1; pass < 3; pass++) {
             for (int ii = 0; ii < model.length; ii++) {
                 for (int jj = 0; jj < model[ii].length; jj++) {
                     if (pass == 1 && model[ii][jj] == ModelId.Trace) {
-                        base[ii][jj] = trace;
+                        base[ii][jj] = Colors.blend(base[ii][jj], trace);
                     }
                     if (pass == 2 && model[ii][jj] == ModelId.Via) {
+                        Color via = Colors.randomPleasant();
+                        via.a = .1f;
                         for (int ox = 0; ox < viaBase.length; ox++) {
                             for (int oy = 0; oy < viaBase[0].length; oy++) {
-                                if (viaBase[ox][oy] == via) {
+                                if (viaBase[ox][oy]) {
                                     int x = ii + ox - viaPixelWidth / 2;
                                     int y = jj + oy - viaPixelWidth / 2;
                                     if (x >= 0 && y >= 0 && x < base.length && y < base[0].length) {
-                                        base[x][y] = via;
+                                        base[x][y] = Colors.blend(base[ii][jj], via);
                                     }
                                 }
                             }
@@ -135,8 +139,8 @@ public class Background {
             }
         }
 
-        //Blur the entire texture
-        base = TextureManipulation.blurGaussian(base, 3);
+        TextureManipulation.blurGaussian(base, 3);
+        TextureManipulation.darken(base, 80);
 
         return SpriteMaker.get().fromColors(base);
     }
