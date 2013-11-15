@@ -14,8 +14,8 @@ import sps.entities.HitTest;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Background {
-    private Background() {
+public class BackgroundMaker {
+    private BackgroundMaker() {
 
     }
 
@@ -23,6 +23,20 @@ public class Background {
         Empty,
         Via,
         Trace
+    }
+
+    public static Sprite radial() {
+        Color c1 = Colors.randomPleasant();
+        Color c2 = Color.WHITE;
+        return SpriteMaker.get().fromColors(ProcTextures.radial((int) Screen.width(100), (int) Screen.height(100), c1, c2));
+    }
+
+    public static Sprite printedCircuitBoard() {
+        return printedCircuitBoard((int) Screen.width(100), (int) Screen.height(100));
+    }
+
+    public static Sprite printedCircuitBoard(int pixelWidth, int pixelHeight) {
+        return convertModelToTexture(buildModel(pixelWidth, pixelHeight));
     }
 
     private static final int viaPixelWidth = 12;
@@ -92,8 +106,6 @@ public class Background {
     }
 
     private static Sprite convertModelToTexture(ModelId[][] model) {
-
-
         Color board = Colors.randomPleasant();
         Color board2 = Colors.randomPleasant();
         int w = model.length;
@@ -143,13 +155,5 @@ public class Background {
         TextureManipulation.darken(base, 80);
 
         return SpriteMaker.get().fromColors(base);
-    }
-
-    public static Sprite generate() {
-        return generate((int) Screen.width(100), (int) Screen.height(100));
-    }
-
-    public static Sprite generate(int pixelWidth, int pixelHeight) {
-        return convertModelToTexture(buildModel(pixelWidth, pixelHeight));
     }
 }

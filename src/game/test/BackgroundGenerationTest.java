@@ -1,7 +1,7 @@
 package game.test;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.Background;
+import game.BackgroundMaker;
 import game.InputWrapper;
 import sps.bridge.DrawDepths;
 import sps.display.Window;
@@ -12,7 +12,7 @@ public class BackgroundGenerationTest implements State {
 
     @Override
     public void create() {
-        _bg = Background.generate();
+        _bg = BackgroundMaker.printedCircuitBoard();
     }
 
     @Override
@@ -23,7 +23,7 @@ public class BackgroundGenerationTest implements State {
     @Override
     public void update() {
         if (InputWrapper.confirm()) {
-            _bg = Background.generate();
+            _bg = BackgroundMaker.printedCircuitBoard();
         }
     }
 

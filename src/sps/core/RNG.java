@@ -33,7 +33,7 @@ public class RNG {
             return min;
         }
         try {
-            throw new RuntimeException("You cannot generate a random number if max is less than min!");
+            throw new RuntimeException("You cannot printedCircuitBoard a random number if max is less than min!");
         }
         catch (Exception e) {
             Logger.exception(e);

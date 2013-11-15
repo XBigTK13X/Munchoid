@@ -2,6 +2,7 @@ package game.pregame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import game.BackgroundMaker;
 import game.GameConfig;
 import game.InputWrapper;
 import game.Score;
@@ -19,6 +20,8 @@ import sps.states.StateManager;
 import sps.text.TextPool;
 
 public class MainMenu implements State {
+    Sprite _background;
+
     UIButton _start;
     UIButton _options;
     UIButton _exit;
@@ -28,6 +31,7 @@ public class MainMenu implements State {
 
     @Override
     public void create() {
+        _background = BackgroundMaker.radial();
         StateManager.clearTimes();
         Score.reset();
 
@@ -84,6 +88,7 @@ public class MainMenu implements State {
 
     @Override
     public void draw() {
+        Window.get().schedule(_background, DrawDepths.get("GameBackground"));
         Window.get().schedule(_logo, DrawDepths.get("Logo"));
         _start.draw();
         _options.draw();

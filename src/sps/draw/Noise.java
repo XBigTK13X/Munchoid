@@ -89,7 +89,7 @@ public class Noise {
 
         float persistance = 0.7f;
 
-        //generate smooth noise
+        //printedCircuitBoard smooth noise
         for (int i = 0; i < octaveCount; i++) {
             smoothNoise[i] = smooth(baseNoise, i);
         }

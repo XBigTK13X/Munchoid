@@ -1,7 +1,7 @@
 package game.battle;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.Background;
+import game.BackgroundMaker;
 import game.GameConfig;
 import game.InputWrapper;
 import game.Score;
@@ -55,7 +55,7 @@ public class Battle implements State {
 
     @Override
     public void create() {
-        _background = Background.generate();
+        _background = BackgroundMaker.printedCircuitBoard();
 
         _left.orientX(false, true);
         _right.orientX(true, true);

@@ -2,7 +2,7 @@ package game.arena;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.Background;
+import game.BackgroundMaker;
 import game.GameConfig;
 import sps.bridge.DrawDepths;
 import sps.bridge.EntityTypes;
@@ -24,7 +24,7 @@ public class Floor extends Entity {
         initialize(0, 0, Point2.Zero, null, EntityTypes.get("Floor"), DrawDepths.get("Floor"));
 
         if (GameConfig.OptArenaPCBBackground) {
-            _background = Background.generate(GameConfig.ArenaWidth, GameConfig.ArenaHeight);
+            _background = BackgroundMaker.printedCircuitBoard(GameConfig.ArenaWidth, GameConfig.ArenaHeight);
         }
         else {
             Color dirt = Colors.rgb(55, 30, 15);
