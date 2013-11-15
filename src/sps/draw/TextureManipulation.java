@@ -79,10 +79,10 @@ public class TextureManipulation {
         }
     }
 
-    public static void darken(Color[][] base, int darkness) {
+    public static void darken(Color[][] base, int percent) {
         for (int ii = 0; ii < base.length; ii++) {
             for (int jj = 0; jj < base[0].length; jj++) {
-                base[ii][jj] = Colors.shade(base[ii][jj], -darkness);
+                base[ii][jj] = Colors.shade(base[ii][jj], -percent);
             }
         }
     }

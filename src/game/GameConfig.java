@@ -20,7 +20,7 @@ public class GameConfig {
     public static final boolean DevPopulationTest = false;
     public static final boolean DevBattleTest = false;
     public static final boolean DevSkeletonTest = false;
-    public static final boolean DevBackgroundGenerationTest = true;
+    public static final boolean DevBackgroundGenerationTest = false;
 
     public static final boolean DevEndToEndStateLoadTest = false;
     public static final boolean DevFlipEnabled = false;
@@ -30,6 +30,20 @@ public class GameConfig {
     public static final boolean DevDebugJointGridWithSquares = false;
     public static final boolean DevAlwaysSelectForces = false;
     public static final boolean DevUseOldCatchableMergeAlgorithm = false;
+
+    //Options / Optimizations
+    //TODO Make these toggleable in the options menu,
+    //     helps with lots of creatures running on weaker computers
+    public static boolean OptPerformanceGraphicsSettings = false;
+    public static final boolean OptCollectMetaData = true;
+    public static boolean OptDisableOutlines = GameConfig.OptPerformanceGraphicsSettings ? true : false;
+    public static boolean OptDisableCloudyTextures = GameConfig.OptPerformanceGraphicsSettings ? true : false;
+    public static boolean OptEnableFontOutlines = GameConfig.OptPerformanceGraphicsSettings ? false : true;
+    public static final boolean OptFastOutlineAlg = false;
+    public static final boolean OptShowFPS = false;
+    public static final boolean OptSmoothRegionMap = true;
+    public static final boolean OptDrawBones = false;
+    public static final boolean OptArenaPCBBackground = true;
 
     //Debug/Development Logging toggles
     public static final boolean DevBattleLog = false;
@@ -102,19 +116,6 @@ public class GameConfig {
     public final static int StartingPopulationSize = 1_000_000;
     public final static int NaturalPopulationGrowthPercent = 27;
     public final static int PopulationMax = 70_000_000;
-
-    //Optimizations
-    //TODO Make these toggleable in the options menu,
-    //     helps with lots of creatures running on weaker computers
-    public static boolean OptPerformanceGraphicsSettings = false;
-    public static final boolean OptCollectMetaData = true;
-    public static boolean OptDisableOutlines = GameConfig.OptPerformanceGraphicsSettings ? true : false;
-    public static boolean OptDisableCloudyTextures = GameConfig.OptPerformanceGraphicsSettings ? true : false;
-    public static boolean OptEnableFontOutlines = GameConfig.OptPerformanceGraphicsSettings ? false : true;
-    public static final boolean OptFastOutlineAlg = false;
-    public static final boolean OptShowFPS = false;
-    public static final boolean OptSmoothRegionMap = true;
-    public static final boolean OptDrawBones = false;
 
     //Style
     //TODO Make this scale with resolution like everything else?

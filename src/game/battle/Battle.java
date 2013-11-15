@@ -1,5 +1,7 @@
 package game.battle;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import game.Background;
 import game.GameConfig;
 import game.InputWrapper;
 import game.Score;
@@ -9,8 +11,10 @@ import game.tournament.TournamentEnd;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
+import sps.bridge.DrawDepths;
 import sps.core.Logger;
 import sps.display.Screen;
+import sps.display.Window;
 import sps.entities.EntityManager;
 import sps.io.Input;
 import sps.states.State;
@@ -23,6 +27,8 @@ public class Battle implements State {
     private static SingleSongPlayer __battleMusic;
     private Creature _left;
     private Creature _right;
+
+    private Sprite _background;
 
     private BattleHUD _leftHud;
     private BattleHUD _rightHud;
@@ -49,6 +55,8 @@ public class Battle implements State {
 
     @Override
     public void create() {
+        _background = Background.generate();
+
         _left.orientX(false, true);
         _right.orientX(true, true);
 
@@ -67,6 +75,7 @@ public class Battle implements State {
 
     @Override
     public void draw() {
+        Window.get().schedule(_background, DrawDepths.get("GameBackground"));
         EntityManager.get().draw();
         _leftHud.draw();
         _rightHud.draw();

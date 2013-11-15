@@ -2,6 +2,7 @@ package sps.draw;
 
 import com.badlogic.gdx.graphics.Color;
 import sps.core.RNG;
+import sps.util.MathHelper;
 
 public class Colors {
     private static float base = 255f;
@@ -14,26 +15,31 @@ public class Colors {
         return new Color(r / base, g / base, b / base, a / base);
     }
 
-    private static float __shadePercent = .65f;
+    private static int __shadePercent = 65;
 
     public static Color lighten(Color color) {
-        return new Color(color.r * (1 + __shadePercent), color.g * (1 + __shadePercent), color.b * (1 + __shadePercent), color.a);
+        return shade(color, __shadePercent);
     }
 
     public static Color darken(Color color) {
-        return new Color(color.r * __shadePercent, color.g * __shadePercent, color.b * __shadePercent, color.a);
+        return shade(color, -__shadePercent);
     }
 
-    public static Color shade(Color color, int breadth) {
-        HSV hsv = HSV.fromRGB(color);
-        hsv.V = hsv.V * ((100 + breadth) / 100f);
-        if (hsv.V > 1) {
-            hsv.V = 1;
+    public static Color shade(Color color, int shadePercent) {
+        if (shadePercent == 0) {
+            return color;
         }
-        if (hsv.V < 0) {
-            hsv.V = 0;
+
+        float mult = Math.abs(MathHelper.clamp(shadePercent, -100, 100) / 100f);
+
+        if (shadePercent > 0) {
+            mult += 1f;
         }
-        return hsv.toRGBColor();
+        else {
+            mult = 1f - mult;
+        }
+
+        return new Color(color.r * mult, color.g * mult, color.b * mult, color.a);
     }
 
     public static Color random() {

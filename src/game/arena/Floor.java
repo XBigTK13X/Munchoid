@@ -2,6 +2,7 @@ package game.arena;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import game.Background;
 import game.GameConfig;
 import sps.bridge.DrawDepths;
 import sps.bridge.EntityTypes;
@@ -21,11 +22,17 @@ public class Floor extends Entity {
 
     public Floor() {
         initialize(0, 0, Point2.Zero, null, EntityTypes.get("Floor"), DrawDepths.get("Floor"));
-        Color dirt = Colors.rgb(55, 30, 15);
-        Color grass = Colors.rgb(15, 55, 15);
-        Color[][] base = ProcTextures.perlin(GameConfig.ArenaWidth, GameConfig.ArenaHeight, grass, dirt, __fieldSmoothness);
 
-        _background = SpriteMaker.get().fromColors(base);
+        if (GameConfig.OptArenaPCBBackground) {
+            _background = Background.generate(GameConfig.ArenaWidth, GameConfig.ArenaHeight);
+        }
+        else {
+            Color dirt = Colors.rgb(55, 30, 15);
+            Color grass = Colors.rgb(15, 55, 15);
+            Color[][] base = ProcTextures.perlin(GameConfig.ArenaWidth, GameConfig.ArenaHeight, grass, dirt, __fieldSmoothness);
+            _background = SpriteMaker.get().fromColors(base);
+        }
+
         setSize((int) _background.getWidth(), (int) _background.getHeight());
         BoundingBox.fromDimensions(_boundingBox, 0, 0, getWidth(), getHeight());
         if (GameConfig.DevPrintArenaSize) {

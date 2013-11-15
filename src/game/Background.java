@@ -96,8 +96,8 @@ public class Background {
 
         Color board = Colors.randomPleasant();
         Color board2 = Colors.randomPleasant();
-        int w = (int) Screen.width(100);
-        int h = (int) Screen.height(100);
+        int w = model.length;
+        int h = model[0].length;
         Color[][] base = ProcTextures.radial(w, h, board, board2);
 
         //Create the via texture
@@ -112,7 +112,7 @@ public class Background {
             }
         }
         Color trace = Colors.randomPleasant();
-        trace.a = .1f;
+        trace = Colors.shade(trace, -50);
         //Draw the traces first, then the vias
         for (int pass = 1; pass < 3; pass++) {
             for (int ii = 0; ii < model.length; ii++) {
@@ -122,7 +122,7 @@ public class Background {
                     }
                     if (pass == 2 && model[ii][jj] == ModelId.Via) {
                         Color via = Colors.randomPleasant();
-                        via.a = .1f;
+                        via = Colors.shade(via, -50);
                         for (int ox = 0; ox < viaBase.length; ox++) {
                             for (int oy = 0; oy < viaBase[0].length; oy++) {
                                 if (viaBase[ox][oy]) {
@@ -146,6 +146,10 @@ public class Background {
     }
 
     public static Sprite generate() {
-        return convertModelToTexture(buildModel((int) Screen.width(100), (int) Screen.height(100)));
+        return generate((int) Screen.width(100), (int) Screen.height(100));
+    }
+
+    public static Sprite generate(int pixelWidth, int pixelHeight) {
+        return convertModelToTexture(buildModel(pixelWidth, pixelHeight));
     }
 }
