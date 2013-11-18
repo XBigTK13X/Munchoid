@@ -76,13 +76,17 @@ public abstract class UIButton {
         int tries = 5;
         while (_width < _message.getBounds().width && tries-- > 0) {
             _message.setMessage(_message.getMessage().replace(" ", "\n"));
+            //TODO Pad each line with spaces to center
         }
     }
 
     private void setXY(int x, int y) {
         int mW = (int) _message.getBounds().width;
         int mH = (int) _message.getBounds().height;
-        _message.setPosition(x + 5, y + mH + ((_height - mH) / 2));
+        //FIXME For some reason, the centering doesn't always work.
+        //Sometimes it does. For example,"Options" button is wrong,
+        //   but the rest are fine
+        _message.setPosition(x + ((_width - mW) / 2), y + mH + ((_height - mH) / 2));
         _sprite.setPosition(x, y);
     }
 
