@@ -151,6 +151,9 @@ public class PopulationOverview implements State {
             if (_tutorial.isFinished()) {
                 _tutorial = null;
             }
+            else {
+                _tutorial.update();
+            }
             return;
         }
         if (_eradicated != null) {
