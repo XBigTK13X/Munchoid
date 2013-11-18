@@ -39,6 +39,15 @@ public class Options {
                     case "graphicsLowQuality":
                         options.GraphicsLowQuality = Parse.bool(value);
                         break;
+                    case "tutorialEnabled":
+                        options.TutorialEnabled = Parse.bool(value);
+                        break;
+                    case "enableTutorialQuery":
+                        options.EnableTutorialQuery = Parse.bool(value);
+                        break;
+                    case "showIntro":
+                        options.ShowIntro = Parse.bool(value);
+                        break;
                     default:
                         Logger.error("Invalid user config: " + line);
                         break;
@@ -68,8 +77,11 @@ public class Options {
     public int WindowResolutionX;
     public int WindowResolutionY;
     public boolean FullScreen;
-    public boolean MusicEnabled;
+    public boolean MusicEnabled = true;
     public boolean GraphicsLowQuality;
+    public boolean TutorialEnabled = true;
+    public boolean ShowIntro = true;
+    public boolean EnableTutorialQuery = true;
 
     public void save() {
         try {
@@ -78,7 +90,10 @@ public class Options {
             options += "windowedResolution=" + WindowResolutionX + "x" + WindowResolutionY + "\n";
             options += "fullScreen=" + FullScreen + "\n";
             options += "musicEnabled=" + MusicEnabled + "\n";
-            options += "graphicsLowQuality=" + GraphicsLowQuality;
+            options += "graphicsLowQuality=" + GraphicsLowQuality + "\n";
+            options += "tutorialEnabled=" + TutorialEnabled + "\n";
+            options += "enableTutorialQuery=" + EnableTutorialQuery + "\n";
+            options += "showIntro=" + ShowIntro;
 
             FileUtils.write(__config, options);
         }

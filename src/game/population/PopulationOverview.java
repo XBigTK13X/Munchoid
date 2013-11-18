@@ -3,7 +3,9 @@ package game.population;
 import game.*;
 import game.arena.PreloadArena;
 import game.save.GameSnapshot;
+import game.save.Options;
 import game.save.Persistence;
+import game.tutorial.PopulationOverviewTutorial;
 import org.apache.commons.lang3.text.WordUtils;
 import sps.bridge.Commands;
 import sps.core.Loader;
@@ -19,6 +21,8 @@ import java.text.NumberFormat;
 
 public class PopulationOverview implements State {
     private static final Markov __regionNames = Markov.get(Loader.get().data("region_name_seed.txt"), 2);
+
+    private PopulationOverviewTutorial _tutorial;
 
     private Population _population;
 
@@ -83,6 +87,10 @@ public class PopulationOverview implements State {
 
             _regionName = __regionNames.makeWord(RNG.next(7, 10));
             _regionName = WordUtils.capitalize(_regionName);
+
+            if (Options.load().TutorialEnabled) {
+                _tutorial = new PopulationOverviewTutorial();
+            }
         }
 
         _topCauses.generateDisplay();
@@ -139,6 +147,12 @@ public class PopulationOverview implements State {
 
     @Override
     public void update() {
+        if (_tutorial != null) {
+            if (_tutorial.isFinished()) {
+                _tutorial = null;
+            }
+            return;
+        }
         if (_eradicated != null) {
             if (_eradicated.isActive()) {
                 _eradicated.update();

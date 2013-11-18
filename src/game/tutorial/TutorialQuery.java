@@ -3,6 +3,7 @@ package game.tutorial;
 import game.GameConfig;
 import game.population.PreloadPopulationOverview;
 import game.pregame.MainMenu;
+import game.save.Options;
 import game.ui.UIButton;
 import sps.bridge.Commands;
 import sps.display.Screen;
@@ -26,13 +27,19 @@ public class TutorialQuery implements State {
         _launchTutorial = new UIButton("Yes", Commands.get("Confirm")) {
             @Override
             public void click() {
-                StateManager.get().push(new Tutorial());
+                Options options = Options.load();
+                options.TutorialEnabled = true;
+                options.save();
+                StateManager.get().push(new PreloadPopulationOverview());
             }
         };
 
         _launchGame = new UIButton("No", Commands.get("Push")) {
             @Override
             public void click() {
+                Options options = Options.load();
+                options.TutorialEnabled = false;
+                options.save();
                 StateManager.get().push(new PreloadPopulationOverview());
             }
         };
