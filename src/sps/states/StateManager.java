@@ -6,6 +6,7 @@ import game.GameConfig;
 import game.Score;
 import game.population.PopulationOverview;
 import game.save.GameSnapshot;
+import game.save.Options;
 import game.tutorial.Tutorial;
 import sps.audio.MusicPlayer;
 import sps.bridge.DrawDepths;
@@ -243,9 +244,11 @@ public class StateManager {
     }
 
     public void showTutorial() {
-        if (_tutorials.containsKey(current().getClass())) {
-            _tutorial = _tutorials.get(current().getClass());
-            _tutorial.load();
+        if (Options.load().TutorialEnabled) {
+            if (_tutorials.containsKey(current().getClass())) {
+                _tutorial = _tutorials.get(current().getClass());
+                _tutorial.load();
+            }
         }
     }
 

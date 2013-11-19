@@ -14,6 +14,7 @@ import game.pregame.MainMenu;
 import game.save.Options;
 import game.test.BackgroundGenerationTest;
 import game.test.SkeletonTest;
+import game.tutorial.BattleTutorial;
 import game.tutorial.PopulationOverviewTutorial;
 import sps.bridge.Commands;
 import sps.bridge.SpriteTypes;
@@ -53,6 +54,7 @@ public class Game implements ApplicationListener {
         PartFunction.initJointSpecs();
 
         StateManager.get().addTutorial(PopulationOverview.class, new PopulationOverviewTutorial());
+        StateManager.get().addTutorial(Battle.class, new BattleTutorial());
 
         StateManager.get().push(createInitialState());
         StateManager.get().setPaused(false);

@@ -70,6 +70,7 @@ public class Battle implements State {
         _leftHud = new BattleHUD(_left);
         _rightHud = new BattleHUD(_right);
 
+        StateManager.get().showTutorial();
     }
 
 

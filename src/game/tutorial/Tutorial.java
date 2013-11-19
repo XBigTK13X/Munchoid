@@ -69,10 +69,22 @@ public class Tutorial {
         }
     }
 
+    private int _rotationLimit = 45;
+    private int _rotation = _rotationLimit;
+    private int _arrowRotationDirection = 1;
+
     public void update() {
         if (_finished) {
             return;
         }
+        if (_rotation >= _rotationLimit) {
+            _arrowRotationDirection = -1;
+        }
+        if (_rotation <= -_rotationLimit) {
+            _arrowRotationDirection = 1;
+        }
+        _rotation += _arrowRotationDirection;
+        __arrow.setRotation(_rotation);
         Window.get().schedule(__background, DrawDepths.get("TutorialBackground"));
         Window.get().schedule(__arrow, DrawDepths.get("TutorialArrow"));
         if (_steps.size() > 0 && _display.getMessage().isEmpty()) {
