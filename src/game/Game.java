@@ -36,9 +36,9 @@ public class Game implements ApplicationListener {
         RNG.seed((int) System.currentTimeMillis());
         Sps.setup(true);
 
-        Assets.get().fontPack().setDefault("Economica-Regular.ttf", 60);
+        Assets.get().fontPack().setDefault("Aller/Aller_Rg.ttf", 50);
         Assets.get().fontPack().cacheFont("keys", "Keycaps Regular.ttf", 30);
-        Assets.get().fontPack().cacheFont("UIButton", "verdanab.ttf", 70);
+        Assets.get().fontPack().cacheFont("UIButton", "neris/Neris-SemiBold.otf", 70);
 
         Window.setWindowBackground(Color.BLACK);
         Window.get(false).screenEngine().setStrategy(new FrameStrategy());
