@@ -147,15 +147,6 @@ public class PopulationOverview implements State {
 
     @Override
     public void update() {
-        if (_tutorial != null) {
-            if (_tutorial.isFinished()) {
-                _tutorial = null;
-            }
-            else {
-                _tutorial.update();
-            }
-            return;
-        }
         if (_eradicated != null) {
             if (_eradicated.isActive()) {
                 _eradicated.update();

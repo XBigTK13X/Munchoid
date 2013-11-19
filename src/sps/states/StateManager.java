@@ -6,6 +6,7 @@ import game.GameConfig;
 import game.Score;
 import game.population.PopulationOverview;
 import game.save.GameSnapshot;
+import game.tutorial.Tutorial;
 import sps.audio.MusicPlayer;
 import sps.bridge.DrawDepths;
 import sps.core.Logger;
@@ -69,10 +70,13 @@ public class StateManager {
     private Stack<State> _states;
     private Map<State, StateDependentComponents> _components;
     private boolean _paused = false;
+    private Map<Class, Tutorial> _tutorials;
+    private Tutorial _tutorial;
 
     private StateManager() {
         _states = new Stack<>();
         _components = new HashMap<>();
+        _tutorials = new HashMap<>();
     }
 
     public void setPaused(boolean value) {
@@ -184,7 +188,17 @@ public class StateManager {
 
     public void update() {
         if (!_paused) {
-            current().update();
+            if (_tutorial == null) {
+                current().update();
+            }
+            if (_tutorial != null) {
+                if (_tutorial.isFinished()) {
+                    _tutorial = null;
+                }
+                else {
+                    _tutorial.update();
+                }
+            }
         }
     }
 
@@ -222,5 +236,15 @@ public class StateManager {
     public void loadFrom(GameSnapshot snapshot) {
         Score.set(snapshot.Score);
         push(new PopulationOverview(snapshot));
+    }
+
+    public void addTutorial(Class c, Tutorial tutorial) {
+        _tutorials.put(c, tutorial);
+    }
+
+    public void showTutorial() {
+        if (_tutorials.containsKey(current().getClass())) {
+            _tutorial = _tutorials.get(current().getClass());
+        }
     }
 }

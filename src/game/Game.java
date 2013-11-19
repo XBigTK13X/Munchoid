@@ -8,11 +8,14 @@ import game.battle.Battle;
 import game.battle.MergeOutcome;
 import game.creatures.Creature;
 import game.creatures.PartFunction;
+import game.population.PopulationOverview;
 import game.population.PreloadPopulationOverview;
 import game.pregame.MainMenu;
 import game.save.Options;
 import game.test.BackgroundGenerationTest;
 import game.test.SkeletonTest;
+import game.tutorial.PopulationOverviewTutorial;
+import sps.bridge.Commands;
 import sps.bridge.SpriteTypes;
 import sps.bridge.Sps;
 import sps.core.DevConsole;
@@ -49,6 +52,8 @@ public class Game implements ApplicationListener {
 
         PartFunction.initJointSpecs();
 
+        StateManager.get().addTutorial(PopulationOverview.class, new PopulationOverviewTutorial());
+
         StateManager.get().push(createInitialState());
         StateManager.get().setPaused(false);
 
@@ -68,7 +73,7 @@ public class Game implements ApplicationListener {
         else if (GameConfig.DevSkeletonTest) {
             return new SkeletonTest();
         }
-        else if (GameConfig.DevBackgroundGenerationTest){
+        else if (GameConfig.DevBackgroundGenerationTest) {
             return new BackgroundGenerationTest();
         }
         else {
@@ -107,6 +112,10 @@ public class Game implements ApplicationListener {
 
         if (InputWrapper.pause()) {
             StateManager.get().setPaused(!StateManager.get().isPaused());
+        }
+
+        if (Input.get().isActive(Commands.get("Help"))) {
+            StateManager.get().showTutorial();
         }
 
         if (!StateManager.get().isPaused()) {
