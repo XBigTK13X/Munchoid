@@ -7,8 +7,8 @@ import sps.bridge.Context;
 import sps.bridge.Contexts;
 import sps.bridge.Sps;
 import sps.core.SpsConfig;
-import sps.display.Window;
 import sps.display.Screen;
+import sps.display.Window;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,7 +68,11 @@ public class Input implements InputProvider {
         if (SpsConfig.get().controllersEnabled && Controllers.getControllers().size > playerIndex) {
             gamepadActive = command.controllerInput().isActive(Controllers.getControllers().get(playerIndex));
         }
-        boolean keyboardActive = (playerIndex == provider.getFirstPlayerIndex()) && Gdx.input.isKeyPressed(command.key().getKeyCode());
+        boolean chordActive = true;
+        for (int ii = 0; ii < command.keys().length; ii++) {
+            chordActive = chordActive && Gdx.input.isKeyPressed(command.keys()[ii].getKeyCode());
+        }
+        boolean keyboardActive = (playerIndex == provider.getFirstPlayerIndex()) && chordActive;
 
         return gamepadActive || keyboardActive;
     }

@@ -5,7 +5,7 @@ import sps.io.Keys;
 
 public class Command implements Comparable<Command> {
     private ControllerInput _controllerInput;
-    private Keys _key;
+    private Keys[] _keys;
     private String _name;
     public Context Context;
 
@@ -18,17 +18,18 @@ public class Command implements Comparable<Command> {
         _name = name;
     }
 
-    public void bind(ControllerInput controllerInput, Keys key) {
+    public void bind(ControllerInput controllerInput, Keys... keys) {
         _controllerInput = controllerInput;
-        _key = key;
+        _keys = keys;
+        recalcId();
     }
 
     public ControllerInput controllerInput() {
         return _controllerInput;
     }
 
-    public Keys key() {
-        return _key;
+    public Keys[] keys() {
+        return _keys;
     }
 
     public String name() {
@@ -49,12 +50,26 @@ public class Command implements Comparable<Command> {
         return c._name.equalsIgnoreCase(_name);
     }
 
+    private void recalcId() {
+        _id = "";
+        for (int ii = 0; ii < keys().length; ii++) {
+            _id += keys()[ii];
+            if (ii < keys().length - 1) {
+                _id += "+";
+            }
+        }
+        _id = "[" + _id + "]";
+    }
+
+    private String _id;
+
     @Override
     public String toString() {
-        if (key() == null) {
+        if (keys() == null) {
             return "[Undefined]";
         }
-        return "[" + key().toString() + "]";
+
+        return _id;
     }
 
     @Override
