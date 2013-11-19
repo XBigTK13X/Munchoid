@@ -57,12 +57,13 @@ public class Tutorial {
             refreshDisplay();
         }
         if (InputWrapper.confirm() && Input.get().isActive(Commands.get("Force1"))) {
-            if (_currentStepIndex < _steps.size()) {
+            if (_currentStepIndex < _steps.size() - 1) {
                 _currentStepIndex++;
                 refreshDisplay();
             }
             else {
                 _finished = true;
+                _display.setVisible(false);
             }
         }
     }
