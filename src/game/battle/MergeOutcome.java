@@ -10,6 +10,7 @@ import game.creatures.Merge;
 import game.creatures.Stats;
 import game.forces.Force;
 import game.forceselection.ForceSelection;
+import game.ui.UIButton;
 import game.ui.UISprite;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
@@ -34,6 +35,8 @@ public class MergeOutcome implements State {
 
     private Sprite _reject;
     private Sprite _accept;
+
+    private UIButton _reroll;
 
     public MergeOutcome(Creature pet, Creature defeated) {
         _pet = pet;
@@ -143,6 +146,13 @@ public class MergeOutcome implements State {
                 return "Click here or press " + Commands.get("Push") + "\nto devour the opponent";
             }
         });
+        _reroll = new UIButton("Start", Commands.get("Confirm")) {
+            @Override
+            public void click() {
+                //TODO Reroll
+            }
+        };
+
         if (GameConfig.DevEndToEndStateLoadTest) {
             acceptMerge();
         }
@@ -156,6 +166,7 @@ public class MergeOutcome implements State {
         _pet.draw();
         _defeated.draw();
         _merged.draw();
+        _reroll.draw();
     }
 
     private void acceptMerge() {
