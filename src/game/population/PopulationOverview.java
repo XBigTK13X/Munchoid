@@ -99,6 +99,8 @@ public class PopulationOverview implements State {
 
         updateDeathDisplays();
         _continuePrompt = TextPool.get().write("Press " + Commands.get("Confirm") + " to enter the next tournament", Screen.pos(10, 10));
+
+        StateManager.get().showTutorial();
     }
 
     private void updateDeathDisplays() {

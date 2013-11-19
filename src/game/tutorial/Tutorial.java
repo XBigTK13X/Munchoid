@@ -2,7 +2,6 @@ package game.tutorial;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.InputWrapper;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
 import sps.bridge.SpriteTypes;
@@ -38,8 +37,13 @@ public class Tutorial {
             __arrow = Assets.get().sprite(arrowInfo.SpriteIndex);
         }
         _steps = new ArrayList<>();
+    }
+
+    public void load() {
         _display = TextPool.get().write("", Screen.pos(10, 30));
         _display.setDepth(DrawDepths.get("TutorialText"));
+        _currentStepIndex = 0;
+        _finished = false;
     }
 
     public void addStep(String message) {
@@ -53,7 +57,7 @@ public class Tutorial {
     private void refreshDisplay() {
         _currentStep = _steps.get(_currentStepIndex);
         String message = _currentStep.getMessage();
-        message += "\n\n\t\t(Press " + Commands.get("Confirm") + " and " + Commands.get("Force1") + ") to continue";
+        message += "\n\n\t\t(Press " + Commands.get("AdvanceTutorial") + " to continue";
         _display.setMessage(message);
         if (!_currentStep.getArrowLocation().isZero()) {
             __arrow.setPosition(_currentStep.getArrowLocation().X, _currentStep.getArrowLocation().Y);
@@ -74,16 +78,20 @@ public class Tutorial {
         if (_steps.size() > 0 && _display.getMessage().isEmpty()) {
             refreshDisplay();
         }
-        if (InputWrapper.confirm() && Input.get().isActive(Commands.get("Force1"))) {
+        if (Input.get().isActive(Commands.get("AdvanceTutorial"))) {
             if (_currentStepIndex < _steps.size() - 1) {
                 _currentStepIndex++;
                 refreshDisplay();
             }
             else {
-                _finished = true;
-                _display.setVisible(false);
+                close();
             }
         }
+    }
+
+    public void close() {
+        _finished = true;
+        _display.setVisible(false);
     }
 
     public boolean isFinished() {

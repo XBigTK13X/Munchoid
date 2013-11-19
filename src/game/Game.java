@@ -118,6 +118,12 @@ public class Game implements ApplicationListener {
             StateManager.get().showTutorial();
         }
 
+        if (Input.get().isActive(Commands.get("Exit"))) {
+            if (!StateManager.get().closeTutorial()) {
+                //TODO Prompt for game exit
+            }
+        }
+
         if (!StateManager.get().isPaused()) {
             _preUpdateState = StateManager.get().current();
             StateManager.get().asyncUpdate();

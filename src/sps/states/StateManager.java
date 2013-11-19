@@ -238,13 +238,22 @@ public class StateManager {
         push(new PopulationOverview(snapshot));
     }
 
-    public void addTutorial(Class c, Tutorial tutorial) {
-        _tutorials.put(c, tutorial);
+    public void addTutorial(Class state, Tutorial tutorial) {
+        _tutorials.put(state, tutorial);
     }
 
     public void showTutorial() {
         if (_tutorials.containsKey(current().getClass())) {
             _tutorial = _tutorials.get(current().getClass());
+            _tutorial.load();
         }
+    }
+
+    public boolean closeTutorial() {
+        if (_tutorial != null) {
+            _tutorial.close();
+            return true;
+        }
+        return false;
     }
 }
