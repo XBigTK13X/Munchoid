@@ -5,6 +5,8 @@ import game.arena.Floor;
 import sps.draw.Colors;
 import sps.util.MathHelper;
 
+import java.util.List;
+
 public class Body {
     private BodyParts _parts;
     private Creature _owner;
@@ -25,9 +27,15 @@ public class Body {
     }
 
     public Body(Color color) {
-        _parts = new BodyParts(this);
         _color = color;
         _parts = Engineer.designParts(this);
+        calculateSize();
+    }
+
+    public Body(Color color, List<BodyPart> parts) {
+        _color = color;
+        _parts = new BodyParts(this);
+        _parts.copy(parts);
         calculateSize();
     }
 

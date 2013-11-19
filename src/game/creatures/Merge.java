@@ -2,20 +2,64 @@ package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
+import game.creatures.style.Grid;
 import game.forces.Force;
 import sps.core.RNG;
-import sps.draw.Colors;
 import sps.draw.HSV;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Merge {
     public static Creature creatures(Creature a, Creature b) {
-        Color mergedColor = HSV.average(a.getBody().getColor(), b.getBody().getColor());
-
-        Creature result = new Creature(new Body(mergedColor));
+        Creature result = new Creature(body(a, b));
 
         result.setStats(stats(a.getStats(), b.getStats()));
 
         //TODO MergeOutcome in size as well as stats/body
+        return result;
+    }
+
+    public static Body body(Creature a, Creature b) {
+        Color mergedColor = HSV.average(a.getBody().getColor(), b.getBody().getColor());
+
+        BodyParts ab = a.getBody().getParts();
+        BodyParts bb = b.getBody().getParts();
+        BodyPart abc = ab.getCore();
+        BodyPart bbc = bb.getCore();
+        List<Joint> coreJoints = new ArrayList<>();
+        Joints abcj = abc.getJoints();
+        Joints bbcj = bbc.getJoints();
+        BodyPart core = RNG.coinFlip() ? abc : bbc;
+
+        for (int ii = 0; ii < Grid.JointSlots; ii++) {
+            Joint j = abcj.get(ii);
+            Joint j2 = bbcj.get(ii);
+            if (j != null && j2 != null) {
+                if (j.getChild() != null && j2.getChild() != null) {
+                    coreJoints.add(RNG.coinFlip() ? j : j2);
+                }
+                else if (j.getChild() != null) {
+                    if (RNG.coinFlip()) {
+                        coreJoints.add(j);
+                    }
+                }
+                else if (j2.getChild() != null) {
+                    if (RNG.coinFlip()) {
+                        coreJoints.add(j2);
+                    }
+                }
+            }
+        }
+        //TODO Create copies of parts and correctly register parent joints
+        List<BodyPart> parts = new ArrayList<>();
+        parts.add(core);
+        for (Joint base : coreJoints) {
+            base.getChild().setParent(core, core.getJoints().get(base.GridLoc));
+            parts.add(base.getChild());
+        }
+
+        Body result = new Body(mergedColor, parts);
         return result;
     }
 

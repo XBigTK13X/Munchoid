@@ -21,6 +21,8 @@ public class Grid {
         789
      */
 
+    public static final int JointSlots = 9;
+
     private static final Point2[] __gridRots = {
             new Point2(-1, -1), new Point2(0, -1), new Point2(1, -1),
             new Point2(-1, 0), new Point2(0, 0), new Point2(1, 0),

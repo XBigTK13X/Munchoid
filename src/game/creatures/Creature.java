@@ -64,6 +64,11 @@ public class Creature extends Entity {
         _coolDown = new CoolDown(coolDownTime);
     }
 
+    public void setBody(Body body) {
+        _body = body;
+        _body.setOwner(this);
+    }
+
     public void orientX(boolean faceLeft, boolean updatePos) {
         if (faceLeft != _body.isFlipX()) {
             _body.flipX(faceLeft);

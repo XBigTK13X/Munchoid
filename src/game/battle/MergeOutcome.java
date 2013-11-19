@@ -146,12 +146,14 @@ public class MergeOutcome implements State {
                 return "Click here or press " + Commands.get("Push") + "\nto devour the opponent";
             }
         });
-        _reroll = new UIButton("Start", Commands.get("Confirm")) {
+        _reroll = new UIButton("Reroll") {
             @Override
             public void click() {
-                //TODO Reroll
+                _merged.setBody(Merge.body(_pet, _defeated));
+                _merged.getBody().setScale(.5f);
             }
         };
+        _reroll.setColRow(0, 0);
 
         if (GameConfig.DevEndToEndStateLoadTest) {
             acceptMerge();

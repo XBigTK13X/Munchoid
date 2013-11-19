@@ -17,9 +17,9 @@ public class BodyParts {
 
     public BodyParts(Body owner) {
         _owner = owner;
-        _parts = new ArrayList<BodyPart>();
-        _front = new ArrayList<BodyPart>();
-        _back = new ArrayList<BodyPart>();
+        _parts = new ArrayList<>();
+        _front = new ArrayList<>();
+        _back = new ArrayList<>();
     }
 
     public void assignDepth(BodyPart part) {
