@@ -43,8 +43,8 @@ public class MergeOutcome implements State {
     @Override
     public void create() {
         //Create a new merged creature
-        _pet.getBody().restore();
-        _defeated.getBody().restore();
+        _pet.restore();
+        _defeated.restore();
         _pet.getBody().flipX(false);
         _defeated.getBody().flipX(false);
         _merged = Merge.creatures(_pet, _defeated);

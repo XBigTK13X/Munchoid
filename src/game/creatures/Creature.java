@@ -235,4 +235,9 @@ public class Creature extends Entity {
     public void setOwner(Player player) {
         _owner = player;
     }
+
+    public void restore() {
+        _sideEffects.clear();
+        getBody().restore();
+    }
 }

@@ -205,7 +205,7 @@ public class Battle implements State {
     private void victory() {
         Score.get().addVictory();
         Score.get().addHealthRemaining(_left.getBody().getPercentHealth());
-        _left.getBody().restore();
+        _left.restore();
         StateManager.get().pop();
         if (_isFinalBattle) {
             Score.get().setPlayerPetStats(_left.getStats());

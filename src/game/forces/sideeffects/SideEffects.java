@@ -46,4 +46,8 @@ public class SideEffects {
     public void add(SideEffect sideEffect) {
         _effects.add(sideEffect);
     }
+
+    public void clear() {
+        _effects.clear();
+    }
 }
