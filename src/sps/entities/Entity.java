@@ -37,6 +37,17 @@ public class Entity implements Comparable<Entity> {
         return (SpsConfig.get().spriteHeight * factorsOfSpriteHeight * isNeg);
     }
 
+    protected void initialize(int width, int height, Point2 location, SpriteType spriteType, EntityType entityType, DrawDepth depth) {
+        _width = width;
+        _height = height;
+        _assetName = spriteType;
+        _entityType = entityType;
+        _location.copy(location);
+        _graphic.setPosition(_location);
+        _graphic.setDrawDepth(depth);
+        _graphic.loadContent(spriteType);
+    }
+
     public void loadContent() {
         _graphic.loadContent(_assetName);
     }
@@ -53,17 +64,6 @@ public class Entity implements Comparable<Entity> {
 
     public void show() {
         _isOnBoard = true;
-    }
-
-    protected void initialize(int width, int height, Point2 location, SpriteType spriteType, EntityType entityType, DrawDepth depth) {
-        _width = width;
-        _height = height;
-        _assetName = spriteType;
-        _entityType = entityType;
-        _location.copy(location);
-        _graphic.setPosition(_location);
-        _graphic.setDrawDepth(depth);
-        _graphic.loadContent(spriteType);
     }
 
     public void update() {
