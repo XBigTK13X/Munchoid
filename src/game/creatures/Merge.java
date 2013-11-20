@@ -51,12 +51,16 @@ public class Merge {
                 }
             }
         }
-        //TODO Create copies of parts and correctly register parent joints
+
+        //TODO Walk joint branches during copy
+
         List<BodyPart> parts = new ArrayList<>();
-        parts.add(core);
+        BodyPart freshCore = new BodyPart(core, null, mergedColor);
+        parts.add(freshCore);
         for (Joint base : coreJoints) {
-            base.getChild().setParent(core, core.getJoints().get(base.GridLoc));
-            parts.add(base.getChild());
+            BodyPart freshChild = new BodyPart(base.getChild(), null, mergedColor);
+            freshChild.setParent(freshCore, freshCore.getJoints().get(base.GridLoc));
+            parts.add(freshChild);
         }
 
         Body result = new Body(mergedColor, parts);

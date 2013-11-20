@@ -322,4 +322,9 @@ public class BodyPart {
     public void setTint(Color tint) {
         _partTint = tint;
     }
+
+
+    public void setOwner(Body owner) {
+        _body = owner;
+    }
 }

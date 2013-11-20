@@ -37,10 +37,10 @@ public class BodyParts {
 
     public void copy(List<BodyPart> parts) {
         for (BodyPart part : parts) {
-            BodyPart copiedPart = new BodyPart(part, _owner, _owner.getColor());
-            _parts.add(copiedPart);
+            part.setOwner(_owner);
+            _parts.add(part);
             if (_parts.size() > 1) {
-                assignDepth(copiedPart);
+                assignDepth(part);
             }
         }
     }
