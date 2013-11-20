@@ -20,6 +20,7 @@ public class Merge {
         return result;
     }
 
+    //FIXME This seems way more complicated than it needs to be
     public static Body body(Creature a, Creature b) {
         Color mergedColor = HSV.average(a.getBody().getColor(), b.getBody().getColor());
 
@@ -32,7 +33,7 @@ public class Merge {
         Joints bbcj = bbc.getJoints();
         BodyPart core = RNG.coinFlip() ? abc : bbc;
 
-        for (int ii = 0; ii < Grid.JointSlots; ii++) {
+        for (int ii = 1; ii <= Grid.JointSlots; ii++) {
             Joint j = abcj.get(ii);
             Joint j2 = bbcj.get(ii);
             if (j != null && j2 != null) {
@@ -58,13 +59,30 @@ public class Merge {
         BodyPart freshCore = new BodyPart(core, null, mergedColor);
         parts.add(freshCore);
         for (Joint base : coreJoints) {
-            BodyPart freshChild = new BodyPart(base.getChild(), null, mergedColor);
-            freshChild.setParent(freshCore, freshCore.getJoints().get(base.GridLoc));
-            parts.add(freshChild);
+            walkCopy(parts, freshCore, freshCore, base, mergedColor, null);
         }
 
         Body result = new Body(mergedColor, parts);
         return result;
+    }
+
+    private static void walkCopy(List<BodyPart> parts, BodyPart core, BodyPart parent, Joint joint, Color color, BodyPart originalParent) {
+        if (core == parent) {
+            BodyPart freshChild = new BodyPart(joint.getChild(), null, color);
+            freshChild.setParent(core, core.getJoints().get(joint.GridLoc));
+            parts.add(freshChild);
+            walkCopy(parts, core, freshChild, joint, color, joint.getChild());
+        }
+        else {
+            for (Joint j : originalParent.getJoints().getAll()) {
+                if (j.getChild() != null) {
+                    BodyPart freshChild = new BodyPart(j.getChild(), null, color);
+                    freshChild.setParent(parent, parent.getJoints().get(j.GridLoc));
+                    parts.add(freshChild);
+                    walkCopy(parts, core, freshChild, null, color, j.getChild());
+                }
+            }
+        }
     }
 
     public static Stats stats(Stats a, Stats b) {

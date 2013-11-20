@@ -58,7 +58,9 @@ public class BodyPart {
         for (int ii = 0; ii < _atoms.length; ii++) {
             for (int jj = 0; jj < _atoms[0].length; jj++) {
                 if (_atoms[ii][jj] != null) {
-                    _atoms[ii][jj].setColor(textureBase[ii][jj]);
+                    if (_atoms[ii][jj].getColor() != Color.WHITE && _atoms[ii][jj].getColor() != Color.BLACK) {
+                        _atoms[ii][jj].setColor(textureBase[ii][jj]);
+                    }
                 }
             }
         }
