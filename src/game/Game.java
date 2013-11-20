@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import game.battle.Battle;
 import game.battle.MergeOutcome;
-import game.creatures.Creature;
 import game.creatures.PartFunction;
 import game.population.PopulationOverview;
 import game.population.PreloadPopulationOverview;
@@ -67,7 +66,7 @@ public class Game implements ApplicationListener {
             return new PreloadPopulationOverview();
         }
         if (GameConfig.DevMergeOutcomeTest) {
-            return new MergeOutcome(new Creature(), new Creature());
+            return new MergeOutcome();
         }
         else if (GameConfig.DevBattleTest) {
             return new Battle();

@@ -16,6 +16,7 @@ import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
+import sps.core.Logger;
 import sps.core.RNG;
 import sps.display.Screen;
 import sps.display.Window;
@@ -37,6 +38,11 @@ public class MergeOutcome implements State {
     private Sprite _accept;
 
     private UIButton _reroll;
+
+    public MergeOutcome() {
+        this(new Creature(), new Creature());
+        Logger.info("ONLY USE MergeOutcome() for testing!");
+    }
 
     public MergeOutcome(Creature pet, Creature defeated) {
         _pet = pet;
@@ -75,17 +81,6 @@ public class MergeOutcome implements State {
             TextPool.get().write(forceChange, Screen.pos(left + 50, top - forceRow * 5));
             forceRow++;
         }
-
-        //Body merge display
-        _pet.setLocation(Screen.pos(10, 10));
-        TextPool.get().write("+", Screen.pos(25, 15));
-        _defeated.setLocation(Screen.pos(30, 10));
-        TextPool.get().write("=", Screen.pos(45, 15));
-        _merged.setLocation(Screen.pos(65, 15));
-
-        _pet.getBody().setScale(.5f);
-        _defeated.getBody().setScale(.5f);
-        _merged.getBody().setScale(.5f);
 
         //Accept and reject buttons
         if (_accept == null) {
@@ -146,6 +141,8 @@ public class MergeOutcome implements State {
                 return "Click here or press " + Commands.get("Push") + "\nto devour the opponent";
             }
         });
+
+        //Body merge display
         _reroll = new UIButton("Reroll") {
             @Override
             public void click() {
@@ -153,7 +150,20 @@ public class MergeOutcome implements State {
                 _merged.getBody().setScale(.5f);
             }
         };
-        _reroll.setColRow(0, 0);
+
+        int yB = 15;
+        int yB5 = yB + 5;
+        _pet.setLocation(Screen.pos(10, yB));
+        TextPool.get().write("+", Screen.pos(25, yB5 + _pet.getHeight() / 2));
+        _defeated.setLocation(Screen.pos(30, yB));
+        TextPool.get().write("=", Screen.pos(45, yB5 + _pet.getHeight() / 2));
+        _merged.setLocation(Screen.pos(50, yB));
+        _reroll.setScreenPercent(70, yB - 5);
+
+        _pet.getBody().setScale(.5f);
+        _defeated.getBody().setScale(.5f);
+        _merged.getBody().setScale(.5f);
+
 
         if (GameConfig.DevEndToEndStateLoadTest) {
             acceptMerge();
@@ -185,7 +195,12 @@ public class MergeOutcome implements State {
     }
 
     private void loadNextScene() {
-        StateManager.get().push(new ForceSelection(_pet));
+        if (GameConfig.DevMergeOutcomeTest) {
+            StateManager.get().push(new MergeOutcome());
+        }
+        else {
+            StateManager.get().push(new ForceSelection(_pet));
+        }
     }
 
     @Override

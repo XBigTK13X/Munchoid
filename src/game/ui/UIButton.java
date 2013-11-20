@@ -90,6 +90,10 @@ public abstract class UIButton {
         _sprite.setPosition(x, y);
     }
 
+    public void setScreenPercent(int x, int y) {
+        setXY((int) Screen.width(x), (int) Screen.height(y));
+    }
+
     public void setColRow(int col, int row) {
         setXY(UIButton.x(col), UIButton.y(row));
     }
