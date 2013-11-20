@@ -14,13 +14,14 @@ public class GameConfig {
     public static final boolean DevBotRandomlyMerges = true;
 
     //Debugging / Development
-    public static final boolean DevShortcutsEnabled = false;
+
     public static final boolean DevTournyTest = false;
     public static final boolean DevMergeOutcomeTest = false;
     public static final boolean DevPopulationTest = false;
     public static final boolean DevBattleTest = false;
     public static final boolean DevSkeletonTest = false;
     public static final boolean DevBackgroundGenerationTest = false;
+    public static final boolean DevShortcutsEnabled = DevTournyTest || DevMergeOutcomeTest || DevPopulationTest || DevBattleTest || DevSkeletonTest || DevBackgroundGenerationTest;
 
     public static final boolean DevEndToEndStateLoadTest = false;
     public static final boolean DevFlipEnabled = false;
