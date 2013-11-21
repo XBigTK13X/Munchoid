@@ -33,6 +33,7 @@ public class MainMenu implements State {
     public void create() {
         _background = BackgroundMaker.radial();
         StateManager.clearTimes();
+        StateManager.get().clearTutorialCompletions();
         Score.reset();
 
         _logo = SpriteMaker.get().fromGraphic("munchoid_logo.png");

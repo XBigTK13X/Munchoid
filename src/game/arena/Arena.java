@@ -75,6 +75,8 @@ public class Arena implements State {
                 StateManager.get().push(new Tournament(_preload.getPlayer()));
             }
         }
+        EntityManager.get().update();
+        StateManager.get().showTutorial();
     }
 
     @Override

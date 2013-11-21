@@ -72,12 +72,14 @@ public class StateManager {
     private Map<State, StateDependentComponents> _components;
     private boolean _paused = false;
     private Map<Class, Tutorial> _tutorials;
+    private Map<Tutorial, Boolean> _completedTutorials;
     private Tutorial _tutorial;
 
     private StateManager() {
         _states = new Stack<>();
         _components = new HashMap<>();
         _tutorials = new HashMap<>();
+        _completedTutorials = new HashMap<>();
     }
 
     public void setPaused(boolean value) {
@@ -245,9 +247,19 @@ public class StateManager {
 
     public void showTutorial(boolean force) {
         if (Options.load().TutorialEnabled || force) {
-            if (_tutorials.containsKey(current().getClass())) {
-                _tutorial = _tutorials.get(current().getClass());
-                _tutorial.load();
+            Tutorial tutorial = _tutorials.get(current().getClass());
+            if (tutorial != null) {
+                Boolean completed = _completedTutorials.get(tutorial);
+                if (completed == null) {
+                    completed = false;
+                }
+                if (!completed || force) {
+                    _tutorial = tutorial;
+                    _tutorial.load();
+                    if (!completed) {
+                        _completedTutorials.put(tutorial, true);
+                    }
+                }
             }
         }
     }
@@ -262,5 +274,12 @@ public class StateManager {
             return true;
         }
         return false;
+    }
+
+    public void clearTutorialCompletions() {
+        for (Class state : _tutorials.keySet()) {
+            Tutorial t = _tutorials.get(state);
+            _completedTutorials.put(t, false);
+        }
     }
 }

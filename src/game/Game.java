@@ -4,6 +4,7 @@ package game;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import game.arena.Arena;
 import game.battle.Battle;
 import game.battle.MergeOutcome;
 import game.creatures.PartFunction;
@@ -13,6 +14,7 @@ import game.pregame.MainMenu;
 import game.save.Options;
 import game.test.BackgroundGenerationTest;
 import game.test.SkeletonTest;
+import game.tutorial.ArenaTutorial;
 import game.tutorial.BattleTutorial;
 import game.tutorial.PopulationOverviewTutorial;
 import sps.bridge.Commands;
@@ -58,6 +60,7 @@ public class Game implements ApplicationListener {
 
         StateManager.get().addTutorial(PopulationOverview.class, new PopulationOverviewTutorial());
         StateManager.get().addTutorial(Battle.class, new BattleTutorial());
+        StateManager.get().addTutorial(Arena.class, new ArenaTutorial());
 
         StateManager.get().push(createInitialState());
         StateManager.get().setPaused(false);
