@@ -25,7 +25,7 @@ public class AudioOptionsMenu implements State {
                 options.MusicEnabled = !options.MusicEnabled;
                 options.save();
                 options.apply();
-                getMessage().setMessage("Music\n" + (options.MusicEnabled ? "Enabled" : "Disabled"));
+                setMessage("Music\n" + (options.MusicEnabled ? "Enabled" : "Disabled"));
             }
         };
 

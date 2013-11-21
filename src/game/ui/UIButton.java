@@ -73,7 +73,12 @@ public abstract class UIButton {
 
         setXY(x, y);
 
+        setMessage(text);
+    }
+
+    public void setMessage(String message) {
         int tries = 5;
+        _message.setMessage(message);
         while (_width < _message.getBounds().width && tries-- > 0) {
             _message.setMessage(_message.getMessage().replace(" ", "\n"));
             //TODO Pad each line with spaces to center
@@ -114,9 +119,5 @@ public abstract class UIButton {
     public void setVisible(boolean visible) {
         _message.setVisible(visible);
         _visible = visible;
-    }
-
-    public Text getMessage() {
-        return _message;
     }
 }

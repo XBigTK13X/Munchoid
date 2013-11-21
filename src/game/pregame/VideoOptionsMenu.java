@@ -37,7 +37,7 @@ public class VideoOptionsMenu implements State {
                 options.GraphicsLowQuality = !options.GraphicsLowQuality;
                 options.save();
                 options.apply();
-                getMessage().setMessage(qualityMessage(options));
+                setMessage(qualityMessage(options));
             }
         };
 
