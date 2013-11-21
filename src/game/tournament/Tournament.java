@@ -3,6 +3,7 @@ package game.tournament;
 import game.GameConfig;
 import game.InputWrapper;
 import game.arena.Player;
+import sps.bridge.Commands;
 import sps.display.Screen;
 import sps.states.State;
 import sps.text.Text;
@@ -28,7 +29,10 @@ public class Tournament implements State {
     }
 
     private String boutMessage() {
-        return "SPACE for bout " + _boutNumber + " of " + GameConfig.TournamentMatches;
+        String message = "Your arena is empty and the strongest from other arenas have gathered!";
+        message += "\nBeat all of them to gain control of the strongest Munchoid.";
+        message += "\n\nPress " + Commands.get("Confirm") + " to start tournament match " + _boutNumber + " of " + GameConfig.TournamentMatches;
+        return message;
     }
 
     @Override
