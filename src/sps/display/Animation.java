@@ -73,7 +73,13 @@ public class Animation {
             Color renderColor = (alternate) ? _color.tmp().mul(flashColor) : _color;
             _sprite.setPosition(_position.X, _position.Y);
             _sprite.setColor(renderColor);
-            _sprite.flip(flipX, flipY);
+            if (_sprite.isFlipX() != flipX) {
+                _sprite.flip(true, _sprite.isFlipY());
+            }
+            if (_sprite.isFlipY() != flipY) {
+                _sprite.flip(_sprite.isFlipX(), true);
+            }
+
             Window.get().schedule(_sprite, _depth);
         }
     }
