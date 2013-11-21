@@ -27,7 +27,7 @@ public class DeathCauses {
     private DeathCauses() {
         _deathCauses = new ArrayList<DeathCause>();
         try {
-            for (String line : FileUtils.readLines(Loader.get().data("diseases.csv"))) {
+            for (String line : FileUtils.readLines(Loader.get().data("causes_of_death.csv"))) {
                 if (!line.contains("##") && line.length() > 1) {
                     String[] values = line.split(",");
                     String name = values[0];
