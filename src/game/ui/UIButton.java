@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.creatures.style.Outline;
 import sps.bridge.Command;
+import sps.bridge.DrawDepth;
 import sps.bridge.DrawDepths;
 import sps.core.Point2;
 import sps.display.Screen;
@@ -27,12 +28,14 @@ public abstract class UIButton {
         return (int) (row * __padding.Y + row * __default.Y);
     }
 
+    private Buttons.User _buttonUser;
     private Text _message;
     private Sprite _sprite;
     private int _width;
     private int _height;
     private Command _command;
     private boolean _visible = true;
+    private DrawDepth _depth;
 
     public UIButton(String text) {
         this(text, 0, 0);
@@ -47,6 +50,7 @@ public abstract class UIButton {
     }
 
     public UIButton(String text, int x, int y, Command command) {
+        _depth = DrawDepths.get("UIButton");
         _command = command;
 
         _width = (int) Screen.width(20);
@@ -54,12 +58,13 @@ public abstract class UIButton {
 
         _message = TextPool.get().write(text, new Point2(0, 0));
         _message.setFont("UIButton", 60);
+        _message.setDepth(_depth);
 
         Color[][] base = ProcTextures.gradient(_width, _height, Color.WHITE, Color.GRAY, false);
         Outline.single(base, Color.WHITE, 3);
         _sprite = SpriteMaker.get().fromColors(base);
 
-        Buttons.get().add(new Buttons.User() {
+        _buttonUser = new Buttons.User() {
             @Override
             public Sprite getSprite() {
                 return _sprite;
@@ -69,7 +74,8 @@ public abstract class UIButton {
             public void onClick() {
                 click();
             }
-        });
+        };
+        Buttons.get().add(_buttonUser);
 
         setXY(x, y);
 
@@ -110,7 +116,7 @@ public abstract class UIButton {
                     click();
                 }
             }
-            Window.get().schedule(_sprite, DrawDepths.get("UIButton"));
+            Window.get().schedule(_sprite, _depth);
         }
     }
 
@@ -119,5 +125,12 @@ public abstract class UIButton {
     public void setVisible(boolean visible) {
         _message.setVisible(visible);
         _visible = visible;
+        _buttonUser.setActive(visible);
+    }
+
+    public void setDepth(DrawDepth depth) {
+        _depth = depth;
+        _message.setDepth(depth);
+        _buttonUser.setDepth(depth);
     }
 }

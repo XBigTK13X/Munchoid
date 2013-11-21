@@ -27,6 +27,7 @@ public class Input implements InputProvider {
     private boolean __isInputActive = false;
     private int mouseX;
     private int mouseY;
+    private boolean _mouseLocked = false;
 
     public static InputProvider get() {
         return isDisabled() ? falseInstance : instance;
@@ -147,6 +148,7 @@ public class Input implements InputProvider {
                 ii--;
             }
         }
+        setMouseLock(false);
     }
 
     @Override
@@ -183,6 +185,14 @@ public class Input implements InputProvider {
 
     @Override
     public boolean isMouseDown() {
+        if (_mouseLocked) {
+            return false;
+        }
         return Gdx.input.isButtonPressed(com.badlogic.gdx.Input.Buttons.LEFT);
+    }
+
+    @Override
+    public void setMouseLock(boolean locked) {
+        _mouseLocked = locked;
     }
 }

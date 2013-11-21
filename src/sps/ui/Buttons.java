@@ -2,6 +2,8 @@ package sps.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import sps.bridge.DrawDepth;
+import sps.bridge.DrawDepths;
 import sps.entities.HitTest;
 import sps.io.Input;
 import sps.util.BoundingBox;
@@ -14,6 +16,20 @@ import java.util.Map;
 public class Buttons {
     public static abstract class User {
         private BoundingBox _bounds = BoundingBox.empty();
+        private DrawDepth _depth;
+        private boolean _active = true;
+
+        public User() {
+            _depth = DrawDepths.get("UIButton");
+        }
+
+        public void setDepth(DrawDepth depth) {
+            _depth = depth;
+        }
+
+        public DrawDepth getDepth() {
+            return _depth;
+        }
 
         public abstract Sprite getSprite();
 
@@ -30,6 +46,14 @@ public class Buttons {
         public BoundingBox getBounds() {
             BoundingBox.fromDimensions(_bounds, getSprite().getX(), getSprite().getY(), (int) getSprite().getWidth(), (int) getSprite().getHeight());
             return _bounds;
+        }
+
+        public void setActive(boolean active) {
+            _active = active;
+        }
+
+        public boolean isActive() {
+            return _active;
         }
     }
 
@@ -70,22 +94,39 @@ public class Buttons {
         _states.put(user, null);
     }
 
+    private User _highest;
+
     public void update() {
         for (User user : _users) {
-            boolean mouseOver = HitTest.inBox(Input.get().x(), Input.get().y(), user.getBounds());
-            boolean mouseDown = Input.get().isMouseDown();
-            if (!mouseOver || _states.get(user) == State.Clicked) {
-                _states.put(user, State.Outside);
-                user.normal();
+            if (user.isActive()) {
+                boolean mouseOver = HitTest.inBox(Input.get().x(), Input.get().y(), user.getBounds());
+                boolean mouseDown = Input.get().isMouseDown();
+                if (!mouseOver || _states.get(user) == State.Clicked) {
+                    _states.put(user, State.Outside);
+                    user.normal();
+                }
+                if (mouseOver && !mouseDown) {
+                    _states.put(user, State.Over);
+                    user.over();
+                }
+                if (_states.get(user) == State.Over && mouseOver && mouseDown) {
+                    if (_highest == null) {
+                        _highest = user;
+                    }
+                    else if (_highest.getDepth().DrawDepth < user.getDepth().DrawDepth) {
+                        _states.put(_highest, State.Outside);
+                        _highest.normal();
+                        _highest = user;
+                    }
+                }
             }
-            if (mouseOver && !mouseDown) {
-                _states.put(user, State.Over);
-                user.over();
-            }
-            if (_states.get(user) == State.Over && mouseOver && mouseDown) {
-                _states.put(user, State.Clicked);
-                user.onClick();
-            }
+        }
+
+        if (_highest != null) {
+            _states.put(_highest, State.Clicked);
+            _highest.onClick();
+            Input.get().setMouseLock(true);
+            _highest = null;
         }
     }
 }

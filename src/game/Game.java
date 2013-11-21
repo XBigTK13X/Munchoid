@@ -34,6 +34,10 @@ import sps.text.TextPool;
 import sps.ui.UiElements;
 
 public class Game implements ApplicationListener {
+
+    private State _preUpdateState;
+    private ExitPrompt _exitPrompt;
+
     @Override
     public void create() {
         RNG.seed((int) System.currentTimeMillis());
@@ -57,6 +61,8 @@ public class Game implements ApplicationListener {
 
         StateManager.get().push(createInitialState());
         StateManager.get().setPaused(false);
+
+        _exitPrompt = new ExitPrompt();
 
         Options.load().apply();
     }
@@ -108,10 +114,16 @@ public class Game implements ApplicationListener {
         }
     }
 
-    State _preUpdateState;
-
     private void update() {
+        if (_preUpdateState != StateManager.get().current()) {
+            _exitPrompt = new ExitPrompt();
+        }
         Input.get().update();
+
+        if (_exitPrompt.isActive()) {
+            UiElements.get().update();
+            _exitPrompt.update();
+        }
 
         handleDevShortcuts();
 
@@ -124,8 +136,13 @@ public class Game implements ApplicationListener {
         }
 
         if (Input.get().isActive(Commands.get("Exit"))) {
-            if (!StateManager.get().closeTutorial()) {
-                //TODO Prompt for game exit
+            if (_exitPrompt.isActive()) {
+                _exitPrompt.setActive(false);
+            }
+            else {
+                if (!StateManager.get().closeTutorial()) {
+                    _exitPrompt.setActive(true);
+                }
             }
         }
 
