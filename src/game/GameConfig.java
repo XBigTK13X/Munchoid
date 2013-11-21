@@ -12,6 +12,7 @@ public class GameConfig {
     public static boolean DevBotEnabled = false;
     public static final boolean DevBotAlwaysMerge = false;
     public static final boolean DevBotRandomlyMerges = true;
+    public static final boolean DevBotsLowQualityGraphics = false;
 
     //Debugging / Development
     public static final boolean DevForceShortcutsEnabled = false;
@@ -37,10 +38,10 @@ public class GameConfig {
     //     helps with lots of creatures running on weaker computers
     public static boolean OptPerformanceGraphicsSettings = false;
     public static final boolean OptCollectMetaData = true;
-    public static boolean OptDisableOutlines = GameConfig.OptPerformanceGraphicsSettings ? true : false;
-    public static boolean OptDisableCloudyTextures = GameConfig.OptPerformanceGraphicsSettings ? true : false;
+    public static boolean OptDisableOutlines = GameConfig.OptPerformanceGraphicsSettings;
+    public static boolean OptDisableCloudyTextures = GameConfig.OptPerformanceGraphicsSettings;
+    public static boolean OptSimpleBackgrounds = GameConfig.OptPerformanceGraphicsSettings;
     public static boolean OptEnableFontOutlines = true;
-    public static boolean OptSimpleBackgrounds = GameConfig.OptPerformanceGraphicsSettings ? false : true;
     public static final boolean OptFastOutlineAlg = false;
     public static final boolean OptShowFPS = false;
     public static final boolean OptSmoothRegionMap = true;
@@ -49,9 +50,9 @@ public class GameConfig {
 
     public static void setGraphicsMode(boolean performanceMode) {
         OptPerformanceGraphicsSettings = performanceMode;
-        OptDisableOutlines = performanceMode ? true : false;
-        OptDisableCloudyTextures = performanceMode ? true : false;
-        OptSimpleBackgrounds = performanceMode ? true : false;
+        OptDisableOutlines = performanceMode;
+        OptDisableCloudyTextures = performanceMode;
+        OptSimpleBackgrounds = performanceMode;
     }
 
     //Debug/Development Logging toggles
