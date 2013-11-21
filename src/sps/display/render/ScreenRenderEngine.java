@@ -77,7 +77,7 @@ public class ScreenRenderEngine {
     }
 
     public void setStrategy(RenderStrategy strategy) {
-        this._strategy = strategy;
+        _strategy = strategy;
         _camera = strategy.createCamera();
     }
 

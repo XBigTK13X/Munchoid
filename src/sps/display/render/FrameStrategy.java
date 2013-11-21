@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import sps.display.Screen;
-import sps.display.render.RenderStrategy;
 
 public class FrameStrategy implements RenderStrategy {
     private Rectangle viewport;
@@ -37,11 +36,10 @@ public class FrameStrategy implements RenderStrategy {
             scale = (float) height / (float) Screen.get().VirtualHeight;
             crop.x = (width - Screen.get().VirtualWidth * scale) / 2f;
         }
-        else
-            if (aspectRatio < Screen.get().VirtualAspectRatio) {
-                scale = (float) width / (float) Screen.get().VirtualWidth;
-                crop.y = (height - Screen.get().VirtualHeight * scale) / 2f;
-            }
+        else if (aspectRatio < Screen.get().VirtualAspectRatio) {
+            scale = (float) width / (float) Screen.get().VirtualWidth;
+            crop.y = (height - Screen.get().VirtualHeight * scale) / 2f;
+        }
 
         float w = (float) Screen.get().VirtualWidth * scale;
         float h = (float) Screen.get().VirtualHeight * scale;

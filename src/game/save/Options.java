@@ -1,5 +1,6 @@
 package game.save;
 
+import com.badlogic.gdx.Gdx;
 import game.GameConfig;
 import org.apache.commons.io.FileUtils;
 import sps.core.Loader;
@@ -103,8 +104,10 @@ public class Options {
     }
 
     public void apply() {
-        Window.resize(WindowResolutionX, WindowResolutionY, true);
-        Window.toggleFullScreen(FullScreen, WindowResolutionX, WindowResolutionY);
+        Window.setFullScreen(FullScreen, WindowResolutionX, WindowResolutionY);
+        if (!Gdx.graphics.isFullscreen()) {
+            Window.resize(WindowResolutionX, WindowResolutionY, true);
+        }
         SpsConfig.get().musicEnabled = MusicEnabled;
         GameConfig.setGraphicsMode(GraphicsLowQuality);
     }

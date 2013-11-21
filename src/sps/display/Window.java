@@ -77,7 +77,7 @@ public class Window {
         get(false).screenEngine().resize(width, height);
     }
 
-    public static void toggleFullScreen(boolean enableFullScreen, int width, int height) {
+    public static void setFullScreen(boolean enableFullScreen, int width, int height) {
         int resolutionX = 0;
         int resolutionY = 0;
         boolean isFullScreen = Gdx.graphics.isFullscreen();

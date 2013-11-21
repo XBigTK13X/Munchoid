@@ -55,7 +55,9 @@ public class Battle implements State {
 
     @Override
     public void create() {
-        _background = BackgroundMaker.printedCircuitBoard();
+        _background = GameConfig.OptSimpleBackgrounds ?
+                BackgroundMaker.radial() :
+                BackgroundMaker.printedCircuitBoard();
 
         _left.orientX(false, true);
         _right.orientX(true, true);

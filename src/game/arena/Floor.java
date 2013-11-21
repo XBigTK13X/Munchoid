@@ -24,7 +24,9 @@ public class Floor extends Entity {
         initialize(0, 0, Point2.Zero, null, EntityTypes.get("Floor"), DrawDepths.get("Floor"));
 
         if (GameConfig.OptArenaPCBBackground) {
-            _background = BackgroundMaker.printedCircuitBoard(GameConfig.ArenaWidth, GameConfig.ArenaHeight);
+            _background = GameConfig.OptSimpleBackgrounds ?
+                    BackgroundMaker.radial(GameConfig.ArenaWidth, GameConfig.ArenaHeight) :
+                    BackgroundMaker.printedCircuitBoard(GameConfig.ArenaWidth, GameConfig.ArenaHeight);
         }
         else {
             Color dirt = Colors.rgb(55, 30, 15);

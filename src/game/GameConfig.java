@@ -39,12 +39,20 @@ public class GameConfig {
     public static final boolean OptCollectMetaData = true;
     public static boolean OptDisableOutlines = GameConfig.OptPerformanceGraphicsSettings ? true : false;
     public static boolean OptDisableCloudyTextures = GameConfig.OptPerformanceGraphicsSettings ? true : false;
-    public static boolean OptEnableFontOutlines = GameConfig.OptPerformanceGraphicsSettings ? false : true;
+    public static boolean OptEnableFontOutlines = true;
+    public static boolean OptSimpleBackgrounds = GameConfig.OptPerformanceGraphicsSettings ? false : true;
     public static final boolean OptFastOutlineAlg = false;
     public static final boolean OptShowFPS = false;
     public static final boolean OptSmoothRegionMap = true;
     public static final boolean OptDrawBones = false;
     public static final boolean OptArenaPCBBackground = true;
+
+    public static void setGraphicsMode(boolean performanceMode) {
+        OptPerformanceGraphicsSettings = performanceMode;
+        OptDisableOutlines = GameConfig.OptPerformanceGraphicsSettings ? true : false;
+        OptDisableCloudyTextures = GameConfig.OptPerformanceGraphicsSettings ? true : false;
+        OptSimpleBackgrounds = GameConfig.OptPerformanceGraphicsSettings ? false : true;
+    }
 
     //Debug/Development Logging toggles
     public static final boolean DevBattleLog = false;
@@ -122,13 +130,6 @@ public class GameConfig {
     //TODO Make this scale with resolution like everything else?
     public static final int MeterOutlinePixelThickness = 2;
     public static final int BodyPartOutlinePixelThickness = 5;
-
-    public static void setGraphicsMode(boolean performanceMode) {
-        OptPerformanceGraphicsSettings = performanceMode;
-        OptDisableOutlines = GameConfig.OptPerformanceGraphicsSettings ? true : false;
-        OptDisableCloudyTextures = GameConfig.OptPerformanceGraphicsSettings ? true : false;
-        OptEnableFontOutlines = GameConfig.OptPerformanceGraphicsSettings ? false : true;
-    }
 
     public static String json() {
         String config = "\"gameConfig\":{";

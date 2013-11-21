@@ -88,11 +88,7 @@ public class Game implements ApplicationListener {
         StateManager.get().resize(width, height);
     }
 
-    State _preUpdateState;
-
-    private void update() {
-        Input.get().update();
-
+    private void handleDevShortcuts() {
         if (GameConfig.DevShortcutsEnabled) {
             if (InputWrapper.moveDown() && InputWrapper.moveUp() && InputWrapper.debug1()) {
                 StateManager.reset().push(new MainMenu());
@@ -102,14 +98,22 @@ public class Game implements ApplicationListener {
             }
             if (InputWrapper.fullScreen()) {
                 Options options = Options.load();
-                Window.toggleFullScreen(!options.FullScreen, options.WindowResolutionX, options.WindowResolutionY);
-                options.FullScreen = !options.FullScreen;
+                Window.setFullScreen(!Gdx.graphics.isFullscreen(), options.WindowResolutionX, options.WindowResolutionY);
+                options.FullScreen = !Gdx.graphics.isFullscreen();
                 options.save();
             }
             if (InputWrapper.devConsole()) {
                 DevConsole.get().toggle();
             }
         }
+    }
+
+    State _preUpdateState;
+
+    private void update() {
+        Input.get().update();
+
+        handleDevShortcuts();
 
         if (InputWrapper.pause()) {
             StateManager.get().setPaused(!StateManager.get().isPaused());

@@ -26,9 +26,13 @@ public class BackgroundMaker {
     }
 
     public static Sprite radial() {
+        return radial((int) Screen.width(100), (int) Screen.height(100));
+    }
+
+    public static Sprite radial(int pixelWidth, int pixelHeight) {
         Color c1 = Colors.randomPleasant();
         Color c2 = Color.WHITE;
-        return SpriteMaker.get().fromColors(ProcTextures.radial((int) Screen.width(100), (int) Screen.height(100), c1, c2));
+        return SpriteMaker.get().fromColors(ProcTextures.radial(pixelWidth, pixelHeight, c1, c2));
     }
 
     public static Sprite printedCircuitBoard() {
