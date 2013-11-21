@@ -49,9 +49,9 @@ public class GameConfig {
 
     public static void setGraphicsMode(boolean performanceMode) {
         OptPerformanceGraphicsSettings = performanceMode;
-        OptDisableOutlines = GameConfig.OptPerformanceGraphicsSettings ? true : false;
-        OptDisableCloudyTextures = GameConfig.OptPerformanceGraphicsSettings ? true : false;
-        OptSimpleBackgrounds = GameConfig.OptPerformanceGraphicsSettings ? false : true;
+        OptDisableOutlines = performanceMode ? true : false;
+        OptDisableCloudyTextures = performanceMode ? true : false;
+        OptSimpleBackgrounds = performanceMode ? true : false;
     }
 
     //Debug/Development Logging toggles
