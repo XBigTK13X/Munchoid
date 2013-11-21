@@ -169,8 +169,19 @@ public class Battle implements State {
         */
         if (_left.getCoolDown().isCooled()) {
             if (GameConfig.DevBotEnabled) {
-                Force f = _left.getStats().randomEnabledForce();
-                playerActivate(f);
+                Force max = Force.Abrasive;
+                for (Force force : Force.values()) {
+                    if (_left.getStats().get(force) > _left.getStats().get(max)) {
+                        max = force;
+                    }
+                }
+                if (_left.canUse(max)) {
+                    playerActivate(max);
+                }
+                else {
+                    Force f = _left.getStats().randomEnabledForce();
+                    playerActivate(f);
+                }
             }
             for (Force force : Force.values()) {
                 if (Input.get().isActive(Commands.get(force.Command), 0) && _left.getStats().isEnabled(force)) {
