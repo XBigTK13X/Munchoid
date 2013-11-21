@@ -19,6 +19,11 @@ public class TutorialQuery implements State {
     @Override
     public void create() {
         if (GameConfig.DevEndToEndStateLoadTest || GameConfig.DevBotEnabled) {
+            Options options = Options.load();
+            options.TutorialEnabled = false;
+            options.apply();
+            options.save();
+
             StateManager.get().push(new PreloadPopulationOverview());
             return;
         }

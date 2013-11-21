@@ -22,7 +22,7 @@ public class DesktopGame {
             }
         }
         if (GameConfig.DevBotEnabled) {
-            Logger.setLogFile("logs/" + UUID.randomUUID().toString() + ".log");
+            Logger.setLogFile("bot-" + UUID.randomUUID().toString() + ".log");
         }
         else {
             Logger.setLogFile("game.log");

@@ -18,7 +18,7 @@ public class Commander {
             try {
                 InputStreamReader isr = new InputStreamReader(is);
                 BufferedReader br = new BufferedReader(isr);
-                String line = null;
+                String line;
                 while ((line = br.readLine()) != null) {
 
                     Logger.info(type + ">" + line);
@@ -30,13 +30,11 @@ public class Commander {
         }
     }
 
-    private String _command;
     private StreamGobbler _output;
     private StreamGobbler _error;
     private Process _process;
 
     public Commander(String command, String workingDir, boolean watchOutput) {
-        _command = command;
         try {
             _process = Runtime.getRuntime().exec(command, null, new File(workingDir));
             if (watchOutput) {

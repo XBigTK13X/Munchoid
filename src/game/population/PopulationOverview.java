@@ -139,15 +139,31 @@ public class PopulationOverview implements State {
         return _tournamentsPlayed >= GameConfig.NumberOfTournaments;
     }
 
+    private void nextState() {
+        if (!gameFinished()) {
+            StateManager.get().push(new PreloadArena());
+        }
+        else {
+            StateManager.get().push(new EndGame(_tournamentWins));
+        }
+    }
+
     @Override
     public void update() {
         if (_eradicated != null) {
-            if (_eradicated.isActive()) {
-                _eradicated.update();
+            if (GameConfig.DevBotEnabled) {
+                simluatePopulationChange();
+                nextState();
+                _eradicated = null;
             }
             else {
-                simluatePopulationChange();
-                _eradicated = null;
+                if (_eradicated.isActive()) {
+                    _eradicated.update();
+                }
+                else {
+                    simluatePopulationChange();
+                    _eradicated = null;
+                }
             }
         }
         else {
@@ -155,12 +171,7 @@ public class PopulationOverview implements State {
                 _continuePrompt.setMessage("Press " + Commands.get("Confirm") + " to see the outcome of your efforts.");
             }
             if (InputWrapper.confirm() || GameConfig.DevBotEnabled) {
-                if (!gameFinished()) {
-                    StateManager.get().push(new PreloadArena());
-                }
-                else {
-                    StateManager.get().push(new EndGame(_tournamentWins));
-                }
+                nextState();
             }
             if (GameConfig.DevPopulationTest) {
                 boolean a = InputWrapper.pop();
