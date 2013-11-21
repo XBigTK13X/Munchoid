@@ -4,7 +4,6 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import game.Game;
 import game.GameConfig;
-import game.save.Options;
 import sps.core.Logger;
 import sps.core.SpsConfig;
 
@@ -18,12 +17,6 @@ public class DesktopGame {
             for (String s : args) {
                 if (s.equalsIgnoreCase("--play-as-bot")) {
                     GameConfig.DevBotEnabled = true;
-                    if (GameConfig.DevBotsLowQualityGraphics) {
-                        Options options = Options.load();
-                        options.GraphicsLowQuality = true;
-                        options.apply();
-                        options.save();
-                    }
                 }
             }
         }

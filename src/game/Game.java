@@ -66,7 +66,15 @@ public class Game implements ApplicationListener {
         StateManager.get().setPaused(false);
 
         _exitPrompt = new ExitPrompt();
-
+        if (GameConfig.DevBotEnabled) {
+            Options options = Options.load();
+            options.GraphicsLowQuality = GameConfig.DevBotsLowQualityGraphics;
+            options.FullScreen = false;
+            options.WindowResolutionY = 100;
+            options.WindowResolutionX = 100;
+            options.apply();
+            options.save();
+        }
         Options.load().apply();
     }
 

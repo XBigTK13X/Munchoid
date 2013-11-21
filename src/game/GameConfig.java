@@ -12,7 +12,7 @@ public class GameConfig {
     public static boolean DevBotEnabled = false;
     public static final boolean DevBotAlwaysMerge = false;
     public static final boolean DevBotRandomlyMerges = true;
-    public static final boolean DevBotsLowQualityGraphics = false;
+    public static final boolean DevBotsLowQualityGraphics = true;
 
     //Debugging / Development
     public static final boolean DevForceShortcutsEnabled = false;
