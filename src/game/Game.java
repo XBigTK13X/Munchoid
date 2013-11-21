@@ -116,7 +116,7 @@ public class Game implements ApplicationListener {
         }
 
         if (Input.get().isActive(Commands.get("Help"))) {
-            StateManager.get().showTutorial();
+            StateManager.get().showTutorial(true);
         }
 
         if (Input.get().isActive(Commands.get("Exit"))) {

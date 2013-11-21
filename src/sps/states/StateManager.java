@@ -243,13 +243,17 @@ public class StateManager {
         _tutorials.put(state, tutorial);
     }
 
-    public void showTutorial() {
-        if (Options.load().TutorialEnabled) {
+    public void showTutorial(boolean force) {
+        if (Options.load().TutorialEnabled || force) {
             if (_tutorials.containsKey(current().getClass())) {
                 _tutorial = _tutorials.get(current().getClass());
                 _tutorial.load();
             }
         }
+    }
+
+    public void showTutorial() {
+        showTutorial(false);
     }
 
     public boolean closeTutorial() {
