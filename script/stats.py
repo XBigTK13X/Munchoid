@@ -5,7 +5,6 @@ def dirToJson(dir):
     for root,dirs,files in os.walk(dir):
         for f in files:
             path = os.path.join(root,f)
-            print("Reading "+path)
             for line in open(path,'r').readlines():
                 if '"version"' in line:
                     j = json.loads(line)
