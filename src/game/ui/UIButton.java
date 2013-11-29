@@ -3,6 +3,7 @@ package game.ui;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.creatures.style.Outline;
+import org.apache.commons.lang3.StringUtils;
 import sps.bridge.Command;
 import sps.bridge.DrawDepth;
 import sps.bridge.DrawDepths;
@@ -83,12 +84,25 @@ public abstract class UIButton {
     }
 
     public void setMessage(String message) {
-        int tries = 5;
+        int maxLines = 5;
         _message.setMessage(message);
-        while (_width < _message.getBounds().width && tries-- > 0) {
+        int longestLineLength = 0;
+        while (_width < _message.getBounds().width && maxLines-- > 0) {
             _message.setMessage(_message.getMessage().replace(" ", "\n"));
-            //TODO Pad each line with spaces to center
         }
+        _message.setMessage(_message.getMessage().trim());
+        for (String line : _message.getMessage().split("\n")) {
+            if (line.length() > longestLineLength) {
+                longestLineLength = line.length();
+            }
+        }
+        for (String line : _message.getMessage().split("\n")) {
+            if (line.length() < longestLineLength) {
+                int offset = (longestLineLength - line.length());
+                _message.setMessage(_message.getMessage().replace(line, StringUtils.repeat(" ", offset) + line));
+            }
+        }
+
     }
 
     private void setXY(int x, int y) {
