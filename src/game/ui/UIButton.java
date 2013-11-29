@@ -12,6 +12,7 @@ import sps.display.Screen;
 import sps.display.Window;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
+import sps.entities.HitTest;
 import sps.io.Input;
 import sps.text.Text;
 import sps.text.TextPool;
@@ -37,6 +38,7 @@ public abstract class UIButton {
     private Command _command;
     private boolean _visible = true;
     private DrawDepth _depth;
+    private Point2 _position;
 
     public UIButton(String text) {
         this(text, 0, 0);
@@ -53,17 +55,13 @@ public abstract class UIButton {
     public UIButton(String text, int x, int y, Command command) {
         _depth = DrawDepths.get("UIButton");
         _command = command;
-
-        _width = (int) Screen.width(20);
-        _height = (int) Screen.height(20);
+        _position = new Point2(0, 0);
 
         _message = TextPool.get().write(text, new Point2(0, 0));
         _message.setFont("UIButton", 60);
         _message.setDepth(_depth);
 
-        Color[][] base = ProcTextures.gradient(_width, _height, Color.WHITE, Color.GRAY, false);
-        Outline.single(base, Color.WHITE, 3);
-        _sprite = SpriteMaker.get().fromColors(base);
+        setSize(20, 20);
 
         _buttonUser = new Buttons.User() {
             @Override
@@ -75,12 +73,32 @@ public abstract class UIButton {
             public void onClick() {
                 click();
             }
+
+            @Override
+            public void onMouseDown() {
+                mouseDown();
+            }
         };
         Buttons.get().add(_buttonUser);
 
         setXY(x, y);
 
         setMessage(text);
+    }
+
+    public Point2 getPosition() {
+        return _position;
+    }
+
+    public void setSize(int width, int height) {
+        _width = (int) Screen.width(width);
+        _height = (int) (Screen.height(height));
+
+        Color[][] base = ProcTextures.gradient(_width, _height, Color.WHITE, Color.GRAY, false);
+        Outline.single(base, Color.WHITE, 3);
+        _sprite = SpriteMaker.get().fromColors(base);
+
+        setMessage(_message.getMessage());
     }
 
     public void setMessage(String message) {
@@ -105,7 +123,7 @@ public abstract class UIButton {
 
     }
 
-    private void setXY(int x, int y) {
+    public void setXY(int x, int y) {
         int mW = (int) _message.getBounds().width;
         int mH = (int) _message.getBounds().height;
         //FIXME For some reason, the centering doesn't always work.
@@ -113,6 +131,7 @@ public abstract class UIButton {
         //   but the rest are fine
         _message.setPosition(x + ((_width - mW) / 2), y + mH + ((_height - mH) / 2));
         _sprite.setPosition(x, y);
+        _position.reset(x, y);
     }
 
     public void setScreenPercent(int x, int y) {
@@ -136,6 +155,16 @@ public abstract class UIButton {
 
     public abstract void click();
 
+    public void mouseDown() {
+
+    }
+
+    public boolean beingClicked() {
+        boolean mouseOver = HitTest.inBox(Input.get().x(), Input.get().y(), _buttonUser.getBounds());
+        boolean mouseDown = Input.get().isMouseDown(false);
+        return mouseOver && mouseDown;
+    }
+
     public void setVisible(boolean visible) {
         _message.setVisible(visible);
         _visible = visible;
@@ -146,5 +175,13 @@ public abstract class UIButton {
         _depth = depth;
         _message.setDepth(depth);
         _buttonUser.setDepth(depth);
+    }
+
+    public int getWidth() {
+        return _width;
+    }
+
+    public int getHeight() {
+        return _height;
     }
 }

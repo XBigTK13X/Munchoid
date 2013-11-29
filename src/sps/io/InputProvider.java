@@ -33,4 +33,6 @@ public interface InputProvider {
     boolean isMouseDown();
 
     void setMouseLock(boolean locked);
+
+    boolean isMouseDown(boolean failIfLocked);
 }

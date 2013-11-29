@@ -16,20 +16,20 @@ import sps.display.Screen;
 import sps.draw.DrawAPI;
 import sps.entities.HitTest;
 import sps.particles.ParticleLease;
+import sps.util.MathHelper;
 
 //TODO Handle multiple shaders. ie: Text shader, sprite shader
 public class ScreenRenderEngine {
-    private SpriteBatch _batch;
+    private ShaderBatch _batch;
     private OrthographicCamera _camera;
     private RenderStrategy _strategy;
 
     private Point2 _offset = new Point2(0, 0);
 
     public ScreenRenderEngine(int width, int height) {
-        _batch = new SpriteBatch();
+        _batch = new ShaderBatch(Assets.get().defaultShaders());
         _strategy = new StretchStrategy();
         resize(width, height);
-        setShader(Assets.get().defaultShaders());
     }
 
     public void render(Sprite sprite) {
@@ -66,8 +66,7 @@ public class ScreenRenderEngine {
         DrawAPI.get().setColor(call.Color);
         if (call.Radius == null) {
             DrawAPI.get().line(call.X, call.Y, call.X2, call.Y2);
-        }
-        else {
+        } else {
             DrawAPI.get().circle(call.X, call.Y, call.Radius);
         }
     }
@@ -136,5 +135,13 @@ public class ScreenRenderEngine {
 
     public Vector2 getBuffer() {
         return _strategy.getBuffer();
+    }
+
+    public void setBrightness(int brightnessPercent) {
+        _batch.setBrightness(MathHelper.percentRange(brightnessPercent));
+    }
+
+    public void setContrast(int contrastPercent) {
+        _batch.setContrast(MathHelper.percentRange(contrastPercent));
     }
 }

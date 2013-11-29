@@ -35,6 +35,10 @@ public class Buttons {
 
         public abstract void onClick();
 
+        public void onMouseDown() {
+
+        }
+
         public void normal() {
             getSprite().setColor(Color.GRAY);
         }
@@ -85,8 +89,8 @@ public class Buttons {
     private Map<User, State> _states;
 
     private Buttons() {
-        _states = new HashMap<User, State>();
-        _users = new ArrayList<User>();
+        _states = new HashMap<>();
+        _users = new ArrayList<>();
     }
 
     public void add(User user) {
@@ -101,6 +105,9 @@ public class Buttons {
             if (user.isActive()) {
                 boolean mouseOver = HitTest.inBox(Input.get().x(), Input.get().y(), user.getBounds());
                 boolean mouseDown = Input.get().isMouseDown();
+                if (mouseDown) {
+                    user.onMouseDown();
+                }
                 if (!mouseOver || _states.get(user) == State.Clicked) {
                     _states.put(user, State.Outside);
                     user.normal();
@@ -112,8 +119,7 @@ public class Buttons {
                 if (_states.get(user) == State.Over && mouseOver && mouseDown) {
                     if (_highest == null) {
                         _highest = user;
-                    }
-                    else if (_highest.getDepth().DrawDepth < user.getDepth().DrawDepth) {
+                    } else if (_highest.getDepth().DrawDepth < user.getDepth().DrawDepth) {
                         _states.put(_highest, State.Outside);
                         _highest.normal();
                         _highest = user;

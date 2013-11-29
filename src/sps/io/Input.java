@@ -55,8 +55,7 @@ public class Input implements InputProvider {
 
         if (stateProvider == null) {
             provider = new DefaultStateProvider();
-        }
-        else {
+        } else {
             provider = stateProvider;
         }
 
@@ -185,7 +184,12 @@ public class Input implements InputProvider {
 
     @Override
     public boolean isMouseDown() {
-        if (_mouseLocked) {
+        return isMouseDown(true);
+    }
+
+    @Override
+    public boolean isMouseDown(boolean failIfLocked) {
+        if (_mouseLocked && failIfLocked) {
             return false;
         }
         return Gdx.input.isButtonPressed(com.badlogic.gdx.Input.Buttons.LEFT);

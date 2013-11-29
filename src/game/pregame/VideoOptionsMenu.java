@@ -3,6 +3,9 @@ package game.pregame;
 import com.badlogic.gdx.Gdx;
 import game.save.Options;
 import game.ui.UIButton;
+import game.ui.UISlider;
+import sps.display.Screen;
+import sps.display.Window;
 import sps.states.State;
 import sps.states.StateManager;
 
@@ -10,6 +13,7 @@ public class VideoOptionsMenu implements State {
     UIButton _back;
     UIButton _fullScreen;
     UIButton _graphicsMode;
+    UISlider _brightness;
 
     @Override
     public void create() {
@@ -41,10 +45,18 @@ public class VideoOptionsMenu implements State {
             }
         };
 
+        _brightness = new UISlider(80, 10, (int) Screen.width(10), (int) Screen.height(50)) {
+            @Override
+            public void onSlide() {
+                int brightness = getSliderPercent();
+
+                Window.get().screenEngine().setBrightness(brightness);
+                Window.get(true).screenEngine().setBrightness(brightness);
+            }
+        };
+
         _graphicsMode.setColRow(1, 1);
-
         _back.setColRow(2, 3);
-
         _fullScreen.setColRow(2, 1);
     }
 
@@ -57,6 +69,7 @@ public class VideoOptionsMenu implements State {
         _back.draw();
         _fullScreen.draw();
         _graphicsMode.draw();
+        _brightness.draw();
     }
 
     @Override
