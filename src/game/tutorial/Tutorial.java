@@ -57,7 +57,7 @@ public class Tutorial {
     private void refreshDisplay() {
         _currentStep = _steps.get(_currentStepIndex);
         String message = _currentStep.getMessage();
-        message += "\n\n\t\t(Press " + Commands.get("AdvanceTutorial") + " to continue";
+        message += "\n\n\t\t(Press " + Commands.get("AdvanceTutorial") + " to continue)";
         _display.setMessage(message);
         if (!_currentStep.getArrowLocation().isZero()) {
             __arrow.setPosition(_currentStep.getArrowLocation().X, _currentStep.getArrowLocation().Y);
