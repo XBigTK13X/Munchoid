@@ -14,3 +14,5 @@ http://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically
 http://stackoverflow.com/questions/18004150/desktop-api-is-not-supported-on-the-current-platform
 
 https://github.com/mattdesl/lwjgl-basics/wiki/LibGDX-Brightness-&-Contrast
+
+http://armedunity.com/topic/4950-brightnesscontrastsaturation-shader/
