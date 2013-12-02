@@ -7,13 +7,16 @@ import game.ui.UISlider;
 import sps.display.Screen;
 import sps.states.State;
 import sps.states.StateManager;
+import sps.text.Text;
+import sps.text.TextPool;
 
 public class VideoOptionsMenu implements State {
-    UIButton _back;
-    UIButton _fullScreen;
-    UIButton _graphicsMode;
-    UISlider _brightness;
-    UIButton _brightnessReset;
+    private UIButton _back;
+    private UIButton _fullScreen;
+    private UIButton _graphicsMode;
+    private UISlider _brightness;
+    private UIButton _brightnessReset;
+    private Text _brightnessLabel;
 
     @Override
     public void create() {
@@ -49,31 +52,30 @@ public class VideoOptionsMenu implements State {
         _brightness = new UISlider(80, 10, (int) Screen.width(10), (int) Screen.height(50)) {
             @Override
             public void onSlide() {
-                int brightness = getSliderPercent() - 50;
-                setBrightness(brightness);
+                setBrightnessPercent(getSliderPercent());
             }
         };
 
-        _brightness.setSliderPercent(options.Brightness + 50);
+        setBrightnessPercent(options.Brightness);
 
         _brightnessReset = new UIButton("") {
             @Override
             public void click() {
-                setBrightness(0);
+                setBrightnessPercent(100);
             }
         };
 
-
         _brightnessReset.setSize(5, 5);
-        _brightnessReset.setScreenPercent(1, 50);
-
+        _brightnessReset.setScreenPercent(3, 52);
         _graphicsMode.setColRow(1, 1);
         _back.setColRow(2, 3);
         _fullScreen.setColRow(2, 1);
+
+        _brightnessLabel = TextPool.get().write("Brightness", Screen.pos(15, 55));
     }
 
-    private void setBrightness(int brightness) {
-        _brightness.setSliderPercent(brightness + 50);
+    private void setBrightnessPercent(int brightness) {
+        _brightness.setSliderPercent(brightness);
         Options options = Options.load();
         options.Brightness = brightness;
         options.apply();

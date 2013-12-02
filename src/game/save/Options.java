@@ -7,6 +7,7 @@ import sps.core.Loader;
 import sps.core.Logger;
 import sps.core.SpsConfig;
 import sps.display.Window;
+import sps.util.MathHelper;
 import sps.util.Parse;
 
 import java.io.File;
@@ -86,7 +87,7 @@ public class Options {
     public boolean TutorialEnabled = true;
     public boolean ShowIntro = true;
     public boolean EnableTutorialQuery = true;
-    public int Brightness = 0;
+    public int Brightness = 100;
 
     public void save() {
         try {
@@ -116,7 +117,8 @@ public class Options {
         }
         SpsConfig.get().musicEnabled = MusicEnabled;
         GameConfig.setGraphicsMode(GraphicsLowQuality);
-        Window.get().screenEngine().setBrightness(Brightness);
-        Window.get(true).screenEngine().setBrightness(Brightness);
+        int brightness = (int) (MathHelper.percentToValue(-75, 0, Brightness));
+        Window.get().screenEngine().setBrightness(brightness);
+        Window.get(true).screenEngine().setBrightness(brightness);
     }
 }

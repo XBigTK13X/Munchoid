@@ -110,6 +110,9 @@ public class Game implements ApplicationListener {
             if (InputWrapper.moveDown() && InputWrapper.moveUp() && InputWrapper.debug1()) {
                 StateManager.reset().push(new MainMenu());
             }
+            if (InputWrapper.moveDown() && InputWrapper.moveUp() && InputWrapper.debug2()) {
+                Options.resetToDefaults();
+            }
             if (InputWrapper.moveRight() && InputWrapper.moveLeft() && InputWrapper.debug2()) {
                 StateManager.reset().push(createInitialState());
             }

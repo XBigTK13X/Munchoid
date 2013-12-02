@@ -12,7 +12,6 @@ import sps.display.Screen;
 import sps.display.Window;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
-import sps.entities.HitTest;
 import sps.io.Input;
 import sps.text.Text;
 import sps.text.TextPool;
@@ -99,6 +98,7 @@ public abstract class UIButton {
         _sprite = SpriteMaker.get().fromColors(base);
 
         setMessage(_message.getMessage());
+        setXY((int) getPosition().X, (int) getPosition().Y);
     }
 
     public void setMessage(String message) {
@@ -160,9 +160,7 @@ public abstract class UIButton {
     }
 
     public boolean beingClicked() {
-        boolean mouseOver = HitTest.inBox(Input.get().x(), Input.get().y(), _buttonUser.getBounds());
-        boolean mouseDown = Input.get().isMouseDown(false);
-        return mouseOver && mouseDown;
+        return _buttonUser.isBeingClicked();
     }
 
     public void setVisible(boolean visible) {

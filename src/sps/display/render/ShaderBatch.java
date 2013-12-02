@@ -33,7 +33,6 @@ public class ShaderBatch extends SpriteBatch {
 
         if (!__shaderCapabilitiesDisplayed) {
             Logger.info("Shaders initialized. (Brightness: " + _brightnessControlsSupported + ", Contrast: " + _contrastControlsSupported + ", Saturation: " + _saturationControlsSupported + ")");
-            Logger.info("Initialized values: Brightness: " + _brightness);
             __shaderCapabilitiesDisplayed = true;
         }
 

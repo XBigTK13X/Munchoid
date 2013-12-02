@@ -66,7 +66,8 @@ public class ScreenRenderEngine {
         DrawAPI.get().setColor(call.Color);
         if (call.Radius == null) {
             DrawAPI.get().line(call.X, call.Y, call.X2, call.Y2);
-        } else {
+        }
+        else {
             DrawAPI.get().circle(call.X, call.Y, call.Radius);
         }
     }
@@ -140,10 +141,10 @@ public class ScreenRenderEngine {
     }
 
     public void setBrightness(int brightnessPercent) {
-        _batch.setBrightness(MathHelper.percentRange(brightnessPercent));
+        _batch.setBrightness(MathHelper.percentDecimal(brightnessPercent));
     }
 
     public void setContrast(int contrastPercent) {
-        _batch.setContrast(MathHelper.percentRange(contrastPercent));
+        _batch.setContrast(MathHelper.percentDecimal(contrastPercent));
     }
 }

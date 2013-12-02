@@ -59,6 +59,12 @@ public class Buttons {
         public boolean isActive() {
             return _active;
         }
+
+        public boolean isBeingClicked() {
+            boolean mouseOver = HitTest.inBox(Input.get().x(), Input.get().y(), getBounds());
+            boolean mouseDown = Input.get().isMouseDown(false);
+            return mouseOver && mouseDown;
+        }
     }
 
     private enum State {
@@ -119,7 +125,8 @@ public class Buttons {
                 if (_states.get(user) == State.Over && mouseOver && mouseDown) {
                     if (_highest == null) {
                         _highest = user;
-                    } else if (_highest.getDepth().DrawDepth < user.getDepth().DrawDepth) {
+                    }
+                    else if (_highest.getDepth().DrawDepth < user.getDepth().DrawDepth) {
                         _states.put(_highest, State.Outside);
                         _highest.normal();
                         _highest = user;
