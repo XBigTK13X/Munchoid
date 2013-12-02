@@ -84,7 +84,9 @@ public class ScreenRenderEngine {
         _camera.update();
         DrawAPI.get().update(_camera.combined, _batch.getProjectionMatrix());
         _strategy.begin(_camera, _batch, (int) _offset.X, (int) _offset.Y);
+
         _batch.begin();
+        _batch.pushUniforms();
     }
 
     public void end() {

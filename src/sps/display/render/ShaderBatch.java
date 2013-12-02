@@ -2,11 +2,13 @@ package sps.display.render;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import sps.core.Logger;
 
 //Modified from: https://github.com/mattdesl/lwjgl-basics/wiki/LibGDX-Brightness-&-Contrast
 public class ShaderBatch extends SpriteBatch {
 
     private static final int GLSL_VALUE_NOT_PRESENT = -1;
+    private static boolean __shaderCapabilitiesDisplayed = false;
 
     private float _brightness = 1f;
     private float _contrast = 1f;
@@ -25,16 +27,25 @@ public class ShaderBatch extends SpriteBatch {
     public ShaderBatch(ShaderProgram shaders) {
         _shaders = shaders;
         _brightnessControlsSupported = _shaders.getUniformLocation("u_brightness") != GLSL_VALUE_NOT_PRESENT;
-        setBrightness(_brightness);
         _contrastControlsSupported = _shaders.getUniformLocation("u_contrast") != GLSL_VALUE_NOT_PRESENT;
-        setContrast(_contrast);
         _saturationControlsSupported = _shaders.getUniformLocation("u_saturation") != GLSL_VALUE_NOT_PRESENT;
-        setSaturation(_saturation);
+        pushUniforms();
+        if (!__shaderCapabilitiesDisplayed) {
+            Logger.info("Shaders initialized. (Brightness: " + _brightnessControlsSupported + ", Contrast: " + _contrastControlsSupported + ", Saturation: " + _saturationControlsSupported + ")");
+            Logger.info("Initialized values: Brightness: " + _brightness);
+            __shaderCapabilitiesDisplayed = true;
+        }
         setShader(_shaders);
     }
 
     public void begin() {
         super.begin();
+    }
+
+    public void pushUniforms(){
+        setBrightness(_brightness);
+        setContrast(_contrast);
+        setSaturation(_saturation);
     }
 
     public void setBrightness(float brightness) {
