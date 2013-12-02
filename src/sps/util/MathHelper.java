@@ -41,13 +41,6 @@ public class MathHelper {
     }
 
     public static float percentRange(int percent) {
-        float result = ((float) percent) / 100;
-        if (result < 0) {
-            return 0f;
-        }
-        if (result > 1f) {
-            return 1f;
-        }
-        return result;
+        return ((float) percent) / 100;
     }
 }

@@ -12,9 +12,6 @@ uniform float u_saturation;
 
 void main() {
     vec4 color = v_color * texture2D(u_texture, v_texCoords);
-	color -= u_brightness;
-	float bug = 0.0;
-	if(u_brightness == 0.0) bug=1.0;
-    color.x+=bug;
+	color += u_brightness;
     gl_FragColor = color;
 }

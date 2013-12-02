@@ -9,14 +9,13 @@ public class ShaderBatch extends SpriteBatch {
 
     private static final int GLSL_VALUE_NOT_PRESENT = -1;
     private static boolean __shaderCapabilitiesDisplayed = false;
+    private static final String __brightnessId = "u_brightness";
+    private static final String __contrastId = "u_contrast";
+    private static final String __saturationId = "u_saturation";
 
-    private float _brightness = 1f;
+    private float _brightness = 0f;
     private float _contrast = 1f;
     private float _saturation = 0f;
-
-    private float _lastBrightness = Float.MAX_VALUE;
-    private float _lastContrast = Float.MAX_VALUE;
-    private float _lastSaturation = Float.MAX_VALUE;
 
     private boolean _brightnessControlsSupported;
     private boolean _contrastControlsSupported;
@@ -26,15 +25,18 @@ public class ShaderBatch extends SpriteBatch {
 
     public ShaderBatch(ShaderProgram shaders) {
         _shaders = shaders;
-        _brightnessControlsSupported = _shaders.getUniformLocation("u_brightness") != GLSL_VALUE_NOT_PRESENT;
-        _contrastControlsSupported = _shaders.getUniformLocation("u_contrast") != GLSL_VALUE_NOT_PRESENT;
-        _saturationControlsSupported = _shaders.getUniformLocation("u_saturation") != GLSL_VALUE_NOT_PRESENT;
+        _brightnessControlsSupported = _shaders.getUniformLocation(__brightnessId) != GLSL_VALUE_NOT_PRESENT;
+        _contrastControlsSupported = _shaders.getUniformLocation(__contrastId) != GLSL_VALUE_NOT_PRESENT;
+        _saturationControlsSupported = _shaders.getUniformLocation(__saturationId) != GLSL_VALUE_NOT_PRESENT;
+
         pushUniforms();
+
         if (!__shaderCapabilitiesDisplayed) {
             Logger.info("Shaders initialized. (Brightness: " + _brightnessControlsSupported + ", Contrast: " + _contrastControlsSupported + ", Saturation: " + _saturationControlsSupported + ")");
             Logger.info("Initialized values: Brightness: " + _brightness);
             __shaderCapabilitiesDisplayed = true;
         }
+
         setShader(_shaders);
     }
 
@@ -42,39 +44,31 @@ public class ShaderBatch extends SpriteBatch {
         super.begin();
     }
 
-    public void pushUniforms(){
+    public void pushUniforms() {
         setBrightness(_brightness);
         setContrast(_contrast);
         setSaturation(_saturation);
     }
 
-    public void setBrightness(float brightness) {
-        if (_brightnessControlsSupported) {
-            _brightness = brightness;
-            if (_lastBrightness != _brightness) {
-                _shaders.setUniformf("u_brightness", _brightness);
-                _lastBrightness = _brightness;
-            }
+    private void setShaderUniform(final String id, final float value, final boolean supported) {
+        if (supported) {
+            int location = _shaders.getUniformLocation(id);
+            _shaders.setUniformf(location, value);
         }
+    }
+
+    public void setBrightness(float brightness) {
+        _brightness = brightness;
+        setShaderUniform(__brightnessId, _brightness, _brightnessControlsSupported);
     }
 
     public void setContrast(float contrast) {
-        if (_contrastControlsSupported) {
-            _contrast = contrast;
-            if (_lastContrast != _contrast) {
-                _shaders.setUniformf("u_contrast", _contrast);
-                _lastContrast = _contrast;
-            }
-        }
+        _contrast = contrast;
+        setShaderUniform(__contrastId, _contrast, _contrastControlsSupported);
     }
 
     public void setSaturation(float saturation) {
-        if (_saturationControlsSupported) {
-            _saturation = saturation;
-            if (_lastSaturation != _saturation) {
-                _shaders.setUniformf("u_saturation", _saturation);
-                _lastSaturation = _saturation;
-            }
-        }
+        _saturation = saturation;
+        setShaderUniform(__saturationId, _saturation, _saturationControlsSupported);
     }
 }

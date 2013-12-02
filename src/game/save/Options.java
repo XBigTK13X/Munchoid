@@ -49,6 +49,9 @@ public class Options {
                     case "showIntro":
                         options.ShowIntro = Parse.bool(value);
                         break;
+                    case "brightness":
+                        options.Brightness = Parse.inte(value);
+                        break;
                     default:
                         Logger.error("Invalid user config: " + line);
                         break;
@@ -83,6 +86,7 @@ public class Options {
     public boolean TutorialEnabled = true;
     public boolean ShowIntro = true;
     public boolean EnableTutorialQuery = true;
+    public int Brightness = 0;
 
     public void save() {
         try {
@@ -94,7 +98,9 @@ public class Options {
             options += "graphicsLowQuality=" + GraphicsLowQuality + "\n";
             options += "tutorialEnabled=" + TutorialEnabled + "\n";
             options += "enableTutorialQuery=" + EnableTutorialQuery + "\n";
+            options += "brightness=" + Brightness + "\n";
             options += "showIntro=" + ShowIntro;
+
 
             FileUtils.write(__config, options);
         }
@@ -110,5 +116,7 @@ public class Options {
         }
         SpsConfig.get().musicEnabled = MusicEnabled;
         GameConfig.setGraphicsMode(GraphicsLowQuality);
+        Window.get().screenEngine().setBrightness(Brightness);
+        Window.get(true).screenEngine().setBrightness(Brightness);
     }
 }

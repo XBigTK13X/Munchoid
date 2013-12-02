@@ -5,7 +5,6 @@ import game.save.Options;
 import game.ui.UIButton;
 import game.ui.UISlider;
 import sps.display.Screen;
-import sps.display.Window;
 import sps.states.State;
 import sps.states.StateManager;
 
@@ -14,6 +13,7 @@ public class VideoOptionsMenu implements State {
     UIButton _fullScreen;
     UIButton _graphicsMode;
     UISlider _brightness;
+    UIButton _brightnessReset;
 
     @Override
     public void create() {
@@ -34,7 +34,8 @@ public class VideoOptionsMenu implements State {
             }
         };
 
-        _graphicsMode = new UIButton(qualityMessage(Options.load())) {
+        Options options = Options.load();
+        _graphicsMode = new UIButton(qualityMessage(options)) {
             @Override
             public void click() {
                 Options options = Options.load();
@@ -48,16 +49,35 @@ public class VideoOptionsMenu implements State {
         _brightness = new UISlider(80, 10, (int) Screen.width(10), (int) Screen.height(50)) {
             @Override
             public void onSlide() {
-                int brightness = getSliderPercent();
-
-                Window.get().screenEngine().setBrightness(brightness);
-                Window.get(true).screenEngine().setBrightness(brightness);
+                int brightness = getSliderPercent() - 50;
+                setBrightness(brightness);
             }
         };
+
+        _brightness.setSliderPercent(options.Brightness + 50);
+
+        _brightnessReset = new UIButton("") {
+            @Override
+            public void click() {
+                setBrightness(0);
+            }
+        };
+
+
+        _brightnessReset.setSize(5, 5);
+        _brightnessReset.setScreenPercent(1, 50);
 
         _graphicsMode.setColRow(1, 1);
         _back.setColRow(2, 3);
         _fullScreen.setColRow(2, 1);
+    }
+
+    private void setBrightness(int brightness) {
+        _brightness.setSliderPercent(brightness + 50);
+        Options options = Options.load();
+        options.Brightness = brightness;
+        options.apply();
+        options.save();
     }
 
     private String qualityMessage(Options options) {
@@ -70,6 +90,7 @@ public class VideoOptionsMenu implements State {
         _fullScreen.draw();
         _graphicsMode.draw();
         _brightness.draw();
+        _brightnessReset.draw();
     }
 
     @Override

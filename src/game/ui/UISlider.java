@@ -17,7 +17,7 @@ public abstract class UISlider {
         _height = _meter.getBounds().Height;
         _position = new Point2(x, y);
 
-        //Change so that mouseDown detection is on meter, not knob
+        //TODO Change so that mouseDown detection is on meter, not knob
         _knob = new UIButton("") {
             @Override
             public void click() {
@@ -46,5 +46,9 @@ public abstract class UISlider {
 
     public int getSliderPercent() {
         return (int) (((_knob.getPosition().X - _position.X) / (float) _width) * 100);
+    }
+
+    public void setSliderPercent(int percent) {
+        _knob.setXY((int) (_position.X + (_width * (percent / 100f))), (int) _knob.getPosition().Y);
     }
 }
