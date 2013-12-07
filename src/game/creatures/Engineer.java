@@ -1,5 +1,6 @@
 package game.creatures;
 
+import game.DevConfig;
 import game.GameConfig;
 import game.creatures.part.DebugPoly;
 import game.creatures.part.Design;
@@ -22,7 +23,7 @@ public class Engineer {
             fill(maxParts, body, result, core);
         }
 
-        if (GameConfig.DevDrawSkeleton) {
+        if (DevConfig.DrawSkeleton) {
             Logger.info(result.getCore().getJoints().debug());
         }
 
@@ -30,7 +31,7 @@ public class Engineer {
     }
 
     private static BodyPart construct(Body owner, PartFunction f, Design design) {
-        if (!GameConfig.DevDebugJointGrid || f == PartFunction.Core) {
+        if (!DevConfig.DebugJointGrid || f == PartFunction.Core) {
             design = Designs.get(f);
         }
         return new BodyPart(f, RNG.next((int) (pwMin * f.Mult), (int) (pWMax * f.Mult)), RNG.next((int) (pHMin * f.Mult), (int) (pHMax * f.Mult)), owner, design);
@@ -49,7 +50,7 @@ public class Engineer {
                 PartFunction f = PartFunction.random(j.GridLoc, parent.getFunction());
                 if (f != null) {
                     Design design = Designs.get(f);
-                    if (GameConfig.DevDebugJointGrid) {
+                    if (DevConfig.DebugJointGrid) {
                         design = new DebugPoly(j.GridLoc);
                     }
                     BodyPart child = construct(owner, f, design);

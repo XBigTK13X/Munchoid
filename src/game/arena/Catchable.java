@@ -2,6 +2,7 @@ package game.arena;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import game.DevConfig;
 import game.GameConfig;
 import game.creatures.Creature;
 import sps.bridge.DrawDepths;
@@ -33,13 +34,13 @@ public class Catchable extends Entity {
         _creature = new Creature();
         _creature.getBody().setFloor(floor);
         _creature.getBody().setScale(GameConfig.ArenaCreatureScale);
-        _creature.orientX((GameConfig.DevFlipEnabled) ? RNG.coinFlip() : false, false);
+        _creature.orientX((DevConfig.FlipEnabled) ? RNG.coinFlip() : false, false);
         setSize(_creature.getWidth(), _creature.getHeight());
         setLocation(new Point2(RNG.next((int) (floor.getBounds().X2 * __spawnBuffer), (int) (floor.getBounds().X2 * (1f - __spawnBuffer))), RNG.next((int) (floor.getBounds().Y2 * __spawnBuffer), (int) (floor.getBounds().Y2 * (1f - __spawnBuffer)))));
     }
 
     private void movement() {
-        if (GameConfig.DevFlipEnabled) {
+        if (DevConfig.FlipEnabled) {
             _creature.orientX(_dX <= 0, false);
         }
 

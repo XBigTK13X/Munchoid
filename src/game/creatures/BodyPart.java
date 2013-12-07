@@ -2,6 +2,7 @@ package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import game.DevConfig;
 import game.GameConfig;
 import game.creatures.part.Design;
 import game.creatures.part.Designs;
@@ -180,7 +181,7 @@ public class BodyPart {
 
     public void draw() {
         _joints.draw();
-        if (GameConfig.DevSkeletonTest) {
+        if (DevConfig.SkeletonTest) {
             _sprite.setColor(_partTint);
         }
         else {

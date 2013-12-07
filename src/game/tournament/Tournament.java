@@ -1,5 +1,6 @@
 package game.tournament;
 
+import game.DevConfig;
 import game.GameConfig;
 import game.InputWrapper;
 import game.arena.Player;
@@ -41,7 +42,7 @@ public class Tournament implements State {
 
     @Override
     public void update() {
-        if (InputWrapper.confirm() || GameConfig.DevEndToEndStateLoadTest || GameConfig.DevBotEnabled) {
+        if (InputWrapper.confirm() || DevConfig.EndToEndStateLoadTest || DevConfig.BotEnabled) {
             _boutNumber++;
             _entranceInfo.setMessage(boutMessage());
             // Run all of the EvE matches and Byes, then load the next PvE match

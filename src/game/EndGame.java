@@ -28,7 +28,7 @@ public class EndGame implements State {
 
     @Override
     public void update() {
-        if (InputWrapper.confirm() || GameConfig.DevEndToEndStateLoadTest || GameConfig.DevBotEnabled) {
+        if (InputWrapper.confirm() || DevConfig.EndToEndStateLoadTest || DevConfig.BotEnabled) {
             StateManager.reset().push(new MainMenu());
         }
     }

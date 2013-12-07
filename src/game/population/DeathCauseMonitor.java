@@ -1,5 +1,6 @@
 package game.population;
 
+import game.DevConfig;
 import game.GameConfig;
 import sps.core.Logger;
 import sps.display.Screen;
@@ -38,7 +39,7 @@ public class DeathCauseMonitor {
         for (DeathCause d : _deathCauses) {
             if (d.isActive()) {
                 totalDeaths += population.deathsCausedBy(d);
-                if (GameConfig.DevDebugPopulationGrowth) {
+                if (DevConfig.DebugPopulationGrowth) {
                     Logger.info(d.getName() + " caused " + population.deathsCausedBy(d) + " deaths");
                 }
             }

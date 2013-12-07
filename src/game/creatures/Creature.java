@@ -1,6 +1,7 @@
 package game.creatures;
 
 import com.badlogic.gdx.Gdx;
+import game.DevConfig;
 import game.GameConfig;
 import game.arena.Player;
 import game.forces.Force;
@@ -126,7 +127,7 @@ public class Creature extends Entity {
                 magnitude = 1;
             }
 
-            if (GameConfig.DevBattleLog) {
+            if (DevConfig.BattleLog) {
                 Logger.info(getName() + " attacking " + _opponent.getName() + " with " + force.name() + " queuing " + Force.sideEffect(force).getClass().getName().replace("game.forces.sideeffects.", ""));
             }
             Force.create(force, magnitude).apply(_opponent.getBody().getParts().getRandom());

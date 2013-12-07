@@ -1,6 +1,6 @@
 package game.tutorial;
 
-import game.GameConfig;
+import game.DevConfig;
 import game.population.PreloadPopulationOverview;
 import game.pregame.MainMenu;
 import game.save.Options;
@@ -18,7 +18,7 @@ public class TutorialQuery implements State {
 
     @Override
     public void create() {
-        if (GameConfig.DevEndToEndStateLoadTest || GameConfig.DevBotEnabled) {
+        if (DevConfig.EndToEndStateLoadTest || DevConfig.BotEnabled) {
             Options options = Options.load();
             options.TutorialEnabled = false;
             options.apply();

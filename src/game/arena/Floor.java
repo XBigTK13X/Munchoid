@@ -3,6 +3,7 @@ package game.arena;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.BackgroundMaker;
+import game.DevConfig;
 import game.GameConfig;
 import sps.bridge.DrawDepths;
 import sps.bridge.EntityTypes;
@@ -37,7 +38,7 @@ public class Floor extends Entity {
 
         setSize((int) _background.getWidth(), (int) _background.getHeight());
         BoundingBox.fromDimensions(_boundingBox, 0, 0, getWidth(), getHeight());
-        if (GameConfig.DevPrintArenaSize) {
+        if (DevConfig.PrintArenaSize) {
             Logger.info("Arena size: (W,H): (" + _background.getWidth() + "," + _background.getHeight() + ")");
         }
     }

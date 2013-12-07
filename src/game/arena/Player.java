@@ -2,6 +2,7 @@ package game.arena;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import game.DevConfig;
 import game.GameConfig;
 import game.InputWrapper;
 import game.Score;
@@ -48,7 +49,7 @@ public class Player extends Entity implements IActor {
     }
 
     private void calculateKeyVelocity() {
-        if (GameConfig.DevBotEnabled) {
+        if (DevConfig.BotEnabled) {
             Entity e = _arrow.getClosest();
             if (e != null) {
                 float xVel = (e.getLocation().X - getLocation().X > 0) ? _moveDistance : -_moveDistance;
@@ -153,7 +154,7 @@ public class Player extends Entity implements IActor {
         moveInBothDirections(_keyVelocity.X, 0);
         moveInBothDirections(0, _keyVelocity.Y);
 
-        boolean botCanSwing = GameConfig.DevBotEnabled && _closestColor == Catchable.CanBeCaughtHighlight;
+        boolean botCanSwing = DevConfig.BotEnabled && _closestColor == Catchable.CanBeCaughtHighlight;
         if ((botCanSwing || InputWrapper.confirm()) && !_net.isInUse()) {
             _net.use();
         }

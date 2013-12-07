@@ -1,10 +1,7 @@
 package game.battle;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.BackgroundMaker;
-import game.GameConfig;
-import game.InputWrapper;
-import game.Score;
+import game.*;
 import game.creatures.Creature;
 import game.forces.Force;
 import game.tournament.TournamentEnd;
@@ -115,8 +112,8 @@ public class Battle implements State {
         _rightHud.update();
 
         if (_isBattleOver) {
-            if (InputWrapper.confirm() || GameConfig.DevBotEnabled) {
-                if (GameConfig.DevBattleTest) {
+            if (InputWrapper.confirm() || DevConfig.BotEnabled) {
+                if (DevConfig.BattleTest) {
                     StateManager.reset().push(new Battle());
                 }
                 else {
@@ -135,7 +132,7 @@ public class Battle implements State {
     }
 
     private void battleStep() {
-        if (GameConfig.DevShortcutsEnabled) {
+        if (DevConfig.ShortcutsEnabled) {
             if (InputWrapper.pop()) {
                 waitForPlayerToAdvance(true);
             }
@@ -168,7 +165,7 @@ public class Battle implements State {
          is recharging energy.
         */
         if (_left.getCoolDown().isCooled()) {
-            if (GameConfig.DevBotEnabled) {
+            if (DevConfig.BotEnabled) {
                 Force max = Force.Abrasive;
                 for (Force force : Force.values()) {
                     if (_left.getStats().get(force) > _left.getStats().get(max)) {
@@ -201,7 +198,7 @@ public class Battle implements State {
         }
 
 
-        if (!_right.getBody().getParts().anyAlive() || GameConfig.DevEndToEndStateLoadTest) {
+        if (!_right.getBody().getParts().anyAlive() || DevConfig.EndToEndStateLoadTest) {
             waitForPlayerToAdvance(true);
         }
         if (!_left.getBody().getParts().anyAlive()) {

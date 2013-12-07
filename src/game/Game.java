@@ -66,9 +66,9 @@ public class Game implements ApplicationListener {
         StateManager.get().setPaused(false);
 
         _exitPrompt = new ExitPrompt();
-        if (GameConfig.DevBotEnabled) {
+        if (DevConfig.BotEnabled) {
             Options options = Options.load();
-            options.GraphicsLowQuality = GameConfig.DevBotsLowQualityGraphics;
+            options.GraphicsLowQuality = DevConfig.BotsLowQualityGraphics;
             options.FullScreen = false;
             options.WindowResolutionY = 100;
             options.WindowResolutionX = 100;
@@ -79,19 +79,19 @@ public class Game implements ApplicationListener {
     }
 
     private State createInitialState() {
-        if (GameConfig.DevPopulationTest) {
+        if (DevConfig.PopulationTest) {
             return new PreloadPopulationOverview();
         }
-        if (GameConfig.DevMergeOutcomeTest) {
+        if (DevConfig.MergeOutcomeTest) {
             return new MergeOutcome();
         }
-        else if (GameConfig.DevBattleTest) {
+        else if (DevConfig.BattleTest) {
             return new Battle();
         }
-        else if (GameConfig.DevSkeletonTest) {
+        else if (DevConfig.SkeletonTest) {
             return new SkeletonTest();
         }
-        else if (GameConfig.DevBackgroundGenerationTest) {
+        else if (DevConfig.BackgroundGenerationTest) {
             return new BackgroundGenerationTest();
         }
         else {
@@ -106,7 +106,7 @@ public class Game implements ApplicationListener {
     }
 
     private void handleDevShortcuts() {
-        if (GameConfig.DevShortcutsEnabled) {
+        if (DevConfig.ShortcutsEnabled) {
             if (InputWrapper.moveDown() && InputWrapper.moveUp() && InputWrapper.debug1()) {
                 StateManager.reset().push(new MainMenu());
             }

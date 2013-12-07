@@ -1,38 +1,9 @@
 package game;
 
-import sps.core.Logger;
 import sps.core.Point2;
 import sps.display.Screen;
 
-import java.lang.reflect.Field;
-
 public class GameConfig {
-
-    //Bots
-    public static boolean DevBotEnabled = false;
-    public static final boolean DevBotAlwaysMerge = false;
-    public static final boolean DevBotRandomlyMerges = true;
-    public static final boolean DevBotsLowQualityGraphics = true;
-
-    //Debugging / Development
-    public static final boolean DevForceShortcutsEnabled = false;
-    public static final boolean DevTournyTest = false;
-    public static final boolean DevMergeOutcomeTest = false;
-    public static final boolean DevPopulationTest = false;
-    public static final boolean DevBattleTest = false;
-    public static final boolean DevSkeletonTest = false;
-    public static final boolean DevBackgroundGenerationTest = false;
-    public static final boolean DevShortcutsEnabled = DevForceShortcutsEnabled || DevTournyTest || DevMergeOutcomeTest || DevPopulationTest || DevBattleTest || DevSkeletonTest || DevBackgroundGenerationTest;
-
-    public static final boolean DevEndToEndStateLoadTest = false;
-    public static final boolean DevFlipEnabled = false;
-    public static final boolean DevPartSortingEnabled = false;
-    public static final boolean DevDrawSkeleton = false;
-    public static final boolean DevDebugJointGrid = false;
-    public static final boolean DevDebugJointGridWithSquares = false;
-    public static final boolean DevAlwaysSelectForces = false;
-    public static final boolean DevUseOldCatchableMergeAlgorithm = false;
-
     //Options / Optimizations
     //TODO Make these toggleable in the options menu,
     //     helps with lots of creatures running on weaker computers
@@ -54,12 +25,6 @@ public class GameConfig {
         OptDisableCloudyTextures = performanceMode;
         OptSimpleBackgrounds = performanceMode;
     }
-
-    //Debug/Development Logging toggles
-    public static final boolean DevBattleLog = false;
-    public static final boolean DevTimeStates = false;
-    public static final boolean DevPrintArenaSize = false;
-    public static final boolean DevDebugPopulationGrowth = false;
 
     //Intro
     public final static float IntroVideoSkipSeconds = 2f;
@@ -131,23 +96,4 @@ public class GameConfig {
     //TODO Make this scale with resolution like everything else?
     public static final int MeterOutlinePixelThickness = 2;
     public static final int BodyPartOutlinePixelThickness = 5;
-
-    public static String json() {
-        String config = "\"gameConfig\":{";
-        Field[] fields = GameConfig.class.getDeclaredFields();
-        int c = 0;
-        for (Field f : fields) {
-            try {
-                config += "\"" + f.getName() + "\":\"" + f.get(null) + "\"";
-                if (c++ < fields.length - 1) {
-                    config += ",";
-                }
-            }
-            catch (IllegalAccessException e) {
-                Logger.exception(e);
-            }
-        }
-        config += "}";
-        return config;
-    }
 }

@@ -1,6 +1,7 @@
 package game.pregame;
 
 import com.badlogic.gdx.graphics.Color;
+import game.DevConfig;
 import game.GameConfig;
 import game.movie.Movie;
 import sps.audio.MusicPlayer;
@@ -51,7 +52,7 @@ public class Intro implements State {
     public void update() {
         _movie.play(MusicPlayer.get().getMusic().getPosition());
 
-        if (_skip.isCooled() || !MusicPlayer.get().getMusic().isPlaying() || GameConfig.DevEndToEndStateLoadTest || GameConfig.DevBotEnabled) {
+        if (_skip.isCooled() || !MusicPlayer.get().getMusic().isPlaying() || DevConfig.EndToEndStateLoadTest || DevConfig.BotEnabled) {
             StateManager.get().push(new MainMenu());
         }
 

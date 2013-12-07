@@ -2,6 +2,7 @@ package game;
 
 import sps.core.Logger;
 import sps.states.StateManager;
+import sps.util.JSON;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -12,7 +13,7 @@ public class MetaData {
     private static int version = 1;
     private static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         printWin();
     }
 
@@ -38,7 +39,8 @@ public class MetaData {
             metaData += Score.get().json() + ",";
             metaData += Score.get().petStats().json() + ",";
             metaData += StateManager.json() + ",";
-            metaData += GameConfig.json() + ",";
+            metaData += JSON.formatFields(GameConfig.class) + ",";
+            metaData += JSON.formatFields(DevConfig.class) + ",";
             metaData += "\"timestamp\":\"" + dateFormat.format(date) + "\"";
             metaData += "}";
 

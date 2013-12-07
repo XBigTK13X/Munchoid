@@ -1,5 +1,6 @@
 package game.arena;
 
+import game.DevConfig;
 import game.GameConfig;
 import game.ui.Meter;
 import sps.display.Screen;
@@ -53,7 +54,7 @@ public class PreloadArena implements State {
     @Override
     public void create() {
         //Floor + Player + Creatures
-        int creatureCount = GameConfig.DevTournyTest ? 0 : GameConfig.CreatureLimit;
+        int creatureCount = DevConfig.TournyTest ? 0 : GameConfig.CreatureLimit;
         _preloadedItemsTarget = 1 + 1 + creatureCount;
         _loadingMessage = TextPool.get().write(getMessage(), Screen.pos(10, 60));
         _arenaPieces = new Payload();

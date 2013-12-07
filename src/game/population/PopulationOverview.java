@@ -151,7 +151,7 @@ public class PopulationOverview implements State {
     @Override
     public void update() {
         if (_eradicated != null) {
-            if (GameConfig.DevBotEnabled) {
+            if (DevConfig.BotEnabled) {
                 simluatePopulationChange();
                 nextState();
                 _eradicated = null;
@@ -170,10 +170,10 @@ public class PopulationOverview implements State {
             if (gameFinished()) {
                 _continuePrompt.setMessage("Press " + Commands.get("Confirm") + " to see the outcome of your efforts.");
             }
-            if (InputWrapper.confirm() || GameConfig.DevBotEnabled) {
+            if (InputWrapper.confirm() || DevConfig.BotEnabled) {
                 nextState();
             }
-            if (GameConfig.DevPopulationTest) {
+            if (DevConfig.PopulationTest) {
                 boolean a = InputWrapper.pop();
                 boolean b = InputWrapper.push();
                 boolean c = InputWrapper.moveRight();

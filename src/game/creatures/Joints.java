@@ -1,6 +1,7 @@
 package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
+import game.DevConfig;
 import game.GameConfig;
 import sps.display.DrawApiCall;
 import sps.display.Window;
@@ -34,10 +35,10 @@ public class Joints {
     }
 
     public void draw() {
-        if (GameConfig.DevDrawSkeleton || GameConfig.OptDrawBones) {
+        if (DevConfig.DrawSkeleton || GameConfig.OptDrawBones) {
             for (Joint j : _joints) {
                 if (j.getChild() != null) {
-                    if (GameConfig.DevDrawSkeleton) {
+                    if (DevConfig.DrawSkeleton) {
                         int radBG = 7;
                         int radFG = radBG - 2;
 

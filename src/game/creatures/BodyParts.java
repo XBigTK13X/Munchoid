@@ -1,6 +1,6 @@
 package game.creatures;
 
-import game.GameConfig;
+import game.DevConfig;
 import game.arena.Floor;
 import sps.core.RNG;
 import sps.util.BoundingBox;
@@ -23,7 +23,7 @@ public class BodyParts {
     }
 
     public void assignDepth(BodyPart part) {
-        if (GameConfig.DevPartSortingEnabled) {
+        if (DevConfig.PartSortingEnabled) {
             if (_parts.size() > 1) {
                 if (RNG.coinFlip()) {
                     _front.add(part);
@@ -58,7 +58,7 @@ public class BodyParts {
     }
 
     public void draw() {
-        if (GameConfig.DevPartSortingEnabled) {
+        if (DevConfig.PartSortingEnabled) {
             for (BodyPart part : _back) {
                 drawPart(part);
             }

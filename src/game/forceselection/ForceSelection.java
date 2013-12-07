@@ -2,7 +2,7 @@ package game.forceselection;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.GameConfig;
+import game.DevConfig;
 import game.InputWrapper;
 import game.arena.Arena;
 import game.creatures.Creature;
@@ -37,7 +37,7 @@ public class ForceSelection implements State {
     @Override
     public void create() {
         //TODO Option that automatically chooses
-        if (_pet.getStats().possibleActiveForces() <= 4 && !GameConfig.DevAlwaysSelectForces) {
+        if (_pet.getStats().possibleActiveForces() <= 4 && !DevConfig.AlwaysSelectForces) {
             exitMenu();
             return;
         }
@@ -74,7 +74,7 @@ public class ForceSelection implements State {
             }
         });
         _forces = new ForcesSelectionUI(_pet);
-        if (GameConfig.DevEndToEndStateLoadTest) {
+        if (DevConfig.EndToEndStateLoadTest) {
             while (!confirmSelection()) {
                 _pet.getStats().setEnabled(_pet.getStats().randomEnabledForce(), false);
             }
@@ -132,7 +132,7 @@ public class ForceSelection implements State {
     @Override
     public void update() {
         setMessage();
-        if (GameConfig.DevBotEnabled) {
+        if (DevConfig.BotEnabled) {
             if (!confirmSelection()) {
                 _pet.getStats().setEnabled(_pet.getStats().randomEnabledForce(), false);
             }

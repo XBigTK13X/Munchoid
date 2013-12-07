@@ -2,6 +2,7 @@ package game.battle;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import game.DevConfig;
 import game.GameConfig;
 import game.InputWrapper;
 import game.Score;
@@ -165,7 +166,7 @@ public class MergeOutcome implements State {
         _merged.getBody().setScale(.5f);
 
 
-        if (GameConfig.DevEndToEndStateLoadTest) {
+        if (DevConfig.EndToEndStateLoadTest) {
             acceptMerge();
         }
         _pet.setStats(cancelStats);
@@ -195,7 +196,7 @@ public class MergeOutcome implements State {
     }
 
     private void loadNextScene() {
-        if (GameConfig.DevMergeOutcomeTest) {
+        if (DevConfig.MergeOutcomeTest) {
             StateManager.get().push(new MergeOutcome());
         }
         else {
@@ -211,8 +212,8 @@ public class MergeOutcome implements State {
         if (InputWrapper.push()) {
             rejectMerge();
         }
-        if (GameConfig.DevBotEnabled) {
-            if (GameConfig.DevBotRandomlyMerges) {
+        if (DevConfig.BotEnabled) {
+            if (DevConfig.BotRandomlyMerges) {
                 if (RNG.coinFlip()) {
                     acceptMerge();
                 }
@@ -222,7 +223,7 @@ public class MergeOutcome implements State {
                 return;
             }
             else {
-                if (GameConfig.DevBotAlwaysMerge) {
+                if (DevConfig.BotAlwaysMerge) {
                     acceptMerge();
                 }
                 else {

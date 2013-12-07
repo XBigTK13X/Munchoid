@@ -3,7 +3,7 @@ package game.pregame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.BackgroundMaker;
-import game.GameConfig;
+import game.DevConfig;
 import game.InputWrapper;
 import game.Score;
 import game.save.Persistence;
@@ -101,7 +101,7 @@ public class MainMenu implements State {
 
     @Override
     public void update() {
-        if (InputWrapper.confirm() || GameConfig.DevEndToEndStateLoadTest || GameConfig.DevBotEnabled) {
+        if (InputWrapper.confirm() || DevConfig.EndToEndStateLoadTest || DevConfig.BotEnabled) {
             _start.click();
         }
     }

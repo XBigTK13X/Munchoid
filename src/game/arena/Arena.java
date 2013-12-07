@@ -1,6 +1,7 @@
 package game.arena;
 
 import com.badlogic.gdx.Gdx;
+import game.DevConfig;
 import game.GameConfig;
 import game.InputWrapper;
 import game.Score;
@@ -69,9 +70,9 @@ public class Arena implements State {
 
         _creatureText = TextPool.get().write(creatureDisplay(GameConfig.CreatureLimit), __creatureTextPos);
         _creatureText.setMoveable(false);
-        if (GameConfig.DevEndToEndStateLoadTest || GameConfig.DevTournyTest) {
+        if (DevConfig.EndToEndStateLoadTest || DevConfig.TournyTest) {
             _preload.getPlayer().setPet(new Creature());
-            if (GameConfig.DevTournyTest) {
+            if (DevConfig.TournyTest) {
                 StateManager.get().push(new Tournament(_preload.getPlayer()));
             }
         }
@@ -101,7 +102,7 @@ public class Arena implements State {
                 StateManager.get().push(new Tournament((Player) EntityManager.get().getPlayer()));
             }
             else {
-                if ((_countDownSeconds <= 0 && opponents.size() > 0) || (InputWrapper.push() && GameConfig.DevShortcutsEnabled) || GameConfig.DevEndToEndStateLoadTest) {
+                if ((_countDownSeconds <= 0 && opponents.size() > 0) || (InputWrapper.push() && DevConfig.ShortcutsEnabled) || DevConfig.EndToEndStateLoadTest) {
                     Creature opponent = ((Catchable) opponents.get(RNG.next(0, opponents.size()))).getCreature();
                     if (Score.get().victories() == 0) {
                         opponent.setStats(Stats.createWeakling(player.getPet().getStats()));
@@ -128,7 +129,7 @@ public class Arena implements State {
     }
 
     private void simulateCreatureGrowth(List<Entity> opponents) {
-        if (GameConfig.DevUseOldCatchableMergeAlgorithm) {
+        if (DevConfig.UseOldCatchableMergeAlgorithm) {
             if (opponents.size() > 1) {
                 for (int ii = 0; ii + 1 < opponents.size(); ii += 2) {
                     if (opponents.get(ii).isActive() && opponents.get(ii + 1).isActive() && RNG.percent(GameConfig.ArenaMergeChance)) {

@@ -1,5 +1,9 @@
 package sps.util;
 
+import sps.core.Logger;
+
+import java.lang.reflect.Field;
+
 public class JSON {
     public static String pad(String key, String value) {
         return "\"" + key + "\":\"" + value + "\"";
@@ -22,5 +26,24 @@ public class JSON {
             }
         }
         return result;
+    }
+
+    public static String formatFields(Class target) {
+        String config = "\"" + target.getSimpleName() + "\":{";
+        Field[] fields = target.getDeclaredFields();
+        int c = 0;
+        for (Field f : fields) {
+            try {
+                config += "\"" + f.getName() + "\":\"" + f.get(null) + "\"";
+                if (c++ < fields.length - 1) {
+                    config += ",";
+                }
+            }
+            catch (IllegalAccessException e) {
+                Logger.exception(e);
+            }
+        }
+        config += "}";
+        return config;
     }
 }

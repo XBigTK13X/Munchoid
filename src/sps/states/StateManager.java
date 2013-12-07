@@ -2,6 +2,7 @@ package sps.states;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import game.DevConfig;
 import game.GameConfig;
 import game.Score;
 import game.population.PopulationOverview;
@@ -117,7 +118,7 @@ public class StateManager {
     }
 
     public void push(State state) {
-        if (GameConfig.DevTimeStates) {
+        if (DevConfig.TimeStates) {
             Logger.info("Pushing: " + state.getName() + ". Time since last: " + ((System.currentTimeMillis() - lastMil)) / 1000f);
             lastMil = System.currentTimeMillis();
         }

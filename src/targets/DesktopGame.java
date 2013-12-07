@@ -2,8 +2,8 @@ package targets;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import game.DevConfig;
 import game.Game;
-import game.GameConfig;
 import sps.core.Logger;
 import sps.core.SpsConfig;
 
@@ -16,11 +16,11 @@ public class DesktopGame {
         if (args.length > 0) {
             for (String s : args) {
                 if (s.equalsIgnoreCase("--play-as-bot")) {
-                    GameConfig.DevBotEnabled = true;
+                    DevConfig.BotEnabled = true;
                 }
             }
         }
-        if (GameConfig.DevBotEnabled) {
+        if (DevConfig.BotEnabled) {
             Logger.setLogFile("bot-" + UUID.randomUUID().toString() + ".log");
         }
         else {
