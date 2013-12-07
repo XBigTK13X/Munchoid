@@ -1,6 +1,17 @@
 package game;
 
+import sps.core.Loader;
+
 public class DevConfig {
+    private static Boolean __canEnable;
+
+    private static boolean canEnable() {
+        if (__canEnable == null) {
+            __canEnable = !Loader.get().data("release_build").exists();
+        }
+        return __canEnable;
+    }
+
     //Bots
     public static boolean BotEnabled = false;
     public static final boolean BotAlwaysMerge = false;
@@ -8,27 +19,27 @@ public class DevConfig {
     public static final boolean BotsLowQualityGraphics = true;
 
     //Debugging / Development
-    public static final boolean ForceShortcutsEnabled = true;
-    public static final boolean TournyTest = false;
-    public static final boolean MergeOutcomeTest = false;
-    public static final boolean PopulationTest = false;
-    public static final boolean BattleTest = false;
-    public static final boolean SkeletonTest = false;
-    public static final boolean BackgroundGenerationTest = false;
+    public static final boolean ForceShortcutsEnabled = true && canEnable();
+    public static final boolean TournyTest = false && canEnable();
+    public static final boolean MergeOutcomeTest = false && canEnable();
+    public static final boolean PopulationTest = false && canEnable();
+    public static final boolean BattleTest = false && canEnable();
+    public static final boolean SkeletonTest = false && canEnable();
+    public static final boolean BackgroundGenerationTest = false && canEnable();
     public static final boolean ShortcutsEnabled = ForceShortcutsEnabled || TournyTest || MergeOutcomeTest || PopulationTest || BattleTest || SkeletonTest || BackgroundGenerationTest;
 
-    public static final boolean EndToEndStateLoadTest = false;
-    public static final boolean FlipEnabled = false;
+    public static final boolean EndToEndStateLoadTest = false && canEnable();
+    public static final boolean FlipEnabled = false && canEnable();
     public static final boolean PartSortingEnabled = false;
-    public static final boolean DrawSkeleton = false;
-    public static final boolean DebugJointGrid = false;
-    public static final boolean DebugJointGridWithSquares = false;
-    public static final boolean AlwaysSelectForces = false;
-    public static final boolean UseOldCatchableMergeAlgorithm = false;
+    public static final boolean DrawSkeleton = false && canEnable();
+    public static final boolean DebugJointGrid = false && canEnable();
+    public static final boolean DebugJointGridWithSquares = false && canEnable();
+    public static final boolean AlwaysSelectForces = false && canEnable();
+    public static final boolean UseOldCatchableMergeAlgorithm = false && canEnable();
 
     //Debug/Development Logging toggles
-    public static final boolean BattleLog = false;
-    public static final boolean TimeStates = false;
-    public static final boolean PrintArenaSize = false;
-    public static final boolean DebugPopulationGrowth = false;
+    public static final boolean BattleLog = false && canEnable();
+    public static final boolean TimeStates = false && canEnable();
+    public static final boolean PrintArenaSize = false && canEnable();
+    public static final boolean DebugPopulationGrowth = false && canEnable();
 }
