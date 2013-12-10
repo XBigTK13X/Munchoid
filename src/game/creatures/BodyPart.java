@@ -79,7 +79,9 @@ public class BodyPart {
 
     private void applyStyle() {
         Color[][] atomColors = AtomHelper.getColors(_atoms);
-        Outline.single(atomColors, Color.WHITE, GameConfig.BodyPartOutlinePixelThickness);
+        if (GameConfig.OptCreatureOutlineEnabled) {
+            Outline.single(atomColors, Color.WHITE, GameConfig.BodyPartOutlinePixelThickness);
+        }
         AtomHelper.setColors(_atoms, atomColors);
         _width = _atoms.length;
         _height = _atoms[0].length;
@@ -187,11 +189,12 @@ public class BodyPart {
         else {
             _sprite.setColor(_body.getHighlight());
         }
+
         _sprite.setOrigin(_pivot.X * _scale, _pivot.Y * _scale);
         _sprite.setPosition(getCheapGlobalPosition().X, getCheapGlobalPosition().Y);
         _sprite.setRotation(_rotationDegrees);
         _sprite.setSize(_width * _scale, _height * _scale);
-        _sprite.setPosition(getCheapGlobalPosition().X, getCheapGlobalPosition().Y);
+
         Window.get().schedule(_sprite, DrawDepths.get("BodyPart"));
     }
 

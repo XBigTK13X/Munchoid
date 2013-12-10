@@ -1,6 +1,5 @@
 package game;
 
-import game.creatures.style.Outline;
 import sps.core.Point2;
 import sps.display.Screen;
 
@@ -11,9 +10,9 @@ public class GameConfig {
     public static boolean OptPerformanceGraphicsSettings = false;
     public static final boolean OptCollectMetaData = true;
     public static boolean OptDisableCloudyTextures = false;
-    public static boolean OptSimpleBackgrounds = GameConfig.OptPerformanceGraphicsSettings;
+    public static boolean OptSimpleBackgrounds = false;
     public static boolean OptEnableFontOutlines = true;
-    public static Outline.Mode OptOutlineMode = Outline.Mode.Naive;
+    public static boolean OptCreatureOutlineEnabled = true;
     public static final boolean OptShowFPS = false;
     public static final boolean OptSmoothRegionMap = true;
     public static final boolean OptDrawBones = false;
@@ -21,9 +20,7 @@ public class GameConfig {
 
     public static void setGraphicsMode(boolean performanceMode) {
         OptPerformanceGraphicsSettings = performanceMode;
-        if (performanceMode) {
-            OptOutlineMode = Outline.Mode.None;
-        }
+        OptCreatureOutlineEnabled = !performanceMode;
         OptSimpleBackgrounds = performanceMode;
     }
 

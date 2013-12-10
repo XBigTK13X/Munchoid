@@ -29,7 +29,7 @@ public class RenderApiCall implements Comparable<RenderApiCall> {
     public com.badlogic.gdx.graphics.g2d.Sprite Sprite;
 
     public RenderApiCall(Sprite sprite, DrawDepth depth) {
-        Sprite = sprite;
+        Sprite = new Sprite(sprite);
         Depth = depth;
     }
 

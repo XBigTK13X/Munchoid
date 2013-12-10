@@ -2,8 +2,7 @@ package game.test;
 
 import game.GameConfig;
 import game.InputWrapper;
-import game.creatures.Creature;
-import game.creatures.style.Outline;
+import game.arena.Catchable;
 import sps.bridge.Commands;
 import sps.display.Screen;
 import sps.io.Input;
@@ -14,59 +13,66 @@ import sps.text.TextPool;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OutlineTest implements State {
+public class CatchableGenerationTest implements State {
 
-    boolean _testRunning;
-    long _testTime;
-    long _startTime;
+    private long _testTime;
+    private long _startTime;
+
+    private int _testStage = 0;
 
     Text _display;
 
-    private List<Creature> _creatures;
+    private List<Catchable> _catchables;
 
     @Override
     public void create() {
         _display = TextPool.get().write("Press " + Commands.get("Confirm") + " to run the test", Screen.pos(5, 50));
-        _creatures = new ArrayList<Creature>();
+        _catchables = new ArrayList<>();
     }
 
     @Override
     public void draw() {
-        for (Creature c : _creatures) {
+        for (Catchable c : _catchables) {
             c.draw();
         }
     }
 
     @Override
     public void update() {
+        int creatureCount = 10;
         if (Input.get().isActive(Commands.get("Force1"))) {
-            GameConfig.OptOutlineMode = Outline.Mode.Naive;
+            GameConfig.OptCreatureOutlineEnabled = true;
+            _display.setMessage("Enable creature outlines.");
         }
         if (Input.get().isActive(Commands.get("Force2"))) {
-            GameConfig.OptOutlineMode = Outline.Mode.Fast;
-        }
-        if (Input.get().isActive(Commands.get("Force3"))) {
-            GameConfig.OptOutlineMode = Outline.Mode.None;
+            GameConfig.OptCreatureOutlineEnabled = false;
+            _display.setMessage("Disable creature outlines.");
         }
 
-        if (InputWrapper.confirm()) {
-            if (!_testRunning) {
-                _testRunning = true;
+        if (_testStage == 0) {
+            if (InputWrapper.confirm()) {
+                _testStage = 1;
                 _testTime = 0;
-                _creatures.clear();
-                GameConfig.setGraphicsMode(false);
+                _catchables.clear();
                 _startTime = System.currentTimeMillis();
             }
         }
-        if (_testRunning) {
+        else if (_testStage == 1) {
+            _display.setMessage("Creating creatures.");
+            _testStage++;
+        }
+        else if (_testStage > 1 && _testStage < creatureCount + 1) {
+            _display.setMessage("Creating creature " + (_catchables.size() + 1) + " of " + creatureCount);
+            _testStage++;
             _testTime += timePassed();
-            for (int ii = 0; ii < 10; ii++) {
-                _testTime += timePassed();
-                _creatures.add(new Creature());
-                _creatures.get(_creatures.size() - 1).setLocation(Screen.rand(20, 80, 20, 80));
-            }
-            _testRunning = false;
+            _testTime += timePassed();
+            _catchables.add(new Catchable(null, null));
+            _catchables.get(_catchables.size() - 1).setLocation(Screen.rand(20, 80, 20, 80));
+            _catchables.get(_catchables.size() - 1).getCreature().setLocation(Screen.rand(20, 80, 20, 80));
+        }
+        else {
             _display.setMessage("Test run time: " + (_testTime / 1000f) + " seconds");
+            _testStage = 0;
         }
     }
 

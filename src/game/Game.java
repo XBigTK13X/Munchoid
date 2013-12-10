@@ -13,7 +13,7 @@ import game.population.PreloadPopulationOverview;
 import game.pregame.MainMenu;
 import game.save.Options;
 import game.test.BackgroundGenerationTest;
-import game.test.OutlineTest;
+import game.test.CatchableGenerationTest;
 import game.test.SkeletonTest;
 import game.tutorial.ArenaTutorial;
 import game.tutorial.BattleTutorial;
@@ -96,7 +96,7 @@ public class Game implements ApplicationListener {
             return new BackgroundGenerationTest();
         }
         else if (DevConfig.OutlineTest) {
-            return new OutlineTest();
+            return new CatchableGenerationTest();
         }
         else {
             return new MainMenu();

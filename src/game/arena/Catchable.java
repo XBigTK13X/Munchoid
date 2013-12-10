@@ -36,7 +36,9 @@ public class Catchable extends Entity {
         _creature.getBody().setScale(GameConfig.ArenaCreatureScale);
         _creature.orientX((DevConfig.FlipEnabled) ? RNG.coinFlip() : false, false);
         setSize(_creature.getWidth(), _creature.getHeight());
-        setLocation(new Point2(RNG.next((int) (floor.getBounds().X2 * __spawnBuffer), (int) (floor.getBounds().X2 * (1f - __spawnBuffer))), RNG.next((int) (floor.getBounds().Y2 * __spawnBuffer), (int) (floor.getBounds().Y2 * (1f - __spawnBuffer)))));
+        if (floor != null) {
+            setLocation(new Point2(RNG.next((int) (floor.getBounds().X2 * __spawnBuffer), (int) (floor.getBounds().X2 * (1f - __spawnBuffer))), RNG.next((int) (floor.getBounds().Y2 * __spawnBuffer), (int) (floor.getBounds().Y2 * (1f - __spawnBuffer)))));
+        }
     }
 
     private void movement() {
