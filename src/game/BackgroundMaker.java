@@ -25,14 +25,24 @@ public class BackgroundMaker {
         Trace
     }
 
-    public static Sprite radial() {
-        return radial((int) Screen.width(100), (int) Screen.height(100));
+    public static Sprite radialBright() {
+        return radialBright((int) Screen.width(100), (int) Screen.height(100));
     }
 
-    public static Sprite radial(int pixelWidth, int pixelHeight) {
+    public static Sprite radialBright(int pixelWidth, int pixelHeight) {
         Color c1 = Colors.randomPleasant();
         Color c2 = Color.WHITE;
         return SpriteMaker.get().fromColors(ProcTextures.radial(pixelWidth, pixelHeight, c1, c2));
+    }
+
+    public static Sprite radialDark() {
+        return radialDark((int) Screen.width(100), (int) Screen.height(100));
+    }
+
+    public static Sprite radialDark(int pixelWidth, int pixelHeight) {
+        Color c1 = Colors.randomPleasant();
+        Color c2 = Color.BLACK;
+        return SpriteMaker.get().fromColors(ProcTextures.radial(pixelWidth, pixelHeight, c2, c1));
     }
 
     public static Sprite printedCircuitBoard() {

@@ -23,10 +23,10 @@ public class DevConfig {
     public static final boolean TournyTest = false && canEnable();
     public static final boolean MergeOutcomeTest = false && canEnable();
     public static final boolean PopulationTest = false && canEnable();
-    public static final boolean BattleTest = false && canEnable();
+    public static final boolean BattleTest = true && canEnable();
     public static final boolean SkeletonTest = false && canEnable();
     public static final boolean BackgroundGenerationTest = false && canEnable();
-    public static final boolean OutlineTest = true && canEnable();
+    public static final boolean OutlineTest = false && canEnable();
     public static final boolean ShortcutsEnabled = OutlineTest || ForceShortcutsEnabled || TournyTest || MergeOutcomeTest || PopulationTest || BattleTest || SkeletonTest || BackgroundGenerationTest;
 
     public static final boolean EndToEndStateLoadTest = false && canEnable();

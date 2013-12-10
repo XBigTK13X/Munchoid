@@ -63,10 +63,6 @@ public class Game implements ApplicationListener {
         StateManager.get().addTutorial(Battle.class, new BattleTutorial());
         StateManager.get().addTutorial(Arena.class, new ArenaTutorial());
 
-        StateManager.get().push(createInitialState());
-        StateManager.get().setPaused(false);
-
-        _exitPrompt = new ExitPrompt();
         if (DevConfig.BotEnabled) {
             Options options = Options.load();
             options.GraphicsLowQuality = DevConfig.BotsLowQualityGraphics;
@@ -77,6 +73,11 @@ public class Game implements ApplicationListener {
             options.save();
         }
         Options.load().apply();
+
+        StateManager.get().push(createInitialState());
+        StateManager.get().setPaused(false);
+
+        _exitPrompt = new ExitPrompt();
     }
 
     private State createInitialState() {
@@ -106,7 +107,9 @@ public class Game implements ApplicationListener {
     @Override
     public void resize(int width, int height) {
         Window.resize(width, height, false);
-        StateManager.get().resize(width, height);
+        if (StateManager.get().current() != null) {
+            StateManager.get().resize(width, height);
+        }
     }
 
     private void handleDevShortcuts() {

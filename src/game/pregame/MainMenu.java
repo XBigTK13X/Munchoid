@@ -31,7 +31,7 @@ public class MainMenu implements State {
 
     @Override
     public void create() {
-        _background = BackgroundMaker.radial();
+        _background = BackgroundMaker.radialDark();
         StateManager.clearTimes();
         StateManager.get().clearTutorialCompletions();
         Score.reset();

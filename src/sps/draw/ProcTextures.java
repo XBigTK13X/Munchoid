@@ -70,7 +70,7 @@ public class ProcTextures {
 
     public static Color[][] radial(int width, int height, Color start, Color end, Point2 center) {
         Color[][] result = new Color[width][height];
-        Color[] g = Colors.gradient(start, end, (int) Math.sqrt(height * height + width * width));
+        Color[] g = Colors.gradient(start, end, (int) (Math.sqrt(height * height + width * width)));
 
 
         for (int ii = 0; ii < result.length; ii++) {

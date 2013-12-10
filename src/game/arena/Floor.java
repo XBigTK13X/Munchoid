@@ -26,7 +26,7 @@ public class Floor extends Entity {
 
         if (GameConfig.OptArenaPCBBackground) {
             _background = GameConfig.OptSimpleBackgrounds ?
-                    BackgroundMaker.radial(GameConfig.ArenaWidth, GameConfig.ArenaHeight) :
+                    BackgroundMaker.radialDark(GameConfig.ArenaWidth, GameConfig.ArenaHeight) :
                     BackgroundMaker.printedCircuitBoard(GameConfig.ArenaWidth, GameConfig.ArenaHeight);
         }
         else {
