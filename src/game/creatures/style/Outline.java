@@ -5,6 +5,12 @@ import game.GameConfig;
 import sps.draw.Colors;
 
 public class Outline {
+    public static enum Mode {
+        Naive,
+        Fast,
+        None
+    }
+
     private interface ColorPicker {
         public Color convert(Color color);
     }
@@ -49,15 +55,23 @@ public class Outline {
                 }
                 else {
                     image[i][j] = image.length + image[i].length;
-                    if (i > 0) image[i][j] = Math.min(image[i][j], image[i - 1][j] + 1);
-                    if (j > 0) image[i][j] = Math.min(image[i][j], image[i][j - 1] + 1);
+                    if (i > 0) {
+                        image[i][j] = Math.min(image[i][j], image[i - 1][j] + 1);
+                    }
+                    if (j > 0) {
+                        image[i][j] = Math.min(image[i][j], image[i][j - 1] + 1);
+                    }
                 }
             }
         }
         for (int i = image.length - 1; i >= 0; i--) {
             for (int j = image[i].length - 1; j >= 0; j--) {
-                if (i + 1 < image.length) image[i][j] = Math.min(image[i][j], image[i + 1][j] + 1);
-                if (j + 1 < image[i].length) image[i][j] = Math.min(image[i][j], image[i][j + 1] + 1);
+                if (i + 1 < image.length) {
+                    image[i][j] = Math.min(image[i][j], image[i + 1][j] + 1);
+                }
+                if (j + 1 < image[i].length) {
+                    image[i][j] = Math.min(image[i][j], image[i][j + 1] + 1);
+                }
             }
         }
 
@@ -123,15 +137,15 @@ public class Outline {
     }
 
     public static void apply(Color[][] colors, ColorPicker picker, int pixelThickness) {
-        if (GameConfig.OptDisableOutlines) {
-            return;
-        }
-
-        if (GameConfig.OptFastOutlineAlg) {
-            fast(colors, picker, pixelThickness);
-        }
-        else {
-            naive(colors, picker, pixelThickness);
+        switch (GameConfig.OptOutlineMode) {
+            case Naive:
+                naive(colors, picker, pixelThickness);
+                break;
+            case Fast:
+                fast(colors, picker, pixelThickness);
+                break;
+            case None:
+                return;
         }
     }
 }
