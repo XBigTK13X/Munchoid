@@ -26,6 +26,7 @@ public class DesktopGame {
         else {
             Logger.setLogFile("game.log");
         }
+
         Logger.info("Launching the main game loop");
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Munchoid";

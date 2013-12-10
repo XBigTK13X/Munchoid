@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <libgdx-version>2013.06.20</libgdx-version>
+        <libgdx-version>12.09.2013</libgdx-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
@@ -39,56 +39,56 @@
             <version>2.21</version>
         </dependency>
 
-        <!-- Dependencies in the local lib repo-->
+        <!-- Dependencies in local repo-->
         <dependency>
-            <groupId>com.badlogic</groupId>
+            <groupId>com.badlogicgames.libgdx</groupId>
             <artifactId>gdx</artifactId>
             <version>${libgdx-version}</version>
         </dependency>
         <dependency>
-            <groupId>com.badlogic</groupId>
+            <groupId>com.badlogicgames.libgdx</groupId>
             <artifactId>gdx-openal</artifactId>
             <version>${libgdx-version}</version>
         </dependency>
         <dependency>
-            <groupId>com.badlogic</groupId>
+            <groupId>com.badlogicgames.libgdx</groupId>
             <artifactId>gdx-natives</artifactId>
             <version>${libgdx-version}</version>
         </dependency>
         <dependency>
-            <groupId>com.badlogic</groupId>
+            <groupId>com.badlogicgames.libgdx</groupId>
             <artifactId>gdx-backend-lwjgl</artifactId>
             <version>${libgdx-version}</version>
         </dependency>
         <dependency>
-            <groupId>com.badlogic</groupId>
+            <groupId>com.badlogicgames.libgdx</groupId>
             <artifactId>gdx-backend-lwjgl-natives</artifactId>
             <version>${libgdx-version}</version>
         </dependency>
         <dependency>
-            <groupId>com.badlogic</groupId>
+            <groupId>com.badlogicgames.libgdx</groupId>
             <artifactId>gdx-controllers</artifactId>
             <version>${libgdx-version}</version>
         </dependency>
         <dependency>
-            <groupId>com.badlogic</groupId>
+            <groupId>com.badlogicgames.libgdx</groupId>
             <artifactId>gdx-controllers-desktop</artifactId>
             <version>${libgdx-version}</version>
         </dependency>
         <dependency>
-            <groupId>com.badlogic</groupId>
+            <groupId>com.badlogicgames.libgdx</groupId>
             <artifactId>gdx-controllers-desktop-natives</artifactId>
             <version>${libgdx-version}</version>
         </dependency>
         <dependency>
-            <groupId>com.badlogic</groupId>
+            <groupId>com.badlogicgames.libgdx</groupId>
             <artifactId>gdx-freetype-natives</artifactId>
-            <version>2013.07.25</version>
+            <version>${libgdx-version}</version>
         </dependency>
         <dependency>
-            <groupId>com.badlogic</groupId>
+            <groupId>com.badlogicgames.libgdx</groupId>
             <artifactId>gdx-freetype</artifactId>
-            <version>2013.07.25</version>
+            <version>${libgdx-version}</version>
         </dependency>
     </dependencies>
 
