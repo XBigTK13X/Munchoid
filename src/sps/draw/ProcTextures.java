@@ -2,6 +2,7 @@ package sps.draw;
 
 import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
+import sps.color.Colors;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.HitTest;
@@ -21,10 +22,11 @@ public class ProcTextures {
     }
 
     public static Color[][] monotone(int width, int height, Color color) {
+        Color target = new Color(color);
         Color[][] base = new Color[width][height];
         for (int ii = 0; ii < base.length; ii++) {
             for (int jj = 0; jj < base[0].length; jj++) {
-                base[ii][jj] = color;
+                base[ii][jj] = target;
             }
         }
         return base;
@@ -64,22 +66,34 @@ public class ProcTextures {
         return result;
     }
 
-    public static Color[][] radial(int width, int height, Color start, Color end) {
-        return radial(width, height, start, end, RNG.point(0, width, 0, height));
-    }
-
-    public static Color[][] radial(int width, int height, Color start, Color end, Point2 center) {
+    public static Color[][] fixedRadial(int width, int height, Color start, Color end, int steps, Point2 center) {
         Color[][] result = new Color[width][height];
-        Color[] g = Colors.gradient(start, end, (int) (Math.sqrt(height * height + width * width)));
+        Color[] g = Colors.gradient(start, end, steps);
 
+        int maxDist = (int) (Math.sqrt(height * height + width * width));
 
         for (int ii = 0; ii < result.length; ii++) {
             for (int jj = 0; jj < result[0].length; jj++) {
                 int dist = (int) HitTest.getDistance(ii, jj, center.X, center.Y);
-                result[ii][jj] = g[MathHelper.clamp(dist, 0, g.length)];
+                float percentDist = MathHelper.valueToPercent(0, maxDist, dist);
+                int scaledDist = (int) ((percentDist / 100f) * steps);
+                result[ii][jj] = g[scaledDist];
             }
         }
 
         return result;
+    }
+
+    public static Color[][] fixedRadial(int width, int height, Color start, Color end, int steps) {
+        return fixedRadial(width, height, start, end, steps, RNG.point(0, width, 0, height));
+    }
+
+    public static Color[][] smoothRadial(int width, int height, Color start, Color end) {
+        return smoothRadial(width, height, start, end, RNG.point(0, width, 0, height));
+    }
+
+    public static Color[][] smoothRadial(int width, int height, Color start, Color end, Point2 center) {
+        int steps = (int) (Math.sqrt(height * height + width * width));
+        return fixedRadial(width, height, start, end, steps, center);
     }
 }

@@ -24,6 +24,10 @@ public class MathHelper {
         return (int) Math.max(Math.min(value, max), min);
     }
 
+    public static float clamp(float value, float min, float max) {
+        return Math.max(Math.min(value, max), min);
+    }
+
     public static int wrap(float value, int min, int max) {
         if (value > max) {
             return min;

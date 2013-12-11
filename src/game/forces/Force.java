@@ -3,9 +3,8 @@ package game.forces;
 import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.forces.sideeffects.*;
-import sps.core.Logger;
+import sps.color.RGBA;
 import sps.core.RNG;
-import sps.draw.Colors;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -24,7 +23,7 @@ public enum Force {
 
     private Force(float rT, float gT, float bT, int inputId) {
         Command = "Force" + inputId;
-        Color = Colors.fromRGB(tToC(rT), tToC(gT), tToC(bT));
+        Color = new RGBA(tToC(rT), tToC(gT), tToC(bT)).toColor();
     }
 
     private static float tToC(float t) {

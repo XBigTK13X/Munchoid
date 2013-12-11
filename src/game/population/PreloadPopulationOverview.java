@@ -1,9 +1,9 @@
 package game.population;
 
 import game.ui.Meter;
+import sps.color.Colors;
 import sps.core.Point2;
 import sps.display.Screen;
-import sps.draw.Colors;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;

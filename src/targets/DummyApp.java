@@ -8,9 +8,9 @@ import sps.bridge.SpriteTypes;
 import sps.bridge.Sps;
 import sps.core.RNG;
 import sps.core.SpsConfig;
-import sps.display.render.FrameStrategy;
 import sps.display.SpriteSheetManager;
 import sps.display.Window;
+import sps.display.render.FrameStrategy;
 import sps.io.DefaultStateProvider;
 import sps.io.Input;
 
@@ -29,7 +29,7 @@ public class DummyApp {
     public void create() {
         RNG.seed((int) System.currentTimeMillis());
         Sps.setup(true);
-        Window.setWindowBackground(Color.BLACK);
+        Window.setWindowBackground(new Color(Color.BLACK));
         Window.get(false).screenEngine().setStrategy(new FrameStrategy());
         Window.get(true).screenEngine().setStrategy(new FrameStrategy());
         Window.setRefreshInstance(_app);

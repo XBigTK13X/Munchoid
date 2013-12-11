@@ -26,7 +26,7 @@ public class DeathCauseEradicated {
         notification += "\n\nPress " + Commands.get("Pass") + " to continue";
         _announcement = TextPool.get().write(notification, Screen.pos(10, 50));
         _announcement.setDepth(DrawDepths.get("DeathCauseResultText"));
-        Color overlay = Color.BLACK;
+        Color overlay = new Color(Color.BLACK);
         overlay.a = .90f;
         _bg = SpriteMaker.get().pixel(overlay);
         _bg.setSize(Screen.width(100), Screen.height(100));

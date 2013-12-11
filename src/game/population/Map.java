@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import sps.bridge.DrawDepths;
+import sps.color.RGBA;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.display.Window;
-import sps.draw.Colors;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
 import sps.draw.TextureManipulation;
@@ -27,7 +27,7 @@ public class Map {
 
     public Map(int width, int height, Point2 position) {
         _position = position;
-        _spriteBase = ProcTextures.perlin(width, height, Colors.rgb(0, 255, 255), Colors.rgb(255, 255, 255), 9, true);
+        _spriteBase = ProcTextures.perlin(width, height, new RGBA(0, 255, 255).toColor(), new RGBA(255, 255, 255).toColor(), 9, true);
         _habitableZones = new int[width][height];
 
         if (GameConfig.OptSmoothRegionMap) {

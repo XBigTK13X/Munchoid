@@ -2,10 +2,10 @@ package game;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import sps.color.Colors;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.display.Screen;
-import sps.draw.Colors;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
 import sps.draw.TextureManipulation;
@@ -31,8 +31,8 @@ public class BackgroundMaker {
 
     public static Sprite radialBright(int pixelWidth, int pixelHeight) {
         Color c1 = Colors.randomPleasant();
-        Color c2 = Color.WHITE;
-        return SpriteMaker.get().fromColors(ProcTextures.radial(pixelWidth, pixelHeight, c1, c2));
+        Color c2 = new Color(1f, 1f, 1f, 1f);
+        return SpriteMaker.get().fromColors(ProcTextures.smoothRadial(pixelWidth, pixelHeight, c1, c2));
     }
 
     public static Sprite radialDark() {
@@ -41,8 +41,8 @@ public class BackgroundMaker {
 
     public static Sprite radialDark(int pixelWidth, int pixelHeight) {
         Color c1 = Colors.randomPleasant();
-        Color c2 = Color.BLACK;
-        return SpriteMaker.get().fromColors(ProcTextures.radial(pixelWidth, pixelHeight, c2, c1));
+        Color c2 = new Color(0f, 0f, 0f, 1f);
+        return SpriteMaker.get().fromColors(ProcTextures.smoothRadial(pixelWidth, pixelHeight, c1, c2));
     }
 
     public static Sprite printedCircuitBoard() {
@@ -124,7 +124,7 @@ public class BackgroundMaker {
         Color board2 = Colors.randomPleasant();
         int w = model.length;
         int h = model[0].length;
-        Color[][] base = ProcTextures.radial(w, h, board, board2);
+        Color[][] base = ProcTextures.smoothRadial(w, h, board, board2);
 
         //Create the via texture
         boolean[][] viaBase = new boolean[viaPixelWidth][viaPixelWidth];
@@ -138,24 +138,24 @@ public class BackgroundMaker {
             }
         }
         Color trace = Colors.randomPleasant();
-        trace = Colors.shade(trace, -50);
+        trace = Colors.brightnessShift(trace, -5);
         //Draw the traces first, then the vias
         for (int pass = 1; pass < 3; pass++) {
             for (int ii = 0; ii < model.length; ii++) {
                 for (int jj = 0; jj < model[ii].length; jj++) {
                     if (pass == 1 && model[ii][jj] == ModelId.Trace) {
-                        base[ii][jj] = Colors.blend(base[ii][jj], trace);
+                        base[ii][jj] = trace;
                     }
                     if (pass == 2 && model[ii][jj] == ModelId.Via) {
                         Color via = Colors.randomPleasant();
-                        via = Colors.shade(via, -50);
+                        via = Colors.brightnessShift(via, -5);
                         for (int ox = 0; ox < viaBase.length; ox++) {
                             for (int oy = 0; oy < viaBase[0].length; oy++) {
                                 if (viaBase[ox][oy]) {
                                     int x = ii + ox - viaPixelWidth / 2;
                                     int y = jj + oy - viaPixelWidth / 2;
                                     if (x >= 0 && y >= 0 && x < base.length && y < base[0].length) {
-                                        base[x][y] = Colors.blend(base[ii][jj], via);
+                                        base[x][y] = via;
                                     }
                                 }
                             }
@@ -166,7 +166,8 @@ public class BackgroundMaker {
         }
 
         TextureManipulation.blurGaussian(base, 3);
-        TextureManipulation.darken(base, 80);
+        //TODO Figure out why this creates high contrast bands
+        TextureManipulation.darken(base, 75);
 
         return SpriteMaker.get().fromColors(base);
     }

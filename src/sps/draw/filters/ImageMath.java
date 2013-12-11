@@ -319,7 +319,7 @@ public class ImageMath {
     }
 
     /**
-     * Return the NTSC gray level of an RGB value.
+     * Return the NTSC gray level of an RGBA value.
      *
      * @param rgb1 the input pixel
      * @return the gray level (0-255)
@@ -429,7 +429,7 @@ public class ImageMath {
     }
 
     /**
-     * Compute a Catmull-Rom spline for RGB values.
+     * Compute a Catmull-Rom spline for RGBA values.
      *
      * @param x        the input parameter
      * @param numKnots the number of knots in the spline
@@ -476,7 +476,7 @@ public class ImageMath {
     }
 
     /**
-     * Compute a Catmull-Rom spline for RGB values, but with variable knot spacing.
+     * Compute a Catmull-Rom spline for RGBA values, but with variable knot spacing.
      *
      * @param x        the input parameter
      * @param numKnots the number of knots in the spline

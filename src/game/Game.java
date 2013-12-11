@@ -50,7 +50,7 @@ public class Game implements ApplicationListener {
         Assets.get().fontPack().cacheFont("keys", "Keycaps Regular.ttf", 30);
         Assets.get().fontPack().cacheFont("UIButton", "neris/Neris-SemiBold.otf", 70);
 
-        Window.setWindowBackground(Color.BLACK);
+        Window.setWindowBackground(new Color(Color.BLACK));
         Window.get(false).screenEngine().setStrategy(new FrameStrategy());
         Window.get(true).screenEngine().setStrategy(new FrameStrategy());
         Window.setRefreshInstance(this);

@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.creatures.style.Grid;
 import game.forces.Force;
+import sps.color.HSV;
 import sps.core.RNG;
-import sps.draw.HSV;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class Merge {
 
     //FIXME This seems way more complicated than it needs to be
     public static Body body(Creature a, Creature b) {
-        Color mergedColor = HSV.average(a.getBody().getColor(), b.getBody().getColor());
+        Color mergedColor = HSV.fromColor(a.getBody().getColor()).average(HSV.fromColor(b.getBody().getColor())).toColor();
 
         BodyParts ab = a.getBody().getParts();
         BodyParts bb = b.getBody().getParts();

@@ -16,3 +16,5 @@ http://stackoverflow.com/questions/18004150/desktop-api-is-not-supported-on-the-
 https://github.com/mattdesl/lwjgl-basics/wiki/LibGDX-Brightness-&-Contrast
 
 http://armedunity.com/topic/4950-brightnesscontrastsaturation-shader/
+
+http://www.codeproject.com/Articles/19045/Manipulating-colors-in-NET-Part-1#rgb2

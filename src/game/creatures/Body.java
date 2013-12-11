@@ -2,7 +2,7 @@ package game.creatures;
 
 import com.badlogic.gdx.graphics.Color;
 import game.arena.Floor;
-import sps.draw.Colors;
+import sps.color.Colors;
 import sps.util.MathHelper;
 
 import java.util.List;

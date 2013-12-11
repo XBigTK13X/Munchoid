@@ -1,7 +1,7 @@
 package game.creatures.style;
 
 import com.badlogic.gdx.graphics.Color;
-import sps.draw.Colors;
+import sps.color.Colors;
 
 public class Outline {
 
@@ -20,7 +20,7 @@ public class Outline {
         private Color _choice;
 
         public Single(Color choice) {
-            _choice = choice;
+            _choice = new Color(choice);
         }
 
         @Override

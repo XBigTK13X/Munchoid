@@ -57,7 +57,7 @@ public class DevConsole {
     private final Sprite _consoleBase;
 
     private DevConsole() {
-        _bgColor = Color.BLACK;
+        _bgColor = new Color(Color.BLACK);
         _bgColor.a = (byte) 180;
         _consoleBase = SpriteMaker.get().pixel(Color.WHITE);
         _isVisible = false;

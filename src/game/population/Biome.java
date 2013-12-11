@@ -1,7 +1,7 @@
 package game.population;
 
 import com.badlogic.gdx.graphics.Color;
-import sps.draw.Colors;
+import sps.color.RGBA;
 
 public enum Biome {
     Land(true, Map.C / 2, 180),
@@ -52,7 +52,7 @@ public enum Biome {
                 break;
         }
 
-        return Colors.rgb(cap(r), cap(g), cap(b), 255);
+        return new RGBA(cap(r), cap(g), cap(b), 255).toColor();
     }
 
     private static int cap(int colorComponent) {

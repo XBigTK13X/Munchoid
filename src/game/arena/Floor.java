@@ -7,10 +7,10 @@ import game.DevConfig;
 import game.GameConfig;
 import sps.bridge.DrawDepths;
 import sps.bridge.EntityTypes;
+import sps.color.RGBA;
 import sps.core.Logger;
 import sps.core.Point2;
 import sps.display.Window;
-import sps.draw.Colors;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
 import sps.entities.Entity;
@@ -30,8 +30,8 @@ public class Floor extends Entity {
                     BackgroundMaker.printedCircuitBoard(GameConfig.ArenaWidth, GameConfig.ArenaHeight);
         }
         else {
-            Color dirt = Colors.rgb(55, 30, 15);
-            Color grass = Colors.rgb(15, 55, 15);
+            Color dirt = new RGBA(55, 30, 15).toColor();
+            Color grass = new RGBA(15, 55, 15).toColor();
             Color[][] base = ProcTextures.perlin(GameConfig.ArenaWidth, GameConfig.ArenaHeight, grass, dirt, __fieldSmoothness);
             _background = SpriteMaker.get().fromColors(base);
         }
