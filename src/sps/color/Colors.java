@@ -63,9 +63,14 @@ public class Colors {
         Color[] gradient = new Color[steps];
         for (int ii = 0; ii < steps; ii++) {
             float sP = (float) ii / steps;
-            float eP = 1 - sP;
-            gradient[ii] = new Color(start.r * sP + end.r * eP, start.g * sP + end.g * eP, start.b * sP + end.b * eP, start.a * sP + end.a * eP);
+            gradient[ii] = interpolate(sP, start, end);
         }
         return gradient;
+    }
+
+    public static Color interpolate(float startPercent, Color start, Color end) {
+        float sP = startPercent / 100f;
+        float eP = 1 - sP;
+        return new Color(start.r * sP + end.r * eP, start.g * sP + end.g * eP, start.b * sP + end.b * eP, start.a * sP + end.a * eP);
     }
 }

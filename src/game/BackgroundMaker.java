@@ -126,36 +126,42 @@ public class BackgroundMaker {
         int h = model[0].length;
         Color[][] base = ProcTextures.smoothRadial(w, h, board, board2);
 
-        //Create the via texture
-        boolean[][] viaBase = new boolean[viaPixelWidth][viaPixelWidth];
-        Point2 viaCenter = new Point2(viaPixelWidth / 2, viaPixelWidth / 2);
-        for (int ii = 0; ii < viaBase.length; ii++) {
-            for (int jj = 0; jj < viaBase[0].length; jj++) {
-                float dist = HitTest.getDistance(ii, jj, viaCenter.X, viaCenter.Y);
-                if (dist < viaPixelWidth / 2) {
-                    viaBase[ii][jj] = true;
+        boolean enableDetails = false;
+        boolean enableBlur = false;
+        boolean enableDarkness = true;
+
+        if (enableDetails) {
+            //Create the via texture
+            boolean[][] viaBase = new boolean[viaPixelWidth][viaPixelWidth];
+            Point2 viaCenter = new Point2(viaPixelWidth / 2, viaPixelWidth / 2);
+            for (int ii = 0; ii < viaBase.length; ii++) {
+                for (int jj = 0; jj < viaBase[0].length; jj++) {
+                    float dist = HitTest.getDistance(ii, jj, viaCenter.X, viaCenter.Y);
+                    if (dist < viaPixelWidth / 2) {
+                        viaBase[ii][jj] = true;
+                    }
                 }
             }
-        }
-        Color trace = Colors.randomPleasant();
-        trace = Colors.brightnessShift(trace, -5);
-        //Draw the traces first, then the vias
-        for (int pass = 1; pass < 3; pass++) {
-            for (int ii = 0; ii < model.length; ii++) {
-                for (int jj = 0; jj < model[ii].length; jj++) {
-                    if (pass == 1 && model[ii][jj] == ModelId.Trace) {
-                        base[ii][jj] = trace;
-                    }
-                    if (pass == 2 && model[ii][jj] == ModelId.Via) {
-                        Color via = Colors.randomPleasant();
-                        via = Colors.brightnessShift(via, -5);
-                        for (int ox = 0; ox < viaBase.length; ox++) {
-                            for (int oy = 0; oy < viaBase[0].length; oy++) {
-                                if (viaBase[ox][oy]) {
-                                    int x = ii + ox - viaPixelWidth / 2;
-                                    int y = jj + oy - viaPixelWidth / 2;
-                                    if (x >= 0 && y >= 0 && x < base.length && y < base[0].length) {
-                                        base[x][y] = via;
+            Color trace = Colors.randomPleasant();
+            trace = Colors.brightnessShift(trace, -5);
+            //Draw the traces first, then the vias
+            for (int pass = 1; pass < 3; pass++) {
+                for (int ii = 0; ii < model.length; ii++) {
+                    for (int jj = 0; jj < model[ii].length; jj++) {
+                        if (pass == 1 && model[ii][jj] == ModelId.Trace) {
+                            base[ii][jj] = trace;
+                        }
+                        if (pass == 2 && model[ii][jj] == ModelId.Via) {
+                            Color via = Colors.randomPleasant();
+                            via = Colors.brightnessShift(via, -5);
+                            for (int ox = 0; ox < viaBase.length; ox++) {
+                                for (int oy = 0; oy < viaBase[0].length; oy++) {
+                                    if (viaBase[ox][oy]) {
+                                        int x = ii + ox - viaPixelWidth / 2;
+                                        int y = jj + oy - viaPixelWidth / 2;
+                                        if (x >= 0 && y >= 0 && x < base.length && y < base[0].length) {
+                                            base[x][y] = via;
+                                        }
                                     }
                                 }
                             }
@@ -165,9 +171,13 @@ public class BackgroundMaker {
             }
         }
 
-        TextureManipulation.blurGaussian(base, 3);
+        if (enableBlur) {
+            TextureManipulation.blurGaussian(base, 3);
+        }
         //TODO Figure out why this creates high contrast bands
-        TextureManipulation.darken(base, 75);
+        if (enableDarkness) {
+            TextureManipulation.darken(base, 50);
+        }
 
         return SpriteMaker.get().fromColors(base);
     }

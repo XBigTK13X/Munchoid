@@ -66,18 +66,34 @@ public class ProcTextures {
         return result;
     }
 
-    public static Color[][] fixedRadial(int width, int height, Color start, Color end, int steps, Point2 center) {
+    public static Color[][] radial(int width, int height, Color start, Color end, int steps, Point2 center, boolean fixed) {
+        boolean colorDebug = true;
+        if (colorDebug) {
+            start = new Color(0xf248e8ff);
+            end = new Color(0x48f2caff);
+            center.reset(0, 0);
+        }
+
         Color[][] result = new Color[width][height];
-        Color[] g = Colors.gradient(start, end, steps);
 
         int maxDist = (int) (Math.sqrt(height * height + width * width));
+
+        Color[] g = null;
 
         for (int ii = 0; ii < result.length; ii++) {
             for (int jj = 0; jj < result[0].length; jj++) {
                 int dist = (int) HitTest.getDistance(ii, jj, center.X, center.Y);
                 float percentDist = MathHelper.valueToPercent(0, maxDist, dist);
-                int scaledDist = (int) ((percentDist / 100f) * steps);
-                result[ii][jj] = g[scaledDist];
+                if (fixed) {
+                    if (g == null) {
+                        g = Colors.gradient(start, end, steps);
+                    }
+                    int scaledDist = (int) ((percentDist / 100f) * steps);
+                    result[ii][jj] = g[scaledDist];
+                }
+                else {
+                    result[ii][jj] = Colors.interpolate(percentDist, start, end);
+                }
             }
         }
 
@@ -85,7 +101,7 @@ public class ProcTextures {
     }
 
     public static Color[][] fixedRadial(int width, int height, Color start, Color end, int steps) {
-        return fixedRadial(width, height, start, end, steps, RNG.point(0, width, 0, height));
+        return radial(width, height, start, end, steps, RNG.point(0, width, 0, height), true);
     }
 
     public static Color[][] smoothRadial(int width, int height, Color start, Color end) {
@@ -93,7 +109,6 @@ public class ProcTextures {
     }
 
     public static Color[][] smoothRadial(int width, int height, Color start, Color end, Point2 center) {
-        int steps = (int) (Math.sqrt(height * height + width * width));
-        return fixedRadial(width, height, start, end, steps, center);
+        return radial(width, height, start, end, 0, center, false);
     }
 }
