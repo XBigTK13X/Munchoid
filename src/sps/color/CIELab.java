@@ -1,6 +1,7 @@
 package sps.color;
 
 import com.badlogic.gdx.graphics.Color;
+import sps.util.MathHelper;
 
 //From http://www.codeproject.com/Articles/19045/Manipulating-colors-in-NET-Part-1#rgb2
 public class CIELab implements ColorSpec<CIELab> {
@@ -11,25 +12,25 @@ public class CIELab implements ColorSpec<CIELab> {
         return fromXYZ(xyz.X, xyz.Y, xyz.Z);
     }
 
-    public static CIELab fromXYZ(double x, double y, double z) {
+    public static CIELab fromXYZ(float x, float y, float z) {
         CIELab lab = CIELab.Empty;
 
-        lab.L = 116.0 * Fxyz(y / CIEXYZ.D65.Y) - 16;
-        lab.A = 500.0 * (Fxyz(x / CIEXYZ.D65.X) - Fxyz(y / CIEXYZ.D65.Y));
-        lab.B = 200.0 * (Fxyz(y / CIEXYZ.D65.Y) - Fxyz(z / CIEXYZ.D65.Z));
+        lab.L = 116.0f * Fxyz(y / CIEXYZ.D65.Y) - 16f;
+        lab.A = 500.0f * (Fxyz(x / CIEXYZ.D65.X) - Fxyz(y / CIEXYZ.D65.Y));
+        lab.B = 200.0f * (Fxyz(y / CIEXYZ.D65.Y) - Fxyz(z / CIEXYZ.D65.Z));
 
         return lab;
     }
 
-    private static double Fxyz(double t) {
-        return ((t > 0.008856) ? Math.pow(t, (1.0 / 3.0)) : (7.787 * t + 16.0 / 116.0));
+    private static float Fxyz(float t) {
+        return (float) ((t > 0.008856f) ? Math.pow(t, (1.0f / 3.0f)) : (7.787f * t + 16.0f / 116.0f));
     }
 
-    public double L;
-    public double A;
-    public double B;
+    public float L;
+    public float A;
+    public float B;
 
-    public CIELab(double l, double a, double b) {
+    public CIELab(float l, float a, float b) {
         this.L = l;
         this.A = a;
         this.B = b;
@@ -40,7 +41,13 @@ public class CIELab implements ColorSpec<CIELab> {
     }
 
     public ColorSpec average(CIELab target) {
-        return new CIELab((L + target.L) / 2f, (A + target.A) / 2f, (B + target.B) / 2f);
+        return interpolate(50, target);
+    }
+
+    @Override
+    public ColorSpec interpolate(float startPercent, CIELab target) {
+        float[] i = MathHelper.interpolate(startPercent, L, target.L, A, target.A, B, target.B);
+        return new CIELab(i[0], i[1], i[2]);
     }
 
     public CIEXYZ toXYZ() {

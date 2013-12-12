@@ -19,6 +19,7 @@ public class HSV implements ColorSpec<HSV> {
         H = hue;
         S = saturation;
         V = value;
+        clamp();
     }
 
     private void clamp() {
@@ -57,9 +58,13 @@ public class HSV implements ColorSpec<HSV> {
     public ColorSpec average(HSV target) {
         clamp();
         target.clamp();
-        HSV result = new HSV((H + target.H) / 2, (S + target.S) / 2, (V + target.V) / 2);
-        result.clamp();
-        return result;
+        return interpolate(50, target);
+    }
+
+    @Override
+    public ColorSpec interpolate(float startPercent, HSV target) {
+        float[] i = MathHelper.interpolate(startPercent, H, target.H, S, target.S, V, target.V);
+        return new HSV(i[0], i[1], i[2]);
     }
 
     public static HSV fromColor(Color color) {

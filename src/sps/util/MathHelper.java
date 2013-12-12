@@ -69,4 +69,26 @@ public class MathHelper {
     public static float valueToPercent(float lowerBound, float upperBound, float location) {
         return Math.abs(100f * ((location - lowerBound) / (upperBound - lowerBound)));
     }
+
+    //values[0] will be interpolated with values[1] and so on
+    //the even values are considered the start (starting at 0)
+    public static float[] interpolate(float startPercent, float... values) {
+        if (values.length % 2 == 1) {
+            throw new RuntimeException("MathHelper cannot interpolate if values isn't an even length");
+        }
+
+        float sP = startPercent / 100f;
+        float eP = 1 - sP;
+
+        float[] result = new float[values.length / 2];
+        int count = 0;
+        int ii = 0;
+
+        while (count < values.length - 1) {
+            result[ii] = values[count] * sP + values[count + 1] * eP;
+            count += 2;
+            ii++;
+        }
+        return result;
+    }
 }

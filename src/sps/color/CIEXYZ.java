@@ -1,6 +1,7 @@
 package sps.color;
 
 import com.badlogic.gdx.graphics.Color;
+import sps.util.MathHelper;
 
 //From http://www.codeproject.com/Articles/19045/Manipulating-colors-in-NET-Part-1#rgb2
 public class CIEXYZ implements ColorSpec<CIEXYZ> {
@@ -49,6 +50,12 @@ public class CIEXYZ implements ColorSpec<CIEXYZ> {
     }
 
     public ColorSpec average(CIEXYZ target) {
-        return new CIEXYZ((X + target.X) / 2f, (Y + target.Y) / 2f, (Z + target.Z) / 2f);
+        return interpolate(50, target);
+    }
+
+    @Override
+    public ColorSpec interpolate(float startPercent, CIEXYZ target) {
+        float[] i = MathHelper.interpolate(startPercent, X, target.X, Y, target.Y, Z, target.Z);
+        return new HSV(i[0], i[1], i[2]);
     }
 }

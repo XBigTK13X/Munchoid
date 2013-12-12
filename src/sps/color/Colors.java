@@ -69,8 +69,6 @@ public class Colors {
     }
 
     public static Color interpolate(float startPercent, Color start, Color end) {
-        float sP = startPercent / 100f;
-        float eP = 1 - sP;
-        return new Color(start.r * sP + end.r * eP, start.g * sP + end.g * eP, start.b * sP + end.b * eP, start.a * sP + end.a * eP);
+        return new HSV(start.r, start.g, start.b).interpolate(startPercent, new HSV(end.r, end.g, end.b)).toColor();
     }
 }

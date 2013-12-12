@@ -1,6 +1,7 @@
 package sps.color;
 
 import com.badlogic.gdx.graphics.Color;
+import sps.util.MathHelper;
 
 public class RGBA implements ColorSpec<RGBA> {
     private static float __base = 255f;
@@ -36,6 +37,12 @@ public class RGBA implements ColorSpec<RGBA> {
 
     @Override
     public ColorSpec average(RGBA target) {
-        return new RGBA((R + target.R) / 2f, (G + target.G) / 2f, (B + target.B) / 2f, (A + target.A) / 2f);
+        return interpolate(50, target);
+    }
+
+    @Override
+    public ColorSpec interpolate(float startPercent, RGBA target) {
+        float[] i = MathHelper.interpolate(startPercent, R, target.R, G, target.G, B, target.B, A, target.A);
+        return new RGBA(i[0], i[1], i[2], i[3]);
     }
 }
