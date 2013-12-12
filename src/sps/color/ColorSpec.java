@@ -7,5 +7,5 @@ public interface ColorSpec<E extends ColorSpec> {
 
     public ColorSpec average(E target);
 
-    ColorSpec interpolate(float startPercent, E target);
+    ColorSpec lerp(float startPercent, E target);
 }

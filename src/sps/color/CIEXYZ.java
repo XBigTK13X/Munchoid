@@ -50,12 +50,12 @@ public class CIEXYZ implements ColorSpec<CIEXYZ> {
     }
 
     public ColorSpec average(CIEXYZ target) {
-        return interpolate(50, target);
+        return lerp(50, target);
     }
 
     @Override
-    public ColorSpec interpolate(float startPercent, CIEXYZ target) {
-        float[] i = MathHelper.interpolate(startPercent, X, target.X, Y, target.Y, Z, target.Z);
+    public ColorSpec lerp(float startPercent, CIEXYZ target) {
+        float[] i = MathHelper.lerpValues(startPercent, X, target.X, Y, target.Y, Z, target.Z);
         return new HSV(i[0], i[1], i[2]);
     }
 }

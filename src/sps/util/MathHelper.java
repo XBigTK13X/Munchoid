@@ -6,20 +6,6 @@ import sps.core.Logger;
 import sps.core.Point2;
 
 public class MathHelper {
-
-    public static void main(String[] args) {
-        Logger.info("Test-1: " + (percentToValue(50, 150, 50) == 100));
-        Logger.info("Test-2: " + (percentToValue(-50, 50, 0) == -50));
-        Logger.info("Test-3: " + (percentToValue(-150, -50, 50) == -100));
-        Logger.info("Test-3: " + (percentToValue(-150, -50, 100) == -50));
-
-        Logger.info("Test0: " + (valueToPercent(50, 150, 150) == 100));
-        Logger.info("Test1: " + (valueToPercent(50, 150, 100) == 50));
-        Logger.info("Test2: " + (valueToPercent(-50, 50, 0) == 50));
-        Logger.info("Test3: " + (valueToPercent(-150, -50, -100) == 50));
-        Logger.info("Test4: " + (valueToPercent(-50, 50, -50) == 0));
-    }
-
     public static int clamp(float value, int min, int max) {
         return (int) Math.max(Math.min(value, max), min);
     }
@@ -70,11 +56,11 @@ public class MathHelper {
         return Math.abs(100f * ((location - lowerBound) / (upperBound - lowerBound)));
     }
 
-    //values[0] will be interpolated with values[1] and so on
+    //values[0] will be linearlly interpolated with values[1] and so on
     //the even values are considered the start (starting at 0)
-    public static float[] interpolate(float startPercent, float... values) {
+    public static float[] lerpValues(float startPercent, float... values) {
         if (values.length % 2 == 1) {
-            throw new RuntimeException("MathHelper cannot interpolate if values isn't an even length");
+            throw new RuntimeException("MathHelper cannot lerp if values isn't an even length");
         }
 
         float sP = startPercent / 100f;
@@ -90,5 +76,33 @@ public class MathHelper {
             ii++;
         }
         return result;
+    }
+
+    public static float massage(float start, int min, int max, int strength) {
+        start %= max;
+        while (start > max) {
+            start -= strength;
+        }
+        while (start < min) {
+            start += strength;
+        }
+        return start;
+    }
+
+    //http://stackoverflow.com/questions/2708476/rotation-interpolation
+    public static float lerpDegrees(float start, float end, float startPercent) {
+        float difference = Math.abs(end - start);
+        if (difference > 180) {
+            if (end > start) {
+                start += 360;
+            }
+            else {
+                end += 360;
+            }
+        }
+
+        float value = (start + ((end - start) * startPercent));
+
+        return massage(value, 0, 360, 360);
     }
 }

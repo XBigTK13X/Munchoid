@@ -4,6 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 import sps.util.MathHelper;
 
 public class RGBA implements ColorSpec<RGBA> {
+    public static RGBA fromRGB(float r, float g, float b){
+        return new RGBA(r,g,b,1f);
+    }
+
     private static float __base = 255f;
 
     public float R;
@@ -37,12 +41,12 @@ public class RGBA implements ColorSpec<RGBA> {
 
     @Override
     public ColorSpec average(RGBA target) {
-        return interpolate(50, target);
+        return lerp(50, target);
     }
 
     @Override
-    public ColorSpec interpolate(float startPercent, RGBA target) {
-        float[] i = MathHelper.interpolate(startPercent, R, target.R, G, target.G, B, target.B, A, target.A);
+    public ColorSpec lerp(float startPercent, RGBA target) {
+        float[] i = MathHelper.lerpValues(startPercent, R, target.R, G, target.G, B, target.B, A, target.A);
         return new RGBA(i[0], i[1], i[2], i[3]);
     }
 }

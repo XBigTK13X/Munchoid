@@ -32,30 +32,28 @@ public class Colors {
     }
 
     //From: http://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/
-    private static final float __goldenRatioCongujate = (float) Math.abs(1 - Math.sqrt(5)) / 2; //approx 0.618033988749895f;
+    //approx 0.618033988749895f;
+    private static final float __goldenRatioConjugate = (float) Math.abs(1 - Math.sqrt(5)) / 2;
     private static float __hueBase;
     private static boolean __hueBaseRandomized = false;
 
     public static Color randomPleasant() {
         if (!__hueBaseRandomized) {
-            __hueBase = RNG.next(0, 360) / 360f;
+            __hueBase = RNG.next(0, 360);
             __hueBaseRandomized = true;
         }
-        __hueBase += __goldenRatioCongujate;
-        __hueBase %= 1f;
 
+        __hueBase += __goldenRatioConjugate * 100;
+        __hueBase %= 360f;
         return new HSV(__hueBase, 0.7f, 0.95f).toColor();
     }
 
     public static Color hueShift(Color color, float shift) {
         HSV hsv = HSV.fromColor(color);
+
         hsv.H += shift;
-        while (hsv.H >= 1f) {
-            hsv.H -= 1f / 6;
-        }
-        while (hsv.H < 0.0) {
-            hsv.H += 1f / 6;
-        }
+        hsv.H = MathHelper.massage(hsv.H, 0, 360, 60);
+
         return hsv.toColor();
     }
 
@@ -69,6 +67,6 @@ public class Colors {
     }
 
     public static Color interpolate(float startPercent, Color start, Color end) {
-        return new HSV(start.r, start.g, start.b).interpolate(startPercent, new HSV(end.r, end.g, end.b)).toColor();
+        return HSV.fromRGB(start.r, start.g, start.b).lerp(startPercent, HSV.fromRGB(end.r, end.g, end.b)).toColor();
     }
 }

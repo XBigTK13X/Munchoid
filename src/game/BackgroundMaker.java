@@ -128,7 +128,7 @@ public class BackgroundMaker {
 
         boolean enableDetails = false;
         boolean enableBlur = false;
-        boolean enableDarkness = true;
+        boolean enableDarkness = false;
 
         if (enableDetails) {
             //Create the via texture

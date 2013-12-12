@@ -41,12 +41,12 @@ public class CIELab implements ColorSpec<CIELab> {
     }
 
     public ColorSpec average(CIELab target) {
-        return interpolate(50, target);
+        return lerp(50, target);
     }
 
     @Override
-    public ColorSpec interpolate(float startPercent, CIELab target) {
-        float[] i = MathHelper.interpolate(startPercent, L, target.L, A, target.A, B, target.B);
+    public ColorSpec lerp(float startPercent, CIELab target) {
+        float[] i = MathHelper.lerpValues(startPercent, L, target.L, A, target.A, B, target.B);
         return new CIELab(i[0], i[1], i[2]);
     }
 

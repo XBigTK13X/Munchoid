@@ -49,6 +49,7 @@ public class BackgroundGenerationTest implements State {
             _bg.setPosition(0, 0);
         }
         else {
+            Logger.info("New simple: " +_bgColor.toString());
             _bg = SpriteMaker.get().fromColors(ProcTextures.monotone(500, 500, _bgColor));
             _bg.setPosition(200, 200);
         }

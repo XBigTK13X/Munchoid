@@ -69,8 +69,8 @@ public class ProcTextures {
     public static Color[][] radial(int width, int height, Color start, Color end, int steps, Point2 center, boolean fixed) {
         boolean colorDebug = true;
         if (colorDebug) {
-            start = new Color(0xf248e8ff);
-            end = new Color(0x48f2caff);
+            start = new Color(0xCD853FFF);
+            end = new Color(0x20B2AAFF);
             center.reset(0, 0);
         }
 
