@@ -46,7 +46,7 @@ public class CIELab implements ColorSpec<CIELab> {
 
     @Override
     public ColorSpec lerp(float startPercent, CIELab target) {
-        float[] i = MathHelper.lerpValues(startPercent, L, target.L, A, target.A, B, target.B);
+        float[] i = MathHelper.lerp(startPercent, L, target.L, A, target.A, B, target.B);
         return new CIELab(i[0], i[1], i[2]);
     }
 

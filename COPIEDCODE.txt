@@ -5,8 +5,6 @@ https://gist.github.com/veryphatic/3190969
 
 http://devmag.org.za/2009/04/25/perlin-noise/
 
-http://stackoverflow.com/questions/7896280/converting-from-hsv-hsb-in-java-to-rgb-without-using-java-awt-color-disallowe
-
 http://stackoverflow.com/questions/1664140/js-function-to-calculate-complementary-colour
 
 http://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/
@@ -19,6 +17,4 @@ http://armedunity.com/topic/4950-brightnesscontrastsaturation-shader/
 
 http://www.codeproject.com/Articles/19045/Manipulating-colors-in-NET-Part-1#rgb2
 
-http://stackoverflow.com/questions/2708476/rotation-interpolation
-
-http://wiki.unity3d.com/index.php?title=HSBColor
+//http://xboxforums.create.msdn.com/forums/p/53551/579133.aspx

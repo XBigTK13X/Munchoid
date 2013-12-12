@@ -55,7 +55,7 @@ public class CIEXYZ implements ColorSpec<CIEXYZ> {
 
     @Override
     public ColorSpec lerp(float startPercent, CIEXYZ target) {
-        float[] i = MathHelper.lerpValues(startPercent, X, target.X, Y, target.Y, Z, target.Z);
+        float[] i = MathHelper.lerp(startPercent, X, target.X, Y, target.Y, Z, target.Z);
         return new HSV(i[0], i[1], i[2]);
     }
 }

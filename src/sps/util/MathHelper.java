@@ -2,10 +2,12 @@ package sps.util;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Line;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
-import sps.core.Logger;
 import sps.core.Point2;
 
 public class MathHelper {
+    public static final double TWO_PI = Math.PI * 2;
+    public static final float TWO_PIf = (float) (Math.PI * 2);
+
     public static int clamp(float value, int min, int max) {
         return (int) Math.max(Math.min(value, max), min);
     }
@@ -58,7 +60,7 @@ public class MathHelper {
 
     //values[0] will be linearlly interpolated with values[1] and so on
     //the even values are considered the start (starting at 0)
-    public static float[] lerpValues(float startPercent, float... values) {
+    public static float[] lerp(float startPercent, float... values) {
         if (values.length % 2 == 1) {
             throw new RuntimeException("MathHelper cannot lerp if values isn't an even length");
         }
@@ -78,9 +80,9 @@ public class MathHelper {
         return result;
     }
 
-    public static float massage(float start, int min, int max, int strength) {
+    public static float massage(float start, float min, float max, float strength) {
         start %= max;
-        while (start > max) {
+        while (start >= max) {
             start -= strength;
         }
         while (start < min) {
@@ -89,20 +91,31 @@ public class MathHelper {
         return start;
     }
 
-    //http://stackoverflow.com/questions/2708476/rotation-interpolation
-    public static float lerpDegrees(float start, float end, float startPercent) {
-        float difference = Math.abs(end - start);
-        if (difference > 180) {
-            if (end > start) {
-                start += 360;
-            }
-            else {
-                end += 360;
-            }
+    //http://xboxforums.create.msdn.com/forums/p/53551/579133.aspx
+    public static float lerpDegrees(float start, float end, float step) {
+        float from = (float) (start / 180 * Math.PI);
+        float to = (float) (end / 180 * Math.PI);
+
+        from = massage(from, 0, TWO_PIf, TWO_PIf);
+
+        to = massage(to, 0, TWO_PIf, TWO_PIf);
+
+        if (Math.abs(from - to) < Math.PI) {
+            return (float) (lerp(step, from, to)[0] * 180 / Math.PI);
         }
 
-        float value = (start + ((end - start) * startPercent));
+        if (from < to) {
+            from += MathHelper.TWO_PI;
+        }
+        else {
+            to += MathHelper.TWO_PI;
+        }
 
-        return massage(value, 0, 360, 360);
+        float retVal = lerp(step, from, to)[0];
+
+        if (retVal >= MathHelper.TWO_PI) {
+            retVal -= MathHelper.TWO_PI;
+        }
+        return (float) (retVal * 180 / Math.PI);
     }
 }

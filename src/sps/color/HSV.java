@@ -57,7 +57,7 @@ public class HSV implements ColorSpec<HSV> {
     public ColorSpec lerp(float startPercent, HSV target) {
         float h;
 
-        float[] rawHSV = MathHelper.lerpValues(startPercent, H, target.H, S, target.S, V, target.V);
+        float[] rawHSV = MathHelper.lerp(startPercent, H, target.H, S, target.S, V, target.V);
 
         float angle = MathHelper.lerpDegrees(H, target.H, startPercent);
         h = angle;
