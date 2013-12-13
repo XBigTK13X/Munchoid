@@ -67,7 +67,7 @@ public class ProcTextures {
     }
 
     public static Color[][] radial(int width, int height, Color start, Color end, int steps, Point2 center, boolean fixed) {
-        boolean colorDebug = true;
+        boolean colorDebug = false;
         if (colorDebug) {
             start = new Color(0xCD853FFF);
             end = new Color(0x20B2AAFF);
@@ -96,6 +96,24 @@ public class ProcTextures {
                 }
             }
         }
+
+        /*
+        if(GameConfig.OptDitheringEnabled){
+                  for(int i=0; i<height; i++){
+                       for(int j=0; j<width; j++){
+                           int ci = i*w+j;               // current buffer index
+                           Color cc = sb[ci];              // current color
+                           var rc = (cc<128?0:255);      // real (rounded) color
+                           var err = cc-rc;              // error amount
+                           sb[ci] = rc;                  // saving real color
+                           if(j+1<w) sb[ci  +1] += (err*7)>>4;  // if right neighbour exists
+                            if(i+1==h) continue;   // if we are in the last line
+                            if(j  >0) sb[ci+w-1] += (err*3)>>4;  // bottom left neighbour
+                                   sb[ci+w  ] += (err*5)>>4;  // bottom neighbour
+                           if(j+1<w) sb[ci+w+1] += (err*1)>>4;  // bottom right neighbour
+                        }
+               }
+               */
 
         return result;
     }

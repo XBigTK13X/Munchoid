@@ -32,8 +32,7 @@ public class Colors {
     }
 
     //From: http://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/
-    //approx 0.618033988749895f;
-    private static final float __goldenRatioConjugate = (float) Math.abs(1 - Math.sqrt(5)) / 2;
+    private static final float __goldenAngle = 137.508f;
     private static float __hueBase;
     private static boolean __hueBaseRandomized = false;
 
@@ -43,7 +42,7 @@ public class Colors {
             __hueBaseRandomized = true;
         }
 
-        __hueBase += __goldenRatioConjugate * 100;
+        __hueBase += __goldenAngle;
         __hueBase %= 360f;
         return new HSV(__hueBase, 0.7f, 0.95f).toColor();
     }
