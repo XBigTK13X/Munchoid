@@ -2,6 +2,7 @@ package sps.display;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import sps.core.Logger;
@@ -90,8 +91,9 @@ public class Window {
             apply = true;
         }
         else if (!isFullScreen && enableFullScreen) {
-            resolutionX = Gdx.graphics.getDesktopDisplayMode().width;
-            resolutionY = Gdx.graphics.getDesktopDisplayMode().height;
+            Graphics.DisplayMode gfxNative = Gdx.graphics.getDesktopDisplayMode();
+            resolutionX = gfxNative.width;
+            resolutionY = gfxNative.height;
             apply = true;
         }
 
