@@ -174,7 +174,7 @@ public class BackgroundMaker {
         if (enableBlur) {
             TextureManipulation.blurGaussian(base, 3);
         }
-        //TODO Figure out why this creates high contrast bands
+
         if (enableDarkness) {
             TextureManipulation.darken(base, 50);
         }
