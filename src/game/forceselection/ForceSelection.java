@@ -1,32 +1,27 @@
 package game.forceselection;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.DevConfig;
 import game.InputWrapper;
 import game.arena.Arena;
 import game.creatures.Creature;
 import game.tournament.Tournament;
-import game.ui.UISprite;
+import game.ui.UIButton;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.DrawDepths;
+import sps.color.Colors;
 import sps.display.Screen;
-import sps.display.Window;
 import sps.entities.EntityManager;
-import sps.entities.HitTest;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
-import sps.ui.Buttons;
-import sps.ui.Tooltips;
 
 public class ForceSelection implements State {
     private static SingleSongPlayer __mergeMusic;
     private Creature _pet;
 
-    private Sprite _accept;
     private ForcesSelectionUI _forces;
     private Text _wrongCountMessage;
 
@@ -44,35 +39,20 @@ public class ForceSelection implements State {
         TextPool.get().write("ENABLED", Screen.pos(20, 100));
         TextPool.get().write("DISABLED", Screen.pos(70, 100));
 
-        if (_accept == null) {
-            setMessage();
-            _accept = UISprite.button(Color.GREEN);
+        setMessage();
 
-            _accept.setPosition(Screen.width(50), Screen.height(10));
-
-            Buttons.get().add(new Buttons.User() {
-                @Override
-                public Sprite getSprite() {
-                    return _accept;
-                }
-
-                @Override
-                public void onClick() {
-                    confirmSelection();
-                }
-            });
-        }
-        Tooltips.get().add(new Tooltips.User() {
+        final UIButton accept = new UIButton("Confirm") {
             @Override
-            public boolean isActive() {
-                return HitTest.mouseInside(_accept);
+            public void click() {
+                confirmSelection();
             }
+        };
 
-            @Override
-            public String message() {
-                return "Confirm";
-            }
-        });
+        accept.setSize(10, 8);
+        accept.setXY(50, 10);
+        accept.setBackgroundColors(Colors.brightnessShift(Color.GREEN, -80), Colors.brightnessShift(Color.GREEN, -45));
+        accept.setDepth(DrawDepths.get("ForceAccept"));
+
         _forces = new ForcesSelectionUI(_pet);
         if (DevConfig.EndToEndStateLoadTest) {
             while (!confirmSelection()) {
@@ -98,7 +78,6 @@ public class ForceSelection implements State {
 
     @Override
     public void draw() {
-        Window.get().schedule(_accept, DrawDepths.get("ForceAccept"));
         _forces.draw();
     }
 

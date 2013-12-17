@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.bridge.DrawDepth;
 import sps.bridge.DrawDepths;
+import sps.display.Window;
 import sps.entities.HitTest;
 import sps.io.Input;
 import sps.util.BoundingBox;
@@ -140,6 +141,14 @@ public class Buttons {
             _highest.onClick();
             Input.get().setMouseLock(true);
             _highest = null;
+        }
+    }
+
+    public void draw() {
+        for (User user : _users) {
+            if (user.isActive()) {
+                Window.get().schedule(user.getSprite(), user.getDepth());
+            }
         }
     }
 }

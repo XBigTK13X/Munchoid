@@ -1,7 +1,6 @@
 package game.battle;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.DevConfig;
 import game.GameConfig;
 import game.InputWrapper;
@@ -12,21 +11,19 @@ import game.creatures.Stats;
 import game.forces.Force;
 import game.forceselection.ForceSelection;
 import game.ui.UIButton;
-import game.ui.UISprite;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
+import sps.color.Colors;
 import sps.core.Logger;
 import sps.core.RNG;
 import sps.display.Screen;
-import sps.display.Window;
 import sps.entities.EntityManager;
 import sps.entities.HitTest;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.TextPool;
-import sps.ui.Buttons;
 import sps.ui.Tooltips;
 
 public class MergeOutcome implements State {
@@ -34,9 +31,6 @@ public class MergeOutcome implements State {
     private Creature _defeated;
     private Creature _pet;
     private Creature _merged;
-
-    private Sprite _reject;
-    private Sprite _accept;
 
     private UIButton _reroll;
 
@@ -83,45 +77,33 @@ public class MergeOutcome implements State {
             forceRow++;
         }
 
-        //Accept and reject buttons
-        if (_accept == null) {
-            _accept = UISprite.button(Color.GREEN, 40, 50);
-            _reject = UISprite.button(Color.RED, 40, 50);
+        final UIButton reject = new UIButton("") {
+            @Override
+            public void click() {
+                rejectMerge();
+            }
+        };
+        reject.setXY((int) Screen.width(5), (int) Screen.height(35));
+        reject.setSize(40, 50);
+        reject.setBackgroundColors(Colors.brightnessShift(Color.RED, -80), Colors.brightnessShift(Color.RED, -45));
+        reject.setDepth(DrawDepths.get("MergeChoice"));
 
-            _reject.setPosition(Screen.width(5), Screen.height(35));
-            _accept.setPosition(Screen.width(55), Screen.height(35));
+        final UIButton accept = new UIButton("") {
+            @Override
+            public void click() {
+                acceptMerge();
+            }
+        };
+        accept.setXY((int) Screen.width(55), (int) Screen.height(35));
+        accept.setSize(40, 50);
+        accept.setBackgroundColors(Colors.brightnessShift(Color.GREEN, -80), Colors.brightnessShift(Color.GREEN, -45));
+        accept.setDepth(DrawDepths.get("MergeChoice"));
 
-
-            Buttons.get().add(new Buttons.User() {
-
-                @Override
-                public Sprite getSprite() {
-                    return _accept;
-                }
-
-                @Override
-                public void onClick() {
-                    acceptMerge();
-                }
-            });
-            Buttons.get().add(new Buttons.User() {
-
-                @Override
-                public Sprite getSprite() {
-                    return _reject;
-                }
-
-                @Override
-                public void onClick() {
-                    rejectMerge();
-                }
-            });
-        }
         Tooltips.get().add(new Tooltips.User() {
 
             @Override
             public boolean isActive() {
-                return HitTest.mouseInside(_accept);
+                return HitTest.mouseInside(accept.getSprite());
             }
 
             @Override
@@ -134,7 +116,7 @@ public class MergeOutcome implements State {
 
             @Override
             public boolean isActive() {
-                return HitTest.mouseInside(_reject);
+                return HitTest.mouseInside(reject.getSprite());
             }
 
             @Override
@@ -174,8 +156,6 @@ public class MergeOutcome implements State {
 
     @Override
     public void draw() {
-        Window.get().schedule(_accept, DrawDepths.get("MergeChoice"));
-        Window.get().schedule(_reject, DrawDepths.get("MergeChoice"));
         _pet.draw();
         _defeated.draw();
         _merged.draw();

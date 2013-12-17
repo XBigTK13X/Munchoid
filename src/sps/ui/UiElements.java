@@ -26,5 +26,6 @@ public class UiElements {
 
     public void draw() {
         Tooltips.get().draw();
+        Buttons.get().draw();
     }
 }

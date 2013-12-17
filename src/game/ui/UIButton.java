@@ -38,6 +38,8 @@ public abstract class UIButton {
     private boolean _visible = true;
     private DrawDepth _depth;
     private Point2 _position;
+    private Color _start;
+    private Color _end;
 
     public UIButton(String text) {
         this(text, 0, 0);
@@ -52,6 +54,8 @@ public abstract class UIButton {
     }
 
     public UIButton(String text, int x, int y, Command command) {
+        _start = Color.WHITE;
+        _end = Color.GRAY;
         _depth = DrawDepths.get("UIButton");
         _command = command;
         _position = new Point2(0, 0);
@@ -80,22 +84,31 @@ public abstract class UIButton {
         };
         Buttons.get().add(_buttonUser);
 
-        setXY(x, y);
-
         setMessage(text);
+        setXY(x, y);
     }
 
     public Point2 getPosition() {
         return _position;
     }
 
+    public void setBackgroundColors(Color start, Color end) {
+        _start = start;
+        _end = end;
+        rebuildBackground();
+    }
+
+    private void rebuildBackground() {
+        Color[][] base = ProcTextures.gradient(_width, _height, _start, _end, false);
+        Outline.single(base, Color.WHITE, 3);
+        _sprite = SpriteMaker.get().fromColors(base);
+    }
+
     public void setSize(int width, int height) {
         _width = (int) Screen.width(width);
         _height = (int) (Screen.height(height));
 
-        Color[][] base = ProcTextures.gradient(_width, _height, Color.WHITE, Color.GRAY, false);
-        Outline.single(base, Color.WHITE, 3);
-        _sprite = SpriteMaker.get().fromColors(base);
+        rebuildBackground();
 
         setMessage(_message.getMessage());
         setXY((int) getPosition().X, (int) getPosition().Y);
@@ -120,7 +133,7 @@ public abstract class UIButton {
                 _message.setMessage(_message.getMessage().replace(line, StringUtils.repeat(" ", offset) + line));
             }
         }
-
+        setXY((int) _position.X, (int) _position.Y);
     }
 
     public void setXY(int x, int y) {
@@ -129,7 +142,9 @@ public abstract class UIButton {
         //FIXME For some reason, the centering doesn't always work.
         //Sometimes it does. For example,"Options" button is wrong,
         //   but the rest are fine
-        _message.setPosition(x + ((_width - mW) / 2), y + mH + ((_height - mH) / 2));
+        int mX = x + (_width - mW) / 2;
+        int mY = y + mH + (_height - mH) / 2;
+        _message.setPosition(mX, mY);
         _sprite.setPosition(x, y);
         _position.reset(x, y);
     }
@@ -181,5 +196,9 @@ public abstract class UIButton {
 
     public int getHeight() {
         return _height;
+    }
+
+    public Sprite getSprite() {
+        return _sprite;
     }
 }
