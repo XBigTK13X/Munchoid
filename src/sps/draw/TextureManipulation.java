@@ -54,6 +54,10 @@ public class TextureManipulation {
         copyDest(dest, base);
     }
 
+    public static Color[][] blurStack(Color[][] base, int radius) {
+        return Blur.fastblur(base, radius);
+    }
+
     public static void glow(Color[][] base, float strength) {
         BufferedImage dest = getBuffer(base);
         GlowFilter filter = new GlowFilter();
@@ -66,7 +70,7 @@ public class TextureManipulation {
         BufferedImage source = new BufferedImage(base.length, base[0].length, BufferedImage.TYPE_INT_ARGB);
         for (int ii = 0; ii < base.length; ii++) {
             for (int jj = 0; jj < base[0].length; jj++) {
-                source.setRGB(ii, jj, base[ii][jj].toIntBits());
+                source.setRGB(ii, jj, Color.rgb888(base[ii][jj]));
             }
         }
         return source;

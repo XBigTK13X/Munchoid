@@ -12,7 +12,7 @@ public class Outline {
     private static class Compliment implements ColorPicker {
         @Override
         public Color convert(Color color) {
-            return Colors.hueShift(color, .5f);
+            return Colors.compliment(color);
         }
     }
 

@@ -47,6 +47,11 @@ public class Colors {
         return new HSV(__hueBase, 0.7f, 0.95f).toColor();
     }
 
+
+    public static Color compliment(Color color) {
+        return hueShift(color, 180);
+    }
+
     public static Color hueShift(Color color, float shift) {
         HSV hsv = HSV.fromColor(color);
 
@@ -67,5 +72,42 @@ public class Colors {
 
     public static Color interpolate(float startPercent, Color start, Color end) {
         return HSV.fromRGB(start.r, start.g, start.b).lerp(startPercent, HSV.fromRGB(end.r, end.g, end.b)).toColor();
+    }
+
+    public static Color[] twoDtoOneD(Color[][] base) {
+        Color[] flattened = new Color[base.length * base[0].length];
+        int index = 0;
+        for (int ii = 0; ii < base.length; ii++) {
+            for (int jj = 0; jj < base[0].length; jj++) {
+                flattened[index++] = base[ii][jj];
+            }
+        }
+        return flattened;
+    }
+
+    public static Color[][] oneDtoTwoD(Color[] base, int breadth, int depth) {
+        Color[][] packed = new Color[breadth][depth];
+        for (int ii = 0; ii < breadth; ii++) {
+            for (int jj = 0; jj < depth; jj++) {
+                packed[ii][jj] = base[ii * depth + jj];
+            }
+        }
+        return packed;
+    }
+
+    public static Color[] intsToColors(int[] ints) {
+        Color[] colors = new Color[ints.length];
+        for (int ii = 0; ii < ints.length; ii++) {
+            colors[ii] = new Color(ints[ii]);
+        }
+        return colors;
+    }
+
+    public static int[] colorsToInts(Color[] colors) {
+        int[] ints = new int[colors.length];
+        for (int ii = 0; ii < colors.length; ii++) {
+            ints[ii] = Color.rgba8888(colors[ii]);
+        }
+        return ints;
     }
 }

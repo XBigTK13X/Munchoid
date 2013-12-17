@@ -126,8 +126,8 @@ public class BackgroundMaker {
         int h = model[0].length;
         Color[][] base = ProcTextures.smoothRadial(w, h, board, board2);
 
-        boolean enableDetails = false;
-        boolean enableBlur = false;
+        boolean enableDetails = true;
+        boolean enableBlur = true;
         boolean enableDarkness = true;
 
         if (enableDetails) {
@@ -144,6 +144,11 @@ public class BackgroundMaker {
             }
             Color trace = Colors.randomPleasant();
             trace = Colors.brightnessShift(trace, -5);
+
+            Color via = Colors.randomPleasant();
+            via = Colors.brightnessShift(via, -5);
+            Color via2 = Colors.compliment(via);
+
             //Draw the traces first, then the vias
             for (int pass = 1; pass < 3; pass++) {
                 for (int ii = 0; ii < model.length; ii++) {
@@ -152,15 +157,14 @@ public class BackgroundMaker {
                             base[ii][jj] = trace;
                         }
                         if (pass == 2 && model[ii][jj] == ModelId.Via) {
-                            Color via = Colors.randomPleasant();
-                            via = Colors.brightnessShift(via, -5);
+                            Color v = RNG.coinFlip() ? via : via2;
                             for (int ox = 0; ox < viaBase.length; ox++) {
                                 for (int oy = 0; oy < viaBase[0].length; oy++) {
                                     if (viaBase[ox][oy]) {
                                         int x = ii + ox - viaPixelWidth / 2;
                                         int y = jj + oy - viaPixelWidth / 2;
                                         if (x >= 0 && y >= 0 && x < base.length && y < base[0].length) {
-                                            base[x][y] = via;
+                                            base[x][y] = v;
                                         }
                                     }
                                 }
@@ -172,11 +176,11 @@ public class BackgroundMaker {
         }
 
         if (enableBlur) {
-            TextureManipulation.blurGaussian(base, 3);
+            base = TextureManipulation.blurStack(base, 3);
         }
 
         if (enableDarkness) {
-            TextureManipulation.darken(base, 50);
+            TextureManipulation.darken(base, 60);
         }
 
         return SpriteMaker.get().fromColors(base);

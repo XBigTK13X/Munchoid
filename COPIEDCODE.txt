@@ -18,3 +18,5 @@ http://armedunity.com/topic/4950-brightnesscontrastsaturation-shader/
 http://www.codeproject.com/Articles/19045/Manipulating-colors-in-NET-Part-1#rgb2
 
 //http://xboxforums.create.msdn.com/forums/p/53551/579133.aspx
+
+// Stack Blur Algorithm by Mario Klingemann <mario@quasimondo.com>
