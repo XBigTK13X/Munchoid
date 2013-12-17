@@ -25,24 +25,46 @@ public class BackgroundMaker {
         Trace
     }
 
+    public static Sprite noisyRadialDark() {
+        Color[][] base = radialDarkBase((int) Screen.width(100), (int) Screen.height(100));
+        TextureManipulation.subtleNoise(base, 5);
+        return SpriteMaker.get().fromColors(base);
+    }
+
+    public static Sprite noisyRadialBright() {
+        Color[][] base = radialBrightBase((int) Screen.width(100), (int) Screen.height(100));
+        TextureManipulation.subtleNoise(base, 40);
+        return SpriteMaker.get().fromColors(base);
+    }
+
     public static Sprite radialBright() {
         return radialBright((int) Screen.width(100), (int) Screen.height(100));
     }
 
     public static Sprite radialBright(int pixelWidth, int pixelHeight) {
-        Color c1 = Colors.randomPleasant();
-        Color c2 = new Color(1f, 1f, 1f, 1f);
-        return SpriteMaker.get().fromColors(ProcTextures.smoothRadial(pixelWidth, pixelHeight, c1, c2));
+
+        return SpriteMaker.get().fromColors(radialBrightBase(pixelWidth, pixelHeight));
     }
 
     public static Sprite radialDark() {
         return radialDark((int) Screen.width(100), (int) Screen.height(100));
     }
 
+
     public static Sprite radialDark(int pixelWidth, int pixelHeight) {
+        return SpriteMaker.get().fromColors(radialDarkBase(pixelWidth, pixelHeight));
+    }
+
+    private static Color[][] radialBrightBase(int w, int h) {
         Color c1 = Colors.randomPleasant();
-        Color c2 = new Color(0f, 0f, 0f, 1f);
-        return SpriteMaker.get().fromColors(ProcTextures.smoothRadial(pixelWidth, pixelHeight, c1, c2));
+        Color c2 = new Color(1f, 1f, 1f, 1f);
+        return ProcTextures.smoothRadial(w, h, c1, c2);
+    }
+
+    private static Color[][] radialDarkBase(int w, int h) {
+        Color c1 = Colors.randomPleasant();
+        Color c2 = Colors.brightnessShift(c1, -85);
+        return ProcTextures.smoothRadial(w, h, c1, c2);
     }
 
     public static Sprite printedCircuitBoard() {

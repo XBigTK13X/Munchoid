@@ -14,7 +14,7 @@ public class ProcTextures {
     public static void remove(Color[][] arr, Color color) {
         for (int ii = 0; ii < arr.length; ii++) {
             for (int jj = 0; jj < arr[ii].length; jj++) {
-                if (arr[ii][jj] == color) {
+                if (arr[ii][jj].equals(color)) {
                     arr[ii][jj] = null;
                 }
             }

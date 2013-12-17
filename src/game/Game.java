@@ -14,6 +14,7 @@ import game.pregame.MainMenu;
 import game.save.Options;
 import game.test.BackgroundGenerationTest;
 import game.test.CatchableGenerationTest;
+import game.test.MeterProgressTest;
 import game.test.SkeletonTest;
 import game.tutorial.ArenaTutorial;
 import game.tutorial.BattleTutorial;
@@ -99,6 +100,9 @@ public class Game implements ApplicationListener {
         else if (DevConfig.OutlineTest) {
             return new CatchableGenerationTest();
         }
+        else if (DevConfig.MeterTest) {
+            return new MeterProgressTest();
+        }
         else {
             return new MainMenu();
         }
@@ -126,7 +130,7 @@ public class Game implements ApplicationListener {
             if (InputWrapper.fullScreen()) {
                 Options options = Options.load();
                 Window.setFullScreen(!Gdx.graphics.isFullscreen(), options.WindowResolutionX, options.WindowResolutionY);
-                options.FullScreen = !Gdx.graphics.isFullscreen();
+                options.FullScreen = Gdx.graphics.isFullscreen();
                 options.save();
             }
             if (InputWrapper.devConsole()) {

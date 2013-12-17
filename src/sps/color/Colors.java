@@ -6,7 +6,7 @@ import sps.util.MathHelper;
 
 public class Colors {
 
-    private static int __defaultBrightnessShiftPercent = 15;
+    private static int __defaultBrightnessShiftPercent = 35;
 
     public static Color lighten(Color color) {
         return brightnessShift(color, __defaultBrightnessShiftPercent);
@@ -64,14 +64,14 @@ public class Colors {
     public static Color[] gradient(Color start, Color end, int steps) {
         Color[] gradient = new Color[steps];
         for (int ii = 0; ii < steps; ii++) {
-            float sP = (float) ii / steps;
+            float sP = 100 * (float) ii / steps;
             gradient[ii] = interpolate(sP, start, end);
         }
         return gradient;
     }
 
     public static Color interpolate(float startPercent, Color start, Color end) {
-        return HSV.fromRGB(start.r, start.g, start.b).lerp(startPercent, HSV.fromRGB(end.r, end.g, end.b)).toColor();
+        return new RGBA(start.r, start.g, start.b).lerp(startPercent, new RGBA(end.r, end.g, end.b)).toColor();
     }
 
     public static Color[] twoDtoOneD(Color[][] base) {

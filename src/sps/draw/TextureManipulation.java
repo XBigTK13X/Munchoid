@@ -2,6 +2,7 @@ package sps.draw;
 
 import com.badlogic.gdx.graphics.Color;
 import sps.color.Colors;
+import sps.core.RNG;
 import sps.draw.filters.GaussianFilter;
 import sps.draw.filters.GlowFilter;
 
@@ -88,6 +89,14 @@ public class TextureManipulation {
         for (int ii = 0; ii < base.length; ii++) {
             for (int jj = 0; jj < base[0].length; jj++) {
                 base[ii][jj] = Colors.brightnessShift(base[ii][jj], -percent);
+            }
+        }
+    }
+
+    public static void subtleNoise(Color[][] base, int maxChangePercent) {
+        for (int ii = 0; ii < base.length; ii++) {
+            for (int jj = 0; jj < base[0].length; jj++) {
+                base[ii][jj] = Colors.brightnessShift(base[ii][jj], RNG.next(maxChangePercent * 2) - maxChangePercent);
             }
         }
     }

@@ -26,22 +26,24 @@ public class Meter {
     private BoundingBox _boundingBox = BoundingBox.empty();
     private boolean _isVertical;
 
+    private int _scaledPercent;
+
     public Meter(int screenWidthPercent, int screenHeightPercent, Color color, Point2 position, boolean vertical) {
         _isVertical = vertical;
         _position = new Point2(0, 0);
         _width = (int) Screen.width(screenWidthPercent);
         _height = (int) Screen.height(screenHeightPercent);
 
-        Color[][] bg = ProcTextures.gradient(_width, _height, Color.LIGHT_GRAY, Colors.darken(Color.LIGHT_GRAY), !vertical);
+        Color[][] bg = ProcTextures.gradient(_width, _height, new Color(Color.LIGHT_GRAY), Colors.darken(new Color(Color.LIGHT_GRAY)), !vertical);
         _background = SpriteMaker.get().fromColors(bg);
         _background.flip(true, true);
 
         Color[][] base = ProcTextures.gradient(_width, _height, Colors.lighten(color), Colors.darken(color), !vertical);
         _sprite = SpriteMaker.get().fromColors(base);
 
-        Color[][] frame = ProcTextures.monotone(_width, _height, Color.BLACK);
-        Outline.single(frame, Color.WHITE, GameConfig.MeterOutlinePixelThickness);
-        ProcTextures.remove(frame, Color.BLACK);
+        Color[][] frame = ProcTextures.monotone(_width, _height, new Color(Color.BLACK));
+        Outline.single(frame, new Color(Color.WHITE), GameConfig.MeterOutlinePixelThickness);
+        ProcTextures.remove(frame, new Color(Color.BLACK));
         _frame = SpriteMaker.get().fromColors(frame);
 
         scale(0);
@@ -60,6 +62,7 @@ public class Meter {
     }
 
     public void scale(int percent) {
+        _scaledPercent = percent;
         if (_isVertical) {
             scaleHeight(100);
             scaleHeight(percent);
@@ -77,9 +80,10 @@ public class Meter {
     }
 
     public void shade(Color color) {
-        _sprite.setColor(color);
-        _background.setColor(color);
-        _frame.setColor(color);
+        Color c = new Color(color);
+        _sprite.setColor(c);
+        _background.setColor(c);
+        _frame.setColor(c);
     }
 
     public Sprite getBackground() {
@@ -96,5 +100,9 @@ public class Meter {
         _sprite.setPosition(_position.X, _position.Y);
         _frame.setPosition(_position.X, _position.Y);
         BoundingBox.fromDimensions(_boundingBox, _position.X, _position.Y, _width, _height);
+    }
+
+    public int getPercent() {
+        return _scaledPercent;
     }
 }
