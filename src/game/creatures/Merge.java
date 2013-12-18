@@ -1,9 +1,9 @@
 package game.creatures;
 
-import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.creatures.style.Grid;
 import game.forces.Force;
+import sps.color.Color;
 import sps.color.HSV;
 import sps.core.RNG;
 

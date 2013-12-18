@@ -1,6 +1,5 @@
 package sps.color;
 
-import com.badlogic.gdx.graphics.Color;
 import junit.framework.TestCase;
 import org.junit.Test;
 

@@ -1,8 +1,8 @@
 package game.creatures;
 
-import com.badlogic.gdx.graphics.Color;
 import game.DevConfig;
 import game.GameConfig;
+import sps.color.Color;
 import sps.display.DrawApiCall;
 import sps.display.Window;
 

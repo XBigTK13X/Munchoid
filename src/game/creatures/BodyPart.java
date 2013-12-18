@@ -1,6 +1,5 @@
 package game.creatures;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.DevConfig;
 import game.GameConfig;
@@ -9,6 +8,7 @@ import game.creatures.part.Designs;
 import game.creatures.style.Grid;
 import game.creatures.style.Outline;
 import sps.bridge.DrawDepths;
+import sps.color.Color;
 import sps.core.Point2;
 import sps.display.Window;
 import sps.draw.SpriteMaker;
@@ -184,10 +184,10 @@ public class BodyPart {
     public void draw() {
         _joints.draw();
         if (DevConfig.SkeletonTest) {
-            _sprite.setColor(_partTint);
+            _sprite.setColor(_partTint.getGdxColor());
         }
         else {
-            _sprite.setColor(_body.getHighlight());
+            _sprite.setColor(_body.getHighlight().getGdxColor());
         }
 
         _sprite.setOrigin(_pivot.X * _scale, _pivot.Y * _scale);

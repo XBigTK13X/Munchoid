@@ -1,6 +1,6 @@
 package sps.draw;
 
-import com.badlogic.gdx.graphics.Color;
+import sps.color.Color;
 import sps.color.Colors;
 
 // Stack Blur v1.0 from

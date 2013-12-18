@@ -1,10 +1,10 @@
 package game.population;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.InputWrapper;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
+import sps.color.Color;
 import sps.display.Screen;
 import sps.display.Window;
 import sps.draw.SpriteMaker;
@@ -26,8 +26,7 @@ public class DeathCauseEradicated {
         notification += "\n\nPress " + Commands.get("Pass") + " to continue";
         _announcement = TextPool.get().write(notification, Screen.pos(10, 50));
         _announcement.setDepth(DrawDepths.get("DeathCauseResultText"));
-        Color overlay = new Color(Color.BLACK);
-        overlay.a = .90f;
+        Color overlay = new Color(Color.BLACK).newAlpha(.90f);
         _bg = SpriteMaker.get().pixel(overlay);
         _bg.setSize(Screen.width(100), Screen.height(100));
     }

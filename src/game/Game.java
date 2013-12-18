@@ -3,7 +3,6 @@ package game;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import game.arena.Arena;
 import game.battle.Battle;
 import game.battle.MergeOutcome;
@@ -22,6 +21,7 @@ import game.tutorial.PopulationOverviewTutorial;
 import sps.bridge.Commands;
 import sps.bridge.SpriteTypes;
 import sps.bridge.Sps;
+import sps.color.Color;
 import sps.core.DevConsole;
 import sps.core.Logger;
 import sps.core.RNG;

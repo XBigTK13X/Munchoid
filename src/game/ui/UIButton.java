@@ -1,12 +1,12 @@
 package game.ui;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.creatures.style.Outline;
 import org.apache.commons.lang3.StringUtils;
 import sps.bridge.Command;
 import sps.bridge.DrawDepth;
 import sps.bridge.DrawDepths;
+import sps.color.Color;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.display.Window;

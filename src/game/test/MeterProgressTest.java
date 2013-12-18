@@ -1,8 +1,8 @@
 package game.test;
 
-import com.badlogic.gdx.graphics.Color;
 import game.InputWrapper;
 import game.ui.Meter;
+import sps.color.Color;
 import sps.display.Screen;
 import sps.states.State;
 import sps.text.Text;

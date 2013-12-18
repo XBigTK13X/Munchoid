@@ -1,10 +1,10 @@
 package game.ui;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import game.creatures.style.Outline;
 import sps.bridge.DrawDepths;
+import sps.color.Color;
 import sps.color.Colors;
 import sps.core.Point2;
 import sps.display.Screen;
@@ -81,9 +81,9 @@ public class Meter {
 
     public void shade(Color color) {
         Color c = new Color(color);
-        _sprite.setColor(c);
-        _background.setColor(c);
-        _frame.setColor(c);
+        _sprite.setColor(c.getGdxColor());
+        _background.setColor(c.getGdxColor());
+        _frame.setColor(c.getGdxColor());
     }
 
     public Sprite getBackground() {

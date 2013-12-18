@@ -1,6 +1,5 @@
 package sps.color;
 
-import com.badlogic.gdx.graphics.Color;
 import sps.util.MathHelper;
 
 //From http://www.codeproject.com/Articles/19045/Manipulating-colors-in-NET-Part-1#rgb2

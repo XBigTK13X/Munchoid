@@ -1,11 +1,11 @@
 package sps.draw;
 
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.creatures.Atom;
+import sps.color.Color;
 import sps.core.Loader;
 
 public class SpriteMaker {
@@ -30,7 +30,7 @@ public class SpriteMaker {
             for (int jj = 0; jj < atoms[0].length; jj++) {
                 at = atoms[ii][jj];
                 if (at != null && at.isActive()) {
-                    textureBase.setColor(at.getColor());
+                    textureBase.setColor(at.getColor().getGdxColor());
                     textureBase.drawPixel((int) at.getLocalX(), atoms[0].length - (int) at.getLocalY());
                 }
             }
@@ -46,7 +46,7 @@ public class SpriteMaker {
             for (int jj = 0; jj < colors[0].length; jj++) {
                 co = colors[ii][jj];
                 if (co != null) {
-                    textureBase.setColor(co);
+                    textureBase.setColor(co.getGdxColor());
                     textureBase.drawPixel(ii, colors[0].length - jj);
                 }
             }
@@ -56,7 +56,7 @@ public class SpriteMaker {
 
     public Sprite pixel(Color color) {
         Pixmap textureBase = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        textureBase.setColor(color);
+        textureBase.setColor(color.getGdxColor());
         textureBase.drawPixel(0, 0);
         return new Sprite(new Texture(textureBase));
     }

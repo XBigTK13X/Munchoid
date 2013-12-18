@@ -1,8 +1,8 @@
 package game.battle;
 
-import com.badlogic.gdx.graphics.Color;
 import game.creatures.Creature;
 import game.ui.Meter;
+import sps.color.Color;
 import sps.core.Point2;
 import sps.display.Screen;
 

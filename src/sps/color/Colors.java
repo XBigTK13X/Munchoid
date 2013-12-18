@@ -1,6 +1,5 @@
 package sps.color;
 
-import com.badlogic.gdx.graphics.Color;
 import sps.core.RNG;
 import sps.util.MathHelper;
 
@@ -106,7 +105,7 @@ public class Colors {
     public static int[] colorsToInts(Color[] colors) {
         int[] ints = new int[colors.length];
         for (int ii = 0; ii < colors.length; ii++) {
-            ints[ii] = Color.rgba8888(colors[ii]);
+            ints[ii] = colors[ii].rgba8888();
         }
         return ints;
     }

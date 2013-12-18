@@ -1,12 +1,12 @@
 package game.forceselection;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import game.creatures.Creature;
 import game.forces.Force;
 import game.ui.Meter;
 import sps.bridge.Commands;
+import sps.color.Color;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.entities.HitTest;

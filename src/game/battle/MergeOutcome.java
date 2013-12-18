@@ -1,6 +1,5 @@
 package game.battle;
 
-import com.badlogic.gdx.graphics.Color;
 import game.DevConfig;
 import game.GameConfig;
 import game.InputWrapper;
@@ -15,6 +14,7 @@ import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
+import sps.color.Color;
 import sps.color.Colors;
 import sps.core.Logger;
 import sps.core.RNG;

@@ -1,7 +1,7 @@
 package game.ui;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import sps.color.Color;
 import sps.core.Point2;
 import sps.io.Input;
 import sps.ui.Buttons;

@@ -1,8 +1,8 @@
 package sps.ui;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.bridge.DrawDepths;
+import sps.color.Color;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.display.Window;

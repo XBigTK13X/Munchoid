@@ -1,9 +1,9 @@
 package sps.ui;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.bridge.DrawDepth;
 import sps.bridge.DrawDepths;
+import sps.color.Color;
 import sps.display.Window;
 import sps.entities.HitTest;
 import sps.io.Input;
@@ -41,11 +41,11 @@ public class Buttons {
         }
 
         public void normal() {
-            getSprite().setColor(Color.GRAY);
+            getSprite().setColor(Color.GRAY.getGdxColor());
         }
 
         public void over() {
-            getSprite().setColor(Color.LIGHT_GRAY);
+            getSprite().setColor(Color.LIGHT_GRAY.getGdxColor());
         }
 
         public BoundingBox getBounds() {

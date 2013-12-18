@@ -1,11 +1,11 @@
 package sps.display;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.bridge.DrawDepth;
 import sps.bridge.DrawDepths;
 import sps.bridge.SpriteType;
 import sps.bridge.Sps;
+import sps.color.Color;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.core.SpsConfig;
@@ -70,9 +70,9 @@ public class Animation {
                 }
             }
 
-            Color renderColor = (alternate) ? _color.tmp().mul(flashColor) : _color;
+            Color renderColor = (alternate) ? _color.mul(flashColor) : _color;
             _sprite.setPosition(_position.X, _position.Y);
-            _sprite.setColor(renderColor);
+            _sprite.setColor(renderColor.getGdxColor());
             if (_sprite.isFlipX() != flipX) {
                 _sprite.flip(true, _sprite.isFlipY());
             }

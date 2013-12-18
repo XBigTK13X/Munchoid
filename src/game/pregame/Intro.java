@@ -1,12 +1,12 @@
 package game.pregame;
 
-import com.badlogic.gdx.graphics.Color;
 import game.DevConfig;
 import game.GameConfig;
 import game.movie.Movie;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
+import sps.color.Color;
 import sps.display.Screen;
 import sps.io.Input;
 import sps.states.State;

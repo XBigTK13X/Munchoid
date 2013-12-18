@@ -1,6 +1,5 @@
 package game.battle;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
 import game.creatures.Creature;
@@ -8,6 +7,7 @@ import game.forces.Force;
 import game.forceselection.ForceSelection;
 import game.ui.Meter;
 import sps.bridge.Commands;
+import sps.color.Color;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.entities.HitTest;
@@ -33,7 +33,7 @@ public class ForceMeter {
 
         Color core = new Color(Color.GRAY);
         if (!owner.getStats().isEnabled(force)) {
-            core.a = .33f;
+            core = core.newAlpha(.33f);
         }
 
         _meter = new Meter(width, height, force.Color, _position, false);

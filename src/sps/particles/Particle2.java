@@ -1,8 +1,8 @@
 package sps.particles;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.bridge.DrawDepths;
+import sps.color.Color;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.display.Window;
@@ -40,7 +40,7 @@ public class Particle2 extends PEComponent {
     public void draw() {
         if (IsActive) {
             _sprite.setSize(Width, Height);
-            _sprite.setColor(_color);
+            _sprite.setColor(_color.getGdxColor());
             _sprite.setRotation((float) (Angle * 180 / Math.PI));
             _sprite.setPosition(Position.X, Position.Y);
             Window.get().schedule(_sprite, DrawDepths.get("SpsParticle"));
@@ -99,7 +99,7 @@ public class Particle2 extends PEComponent {
 
     public void update() {
         _life *= .85f;
-        _color.a *= .999f;
+        _color = _color.newAlpha(999f);
         if ((_life <= .001 && Entity == null) || (Entity != null && !Entity.isActive())) {
             IsActive = false;
         }
@@ -107,7 +107,7 @@ public class Particle2 extends PEComponent {
     }
 
     public void clear() {
-        _color.a = 0;
+        _color = _color.newAlpha(0);
         _life = 0;
         IsActive = false;
     }

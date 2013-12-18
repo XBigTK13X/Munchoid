@@ -1,7 +1,7 @@
 package sps.draw;
 
-import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
+import sps.color.Color;
 import sps.color.Colors;
 import sps.core.Point2;
 import sps.core.RNG;

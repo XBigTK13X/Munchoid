@@ -1,10 +1,10 @@
 package game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.ui.UIButton;
 import sps.bridge.DrawDepths;
+import sps.color.Color;
 import sps.display.Screen;
 import sps.display.Window;
 import sps.draw.SpriteMaker;

@@ -1,6 +1,6 @@
 package game.creatures;
 
-import com.badlogic.gdx.graphics.Color;
+import sps.color.Color;
 import sps.core.Logger;
 import sps.util.BoundingBox;
 

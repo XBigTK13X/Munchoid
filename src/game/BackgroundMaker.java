@@ -1,7 +1,7 @@
 package game;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import sps.color.Color;
 import sps.color.Colors;
 import sps.core.Point2;
 import sps.core.RNG;

@@ -1,6 +1,6 @@
 package sps.particles;
 
-import com.badlogic.gdx.graphics.Color;
+import sps.color.Color;
 import sps.core.Point2;
 import sps.entities.Entity;
 

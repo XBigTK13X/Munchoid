@@ -1,8 +1,8 @@
 package sps.display.render;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.bridge.DrawDepth;
+import sps.color.Color;
 import sps.core.Point2;
 import sps.display.Assets;
 import sps.display.DrawApiCall;

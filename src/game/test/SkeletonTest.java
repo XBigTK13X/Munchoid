@@ -1,11 +1,11 @@
 package game.test;
 
-import com.badlogic.gdx.graphics.Color;
 import game.InputWrapper;
 import game.creatures.BodyPart;
 import game.creatures.Creature;
 import game.forces.Force;
 import sps.bridge.Commands;
+import sps.color.Color;
 import sps.core.Logger;
 import sps.core.Point2;
 import sps.display.Screen;

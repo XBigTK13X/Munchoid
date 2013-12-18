@@ -1,10 +1,10 @@
 package sps.text;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import sps.bridge.DrawDepth;
 import sps.bridge.DrawDepths;
+import sps.color.Color;
 import sps.core.Point2;
 import sps.display.Assets;
 import sps.display.Window;

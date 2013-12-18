@@ -1,6 +1,6 @@
 package sps.display;
 
-import com.badlogic.gdx.graphics.Color;
+import sps.color.Color;
 
 public class DrawApiCall {
     public final float X;

@@ -1,6 +1,5 @@
 package sps.color;
 
-import com.badlogic.gdx.graphics.Color;
 import sps.util.MathHelper;
 
 public class HSV implements ColorSpec<HSV> {

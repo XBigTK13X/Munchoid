@@ -1,12 +1,12 @@
 package game.test;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.BackgroundMaker;
 import game.GameConfig;
 import game.InputWrapper;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
+import sps.color.Color;
 import sps.color.Colors;
 import sps.core.Logger;
 import sps.display.Window;
@@ -49,7 +49,7 @@ public class BackgroundGenerationTest implements State {
             _bg.setPosition(0, 0);
         }
         else {
-            Logger.info("New simple: " +_bgColor.toString());
+            Logger.info("New simple: " + _bgColor.toString());
             _bg = SpriteMaker.get().fromColors(ProcTextures.monotone(500, 500, _bgColor));
             _bg.setPosition(200, 200);
         }

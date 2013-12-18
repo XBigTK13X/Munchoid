@@ -1,7 +1,7 @@
 package game.creatures;
 
-import com.badlogic.gdx.graphics.Color;
 import game.arena.Floor;
+import sps.color.Color;
 import sps.color.Colors;
 import sps.util.MathHelper;
 

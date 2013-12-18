@@ -1,8 +1,8 @@
 package sps.draw;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
+import sps.color.Color;
 
 public class DrawAPI {
     private static DrawAPI __instance;
@@ -22,7 +22,7 @@ public class DrawAPI {
     }
 
     public void setColor(Color color) {
-        _renderer.setColor(color);
+        _renderer.setColor(color.getGdxColor());
     }
 
     public void update(Matrix4 transform, Matrix4 projection) {

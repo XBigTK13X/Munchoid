@@ -1,6 +1,6 @@
 package game.creatures.style;
 
-import com.badlogic.gdx.graphics.Color;
+import sps.color.Color;
 import sps.color.Colors;
 
 public class Outline {

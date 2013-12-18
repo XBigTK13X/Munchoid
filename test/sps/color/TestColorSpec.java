@@ -1,6 +1,5 @@
 package sps.color;
 
-import com.badlogic.gdx.graphics.Color;
 import junit.framework.TestCase;
 import org.junit.Test;
 
@@ -9,6 +8,7 @@ public class TestColorSpec extends TestCase {
     public void testNullBlack() {
         rgbConversionTest(Color.BLACK, 0, 0, 0, 0, 0, 0);
     }
+
     @Test
     public void testNullWhite() {
         rgbConversionTest(Color.WHITE, 0, 0, 1, 100, 0, 0);

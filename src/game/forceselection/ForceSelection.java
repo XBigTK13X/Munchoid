@@ -1,6 +1,5 @@
 package game.forceselection;
 
-import com.badlogic.gdx.graphics.Color;
 import game.DevConfig;
 import game.InputWrapper;
 import game.arena.Arena;
@@ -10,6 +9,7 @@ import game.ui.UIButton;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.DrawDepths;
+import sps.color.Color;
 import sps.color.Colors;
 import sps.display.Screen;
 import sps.entities.EntityManager;

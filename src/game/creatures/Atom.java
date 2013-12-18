@@ -1,6 +1,6 @@
 package game.creatures;
 
-import com.badlogic.gdx.graphics.Color;
+import sps.color.Color;
 
 public class Atom {
     public static int count = 0;

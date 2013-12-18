@@ -1,10 +1,10 @@
 package game.tutorial;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
 import sps.bridge.SpriteTypes;
+import sps.color.Color;
 import sps.color.Colors;
 import sps.display.*;
 import sps.draw.SpriteMaker;
@@ -29,7 +29,7 @@ public class Tutorial {
     public Tutorial() {
         if (__background == null) {
             Color bg = new Color(Color.BLACK);
-            bg.a = .8f;
+            bg = bg.newAlpha(.8f);
             __background = SpriteMaker.get().pixel(bg);
             __background.setSize(Screen.width(100), Screen.height(100));
 
@@ -62,10 +62,10 @@ public class Tutorial {
         if (!_currentStep.getArrowLocation().isZero()) {
             __arrow.setPosition(_currentStep.getArrowLocation().X, _currentStep.getArrowLocation().Y);
             __arrow.setRotation(45);
-            __arrow.setColor(Colors.randomPleasant());
+            __arrow.setColor(Colors.randomPleasant().getGdxColor());
         }
         else {
-            __arrow.setColor(new Color(0, 0, 0, 0));
+            __arrow.setColor(new Color(0, 0, 0, 0).getGdxColor());
         }
     }
 

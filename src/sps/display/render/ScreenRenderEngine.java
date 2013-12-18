@@ -1,7 +1,6 @@
 package sps.display.render;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -9,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import game.GameConfig;
+import sps.color.Color;
 import sps.core.Point2;
 import sps.display.Assets;
 import sps.display.DrawApiCall;
@@ -54,7 +54,7 @@ public class ScreenRenderEngine {
             _nextToWrite.draw(_batch, content, location.X, location.Y - offset);
         }
 
-        _nextToWrite.setColor(filter);
+        _nextToWrite.setColor(filter.getGdxColor());
         _nextToWrite.draw(_batch, content, location.X, location.Y);
     }
 

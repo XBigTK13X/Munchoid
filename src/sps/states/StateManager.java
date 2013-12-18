@@ -1,6 +1,5 @@
 package sps.states;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.DevConfig;
 import game.GameConfig;
@@ -11,6 +10,7 @@ import game.save.Options;
 import game.tutorial.Tutorial;
 import sps.audio.MusicPlayer;
 import sps.bridge.DrawDepths;
+import sps.color.Color;
 import sps.core.Logger;
 import sps.display.Screen;
 import sps.display.Window;

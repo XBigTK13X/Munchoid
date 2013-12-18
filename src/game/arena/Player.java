@@ -1,7 +1,6 @@
 package game.arena;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import game.DevConfig;
 import game.GameConfig;
 import game.InputWrapper;
@@ -10,6 +9,7 @@ import game.creatures.Creature;
 import sps.audio.MusicPlayer;
 import sps.audio.SingleSongPlayer;
 import sps.bridge.*;
+import sps.color.Color;
 import sps.core.Point2;
 import sps.core.SpsConfig;
 import sps.display.Screen;

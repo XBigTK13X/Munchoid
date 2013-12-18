@@ -1,6 +1,6 @@
 package sps.draw;
 
-import com.badlogic.gdx.graphics.Color;
+import sps.color.Color;
 import sps.core.RNG;
 
 // Based off of: http://devmag.org.za/2009/04/25/perlin-noise/

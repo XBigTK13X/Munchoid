@@ -1,8 +1,8 @@
 package game.forces;
 
-import com.badlogic.gdx.graphics.Color;
 import game.GameConfig;
 import game.forces.sideeffects.*;
+import sps.color.Color;
 import sps.color.RGBA;
 import sps.core.RNG;
 

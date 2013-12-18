@@ -1,6 +1,6 @@
 package game.population;
 
-import com.badlogic.gdx.graphics.Color;
+import sps.color.Color;
 import sps.color.RGBA;
 
 public enum Biome {

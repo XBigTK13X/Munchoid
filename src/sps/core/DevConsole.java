@@ -1,8 +1,8 @@
 package sps.core;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.bridge.DrawDepths;
+import sps.color.Color;
 import sps.display.Screen;
 import sps.display.Window;
 import sps.draw.SpriteMaker;
@@ -57,8 +57,7 @@ public class DevConsole {
     private final Sprite _consoleBase;
 
     private DevConsole() {
-        _bgColor = new Color(Color.BLACK);
-        _bgColor.a = (byte) 180;
+        _bgColor = new Color(Color.BLACK).newAlpha(.75f);
         _consoleBase = SpriteMaker.get().pixel(Color.WHITE);
         _isVisible = false;
         add("The development console has been started.");
@@ -83,7 +82,7 @@ public class DevConsole {
     public void draw() {
         if (_isVisible) {
             _consoleBase.setSize(Screen.get().VirtualWidth, Screen.get().VirtualHeight);
-            _consoleBase.setColor(_bgColor);
+            _consoleBase.setColor(_bgColor.getGdxColor());
             _consoleBase.setPosition(0, 0);
             Window.get(true).schedule(_consoleBase, DrawDepths.get("DevConsole"));
             for (ConsoleText _content : _contents) {

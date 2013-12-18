@@ -1,6 +1,6 @@
 package sps.draw;
 
-import com.badlogic.gdx.graphics.Color;
+import sps.color.Color;
 import sps.color.Colors;
 import sps.core.RNG;
 import sps.draw.filters.GaussianFilter;
@@ -71,7 +71,7 @@ public class TextureManipulation {
         BufferedImage source = new BufferedImage(base.length, base[0].length, BufferedImage.TYPE_INT_ARGB);
         for (int ii = 0; ii < base.length; ii++) {
             for (int jj = 0; jj < base[0].length; jj++) {
-                source.setRGB(ii, jj, Color.rgb888(base[ii][jj]));
+                source.setRGB(ii, jj, base[ii][jj].rgb888());
             }
         }
         return source;
