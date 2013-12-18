@@ -34,16 +34,16 @@ public class Meter {
         _width = (int) Screen.width(screenWidthPercent);
         _height = (int) Screen.height(screenHeightPercent);
 
-        Color[][] bg = ProcTextures.gradient(_width, _height, new Color(Color.LIGHT_GRAY), Colors.darken(new Color(Color.LIGHT_GRAY)), !vertical);
+        Color[][] bg = ProcTextures.gradient(_width, _height, Color.LIGHT_GRAY, Colors.darken(Color.LIGHT_GRAY), !vertical);
         _background = SpriteMaker.get().fromColors(bg);
         _background.flip(true, true);
 
         Color[][] base = ProcTextures.gradient(_width, _height, Colors.lighten(color), Colors.darken(color), !vertical);
         _sprite = SpriteMaker.get().fromColors(base);
 
-        Color[][] frame = ProcTextures.monotone(_width, _height, new Color(Color.BLACK));
-        Outline.single(frame, new Color(Color.WHITE), GameConfig.MeterOutlinePixelThickness);
-        ProcTextures.remove(frame, new Color(Color.BLACK));
+        Color[][] frame = ProcTextures.monotone(_width, _height, Color.BLACK);
+        Outline.single(frame, Color.WHITE, GameConfig.MeterOutlinePixelThickness);
+        ProcTextures.remove(frame, Color.BLACK);
         _frame = SpriteMaker.get().fromColors(frame);
 
         scale(0);
@@ -80,10 +80,9 @@ public class Meter {
     }
 
     public void shade(Color color) {
-        Color c = new Color(color);
-        _sprite.setColor(c.getGdxColor());
-        _background.setColor(c.getGdxColor());
-        _frame.setColor(c.getGdxColor());
+        _sprite.setColor(color.getGdxColor());
+        _background.setColor(color.getGdxColor());
+        _frame.setColor(color.getGdxColor());
     }
 
     public Sprite getBackground() {

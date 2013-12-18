@@ -27,7 +27,7 @@ public class PopulationHUD {
     private int _pad = 1;
     private Point2 _size;
 
-    private Color _iconColor = new Color(Color.WHITE);
+    private Color _iconColor = Color.WHITE;
 
     private Color[][] _popIconBase;
 

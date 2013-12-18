@@ -83,10 +83,10 @@ public class MergeOutcome implements State {
                 rejectMerge();
             }
         };
-        reject.setXY((int) Screen.width(5), (int) Screen.height(35));
         reject.setSize(40, 50);
         reject.setBackgroundColors(Colors.brightnessShift(Color.RED, -80), Colors.brightnessShift(Color.RED, -45));
         reject.setDepth(DrawDepths.get("MergeChoice"));
+        reject.setXY((int) Screen.width(5), (int) Screen.height(35));
 
         final UIButton accept = new UIButton("") {
             @Override
@@ -94,10 +94,11 @@ public class MergeOutcome implements State {
                 acceptMerge();
             }
         };
-        accept.setXY((int) Screen.width(55), (int) Screen.height(35));
+
         accept.setSize(40, 50);
         accept.setBackgroundColors(Colors.brightnessShift(Color.GREEN, -80), Colors.brightnessShift(Color.GREEN, -45));
         accept.setDepth(DrawDepths.get("MergeChoice"));
+        accept.setXY((int) Screen.width(55), (int) Screen.height(35));
 
         Tooltips.get().add(new Tooltips.User() {
 

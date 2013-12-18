@@ -28,7 +28,7 @@ public class Tutorial {
 
     public Tutorial() {
         if (__background == null) {
-            Color bg = new Color(Color.BLACK);
+            Color bg = Color.BLACK;
             bg = bg.newAlpha(.8f);
             __background = SpriteMaker.get().pixel(bg);
             __background.setSize(Screen.width(100), Screen.height(100));

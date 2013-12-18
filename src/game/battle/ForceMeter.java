@@ -1,6 +1,7 @@
 package game.battle;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import game.DevConfig;
 import game.GameConfig;
 import game.creatures.Creature;
 import game.forces.Force;
@@ -31,7 +32,7 @@ public class ForceMeter {
         _position = origin;
         int stat = _owner.getStats().get(force);
 
-        Color core = new Color(Color.GRAY);
+        Color core = Color.GRAY;
         if (!owner.getStats().isEnabled(force)) {
             core = core.newAlpha(.33f);
         }
@@ -58,7 +59,7 @@ public class ForceMeter {
             });
 
             if (stat > GameConfig.DisableStat && _owner.getStats().isEnabled(_force)) {
-                Buttons.get().add(new Buttons.User() {
+                Buttons.User user = new Buttons.User() {
                     @Override
                     public Sprite getSprite() {
                         return _meter.getBackground();
@@ -67,18 +68,24 @@ public class ForceMeter {
                     @Override
                     public void onClick() {
                         State state = StateManager.get().current();
-                        Battle battle = (Battle) state;
-                        battle.playerActivate(_force);
+                        if (DevConfig.MeterTest == false) {
+                            Battle battle = (Battle) state;
+                            battle.playerActivate(_force);
+                        }
                     }
 
                     @Override
                     public void over() {
                         super.over();
                         State state = StateManager.get().current();
-                        Battle battle = (Battle) state;
-                        battle.playerShowCost(_force);
+                        if (DevConfig.MeterTest == false) {
+                            Battle battle = (Battle) state;
+                            battle.playerShowCost(_force);
+                        }
                     }
-                });
+                };
+                user.setShouldDraw(false);
+                Buttons.get().add(user);
             }
         }
     }

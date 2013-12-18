@@ -17,7 +17,7 @@ public class Window {
     private static Renderer __fixed;
     private static boolean __tipHasBeenDisplayed = false;
     private static ApplicationListener __app;
-    private static Color __bgColor = new Color(Color.BLACK);
+    private static Color __bgColor = Color.BLACK;
 
     public static int Height;
     public static int Width;

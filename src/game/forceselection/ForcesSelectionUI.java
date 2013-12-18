@@ -18,8 +18,8 @@ public class ForcesSelectionUI {
 
     public ForcesSelectionUI(Creature owner) {
         _owner = owner;
-        _origin = new Point2(owner.getLocation().X, Screen.get().VirtualHeight - __heightPercent * Force.values().length - Screen.height(48));
-        _meters = new ArrayList<ForceSelectionButton>();
+        _origin = new Point2(Screen.width(10), Screen.get().VirtualHeight - __heightPercent * Force.values().length - Screen.height(48));
+        _meters = new ArrayList<>();
         int row = Force.values().length;
         for (Force force : Force.values()) {
             row--;

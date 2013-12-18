@@ -1,9 +1,11 @@
 package game.forceselection;
 
 import game.DevConfig;
+import game.GameConfig;
 import game.InputWrapper;
 import game.arena.Arena;
 import game.creatures.Creature;
+import game.forces.Force;
 import game.tournament.Tournament;
 import game.ui.UIButton;
 import sps.audio.MusicPlayer;
@@ -11,6 +13,7 @@ import sps.audio.SingleSongPlayer;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.color.Colors;
+import sps.core.Logger;
 import sps.display.Screen;
 import sps.entities.EntityManager;
 import sps.states.State;
@@ -25,6 +28,11 @@ public class ForceSelection implements State {
     private ForcesSelectionUI _forces;
     private Text _wrongCountMessage;
 
+    public ForceSelection() {
+        this(new Creature());
+        Logger.error("ONLY USE ForceSelection() FOR DEBUGGING!!!");
+    }
+
     public ForceSelection(Creature pet) {
         _pet = pet;
     }
@@ -32,6 +40,11 @@ public class ForceSelection implements State {
     @Override
     public void create() {
         //TODO Option that automatically chooses
+        if (DevConfig.ForceSelectionTest) {
+            for (Force force : Force.values()) {
+                _pet.getStats().set(force, GameConfig.MaxStat);
+            }
+        }
         if (_pet.getStats().possibleActiveForces() <= 4 && !DevConfig.AlwaysSelectForces) {
             exitMenu();
             return;
@@ -41,17 +54,17 @@ public class ForceSelection implements State {
 
         setMessage();
 
-        final UIButton accept = new UIButton("Confirm") {
+        final UIButton confirm = new UIButton("Confirm") {
             @Override
             public void click() {
                 confirmSelection();
             }
         };
 
-        accept.setSize(10, 8);
-        accept.setXY(50, 10);
-        accept.setBackgroundColors(Colors.brightnessShift(Color.GREEN, -80), Colors.brightnessShift(Color.GREEN, -45));
-        accept.setDepth(DrawDepths.get("ForceAccept"));
+        confirm.setSize(30, 24);
+        confirm.setBackgroundColors(Colors.brightnessShift(Color.GREEN, -80), Colors.brightnessShift(Color.GREEN, -45));
+        confirm.setDepth(DrawDepths.get("ForceAccept"));
+        confirm.setScreenPercent(35, 10);
 
         _forces = new ForcesSelectionUI(_pet);
         if (DevConfig.EndToEndStateLoadTest) {
@@ -98,7 +111,7 @@ public class ForceSelection implements State {
 
     private void setMessage() {
         if (_wrongCountMessage == null) {
-            _wrongCountMessage = TextPool.get().write(getMessage(), Screen.pos(10, 30));
+            _wrongCountMessage = TextPool.get().write(getMessage(), Screen.pos(25, 45));
         }
         else {
             if (_lastEnabledCount != _pet.getStats().enabledCount()) {

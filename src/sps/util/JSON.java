@@ -1,7 +1,5 @@
 package sps.util;
 
-import sps.core.Logger;
-
 import java.lang.reflect.Field;
 
 public class JSON {
@@ -39,8 +37,9 @@ public class JSON {
                     config += ",";
                 }
             }
-            catch (IllegalAccessException e) {
-                Logger.exception(e);
+            catch (IllegalAccessException swallow) {
+                //This will happen when trying to access private static fields,
+                //These aren't needed when printing config values
             }
         }
         config += "}";

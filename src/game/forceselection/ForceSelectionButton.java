@@ -54,7 +54,8 @@ public class ForceSelectionButton {
         if (!_owner.getStats().isEnabled(_force) || _owner.getStats().get(_force) <= GameConfig.DisableStat) {
             moveToRightSide();
         }
-        Buttons.get().add(new Buttons.User() {
+
+        Buttons.User user = new Buttons.User() {
             @Override
             public Sprite getSprite() {
                 return _meter.getBackground();
@@ -70,7 +71,9 @@ public class ForceSelectionButton {
                     moveToLeftSide();
                 }
             }
-        });
+        };
+        user.setShouldDraw(false);
+        Buttons.get().add(user);
 
     }
 

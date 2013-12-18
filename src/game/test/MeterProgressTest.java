@@ -1,6 +1,8 @@
 package game.test;
 
 import game.InputWrapper;
+import game.arena.Catchable;
+import game.battle.BattleHUD;
 import game.ui.Meter;
 import sps.color.Color;
 import sps.display.Screen;
@@ -11,9 +13,13 @@ import sps.text.TextPool;
 public class MeterProgressTest implements State {
     private Meter _meter;
     private Text _progress;
+    private BattleHUD _hud;
 
     private void regenMeter() {
-        _meter = new Meter(80, 10, Color.BLUE, Screen.pos(5, 45), false);
+        _meter = new Meter(40, 10, Color.BLUE, Screen.pos(55, 45), false);
+        Catchable c = new Catchable(null, null);
+        c.getCreature().setLocation(Screen.pos(30, 15));
+        _hud = new BattleHUD(c.getCreature());
     }
 
     @Override
@@ -26,6 +32,7 @@ public class MeterProgressTest implements State {
     @Override
     public void draw() {
         _meter.draw();
+        _hud.draw();
     }
 
     @Override

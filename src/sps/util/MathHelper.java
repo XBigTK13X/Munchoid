@@ -62,7 +62,7 @@ public class MathHelper {
     //the even values are considered the start (starting at 0)
     public static float[] lerp(float startPercent, float... values) {
         if (values.length % 2 == 1) {
-            throw new RuntimeException("MathHelper cannot lerp if values isn't an even length");
+            throw new RuntimeException("MathHelper cannot lerp if <values> isn't an even length");
         }
 
         float sP = startPercent / 100f;

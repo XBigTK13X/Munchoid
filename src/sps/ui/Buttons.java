@@ -19,6 +19,7 @@ public class Buttons {
         private BoundingBox _bounds = BoundingBox.empty();
         private DrawDepth _depth;
         private boolean _active = true;
+        private boolean _shouldDraw = true;
 
         public User() {
             _depth = DrawDepths.get("UIButton");
@@ -61,11 +62,21 @@ public class Buttons {
             return _active;
         }
 
+        public void setShouldDraw(boolean shouldDraw) {
+            _shouldDraw = shouldDraw;
+        }
+
+        public boolean shouldDraw() {
+            return _shouldDraw;
+        }
+
         public boolean isBeingClicked() {
             boolean mouseOver = HitTest.inBox(Input.get().x(), Input.get().y(), getBounds());
             boolean mouseDown = Input.get().isMouseDown(false);
             return mouseOver && mouseDown;
         }
+
+
     }
 
     private enum State {
@@ -146,7 +157,7 @@ public class Buttons {
 
     public void draw() {
         for (User user : _users) {
-            if (user.isActive()) {
+            if (user.shouldDraw() && user.isActive()) {
                 Window.get().schedule(user.getSprite(), user.getDepth());
             }
         }

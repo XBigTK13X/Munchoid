@@ -15,7 +15,7 @@ import sps.entities.HitTest;
 
 public class Catchable extends Entity {
     private static final int __changeDirectionSecondsMax = 3;
-    public static final Color CanBeCaughtHighlight = new Color(Color.BLUE);
+    public static final Color CanBeCaughtHighlight = Color.BLUE;
 
     private Creature _creature;
     private float _dX = 0;

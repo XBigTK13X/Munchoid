@@ -1,5 +1,6 @@
 package sps.color;
 
+import com.badlogic.gdx.utils.NumberUtils;
 import sps.util.MathHelper;
 
 //Bitwise color operations taken from: https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/graphics/Color.java
@@ -36,12 +37,12 @@ public class Color {
         _gdxColor = new com.badlogic.gdx.graphics.Color(this.r, this.g, this.b, this.a);
     }
 
-    public Color(int rgba8888) {
-        this(((rgba8888 & 0xff000000) >>> 24) / 255f, ((rgba8888 & 0x00ff0000) >>> 16) / 255f, ((rgba8888 & 0x0000ff00) >>> 8) / 255f, ((rgba8888 & 0x000000ff)) / 255f);
-    }
-
     public Color(Color color) {
         this(color.r, color.g, color.b, color.a);
+    }
+
+    public Color(int rgba8888) {
+        this(((rgba8888 & 0xff000000) >>> 24) / COLOR_DEPTH, ((rgba8888 & 0x00ff0000) >>> 16) / COLOR_DEPTH, ((rgba8888 & 0x0000ff00) >>> 8) / COLOR_DEPTH, ((rgba8888 & 0x000000ff)) / COLOR_DEPTH);
     }
 
     public Color mul(Color target) {
@@ -73,10 +74,27 @@ public class Color {
     }
 
     public int rgb888() {
-        return ((int) (r * 255) << 16) | ((int) (g * 255) << 8) | (int) (b * 255);
+        return ((int) (r * COLOR_DEPTH) << 16) | ((int) (g * COLOR_DEPTH) << 8) | (int) (b * COLOR_DEPTH);
     }
 
     public int rgba8888() {
-        return ((int) (r * 255) << 24) | ((int) (g * 255) << 16) | ((int) (b * 255) << 8) | (int) (a * 255);
+        return ((int) (r * COLOR_DEPTH) << 24) | ((int) (g * COLOR_DEPTH) << 16) | ((int) (b * COLOR_DEPTH) << 8) | (int) (a * COLOR_DEPTH);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Color color = (Color) o;
+        return rgba8888() == color.rgba8888();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (r != +0.0f ? NumberUtils.floatToIntBits(r) : 0);
+        result = 31 * result + (g != +0.0f ? NumberUtils.floatToIntBits(g) : 0);
+        result = 31 * result + (b != +0.0f ? NumberUtils.floatToIntBits(b) : 0);
+        result = 31 * result + (a != +0.0f ? NumberUtils.floatToIntBits(a) : 0);
+        return result;
     }
 }

@@ -7,6 +7,7 @@ import game.arena.Arena;
 import game.battle.Battle;
 import game.battle.MergeOutcome;
 import game.creatures.PartFunction;
+import game.forceselection.ForceSelection;
 import game.population.PopulationOverview;
 import game.population.PreloadPopulationOverview;
 import game.pregame.MainMenu;
@@ -51,7 +52,7 @@ public class Game implements ApplicationListener {
         Assets.get().fontPack().cacheFont("keys", "Keycaps Regular.ttf", 30);
         Assets.get().fontPack().cacheFont("UIButton", "neris/Neris-SemiBold.otf", 70);
 
-        Window.setWindowBackground(new Color(Color.BLACK));
+        Window.setWindowBackground(Color.BLACK);
         Window.get(false).screenEngine().setStrategy(new FrameStrategy());
         Window.get(true).screenEngine().setStrategy(new FrameStrategy());
         Window.setRefreshInstance(this);
@@ -102,6 +103,9 @@ public class Game implements ApplicationListener {
         }
         else if (DevConfig.MeterTest) {
             return new MeterProgressTest();
+        }
+        else if (DevConfig.ForceSelectionTest) {
+            return new ForceSelection();
         }
         else {
             return new MainMenu();

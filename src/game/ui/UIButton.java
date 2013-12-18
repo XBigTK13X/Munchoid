@@ -102,6 +102,7 @@ public abstract class UIButton {
         Color[][] base = ProcTextures.gradient(_width, _height, _start, _end, false);
         Outline.single(base, Color.WHITE, 3);
         _sprite = SpriteMaker.get().fromColors(base);
+        _sprite.setPosition(_position.X, _position.Y);
     }
 
     public void setSize(int width, int height) {
