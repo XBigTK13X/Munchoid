@@ -18,6 +18,7 @@ public class SpsConfig {
     private HashMap<String, String> _settings = new HashMap<String, String>();
 
     public boolean musicEnabled;
+    public boolean soundEnabled;
 
     public final int spriteHeight;
     public final int spriteWidth;
@@ -57,6 +58,7 @@ public class SpsConfig {
 
         // Audio
         musicEnabled = Parse.bool(_settings.get("musicEnabled"));
+        soundEnabled = Parse.bool(_settings.get("soundEnabled"));
 
         // Display
         spriteHeight = Parse.inte(_settings.get("spriteHeight"));

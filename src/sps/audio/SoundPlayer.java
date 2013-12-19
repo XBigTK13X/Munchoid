@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import sps.core.Loader;
+import sps.core.SpsConfig;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,24 +21,29 @@ public class SoundPlayer {
         return __instance;
     }
 
+    private ExecutorService soundExecutor = Executors.newSingleThreadExecutor();
+    private Map<String, Sound> _sounds = new HashMap<>();
+
     private SoundPlayer() {
-
     }
-
-    ExecutorService soundExecutor = Executors.newSingleThreadExecutor();
-
-    Map<String, Sound> _sounds = new HashMap<>();
 
     public void add(String id, String nameWithExtension) {
         _sounds.put(id, Gdx.audio.newSound(new FileHandle(Loader.get().sound(nameWithExtension))));
     }
 
     public void play(final String soundId) {
-        soundExecutor.submit(new Runnable() {
-            public void run() {
-                _sounds.get(soundId).play();
-            }
-        });
+        if (SpsConfig.get().soundEnabled) {
+            soundExecutor.submit(new Runnable() {
+                public void run() {
+                    _sounds.get(soundId).play();
+                }
+            });
+        }
     }
 
+    public void dispose() {
+        for (String id : _sounds.keySet()) {
+            _sounds.get(id).dispose();
+        }
+    }
 }

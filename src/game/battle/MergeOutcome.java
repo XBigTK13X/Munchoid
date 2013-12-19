@@ -11,7 +11,6 @@ import game.forces.Force;
 import game.forceselection.ForceSelection;
 import game.ui.UIButton;
 import sps.audio.MusicPlayer;
-import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
@@ -27,7 +26,6 @@ import sps.text.TextPool;
 import sps.ui.Tooltips;
 
 public class MergeOutcome implements State {
-    private static SingleSongPlayer __mergeMusic;
     private Creature _defeated;
     private Creature _pet;
     private Creature _merged;
@@ -220,11 +218,8 @@ public class MergeOutcome implements State {
 
     @Override
     public void load() {
-        if (__mergeMusic == null) {
-            __mergeMusic = new SingleSongPlayer("MergeTheme.ogg");
-        }
-        MusicPlayer.get(__mergeMusic);
-        MusicPlayer.get().start();
+
+        MusicPlayer.get().play("MergeTheme");
     }
 
     @Override

@@ -7,7 +7,6 @@ import game.InputWrapper;
 import game.Score;
 import game.creatures.Creature;
 import sps.audio.MusicPlayer;
-import sps.audio.SingleSongPlayer;
 import sps.bridge.*;
 import sps.color.Color;
 import sps.core.Point2;
@@ -111,8 +110,7 @@ public class Player extends Entity implements IActor {
                     _creature.getBody().setHighlight(Color.WHITE);
                     setPet(_creature);
                     e.setInactive();
-                    MusicPlayer.get(new SingleSongPlayer("Quickly.ogg"));
-                    MusicPlayer.get().start();
+                    MusicPlayer.get().play("Quickly");
                     _net.disable();
                     break;
                 }

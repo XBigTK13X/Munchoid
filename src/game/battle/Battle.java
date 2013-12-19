@@ -6,7 +6,6 @@ import game.creatures.Creature;
 import game.forces.Force;
 import game.tournament.TournamentEnd;
 import sps.audio.MusicPlayer;
-import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
 import sps.core.Logger;
@@ -21,7 +20,6 @@ import sps.text.TextPool;
 import sps.ui.Tooltips;
 
 public class Battle implements State {
-    private static SingleSongPlayer __battleMusic;
     private Creature _left;
     private Creature _right;
 
@@ -238,11 +236,7 @@ public class Battle implements State {
 
     @Override
     public void load() {
-        if (__battleMusic == null) {
-            __battleMusic = new SingleSongPlayer("BattleTheme.ogg");
-        }
-        MusicPlayer.get(__battleMusic);
-        MusicPlayer.get().start();
+        MusicPlayer.get().play("BattleTheme");
     }
 
     @Override

@@ -9,7 +9,6 @@ import game.forces.Force;
 import game.tournament.Tournament;
 import game.ui.UIButton;
 import sps.audio.MusicPlayer;
-import sps.audio.SingleSongPlayer;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.color.Colors;
@@ -22,7 +21,6 @@ import sps.text.Text;
 import sps.text.TextPool;
 
 public class ForceSelection implements State {
-    private static SingleSongPlayer __mergeMusic;
     private Creature _pet;
 
     private ForcesSelectionUI _forces;
@@ -140,11 +138,7 @@ public class ForceSelection implements State {
 
     @Override
     public void load() {
-        if (__mergeMusic == null) {
-            __mergeMusic = new SingleSongPlayer("MergeTheme.ogg");
-        }
-        MusicPlayer.get(__mergeMusic);
-        MusicPlayer.get().start();
+        MusicPlayer.get().play("MergeTheme");
     }
 
     @Override

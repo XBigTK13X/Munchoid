@@ -38,6 +38,9 @@ public class Options {
                     case "musicEnabled":
                         options.MusicEnabled = Parse.bool(value);
                         break;
+                    case "soundEnabled":
+                        options.SoundEnabled = Parse.bool(value);
+                        break;
                     case "graphicsLowQuality":
                         options.GraphicsLowQuality = Parse.bool(value);
                         break;
@@ -83,6 +86,7 @@ public class Options {
     public int WindowResolutionY;
     public boolean FullScreen;
     public boolean MusicEnabled = true;
+    public boolean SoundEnabled = true;
     public boolean GraphicsLowQuality;
     public boolean TutorialEnabled = true;
     public boolean ShowIntro = true;
@@ -96,6 +100,7 @@ public class Options {
             options += "windowedResolution=" + WindowResolutionX + "x" + WindowResolutionY + "\n";
             options += "fullScreen=" + FullScreen + "\n";
             options += "musicEnabled=" + MusicEnabled + "\n";
+            options += "soundEnabled=" + SoundEnabled + "\n";
             options += "graphicsLowQuality=" + GraphicsLowQuality + "\n";
             options += "tutorialEnabled=" + TutorialEnabled + "\n";
             options += "enableTutorialQuery=" + EnableTutorialQuery + "\n";
@@ -116,6 +121,7 @@ public class Options {
             Window.resize(WindowResolutionX, WindowResolutionY, true);
         }
         SpsConfig.get().musicEnabled = MusicEnabled;
+        SpsConfig.get().soundEnabled = SoundEnabled;
         GameConfig.setGraphicsMode(GraphicsLowQuality);
         int brightness = (int) (MathHelper.percentToValue(-75, 0, Brightness));
         Window.get().screenEngine().setBrightness(brightness);

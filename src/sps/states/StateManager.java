@@ -8,7 +8,6 @@ import game.population.PopulationOverview;
 import game.save.GameSnapshot;
 import game.save.Options;
 import game.tutorial.Tutorial;
-import sps.audio.MusicPlayer;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.core.Logger;
@@ -102,7 +101,6 @@ public class StateManager {
             EntityManager.set(components.EntityManager);
             ParticleEngine.set(components.ParticleEngine);
             TextPool.set(components.TextPool);
-            MusicPlayer.set(components.MusicPlayer);
             Tooltips.set(components.Tooltips);
             Buttons.set(components.Buttons);
         }
@@ -110,7 +108,6 @@ public class StateManager {
             EntityManager.reset();
             ParticleEngine.reset();
             TextPool.reset();
-            MusicPlayer.reset();
             UiElements.reset();
         }
         ParticleWrapper.get().release();
@@ -134,7 +131,7 @@ public class StateManager {
         Window.get().screenEngine().resetCamera();
         boolean isNewState = false;
         if (_states.size() > 0) {
-            _components.put(current(), new StateDependentComponents(EntityManager.get(), ParticleEngine.get(), TextPool.get(), MusicPlayer.get(), Tooltips.get(), Buttons.get()));
+            _components.put(current(), new StateDependentComponents(EntityManager.get(), ParticleEngine.get(), TextPool.get(), Tooltips.get(), Buttons.get()));
         }
         if (!_states.contains(state)) {
             isNewState = true;

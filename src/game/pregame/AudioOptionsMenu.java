@@ -25,6 +25,19 @@ public class AudioOptionsMenu extends OptionsState {
             }
         };
 
+        final UIButton soundEnabled = new UIButton("Sound\n" + (Options.load().MusicEnabled ? "Enabled" : "Disabled")) {
+            @Override
+            public void click() {
+                Options options = Options.load();
+                options.SoundEnabled = !options.SoundEnabled;
+                options.save();
+                options.apply();
+                setMessage("Music\n" + (options.SoundEnabled ? "Enabled" : "Disabled"));
+            }
+        };
+
+        musicEnabled.setColRow(2, 1);
+
         musicEnabled.setColRow(2, 1);
         back.setColRow(2, 3);
     }

@@ -4,7 +4,6 @@ import game.DevConfig;
 import game.GameConfig;
 import game.movie.Movie;
 import sps.audio.MusicPlayer;
-import sps.audio.SingleSongPlayer;
 import sps.bridge.Commands;
 import sps.color.Color;
 import sps.display.Screen;
@@ -50,9 +49,9 @@ public class Intro implements State {
 
     @Override
     public void update() {
-        _movie.play(MusicPlayer.get().getMusic().getPosition());
+        _movie.play(MusicPlayer.get().music("Intro").getPosition());
 
-        if (_skip.isCooled() || !MusicPlayer.get().getMusic().isPlaying() || DevConfig.EndToEndStateLoadTest || DevConfig.BotEnabled) {
+        if (_skip.isCooled() || !MusicPlayer.get().music("Intro").isPlaying() || DevConfig.EndToEndStateLoadTest || DevConfig.BotEnabled) {
             StateManager.get().push(new MainMenu());
         }
 
@@ -72,8 +71,7 @@ public class Intro implements State {
 
     @Override
     public void load() {
-        MusicPlayer.get(new SingleSongPlayer("Intro.ogg", false));
-        MusicPlayer.get().start();
+        MusicPlayer.get().play("Intro", false);
     }
 
     @Override
