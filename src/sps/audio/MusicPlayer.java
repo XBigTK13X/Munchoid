@@ -33,14 +33,15 @@ public class MusicPlayer {
     }
 
     public void play(final String musicId) {
-        stop();
         play(musicId, true);
     }
 
     public void play(final String musicId, final boolean loop) {
         if (SpsConfig.get().musicEnabled) {
+            stop();
             musicExecutor.submit(new Runnable() {
                 public void run() {
+                    _music.get(musicId).stop();
                     _music.get(musicId).setLooping(loop);
                     _music.get(musicId).play();
                 }

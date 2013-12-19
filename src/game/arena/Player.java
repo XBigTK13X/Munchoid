@@ -110,7 +110,7 @@ public class Player extends Entity implements IActor {
                     _creature.getBody().setHighlight(Color.WHITE);
                     setPet(_creature);
                     e.setInactive();
-                    MusicPlayer.get().play("Quickly");
+                    MusicPlayer.get().play("Quickly", false);
                     _net.disable();
                     break;
                 }

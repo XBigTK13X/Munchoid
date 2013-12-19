@@ -35,7 +35,7 @@ public class GameConfig {
     public static final int ArenaHeight = Screen.get().VirtualHeight + (int) Screen.height(ArenaBufferPercent) * 2;
     public static final int ArenaWidth = Screen.get().VirtualWidth + (int) Screen.width(ArenaBufferPercent) * 2;
     //The length of Quickly.ogg
-    public static final float ArenaTimeoutSeconds = 10f;
+    public static final float ArenaTimeoutSeconds = 9f;
     public static final float ArenaCreatureScale = .6f;
     public static final boolean EnableChompText = false;
 

@@ -170,7 +170,7 @@ public class Arena implements State {
         }
         else {
             //FIXME this is ugly.
-
+            MusicPlayer.get().play("Quickly", false);
             //Instead, should be a one liner to re-center the camera.
             //However, that would result in a lot of positions being gathered,
             //so the method below was chosen instead to save some time.
