@@ -50,7 +50,7 @@ public class MainMenu implements State {
         _options = new UIButton("Options", Commands.get("Push")) {
             @Override
             public void click() {
-                StateManager.get().push(new OptionsMenu());
+                StateManager.get().push(new OptionsMenu(_background));
             }
         };
 

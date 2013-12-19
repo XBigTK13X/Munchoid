@@ -1,8 +1,17 @@
 package game.pregame;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import sps.bridge.DrawDepths;
+import sps.display.Window;
 import sps.states.State;
 
 public class OptionsState implements State {
+    protected Sprite _background;
+
+    public OptionsState(Sprite background) {
+        _background = background;
+    }
+
     @Override
     public void create() {
 
@@ -10,7 +19,7 @@ public class OptionsState implements State {
 
     @Override
     public void draw() {
-
+        Window.get().schedule(_background, DrawDepths.get("GameBackground"));
     }
 
     @Override

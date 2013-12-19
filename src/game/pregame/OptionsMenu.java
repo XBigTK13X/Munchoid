@@ -1,30 +1,35 @@
 package game.pregame;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.save.Options;
 import game.ui.UIButton;
 import sps.states.StateManager;
 
 public class OptionsMenu extends OptionsState {
+    public OptionsMenu(Sprite background) {
+        super(background);
+    }
+
     @Override
     public void create() {
         final UIButton gameplay = new UIButton("Gameplay") {
             @Override
             public void click() {
-                StateManager.get().push(new GameplayOptionsMenu());
+                StateManager.get().push(new GameplayOptionsMenu(_background));
             }
         };
 
         final UIButton video = new UIButton("Video") {
             @Override
             public void click() {
-                StateManager.get().push(new VideoOptionsMenu());
+                StateManager.get().push(new VideoOptionsMenu(_background));
             }
         };
 
         final UIButton audio = new UIButton("Audio") {
             @Override
             public void click() {
-                StateManager.get().push(new AudioOptionsMenu());
+                StateManager.get().push(new AudioOptionsMenu(_background));
             }
         };
 

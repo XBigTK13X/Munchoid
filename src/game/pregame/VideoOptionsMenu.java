@@ -1,6 +1,7 @@
 package game.pregame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.save.Options;
 import game.ui.UIButton;
 import game.ui.UISlider;
@@ -12,6 +13,10 @@ import sps.text.TextPool;
 public class VideoOptionsMenu extends OptionsState {
     private UISlider _brightness;
     private Text _brightnessLabel;
+
+    public VideoOptionsMenu(Sprite background) {
+        super(background);
+    }
 
     @Override
     public void create() {
@@ -84,6 +89,7 @@ public class VideoOptionsMenu extends OptionsState {
 
     @Override
     public void draw() {
+        super.draw();
         _brightness.draw();
     }
 }

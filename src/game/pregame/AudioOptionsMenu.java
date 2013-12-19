@@ -1,10 +1,15 @@
 package game.pregame;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.save.Options;
 import game.ui.UIButton;
 import sps.states.StateManager;
 
 public class AudioOptionsMenu extends OptionsState {
+    public AudioOptionsMenu(Sprite background) {
+        super(background);
+    }
+
     @Override
     public void create() {
         final UIButton back = new UIButton("Back") {
