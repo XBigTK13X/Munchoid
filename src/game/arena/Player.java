@@ -116,8 +116,10 @@ public class Player extends Entity implements IActor {
                 }
                 else {
                     if (_pet.isLargerThan(_creature)) {
-                        //TODO Chomping sound effect here
-                        TextPool.get().write("*CHOMP*", getLocation(), 1f, TextEffects.Fountain);
+                        ChompPlayer.play();
+                        if (GameConfig.EnableChompText) {
+                            TextPool.get().write("*CHOMP*", getLocation(), 1f, TextEffects.Fountain);
+                        }
                         Score.get().addChomp();
                         _pet.addBonus(GameConfig.ChompPoints);
                         e.setInactive();

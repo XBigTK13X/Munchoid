@@ -25,18 +25,19 @@ public class GameConfig {
     }
 
     //Intro
-    public final static float IntroVideoSkipSeconds = 2f;
-    public final static boolean IntroVideoEnabled = false;
+    public static final float IntroVideoSkipSeconds = 2f;
+    public static final boolean IntroVideoEnabled = false;
 
     //Arena
-    public final static int CreatureLimit = 50;
-    public final static int SpacePercentPerCreature = 1;
+    public static final int CreatureLimit = 50;
+    public static final int SpacePercentPerCreature = 1;
     public static final int ArenaBufferPercent = (int) ((GameConfig.CreatureLimit / 2) * GameConfig.SpacePercentPerCreature);
     public static final int ArenaHeight = Screen.get().VirtualHeight + (int) Screen.height(ArenaBufferPercent) * 2;
     public static final int ArenaWidth = Screen.get().VirtualWidth + (int) Screen.width(ArenaBufferPercent) * 2;
     //The length of Quickly.ogg
-    public final static float ArenaTimeoutSeconds = 10f;
+    public static final float ArenaTimeoutSeconds = 10f;
     public static final float ArenaCreatureScale = .6f;
+    public static final boolean EnableChompText = false;
 
     public static final float PlayerFrozenSecondsMax = .5f;
     public static final int ArenaMergeChance = 60;
@@ -84,11 +85,11 @@ public class GameConfig {
     public static final float MaxScaleDeath = 1.5f;
 
     //Tournament/Population
-    public final static int NumberOfTournaments = 5;
-    public final static int TournamentMatches = 3;
-    public final static int StartingPopulationSize = 1_000_000;
-    public final static int NaturalPopulationGrowthPercent = 27;
-    public final static int PopulationMax = 70_000_000;
+    public static final int NumberOfTournaments = 5;
+    public static final int TournamentMatches = 3;
+    public static final int StartingPopulationSize = 1_000_000;
+    public static final int NaturalPopulationGrowthPercent = 27;
+    public static final int PopulationMax = 70_000_000;
 
     //Style
     //TODO Make this scale with resolution like everything else?

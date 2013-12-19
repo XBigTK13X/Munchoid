@@ -4,6 +4,7 @@ package game;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import game.arena.Arena;
+import game.arena.ChompPlayer;
 import game.battle.Battle;
 import game.battle.MergeOutcome;
 import game.creatures.PartFunction;
@@ -55,6 +56,7 @@ public class Game implements ApplicationListener {
         Assets.get().fontPack().cacheFont("UIButton", "neris/Neris-SemiBold.otf", 70);
 
         SoundPlayer.get().add("Click", "click.ogg");
+        ChompPlayer.setup();
 
         MusicPlayer.get().add("Intro", "Intro.ogg");
         MusicPlayer.get().add("Anticipation", "Anticipation.ogg");
