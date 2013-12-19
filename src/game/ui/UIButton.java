@@ -3,6 +3,7 @@ package game.ui;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.creatures.style.Outline;
 import org.apache.commons.lang3.StringUtils;
+import sps.audio.SoundPlayer;
 import sps.bridge.Command;
 import sps.bridge.DrawDepth;
 import sps.bridge.DrawDepths;
@@ -74,6 +75,7 @@ public abstract class UIButton {
 
             @Override
             public void onClick() {
+                SoundPlayer.get().play("Click");
                 click();
             }
 

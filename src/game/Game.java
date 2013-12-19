@@ -19,6 +19,7 @@ import game.test.SkeletonTest;
 import game.tutorial.ArenaTutorial;
 import game.tutorial.BattleTutorial;
 import game.tutorial.PopulationOverviewTutorial;
+import sps.audio.SoundPlayer;
 import sps.bridge.Commands;
 import sps.bridge.SpriteTypes;
 import sps.bridge.Sps;
@@ -51,6 +52,8 @@ public class Game implements ApplicationListener {
         Assets.get().fontPack().setDefault("Aller/Aller_Rg.ttf", 50);
         Assets.get().fontPack().cacheFont("keys", "Keycaps Regular.ttf", 30);
         Assets.get().fontPack().cacheFont("UIButton", "neris/Neris-SemiBold.otf", 70);
+
+        SoundPlayer.get().add("Click", "click.ogg");
 
         Window.setWindowBackground(Color.BLACK);
         Window.get(false).screenEngine().setStrategy(new FrameStrategy());
