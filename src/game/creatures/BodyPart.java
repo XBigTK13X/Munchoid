@@ -11,7 +11,6 @@ import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.core.Point2;
 import sps.display.Window;
-import sps.draw.SpriteMaker;
 
 public class BodyPart {
     private static final float __scaleBase = 1f;
@@ -41,7 +40,7 @@ public class BodyPart {
     public BodyPart(PartFunction function, int width, int height, Body owner, Design design) {
         this(function, owner, owner.getColor(), new Point2(0, 0));
         _partTint = Color.WHITE;
-        int[][] designResult = design.create(width, height);
+        int[][] designResult = design.create((int) (width * GameConfig.OptGraphicsDetailScale), (int) (height * GameConfig.OptGraphicsDetailScale));
 
         _atoms = Designs.toAtoms(designResult, _color);
         _width = _atoms.length;
@@ -83,9 +82,9 @@ public class BodyPart {
             Outline.single(atomColors, Color.WHITE, GameConfig.BodyPartOutlinePixelThickness);
         }
         AtomHelper.setColors(_atoms, atomColors);
+        _joints = new Joints();
         _width = _atoms.length;
         _height = _atoms[0].length;
-        _joints = new Joints();
 
         //TODO Fix this
         boolean locAttachCreated = false;
@@ -104,6 +103,13 @@ public class BodyPart {
         createSprite();
     }
 
+    private void createSprite() {
+        if (_sprite != null) {
+            _sprite.getTexture().dispose();
+        }
+        _sprite = Atoms.toSprite(_atoms);
+    }
+
     public void setPosition(Point2 position) {
         _position = position;
     }
@@ -119,13 +125,6 @@ public class BodyPart {
                 }
             }
         }
-    }
-
-    private void createSprite() {
-        if (_sprite != null) {
-            _sprite.getTexture().dispose();
-        }
-        _sprite = SpriteMaker.get().fromAtoms(_atoms);
     }
 
     public Joints getJoints() {
@@ -193,7 +192,7 @@ public class BodyPart {
         _sprite.setOrigin(_pivot.X * _scale, _pivot.Y * _scale);
         _sprite.setPosition(getCheapGlobalPosition().X, getCheapGlobalPosition().Y);
         _sprite.setRotation(_rotationDegrees);
-        _sprite.setSize(_width * _scale, _height * _scale);
+        _sprite.setSize((_width * _scale) / GameConfig.OptGraphicsDetailScale, (_height * _scale) / GameConfig.OptGraphicsDetailScale);
 
         Window.get().schedule(_sprite, DrawDepths.get("BodyPart"));
     }

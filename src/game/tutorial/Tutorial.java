@@ -30,7 +30,7 @@ public class Tutorial {
         if (__background == null) {
             Color bg = Color.BLACK;
             bg = bg.newAlpha(.8f);
-            __background = SpriteMaker.get().pixel(bg);
+            __background = SpriteMaker.pixel(bg);
             __background.setSize(Screen.width(100), Screen.height(100));
 
             SpriteInfo arrowInfo = SpriteSheetManager.getSpriteInfo(SpriteTypes.get("Arrow"));

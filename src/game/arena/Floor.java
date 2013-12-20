@@ -19,28 +19,31 @@ import sps.util.BoundingBox;
 public class Floor extends Entity {
     private static final int __fieldSmoothness = 6;
     private BoundingBox _boundingBox = BoundingBox.empty();
-    Sprite _background;
+    private Sprite _background;
 
     public Floor() {
         initialize(0, 0, Point2.Zero, null, EntityTypes.get("Floor"), DrawDepths.get("Floor"));
+        setSize(GameConfig.ArenaWidth(), GameConfig.ArenaHeight());
+
+        int scaleWidth = (int) (getWidth() * GameConfig.OptGraphicsDetailScale);
+        int scaleHeight = (int) (getHeight() * GameConfig.OptGraphicsDetailScale);
 
         if (GameConfig.OptArenaPCBBackground) {
             _background = GameConfig.OptSimpleBackgrounds ?
-                    BackgroundMaker.radialDark(GameConfig.ArenaWidth, GameConfig.ArenaHeight) :
-                    BackgroundMaker.printedCircuitBoard(GameConfig.ArenaWidth, GameConfig.ArenaHeight);
+                    BackgroundMaker.radialDark(scaleWidth, scaleHeight) :
+                    BackgroundMaker.printedCircuitBoard(scaleWidth, scaleHeight);
         }
         else {
             Color dirt = new RGBA(55, 30, 15).toColor();
             Color grass = new RGBA(15, 55, 15).toColor();
-            Color[][] base = ProcTextures.perlin(GameConfig.ArenaWidth, GameConfig.ArenaHeight, grass, dirt, __fieldSmoothness);
-            _background = SpriteMaker.get().fromColors(base);
+            Color[][] base = ProcTextures.perlin(scaleWidth, scaleHeight, grass, dirt, __fieldSmoothness);
+            _background = SpriteMaker.fromColors(base);
         }
-
-        setSize((int) _background.getWidth(), (int) _background.getHeight());
         BoundingBox.fromDimensions(_boundingBox, 0, 0, getWidth(), getHeight());
         if (DevConfig.PrintArenaSize) {
-            Logger.info("Arena size: (W,H): (" + _background.getWidth() + "," + _background.getHeight() + ")");
+            Logger.info("Arena size: (W,H): (" + getWidth() + "," + getHeight() + ")");
         }
+        _background.setSize(getWidth(), getHeight());
     }
 
     @Override

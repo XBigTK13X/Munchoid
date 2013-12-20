@@ -57,7 +57,7 @@ public class Particle2 extends PEComponent {
 
     private void init(ParticleBehavior behavior, Point2 position, Entity entity, Color baseColor) {
         if (_sprite == null) {
-            _sprite = SpriteMaker.get().pixel(Color.WHITE);
+            _sprite = SpriteMaker.pixel(Color.WHITE);
         }
 
         _behavior = behavior;

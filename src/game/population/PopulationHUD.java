@@ -67,7 +67,7 @@ public class PopulationHUD {
     }
 
     public void regenerateTextures() {
-        _popIcon = SpriteMaker.get().fromColors(_popIconBase);
+        _popIcon = SpriteMaker.fromColors(_popIconBase);
         _map.regenerateTextures();
         _maxIconsHigh = (int) (_size.Y / (_popIcon.getHeight() + _pad)) - 1;
         _maxIconsWide = (int) (_size.X / (_popIcon.getWidth() + _pad)) - 1;

@@ -36,7 +36,7 @@ public class MainMenu implements State {
         StateManager.get().clearTutorialCompletions();
         Score.reset();
 
-        _logo = SpriteMaker.get().fromGraphic("munchoid_logo.png");
+        _logo = SpriteMaker.fromGraphic("munchoid_logo.png");
 
         _logo.setPosition(Screen.centerWidth((int) _logo.getWidth()), Screen.height(80));
 

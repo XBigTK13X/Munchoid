@@ -58,7 +58,7 @@ public class DevConsole {
 
     private DevConsole() {
         _bgColor = Color.BLACK.newAlpha(.75f);
-        _consoleBase = SpriteMaker.get().pixel(Color.WHITE);
+        _consoleBase = SpriteMaker.pixel(Color.WHITE);
         _isVisible = false;
         add("The development console has been started.");
     }

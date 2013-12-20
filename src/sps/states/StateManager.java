@@ -85,7 +85,7 @@ public class StateManager {
     public void setPaused(boolean value) {
         if (__pausedScreen == null) {
             Color[][] tbg = ProcTextures.monotone((int) Screen.width(50), (int) Screen.height(50), new Color(.5f, .1f, .5f, .7f));
-            __pausedScreen = SpriteMaker.get().fromColors(tbg);
+            __pausedScreen = SpriteMaker.fromColors(tbg);
         }
         _paused = value;
     }

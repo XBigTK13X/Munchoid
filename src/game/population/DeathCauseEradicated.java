@@ -27,7 +27,7 @@ public class DeathCauseEradicated {
         _announcement = TextPool.get().write(notification, Screen.pos(10, 50));
         _announcement.setDepth(DrawDepths.get("DeathCauseResultText"));
         Color overlay = Color.BLACK.newAlpha(.90f);
-        _bg = SpriteMaker.get().pixel(overlay);
+        _bg = SpriteMaker.pixel(overlay);
         _bg.setSize(Screen.width(100), Screen.height(100));
     }
 

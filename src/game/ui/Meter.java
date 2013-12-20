@@ -35,16 +35,16 @@ public class Meter {
         _height = (int) Screen.height(screenHeightPercent);
 
         Color[][] bg = ProcTextures.gradient(_width, _height, Color.LIGHT_GRAY, Colors.darken(Color.LIGHT_GRAY), !vertical);
-        _background = SpriteMaker.get().fromColors(bg);
+        _background = SpriteMaker.fromColors(bg);
         _background.flip(true, true);
 
         Color[][] base = ProcTextures.gradient(_width, _height, Colors.lighten(color), Colors.darken(color), !vertical);
-        _sprite = SpriteMaker.get().fromColors(base);
+        _sprite = SpriteMaker.fromColors(base);
 
         Color[][] frame = ProcTextures.monotone(_width, _height, Color.BLACK);
         Outline.single(frame, Color.WHITE, GameConfig.MeterOutlinePixelThickness);
         ProcTextures.remove(frame, Color.BLACK);
-        _frame = SpriteMaker.get().fromColors(frame);
+        _frame = SpriteMaker.fromColors(frame);
 
         scale(0);
         setPosition(position.X, position.Y);

@@ -28,13 +28,13 @@ public class BackgroundMaker {
     public static Sprite noisyRadialDark() {
         Color[][] base = radialDarkBase((int) Screen.width(100), (int) Screen.height(100));
         TextureManipulation.subtleNoise(base, 5);
-        return SpriteMaker.get().fromColors(base);
+        return SpriteMaker.fromColors(base);
     }
 
     public static Sprite noisyRadialBright() {
         Color[][] base = radialBrightBase((int) Screen.width(100), (int) Screen.height(100));
         TextureManipulation.subtleNoise(base, 40);
-        return SpriteMaker.get().fromColors(base);
+        return SpriteMaker.fromColors(base);
     }
 
     public static Sprite radialBright() {
@@ -43,7 +43,7 @@ public class BackgroundMaker {
 
     public static Sprite radialBright(int pixelWidth, int pixelHeight) {
 
-        return SpriteMaker.get().fromColors(radialBrightBase(pixelWidth, pixelHeight));
+        return SpriteMaker.fromColors(radialBrightBase(pixelWidth, pixelHeight));
     }
 
     public static Sprite radialDark() {
@@ -52,7 +52,7 @@ public class BackgroundMaker {
 
 
     public static Sprite radialDark(int pixelWidth, int pixelHeight) {
-        return SpriteMaker.get().fromColors(radialDarkBase(pixelWidth, pixelHeight));
+        return SpriteMaker.fromColors(radialDarkBase(pixelWidth, pixelHeight));
     }
 
     private static Color[][] radialBrightBase(int w, int h) {
@@ -196,6 +196,6 @@ public class BackgroundMaker {
         TextureManipulation.darken(base, 60);
 
 
-        return SpriteMaker.get().fromColors(base);
+        return SpriteMaker.fromColors(base);
     }
 }

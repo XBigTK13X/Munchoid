@@ -17,11 +17,13 @@ public class GameConfig {
     public static final boolean OptSmoothRegionMap = true;
     public static final boolean OptDrawBones = false;
     public static final boolean OptArenaPCBBackground = true;
+    public static float OptGraphicsDetailScale = 1f;
 
     public static void setGraphicsMode(boolean performanceMode) {
         OptPerformanceGraphicsSettings = performanceMode;
         OptCreatureOutlineEnabled = !performanceMode;
         OptSimpleBackgrounds = performanceMode;
+        OptGraphicsDetailScale = performanceMode ? .5f : 1f;
     }
 
     //Intro
@@ -32,8 +34,15 @@ public class GameConfig {
     public static final int CreatureLimit = 50;
     public static final int SpacePercentPerCreature = 1;
     public static final int ArenaBufferPercent = (int) ((GameConfig.CreatureLimit / 2) * GameConfig.SpacePercentPerCreature);
-    public static final int ArenaHeight = Screen.get().VirtualHeight + (int) Screen.height(ArenaBufferPercent) * 2;
-    public static final int ArenaWidth = Screen.get().VirtualWidth + (int) Screen.width(ArenaBufferPercent) * 2;
+
+    public static int ArenaHeight() {
+        return Screen.get().VirtualHeight + (int) Screen.height(ArenaBufferPercent) * 2;
+    }
+
+    public static int ArenaWidth() {
+        return Screen.get().VirtualWidth + (int) Screen.width(ArenaBufferPercent) * 2;
+    }
+
     //The length of Quickly.ogg
     public static final float ArenaTimeoutSeconds = 9f;
     public static final float ArenaCreatureScale = .6f;

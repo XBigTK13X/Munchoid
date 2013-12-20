@@ -52,7 +52,7 @@ public class Joint {
 
     public void draw() {
         if (_bone == null) {
-            _bone = SpriteMaker.get().pixel(Color.WHITE);
+            _bone = SpriteMaker.pixel(Color.WHITE);
             _bone.setSize(__boneThickness, 1);
         }
         if (_child != null && _child.isAlive() && _owner.isAlive()) {

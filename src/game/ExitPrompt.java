@@ -23,7 +23,7 @@ public class ExitPrompt {
         if (_bg == null) {
             _bg = new Color(0, 0, 0, 1);
         }
-        _background = SpriteMaker.get().pixel(_bg);
+        _background = SpriteMaker.pixel(_bg);
         _background.setSize(Screen.width(100), Screen.height(100));
         _confirm = new UIButton("Yes") {
             @Override

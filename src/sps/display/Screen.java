@@ -30,9 +30,13 @@ public class Screen {
 
     public static Screen get() {
         if (__instance == null) {
-            __instance = new Screen(SpsConfig.get().virtualWidth, SpsConfig.get().virtualHeight);
+            reset(SpsConfig.get().virtualWidth, SpsConfig.get().virtualHeight);
         }
         return __instance;
+    }
+
+    public static void reset(int virtualWidth, int virtualHeight) {
+        __instance = new Screen(virtualWidth, virtualHeight);
     }
 
     // This is the resolution used by the game internally

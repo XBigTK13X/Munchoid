@@ -53,8 +53,8 @@ public class Map {
     }
 
     public void regenerateTextures() {
-        _bg = SpriteMaker.get().fromColors(_bgBase);
-        _sprite = SpriteMaker.get().fromColors(_spriteBase);
+        _bg = SpriteMaker.fromColors(_bgBase);
+        _sprite = SpriteMaker.fromColors(_spriteBase);
 
         _bg.setPosition(_position.X - __frameSizePixels / 2, _position.Y - __frameSizePixels / 2);
         _sprite.setPosition(_position.X, _position.Y);
