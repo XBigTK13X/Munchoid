@@ -18,7 +18,7 @@ import sps.entities.EntityManager;
 import sps.entities.IActor;
 import sps.text.TextEffects;
 import sps.text.TextPool;
-import sps.util.MathHelper;
+import sps.util.Maths;
 
 import java.util.List;
 
@@ -82,7 +82,7 @@ public class Player extends Entity implements IActor {
         if (adjustedXVelocity > 0 && nextX < _floor.getBounds().Width - getWidth() || adjustedXVelocity < 0 && nextX > 0) {
             move(x, 0);
             float camX = getLocation().X - Screen.get().VirtualWidth / 2;
-            Window.get().screenEngine().setCameraX(MathHelper.clamp(camX, 0, _floor.getBounds().Width - Screen.get().VirtualWidth));
+            Window.get().screenEngine().setCameraX(Maths.clamp(camX, 0, _floor.getBounds().Width - Screen.get().VirtualWidth));
         }
 
         //Y Movement
@@ -92,7 +92,7 @@ public class Player extends Entity implements IActor {
         if (adjustedYVelocity > 0 && nextY < _floor.getBounds().Height - getHeight() || adjustedYVelocity < 0 && nextY > 0) {
             move(0, y);
             float camY = getLocation().Y - Screen.get().VirtualHeight / 2;
-            Window.get().screenEngine().setCameraY(MathHelper.clamp(camY, 0, _floor.getBounds().Height - Screen.get().VirtualHeight));
+            Window.get().screenEngine().setCameraY(Maths.clamp(camY, 0, _floor.getBounds().Height - Screen.get().VirtualHeight));
         }
     }
 

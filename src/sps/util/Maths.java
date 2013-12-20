@@ -4,7 +4,7 @@ import org.apache.commons.math3.geometry.euclidean.twod.Line;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import sps.core.Point2;
 
-public class MathHelper {
+public class Maths {
     public static final double TWO_PI = Math.PI * 2;
     public static final float TWO_PIf = (float) (Math.PI * 2);
 
@@ -39,7 +39,7 @@ public class MathHelper {
     }
 
     public static int percent(float zeroToOnePercent) {
-        return MathHelper.clamp(zeroToOnePercent * 100, 0, 100);
+        return Maths.clamp(zeroToOnePercent * 100, 0, 100);
     }
 
     public static int percent(int max, int percent) {
@@ -62,22 +62,23 @@ public class MathHelper {
     //the even values are considered the start (starting at 0)
     public static float[] lerp(float startPercent, float... values) {
         if (values.length % 2 == 1) {
-            throw new RuntimeException("MathHelper cannot lerp if <values> isn't an even length");
+            throw new RuntimeException("Maths cannot lerp if <values> isn't an even length");
         }
-
-        float sP = startPercent / 100f;
-        float eP = 1 - sP;
 
         float[] result = new float[values.length / 2];
         int count = 0;
         int ii = 0;
 
         while (count < values.length - 1) {
-            result[ii] = values[count] * sP + values[count + 1] * eP;
+            result[ii] = lerp(values[count], values[count + 1], startPercent);
             count += 2;
             ii++;
         }
         return result;
+    }
+
+    public static float lerp(float a, float b, float startPercent) {
+        return a * (startPercent / 100f) + b * (1 - (startPercent / 100f));
     }
 
     public static float massage(float start, float min, float max, float strength) {
@@ -101,20 +102,20 @@ public class MathHelper {
         to = massage(to, 0, TWO_PIf, TWO_PIf);
 
         if (Math.abs(from - to) < Math.PI) {
-            return (float) (lerp(step, from, to)[0] * 180 / Math.PI);
+            return (float) (lerp(from, to, step) * 180 / Math.PI);
         }
 
         if (from < to) {
-            from += MathHelper.TWO_PI;
+            from += Maths.TWO_PI;
         }
         else {
-            to += MathHelper.TWO_PI;
+            to += Maths.TWO_PI;
         }
 
-        float retVal = lerp(step, from, to)[0];
+        float retVal = lerp(from, to, step);
 
-        if (retVal >= MathHelper.TWO_PI) {
-            retVal -= MathHelper.TWO_PI;
+        if (retVal >= Maths.TWO_PI) {
+            retVal -= Maths.TWO_PI;
         }
         return (float) (retVal * 180 / Math.PI);
     }

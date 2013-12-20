@@ -7,7 +7,7 @@ import sps.core.Loader;
 import sps.core.Logger;
 import sps.core.SpsConfig;
 import sps.display.Window;
-import sps.util.MathHelper;
+import sps.util.Maths;
 import sps.util.Parse;
 
 import java.io.File;
@@ -123,7 +123,7 @@ public class Options {
         SpsConfig.get().musicEnabled = MusicEnabled;
         SpsConfig.get().soundEnabled = SoundEnabled;
         GameConfig.setGraphicsMode(GraphicsLowQuality);
-        int brightness = (int) (MathHelper.percentToValue(-75, 0, Brightness));
+        int brightness = (int) (Maths.percentToValue(-75, 0, Brightness));
         Window.get().screenEngine().setBrightness(brightness);
         Window.get(true).screenEngine().setBrightness(brightness);
     }

@@ -39,6 +39,7 @@ public class SpsConfig {
 
     public final int particleEffectPoolLimit;
     public final int particleEffectPoolStartSize;
+    public final int maxColorLookupSize;
 
 
     private SpsConfig() {
@@ -76,6 +77,7 @@ public class SpsConfig {
 
         particleEffectPoolLimit = Parse.inte(_settings.get("particleEffectPoolLimit"));
         particleEffectPoolStartSize = Parse.inte(_settings.get("particleEffectPoolStartSize"));
+        maxColorLookupSize = Parse.inte(_settings.get("maxColorLookupSize"));
 
         // Dev
         viewPaths = Parse.bool(_settings.get("viewPaths"));

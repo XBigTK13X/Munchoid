@@ -1,6 +1,7 @@
 package sps.color;
 
-import sps.util.MathHelper;
+import com.badlogic.gdx.utils.NumberUtils;
+import sps.util.Maths;
 
 public class RGBA implements ColorSpec<RGBA> {
     public static RGBA fromRGB(float r, float g, float b) {
@@ -45,7 +46,25 @@ public class RGBA implements ColorSpec<RGBA> {
 
     @Override
     public ColorSpec lerp(float startPercent, RGBA target) {
-        float[] i = MathHelper.lerp(startPercent, R, target.R, G, target.G, B, target.B, A, target.A);
-        return new RGBA(i[0], i[1], i[2], i[3]);
+        return new RGBA(Maths.lerp(R, target.R, startPercent), Maths.lerp(G, target.G, startPercent), Maths.lerp(B, target.B, startPercent));
+    }
+
+    private RGBA comp;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        comp = (RGBA) o;
+        return R == comp.R && G == comp.G && B == comp.B && A == comp.A;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (R != +0.0f ? NumberUtils.floatToIntBits(R) : 0);
+        result = 31 * result + (G != +0.0f ? NumberUtils.floatToIntBits(G) : 0);
+        result = 31 * result + (B != +0.0f ? NumberUtils.floatToIntBits(B) : 0);
+        result = 31 * result + (A != +0.0f ? NumberUtils.floatToIntBits(A) : 0);
+        return result;
     }
 }

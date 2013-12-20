@@ -18,7 +18,7 @@ import sps.text.TextEffects;
 import sps.text.TextPool;
 import sps.util.CoolDown;
 import sps.util.Markov;
-import sps.util.MathHelper;
+import sps.util.Maths;
 
 public class Creature extends Entity {
     private static final Markov __nameGenerator = Markov.get(Loader.get().data("creature_name_seed.txt"), 2);
@@ -203,11 +203,11 @@ public class Creature extends Entity {
     }
 
     public int getCostPercent(Force force) {
-        return MathHelper.percent((float) getStats().get(force) / GameConfig.MaxStat);
+        return Maths.percent((float) getStats().get(force) / GameConfig.MaxStat);
     }
 
     public int getPercentEnergy() {
-        return MathHelper.percent((float) _energy / _energyMax);
+        return Maths.percent((float) _energy / _energyMax);
     }
 
     public void regenEnergy() {
@@ -215,7 +215,7 @@ public class Creature extends Entity {
         _sideEffects.act(SideEffectType.Health);
         if (_regenTimer >= (_energyRegenSeconds + _sideEffects.act(SideEffectType.EnergyRegenRate))) {
             _regenTimer = 0;
-            _energy += MathHelper.percent(_energyMax, _energyRegenPercent);
+            _energy += Maths.percent(_energyMax, _energyRegenPercent);
             if (_energy >= _energyMax) {
                 _energy = _energyMax;
             }

@@ -1,6 +1,7 @@
 package sps.draw;
 
 import sps.color.Color;
+import sps.color.Colors;
 import sps.core.RNG;
 
 // Based off of: http://devmag.org.za/2009/04/25/perlin-noise/
@@ -21,14 +22,6 @@ public class Noise {
         return x0 * (1 - alpha) + alpha * x1;
     }
 
-    public static Color getColor(Color gradientStart, Color gradientEnd, float t) {
-        float u = 1 - t;
-
-        Color color = new Color(gradientStart.r * u + gradientEnd.r * t, (gradientStart.g * u + gradientEnd.g * t), (gradientStart.b * u + gradientEnd.b * t), 1f);
-
-        return color;
-    }
-
     public static Color[][] mapGradient(Color gradientStart, Color gradientEnd, float[][] perlinNoise) {
         int width = perlinNoise.length;
         int height = perlinNoise[0].length;
@@ -37,7 +30,7 @@ public class Noise {
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                image[i][j] = getColor(gradientStart, gradientEnd, perlinNoise[i][j]);
+                image[i][j] = Colors.interpolate(perlinNoise[i][j] * 100, gradientStart, gradientEnd);
             }
         }
 

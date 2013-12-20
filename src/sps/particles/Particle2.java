@@ -8,7 +8,7 @@ import sps.core.RNG;
 import sps.display.Window;
 import sps.draw.SpriteMaker;
 import sps.entities.Entity;
-import sps.util.MathHelper;
+import sps.util.Maths;
 
 public class Particle2 extends PEComponent {
     public static final int DefaultLife = 100;
@@ -88,7 +88,7 @@ public class Particle2 extends PEComponent {
     }
 
     private static Color darken(Color inColor, float inAmount) {
-        return new Color(MathHelper.clamp((inColor.r) * 255 - 255 * inAmount, 0, 255), MathHelper.clamp((inColor.g) * 255 - 255 * inAmount, 0, 255), MathHelper.clamp((inColor.b) * 255 - 255 * inAmount, 0, 255), 255);
+        return new Color(Maths.clamp((inColor.r) * 255 - 255 * inAmount, 0, 255), Maths.clamp((inColor.g) * 255 - 255 * inAmount, 0, 255), Maths.clamp((inColor.b) * 255 - 255 * inAmount, 0, 255), 255);
     }
 
     public void setSize(float height, float width) {

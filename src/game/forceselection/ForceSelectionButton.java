@@ -15,7 +15,7 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.ui.Buttons;
 import sps.ui.Tooltips;
-import sps.util.MathHelper;
+import sps.util.Maths;
 
 public class ForceSelectionButton {
     private Force _force;
@@ -34,7 +34,7 @@ public class ForceSelectionButton {
 
         _meter = new Meter(width, height, force.Color, _originalPosition.add(0, 0), false);
         _meter.shade(Color.GRAY);
-        _meter.scale(MathHelper.percent(stat / ((float) GameConfig.MaxStat)));
+        _meter.scale(Maths.percent(stat / ((float) GameConfig.MaxStat)));
 
         _message = (stat > GameConfig.DisableStat && _owner.getStats().isEnabled(_force)) ? force.name() + ": " + strength() + Commands.get(force.Command) : "Disabled";
         Tooltips.get().add(new Tooltips.User() {

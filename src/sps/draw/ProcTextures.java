@@ -6,7 +6,7 @@ import sps.color.Colors;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.entities.HitTest;
-import sps.util.MathHelper;
+import sps.util.Maths;
 
 public class ProcTextures {
     private static final int defaultPerlinSmoothness = 6;
@@ -76,7 +76,7 @@ public class ProcTextures {
         for (int ii = 0; ii < result.length; ii++) {
             for (int jj = 0; jj < result[0].length; jj++) {
                 int dist = (int) HitTest.getDistance(ii, jj, center.X, center.Y);
-                float percentDist = MathHelper.valueToPercent(0, maxDist, dist);
+                float percentDist = Maths.valueToPercent(0, maxDist, dist);
                 if (fixed) {
                     if (g == null) {
                         g = Colors.gradient(start, end, steps);

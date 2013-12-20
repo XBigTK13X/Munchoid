@@ -1,7 +1,7 @@
 package sps.color;
 
 import com.badlogic.gdx.utils.NumberUtils;
-import sps.util.MathHelper;
+import sps.util.Maths;
 
 //Bitwise color operations taken from: https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/graphics/Color.java
 public class Color {
@@ -66,7 +66,7 @@ public class Color {
     }
 
     protected float clamp(float value) {
-        return MathHelper.clamp(value, 0.0f, 1.0f);
+        return Maths.clamp(value, 0.0f, 1.0f);
     }
 
     public com.badlogic.gdx.graphics.Color getGdxColor() {

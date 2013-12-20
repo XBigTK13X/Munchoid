@@ -3,7 +3,7 @@ package game.creatures;
 import game.arena.Floor;
 import sps.color.Color;
 import sps.color.Colors;
-import sps.util.MathHelper;
+import sps.util.Maths;
 
 import java.util.List;
 
@@ -117,7 +117,7 @@ public class Body {
     }
 
     public int getHealth() {
-        return MathHelper.clamp(_health + _owner.getHealthOffset(), 0, _healthMax);
+        return Maths.clamp(_health + _owner.getHealthOffset(), 0, _healthMax);
     }
 
     public int getHealthMax() {
@@ -152,7 +152,7 @@ public class Body {
     }
 
     public int getPercentHealth() {
-        return MathHelper.percent(getHealth() / (float) getHealthMax());
+        return Maths.percent(getHealth() / (float) getHealthMax());
     }
 
     public float getScale() {

@@ -1,6 +1,6 @@
 package sps.color;
 
-import sps.util.MathHelper;
+import sps.util.Maths;
 
 public class HSV implements ColorSpec<HSV> {
     public static HSV fromColor(Color color) {
@@ -35,9 +35,9 @@ public class HSV implements ColorSpec<HSV> {
     }
 
     private void clamp() {
-        H = MathHelper.clamp(H, 0f, 360f);
-        S = MathHelper.clamp(S, 0f, 1f);
-        V = MathHelper.clamp(V, 0f, 1f);
+        H = Maths.clamp(H, 0f, 360f);
+        S = Maths.clamp(S, 0f, 1f);
+        V = Maths.clamp(V, 0f, 1f);
     }
 
     public Color toColor() {
@@ -54,14 +54,7 @@ public class HSV implements ColorSpec<HSV> {
 
     @Override
     public ColorSpec lerp(float startPercent, HSV target) {
-        float h;
-
-        float[] rawHSV = MathHelper.lerp(startPercent, H, target.H, S, target.S, V, target.V);
-
-        float angle = MathHelper.lerpDegrees(H, target.H, startPercent);
-        h = angle;
-
-        return new HSV(h, rawHSV[1], rawHSV[2]);
+        return new HSV(Maths.lerpDegrees(H, target.H, startPercent), Maths.lerp(S, target.S, startPercent), Maths.lerp(V, target.V, startPercent));
     }
 
 }

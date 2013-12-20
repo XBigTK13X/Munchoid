@@ -1,7 +1,11 @@
 package sps.color;
 
 import sps.core.RNG;
-import sps.util.MathHelper;
+import sps.core.SpsConfig;
+import sps.util.Maths;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Colors {
 
@@ -20,7 +24,7 @@ public class Colors {
             return color;
         }
         HSV hsv = HSV.fromRGB(color.r, color.g, color.b);
-        float shift = hsv.V * MathHelper.percentDecimal(shiftPercent);
+        float shift = hsv.V * Maths.percentDecimal(shiftPercent);
         hsv.V += shift;
 
         return hsv.toColor();
@@ -55,7 +59,7 @@ public class Colors {
         HSV hsv = HSV.fromColor(color);
 
         hsv.H += shift;
-        hsv.H = MathHelper.massage(hsv.H, 0, 360, 60);
+        hsv.H = Maths.massage(hsv.H, 0, 360, 60);
 
         return hsv.toColor();
     }
@@ -69,8 +73,27 @@ public class Colors {
         return gradient;
     }
 
+    private static RGBA __lerp1 = new RGBA(0, 0, 0);
+    private static RGBA __lerp2 = new RGBA(0, 0, 0);
+    private static ColorSpec __lookup = new RGBA(0, 0, 0);
+
+    private static Map<ColorSpec, Color> __colorLookup = new HashMap<>();
+
     public static Color interpolate(float startPercent, Color start, Color end) {
-        return new RGBA(start.r, start.g, start.b).lerp(startPercent, new RGBA(end.r, end.g, end.b)).toColor();
+        if (__colorLookup.size() > SpsConfig.get().maxColorLookupSize) {
+            __colorLookup.clear();
+        }
+        __lerp1.R = start.r;
+        __lerp1.G = start.g;
+        __lerp1.B = start.b;
+        __lerp2.R = end.r;
+        __lerp2.G = end.g;
+        __lerp2.B = end.b;
+        __lookup = __lerp1.lerp(startPercent, __lerp2);
+        if (!__colorLookup.containsKey(__lookup)) {
+            __colorLookup.put(__lookup, __lookup.toColor());
+        }
+        return __colorLookup.get(__lookup);
     }
 
     public static Color[] twoDtoOneD(Color[][] base) {

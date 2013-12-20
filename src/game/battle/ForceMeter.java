@@ -17,7 +17,7 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.ui.Buttons;
 import sps.ui.Tooltips;
-import sps.util.MathHelper;
+import sps.util.Maths;
 
 public class ForceMeter {
     private Force _force;
@@ -40,7 +40,7 @@ public class ForceMeter {
         _meter = new Meter(width, height, force.Color, _position, false);
         _meter.shade(core);
 
-        _meter.scale(MathHelper.percent(stat / ((float) GameConfig.MaxStat)));
+        _meter.scale(Maths.percent(stat / ((float) GameConfig.MaxStat)));
 
         boolean isPlayer = _position.X < Screen.width(50);
         if (isPlayer) {

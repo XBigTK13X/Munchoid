@@ -10,7 +10,7 @@ import sps.display.Screen;
 import sps.display.Window;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
-import sps.util.MathHelper;
+import sps.util.Maths;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ public class PopulationHUD {
     }
 
     public void recalcIcons() {
-        int iconsToDraw = MathHelper.clamp((int) (_maxIcons * ((float) _population.getSize()) / GameConfig.PopulationMax), 1, _maxIcons);
+        int iconsToDraw = Maths.clamp((int) (_maxIcons * ((float) _population.getSize()) / GameConfig.PopulationMax), 1, _maxIcons);
 
         while (iconsToDraw < _iconPositions.size()) {
             Point2 kill = _iconPositions.get(_iconPositions.size() - 1);

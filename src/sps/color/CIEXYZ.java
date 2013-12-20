@@ -1,6 +1,6 @@
 package sps.color;
 
-import sps.util.MathHelper;
+import sps.util.Maths;
 
 //From http://www.codeproject.com/Articles/19045/Manipulating-colors-in-NET-Part-1#rgb2
 public class CIEXYZ implements ColorSpec<CIEXYZ> {
@@ -54,7 +54,6 @@ public class CIEXYZ implements ColorSpec<CIEXYZ> {
 
     @Override
     public ColorSpec lerp(float startPercent, CIEXYZ target) {
-        float[] i = MathHelper.lerp(startPercent, X, target.X, Y, target.Y, Z, target.Z);
-        return new HSV(i[0], i[1], i[2]);
+        return new HSV(Maths.lerp(X, target.X, startPercent), Maths.lerp(Y, target.Y, startPercent), Maths.lerp(Z, target.Z, startPercent));
     }
 }

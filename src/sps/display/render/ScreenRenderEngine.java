@@ -16,7 +16,7 @@ import sps.display.Screen;
 import sps.draw.DrawAPI;
 import sps.entities.HitTest;
 import sps.particles.ParticleLease;
-import sps.util.MathHelper;
+import sps.util.Maths;
 
 //TODO Handle multiple shaders. ie: Text shader, sprite shader
 public class ScreenRenderEngine {
@@ -141,10 +141,10 @@ public class ScreenRenderEngine {
     }
 
     public void setBrightness(int brightnessPercent) {
-        _batch.setBrightness(MathHelper.percentDecimal(brightnessPercent));
+        _batch.setBrightness(Maths.percentDecimal(brightnessPercent));
     }
 
     public void setContrast(int contrastPercent) {
-        _batch.setContrast(MathHelper.percentDecimal(contrastPercent));
+        _batch.setContrast(Maths.percentDecimal(contrastPercent));
     }
 }
