@@ -74,7 +74,14 @@ public class GameConfig {
     public static final int MergeRejectGrowthPercent = 40;
     public static final int NaturalStatGrowthPercent = 10;
 
+
     //Battle
+    public static final boolean BattleEnableEnemyForcesHUD = false;
+    public static final Point2 BattleEnemyPosition = Screen.pos(60, 40);
+    public static final Point2 BattlePlayerPosition = Screen.pos(25, 40);
+    public static final Point2 BattlePlayerForcesHUDPosition = Screen.pos(15, 85);
+    public static final Point2 BattleEnemyForcesHUDPosition = Screen.pos(55, 85);
+    public static final boolean BattleEffectHUDEnabled = false;
     public static final float BattleCreatureScale = 1f;
     public static final float FirstFightMult = 1.5f;
     public static final int MaxForcesEnabled = 4;

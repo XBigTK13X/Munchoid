@@ -20,7 +20,7 @@ public class BattleHUD {
     public BattleHUD(Creature owner) {
         _owner = owner;
 
-        TextPool.get().write(_owner.getName(), Screen.pos(0, 50).add((int) _owner.getLocation().X, 0));
+        TextPool.get().write(_owner.getName(), Screen.pos(0, 10).add((int) _owner.getLocation().X, 0));
 
         _forces = new ForcesHUD(owner);
         _health = new HealthMeter(owner);

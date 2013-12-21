@@ -76,11 +76,11 @@ public class Creature extends Entity {
         }
         if (updatePos) {
             if (faceLeft) {
-                Point2 rightSide = Screen.pos(60, 20);
+                Point2 rightSide = GameConfig.BattleEnemyPosition;
                 setLocation(rightSide);
             }
             else {
-                Point2 leftSide = Screen.pos(20, 20);
+                Point2 leftSide = GameConfig.BattlePlayerPosition;
                 setLocation(leftSide);
             }
         }
