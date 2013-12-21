@@ -62,8 +62,8 @@ public class BackgroundMaker {
     }
 
     private static Color[][] radialDarkBase(int w, int h) {
-        Color c1 = Colors.randomPleasant();
-        Color c2 = Colors.brightnessShift(c1, -85);
+        Color c1 = Colors.brightnessShift(Colors.randomPleasant(), -50);
+        Color c2 = Colors.brightnessShift(Colors.randomPleasant(), -50);
         return ProcTextures.smoothRadial(w, h, c1, c2);
     }
 
