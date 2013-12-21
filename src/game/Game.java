@@ -48,12 +48,16 @@ public class Game implements ApplicationListener {
 
     @Override
     public void create() {
+
         RNG.seed((int) System.currentTimeMillis());
         Sps.setup(true);
 
         Assets.get().fontPack().setDefault("Aller/Aller_Rg.ttf", 50);
         Assets.get().fontPack().cacheFont("keys", "Keycaps Regular.ttf", 30);
         Assets.get().fontPack().cacheFont("UIButton", "neris/Neris-SemiBold.otf", 70);
+        Assets.get().fontPack().cacheFont("Console", "ubuntu/UbuntuMono-R.ttf", 24);
+
+        DevConsole.get().setFont("Console", 24);
 
         SoundPlayer.get().add("Click", "click.ogg");
         ChompPlayer.setup();
