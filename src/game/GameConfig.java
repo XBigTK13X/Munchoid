@@ -21,7 +21,8 @@ public class GameConfig {
 
     public static void setGraphicsMode(boolean performanceMode) {
         OptPerformanceGraphicsSettings = performanceMode;
-        OptCreatureOutlineEnabled = !performanceMode;
+        //OptCreatureOutlineEnabled = !performanceMode;
+        BodyPartOutlinePixelThickness = performanceMode ? 2 : 5;
         OptSimpleBackgrounds = performanceMode;
         OptGraphicsDetailScale = performanceMode ? .5f : 1f;
     }
@@ -103,5 +104,5 @@ public class GameConfig {
     //Style
     //TODO Make this scale with resolution like everything else?
     public static final int MeterOutlinePixelThickness = 2;
-    public static final int BodyPartOutlinePixelThickness = 5;
+    public static int BodyPartOutlinePixelThickness = 5;
 }
