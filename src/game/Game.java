@@ -130,10 +130,7 @@ public class Game implements ApplicationListener {
 
     @Override
     public void resize(int width, int height) {
-        Window.resize(width, height, false);
-        if (StateManager.get().current() != null) {
-            StateManager.get().resize(width, height);
-        }
+        Window.resize(width, height);
     }
 
     private void handleDevShortcuts() {

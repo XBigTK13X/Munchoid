@@ -51,10 +51,6 @@ public class EndGame implements State {
     }
 
     @Override
-    public void resize(int width, int height) {
-    }
-
-    @Override
     public void pause() {
     }
 }

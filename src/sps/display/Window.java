@@ -59,19 +59,8 @@ public class Window {
         __bgColor = color;
     }
 
-    public static void resize(int width, int height, boolean changeWindow) {
-        if (__app == null) {
-            if (!__tipHasBeenDisplayed) {
-                Logger.info("If the app is registered with Renderer.get().setRefreshInstance(this); in the create method, then the screen will update without a manual resizing.");
-                __tipHasBeenDisplayed = true;
-            }
-        }
-        else {
-            if (changeWindow) {
-                __app.resize(width, height);
-                Gdx.graphics.setDisplayMode(width, height, Gdx.graphics.isFullscreen());
-            }
-        }
+    public static void resize(int width, int height) {
+        Gdx.graphics.setDisplayMode(width, height, Gdx.graphics.isFullscreen());
         Height = height;
         Width = width;
         get(true).screenEngine().resize(width, height);
@@ -99,7 +88,7 @@ public class Window {
 
         if (apply) {
             Gdx.graphics.setDisplayMode(resolutionX, resolutionY, enableFullScreen);
-            resize(resolutionX, resolutionY, false);
+            resize(resolutionX, resolutionY);
         }
     }
 

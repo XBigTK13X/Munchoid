@@ -196,8 +196,4 @@ public class Arena implements State {
     public String getName() {
         return "Arena";
     }
-
-    @Override
-    public void resize(int width, int height) {
-    }
 }

@@ -208,11 +208,6 @@ public class StateManager {
             current().asyncUpdate();
         }
     }
-
-    public void resize(int width, int height) {
-        current().resize(width, height);
-    }
-
     public State current() {
         if (_states.size() == 0) {
             return null;

@@ -116,10 +116,10 @@ public class Options {
     }
 
     public void apply() {
-        Window.setFullScreen(FullScreen, WindowResolutionX, WindowResolutionY);
         if (!Gdx.graphics.isFullscreen()) {
-            Window.resize(WindowResolutionX, WindowResolutionY, true);
+            Window.resize(WindowResolutionX, WindowResolutionY);
         }
+        Window.setFullScreen(FullScreen, WindowResolutionX, WindowResolutionY);
         SpsConfig.get().musicEnabled = MusicEnabled;
         SpsConfig.get().soundEnabled = SoundEnabled;
         GameConfig.setGraphicsMode(GraphicsLowQuality);
