@@ -8,6 +8,7 @@ import game.population.PopulationOverview;
 import game.save.GameSnapshot;
 import game.save.Options;
 import game.tutorial.Tutorial;
+import sps.audio.MusicPlayer;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.core.Logger;
@@ -89,6 +90,12 @@ public class StateManager {
             __pausedScreen.setPosition(Screen.width(25), Screen.height(25));
         }
         _paused = value;
+        if (_paused) {
+            MusicPlayer.get().pause();
+        }
+        else {
+            MusicPlayer.get().resume();
+        }
     }
 
     public boolean isPaused() {

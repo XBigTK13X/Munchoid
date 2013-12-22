@@ -7,6 +7,8 @@ import sps.core.Loader;
 import sps.core.SpsConfig;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -63,5 +65,23 @@ public class MusicPlayer {
         for (String id : _music.keySet()) {
             _music.get(id).dispose();
         }
+    }
+
+    private List<Music> _paused = new LinkedList<>();
+
+    public void pause() {
+        for (String id : _music.keySet()) {
+            if (_music.get(id).isPlaying()) {
+                _paused.add(_music.get(id));
+                _music.get(id).pause();
+            }
+        }
+    }
+
+    public void resume() {
+        for (Music music : _paused) {
+            music.play();
+        }
+        _paused.clear();
     }
 }
