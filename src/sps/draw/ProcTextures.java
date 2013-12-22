@@ -105,7 +105,7 @@ public class ProcTextures {
         return radial(width, height, start, end, 0, center, false);
     }
 
-    public static Color[][] centeredCircleSegment(int radiusPixelsMin, int radiusPixelsMax, int degreesMin, int degreesMax, Color color) {
+    public static Color[][] centeredCircleSegment(int radiusPixelsMin, int radiusPixelsMax, int degreesMin, int degreesMax, Color start, Color end) {
         int boxHeight = radiusPixelsMax;
         int boxWidth = radiusPixelsMax;
         int widthDegrees = degreesMax - degreesMin;
@@ -118,6 +118,8 @@ public class ProcTextures {
 
         Point2 center = new Point2(boxWidth, boxHeight);
 
+        Color[] gradient = Colors.gradient(start, end, 360);
+
         for (int ii = 0; ii < base.length; ii++) {
             for (int jj = 0; jj < base[0].length; jj++) {
                 int arcLocationDegrees = (int) (180 * Math.atan2(center.Y - jj, center.X - ii) / Math.PI);
@@ -126,7 +128,7 @@ public class ProcTextures {
 
                     float dist = HitTest.getDistance(ii, jj, center.X, center.Y);
                     if (dist <= radiusPixelsMax && dist >= radiusPixelsMin) {
-                        base[ii][jj] = color;
+                        base[ii][jj] = gradient[arcLocationDegrees];
                     }
                 }
             }

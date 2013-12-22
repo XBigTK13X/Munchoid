@@ -30,8 +30,9 @@ public class TimerGraphic {
             Color[][] base;
             for (int ii = 0; ii <= 100; ii++) {
                 float rotationMax = Maths.percentToValue(0, 360, ii);
-                base = ProcTextures.centeredCircleSegment(0, radiusPixels, 0, (int) rotationMax, Color.WHITE);
-                Outline.single(base, Color.BLACK, 3);
+                float c = .2f;
+                base = ProcTextures.centeredCircleSegment(0, radiusPixels, 0, (int) rotationMax, new Color(c, c, c, 1), new Color(1 - c, 1 - c, 1 - c, 1));
+                Outline.single(base, Color.WHITE, 2);
                 _frames[ii] = SpriteMaker.fromColors(base);
                 _frames[ii].setRotation(-90);
             }
