@@ -20,6 +20,7 @@ public class TimerGraphic {
     private Point2 _position;
     private boolean _finished;
     private boolean _visible;
+    private Color _color;
 
 
     public TimerGraphic(boolean fillUp, Point2 position, Color color) {
@@ -28,12 +29,13 @@ public class TimerGraphic {
             Color[][] base;
             for (int ii = 0; ii <= 100; ii++) {
                 float rotationMax = Maths.percentToValue(0, 360, ii);
-                base = ProcTextures.centeredCircleSegment(0, radiusPixels, 0, (int) rotationMax, color);
-                Outline.single(base, Color.WHITE, 2);
+                base = ProcTextures.centeredCircleSegment(0, radiusPixels, 0, (int) rotationMax, Color.WHITE);
+                Outline.single(base, Color.BLACK, 3);
                 _frames[ii] = SpriteMaker.fromColors(base);
                 _frames[ii].setRotation(-90);
             }
         }
+        _color = color;
         _fillUp = fillUp;
         _visible = true;
         reset();
@@ -66,6 +68,7 @@ public class TimerGraphic {
 
     public void draw() {
         if (_visible) {
+            _frames[_percent].setColor(_color.getGdxColor());
             _frames[_percent].setPosition(_position.X, _position.Y);
             Window.get().schedule(_frames[_percent], DrawDepths.get("BattleCoolDown"));
         }
