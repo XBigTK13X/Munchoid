@@ -19,12 +19,6 @@ public class BackgroundMaker {
 
     }
 
-    private static enum ModelId {
-        Empty,
-        Via,
-        Trace
-    }
-
     public static Sprite noisyRadialDark() {
         Color[][] base = radialDarkBase((int) Screen.width(100), (int) Screen.height(100));
         TextureManipulation.subtleNoise(base, 5);
@@ -71,21 +65,37 @@ public class BackgroundMaker {
         return printedCircuitBoard((int) Screen.width(100), (int) Screen.height(100));
     }
 
-    public static Sprite printedCircuitBoard(int pixelWidth, int pixelHeight) {
-        return convertModelToTexture(buildModel(pixelWidth, pixelHeight));
-    }
-
     private static final int viaPixelWidth = 12;
     private static final int viaPixelMargin = 10;
     private static final int tracePixelWidth = 3;
 
-    private static ModelId[][] buildModel(int width, int height) {
-        List<Point2> vias = new ArrayList<Point2>();
+    public static Sprite printedCircuitBoard(int pixelWidth, int pixelHeight) {
+        Color board = Colors.randomPleasant();
+        Color board2 = Colors.randomPleasant();
 
-        ModelId[][] result = new ModelId[width][height];
-        for (int ii = 0; ii < width; ii++) {
-            for (int jj = 0; jj < height; jj++) {
-                result[ii][jj] = ModelId.Empty;
+        List<Point2> vias = new ArrayList<>();
+
+        int width = pixelWidth;
+        int height = pixelHeight;
+
+        Color[][] base = ProcTextures.smoothRadial(width, height, board, board2);
+
+        Color trace = Colors.randomPleasant();
+        trace = Colors.brightnessShift(trace, -5);
+
+        Color via = Colors.randomPleasant();
+        via = Colors.brightnessShift(via, -5);
+        Color via2 = Colors.compliment(via);
+
+        //Via sprite
+        boolean[][] viaBase = new boolean[viaPixelWidth][viaPixelWidth];
+        Point2 viaCenter = new Point2(viaPixelWidth / 2, viaPixelWidth / 2);
+        for (int ii = 0; ii < viaBase.length; ii++) {
+            for (int jj = 0; jj < viaBase[0].length; jj++) {
+                float dist = HitTest.getDistance(ii, jj, viaCenter.X, viaCenter.Y);
+                if (dist < viaPixelWidth / 2) {
+                    viaBase[ii][jj] = true;
+                }
             }
         }
 
@@ -94,10 +104,12 @@ public class BackgroundMaker {
         int viaCount = screenArea / (viaPixelWidth * viaPixelWidth) / (viaPixelMargin * viaPixelMargin);
         while (viaCount > 0) {
             viaCount--;
-            Point2 via = new Point2(RNG.next(width), RNG.next(height));
-            result[(int) via.X][(int) via.Y] = ModelId.Via;
-            vias.add(via);
+            Point2 viaLoc = new Point2(RNG.next(width), RNG.next(height));
+
+            vias.add(viaLoc);
         }
+
+        List<Point2> vias2 = new ArrayList<>(vias);
 
         //Trace connections
         while (vias.size() > 0) {
@@ -114,10 +126,8 @@ public class BackgroundMaker {
                     xtrace++;
                     for (int w = -tracePixelWidth / 2; w < tracePixelWidth / 2; w++) {
                         int y = (int) minx.Y + w;
-                        if (y >= 0 && y < result[0].length) {
-                            if (result[xtrace][y] == ModelId.Empty) {
-                                result[xtrace][y] = ModelId.Trace;
-                            }
+                        if (y >= 0 && y < base[0].length) {
+                            base[xtrace][y] = trace;
                         }
                     }
                 }
@@ -127,10 +137,8 @@ public class BackgroundMaker {
                     ytrace++;
                     for (int w = -tracePixelWidth / 2; w < tracePixelWidth / 2; w++) {
                         int x = (int) maxx.X + w;
-                        if (x >= 0 && x < result.length) {
-                            if (result[x][ytrace] == ModelId.Empty) {
-                                result[x][ytrace] = ModelId.Trace;
-                            }
+                        if (x >= 0 && x < base.length) {
+                            base[x][ytrace] = trace;
                         }
                     }
                 }
@@ -138,53 +146,16 @@ public class BackgroundMaker {
             vias.remove(end);
             vias.remove(start);
         }
-        return result;
-    }
 
-    private static Sprite convertModelToTexture(ModelId[][] model) {
-        Color board = Colors.randomPleasant();
-        Color board2 = Colors.randomPleasant();
-        int w = model.length;
-        int h = model[0].length;
-        Color[][] base = ProcTextures.smoothRadial(w, h, board, board2);
-
-        //Create the via texture
-        boolean[][] viaBase = new boolean[viaPixelWidth][viaPixelWidth];
-        Point2 viaCenter = new Point2(viaPixelWidth / 2, viaPixelWidth / 2);
-        for (int ii = 0; ii < viaBase.length; ii++) {
-            for (int jj = 0; jj < viaBase[0].length; jj++) {
-                float dist = HitTest.getDistance(ii, jj, viaCenter.X, viaCenter.Y);
-                if (dist < viaPixelWidth / 2) {
-                    viaBase[ii][jj] = true;
-                }
-            }
-        }
-        Color trace = Colors.randomPleasant();
-        trace = Colors.brightnessShift(trace, -5);
-
-        Color via = Colors.randomPleasant();
-        via = Colors.brightnessShift(via, -5);
-        Color via2 = Colors.compliment(via);
-
-        //Draw the traces first, then the vias
-        for (int pass = 1; pass < 3; pass++) {
-            for (int ii = 0; ii < model.length; ii++) {
-                for (int jj = 0; jj < model[ii].length; jj++) {
-                    if (pass == 1 && model[ii][jj] == ModelId.Trace) {
-                        base[ii][jj] = trace;
-                    }
-                    if (pass == 2 && model[ii][jj] == ModelId.Via) {
-                        Color v = RNG.coinFlip() ? via : via2;
-                        for (int ox = 0; ox < viaBase.length; ox++) {
-                            for (int oy = 0; oy < viaBase[0].length; oy++) {
-                                if (viaBase[ox][oy]) {
-                                    int x = ii + ox - viaPixelWidth / 2;
-                                    int y = jj + oy - viaPixelWidth / 2;
-                                    if (x >= 0 && y >= 0 && x < base.length && y < base[0].length) {
-                                        base[x][y] = v;
-                                    }
-                                }
-                            }
+        for (Point2 viaLoc : vias2) {
+            Color v = RNG.coinFlip() ? via : via2;
+            for (int ox = 0; ox < viaBase.length; ox++) {
+                for (int oy = 0; oy < viaBase[0].length; oy++) {
+                    if (viaBase[ox][oy]) {
+                        int x = (int) (viaLoc.X + ox - viaPixelWidth / 2);
+                        int y = (int) (viaLoc.Y + oy - viaPixelWidth / 2);
+                        if (x >= 0 && y >= 0 && x < base.length && y < base[0].length) {
+                            base[x][y] = v;
                         }
                     }
                 }
@@ -192,10 +163,7 @@ public class BackgroundMaker {
         }
 
         base = TextureManipulation.blurStack(base, 3);
-
         TextureManipulation.darken(base, 60);
-
-
         return SpriteMaker.fromColors(base);
     }
 }
