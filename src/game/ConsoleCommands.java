@@ -17,11 +17,11 @@ public class ConsoleCommands {
     }
 
     public static void init() {
-        DevConsole.get().register(new DevConsoleAction("PLAYERFORCE") {
+        DevConsole.get().register(new DevConsoleAction("player.setforce") {
             @Override
             public String act(int[] input) {
                 if (input.length != 2) {
-                    return "forceId [1,6] and value [0,100] required for PLAYERFORCE";
+                    return "forceId [1,6] and value [0,100] required for player.setforce";
                 }
 
                 int forceId = input[0];
@@ -39,6 +39,35 @@ public class ConsoleCommands {
                         Battle battle = (Battle) StateManager.get().current();
                         battle.rebuildHud();
                         return "Player pet " + force.name() + " set to " + forceValue;
+                    }
+                }
+                return "Player does not have a pet";
+
+            }
+        });
+
+        DevConsole.get().register(new DevConsoleAction("player.setallforces") {
+            @Override
+            public String act(int[] input) {
+                if (input.length != 1) {
+                    return "value [0,100] required for player.setforce";
+                }
+                List<Entity> creatures = EntityManager.get().getEntities(EntityTypes.get("Creature"));
+                if (creatures.isEmpty()) {
+                    return "No creatures found";
+                }
+
+                int forceValue = input[0];
+                for (Entity e : creatures) {
+                    Creature c = (Creature) e;
+                    if (c.isOwned()) {
+                        for (Force force : Force.values()) {
+                            c.getStats().set(force, forceValue);
+                            c.getStats().setEnabled(force, true);
+                        }
+                        Battle battle = (Battle) StateManager.get().current();
+                        battle.rebuildHud();
+                        return "Player forces set to: " + forceValue;
                     }
                 }
                 return "Player does not have a pet";

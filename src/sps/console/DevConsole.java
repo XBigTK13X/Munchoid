@@ -50,7 +50,7 @@ public class DevConsole {
         _isActive = false;
         add("The development console has been started.");
 
-        register(new DevConsoleAction("STOP") {
+        register(new DevConsoleAction("stop") {
             @Override
             public String act(int[] input) {
                 toggle();
@@ -58,7 +58,7 @@ public class DevConsole {
             }
         });
 
-        register(new DevConsoleAction("KILL") {
+        register(new DevConsoleAction("kill") {
             @Override
             public String act(int[] input) {
                 Gdx.app.exit();
@@ -66,7 +66,7 @@ public class DevConsole {
             }
         });
 
-        register(new DevConsoleAction("HELP") {
+        register(new DevConsoleAction("help") {
             @Override
             public String act(int[] input) {
                 String result = "";
@@ -156,15 +156,15 @@ public class DevConsole {
     }
 
     public void register(DevConsoleAction action) {
-        _actions.put(action.Id, action);
+        _actions.put(action.Id.toLowerCase(), action);
     }
 
     private void takeAction() {
         String input = getInput();
         if (input.trim().length() > 0) {
             DevParsedCommand command = new DevParsedCommand(input);
-            if (_actions.containsKey(command.Id)) {
-                String result = _actions.get(command.Id).act(command.Arguments);
+            if (_actions.containsKey(command.Id.toLowerCase())) {
+                String result = _actions.get(command.Id.toLowerCase()).act(command.Arguments);
                 if (!result.isEmpty()) {
                     add(result);
                 }
@@ -199,6 +199,9 @@ public class DevConsole {
                                 //Only deal with single characters
                                 String chars = Input.Keys.toString(key);
                                 if (chars.length() == 1) {
+                                    if (!Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && !Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
+                                        chars = chars.toLowerCase();
+                                    }
                                     appendInput(chars);
                                 }
                             }
