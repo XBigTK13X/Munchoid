@@ -1,11 +1,11 @@
 package game.arena;
 
-import com.badlogic.gdx.Gdx;
 import game.DevConfig;
 import game.GameConfig;
 import game.InputWrapper;
 import game.Score;
 import game.battle.Battle;
+import game.battle.TimerGraphic;
 import game.creatures.Creature;
 import game.creatures.Merge;
 import game.creatures.Stats;
@@ -22,15 +22,16 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
+import sps.util.CoolDown;
 
 import java.util.List;
 
 public class Arena implements State {
 
-    private static final Point2 __timerPos = Screen.pos(5, 95);
+    private static final Point2 __timerPos = Screen.pos(5, 75);
     private int _lastTime;
-    private float _countDownSeconds;
-    private Text _timerText;
+    private CoolDown _battleCountDown;
+    private TimerGraphic _timer;
 
     private static final Point2 __creatureTextPos = Screen.pos(55, 95);
     private Text _creatureText;
@@ -53,10 +54,11 @@ public class Arena implements State {
     @Override
     public void create() {
         Score.reset();
-        _countDownSeconds = GameConfig.ArenaTimeoutSeconds;
+        _battleCountDown = new CoolDown(GameConfig.ArenaTimeoutSeconds);
         _lastTime = (int) GameConfig.ArenaTimeoutSeconds;
-        _timerText = TextPool.get().write(timeDisplay(), __timerPos);
-        _timerText.setMoveable(false);
+        _timer = _preload.getTimer();
+        _timer.setPosition(__timerPos);
+        _timer.setMoveable(false);
 
         EntityManager.get().addEntity(_preload.getFloor());
         EntityManager.get().addEntity(_preload.getPlayer());
@@ -82,6 +84,7 @@ public class Arena implements State {
     @Override
     public void draw() {
         EntityManager.get().draw();
+        _timer.draw();
     }
 
     @Override
@@ -90,18 +93,14 @@ public class Arena implements State {
 
         Player player = (Player) EntityManager.get().getPlayer();
         if (player.getPet() != null) {
-            _countDownSeconds -= Gdx.graphics.getDeltaTime();
-            if (_lastTime != (int) _countDownSeconds) {
-                _lastTime = (int) _countDownSeconds;
-                _timerText.setMessage(timeDisplay());
-            }
-
+            _battleCountDown.update();
+            _timer.setPercent(_battleCountDown.getPercentCompletion());
             List<Entity> opponents = EntityManager.get().getEntities(EntityTypes.get("Catchable"));
             if (opponents.size() <= 0) {
                 StateManager.get().push(new Tournament((Player) EntityManager.get().getPlayer()));
             }
             else {
-                if ((_countDownSeconds <= 0 && opponents.size() > 0) || (InputWrapper.push() && DevConfig.ShortcutsEnabled) || DevConfig.EndToEndStateLoadTest) {
+                if ((_battleCountDown.isCooled() && opponents.size() > 0) || (InputWrapper.push() && DevConfig.ShortcutsEnabled) || DevConfig.EndToEndStateLoadTest) {
                     Creature opponent = ((Catchable) opponents.get(RNG.next(0, opponents.size()))).getCreature();
                     if (Score.get().victories() == 0) {
                         opponent.setStats(Stats.createWeakling(player.getPet().getStats()));
@@ -117,9 +116,6 @@ public class Arena implements State {
                 _lastCreatureCount = opponents.size();
                 _creatureText.setMessage(creatureDisplay(opponents.size()));
             }
-        }
-        else {
-            _timerText.setMessage("Catch a creature!");
         }
     }
 
@@ -163,7 +159,9 @@ public class Arena implements State {
 
         simulateCreatureGrowth(opponents);
 
-        _countDownSeconds = GameConfig.ArenaTimeoutSeconds;
+        if (_battleCountDown != null) {
+            _battleCountDown.reset();
+        }
         Player p = (Player) EntityManager.get().getPlayer();
         if (p == null) {
             MusicPlayer.get().play("Anticipation");

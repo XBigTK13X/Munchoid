@@ -21,6 +21,7 @@ public class TimerGraphic {
     private boolean _finished;
     private boolean _visible;
     private Color _color;
+    private boolean _moveable = true;
 
 
     public TimerGraphic(boolean fillUp, Point2 position, Color color) {
@@ -70,7 +71,16 @@ public class TimerGraphic {
         if (_visible) {
             _frames[_percent].setColor(_color.getGdxColor());
             _frames[_percent].setPosition(_position.X, _position.Y);
-            Window.get().schedule(_frames[_percent], DrawDepths.get("BattleCoolDown"));
+            Window.get(!_moveable).schedule(_frames[_percent], DrawDepths.get("BattleCoolDown"));
         }
+    }
+
+    public void setMoveable(boolean moveable) {
+        _moveable = moveable;
+    }
+
+
+    public void setPosition(Point2 position) {
+        _position.reset(position.X, position.Y);
     }
 }

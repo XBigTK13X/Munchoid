@@ -2,8 +2,11 @@ package game.arena;
 
 import game.DevConfig;
 import game.GameConfig;
+import game.battle.TimerGraphic;
 import game.ui.Meter;
+import sps.color.Color;
 import sps.color.Colors;
+import sps.core.Point2;
 import sps.display.Screen;
 import sps.states.State;
 import sps.states.StateManager;
@@ -19,6 +22,7 @@ public class PreloadArena implements State {
         private List<Catchable> _catchables = new ArrayList<Catchable>();
         private Floor _floor;
         private Player _player;
+        private TimerGraphic _timer;
 
         public void cache(Player player) {
             _player = player;
@@ -43,6 +47,14 @@ public class PreloadArena implements State {
         public Floor getFloor() {
             return _floor;
         }
+
+        public void cache(TimerGraphic timer) {
+            _timer = timer;
+        }
+
+        public TimerGraphic getTimer() {
+            return _timer;
+        }
     }
 
     private Payload _arenaPieces;
@@ -53,9 +65,9 @@ public class PreloadArena implements State {
 
     @Override
     public void create() {
-        //Floor + Player + Creatures
+        //Floor + Player + Timer + Creatures
         int creatureCount = DevConfig.TournyTest ? 0 : GameConfig.CreatureLimit;
-        _preloadedItemsTarget = 1 + 1 + creatureCount;
+        _preloadedItemsTarget = 1 + 1 + 1 + creatureCount;
         _loadingMessage = TextPool.get().write(getMessage(), Screen.pos(10, 60));
         _arenaPieces = new Payload();
         _loadingMeter = new Meter(90, 5, Colors.randomPleasant(), Screen.pos(5, 30), false);
@@ -89,6 +101,8 @@ public class PreloadArena implements State {
             case 1:
                 _arenaPieces.cache(new Player(_arenaPieces.getFloor()));
                 break;
+            case 2:
+                _arenaPieces.cache(new TimerGraphic(true, new Point2(0, 0), Color.WHITE.newAlpha(.75f)));
             default:
                 _arenaPieces.cache(new Catchable(_arenaPieces.getPlayer(), _arenaPieces.getFloor()));
                 break;

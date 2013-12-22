@@ -64,4 +64,8 @@ public class CoolDown {
     public void delay(float lengthInSeconds) {
         _coolDown += lengthInSeconds;
     }
+
+    public int getPercentCompletion() {
+        return (int) Maths.valueToPercent(0, getSecondsMax(), getSecondsLeft());
+    }
 }

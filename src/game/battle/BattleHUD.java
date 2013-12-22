@@ -4,7 +4,6 @@ import game.creatures.Creature;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.text.TextPool;
-import sps.util.Maths;
 
 public class BattleHUD {
     private Creature _owner;
@@ -35,8 +34,7 @@ public class BattleHUD {
     public void update() {
         _health.update();
         _energy.update();
-        int coolDownPercent = (int) Maths.valueToPercent(0, _owner.getCoolDown().getSecondsMax(), _owner.getCoolDown().getSecondsLeft());
-        _coolDown.setPercent(coolDownPercent);
+        _coolDown.setPercent(_owner.getCoolDown().getPercentCompletion());
         _coolDown.setVisible(!_owner.getCoolDown().isCooled());
     }
 
