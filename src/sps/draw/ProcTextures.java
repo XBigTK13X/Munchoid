@@ -104,4 +104,33 @@ public class ProcTextures {
     public static Color[][] smoothRadial(int width, int height, Color start, Color end, Point2 center) {
         return radial(width, height, start, end, 0, center, false);
     }
+
+    public static Color[][] centeredCircleSegment(int radiusPixelsMin, int radiusPixelsMax, int degreesMin, int degreesMax, Color color) {
+        int boxHeight = radiusPixelsMax;
+        int boxWidth = radiusPixelsMax;
+        int widthDegrees = degreesMax - degreesMin;
+        int normalizedCenterDegrees = (degreesMax - degreesMin) / 2;
+
+        int arcMin = normalizedCenterDegrees - widthDegrees / 2;
+        int arcMax = normalizedCenterDegrees + widthDegrees / 2;
+
+        Color[][] base = new Color[boxWidth * 2][boxHeight * 2];
+
+        Point2 center = new Point2(boxWidth, boxHeight);
+
+        for (int ii = 0; ii < base.length; ii++) {
+            for (int jj = 0; jj < base[0].length; jj++) {
+                int arcLocationDegrees = (int) (180 * Math.atan2(center.Y - jj, center.X - ii) / Math.PI);
+                arcLocationDegrees = (int) Maths.massage(arcLocationDegrees, 0, 360, 360);
+                if (arcLocationDegrees >= arcMin && arcLocationDegrees <= arcMax) {
+
+                    float dist = HitTest.getDistance(ii, jj, center.X, center.Y);
+                    if (dist <= radiusPixelsMax && dist >= radiusPixelsMin) {
+                        base[ii][jj] = color;
+                    }
+                }
+            }
+        }
+        return base;
+    }
 }

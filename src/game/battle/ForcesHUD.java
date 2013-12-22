@@ -54,4 +54,8 @@ public class ForcesHUD {
             }
         }
     }
+
+    public Point2 getOrigin() {
+        return _origin;
+    }
 }

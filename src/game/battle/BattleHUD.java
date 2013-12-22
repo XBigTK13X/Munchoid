@@ -1,9 +1,10 @@
 package game.battle;
 
 import game.creatures.Creature;
+import sps.core.Point2;
 import sps.display.Screen;
-import sps.text.Text;
 import sps.text.TextPool;
+import sps.util.Maths;
 
 public class BattleHUD {
     private Creature _owner;
@@ -14,7 +15,7 @@ public class BattleHUD {
     private CostMeter _cost;
     private EffectHUD _effects;
 
-    private Text _coolDown;
+    private TimerGraphic _coolDown;
 
 
     public BattleHUD(Creature owner) {
@@ -26,15 +27,17 @@ public class BattleHUD {
         _health = new HealthMeter(owner);
         _energy = new EnergyMeter(owner);
         _cost = new CostMeter(owner);
-        _coolDown = TextPool.get().write(coolDownText(owner), Screen.pos(0, 15).add((int) _owner.getLocation().X, 0));
+        Point2 cooldownPos = _forces.getOrigin().add(Screen.width(12), -Screen.height(10));
+        _coolDown = new TimerGraphic(false, cooldownPos, _owner.getBody().getColor());
         _effects = new EffectHUD(owner);
     }
 
     public void update() {
         _health.update();
         _energy.update();
-        _coolDown.setMessage(coolDownText(_owner));
-        _coolDown.setVisible(_owner.getCoolDown().getSecondsLeft() != 0);
+        int coolDownPercent = (int) Maths.valueToPercent(0, _owner.getCoolDown().getSecondsMax(), _owner.getCoolDown().getSecondsLeft());
+        _coolDown.setPercent(coolDownPercent);
+        _coolDown.setVisible(!_owner.getCoolDown().isCooled());
     }
 
     public void draw() {
@@ -42,6 +45,7 @@ public class BattleHUD {
         _health.draw();
         _energy.draw();
         _cost.draw();
+        _coolDown.draw();
     }
 
     private String coolDownText(Creature creature) {
