@@ -168,10 +168,14 @@ public class Creature extends Entity {
             _bonusPoints -= GameConfig.ChompPointsRewardCost;
             Force bonus = _stats.randomEnabledForce();
             _stats.set(bonus, _stats.get(bonus) + GameConfig.ChompRewardStatsImpact);
-            if (_owner != null) {
+            if (isOwned()) {
                 TextPool.get().write("CHOMP REWARD!\n  STAT + " + GameConfig.ChompRewardStatsImpact, _owner.getLocation().add(Screen.pos(0, 15)), 3f, TextEffects.Fountain);
             }
         }
+    }
+
+    public boolean isOwned() {
+        return _owner != null;
     }
 
     public void setOpponent(Creature creature) {

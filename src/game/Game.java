@@ -26,7 +26,7 @@ import sps.bridge.Commands;
 import sps.bridge.SpriteTypes;
 import sps.bridge.Sps;
 import sps.color.Color;
-import sps.core.DevConsole;
+import sps.console.DevConsole;
 import sps.core.Logger;
 import sps.core.RNG;
 import sps.display.Assets;
@@ -48,7 +48,6 @@ public class Game implements ApplicationListener {
 
     @Override
     public void create() {
-
         RNG.seed((int) System.currentTimeMillis());
         Sps.setup(true);
 
@@ -96,6 +95,8 @@ public class Game implements ApplicationListener {
         StateManager.get().setPaused(false);
 
         _exitPrompt = new ExitPrompt();
+
+        ConsoleCommands.init();
     }
 
     private State createInitialState() {
@@ -134,7 +135,7 @@ public class Game implements ApplicationListener {
     }
 
     private void handleDevShortcuts() {
-        if (DevConfig.ShortcutsEnabled) {
+        if (DevConfig.ShortcutsEnabled && !DevConsole.get().isActive()) {
             if (InputWrapper.moveDown() && InputWrapper.moveUp() && InputWrapper.debug1()) {
                 StateManager.reset().push(new MainMenu());
             }
@@ -169,9 +170,11 @@ public class Game implements ApplicationListener {
 
         handleDevShortcuts();
 
-        if (InputWrapper.pause()) {
+        if (InputWrapper.pause() && !DevConsole.get().isActive()) {
             StateManager.get().setPaused(!StateManager.get().isPaused());
         }
+
+        DevConsole.get().update();
 
         if (Input.get().isActive(Commands.get("Help"))) {
             StateManager.get().showTutorial(true);
@@ -201,7 +204,7 @@ public class Game implements ApplicationListener {
     private void draw() {
         if (_preUpdateState == StateManager.get().current()) {
             if (GameConfig.OptShowFPS) {
-                Logger.devConsole("" + Gdx.graphics.getFramesPerSecond() + ": " + Gdx.graphics.getDeltaTime());
+                DevConsole.get().add("" + Gdx.graphics.getFramesPerSecond() + ": " + Gdx.graphics.getDeltaTime());
             }
 
             StateManager.get().draw();

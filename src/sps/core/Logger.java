@@ -20,7 +20,8 @@ public class Logger {
             if (!__dir.exists()) {
                 try {
                     FileUtils.forceMkdir(__dir);
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                     e.printStackTrace();
                     System.out.println("Unable to create logging directory");
                 }
@@ -39,7 +40,8 @@ public class Logger {
                 if (Path.exists()) {
                     try {
                         FileUtils.moveFile(Path, new File(Path.getAbsolutePath().replace(".log", "." + UUID.randomUUID() + ".log")));
-                    } catch (IOException e) {
+                    }
+                    catch (IOException e) {
                         e.printStackTrace();
                         System.out.println("Unable to move old log file");
                     }
@@ -59,7 +61,8 @@ public class Logger {
             System.out.println(format(message));
             try {
                 FileUtils.writeStringToFile(Path, format(message) + "\n", true);
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -81,12 +84,6 @@ public class Logger {
         Handler.Default.log(message);
     }
 
-    public static void devConsole(String message) {
-        if (SpsConfig.get().devConsoleEnabled) {
-            DevConsole.get().add(message);
-        }
-    }
-
     public static void exception(Exception e) {
         exception(e, true);
     }
@@ -103,7 +100,8 @@ public class Logger {
         if (exit) {
             try {
                 Gdx.app.exit();
-            } catch (Exception swallow) {
+            }
+            catch (Exception swallow) {
             }
             System.exit(-1);
         }
