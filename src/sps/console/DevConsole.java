@@ -100,6 +100,7 @@ public class DevConsole {
                 _contents[_index] = new ConsoleText(__marginPixels, getY(_index), message);
                 _contents[_index].getContent().setFont(_fontLabel, _pointSize);
                 _contents[_index].getContent().setMoveable(false);
+                _contents[_index].getContent().setVisible(_isActive);
                 _index++;
             }
             else {
