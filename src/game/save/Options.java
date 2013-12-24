@@ -1,6 +1,5 @@
 package game.save;
 
-import com.badlogic.gdx.Gdx;
 import game.GameConfig;
 import org.apache.commons.io.FileUtils;
 import sps.core.Loader;
@@ -107,7 +106,6 @@ public class Options {
             options += "brightness=" + Brightness + "\n";
             options += "showIntro=" + ShowIntro;
 
-
             FileUtils.write(__config, options);
         }
         catch (Exception e) {
@@ -116,10 +114,7 @@ public class Options {
     }
 
     public void apply() {
-        if (!Gdx.graphics.isFullscreen()) {
-            Window.resize(WindowResolutionX, WindowResolutionY);
-        }
-        Window.setFullScreen(FullScreen, WindowResolutionX, WindowResolutionY);
+        Window.resize(WindowResolutionX, WindowResolutionY, FullScreen);
         SpsConfig.get().musicEnabled = MusicEnabled;
         SpsConfig.get().soundEnabled = SoundEnabled;
         GameConfig.setGraphicsMode(GraphicsLowQuality);

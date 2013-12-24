@@ -8,7 +8,7 @@ import java.io.File;
 public class Persistence {
     private static Persistence __instance;
 
-    private static final File __autoSave = Loader.get().userSave("Munchoid","autosave.dat");
+    private static final File __autoSave = Loader.get().userSave("Munchoid", "autosave.dat");
 
     public static Persistence get() {
         if (__instance == null) {
@@ -18,14 +18,6 @@ public class Persistence {
     }
 
     private Persistence() {
-
-    }
-
-    public void configSave() {
-
-    }
-
-    public void configLoad() {
 
     }
 

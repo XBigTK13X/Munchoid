@@ -70,7 +70,6 @@ public class Game implements ApplicationListener {
         Window.setWindowBackground(Color.BLACK);
         Window.get(false).screenEngine().setStrategy(new FrameStrategy());
         Window.get(true).screenEngine().setStrategy(new FrameStrategy());
-        Window.setRefreshInstance(this);
         Input.get().setup(new DefaultStateProvider());
         SpriteSheetManager.setup(SpriteTypes.getDefs());
 
@@ -89,7 +88,6 @@ public class Game implements ApplicationListener {
             options.apply();
             options.save();
         }
-        Options.load().apply();
 
         StateManager.get().push(createInitialState());
         StateManager.get().setPaused(false);
@@ -129,9 +127,18 @@ public class Game implements ApplicationListener {
         }
     }
 
+    private boolean _firstResizeCall = true;
+
     @Override
     public void resize(int width, int height) {
-        Window.resize(width, height);
+        if (_firstResizeCall) {
+            Logger.info("Libgdx overrides the resolution set in config. Ignoring that resize call");
+            _firstResizeCall = false;
+            return;
+        }
+        if (width != Window.Width || height != Window.Height) {
+            Window.resize(width, height, Gdx.graphics.isFullscreen());
+        }
     }
 
     private void handleDevShortcuts() {
@@ -147,7 +154,8 @@ public class Game implements ApplicationListener {
             }
             if (InputWrapper.fullScreen()) {
                 Options options = Options.load();
-                Window.setFullScreen(!Gdx.graphics.isFullscreen(), options.WindowResolutionX, options.WindowResolutionY);
+                Logger.info("Called 1");
+                Window.resize(options.WindowResolutionX, options.WindowResolutionY, Gdx.graphics.isFullscreen());
                 options.FullScreen = Gdx.graphics.isFullscreen();
                 options.save();
             }
@@ -157,7 +165,16 @@ public class Game implements ApplicationListener {
         }
     }
 
+    private boolean _firstRunOptionsApplied = false;
+
     private void update() {
+        //If we do this in create(), then some platforms do not enter fullscreen properly.
+        if (!_firstRunOptionsApplied) {
+            Options options = Options.load();
+            options.apply();
+            _firstRunOptionsApplied = true;
+        }
+
         if (_preUpdateState != StateManager.get().current()) {
             _exitPrompt = new ExitPrompt();
         }

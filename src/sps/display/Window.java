@@ -1,6 +1,5 @@
 package sps.display;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.GL10;
@@ -15,8 +14,6 @@ public class Window {
     private static RenderStrategy __defaultStrategy = new StretchStrategy();
     private static Renderer __dynamic;
     private static Renderer __fixed;
-    private static boolean __tipHasBeenDisplayed = false;
-    private static ApplicationListener __app;
     private static Color __bgColor = Color.BLACK;
 
     public static int Height;
@@ -51,45 +48,23 @@ public class Window {
         return fixed ? __fixed : __dynamic;
     }
 
-    public static void setRefreshInstance(ApplicationListener app) {
-        __app = app;
-    }
-
     public static void setWindowBackground(Color color) {
         __bgColor = color;
     }
 
-    public static void resize(int width, int height) {
-        Gdx.graphics.setDisplayMode(width, height, Gdx.graphics.isFullscreen());
+    public static void resize(int width, int height, boolean enableFullScreen) {
+        Logger.info("Resizing window: " + width + ", " + height + ", " + (enableFullScreen ? "FullScreen" : "Windowed"));
+        if (enableFullScreen) {
+            Graphics.DisplayMode nativeMode = Gdx.graphics.getDesktopDisplayMode();
+            width = nativeMode.width;
+            height = nativeMode.height;
+            Logger.info("Fullscreen enabled. Ignore parameters and resize to native resolution:  " + width + "x" + height);
+        }
+        Gdx.graphics.setDisplayMode(width, height, enableFullScreen);
         Height = height;
         Width = width;
         get(true).screenEngine().resize(width, height);
         get(false).screenEngine().resize(width, height);
-    }
-
-    public static void setFullScreen(boolean enableFullScreen, int width, int height) {
-        int resolutionX = 0;
-        int resolutionY = 0;
-        boolean isFullScreen = Gdx.graphics.isFullscreen();
-
-        boolean apply = false;
-
-        if (isFullScreen && !enableFullScreen) {
-            resolutionX = width;
-            resolutionY = height;
-            apply = true;
-        }
-        else if (!isFullScreen && enableFullScreen) {
-            Graphics.DisplayMode gfxNative = Gdx.graphics.getDesktopDisplayMode();
-            resolutionX = gfxNative.width;
-            resolutionY = gfxNative.height;
-            apply = true;
-        }
-
-        if (apply) {
-            Gdx.graphics.setDisplayMode(resolutionX, resolutionY, enableFullScreen);
-            resize(resolutionX, resolutionY);
-        }
     }
 
     public static void processDrawCalls() {

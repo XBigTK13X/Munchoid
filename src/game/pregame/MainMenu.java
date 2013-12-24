@@ -112,7 +112,6 @@ public class MainMenu implements State {
 
     @Override
     public void load() {
-        Persistence.get().configLoad();
     }
 
     @Override
