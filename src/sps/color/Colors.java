@@ -128,7 +128,9 @@ public class Colors {
     public static int[] colorsToInts(Color[] colors) {
         int[] ints = new int[colors.length];
         for (int ii = 0; ii < colors.length; ii++) {
-            ints[ii] = colors[ii].rgba8888();
+            if (colors[ii] != null) {
+                ints[ii] = colors[ii].rgba8888();
+            }
         }
         return ints;
     }

@@ -120,14 +120,14 @@ public class ProcTextures {
 
         Color[] gradient = Colors.gradient(start, end, 360);
 
+        int radiusBuffer = 1;
         for (int ii = 0; ii < base.length; ii++) {
             for (int jj = 0; jj < base[0].length; jj++) {
                 int arcLocationDegrees = (int) (180 * Math.atan2(center.Y - jj, center.X - ii) / Math.PI);
                 arcLocationDegrees = (int) Maths.massage(arcLocationDegrees, 0, 360, 360);
                 if (arcLocationDegrees >= arcMin && arcLocationDegrees <= arcMax) {
-
                     float dist = HitTest.getDistance(ii, jj, center.X, center.Y);
-                    if (dist <= radiusPixelsMax && dist >= radiusPixelsMin) {
+                    if (dist < radiusPixelsMax - radiusBuffer && dist > radiusPixelsMin + radiusBuffer) {
                         base[ii][jj] = gradient[arcLocationDegrees];
                     }
                 }

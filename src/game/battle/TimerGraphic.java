@@ -9,6 +9,7 @@ import sps.display.Screen;
 import sps.display.Window;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
+import sps.draw.TextureManipulation;
 import sps.util.Maths;
 
 public class TimerGraphic {
@@ -33,6 +34,7 @@ public class TimerGraphic {
                 float c = .2f;
                 base = ProcTextures.centeredCircleSegment(0, radiusPixels, 0, (int) rotationMax, new Color(c, c, c, 1), new Color(1 - c, 1 - c, 1 - c, 1));
                 Outline.single(base, Color.WHITE, 2);
+                base = TextureManipulation.blurStack(base, 2);
                 _frames[ii] = SpriteMaker.fromColors(base);
                 _frames[ii].setRotation(-90);
             }
@@ -69,7 +71,7 @@ public class TimerGraphic {
 
 
     public void draw() {
-        if (_visible) {
+        if (_visible && _percent != 0) {
             _frames[_percent].setColor(_color.getGdxColor());
             _frames[_percent].setPosition(_position.X, _position.Y);
             Window.get(!_moveable).schedule(_frames[_percent], DrawDepths.get("BattleCoolDown"));
