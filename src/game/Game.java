@@ -157,9 +157,8 @@ public class Game implements ApplicationListener {
             }
             if (InputWrapper.fullScreen()) {
                 Options options = Options.load();
-                Logger.info("Called 1");
-                Window.resize(options.WindowResolutionX, options.WindowResolutionY, Gdx.graphics.isFullscreen());
-                options.FullScreen = Gdx.graphics.isFullscreen();
+                options.FullScreen = !Gdx.graphics.isFullscreen();
+                options.apply();
                 options.save();
             }
             if (InputWrapper.devConsole()) {
