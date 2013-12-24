@@ -45,7 +45,6 @@ import sps.ui.UiElements;
 public class Game implements ApplicationListener {
 
     private State _preUpdateState;
-    private ExitPrompt _exitPrompt;
 
     @Override
     public void create() {
@@ -92,8 +91,6 @@ public class Game implements ApplicationListener {
 
         StateManager.get().push(createInitialState());
         StateManager.get().setPaused(false);
-
-        _exitPrompt = new ExitPrompt();
 
         ConsoleCommands.init();
     }
@@ -177,15 +174,9 @@ public class Game implements ApplicationListener {
             _firstRunOptionsApplied = true;
         }
 
-        if (_preUpdateState != StateManager.get().current()) {
-            _exitPrompt = new ExitPrompt();
-        }
         Input.get().update();
 
-        if (_exitPrompt.isActive()) {
-            UiElements.get().update();
-            _exitPrompt.update();
-        }
+        ExitPrompt.get().update();
 
         handleDevShortcuts();
 
@@ -200,12 +191,12 @@ public class Game implements ApplicationListener {
         }
 
         if (Input.get().isActive(Commands.get("Exit"))) {
-            if (_exitPrompt.isActive()) {
-                _exitPrompt.setActive(false);
+            if (ExitPrompt.get().isActive()) {
+                ExitPrompt.get().setActive(false);
             }
             else {
                 if (!StateManager.get().closeTutorial()) {
-                    _exitPrompt.setActive(true);
+                    ExitPrompt.get().setActive(true);
                 }
             }
         }
