@@ -32,7 +32,7 @@ public class GameConfig {
     public static final boolean IntroVideoEnabled = false;
 
     //Arena
-    public static final int CreatureLimit = 5;
+    public static final int CreatureLimit = 50;
     public static final int SpacePercentPerCreature = 1;
     public static final int ArenaBufferPercent = (int) ((GameConfig.CreatureLimit / 2) * GameConfig.SpacePercentPerCreature);
 
