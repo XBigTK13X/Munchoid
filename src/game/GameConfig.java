@@ -32,7 +32,7 @@ public class GameConfig {
     public static final boolean IntroVideoEnabled = false;
 
     //Arena
-    public static final int CreatureLimit = 50;
+    public static final int CreatureLimit = 5;
     public static final int SpacePercentPerCreature = 1;
     public static final int ArenaBufferPercent = (int) ((GameConfig.CreatureLimit / 2) * GameConfig.SpacePercentPerCreature);
 
@@ -55,7 +55,7 @@ public class GameConfig {
     public static final int PlayerTopSpeed = 500;
 
     public static final int ChompRewardStatsImpact = 2;
-    public static final int ChompPointsRewardCost = GameConfig.CreatureLimit / 10;
+    public static final int ChompPointsRewardCost = Math.max(GameConfig.CreatureLimit / 10, 1);
     public static final int ChompPoints = 1;
 
     //Creature construction
@@ -76,7 +76,7 @@ public class GameConfig {
 
 
     //Battle
-    public static final boolean BattleEnableEnemyForcesHUD = false;
+    public static boolean BattleEnableEnemyForcesHUD = false;
     public static final Point2 BattleEnemyPosition = Screen.pos(60, 35);
     public static final Point2 BattlePlayerPosition = Screen.pos(25, 35);
     public static final Point2 BattlePlayerForcesHUDPosition = Screen.pos(15, 85);
@@ -102,6 +102,7 @@ public class GameConfig {
     public static final float MaxScaleDeath = 1.5f;
 
     //Tournament/Population
+    public static final int TournamentStatRange = 10;
     public static final int NumberOfTournaments = 5;
     public static final int TournamentMatches = 3;
     public static final int StartingPopulationSize = 1_000_000;

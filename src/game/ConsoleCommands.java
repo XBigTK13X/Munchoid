@@ -74,5 +74,17 @@ public class ConsoleCommands {
 
             }
         });
+
+        DevConsole.get().register(new DevConsoleAction("battlehud.enemystats") {
+            @Override
+            public String act(int[] input) {
+                GameConfig.BattleEnableEnemyForcesHUD = !GameConfig.BattleEnableEnemyForcesHUD;
+                if (StateManager.get().hasAny(Battle.class)) {
+                    Battle battle = (Battle) StateManager.get().current();
+                    battle.rebuildHud();
+                }
+                return "Enemy forces HUD  " + (GameConfig.BattleEnableEnemyForcesHUD ? "enabled" : "disabled");
+            }
+        });
     }
 }

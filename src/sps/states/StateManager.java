@@ -145,6 +145,7 @@ public class StateManager {
             isNewState = true;
         }
         _states.push(state);
+        MusicPlayer.get().stop();
         loadCurrent();
         if (isNewState) {
             state.create();

@@ -165,4 +165,19 @@ public class Stats {
         stats += "}";
         return stats;
     }
+
+    public void enableStrongest() {
+        for (Force force : Force.values()) {
+            setEnabled(force, false);
+        }
+        for (int ii = 0; ii < 4; ii++) {
+            Force maxDisabled = Force.Abrasive;
+            for (Force force : Force.values()) {
+                if (!isEnabled(force) && (get(force) > get(maxDisabled) || isEnabled(maxDisabled))) {
+                    maxDisabled = force;
+                }
+            }
+            setEnabled(maxDisabled, true);
+        }
+    }
 }

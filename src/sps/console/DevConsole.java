@@ -194,7 +194,9 @@ public class DevConsole {
                                 appendInput(" ");
                             }
                             else if (key == Input.Keys.BACKSPACE || key == Input.Keys.DEL) {
-                                _input.getContent().setMessage(_input.getContent().getMessage().substring(0, _input.getContent().getMessage().length() - 1));
+                                if (getInput().length() > 0) {
+                                    _input.getContent().setMessage(_input.getContent().getMessage().substring(0, _input.getContent().getMessage().length() - 1));
+                                }
                             }
                             else {
                                 //Only deal with single characters

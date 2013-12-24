@@ -4,12 +4,12 @@ import game.GameConfig;
 import game.arena.Player;
 import game.battle.Battle;
 import game.creatures.Creature;
+import game.creatures.Stats;
+import game.forces.Force;
 import sps.core.RNG;
 import sps.states.StateManager;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Matches {
     private List<Combatant> _fighters = new ArrayList<Combatant>();
@@ -62,6 +62,22 @@ public class Matches {
     public void beginPlayerMatch() {
         _playerMatches++;
         //TODO pull in a creature from an opposing combatant
-        StateManager.get().push(new Battle(_player.getPet(), new Creature(), isLastMatch()));
+
+        Creature opponent = new Creature();
+        Stats stats = opponent.getStats();
+
+        Stats petStats = _player.getPet().getStats();
+        LinkedList<Integer> rawPetStats = new LinkedList<>();
+        for (Force force : Force.values()) {
+            rawPetStats.add(petStats.get(force));
+        }
+        Collections.shuffle(rawPetStats);
+
+        for (Force force : Force.values()) {
+            stats.set(force, RNG.next(GameConfig.TournamentStatRange * 2) - GameConfig.TournamentStatRange + rawPetStats.pop());
+        }
+        stats.enableStrongest();
+
+        StateManager.get().push(new Battle(_player.getPet(), opponent, isLastMatch()));
     }
 }
