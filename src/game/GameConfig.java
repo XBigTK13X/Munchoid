@@ -77,8 +77,8 @@ public class GameConfig {
 
     //Battle
     public static final boolean BattleEnableEnemyForcesHUD = false;
-    public static final Point2 BattleEnemyPosition = Screen.pos(60, 40);
-    public static final Point2 BattlePlayerPosition = Screen.pos(25, 40);
+    public static final Point2 BattleEnemyPosition = Screen.pos(60, 35);
+    public static final Point2 BattlePlayerPosition = Screen.pos(25, 35);
     public static final Point2 BattlePlayerForcesHUDPosition = Screen.pos(15, 85);
     public static final Point2 BattleEnemyForcesHUDPosition = Screen.pos(55, 85);
     public static final boolean BattleEffectHUDEnabled = false;
