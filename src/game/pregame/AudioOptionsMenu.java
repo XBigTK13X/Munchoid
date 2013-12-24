@@ -27,6 +27,7 @@ public class AudioOptionsMenu extends OptionsState {
                 options.save();
                 options.apply();
                 setMessage("Music\n" + (options.MusicEnabled ? "Enabled" : "Disabled"));
+                layout();
             }
         };
 
@@ -38,12 +39,16 @@ public class AudioOptionsMenu extends OptionsState {
                 options.save();
                 options.apply();
                 setMessage("Sound\n" + (options.SoundEnabled ? "Enabled" : "Disabled"));
+                layout();
             }
         };
 
         musicEnabled.setColRow(3, 1);
-
         soundEnabled.setColRow(1, 1);
         back.setColRow(2, 3);
+
+        musicEnabled.layout();
+        soundEnabled.layout();
+        back.layout();
     }
 }

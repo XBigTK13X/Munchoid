@@ -64,6 +64,8 @@ public class ForceSelection implements State {
         confirm.setDepth(DrawDepths.get("ForceAccept"));
         confirm.setScreenPercent(35, 10);
 
+        confirm.layout();
+
         _forces = new ForcesSelectionUI(_pet);
         if (DevConfig.EndToEndStateLoadTest) {
             while (!confirmSelection()) {

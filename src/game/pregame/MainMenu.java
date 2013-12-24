@@ -65,6 +65,10 @@ public class MainMenu implements State {
         _options.setColRow(2, 1);
         _exit.setColRow(3, 1);
 
+        _start.layout();
+        _options.layout();
+        _exit.layout();
+
         if (Persistence.get().saveFileExists()) {
             _load = new UIButton("Continue") {
                 @Override
@@ -84,6 +88,7 @@ public class MainMenu implements State {
                 }
             };
             _load.setColRow(2, 2);
+            _load.layout();
         }
     }
 

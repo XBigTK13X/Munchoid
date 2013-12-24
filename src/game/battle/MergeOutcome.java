@@ -98,6 +98,9 @@ public class MergeOutcome implements State {
         accept.setDepth(DrawDepths.get("MergeChoice"));
         accept.setXY((int) Screen.width(55), (int) Screen.height(35));
 
+        accept.layout();
+        reject.layout();
+
         Tooltips.get().add(new Tooltips.User() {
 
             @Override
@@ -141,6 +144,8 @@ public class MergeOutcome implements State {
         TextPool.get().write("=", Screen.pos(45, yB5 + _pet.getHeight() / 2));
         _merged.setLocation(Screen.pos(50, yB));
         _reroll.setScreenPercent(70, yB - 5);
+
+        _reroll.layout();
 
         _pet.getBody().setScale(.5f);
         _defeated.getBody().setScale(.5f);

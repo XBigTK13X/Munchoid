@@ -45,6 +45,9 @@ public class ExitPrompt {
         _confirm.setDepth(DrawDepths.get("ExitText"));
         _cancel.setDepth(DrawDepths.get("ExitText"));
 
+        _confirm.layout();
+        _cancel.layout();
+
         _display = TextPool.get().write("Do you want to exit the game?", Screen.pos(25, 60));
         _display.setDepth(DrawDepths.get("ExitText"));
         setActive(false);

@@ -18,15 +18,8 @@ public class GameplayOptionsMenu extends OptionsState {
             }
         };
 
-        final UIButton forw = new UIButton("Yup") {
-
-            @Override
-            public void click() {
-
-            }
-        };
-
         back.setColRow(2, 3);
-        forw.setColRow(1, 1);
+
+        back.layout();
     }
 }

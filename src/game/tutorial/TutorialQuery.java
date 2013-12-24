@@ -59,6 +59,10 @@ public class TutorialQuery implements State {
         _launchTutorial.setColRow(1, 1);
         _launchGame.setColRow(2, 1);
         _back.setColRow(3, 1);
+
+        _launchGame.layout();
+        _launchTutorial.layout();
+        _back.layout();
     }
 
     @Override

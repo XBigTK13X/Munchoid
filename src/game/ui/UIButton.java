@@ -113,8 +113,7 @@ public abstract class UIButton {
 
         rebuildBackground();
 
-        setMessage(_message.getMessage());
-        setXY((int) getPosition().X, (int) getPosition().Y);
+        layout();
     }
 
     public void setMessage(String message) {
@@ -136,20 +135,23 @@ public abstract class UIButton {
                 _message.setMessage(_message.getMessage().replace(line, StringUtils.repeat(" ", offset) + line));
             }
         }
-        setXY((int) _position.X, (int) _position.Y);
     }
 
     public void setXY(int x, int y) {
         int mW = (int) _message.getBounds().width;
         int mH = (int) _message.getBounds().height;
-        //FIXME For some reason, the centering doesn't always work.
-        //Sometimes it does. For example,"Options" button is wrong,
-        //   but the rest are fine
         int mX = x + (_width - mW) / 2;
         int mY = y + mH + (_height - mH) / 2;
         _message.setPosition(mX, mY);
         _sprite.setPosition(x, y);
         _position.reset(x, y);
+    }
+
+    public void layout() {
+        //FIXME Is it possible to have a work piece of code than this?
+        //TODO Figure out why if this isn't called, text isn't centered properly.
+        setMessage(_message.getMessage());
+        setXY((int) _position.X, (int) _position.Y);
     }
 
     public void setScreenPercent(int x, int y) {

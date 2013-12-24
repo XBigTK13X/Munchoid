@@ -54,5 +54,11 @@ public class OptionsMenu extends OptionsState {
         defaults.setColRow(2, 1);
 
         back.setColRow(2, 3);
+
+        gameplay.layout();
+        video.layout();
+        audio.layout();
+        defaults.layout();
+        back.layout();
     }
 }

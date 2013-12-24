@@ -44,6 +44,7 @@ public class VideoOptionsMenu extends OptionsState {
                 options.save();
                 options.apply();
                 setMessage(qualityMessage(options));
+                layout();
             }
         };
 
@@ -69,6 +70,10 @@ public class VideoOptionsMenu extends OptionsState {
         graphicsMode.setColRow(1, 1);
         back.setColRow(2, 3);
         fullScreen.setColRow(2, 1);
+
+        graphicsMode.layout();
+        back.layout();
+        fullScreen.layout();
 
         TextPool.get().write("Brightness", Screen.pos(15, 55));
     }
