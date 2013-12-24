@@ -30,6 +30,7 @@ public abstract class UISlider {
 
             }
         };
+        _knob.setBackgroundColors(Color.WHITE, Color.BLACK);
         _knob.setSize(1, heightPercent);
         _knob.setXY((int) _position.X - _width / 2, (int) _position.Y);
 
@@ -53,6 +54,7 @@ public abstract class UISlider {
                 }
             }
         };
+        buttonUser.setShouldDraw(false);
         Buttons.get().add(buttonUser);
     }
 
