@@ -36,12 +36,16 @@ public class Window {
         if (__dynamic == null || __fixed == null) {
             int width = SpsConfig.get().virtualWidth;
             int height = SpsConfig.get().virtualHeight;
-            Logger.info("Virtual resolution: " + width + "W, " + height + "H");
+            if (SpsConfig.get().displayLoggingEnabled) {
+                Logger.info("Virtual resolution: " + width + "W, " + height + "H");
+            }
             __dynamic = new Renderer(width, height);
             __dynamic.screenEngine().setStrategy(__defaultStrategy);
             __fixed = new Renderer(width, height);
             __fixed.screenEngine().setStrategy(__defaultStrategy);
-            Logger.info("Window resolution: " + Gdx.graphics.getWidth() + "W, " + Gdx.graphics.getHeight() + "H");
+            if (SpsConfig.get().displayLoggingEnabled) {
+                Logger.info("Window resolution: " + Gdx.graphics.getWidth() + "W, " + Gdx.graphics.getHeight() + "H");
+            }
             Width = width;
             Height = height;
         }
@@ -53,12 +57,16 @@ public class Window {
     }
 
     public static void resize(int width, int height, boolean enableFullScreen) {
-        Logger.info("Resizing window: " + width + ", " + height + ", " + (enableFullScreen ? "FullScreen" : "Windowed"));
+        if (SpsConfig.get().displayLoggingEnabled) {
+            Logger.info("Resizing window: " + width + ", " + height + ", " + (enableFullScreen ? "FullScreen" : "Windowed"));
+        }
         if (enableFullScreen) {
             Graphics.DisplayMode nativeMode = Gdx.graphics.getDesktopDisplayMode();
             width = nativeMode.width;
             height = nativeMode.height;
-            Logger.info("Fullscreen enabled. Ignore parameters and resize to native resolution:  " + width + "x" + height);
+            if (SpsConfig.get().displayLoggingEnabled) {
+                Logger.info("Fullscreen enabled. Ignore parameters and resize to native resolution:  " + width + "x" + height);
+            }
         }
         Gdx.graphics.setDisplayMode(width, height, enableFullScreen);
         Height = height;

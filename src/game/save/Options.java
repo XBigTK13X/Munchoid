@@ -118,7 +118,7 @@ public class Options {
         SpsConfig.get().musicEnabled = MusicEnabled;
         SpsConfig.get().soundEnabled = SoundEnabled;
         GameConfig.setGraphicsMode(GraphicsLowQuality);
-        int brightness = (int) (Maths.percentToValue(-75, 0, Brightness));
+        int brightness = (int) (Maths.percentToValue(-25, 0, Brightness));
         Window.get().screenEngine().setBrightness(brightness);
         Window.get(true).screenEngine().setBrightness(brightness);
     }

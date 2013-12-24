@@ -29,6 +29,7 @@ import sps.color.Color;
 import sps.console.DevConsole;
 import sps.core.Logger;
 import sps.core.RNG;
+import sps.core.SpsConfig;
 import sps.display.Assets;
 import sps.display.SpriteSheetManager;
 import sps.display.Window;
@@ -132,7 +133,9 @@ public class Game implements ApplicationListener {
     @Override
     public void resize(int width, int height) {
         if (_firstResizeCall) {
-            Logger.info("Libgdx overrides the resolution set in config. Ignoring that resize call");
+            if (SpsConfig.get().displayLoggingEnabled) {
+                Logger.info("Libgdx overrides the resolution set in config. Ignoring that resize call");
+            }
             _firstResizeCall = false;
             return;
         }

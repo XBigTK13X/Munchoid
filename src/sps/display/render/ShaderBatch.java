@@ -3,6 +3,7 @@ package sps.display.render;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import sps.core.Logger;
+import sps.core.SpsConfig;
 
 //Modified from: https://github.com/mattdesl/lwjgl-basics/wiki/LibGDX-Brightness-&-Contrast
 public class ShaderBatch extends SpriteBatch {
@@ -32,7 +33,9 @@ public class ShaderBatch extends SpriteBatch {
         pushUniforms();
 
         if (!__shaderCapabilitiesDisplayed) {
-            Logger.info("Shaders initialized. (Brightness: " + _brightnessControlsSupported + ", Contrast: " + _contrastControlsSupported + ", Saturation: " + _saturationControlsSupported + ")");
+            if (SpsConfig.get().displayLoggingEnabled) {
+                Logger.info("Shaders initialized. Supported variables:  (Brightness: " + _brightnessControlsSupported + ", Contrast: " + _contrastControlsSupported + ", Saturation: " + _saturationControlsSupported + ")");
+            }
             __shaderCapabilitiesDisplayed = true;
         }
 
