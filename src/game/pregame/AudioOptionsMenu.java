@@ -37,13 +37,13 @@ public class AudioOptionsMenu extends OptionsState {
                 options.SoundEnabled = !options.SoundEnabled;
                 options.save();
                 options.apply();
-                setMessage("Music\n" + (options.SoundEnabled ? "Enabled" : "Disabled"));
+                setMessage("Sound\n" + (options.SoundEnabled ? "Enabled" : "Disabled"));
             }
         };
 
-        musicEnabled.setColRow(2, 1);
+        musicEnabled.setColRow(3, 1);
 
-        musicEnabled.setColRow(2, 1);
+        soundEnabled.setColRow(1, 1);
         back.setColRow(2, 3);
     }
 }
