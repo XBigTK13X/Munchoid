@@ -18,7 +18,8 @@ Belize
 Benin
 Bhutan
 Bolivia
-Bosnia Herzegovina
+Bosnia
+Herzegovina
 Botswana
 Brazil
 Brunei
@@ -28,28 +29,35 @@ Burundi
 Cambodia
 Cameroon
 Canada
-Cape Verde
-Central African Rep
+Cape
+Verde
+Central
+African
 Chad
 Chile
 China
 Colombia
 Comoros
 Congo
-Costa Rica
+Costa
+Rica
 Croatia
 Cuba
 Cyprus
-Czech Republic
+Czech
+Republic
 Denmark
 Djibouti
 Dominica
-Dominican Republic
-East Timor
+Dominican
+Republic
+East
+Timor
 Ecuador
 Egypt
-El Salvador
-Equatorial Guinea
+Salvador
+Equatorial
+Guinea
 Eritrea
 Estonia
 Ethiopia
@@ -78,15 +86,17 @@ Iraq
 Ireland
 Israel
 Italy
-Ivory Coast
+Ivory
+Coast
 Jamaica
 Japan
 Jordan
 Kazakhstan
 Kenya
 Kiribati
-Korea North
-Korea South
+Korea
+North
+South
 Kosovo
 Kuwait
 Kyrgyzstan
@@ -106,7 +116,8 @@ Malaysia
 Maldives
 Mali
 Malta
-Marshall Islands
+Marshall
+Islands
 Mauritania
 Mauritius
 Mexico
@@ -122,7 +133,7 @@ Namibia
 Nauru
 Nepal
 Netherlands
-New Zealand
+Zealand
 Nicaragua
 Niger
 Nigeria
@@ -131,7 +142,8 @@ Oman
 Pakistan
 Palau
 Panama
-Papua New Guinea
+Papua
+Guinea
 Paraguay
 Peru
 Philippines
@@ -139,25 +151,31 @@ Poland
 Portugal
 Qatar
 Romania
-Russian Federation
+Russian
+Federation
 Rwanda
-St Lucia
+Lucia
 Samoa
-San Marino
-Saudi Arabia
+Marino
+Saudi
+Arabia
 Senegal
 Serbia
 Seychelles
-Sierra Leone
+Sierra
+Leone
 Singapore
 Slovakia
 Slovenia
-Solomon Islands
+Solomon
+Islands
 Somalia
-South Africa
-South Sudan
+South
+Africa
+Sudan
 Spain
-Sri Lanka
+Sri
+Lanka
 Sudan
 Suriname
 Swaziland
@@ -176,13 +194,18 @@ Turkmenistan
 Tuvalu
 Uganda
 Ukraine
-United Arab Emirates
-United Kingdom
-United States
+United
+Arab
+Emirates
+United
+Kingdom
+United
+States
 Uruguay
 Uzbekistan
 Vanuatu
-Vatican City
+Vatican
+City
 Venezuela
 Vietnam
 Yemen
@@ -216,35 +239,44 @@ Missouri
 Montana
 Nebraska
 Nevada
-New Hampshire
-New Jersey
-New Mexico
-New York
-North Carolina
-North Dakota
+Hampshire
+Jersey
+Mexico
+York
+North
+Carolina
+North
+Dakota
 Ohio
 Oklahoma
 Oregon
 Pennsylvania
-Rhode Island
-South Carolina
-South Dakota
+Rhode
+Island
+South
+Carolina
+South
+Dakota
 Tennessee
 Texas
 Utah
 Vermont
 Virginia
 Washington
-West Virginia
+West
+Virginia
 Wisconsin
 Wyoming
-Buenos Aires (Barrios)
+Buenos
+Aires
+Barrios
 Sydney
 Melbourne
 Brisbane
 Perth
 Adelaide
-Gold Coast
+Gold
+Coast
 Newcastle
 Canberra
 Wollongong
@@ -252,15 +284,18 @@ Hobart
 Townsville
 Darwin
 Toronto
-East York
+East
+York
 Etobicoke
-North York
+North
+York
 Scarborough
 York
 Montreal
 Ottawa
 Vancouver
-Mainland China
+Mainland
+China
 Beijing
 Bangalore
 Chennai
@@ -269,7 +304,8 @@ Hyderabad
 Kolkata
 Mumbai
 Thane
-Navi Mumbai
+Navi
+Mumbai
 Kyoto
 Nara
 Osaka
@@ -281,10 +317,13 @@ Karachi
 Lahore
 Porto
 Moscow
-Saint Petersburg
+Saint
+Petersburg
 Belgrade
-Novi Sad
-Cape Town
+Novi
+Sad
+Cape
+Town
 Johannesburg
 London
 Barking
@@ -319,15 +358,18 @@ Redbridge
 Richmond
 Southwark
 Sutton
-Tower Hamlets
-Waltham Forest
+Tower
+Hamlets
+Waltham
+Forest
 Wandsworth
 Westminster
 Bristol
 Liverpool
 Manchester
 Scotland
-Isle of Arran
+Isle
+Arran
 Austin
 Baltimore
 Berkeley
@@ -336,44 +378,52 @@ Boston
 Buffalo
 Charlotte
 Chicago
-Community areas of Chicago
-Neighborhoods of Chicago
 Cincinnati
 Cleveland
-Columbus, Georgia
-Columbus, Ohio
+Columbus
+Georgia
+Columbus
+Ohio
 Dallas
 Detroit
 Duluth
 Elizabeth
-Fort Worth
+Fort
+Worth
 Greensboro
 Harrisburg
 Honolulu
 Houston
 Indianapolis
-Jersey City
-Los Angeles
+Jersey
+City
+Los
+Angeles
 Louisville
 Memphis
 Milwaukee
 Minneapolis
 Moline
 Newark
-New Orleans
-New York
+Orleans
+York
 Oakland
 Omaha
-Perth Amboy
+Perth
+Amboy
 Philadelphia
 Pittsburgh
 Portland
 Raleigh
 Richmond
-Saint Paul
-San Antonio
-San Diego
-San Francisco
+Saint
+Paul
+San
+Antonio
+San
+Diego
+San
+Francisco
 Seattle
 Syracuse
 Tampa
