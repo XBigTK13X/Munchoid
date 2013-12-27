@@ -94,4 +94,13 @@ public enum PartFunction {
         }
         return childrenWithCorrectAttachment.get(RNG.next(childrenWithCorrectAttachment.size()));
     }
+
+    public static PartFunction lookup(String name){
+        for(PartFunction function:values()){
+            if(function.name().equals(name)){
+                return function;
+            }
+        }
+        return null;
+    }
 }

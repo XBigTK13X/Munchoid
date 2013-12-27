@@ -3,11 +3,15 @@ package game.creatures.part;
 import game.creatures.Atom;
 import game.creatures.PartFunction;
 import game.creatures.part.designimpls.*;
+import org.apache.commons.io.FilenameUtils;
 import sps.color.Color;
 import sps.color.Colors;
+import sps.core.Loader;
+import sps.core.Logger;
 import sps.core.RNG;
 import sps.draw.ProcTextures;
 
+import java.io.File;
 import java.util.*;
 
 public class Designs {
@@ -26,6 +30,31 @@ public class Designs {
         tmp.get(PartFunction.Core).add(new RectangleBody());
         tmp.get(PartFunction.LowerLimb).add(new LimbSegment());
         tmp.get(PartFunction.LowerLimb).add(new RegularPoly());
+
+        //Silhouettes that are restricted to a subset of partfunctions
+        File silhouetteDesigns = Loader.get().graphics("designs");
+        for (File file : silhouetteDesigns.listFiles()) {
+            if (FilenameUtils.getExtension(file.getName()).equals("prt")) {
+                DesignSilhouette silhouette = new DesignSilhouette(file);
+                for (PartFunction function : silhouette.Functions) {
+                    tmp.get(function).add(silhouette);
+                }
+            }
+        }
+
+        //Silhouettes that can be any partfunction
+        File rawSilhouettes = Loader.get().graphics("designs/raw");
+        for (File file : rawSilhouettes.listFiles()) {
+            if (FilenameUtils.getExtension(file.getName()).equals("png")) {
+                DesignSilhouette silhouette = new DesignSilhouette(file.getAbsolutePath());
+                for (PartFunction function : PartFunction.values()) {
+                    if (function != PartFunction.Core) {
+                        tmp.get(function).add(silhouette);
+                    }
+                }
+            }
+        }
+
         __designs = Collections.unmodifiableMap(tmp);
     }
 
