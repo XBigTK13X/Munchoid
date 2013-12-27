@@ -9,19 +9,23 @@ import game.Score;
 import game.save.Persistence;
 import game.tutorial.TutorialQuery;
 import game.ui.UIButton;
+import org.apache.commons.io.FileUtils;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
+import sps.core.Loader;
 import sps.core.Logger;
 import sps.display.Screen;
 import sps.display.Window;
 import sps.draw.SpriteMaker;
 import sps.states.State;
 import sps.states.StateManager;
+import sps.text.Text;
 import sps.text.TextPool;
 
-public class MainMenu implements State {
-    Sprite _background;
+import java.io.File;
 
+public class MainMenu implements State {
+    private Sprite _background;
     private Sprite _logo;
 
     @Override
@@ -85,6 +89,25 @@ public class MainMenu implements State {
             _load.setColRow(2, 2);
             _load.layout();
         }
+
+        String version = "Unknown";
+        File versionDat = Loader.get().data("version.dat");
+        if (versionDat.exists()) {
+            try {
+                version = FileUtils.readFileToString(versionDat);
+            }
+            catch (Exception e) {
+                Logger.exception(e, false);
+            }
+        }
+        Text versionDisplay = TextPool.get().write("Version " + version, Screen.pos(5, 5));
+        versionDisplay.setFont("Console", 24);
+
+        Text developedDisplay = TextPool.get().write("Developed by Simple Path Studios", Screen.pos(40, 5));
+        developedDisplay.setFont("Console", 24);
+
+        Text twitterDisplay = TextPool.get().write("Twitter @XBigTK13X", Screen.pos(80, 5));
+        twitterDisplay.setFont("Console", 24);
     }
 
     private void start() {
