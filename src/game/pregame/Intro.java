@@ -2,12 +2,12 @@ package game.pregame;
 
 import game.GameConfig;
 import game.dev.DevConfig;
-import game.movie.Movie;
 import sps.audio.MusicPlayer;
 import sps.bridge.Commands;
 import sps.color.Color;
 import sps.display.Screen;
 import sps.io.Input;
+import sps.movie.Movie;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
