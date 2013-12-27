@@ -33,9 +33,9 @@ public class RenderApiCall implements Comparable<RenderApiCall> {
         Depth = depth;
     }
 
-    public RenderApiCall(ParticleLease particles, DrawDepth depth) {
+    public RenderApiCall(ParticleLease particles) {
         Particles = particles;
-        Depth = depth;
+        Depth = particles.Depth;
     }
 
     @Override

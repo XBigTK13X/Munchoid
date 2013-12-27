@@ -3,7 +3,9 @@ package sps.particles;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
+import sps.bridge.DrawDepth;
 import sps.bridge.DrawDepths;
+import sps.color.Color;
 import sps.core.Loader;
 import sps.core.Point2;
 import sps.core.SpsConfig;
@@ -56,13 +58,17 @@ public class ParticleWrapper {
         }
     }
 
-    public ParticleEffect emit(String effectLabel, Point2 position) {
+    public ParticleEffect emit(String effectLabel, Point2 position, DrawDepth depth) {
         String label = effectLabel.toLowerCase();
         ParticleEffectPool.PooledEffect effect = _effectPools.get(label).obtain();
+        effect.reset();
         effect.setPosition(position.X, position.Y);
-        effect.start();
-        _leasedEffects.add(new ParticleLease(effect, label));
+        _leasedEffects.add(new ParticleLease(effect, label, depth));
         return effect;
+    }
+
+    public ParticleEffect emit(String effectLabel, Point2 position) {
+        return emit(effectLabel, position, DrawDepths.get("Particle"));
     }
 
     public void update() {
@@ -76,7 +82,7 @@ public class ParticleWrapper {
 
     public void draw() {
         for (ParticleLease lease : _leasedEffects) {
-            Window.get().schedule(lease, DrawDepths.get("Particle"));
+            Window.get().schedule(lease);
         }
     }
 
@@ -93,6 +99,16 @@ public class ParticleWrapper {
             effect.getEmitters().get(i).getSpawnWidth().setHigh(length);
             effect.getEmitters().get(i).getSpawnHeight().setLow(0);
             effect.getEmitters().get(i).getSpawnHeight().setHigh(length);
+        }
+    }
+
+    public static void setColor(ParticleEffect effect, Color color) {
+        float[] colors = new float[3];
+        colors[0] = color.r;
+        colors[1] = color.g;
+        colors[2] = color.b;
+        for (int i = 0; i < effect.getEmitters().size; i++) {
+            effect.getEmitters().get(i).getTint().setColors(colors);
         }
     }
 }

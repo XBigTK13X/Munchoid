@@ -59,8 +59,8 @@ public class Renderer {
         _scheduler.schedule(content, location, filter, fontLabel, pointSize, scale, depth);
     }
 
-    public void schedule(ParticleLease lease, DrawDepth depth) {
-        _scheduler.schedule(lease, depth);
+    public void schedule(ParticleLease lease) {
+        _scheduler.schedule(lease);
     }
 
     public ScreenRenderEngine screenEngine() {

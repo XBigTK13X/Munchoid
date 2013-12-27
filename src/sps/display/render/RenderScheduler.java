@@ -56,8 +56,8 @@ public class RenderScheduler {
         _renderApiCalls.add(new RenderApiCall(content, location, filter, fontLabel, pointSize, scale, depth));
     }
 
-    public void schedule(ParticleLease lease, DrawDepth depth) {
-        _renderApiCalls.add(new RenderApiCall(lease, depth));
+    public void schedule(ParticleLease lease) {
+        _renderApiCalls.add(new RenderApiCall(lease));
     }
 
     public void clear() {

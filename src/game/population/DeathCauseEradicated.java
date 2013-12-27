@@ -1,13 +1,17 @@
 package game.population;
 
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.InputWrapper;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
+import sps.color.Colors;
+import sps.core.RNG;
 import sps.display.Screen;
 import sps.display.Window;
 import sps.draw.SpriteMaker;
+import sps.particles.ParticleWrapper;
 import sps.text.Text;
 import sps.text.TextPool;
 import sps.util.CoolDown;
@@ -18,6 +22,7 @@ public class DeathCauseEradicated {
     private Sprite _bg;
 
     private final CoolDown __displayTimer = new CoolDown(7);
+    private final CoolDown _fireWorksTimer = new CoolDown(.5f);
 
     public DeathCauseEradicated(DeathCause top, DeathCause bottom) {
         _isActive = true;
@@ -36,6 +41,11 @@ public class DeathCauseEradicated {
     }
 
     public void update() {
+        if (_fireWorksTimer.updateAndCheck()) {
+            _fireWorksTimer.reset(RNG.next(50, 150) / 200f);
+            ParticleEffect effect = ParticleWrapper.get().emit("fireworks", Screen.rand(5, 95, 5, 95), DrawDepths.get("Fireworks"));
+            ParticleWrapper.setColor(effect, Colors.randomPleasant());
+        }
         if (InputWrapper.pass()) {
             _isActive = false;
             _announcement.setVisible(false);
