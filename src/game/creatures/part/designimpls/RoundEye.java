@@ -1,5 +1,7 @@
-package game.creatures.part;
+package game.creatures.part.designimpls;
 
+import game.creatures.part.Common;
+import game.creatures.part.Design;
 import sps.entities.HitTest;
 
 public class RoundEye implements Design {

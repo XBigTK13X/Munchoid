@@ -1,4 +1,7 @@
-package game.creatures.part;
+package game.creatures.part.designimpls;
+
+import game.creatures.part.Common;
+import game.creatures.part.Design;
 
 public class RectangleBody implements Design {
     @Override

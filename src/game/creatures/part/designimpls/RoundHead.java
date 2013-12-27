@@ -1,5 +1,6 @@
-package game.creatures.part;
+package game.creatures.part.designimpls;
 
+import game.creatures.part.Design;
 import sps.core.Point2;
 import sps.entities.HitTest;
 

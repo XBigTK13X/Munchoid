@@ -2,6 +2,7 @@ package game.creatures.part;
 
 import game.creatures.Atom;
 import game.creatures.PartFunction;
+import game.creatures.part.designimpls.*;
 import sps.color.Color;
 import sps.color.Colors;
 import sps.core.RNG;
@@ -18,10 +19,13 @@ public class Designs {
             tmp.put(function, new ArrayList<Design>());
         }
         tmp.get(PartFunction.Head).add(new RoundHead());
+        tmp.get(PartFunction.Head).add(new RegularPoly());
         tmp.get(PartFunction.HeadDetail).add(new RoundEye());
         tmp.get(PartFunction.UpperLimb).add(new LimbSegment());
+        tmp.get(PartFunction.UpperLimb).add(new RegularPoly());
         tmp.get(PartFunction.Core).add(new RectangleBody());
         tmp.get(PartFunction.LowerLimb).add(new LimbSegment());
+        tmp.get(PartFunction.LowerLimb).add(new RegularPoly());
         __designs = Collections.unmodifiableMap(tmp);
     }
 
