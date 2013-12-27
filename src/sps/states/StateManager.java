@@ -9,6 +9,7 @@ import game.save.GameSnapshot;
 import game.save.Options;
 import game.tutorial.Tutorial;
 import sps.audio.MusicPlayer;
+import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.core.Logger;
@@ -19,6 +20,7 @@ import sps.draw.SpriteMaker;
 import sps.entities.EntityManager;
 import sps.particles.ParticleEngine;
 import sps.particles.ParticleWrapper;
+import sps.text.Text;
 import sps.text.TextPool;
 import sps.ui.Buttons;
 import sps.ui.Tooltips;
@@ -34,6 +36,7 @@ public class StateManager {
     private static long lastMil = System.currentTimeMillis();
     private static Map<String, Long> stateTimes = new HashMap<>();
     private static Sprite __pausedScreen;
+    private static Text __pausedText;
 
     public static StateManager get() {
         return __instance;
@@ -88,13 +91,17 @@ public class StateManager {
             Color[][] tbg = ProcTextures.monotone((int) Screen.width(50), (int) Screen.height(50), new Color(.5f, .1f, .5f, .7f));
             __pausedScreen = SpriteMaker.fromColors(tbg);
             __pausedScreen.setPosition(Screen.width(25), Screen.height(25));
+            __pausedText = TextPool.get().write("     PAUSED\n" + Commands.get("Pause") + " to continue", Screen.pos(45, 55));
+            __pausedText.setDepth(DrawDepths.get("PauseText"));
         }
         _paused = value;
         if (_paused) {
             MusicPlayer.get().pause();
+            __pausedText.setVisible(true);
         }
         else {
             MusicPlayer.get().resume();
+            __pausedText.setVisible(false);
         }
     }
 
@@ -193,6 +200,7 @@ public class StateManager {
         }
         else {
             Window.get().schedule(__pausedScreen, DrawDepths.get("PauseScreen"));
+            __pausedText.draw();
         }
     }
 
