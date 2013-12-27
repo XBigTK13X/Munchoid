@@ -4,6 +4,7 @@ import game.*;
 import game.arena.PreloadArena;
 import game.save.GameSnapshot;
 import game.save.Persistence;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import sps.bridge.Commands;
 import sps.core.Loader;
@@ -13,6 +14,7 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
+import sps.util.CoolDown;
 import sps.util.Markov;
 
 import java.text.NumberFormat;
@@ -39,6 +41,8 @@ public class PopulationOverview implements State {
     private boolean _restoredFromSaveFile;
 
     private PreloadPopulationOverview.Payload _preload;
+
+    private Text _savingNotice;
 
     public PopulationOverview(PreloadPopulationOverview.Payload preload) {
         _preload = preload;
@@ -92,7 +96,20 @@ public class PopulationOverview implements State {
         updateDeathDisplays();
         _continuePrompt = TextPool.get().write("Press " + Commands.get("Confirm") + " to enter the next tournament", Screen.pos(10, 10));
 
+        _savingNotice = TextPool.get().write("", Screen.pos(20, 50));
+
         StateManager.get().showTutorial();
+    }
+
+    private int saveDotsMax = 5;
+    private int saveDots = 0;
+    private CoolDown _saveUpdate = new CoolDown(.5f);
+
+    private void updateSaveMessage() {
+        if (_saveUpdate.updateAndCheck()) {
+            saveDots = (saveDots + 1) % saveDotsMax;
+            _savingNotice.setMessage("Saving" + StringUtils.repeat(".", saveDots));
+        }
     }
 
     private void updateDeathDisplays() {
@@ -129,6 +146,13 @@ public class PopulationOverview implements State {
 
     @Override
     public void draw() {
+        if (Persistence.get().isBusy()) {
+            updateSaveMessage();
+            _savingNotice.setVisible(true);
+            return;
+        }
+        _savingNotice.setVisible(false);
+
         _populationHud.draw();
         if (_eradicated != null) {
             _eradicated.draw();
@@ -150,6 +174,10 @@ public class PopulationOverview implements State {
 
     @Override
     public void update() {
+        if (Persistence.get().isBusy()) {
+            return;
+        }
+
         if (_eradicated != null) {
             if (DevConfig.BotEnabled) {
                 simluatePopulationChange();
@@ -160,7 +188,7 @@ public class PopulationOverview implements State {
                 if (_eradicated.isActive()) {
                     _eradicated.update();
                 }
-                else {
+                if (!_eradicated.isActive()) {
                     simluatePopulationChange();
                     _eradicated = null;
                 }

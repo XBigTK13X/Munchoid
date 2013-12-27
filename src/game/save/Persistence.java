@@ -21,12 +21,26 @@ public class Persistence {
 
     }
 
+    private Thread _worker;
+
+    public boolean isBusy() {
+        return _worker != null && _worker.isAlive();
+    }
+
     public void autoSave() {
-        Serialize.toFile(StateManager.get().takeSnapshot(), __autoSave);
+        if (!isBusy()) {
+            _worker = new Thread() {
+                @Override
+                public void run() {
+                    Serialize.toFile(StateManager.get().takeSnapshot(), __autoSave);
+                }
+            };
+            _worker.start();
+        }
     }
 
     public GameSnapshot autoLoad() throws RuntimeException {
-        if (saveFileExists()) {
+        if (saveFileExists() && !isBusy()) {
             try {
                 GameSnapshot snapshot = Serialize.fromFile(__autoSave, GameSnapshot.class);
                 if (snapshot.RecordedVersion != GameSnapshot.Version) {
