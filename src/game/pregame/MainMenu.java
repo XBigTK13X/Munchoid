@@ -22,11 +22,6 @@ import sps.text.TextPool;
 public class MainMenu implements State {
     Sprite _background;
 
-    UIButton _start;
-    UIButton _options;
-    UIButton _exit;
-    UIButton _load;
-
     private Sprite _logo;
 
     @Override
@@ -40,21 +35,21 @@ public class MainMenu implements State {
 
         _logo.setPosition(Screen.centerWidth((int) _logo.getWidth()), Screen.height(80));
 
-        _start = new UIButton("Start", Commands.get("Confirm")) {
+        UIButton _start = new UIButton("Start", Commands.get("Confirm")) {
             @Override
             public void click() {
-                StateManager.get().push(new TutorialQuery());
+                start();
             }
         };
 
-        _options = new UIButton("Options", Commands.get("Push")) {
+        UIButton _options = new UIButton("Options", Commands.get("Push")) {
             @Override
             public void click() {
                 StateManager.get().push(new OptionsMenu(_background));
             }
         };
 
-        _exit = new UIButton("Exit") {
+        UIButton _exit = new UIButton("Exit") {
             @Override
             public void click() {
                 Gdx.app.exit();
@@ -70,14 +65,14 @@ public class MainMenu implements State {
         _exit.layout();
 
         if (Persistence.get().saveFileExists()) {
-            _load = new UIButton("Continue") {
+            final UIButton _load = new UIButton("Continue") {
                 @Override
                 public void click() {
                     try {
                         StateManager.get().loadFrom(Persistence.get().autoLoad());
                     }
                     catch (RuntimeException e) {
-                        _load.setVisible(false);
+                        setVisible(false);
                         if (e.getMessage() != null) {
                             TextPool.get().write("Unable to load the save file.\n" + e.getMessage(), Screen.pos(40, 70));
                         }
@@ -92,22 +87,20 @@ public class MainMenu implements State {
         }
     }
 
+    private void start() {
+        StateManager.get().push(new TutorialQuery());
+    }
+
     @Override
     public void draw() {
         Window.get().schedule(_background, DrawDepths.get("GameBackground"));
         Window.get().schedule(_logo, DrawDepths.get("Logo"));
-        _start.draw();
-        _options.draw();
-        _exit.draw();
-        if (_load != null) {
-            _load.draw();
-        }
     }
 
     @Override
     public void update() {
         if (InputWrapper.confirm() || DevConfig.EndToEndStateLoadTest || DevConfig.BotEnabled) {
-            _start.click();
+            start();
         }
     }
 
