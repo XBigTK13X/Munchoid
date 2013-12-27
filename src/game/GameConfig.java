@@ -32,8 +32,7 @@ public class GameConfig {
     }
 
     //Intro
-    public static final float IntroVideoSkipSeconds = 2f;
-    public static final boolean IntroVideoEnabled = false;
+    public static final float IntroVideoSkipSeconds = 1.1f;
 
     //Arena
     public static final int CreatureLimit = 50;
