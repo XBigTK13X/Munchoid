@@ -2,14 +2,13 @@ package game.population;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.GameConfig;
-import game.creatures.style.Outline;
 import sps.bridge.DrawDepths;
-import sps.color.Color;
+import sps.bridge.SpriteTypes;
 import sps.core.Point2;
-import sps.display.Screen;
+import sps.display.Assets;
+import sps.display.SpriteInfo;
+import sps.display.SpriteSheetManager;
 import sps.display.Window;
-import sps.draw.ProcTextures;
-import sps.draw.SpriteMaker;
 import sps.util.Maths;
 
 import java.util.ArrayList;
@@ -27,18 +26,11 @@ public class PopulationHUD {
     private int _pad = 1;
     private Point2 _size;
 
-    private Color _iconColor = Color.WHITE;
-
-    private Color[][] _popIconBase;
-
     public PopulationHUD(Population population, Point2 size, Point2 position) {
         _size = size;
         _population = population;
 
         _map = new Map((int) size.X, (int) size.Y, position);
-
-        _popIconBase = ProcTextures.monotone((int) Screen.width(1), (int) Screen.width(1), _iconColor);
-        Outline.single(_popIconBase, Color.BLACK, 2);
 
         _iconPositions = new ArrayList<>();
     }
@@ -67,7 +59,9 @@ public class PopulationHUD {
     }
 
     public void regenerateTextures() {
-        _popIcon = SpriteMaker.fromColors(_popIconBase);
+        SpriteInfo popIconInfo = SpriteSheetManager.getSpriteInfo(SpriteTypes.get("Settlement"));
+        _popIcon = Assets.get().sprite(popIconInfo.SpriteIndex);
+        _popIcon.setSize(32, 32);
         _map.regenerateTextures();
         _maxIconsHigh = (int) (_size.Y / (_popIcon.getHeight() + _pad)) - 1;
         _maxIconsWide = (int) (_size.X / (_popIcon.getWidth() + _pad)) - 1;
