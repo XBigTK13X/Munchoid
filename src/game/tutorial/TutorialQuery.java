@@ -1,6 +1,6 @@
 package game.tutorial;
 
-import game.DevConfig;
+import game.dev.DevConfig;
 import game.population.PreloadPopulationOverview;
 import game.pregame.MainMenu;
 import game.save.Options;

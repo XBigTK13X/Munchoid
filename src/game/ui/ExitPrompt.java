@@ -1,9 +1,8 @@
-package game;
+package game.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.pregame.MainMenu;
-import game.ui.UIButton;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.display.Screen;

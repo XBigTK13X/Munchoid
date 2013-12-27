@@ -1,12 +1,12 @@
 package game.creatures;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.DevConfig;
 import game.GameConfig;
 import game.creatures.part.Design;
 import game.creatures.part.Designs;
 import game.creatures.style.Grid;
 import game.creatures.style.Outline;
+import game.dev.DevConfig;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.core.Point2;

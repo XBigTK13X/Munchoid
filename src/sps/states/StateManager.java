@@ -1,9 +1,9 @@
 package sps.states;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.DevConfig;
 import game.GameConfig;
 import game.Score;
+import game.dev.DevConfig;
 import game.population.PopulationOverview;
 import game.save.GameSnapshot;
 import game.save.Options;

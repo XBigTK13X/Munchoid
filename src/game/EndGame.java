@@ -1,5 +1,6 @@
 package game;
 
+import game.dev.DevConfig;
 import game.pregame.MainMenu;
 import sps.bridge.Commands;
 import sps.display.Screen;

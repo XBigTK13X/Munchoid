@@ -1,7 +1,7 @@
 package game.creatures;
 
-import game.DevConfig;
 import game.arena.Floor;
+import game.dev.DevConfig;
 import sps.core.RNG;
 import sps.util.BoundingBox;
 

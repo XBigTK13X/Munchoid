@@ -1,6 +1,6 @@
 package game.creatures.part;
 
-import game.DevConfig;
+import game.dev.DevConfig;
 import sps.draw.Shapes;
 
 import java.awt.*;

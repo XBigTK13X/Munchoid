@@ -1,5 +1,7 @@
-package game;
+package game.dev;
 
+import game.GameConfig;
+import game.Score;
 import sps.core.Logger;
 import sps.states.StateManager;
 import sps.util.JSON;

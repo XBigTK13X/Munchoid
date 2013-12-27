@@ -1,7 +1,12 @@
 package game.population;
 
-import game.*;
+import game.EndGame;
+import game.GameConfig;
+import game.InputWrapper;
+import game.Score;
 import game.arena.PreloadArena;
+import game.dev.DevConfig;
+import game.dev.MetaData;
 import game.save.GameSnapshot;
 import game.save.Persistence;
 import org.apache.commons.lang3.StringUtils;

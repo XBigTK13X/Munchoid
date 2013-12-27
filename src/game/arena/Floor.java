@@ -2,8 +2,8 @@ package game.arena;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.BackgroundMaker;
-import game.DevConfig;
 import game.GameConfig;
+import game.dev.DevConfig;
 import sps.bridge.DrawDepths;
 import sps.bridge.EntityTypes;
 import sps.color.Color;

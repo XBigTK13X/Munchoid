@@ -1,6 +1,5 @@
 package game.arena;
 
-import game.DevConfig;
 import game.GameConfig;
 import game.InputWrapper;
 import game.Score;
@@ -9,6 +8,7 @@ import game.battle.TimerGraphic;
 import game.creatures.Creature;
 import game.creatures.Merge;
 import game.creatures.Stats;
+import game.dev.DevConfig;
 import game.forces.Force;
 import game.tournament.Tournament;
 import sps.audio.MusicPlayer;

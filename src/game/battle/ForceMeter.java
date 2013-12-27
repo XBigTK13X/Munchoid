@@ -1,9 +1,9 @@
 package game.battle;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.DevConfig;
 import game.GameConfig;
 import game.creatures.Creature;
+import game.dev.DevConfig;
 import game.forces.Force;
 import game.forceselection.ForceSelection;
 import game.ui.Meter;

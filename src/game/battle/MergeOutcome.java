@@ -1,12 +1,12 @@
 package game.battle;
 
-import game.DevConfig;
 import game.GameConfig;
 import game.InputWrapper;
 import game.Score;
 import game.creatures.Creature;
 import game.creatures.Merge;
 import game.creatures.Stats;
+import game.dev.DevConfig;
 import game.forces.Force;
 import game.forceselection.ForceSelection;
 import game.ui.UIButton;

@@ -1,7 +1,7 @@
 package game.population;
 
-import game.DevConfig;
 import game.GameConfig;
+import game.dev.DevConfig;
 import sps.core.Logger;
 import sps.display.Screen;
 import sps.text.Text;

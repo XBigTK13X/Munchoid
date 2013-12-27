@@ -1,7 +1,7 @@
 package game.pregame;
 
-import game.DevConfig;
 import game.GameConfig;
+import game.dev.DevConfig;
 import game.movie.Movie;
 import sps.audio.MusicPlayer;
 import sps.bridge.Commands;

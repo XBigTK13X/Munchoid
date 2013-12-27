@@ -1,4 +1,4 @@
-package game;
+package game.dev;
 
 import sps.core.Loader;
 

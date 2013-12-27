@@ -1,10 +1,10 @@
 package game.creatures;
 
-import game.DevConfig;
 import game.GameConfig;
 import game.creatures.part.DebugPoly;
 import game.creatures.part.Design;
 import game.creatures.part.Designs;
+import game.dev.DevConfig;
 import sps.core.Logger;
 import sps.core.RNG;
 

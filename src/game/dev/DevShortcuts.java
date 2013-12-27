@@ -1,6 +1,8 @@
-package game;
+package game.dev;
 
 import com.badlogic.gdx.Gdx;
+import game.InitialStateResolver;
+import game.InputWrapper;
 import game.pregame.MainMenu;
 import game.save.Options;
 import sps.console.DevConsole;

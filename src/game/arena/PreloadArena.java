@@ -1,8 +1,8 @@
 package game.arena;
 
-import game.DevConfig;
 import game.GameConfig;
 import game.battle.TimerGraphic;
+import game.dev.DevConfig;
 import game.ui.Meter;
 import sps.color.Color;
 import sps.color.Colors;

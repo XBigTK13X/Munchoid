@@ -1,5 +1,6 @@
-package game;
+package game.dev;
 
+import game.GameConfig;
 import game.battle.Battle;
 import game.creatures.Creature;
 import game.forces.Force;

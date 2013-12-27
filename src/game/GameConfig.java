@@ -19,9 +19,13 @@ public class GameConfig {
     public static final boolean OptArenaPCBBackground = true;
     public static float OptGraphicsDetailScale = 1f;
 
+    //Style
+    //TODO Make this scale with resolution like everything else?
+    public static final int MeterOutlinePixelThickness = 2;
+    public static int BodyPartOutlinePixelThickness = 5;
+
     public static void setGraphicsMode(boolean performanceMode) {
         OptPerformanceGraphicsSettings = performanceMode;
-        //OptCreatureOutlineEnabled = !performanceMode;
         BodyPartOutlinePixelThickness = performanceMode ? 2 : 5;
         OptSimpleBackgrounds = performanceMode;
         OptGraphicsDetailScale = performanceMode ? .5f : 1f;
@@ -108,9 +112,4 @@ public class GameConfig {
     public static final int StartingPopulationSize = 1_000_000;
     public static final int NaturalPopulationGrowthPercent = 27;
     public static final int PopulationMax = 70_000_000;
-
-    //Style
-    //TODO Make this scale with resolution like everything else?
-    public static final int MeterOutlinePixelThickness = 2;
-    public static int BodyPartOutlinePixelThickness = 5;
 }

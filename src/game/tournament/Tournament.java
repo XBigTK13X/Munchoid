@@ -1,9 +1,9 @@
 package game.tournament;
 
-import game.DevConfig;
 import game.GameConfig;
 import game.InputWrapper;
 import game.arena.Player;
+import game.dev.DevConfig;
 import sps.bridge.Commands;
 import sps.display.Screen;
 import sps.states.State;

@@ -1,10 +1,10 @@
 package game.forceselection;
 
-import game.DevConfig;
 import game.GameConfig;
 import game.InputWrapper;
 import game.arena.Arena;
 import game.creatures.Creature;
+import game.dev.DevConfig;
 import game.forces.Force;
 import game.tournament.Tournament;
 import game.ui.UIButton;

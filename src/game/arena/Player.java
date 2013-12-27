@@ -1,11 +1,11 @@
 package game.arena;
 
 import com.badlogic.gdx.Gdx;
-import game.DevConfig;
 import game.GameConfig;
 import game.InputWrapper;
 import game.Score;
 import game.creatures.Creature;
+import game.dev.DevConfig;
 import sps.audio.MusicPlayer;
 import sps.bridge.*;
 import sps.color.Color;
