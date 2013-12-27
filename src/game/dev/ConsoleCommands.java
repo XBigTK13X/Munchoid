@@ -10,6 +10,7 @@ import sps.console.DevConsoleAction;
 import sps.entities.Entity;
 import sps.entities.EntityManager;
 import sps.states.StateManager;
+import sps.util.Memory;
 
 import java.util.List;
 
@@ -85,6 +86,13 @@ public class ConsoleCommands {
                     battle.rebuildHud();
                 }
                 return "Enemy forces HUD  " + (GameConfig.BattleEnableEnemyForcesHUD ? "enabled" : "disabled");
+            }
+        });
+
+        DevConsole.get().register(new DevConsoleAction("memory.debug") {
+            @Override
+            public String act(int[] input) {
+                return Memory.getDebugInfo();
             }
         });
     }

@@ -1,7 +1,7 @@
 package sps.util;
 
 public class Memory {
-    public static String debugMB() {
+    public static String getDebugInfo() {
         int mb = 1024 * 1024;
         String result = "";
         Runtime rt = Runtime.getRuntime();
