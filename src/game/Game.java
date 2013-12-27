@@ -127,6 +127,13 @@ public class Game implements ApplicationListener {
             StateManager.get().setPaused(!StateManager.get().isPaused());
         }
 
+        if (InputWrapper.fullScreen()) {
+            Options options = Options.load();
+            options.FullScreen = !Gdx.graphics.isFullscreen();
+            options.apply();
+            options.save();
+        }
+
         DevConsole.get().update();
 
         if (Input.get().isActive(Commands.get("Help"))) {

@@ -1,6 +1,5 @@
 package game.dev;
 
-import com.badlogic.gdx.Gdx;
 import game.InitialStateResolver;
 import game.InputWrapper;
 import game.pregame.MainMenu;
@@ -19,12 +18,6 @@ public class DevShortcuts {
             }
             if (InputWrapper.moveRight() && InputWrapper.moveLeft() && InputWrapper.debug2()) {
                 StateManager.reset().push(InitialStateResolver.create());
-            }
-            if (InputWrapper.fullScreen()) {
-                Options options = Options.load();
-                options.FullScreen = !Gdx.graphics.isFullscreen();
-                options.apply();
-                options.save();
             }
             if (InputWrapper.devConsole()) {
                 DevConsole.get().toggle();
