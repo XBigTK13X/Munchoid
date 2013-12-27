@@ -12,10 +12,10 @@ public class OptionsMenu extends OptionsState {
 
     @Override
     public void create() {
-        final UIButton gameplay = new UIButton("Gameplay") {
+        final UIButton gameplay = new UIButton("Game") {
             @Override
             public void click() {
-                StateManager.get().push(new GameplayOptionsMenu(_background));
+                StateManager.get().push(new GameOptionsMenu(_background));
             }
         };
 

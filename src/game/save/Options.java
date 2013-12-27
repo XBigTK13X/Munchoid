@@ -46,8 +46,8 @@ public class Options {
                     case "tutorialEnabled":
                         options.TutorialEnabled = Parse.bool(value);
                         break;
-                    case "enableTutorialQuery":
-                        options.EnableTutorialQuery = Parse.bool(value);
+                    case "tutorialQueryEnabled":
+                        options.TutorialQueryEnabled = Parse.bool(value);
                         break;
                     case "showIntro":
                         options.ShowIntro = Parse.bool(value);
@@ -89,7 +89,7 @@ public class Options {
     public boolean GraphicsLowQuality;
     public boolean TutorialEnabled = true;
     public boolean ShowIntro = true;
-    public boolean EnableTutorialQuery = true;
+    public boolean TutorialQueryEnabled = true;
     public int Brightness = 100;
 
     public void save() {
@@ -102,7 +102,7 @@ public class Options {
             options += "soundEnabled=" + SoundEnabled + "\n";
             options += "graphicsLowQuality=" + GraphicsLowQuality + "\n";
             options += "tutorialEnabled=" + TutorialEnabled + "\n";
-            options += "enableTutorialQuery=" + EnableTutorialQuery + "\n";
+            options += "tutorialQueryEnabled=" + TutorialQueryEnabled + "\n";
             options += "brightness=" + Brightness + "\n";
             options += "showIntro=" + ShowIntro;
 

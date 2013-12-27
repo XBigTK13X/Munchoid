@@ -18,8 +18,13 @@ public class TutorialQuery implements State {
 
     @Override
     public void create() {
+        Options options = Options.load();
+        if (!options.TutorialQueryEnabled) {
+            proceed(false);
+            return;
+        }
+
         if (DevConfig.EndToEndStateLoadTest || DevConfig.BotEnabled) {
-            Options options = Options.load();
             options.TutorialEnabled = false;
             options.apply();
             options.save();
@@ -32,20 +37,14 @@ public class TutorialQuery implements State {
         _launchTutorial = new UIButton("Yes", Commands.get("Confirm")) {
             @Override
             public void click() {
-                Options options = Options.load();
-                options.TutorialEnabled = true;
-                options.save();
-                StateManager.get().push(new PreloadPopulationOverview());
+                proceed(true);
             }
         };
 
         _launchGame = new UIButton("No", Commands.get("Push")) {
             @Override
             public void click() {
-                Options options = Options.load();
-                options.TutorialEnabled = false;
-                options.save();
-                StateManager.get().push(new PreloadPopulationOverview());
+                proceed(false);
             }
         };
 
@@ -63,6 +62,13 @@ public class TutorialQuery implements State {
         _launchGame.layout();
         _launchTutorial.layout();
         _back.layout();
+    }
+
+    private void proceed(boolean showTutorial) {
+        Options options = Options.load();
+        options.TutorialEnabled = showTutorial;
+        options.save();
+        StateManager.get().push(new PreloadPopulationOverview());
     }
 
     @Override

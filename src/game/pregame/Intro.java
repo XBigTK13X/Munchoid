@@ -20,13 +20,18 @@ public class Intro implements State {
     private Text _skipInfo;
     private static final String __defaultSkipInfo = "[SPACE to skip]";
 
+    private boolean _enabled;
+
+    public Intro(boolean enabled) {
+        _enabled = enabled;
+    }
+
     @Override
     public void create() {
-        if (!GameConfig.IntroVideoEnabled) {
+        if (!_enabled) {
             StateManager.get().push(new MainMenu());
         }
         else {
-
             _movie = new Movie();
             _movie.addStrip(.8f, "We created the Munchoid. A collection of untapped mental fragments.");
             _movie.addStrip(5.9f, "Citizens volunteer their unused thoughts and we convert them into digital warriors.");

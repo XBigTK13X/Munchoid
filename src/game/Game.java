@@ -6,17 +6,9 @@ import com.badlogic.gdx.Gdx;
 import game.arena.Arena;
 import game.arena.ChompPlayer;
 import game.battle.Battle;
-import game.battle.MergeOutcome;
 import game.creatures.PartFunction;
-import game.forceselection.ForceSelection;
 import game.population.PopulationOverview;
-import game.population.PreloadPopulationOverview;
-import game.pregame.MainMenu;
 import game.save.Options;
-import game.test.BackgroundGenerationTest;
-import game.test.CatchableGenerationTest;
-import game.test.MeterProgressTest;
-import game.test.SkeletonTest;
 import game.tutorial.ArenaTutorial;
 import game.tutorial.BattleTutorial;
 import game.tutorial.PopulationOverviewTutorial;
@@ -89,40 +81,10 @@ public class Game implements ApplicationListener {
             options.save();
         }
 
-        StateManager.get().push(createInitialState());
+        StateManager.get().push(InitialStateResolver.create());
         StateManager.get().setPaused(false);
 
         ConsoleCommands.init();
-    }
-
-    private State createInitialState() {
-        if (DevConfig.PopulationTest) {
-            return new PreloadPopulationOverview();
-        }
-        if (DevConfig.MergeOutcomeTest) {
-            return new MergeOutcome();
-        }
-        else if (DevConfig.BattleTest) {
-            return new Battle();
-        }
-        else if (DevConfig.SkeletonTest) {
-            return new SkeletonTest();
-        }
-        else if (DevConfig.BackgroundGenerationTest) {
-            return new BackgroundGenerationTest();
-        }
-        else if (DevConfig.OutlineTest) {
-            return new CatchableGenerationTest();
-        }
-        else if (DevConfig.MeterTest) {
-            return new MeterProgressTest();
-        }
-        else if (DevConfig.ForceSelectionTest) {
-            return new ForceSelection();
-        }
-        else {
-            return new MainMenu();
-        }
     }
 
     private boolean _firstResizeCall = true;
@@ -141,33 +103,10 @@ public class Game implements ApplicationListener {
         }
     }
 
-    private void handleDevShortcuts() {
-        if (DevConfig.ShortcutsEnabled && !DevConsole.get().isActive()) {
-            if (InputWrapper.moveDown() && InputWrapper.moveUp() && InputWrapper.debug1()) {
-                StateManager.reset().push(new MainMenu());
-            }
-            if (InputWrapper.moveDown() && InputWrapper.moveUp() && InputWrapper.debug2()) {
-                Options.resetToDefaults();
-            }
-            if (InputWrapper.moveRight() && InputWrapper.moveLeft() && InputWrapper.debug2()) {
-                StateManager.reset().push(createInitialState());
-            }
-            if (InputWrapper.fullScreen()) {
-                Options options = Options.load();
-                options.FullScreen = !Gdx.graphics.isFullscreen();
-                options.apply();
-                options.save();
-            }
-            if (InputWrapper.devConsole()) {
-                DevConsole.get().toggle();
-            }
-        }
-    }
-
     private boolean _firstRunOptionsApplied = false;
 
     private void update() {
-        //If we do this in create(), then some platforms do not enter fullscreen properly.
+        //If we do this in create(), then some platforms (Mac OS X Mavericks) do not enter fullscreen properly.
         if (!_firstRunOptionsApplied) {
             Options options = Options.load();
             options.apply();
@@ -178,7 +117,7 @@ public class Game implements ApplicationListener {
 
         ExitPrompt.get().update();
 
-        handleDevShortcuts();
+        DevShortcuts.handle();
 
         if (InputWrapper.pause() && !DevConsole.get().isActive()) {
             StateManager.get().setPaused(!StateManager.get().isPaused());
