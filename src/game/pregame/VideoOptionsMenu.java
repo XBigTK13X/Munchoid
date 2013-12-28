@@ -3,11 +3,11 @@ package game.pregame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.save.Options;
-import game.ui.UIButton;
-import game.ui.UISlider;
 import sps.display.Screen;
 import sps.states.StateManager;
 import sps.text.TextPool;
+import sps.ui.UIButton;
+import sps.ui.UISlider;
 
 public class VideoOptionsMenu extends OptionsState {
     private UISlider _brightness;

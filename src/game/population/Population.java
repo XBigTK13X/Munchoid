@@ -1,6 +1,6 @@
 package game.population;
 
-import game.GameConfig;
+import game.core.GameConfig;
 import sps.util.Maths;
 
 public class Population {

@@ -2,7 +2,7 @@ package targets;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import game.Game;
+import game.core.Game;
 import game.dev.DevConfig;
 import sps.core.Logger;
 import sps.core.SpsConfig;

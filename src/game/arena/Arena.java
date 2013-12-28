@@ -1,10 +1,10 @@
 package game.arena;
 
-import game.GameConfig;
-import game.InputWrapper;
-import game.Score;
 import game.battle.Battle;
 import game.battle.TimerGraphic;
+import game.core.GameConfig;
+import game.core.InputWrapper;
+import game.core.Score;
 import game.creatures.Creature;
 import game.creatures.Merge;
 import game.creatures.Stats;
@@ -37,9 +37,9 @@ public class Arena implements State {
     private Text _creatureText;
     private int _lastCreatureCount;
 
-    private PreloadArena.Payload _preload;
+    private ArenaPayload _preload;
 
-    public Arena(PreloadArena.Payload preload) {
+    public Arena(ArenaPayload preload) {
         _preload = preload;
     }
 

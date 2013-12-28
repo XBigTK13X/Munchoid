@@ -1,8 +1,8 @@
 package sps.states;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.GameConfig;
-import game.Score;
+import game.core.GameConfig;
+import game.core.Score;
 import game.dev.DevConfig;
 import game.population.PopulationOverview;
 import game.save.GameSnapshot;

@@ -1,6 +1,6 @@
 package game.forces;
 
-import game.GameConfig;
+import game.core.GameConfig;
 import game.creatures.BodyPart;
 import sps.core.RNG;
 import sps.particles.ParticleWrapper;

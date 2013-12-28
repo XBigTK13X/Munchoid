@@ -1,6 +1,6 @@
 package game.forces;
 
-import game.GameConfig;
+import game.core.GameConfig;
 import game.forces.sideeffects.*;
 import sps.color.Color;
 import sps.color.RGBA;

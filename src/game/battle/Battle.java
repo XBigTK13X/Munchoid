@@ -1,10 +1,10 @@
 package game.battle;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.BackgroundCache;
-import game.GameConfig;
-import game.InputWrapper;
-import game.Score;
+import game.core.BackgroundCache;
+import game.core.GameConfig;
+import game.core.InputWrapper;
+import game.core.Score;
 import game.creatures.Creature;
 import game.dev.DevConfig;
 import game.forces.Force;

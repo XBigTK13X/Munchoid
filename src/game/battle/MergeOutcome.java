@@ -1,15 +1,14 @@
 package game.battle;
 
-import game.GameConfig;
-import game.InputWrapper;
-import game.Score;
+import game.core.GameConfig;
+import game.core.InputWrapper;
+import game.core.Score;
 import game.creatures.Creature;
 import game.creatures.Merge;
 import game.creatures.Stats;
 import game.dev.DevConfig;
 import game.forces.Force;
 import game.forceselection.ForceSelection;
-import game.ui.UIButton;
 import sps.audio.MusicPlayer;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
@@ -24,6 +23,7 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.text.TextPool;
 import sps.ui.Tooltips;
+import sps.ui.UIButton;
 
 public class MergeOutcome implements State {
     private Creature _defeated;

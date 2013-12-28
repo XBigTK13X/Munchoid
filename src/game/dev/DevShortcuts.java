@@ -1,7 +1,7 @@
 package game.dev;
 
-import game.InitialStateResolver;
-import game.InputWrapper;
+import game.core.InitialStateResolver;
+import game.core.InputWrapper;
 import game.pregame.MainMenu;
 import game.save.Options;
 import sps.console.DevConsole;

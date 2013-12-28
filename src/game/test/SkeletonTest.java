@@ -1,6 +1,6 @@
 package game.test;
 
-import game.InputWrapper;
+import game.core.InputWrapper;
 import game.creatures.BodyPart;
 import game.creatures.Creature;
 import game.forces.Force;

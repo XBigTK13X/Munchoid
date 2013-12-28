@@ -1,7 +1,6 @@
-package game.ui;
+package sps.ui;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.creatures.style.Outline;
 import org.apache.commons.lang3.StringUtils;
 import sps.audio.SoundPlayer;
 import sps.bridge.Command;
@@ -11,12 +10,12 @@ import sps.color.Color;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.display.Window;
+import sps.draw.Outline;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
 import sps.io.Input;
 import sps.text.Text;
 import sps.text.TextPool;
-import sps.ui.Buttons;
 
 public abstract class UIButton {
     private static final Point2 __default = Screen.pos(20, 20);

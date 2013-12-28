@@ -2,7 +2,7 @@ package game.population;
 
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.InputWrapper;
+import game.core.InputWrapper;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
 import sps.color.Color;

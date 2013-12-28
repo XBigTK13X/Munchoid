@@ -1,4 +1,4 @@
-package game;
+package game.core;
 
 import game.arena.Player;
 import game.creatures.Creature;

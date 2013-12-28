@@ -4,12 +4,12 @@ import game.dev.DevConfig;
 import game.population.PreloadPopulationOverview;
 import game.pregame.MainMenu;
 import game.save.Options;
-import game.ui.UIButton;
 import sps.bridge.Commands;
 import sps.display.Screen;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.TextPool;
+import sps.ui.UIButton;
 
 public class TutorialQuery implements State {
     UIButton _launchTutorial;

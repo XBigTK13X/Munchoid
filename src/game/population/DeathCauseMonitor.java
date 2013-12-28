@@ -1,6 +1,6 @@
 package game.population;
 
-import game.GameConfig;
+import game.core.GameConfig;
 import game.dev.DevConfig;
 import sps.core.Logger;
 import sps.display.Screen;

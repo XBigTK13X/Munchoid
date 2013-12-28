@@ -1,8 +1,8 @@
 package game.tournament;
 
-import game.GameConfig;
 import game.arena.Player;
 import game.battle.Battle;
+import game.core.GameConfig;
 import game.creatures.Creature;
 import game.creatures.Stats;
 import game.forces.Force;

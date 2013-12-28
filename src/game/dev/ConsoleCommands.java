@@ -1,7 +1,7 @@
 package game.dev;
 
-import game.GameConfig;
 import game.battle.Battle;
+import game.core.GameConfig;
 import game.creatures.Creature;
 import game.forces.Force;
 import sps.bridge.EntityTypes;

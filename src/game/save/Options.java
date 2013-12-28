@@ -1,6 +1,6 @@
 package game.save;
 
-import game.GameConfig;
+import game.core.GameConfig;
 import org.apache.commons.io.FileUtils;
 import sps.core.Loader;
 import sps.core.Logger;

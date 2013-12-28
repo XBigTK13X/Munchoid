@@ -1,4 +1,4 @@
-package game;
+package game.core;
 
 
 import com.badlogic.gdx.ApplicationListener;
@@ -15,7 +15,6 @@ import game.save.Options;
 import game.tutorial.ArenaTutorial;
 import game.tutorial.BattleTutorial;
 import game.tutorial.PopulationOverviewTutorial;
-import game.ui.ExitPrompt;
 import sps.audio.MusicPlayer;
 import sps.audio.SoundPlayer;
 import sps.bridge.Commands;

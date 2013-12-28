@@ -1,6 +1,6 @@
 package game.battle;
 
-import game.GameConfig;
+import game.core.GameConfig;
 import game.creatures.Creature;
 import game.forces.sideeffects.SideEffectType;
 import sps.display.Screen;

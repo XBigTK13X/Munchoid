@@ -1,7 +1,7 @@
 package game.population;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.GameConfig;
+import game.core.GameConfig;
 import sps.bridge.DrawDepths;
 import sps.bridge.SpriteTypes;
 import sps.core.Point2;

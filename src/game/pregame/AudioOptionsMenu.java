@@ -2,8 +2,8 @@ package game.pregame;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.save.Options;
-import game.ui.UIButton;
 import sps.states.StateManager;
+import sps.ui.UIButton;
 
 public class AudioOptionsMenu extends OptionsState {
     public AudioOptionsMenu(Sprite background) {

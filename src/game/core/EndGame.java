@@ -1,4 +1,4 @@
-package game;
+package game.core;
 
 import game.dev.DevConfig;
 import game.pregame.MainMenu;

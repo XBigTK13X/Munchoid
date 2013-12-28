@@ -1,4 +1,4 @@
-package game;
+package game.core;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.color.Color;

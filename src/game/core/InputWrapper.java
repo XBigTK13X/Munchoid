@@ -1,7 +1,6 @@
-package game;
+package game.core;
 
 import sps.bridge.Commands;
-import sps.core.Logger;
 import sps.io.Input;
 
 public class InputWrapper {

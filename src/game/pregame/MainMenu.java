@@ -2,13 +2,12 @@ package game.pregame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.BackgroundMaker;
-import game.InputWrapper;
-import game.Score;
+import game.core.BackgroundMaker;
+import game.core.InputWrapper;
+import game.core.Score;
 import game.dev.DevConfig;
 import game.save.Persistence;
 import game.tutorial.TutorialQuery;
-import game.ui.UIButton;
 import org.apache.commons.io.FileUtils;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
@@ -21,6 +20,7 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
+import sps.ui.UIButton;
 
 import java.io.File;
 

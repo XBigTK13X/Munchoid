@@ -1,12 +1,12 @@
 package game.battle;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.creatures.style.Outline;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.display.Window;
+import sps.draw.Outline;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
 import sps.draw.TextureManipulation;

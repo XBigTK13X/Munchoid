@@ -1,4 +1,4 @@
-package game;
+package game.core;
 
 import game.battle.Battle;
 import game.battle.MergeOutcome;

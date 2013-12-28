@@ -1,4 +1,4 @@
-package game.creatures.style;
+package sps.draw;
 
 import sps.color.Color;
 import sps.color.Colors;

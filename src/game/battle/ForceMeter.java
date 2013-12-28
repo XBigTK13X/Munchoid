@@ -1,12 +1,11 @@
 package game.battle;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.GameConfig;
+import game.core.GameConfig;
 import game.creatures.Creature;
 import game.dev.DevConfig;
 import game.forces.Force;
 import game.forceselection.ForceSelection;
-import game.ui.Meter;
 import sps.bridge.Commands;
 import sps.color.Color;
 import sps.core.Point2;
@@ -16,6 +15,7 @@ import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.ui.Buttons;
+import sps.ui.Meter;
 import sps.ui.Tooltips;
 import sps.util.Maths;
 

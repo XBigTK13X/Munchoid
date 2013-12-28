@@ -1,4 +1,4 @@
-package game;
+package game.core;
 
 import sps.core.Point2;
 import sps.display.Screen;

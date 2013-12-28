@@ -1,8 +1,8 @@
 package game.test;
 
-import game.GameConfig;
-import game.InputWrapper;
 import game.arena.Catchable;
+import game.core.GameConfig;
+import game.core.InputWrapper;
 import sps.bridge.Commands;
 import sps.display.Screen;
 import sps.io.Input;

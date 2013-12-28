@@ -1,137 +1,77 @@
 package game.population;
 
-import game.BackgroundCache;
-import game.ui.Meter;
-import sps.color.Colors;
+import game.core.BackgroundCache;
 import sps.core.Point2;
 import sps.display.Screen;
+import sps.preload.PreloadChain;
+import sps.preload.PreloadChainLink;
 import sps.states.State;
 import sps.states.StateManager;
-import sps.text.Text;
-import sps.text.TextPool;
-
-import java.text.NumberFormat;
 
 public class PreloadPopulationOverview implements State {
-    public class Payload {
-        private Population _population;
-        private PopulationHUD _populationHud;
-        private DeathCauseMonitor _top;
-        private DeathCauseMonitor _bottom;
-
-        public void cache(Population population) {
-            _population = population;
-        }
-
-
-        public Population getPopulation() {
-            return _population;
-        }
-
-        public void cache(PopulationHUD populationHud) {
-            _populationHud = populationHud;
-        }
-
-        public PopulationHUD getPopulationHud() {
-            return _populationHud;
-        }
-
-        public void cache(DeathCauseMonitor monitor, boolean top) {
-            if (top) {
-                _top = monitor;
-            }
-            else {
-                _bottom = monitor;
-            }
-        }
-
-        public DeathCauseMonitor getTop() {
-            return _top;
-        }
-
-        public DeathCauseMonitor getBottom() {
-            return _bottom;
-        }
-    }
-
-    private Payload _payload;
-    private int _preloadedItems;
-    private int _preloadedItemsTarget;
-    private Text _loadingMessage;
-    private Meter _loadingMeter;
+    private PopulationOverviewPayload _payload;
+    private PreloadChain _preloadChain;
 
     @Override
     public void create() {
-        //PopHud + Pop + Top + Bottom + 3 backgrounds
-        _preloadedItemsTarget = 1 + 1 + 1 + 1 + 3;
-        _loadingMessage = TextPool.get().write(getMessage(), Screen.pos(10, 60));
-        _payload = new Payload();
-        _loadingMeter = new Meter(90, 5, Colors.randomPleasant(), Screen.pos(5, 30), false);
-        _preloadedItems = -1;
+        _payload = new PopulationOverviewPayload();
         BackgroundCache.clear();
-    }
 
-    private String getMessage() {
-        switch (_preloadedItems) {
-            case 0:
-                return "Finding a population to serve.";
-            case 1:
-                return "Collecting information about your region.";
-            case 2:
-                return "Determining the hardest causes of death to solve.";
-            case 3:
-                return "Determining the easiest causes of death to solve";
-            case 4:
-                return "Downloading terrain details and settlement locations.";
-        }
-        return "Simulating environment for this region's activities.";
-    }
+        _preloadChain = new PreloadChain() {
+            @Override
+            public void finish() {
+                StateManager.get().push(new PopulationOverview(_payload));
+            }
+        };
 
-    private static final NumberFormat _df = NumberFormat.getPercentInstance();
-
-    private String getProgress() {
-        return _df.format(((float) _preloadedItems / _preloadedItemsTarget)) + " complete";
+        _preloadChain.add(new PreloadChainLink("Location your region of the planet.") {
+            @Override
+            public void process() {
+                _payload.cache(new Population());
+            }
+        });
+        _preloadChain.add(new PreloadChainLink("Collecting information about your region.") {
+            @Override
+            public void process() {
+                Point2 hudSize = Screen.pos(40, 70);
+                Point2 hudPosition = Screen.pos(30, 15);
+                _payload.cache(new PopulationHUD(_payload.getPopulation(), hudSize, hudPosition));
+            }
+        });
+        _preloadChain.add(new PreloadChainLink("Determining the hardest causes of death to solve.") {
+            @Override
+            public void process() {
+                _payload.cache(new DeathCauseMonitor(false), false);
+            }
+        });
+        _preloadChain.add(new PreloadChainLink("Determining the simplest causes of death to solve.") {
+            @Override
+            public void process() {
+                _payload.cache(new DeathCauseMonitor(true), true);
+            }
+        });
+        _preloadChain.add(new PreloadChainLink("Downloading terrain details and settlement locations.") {
+            @Override
+            public void process() {
+                _payload.getPopulationHud().regenerateTextures();
+            }
+        });
+        _preloadChain.add(new PreloadChainLink("Simulating environment for this region's activities.", 3) {
+            @Override
+            public void process() {
+                BackgroundCache.cacheScreenSize();
+            }
+        });
     }
 
     @Override
     public void draw() {
-        _loadingMeter.draw();
+        _preloadChain.draw();
     }
 
     @Override
     public void update() {
-        switch (_preloadedItems) {
-            case -1:
-                //Gives the preloader a chance to show up before any generation occurs
-                break;
-            case 0:
-                _payload.cache(new Population());
-                break;
-            case 1:
-                Point2 hudSize = Screen.pos(40, 70);
-                Point2 hudPosition = Screen.pos(30, 15);
-                _payload.cache(new PopulationHUD(_payload.getPopulation(), hudSize, hudPosition));
-                break;
-            case 2:
-                _payload.cache(new DeathCauseMonitor(false), false);
-                break;
-            case 3:
-                _payload.cache(new DeathCauseMonitor(true), true);
-            case 4:
-                _payload.getPopulationHud().regenerateTextures();
-            default:
-                BackgroundCache.cacheScreenSize();
-                break;
-        }
-
-        _preloadedItems++;
-        if (_preloadedItems >= _preloadedItemsTarget) {
-            StateManager.get().push(new PopulationOverview(_payload));
-        }
-        else {
-            _loadingMeter.scale((int) ((_preloadedItems / (float) _preloadedItemsTarget) * 100));
-            _loadingMessage.setMessage(getMessage() + "\n" + getProgress());
-        }
+        _preloadChain.update();
     }
 
     @Override

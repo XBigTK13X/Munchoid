@@ -1,13 +1,12 @@
 package game.forceselection;
 
-import game.GameConfig;
-import game.InputWrapper;
 import game.arena.Arena;
+import game.core.GameConfig;
+import game.core.InputWrapper;
 import game.creatures.Creature;
 import game.dev.DevConfig;
 import game.forces.Force;
 import game.tournament.Tournament;
-import game.ui.UIButton;
 import sps.audio.MusicPlayer;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
@@ -19,6 +18,7 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
+import sps.ui.UIButton;
 
 public class ForceSelection implements State {
     private Creature _pet;

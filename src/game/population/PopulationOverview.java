@@ -1,10 +1,10 @@
 package game.population;
 
-import game.EndGame;
-import game.GameConfig;
-import game.InputWrapper;
-import game.Score;
 import game.arena.PreloadArena;
+import game.core.EndGame;
+import game.core.GameConfig;
+import game.core.InputWrapper;
+import game.core.Score;
 import game.dev.DevConfig;
 import game.dev.MetaData;
 import game.save.GameSnapshot;
@@ -45,12 +45,12 @@ public class PopulationOverview implements State {
 
     private boolean _restoredFromSaveFile;
 
-    private PreloadPopulationOverview.Payload _preload;
+    private PopulationOverviewPayload _payload;
 
     private Text _savingNotice;
 
-    public PopulationOverview(PreloadPopulationOverview.Payload preload) {
-        _preload = preload;
+    public PopulationOverview(PopulationOverviewPayload preload) {
+        _payload = preload;
     }
 
     public PopulationOverview(GameSnapshot snapshot) {
@@ -84,11 +84,11 @@ public class PopulationOverview implements State {
     @Override
     public void create() {
         if (!_restoredFromSaveFile) {
-            _population = _preload.getPopulation();
-            _populationHud = _preload.getPopulationHud();
+            _population = _payload.getPopulation();
+            _populationHud = _payload.getPopulationHud();
 
-            _topCauses = _preload.getTop();
-            _bottomCauses = _preload.getBottom();
+            _topCauses = _payload.getTop();
+            _bottomCauses = _payload.getBottom();
 
             _regionName = __regionNames.makeWord(RNG.next(7, 10));
             _regionName = WordUtils.capitalize(_regionName);

@@ -1,10 +1,10 @@
 package game.battle;
 
 import game.creatures.Creature;
-import game.ui.Meter;
 import sps.color.Color;
 import sps.core.Point2;
 import sps.display.Screen;
+import sps.ui.Meter;
 
 public class HealthMeter {
     private static int __widthPercent = 5;

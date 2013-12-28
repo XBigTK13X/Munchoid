@@ -1,6 +1,6 @@
 package game.creatures;
 
-import game.GameConfig;
+import game.core.GameConfig;
 import game.creatures.style.Grid;
 import game.forces.Force;
 import sps.color.Color;

@@ -1,8 +1,8 @@
 package game.arena;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.BackgroundCache;
-import game.GameConfig;
+import game.core.BackgroundCache;
+import game.core.GameConfig;
 import game.dev.DevConfig;
 import sps.bridge.DrawDepths;
 import sps.bridge.EntityTypes;

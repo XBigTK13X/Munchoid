@@ -1,8 +1,8 @@
 package game.creatures;
 
 import com.badlogic.gdx.Gdx;
-import game.GameConfig;
 import game.arena.Player;
+import game.core.GameConfig;
 import game.dev.DevConfig;
 import game.forces.Force;
 import game.forces.sideeffects.SideEffectType;

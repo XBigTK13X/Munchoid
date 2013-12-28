@@ -1,6 +1,6 @@
 package game.creatures;
 
-import game.GameConfig;
+import game.core.GameConfig;
 import game.creatures.part.DebugPoly;
 import game.creatures.part.Design;
 import game.creatures.part.Designs;

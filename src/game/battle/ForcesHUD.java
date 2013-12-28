@@ -1,6 +1,6 @@
 package game.battle;
 
-import game.GameConfig;
+import game.core.GameConfig;
 import game.creatures.Creature;
 import game.forces.Force;
 import sps.core.Point2;

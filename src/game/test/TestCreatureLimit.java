@@ -1,6 +1,6 @@
 package game.test;
 
-import game.GameConfig;
+import game.core.GameConfig;
 import game.creatures.Atom;
 import game.creatures.Creature;
 import sps.core.Logger;

@@ -1,8 +1,8 @@
 package game.tournament;
 
-import game.GameConfig;
-import game.InputWrapper;
 import game.arena.Player;
+import game.core.GameConfig;
+import game.core.InputWrapper;
 import game.dev.DevConfig;
 import sps.bridge.Commands;
 import sps.display.Screen;

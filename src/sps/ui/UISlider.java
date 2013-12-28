@@ -1,10 +1,9 @@
-package game.ui;
+package sps.ui;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.color.Color;
 import sps.core.Point2;
 import sps.io.Input;
-import sps.ui.Buttons;
 
 public abstract class UISlider {
     private Meter _meter;

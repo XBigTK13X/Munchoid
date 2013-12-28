@@ -1,6 +1,6 @@
 package game.save;
 
-import game.Score;
+import game.core.Score;
 import game.population.DeathCauseMonitor;
 import game.population.Population;
 import game.population.PopulationHUD;

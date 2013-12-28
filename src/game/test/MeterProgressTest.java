@@ -1,15 +1,15 @@
 package game.test;
 
-import game.InputWrapper;
 import game.arena.Catchable;
 import game.battle.BattleHUD;
 import game.battle.TimerGraphic;
-import game.ui.Meter;
+import game.core.InputWrapper;
 import sps.color.Color;
 import sps.display.Screen;
 import sps.states.State;
 import sps.text.Text;
 import sps.text.TextPool;
+import sps.ui.Meter;
 
 public class MeterProgressTest implements State {
     private Meter _meter;

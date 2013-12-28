@@ -1,7 +1,7 @@
 package game.arena;
 
 import com.badlogic.gdx.Gdx;
-import game.GameConfig;
+import game.core.GameConfig;
 import game.creatures.Creature;
 import game.dev.DevConfig;
 import sps.bridge.DrawDepths;

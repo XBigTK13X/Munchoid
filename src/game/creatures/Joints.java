@@ -1,6 +1,6 @@
 package game.creatures;
 
-import game.GameConfig;
+import game.core.GameConfig;
 import game.dev.DevConfig;
 import sps.color.Color;
 import sps.display.DrawApiCall;

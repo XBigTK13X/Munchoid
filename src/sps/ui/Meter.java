@@ -1,19 +1,20 @@
-package game.ui;
+package sps.ui;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.GameConfig;
-import game.creatures.style.Outline;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.color.Colors;
 import sps.core.Point2;
 import sps.display.Screen;
 import sps.display.Window;
+import sps.draw.Outline;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
 import sps.util.BoundingBox;
 
 public class Meter {
+    private static final int METER_OUTLINE_PIXEL_THICKNESS = 2;
+
     private Sprite _background;
     private Sprite _sprite;
     private Sprite _frame;
@@ -42,7 +43,7 @@ public class Meter {
         _sprite = SpriteMaker.fromColors(base);
 
         Color[][] frame = ProcTextures.monotone(_width, _height, Color.BLACK);
-        Outline.single(frame, Color.WHITE, GameConfig.MeterOutlinePixelThickness);
+        Outline.single(frame, Color.WHITE, METER_OUTLINE_PIXEL_THICKNESS);
         ProcTextures.remove(frame, Color.BLACK);
         _frame = SpriteMaker.fromColors(frame);
 
