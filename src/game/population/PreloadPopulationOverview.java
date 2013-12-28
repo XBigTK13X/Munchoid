@@ -1,5 +1,6 @@
 package game.population;
 
+import game.BackgroundCache;
 import game.ui.Meter;
 import sps.color.Colors;
 import sps.core.Point2;
@@ -61,28 +62,29 @@ public class PreloadPopulationOverview implements State {
 
     @Override
     public void create() {
-        //PopHud + Pop + Top + Bottom
-        _preloadedItemsTarget = 1 + 1 + 1 + 1;
+        //PopHud + Pop + Top + Bottom + 3 backgrounds
+        _preloadedItemsTarget = 1 + 1 + 1 + 1 + 3;
         _loadingMessage = TextPool.get().write(getMessage(), Screen.pos(10, 60));
         _payload = new Payload();
         _loadingMeter = new Meter(90, 5, Colors.randomPleasant(), Screen.pos(5, 30), false);
         _preloadedItems = -1;
+        BackgroundCache.clear();
     }
 
     private String getMessage() {
         switch (_preloadedItems) {
             case 0:
-                return "Generating a new population";
+                return "Finding a population to serve.";
             case 1:
-                return "Creating the HUD for your region";
+                return "Collecting information about your region.";
             case 2:
-                return "Selecting strongest causes of death";
+                return "Determining the hardest causes of death to solve.";
             case 3:
-                return "Selecting weakest causes of death";
+                return "Determining the easiest causes of death to solve";
             case 4:
-                return "Generating textures";
+                return "Downloading terrain details and settlement locations.";
         }
-        return "Collecting mental fragments from all combatants. ";
+        return "Simulating environment for this region's activities.";
     }
 
     private static final NumberFormat _df = NumberFormat.getPercentInstance();
@@ -117,6 +119,8 @@ public class PreloadPopulationOverview implements State {
                 _payload.cache(new DeathCauseMonitor(true), true);
             case 4:
                 _payload.getPopulationHud().regenerateTextures();
+            default:
+                BackgroundCache.cacheScreenSize();
                 break;
         }
 
