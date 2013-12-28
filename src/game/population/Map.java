@@ -13,6 +13,7 @@ import sps.draw.SpriteMaker;
 import sps.draw.TextureManipulation;
 
 public class Map {
+    public static final int NO_SEED = 0;
     public static final int C = 255;
     private static final int __frameSizePixels = 6;
 
@@ -25,7 +26,13 @@ public class Map {
 
     private static final int __habitBuffer = 25;
 
-    public Map(int width, int height, Point2 position) {
+    private int _seed;
+
+    public Map(int width, int height, Point2 position, int mapSeed) {
+        if (mapSeed == NO_SEED) {
+            mapSeed = RNG.next(0, Integer.MAX_VALUE);
+        }
+        RNG.seed(mapSeed);
         _position = position;
         _spriteBase = ProcTextures.perlin(width, height, new RGBA(0, 255, 255).toColor(), new RGBA(255, 255, 255).toColor(), 9, true);
         _habitableZones = new int[width][height];
@@ -50,6 +57,9 @@ public class Map {
         _bgBase = ProcTextures.monotone(width + __frameSizePixels, height + __frameSizePixels, Color.WHITE);
 
         regenerateTextures();
+
+        RNG.naturalReseed();
+        _seed = mapSeed;
     }
 
     public void regenerateTextures() {
@@ -99,5 +109,9 @@ public class Map {
     public void draw() {
         Window.get().schedule(_bg, DrawDepths.get("PopulationMapBackground"));
         Window.get().schedule(_sprite, DrawDepths.get("PopulationMap"));
+    }
+
+    public int getSeed() {
+        return _seed;
     }
 }

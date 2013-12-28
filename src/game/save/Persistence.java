@@ -1,6 +1,9 @@
 package game.save;
 
+import game.population.PopulationOverview;
+import org.apache.commons.io.FileUtils;
 import sps.core.Loader;
+import sps.core.Logger;
 import sps.states.StateManager;
 
 import java.io.File;
@@ -32,24 +35,31 @@ public class Persistence {
             _worker = new Thread() {
                 @Override
                 public void run() {
-                    Serialize.toFile(StateManager.get().takeSnapshot(), __autoSave);
+                    try {
+                        PopulationOverview overview = (PopulationOverview) StateManager.get().current();
+                        FileUtils.writeStringToFile(__autoSave, overview.takeSnapshot().toPersistable());
+                    }
+                    catch (Exception e) {
+                        Logger.exception(e);
+                    }
                 }
             };
             _worker.start();
         }
     }
 
-    public GameSnapshot autoLoad() throws RuntimeException {
+    public GameSnapshot autoLoad() {
         if (saveFileExists() && !isBusy()) {
             try {
-                GameSnapshot snapshot = Serialize.fromFile(__autoSave, GameSnapshot.class);
-                if (snapshot.RecordedVersion != GameSnapshot.Version) {
-                    throw new RuntimeException("Save game version mismatch. Recorded version is " + snapshot.RecordedVersion + " but the current version is " + GameSnapshot.Version);
+                GameSnapshot snapshot = GameSnapshot.fromPersistable(FileUtils.readFileToString(__autoSave));
+                if (snapshot.RecordedVersion != GameSnapshot.CurrentVersion) {
+                    throw new RuntimeException("Save game version mismatch. Recorded version is " + snapshot.RecordedVersion + " but the current version is " + GameSnapshot.CurrentVersion);
                 }
                 return snapshot;
             }
             catch (Exception e) {
-                throw new RuntimeException("Save game file out of date.");
+                Logger.exception(e);
+                return null;
             }
         }
         else {

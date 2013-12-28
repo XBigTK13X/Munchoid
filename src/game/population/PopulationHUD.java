@@ -12,7 +12,6 @@ import sps.display.Window;
 import sps.util.Maths;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PopulationHUD {
     private Population _population;
@@ -22,17 +21,15 @@ public class PopulationHUD {
     private int _maxIconsWide;
     private int _maxIconsHigh;
     private int _maxIcons;
-    private List<Point2> _iconPositions;
+    private ArrayList<Point2> _iconPositions;
     private int _pad = 1;
     private Point2 _size;
 
-    public PopulationHUD(Population population, Point2 size, Point2 position) {
+    public PopulationHUD(Population population, Point2 size, Point2 position, int mapSeed, ArrayList<Point2> iconPositions) {
         _size = size;
         _population = population;
-
-        _map = new Map((int) size.X, (int) size.Y, position);
-
-        _iconPositions = new ArrayList<>();
+        _map = new Map((int) size.X, (int) size.Y, position, mapSeed);
+        _iconPositions = iconPositions;
     }
 
     public void recalcIcons() {
@@ -67,5 +64,13 @@ public class PopulationHUD {
         _maxIconsWide = (int) (_size.X / (_popIcon.getWidth() + _pad)) - 1;
         _maxIcons = _maxIconsHigh * _maxIconsWide;
 
+    }
+
+    public int getMapSeed() {
+        return _map.getSeed();
+    }
+
+    public ArrayList<Point2> getSettlementLocations() {
+        return _iconPositions;
     }
 }

@@ -105,6 +105,14 @@ public class GameConfig {
     public static final float MaxScaleDeath = 1.5f;
 
     //Tournament/Population
+    public static Point2 HUDSize() {
+        return Screen.pos(40, 70);
+    }
+
+    public static Point2 HUDPosition() {
+        return Screen.pos(30, 15);
+    }
+
     public static final int TournamentStatRange = 10;
     public static final int NumberOfTournaments = 5;
     public static final int TournamentMatches = 3;

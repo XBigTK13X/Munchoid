@@ -66,4 +66,13 @@ public class DeathCauses {
         }
         return result;
     }
+
+    public DeathCause get(String name) {
+        for (DeathCause cause : _deathCauses) {
+            if (name.equals(cause.getName())) {
+                return cause;
+            }
+        }
+        return null;
+    }
 }

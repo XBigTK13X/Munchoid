@@ -23,10 +23,6 @@ public class Score {
         __instance = new Score();
     }
 
-    public static void set(Score score) {
-        __instance = score;
-    }
-
     private static final int __victoryWeight = 11;
     private static final int __chompWeight = 3;
     private static final int __petVarietyWeight = 119;
@@ -49,6 +45,16 @@ public class Score {
 
     }
 
+    public void set(int victories, int chomps, int petVariety, int petPower, int healthRemaining, int acceptedMerges, int rejectedMerges) {
+        _victories = victories;
+        _chomps = chomps;
+        _petVariety = petVariety;
+        _petPower = petPower;
+        _healthRemaining = healthRemaining;
+        _acceptedMerges = acceptedMerges;
+        _rejectedMerges = rejectedMerges;
+    }
+
     public void addChomp() {
         _chomps++;
     }
@@ -59,6 +65,30 @@ public class Score {
 
     public int victories() {
         return _victories;
+    }
+
+    public int chomps() {
+        return _chomps;
+    }
+
+    public int petVariety() {
+        return _petVariety;
+    }
+
+    public int petPower() {
+        return _petPower;
+    }
+
+    public int healthRemaining() {
+        return _healthRemaining;
+    }
+
+    public int acceptedMerges() {
+        return _acceptedMerges;
+    }
+
+    public int rejectedMerges() {
+        return _rejectedMerges;
     }
 
     public Stats petStats() {

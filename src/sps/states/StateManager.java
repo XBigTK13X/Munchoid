@@ -2,10 +2,7 @@ package sps.states;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.core.GameConfig;
-import game.core.Score;
 import game.dev.DevConfig;
-import game.population.PopulationOverview;
-import game.save.GameSnapshot;
 import game.save.Options;
 import game.tutorial.Tutorial;
 import sps.audio.MusicPlayer;
@@ -240,16 +237,6 @@ public class StateManager {
             }
         }
         return false;
-    }
-
-    public GameSnapshot takeSnapshot() {
-        PopulationOverview overview = (PopulationOverview) current();
-        return overview.takeSnapshot();
-    }
-
-    public void loadFrom(GameSnapshot snapshot) {
-        Score.set(snapshot.Score);
-        push(new PopulationOverview(snapshot));
     }
 
     public void addTutorial(Class state, Tutorial tutorial) {

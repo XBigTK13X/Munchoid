@@ -7,6 +7,7 @@ import game.core.InputWrapper;
 import game.core.Score;
 import game.dev.DevConfig;
 import game.save.Persistence;
+import game.save.RestoreSavedGame;
 import game.tutorial.TutorialQuery;
 import org.apache.commons.io.FileUtils;
 import sps.bridge.Commands;
@@ -73,7 +74,7 @@ public class MainMenu implements State {
                 @Override
                 public void click() {
                     try {
-                        StateManager.get().loadFrom(Persistence.get().autoLoad());
+                        StateManager.get().push(new RestoreSavedGame());
                     }
                     catch (RuntimeException e) {
                         setVisible(false);

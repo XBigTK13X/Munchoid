@@ -5,8 +5,11 @@ public class PopulationOverviewPayload {
     private PopulationHUD _populationHud;
     private DeathCauseMonitor _top;
     private DeathCauseMonitor _bottom;
+    private String _regionName;
+    private int _tournamentsPlayed;
+    private int _tournamentWins;
 
-    public void cache(Population population) {
+    public void setPopulation(Population population) {
         _population = population;
     }
 
@@ -15,7 +18,7 @@ public class PopulationOverviewPayload {
         return _population;
     }
 
-    public void cache(PopulationHUD populationHud) {
+    public void setPopulationHUD(PopulationHUD populationHud) {
         _populationHud = populationHud;
     }
 
@@ -23,13 +26,12 @@ public class PopulationOverviewPayload {
         return _populationHud;
     }
 
-    public void cache(DeathCauseMonitor monitor, boolean top) {
-        if (top) {
-            _top = monitor;
-        }
-        else {
-            _bottom = monitor;
-        }
+    public void setTopCauseOfDeathMonitor(DeathCauseMonitor monitor) {
+        _top = monitor;
+    }
+
+    public void setBottomCauseOfDeathMonitor(DeathCauseMonitor monitor) {
+        _bottom = monitor;
     }
 
     public DeathCauseMonitor getTop() {
@@ -38,5 +40,26 @@ public class PopulationOverviewPayload {
 
     public DeathCauseMonitor getBottom() {
         return _bottom;
+    }
+
+    public void setRegionName(String name) {
+        _regionName = name;
+    }
+
+    public String getRegionName() {
+        return _regionName;
+    }
+
+    public void setTournamentStats(int tournamentsPlayed, int tournamentWins) {
+        _tournamentsPlayed = tournamentsPlayed;
+        _tournamentWins = tournamentWins;
+    }
+
+    public int getTournamentsPlayed() {
+        return _tournamentsPlayed;
+    }
+
+    public int getTournamentWins() {
+        return _tournamentWins;
     }
 }

@@ -43,7 +43,7 @@ public class Game implements ApplicationListener {
 
     @Override
     public void create() {
-        RNG.seed((int) System.currentTimeMillis());
+        RNG.naturalReseed();
         Sps.setup(true);
 
         Assets.get().fontPack().setDefault("Aller/Aller_Rg.ttf", 50);

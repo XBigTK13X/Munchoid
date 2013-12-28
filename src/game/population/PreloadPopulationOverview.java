@@ -1,53 +1,45 @@
 package game.population;
 
 import game.core.BackgroundCache;
+import game.core.GameConfig;
+import game.core.PreloaderState;
 import sps.core.Point2;
-import sps.display.Screen;
-import sps.preload.PreloadChain;
 import sps.preload.PreloadChainLink;
-import sps.states.State;
 import sps.states.StateManager;
 
-public class PreloadPopulationOverview implements State {
+import java.util.ArrayList;
+
+public class PreloadPopulationOverview extends PreloaderState {
     private PopulationOverviewPayload _payload;
-    private PreloadChain _preloadChain;
 
     @Override
-    public void create() {
+    public void onCreate() {
         _payload = new PopulationOverviewPayload();
         BackgroundCache.clear();
-
-        _preloadChain = new PreloadChain() {
-            @Override
-            public void finish() {
-                StateManager.get().push(new PopulationOverview(_payload));
-            }
-        };
 
         _preloadChain.add(new PreloadChainLink("Location your region of the planet.") {
             @Override
             public void process() {
-                _payload.cache(new Population());
+                _payload.setRegionName(PopulationOverview.getRegionName());
+                _payload.setPopulation(new Population(GameConfig.StartingPopulationSize));
             }
         });
         _preloadChain.add(new PreloadChainLink("Collecting information about your region.") {
             @Override
             public void process() {
-                Point2 hudSize = Screen.pos(40, 70);
-                Point2 hudPosition = Screen.pos(30, 15);
-                _payload.cache(new PopulationHUD(_payload.getPopulation(), hudSize, hudPosition));
+                _payload.setPopulationHUD(new PopulationHUD(_payload.getPopulation(), GameConfig.HUDSize(), GameConfig.HUDPosition(), Map.NO_SEED, new ArrayList<Point2>()));
             }
         });
         _preloadChain.add(new PreloadChainLink("Determining the hardest causes of death to solve.") {
             @Override
             public void process() {
-                _payload.cache(new DeathCauseMonitor(false), false);
+                _payload.setTopCauseOfDeathMonitor(new DeathCauseMonitor(false));
             }
         });
         _preloadChain.add(new PreloadChainLink("Determining the simplest causes of death to solve.") {
             @Override
             public void process() {
-                _payload.cache(new DeathCauseMonitor(true), true);
+                _payload.setBottomCauseOfDeathMonitor(new DeathCauseMonitor(true));
             }
         });
         _preloadChain.add(new PreloadChainLink("Downloading terrain details and settlement locations.") {
@@ -65,33 +57,7 @@ public class PreloadPopulationOverview implements State {
     }
 
     @Override
-    public void draw() {
-        _preloadChain.draw();
-    }
-
-    @Override
-    public void update() {
-        _preloadChain.update();
-    }
-
-    @Override
-    public void asyncUpdate() {
-    }
-
-    @Override
-    public void load() {
-    }
-
-    @Override
-    public void unload() {
-    }
-
-    @Override
-    public String getName() {
-        return "PreloadPopulationOverview";
-    }
-
-    @Override
-    public void pause() {
+    public void onFinish() {
+        StateManager.get().push(new PopulationOverview(_payload));
     }
 }

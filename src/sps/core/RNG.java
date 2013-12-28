@@ -21,6 +21,10 @@ public class RNG {
         SyncedRand = new Random(seed);
     }
 
+    public static void naturalReseed() {
+        seed((int) System.currentTimeMillis());
+    }
+
     public static int next(int min, int max) {
         return next(min, max, true);
     }

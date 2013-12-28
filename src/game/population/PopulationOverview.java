@@ -27,6 +27,10 @@ import java.text.NumberFormat;
 public class PopulationOverview implements State {
     private static final Markov __regionNames = Markov.get(Loader.get().data("region_name_seed.txt"), 2);
 
+    public static String getRegionName() {
+        return WordUtils.capitalize(__regionNames.makeWord(RNG.next(7, 10)));
+    }
+
     private Population _population;
 
     private DeathCauseMonitor _topCauses;
@@ -43,8 +47,6 @@ public class PopulationOverview implements State {
 
     private DeathCauseEradicated _eradicated;
 
-    private boolean _restoredFromSaveFile;
-
     private PopulationOverviewPayload _payload;
 
     private Text _savingNotice;
@@ -53,51 +55,45 @@ public class PopulationOverview implements State {
         _payload = preload;
     }
 
-    public PopulationOverview(GameSnapshot snapshot) {
-        _restoredFromSaveFile = true;
-
-        _regionName = snapshot.RegionName;
-        _population = snapshot.Population;
-        _populationHud = snapshot.PopulationHud;
-        _populationHud.regenerateTextures();
-        _topCauses = snapshot.TopDeathCauses;
-        _bottomCauses = snapshot.BottomDeathCauses;
-        _tournamentsPlayed = snapshot.TournamentsPlayed;
-        _tournamentWins = snapshot.TournamentWins;
-    }
-
     public GameSnapshot takeSnapshot() {
         GameSnapshot result = new GameSnapshot();
-        result.Score = Score.get();
-        result.Population = _population;
-        result.BottomDeathCauses = _bottomCauses;
-        result.TopDeathCauses = _topCauses;
-        result.RegionName = _regionName;
-        result.PopulationHud = _populationHud;
-        result.Population = _population;
-        result.RecordedVersion = GameSnapshot.Version;
+        result.Victories = Score.get().victories();
+        result.AcceptedMerges = Score.get().acceptedMerges();
+        result.RejectedMerges = Score.get().rejectedMerges();
+        result.HealthRemaining = Score.get().healthRemaining();
+        result.Chomps = Score.get().chomps();
+        result.PetVariety = Score.get().petVariety();
+        result.PetPower = Score.get().petPower();
+        result.PopulationSize = _population.getSize();
+        result.RecordedVersion = GameSnapshot.CurrentVersion;
         result.TournamentsPlayed = _tournamentsPlayed;
         result.TournamentWins = _tournamentWins;
+        result.RegionName = _regionName;
+        result.RegionMapSeed = _populationHud.getMapSeed();
+        result.SettlementLocations = _populationHud.getSettlementLocations();
+        result.BottomDeathCauses = _bottomCauses.getPersistable();
+        result.TopDeathCauses = _topCauses.getPersistable();
         return result;
     }
 
     @Override
     public void create() {
-        if (!_restoredFromSaveFile) {
-            _population = _payload.getPopulation();
-            _populationHud = _payload.getPopulationHud();
+        _population = _payload.getPopulation();
+        _populationHud = _payload.getPopulationHud();
 
-            _topCauses = _payload.getTop();
-            _bottomCauses = _payload.getBottom();
+        _topCauses = _payload.getTop();
+        _bottomCauses = _payload.getBottom();
 
-            _regionName = __regionNames.makeWord(RNG.next(7, 10));
-            _regionName = WordUtils.capitalize(_regionName);
-        }
+        _regionName = _payload.getRegionName();
 
         _topCauses.generateDisplay();
         _bottomCauses.generateDisplay();
         _populationCountDisplay = TextPool.get().write("", Screen.pos(30, 95));
 
+        _tournamentsPlayed = _payload.getTournamentsPlayed();
+        _tournamentWins = _payload.getTournamentWins();
+
+        _populationHud.regenerateTextures();
         updateDeathDisplays();
         _continuePrompt = TextPool.get().write("Press " + Commands.get("Confirm") + " to enter the next tournament", Screen.pos(10, 10));
 

@@ -7,8 +7,8 @@ public class Population {
 
     private int _size;
 
-    public Population() {
-        _size = GameConfig.StartingPopulationSize;
+    public Population(int startingSize) {
+        _size = startingSize;
     }
 
     public void grow() {
