@@ -33,13 +33,13 @@ public class PreloadPopulationOverview extends PreloaderState {
         _preloadChain.add(new PreloadChainLink("Determining the hardest causes of death to solve.") {
             @Override
             public void process() {
-                _payload.setTopCauseOfDeathMonitor(new DeathCauseMonitor(false));
+                _payload.setTopCauseOfDeathMonitor(new DeathCauseMonitor(true));
             }
         });
         _preloadChain.add(new PreloadChainLink("Determining the simplest causes of death to solve.") {
             @Override
             public void process() {
-                _payload.setBottomCauseOfDeathMonitor(new DeathCauseMonitor(true));
+                _payload.setBottomCauseOfDeathMonitor(new DeathCauseMonitor(false));
             }
         });
         _preloadChain.add(new PreloadChainLink("Downloading terrain details and settlement locations.") {

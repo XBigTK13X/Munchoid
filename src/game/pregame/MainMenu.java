@@ -28,6 +28,8 @@ import java.io.File;
 public class MainMenu implements State {
     private Sprite _background;
     private Sprite _logo;
+    private Text _corruptSave;
+    private UIButton _load;
 
     @Override
     public void create() {
@@ -70,16 +72,17 @@ public class MainMenu implements State {
         _exit.layout();
 
         if (Persistence.get().saveFileExists()) {
-            final UIButton _load = new UIButton("Continue") {
+            _load = new UIButton("Continue") {
                 @Override
                 public void click() {
+                    StateManager.get().push(new RestoreSavedGame());
                     try {
-                        StateManager.get().push(new RestoreSavedGame());
+
                     }
                     catch (RuntimeException e) {
                         setVisible(false);
                         if (e.getMessage() != null) {
-                            TextPool.get().write("Unable to load the save file.\n" + e.getMessage(), Screen.pos(40, 70));
+
                         }
                         else {
                             Logger.exception(e);
@@ -89,6 +92,8 @@ public class MainMenu implements State {
             };
             _load.setColRow(2, 2);
             _load.layout();
+            _corruptSave = TextPool.get().write("\t\t\t\t\tUnable to load the save file.\n It is most likely from an older version of the game.", Screen.pos(20, 70));
+            _corruptSave.setVisible(false);
         }
 
         String version = "Unknown";
@@ -123,6 +128,10 @@ public class MainMenu implements State {
 
     @Override
     public void update() {
+        if (Persistence.get().isSaveBad() && !_corruptSave.isVisible()) {
+            _corruptSave.setVisible(true);
+            _load.setVisible(false);
+        }
         if (InputWrapper.confirm() || DevConfig.EndToEndStateLoadTest || DevConfig.BotEnabled) {
             start();
         }

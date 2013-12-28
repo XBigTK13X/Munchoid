@@ -6,7 +6,7 @@ import sps.util.Parse;
 import java.util.ArrayList;
 
 public class GameSnapshot {
-    public static final int CurrentVersion = 4;
+    public static final int CurrentSaveFormatVersion = 7;
 
     public String RegionName;
     public int PopulationSize;
@@ -17,7 +17,7 @@ public class GameSnapshot {
     public int HealthRemaining;
     public int AcceptedMerges;
     public int RejectedMerges;
-    public int RecordedVersion;
+    public int SaveFormatVersion;
     public int TournamentsPlayed;
     public int TournamentWins;
     public int RegionMapSeed;
@@ -36,7 +36,7 @@ public class GameSnapshot {
         persistable += "HealthRemaining=" + HealthRemaining + "\n";
         persistable += "AcceptedMerges=" + AcceptedMerges + "\n";
         persistable += "RejectedMerges=" + RejectedMerges + "\n";
-        persistable += "RecordedVersion=" + RecordedVersion + "\n";
+        persistable += "SaveFormatVersion=" + SaveFormatVersion + "\n";
         persistable += "TournamentsPlayed=" + TournamentsPlayed + "\n";
         persistable += "TournamentWins=" + TournamentWins + "\n";
         persistable += "RegionMapSeed=" + RegionMapSeed + "\n";
@@ -83,8 +83,8 @@ public class GameSnapshot {
                 case "RejectedMerges":
                     snapshot.RejectedMerges = Parse.inte(val);
                     break;
-                case "RecordedVersion":
-                    snapshot.RecordedVersion = Parse.inte(val);
+                case "SaveFormatVersion":
+                    snapshot.SaveFormatVersion = Parse.inte(val);
                     break;
                 case "TournamentsPlayed":
                     snapshot.TournamentsPlayed = Parse.inte(val);

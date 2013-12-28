@@ -65,7 +65,7 @@ public class PopulationOverview implements State {
         result.PetVariety = Score.get().petVariety();
         result.PetPower = Score.get().petPower();
         result.PopulationSize = _population.getSize();
-        result.RecordedVersion = GameSnapshot.CurrentVersion;
+        result.SaveFormatVersion = GameSnapshot.CurrentSaveFormatVersion;
         result.TournamentsPlayed = _tournamentsPlayed;
         result.TournamentWins = _tournamentWins;
         result.RegionName = _regionName;

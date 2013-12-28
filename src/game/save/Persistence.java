@@ -5,6 +5,7 @@ import org.apache.commons.io.FileUtils;
 import sps.core.Loader;
 import sps.core.Logger;
 import sps.states.StateManager;
+import sps.util.Scrambler;
 
 import java.io.File;
 
@@ -25,6 +26,7 @@ public class Persistence {
     }
 
     private Thread _worker;
+    private boolean _saveFileIsBad = false;
 
     public boolean isBusy() {
         return _worker != null && _worker.isAlive();
@@ -37,7 +39,9 @@ public class Persistence {
                 public void run() {
                     try {
                         PopulationOverview overview = (PopulationOverview) StateManager.get().current();
-                        FileUtils.writeStringToFile(__autoSave, overview.takeSnapshot().toPersistable());
+                        String scrambled = Scrambler.scramble(overview.takeSnapshot().toPersistable());
+                        FileUtils.writeStringToFile(__autoSave, scrambled);
+                        _saveFileIsBad = false;
                     }
                     catch (Exception e) {
                         Logger.exception(e);
@@ -51,14 +55,17 @@ public class Persistence {
     public GameSnapshot autoLoad() {
         if (saveFileExists() && !isBusy()) {
             try {
-                GameSnapshot snapshot = GameSnapshot.fromPersistable(FileUtils.readFileToString(__autoSave));
-                if (snapshot.RecordedVersion != GameSnapshot.CurrentVersion) {
-                    throw new RuntimeException("Save game version mismatch. Recorded version is " + snapshot.RecordedVersion + " but the current version is " + GameSnapshot.CurrentVersion);
+                String plainText = Scrambler.descramble(FileUtils.readFileToString(__autoSave));
+                GameSnapshot snapshot = GameSnapshot.fromPersistable(plainText);
+                if (snapshot.SaveFormatVersion != GameSnapshot.CurrentSaveFormatVersion) {
+                    throw new RuntimeException("Save game version mismatch. Recorded version is " + snapshot.SaveFormatVersion + " but the current version is " + GameSnapshot.CurrentSaveFormatVersion);
                 }
+                _saveFileIsBad = false;
                 return snapshot;
             }
             catch (Exception e) {
-                Logger.exception(e);
+                _saveFileIsBad = true;
+                Logger.exception(e, false);
                 return null;
             }
         }
@@ -69,5 +76,9 @@ public class Persistence {
 
     public boolean saveFileExists() {
         return __autoSave.exists();
+    }
+
+    public boolean isSaveBad() {
+        return _saveFileIsBad;
     }
 }

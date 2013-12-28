@@ -5,6 +5,7 @@ import game.core.GameConfig;
 import game.core.PreloaderState;
 import game.core.Score;
 import game.population.*;
+import game.pregame.MainMenu;
 import sps.preload.PreloadChainLink;
 import sps.states.StateManager;
 
@@ -23,7 +24,15 @@ public class RestoreSavedGame extends PreloaderState {
         _preloadChain.add(new PreloadChainLink("Reading auto save file.") {
             @Override
             public void process() {
-                _snapshot = Persistence.get().autoLoad();
+                try {
+                    _snapshot = Persistence.get().autoLoad();
+                    if (_snapshot == null) {
+                        StateManager.get().rollBackTo(MainMenu.class);
+                    }
+                }
+                catch (Exception e) {
+                    StateManager.get().rollBackTo(MainMenu.class);
+                }
             }
         });
         _preloadChain.add(new PreloadChainLink("Restoring score data.") {
