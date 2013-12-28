@@ -25,7 +25,7 @@ public class DevConfig {
     public static final boolean PopulationTest = false && canEnable();
     public static final boolean BattleTest = false && canEnable();
     public static final boolean ForceSelectionTest = false && canEnable();
-    public static final boolean SkeletonTest = true && canEnable();
+    public static final boolean SkeletonTest = false && canEnable();
     public static final boolean BackgroundGenerationTest = false && canEnable();
     public static final boolean OutlineTest = false && canEnable();
     public static final boolean MeterTest = false && canEnable();
