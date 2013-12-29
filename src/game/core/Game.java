@@ -84,6 +84,12 @@ public class Game implements ApplicationListener {
             options.save();
         }
 
+        if (!_firstRunOptionsApplied) {
+            Options options = Options.load();
+            options.apply();
+            _firstRunOptionsApplied = true;
+        }
+
         StateManager.get().push(InitialStateResolver.create());
         StateManager.get().setPaused(false);
 
@@ -109,13 +115,6 @@ public class Game implements ApplicationListener {
     private boolean _firstRunOptionsApplied = false;
 
     private void update() {
-        //If we do this in create(), then some platforms (Mac OS X Mavericks) do not enter fullscreen properly.
-        if (!_firstRunOptionsApplied) {
-            Options options = Options.load();
-            options.apply();
-            _firstRunOptionsApplied = true;
-        }
-
         Input.get().update();
 
         ExitPrompt.get().update();
