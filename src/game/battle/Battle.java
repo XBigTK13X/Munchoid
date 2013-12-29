@@ -60,6 +60,7 @@ public class Battle implements State {
     @Override
     public void create() {
         _background = BackgroundCache.getRandom();
+        _background.setSize(Screen.width(100), Screen.height(100));
 
         _left.orientX(false, true);
         _right.orientX(true, true);

@@ -25,6 +25,7 @@ public class BackgroundCache {
         if (_backgrounds.size() <= 1) {
             Logger.error("No backgrounds were cached. Caching two random backgrounds. This should only happen while debugging.");
             cacheScreenSize();
+            cacheScreenSize();
         }
         Sprite result = _lastRandom;
         while (_lastRandom == result) {
