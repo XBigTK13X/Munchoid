@@ -68,4 +68,8 @@ public class CoolDown {
     public int getPercentCompletion() {
         return (int) Maths.valueToPercent(0, getSecondsMax(), getSecondsLeft());
     }
+
+    public void zeroOut() {
+        _coolDown = 0;
+    }
 }

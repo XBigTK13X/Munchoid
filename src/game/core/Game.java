@@ -36,12 +36,15 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.text.TextPool;
 import sps.ui.UiElements;
+import sps.util.CoolDown;
 
 public class Game implements ApplicationListener {
 
     private State _preUpdateState;
     private boolean _firstCreateOptionsLoaded = false;
     private boolean _firstUpdateOptionsLoaded = false;
+    private CoolDown _persistResizeOperation = new CoolDown(.1f);
+    private boolean _firstResizeCall = true;
 
     @Override
     public void create() {
@@ -96,9 +99,9 @@ public class Game implements ApplicationListener {
         StateManager.get().setPaused(false);
 
         ConsoleCommands.init();
-    }
 
-    private boolean _firstResizeCall = true;
+        _persistResizeOperation.zeroOut();
+    }
 
     @Override
     public void resize(int width, int height) {
@@ -110,21 +113,32 @@ public class Game implements ApplicationListener {
             return;
         }
         if (width != Window.Width || height != Window.Height) {
+            _persistResizeOperation.reset();
             Window.resize(width, height, Gdx.graphics.isFullscreen());
         }
     }
 
-    private void update() {
+    private void handleWindowQuerks() {
+        if (!_persistResizeOperation.isCooled()) {
+            if (_persistResizeOperation.updateAndCheck()) {
+                Logger.info("Persisting");
+                Options options = Options.load();
+                options.WindowResolutionX = Window.Width;
+                options.WindowResolutionY = Window.Height;
+                options.apply();
+                options.save();
+                _persistResizeOperation.zeroOut();
+            }
+        }
         if (!_firstUpdateOptionsLoaded) {
             Options options = Options.load();
             options.apply();
             _firstUpdateOptionsLoaded = true;
         }
+    }
+
+    private void handleUserInput() {
         Input.get().update();
-
-        ExitPrompt.get().update();
-
-        DevShortcuts.handle();
 
         if (InputWrapper.pause() && !DevConsole.get().isActive()) {
             StateManager.get().setPaused(!StateManager.get().isPaused());
@@ -136,8 +150,6 @@ public class Game implements ApplicationListener {
             options.apply();
             options.save();
         }
-
-        DevConsole.get().update();
 
         if (Input.get().isActive(Commands.get("Help"))) {
             StateManager.get().showTutorial(true);
@@ -153,6 +165,18 @@ public class Game implements ApplicationListener {
                 }
             }
         }
+    }
+
+    private void nonGameUpdates() {
+        handleWindowQuerks();
+        handleUserInput();
+        ExitPrompt.get().update();
+        DevShortcuts.handle();
+        DevConsole.get().update();
+    }
+
+    private void update() {
+        nonGameUpdates();
 
         if (!StateManager.get().isPaused()) {
             _preUpdateState = StateManager.get().current();
