@@ -40,6 +40,8 @@ import sps.ui.UiElements;
 public class Game implements ApplicationListener {
 
     private State _preUpdateState;
+    private boolean _firstCreateOptionsLoaded = false;
+    private boolean _firstUpdateOptionsLoaded = false;
 
     @Override
     public void create() {
@@ -84,10 +86,10 @@ public class Game implements ApplicationListener {
             options.save();
         }
 
-        if (!_firstRunOptionsApplied) {
+        if (!_firstCreateOptionsLoaded) {
             Options options = Options.load();
             options.apply();
-            _firstRunOptionsApplied = true;
+            _firstCreateOptionsLoaded = true;
         }
 
         StateManager.get().push(InitialStateResolver.create());
@@ -112,9 +114,12 @@ public class Game implements ApplicationListener {
         }
     }
 
-    private boolean _firstRunOptionsApplied = false;
-
     private void update() {
+        if (!_firstUpdateOptionsLoaded) {
+            Options options = Options.load();
+            options.apply();
+            _firstUpdateOptionsLoaded = true;
+        }
         Input.get().update();
 
         ExitPrompt.get().update();
