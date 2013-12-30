@@ -50,12 +50,12 @@ public class MultiText {
 
     private int getY(int index) {
         //TODO automatically compensate for multiline wrap
-        return (int) (_height - (index * _pointSize));
+        return (int) (_height - (index * _pointSize) + _position.Y - _pointSize / 2);
     }
 
     public void add(String message) {
         if (_index < _contents.length) {
-            _contents[_index] = TextPool.get().write(message, new Point2(_position.X, getY(_index)));
+            _contents[_index] = TextPool.get().write(message, new Point2(_position.X + _pointSize / 2, getY(_index)));
             _contents[_index].setFont(_fontLabel, _pointSize);
             _contents[_index].setMoveable(false);
             _contents[_index].setVisible(_isActive);

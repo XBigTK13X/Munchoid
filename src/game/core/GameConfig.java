@@ -130,7 +130,7 @@ public class GameConfig {
     }
 
     public static Point2 PopulationPlayByPlaySize() {
-        return Screen.pos(40, 70);
+        return Screen.pos(40, 59);
     }
 
     public static Point2 PopulationPlayByPlayPosition() {
