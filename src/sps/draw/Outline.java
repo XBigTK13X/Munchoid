@@ -29,6 +29,19 @@ public class Outline {
         }
     }
 
+    private static class Blend implements ColorPicker {
+        private Color _choice;
+
+        public Blend(Color choice) {
+            _choice = new Color(choice);
+        }
+
+        @Override
+        public Color convert(Color color) {
+            return Colors.interpolate(50, color, _choice);
+        }
+    }
+
     private static final Compliment compliment = new Compliment();
 
 
@@ -79,6 +92,10 @@ public class Outline {
 
     public static void single(Color[][] colors, Color outline, int pixelThickness) {
         apply(colors, new Single(outline), pixelThickness);
+    }
+
+    public static void blend(Color[][] colors, Color outline, int pixelThickness) {
+        apply(colors, new Blend(outline), pixelThickness);
     }
 
     public static void apply(Color[][] colors, ColorPicker picker, int pixelThickness) {

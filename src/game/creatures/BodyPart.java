@@ -79,7 +79,7 @@ public class BodyPart {
     private void applyStyle() {
         Color[][] atomColors = AtomHelper.getColors(_atoms);
         if (GameConfig.OptCreatureOutlineEnabled) {
-            Outline.single(atomColors, Color.WHITE, GameConfig.BodyPartOutlinePixelThickness);
+            Outline.blend(atomColors, Color.WHITE, GameConfig.BodyPartOutlinePixelThickness);
         }
         AtomHelper.setColors(_atoms, atomColors);
         _joints = new Joints();
