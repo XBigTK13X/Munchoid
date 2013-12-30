@@ -69,8 +69,10 @@ public class Arena implements State {
             EntityManager.get().addEntity(catchable);
         }
 
-        _creatureText = TextPool.get().write(creatureDisplay(GameConfig.CreatureLimit), __creatureTextPos);
-        _creatureText.setMoveable(false);
+        if (GameConfig.ArenaShowCreatureCount) {
+            _creatureText = TextPool.get().write(creatureDisplay(GameConfig.CreatureLimit), __creatureTextPos);
+            _creatureText.setMoveable(false);
+        }
         if (DevConfig.EndToEndStateLoadTest || DevConfig.TournyTest) {
             _preload.getPlayer().setPet(new Creature());
             if (DevConfig.TournyTest) {
@@ -112,9 +114,11 @@ public class Arena implements State {
                 }
             }
 
-            if (_lastCreatureCount != opponents.size()) {
-                _lastCreatureCount = opponents.size();
-                _creatureText.setMessage(creatureDisplay(opponents.size()));
+            if (GameConfig.ArenaShowCreatureCount) {
+                if (_lastCreatureCount != opponents.size()) {
+                    _lastCreatureCount = opponents.size();
+                    _creatureText.setMessage(creatureDisplay(opponents.size()));
+                }
             }
         }
     }

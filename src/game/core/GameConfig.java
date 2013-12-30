@@ -37,14 +37,19 @@ public class GameConfig {
     //Arena
     public static final int CreatureLimit = 50;
     public static final int SpacePercentPerCreature = 1;
-    public static final int ArenaBufferPercent = (int) ((GameConfig.CreatureLimit / 2) * GameConfig.SpacePercentPerCreature);
+
+    public static final int ArenaBufferPercent() {
+        return (int) ((GameConfig.CreatureLimit / 2) * GameConfig.SpacePercentPerCreature);
+    }
+
+    public static final boolean ArenaShowCreatureCount = false;
 
     public static int ArenaHeight() {
-        return Screen.get().VirtualHeight + (int) Screen.height(ArenaBufferPercent) * 2;
+        return Screen.get().VirtualHeight + (int) Screen.height(ArenaBufferPercent()) * 2;
     }
 
     public static int ArenaWidth() {
-        return Screen.get().VirtualWidth + (int) Screen.width(ArenaBufferPercent) * 2;
+        return Screen.get().VirtualWidth + (int) Screen.width(ArenaBufferPercent()) * 2;
     }
 
     //The length of Quickly.ogg
