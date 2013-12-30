@@ -122,7 +122,6 @@ public class Game implements ApplicationListener {
     private void handleWindowQuerks() {
         if (!_persistResizeOperation.isCooled()) {
             if (_persistResizeOperation.updateAndCheck()) {
-                Logger.info("Persisting");
                 Options options = Options.load();
                 options.WindowResolutionX = Window.Width;
                 options.WindowResolutionY = Window.Height;
