@@ -22,11 +22,10 @@ public class ProcTextures {
     }
 
     public static Color[][] monotone(int width, int height, Color color) {
-        Color target = new Color(color);
         Color[][] base = new Color[width][height];
         for (int ii = 0; ii < base.length; ii++) {
             for (int jj = 0; jj < base[0].length; jj++) {
-                base[ii][jj] = target;
+                base[ii][jj] = color;
             }
         }
         return base;

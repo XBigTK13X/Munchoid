@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import sps.bridge.Commands;
 import sps.color.Color;
+import sps.color.Colors;
 import sps.core.Loader;
 import sps.core.RNG;
 import sps.display.Screen;
@@ -105,7 +106,7 @@ public class PopulationOverview implements State {
         TextPool.get().write("Causes of Death Solved", GameConfig.PopulationSolutionsCaptionPosition());
         _solutionsMeter = new Meter(40, 5, Color.GREEN, GameConfig.PopulationSolutionMeterPosition(), false);
 
-        _playByPlay = new MultiText(GameConfig.PopulationPlayByPlayPosition(), 25, Color.BLUE.newAlpha(.75f), (int) GameConfig.PopulationPlayByPlaySize().X, (int) GameConfig.PopulationPlayByPlaySize().Y);
+        _playByPlay = new MultiText(GameConfig.PopulationPlayByPlayPosition(), 25, Colors.randomPleasant().newAlpha(.50f), (int) GameConfig.PopulationPlayByPlaySize().X, (int) GameConfig.PopulationPlayByPlaySize().Y);
         _playByPlay.add("Welcome to the overview for " + _regionName);
 
         _tournamentsPlayed = _payload.getTournamentsPlayed();

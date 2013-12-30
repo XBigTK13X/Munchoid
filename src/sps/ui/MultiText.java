@@ -6,6 +6,8 @@ import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.core.Point2;
 import sps.display.Window;
+import sps.draw.Outline;
+import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
 import sps.text.Text;
 import sps.text.TextPool;
@@ -23,7 +25,6 @@ public class MultiText {
     private final Text[] _contents;
     private String _fontLabel;
     private int _pointSize;
-    private Color _bgColor;
     private Sprite _background;
     private boolean _isActive;
     private int _index = 0;
@@ -38,14 +39,17 @@ public class MultiText {
         _messageLimit = messageLimit;
         _contents = new Text[_messageLimit];
         _isActive = true;
-        _bgColor = background;
-        _background = SpriteMaker.pixel(Color.WHITE);
         _width = width;
         _height = height;
         _position = position;
+
         setBackgroundDepth(DrawDepths.get("DefaultTextBG"));
         setTextDepth(DrawDepths.get("DefaultText"));
         setFont(__defaultFontLabel, __defaultFontPointSize);
+
+        Color[][] base = ProcTextures.monotone(_width, _height, background);
+        Outline.single(base, Color.WHITE, 2);
+        _background = SpriteMaker.fromColors(base);
     }
 
     private int getY(int index) {
@@ -72,8 +76,6 @@ public class MultiText {
 
     public void draw() {
         if (_isActive) {
-            _background.setSize(_width, _height);
-            _background.setColor(_bgColor.getGdxColor());
             _background.setPosition(_position.X, _position.Y);
             Window.get(true).schedule(_background, _backgroundDepth);
             for (Text _content : _contents) {
