@@ -40,7 +40,7 @@ public class RestoreSavedGame extends PreloaderState {
             public void process() {
                 Score.get().set(_snapshot.Victories, _snapshot.Chomps, _snapshot.PetVariety,
                         _snapshot.PetPower, _snapshot.HealthRemaining, _snapshot.AcceptedMerges,
-                        _snapshot.RejectedMerges);
+                        _snapshot.RejectedMerges, _snapshot.TournamentWins, _snapshot.TournamentLosses);
             }
         });
         _preloadChain.add(new PreloadChainLink("Resolving region name.") {
@@ -59,12 +59,6 @@ public class RestoreSavedGame extends PreloaderState {
             @Override
             public void process() {
                 _payload.setPopulationHUD(new PopulationHUD(_payload.getPopulation(), UIConfig.PopulationHUDSize(), UIConfig.PopulationHUDPosition(), _snapshot.RegionMapSeed, _snapshot.SettlementLocations));
-            }
-        });
-        _preloadChain.add(new PreloadChainLink("Tallying previous tournament score.") {
-            @Override
-            public void process() {
-                _payload.setTournamentStats(_snapshot.TournamentsPlayed, _snapshot.TournamentWins);
             }
         });
         _preloadChain.add(new PreloadChainLink("Finding registered causes of death that are hardest to solve.") {

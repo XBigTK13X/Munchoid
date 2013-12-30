@@ -1,5 +1,6 @@
 package game.save;
 
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.util.Parse;
 
@@ -18,7 +19,7 @@ public class GameSnapshot {
     public int AcceptedMerges;
     public int RejectedMerges;
     public int SaveFormatVersion;
-    public int TournamentsPlayed;
+    public int TournamentLosses;
     public int TournamentWins;
     public int RegionMapSeed;
     public String TopDeathCauses;
@@ -37,7 +38,7 @@ public class GameSnapshot {
         persistable += "AcceptedMerges=" + AcceptedMerges + "\n";
         persistable += "RejectedMerges=" + RejectedMerges + "\n";
         persistable += "SaveFormatVersion=" + SaveFormatVersion + "\n";
-        persistable += "TournamentsPlayed=" + TournamentsPlayed + "\n";
+        persistable += "TournamentLosses=" + TournamentLosses + "\n";
         persistable += "TournamentWins=" + TournamentWins + "\n";
         persistable += "RegionMapSeed=" + RegionMapSeed + "\n";
         persistable += "TopDeathCauses=" + TopDeathCauses + "\n";
@@ -86,8 +87,8 @@ public class GameSnapshot {
                 case "SaveFormatVersion":
                     snapshot.SaveFormatVersion = Parse.inte(val);
                     break;
-                case "TournamentsPlayed":
-                    snapshot.TournamentsPlayed = Parse.inte(val);
+                case "TournamentsLosses":
+                    snapshot.TournamentLosses = Parse.inte(val);
                     break;
                 case "TournamentWins":
                     snapshot.TournamentWins = Parse.inte(val);
@@ -116,6 +117,8 @@ public class GameSnapshot {
                         snapshot.SettlementLocations.add(new Point2(x, y));
                     }
                     break;
+                default:
+                    Logger.error("Unknown key found in save file. " + key + " Might not load properly.");
             }
         }
         return snapshot;

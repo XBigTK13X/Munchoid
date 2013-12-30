@@ -23,18 +23,23 @@ public class Score {
         __instance = new Score();
     }
 
+    private static final int __scoreMult = 13;
+
     private static final int __victoryWeight = 11;
     private static final int __chompWeight = 3;
     private static final int __petVarietyWeight = 119;
     private static final int __petPowerWeight = 27;
     private static final int __healthRemainingWeight = 16;
-    private static final int __scoreMult = 13;
+    private static final int __tournamentWinWeight = 3500;
+    private static final int __tournamentLossWeight = -1500;
 
     private int _victories;
     private int _chomps;
     private int _petVariety;
     private int _petPower;
     private int _healthRemaining;
+    private int _tournamentWins;
+    private int _tournamentLosses;
 
     private int _acceptedMerges;
     private int _rejectedMerges;
@@ -45,7 +50,7 @@ public class Score {
 
     }
 
-    public void set(int victories, int chomps, int petVariety, int petPower, int healthRemaining, int acceptedMerges, int rejectedMerges) {
+    public void set(int victories, int chomps, int petVariety, int petPower, int healthRemaining, int acceptedMerges, int rejectedMerges, int tournamentWins, int tournamentLosses) {
         _victories = victories;
         _chomps = chomps;
         _petVariety = petVariety;
@@ -53,10 +58,20 @@ public class Score {
         _healthRemaining = healthRemaining;
         _acceptedMerges = acceptedMerges;
         _rejectedMerges = rejectedMerges;
+        _tournamentLosses = tournamentLosses;
+        _tournamentWins = tournamentWins;
     }
 
     public void addChomp() {
         _chomps++;
+    }
+
+    public void addTournyWin() {
+        _tournamentWins++;
+    }
+
+    public void addTournyLoss() {
+        _tournamentLosses++;
     }
 
     public void addVictory() {
@@ -91,6 +106,14 @@ public class Score {
         return _rejectedMerges;
     }
 
+    public int tournamentWins() {
+        return _tournamentWins;
+    }
+
+    public int tournamentLosses() {
+        return _tournamentLosses;
+    }
+
     public Stats petStats() {
         if (_petStats == null) {
             Player p = (Player) EntityManager.get().getPlayer();
@@ -110,7 +133,9 @@ public class Score {
                         _chomps * __chompWeight +
                         _petVariety * __petVarietyWeight +
                         _petPower * __petPowerWeight +
-                        _healthRemaining * __healthRemainingWeight
+                        _healthRemaining * __healthRemainingWeight +
+                        _tournamentWins * __tournamentWinWeight +
+                        _tournamentLosses * __tournamentLossWeight
         );
     }
 
@@ -135,7 +160,9 @@ public class Score {
                         JSON.pad("chomps", _chomps),
                         JSON.pad("healthRemaining", _healthRemaining),
                         JSON.pad("acceptedMerges", _acceptedMerges),
-                        JSON.pad("rejectedMerges", _rejectedMerges)) +
+                        JSON.pad("rejectedMerges", _rejectedMerges),
+                        JSON.pad("tournamentWins", _tournamentWins),
+                        JSON.pad("tournamentLosses", _tournamentLosses)) +
                 "}";
     }
 

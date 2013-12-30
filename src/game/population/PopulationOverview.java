@@ -57,9 +57,6 @@ public class PopulationOverview implements State {
 
     private Text _continuePrompt;
 
-    private int _tournamentsPlayed = 0;
-    private int _tournamentWins = 0;
-
     private DeathCauseEradicated _eradicated;
 
     private PopulationOverviewPayload _payload;
@@ -79,10 +76,11 @@ public class PopulationOverview implements State {
         result.Chomps = Score.get().chomps();
         result.PetVariety = Score.get().petVariety();
         result.PetPower = Score.get().petPower();
+        result.TournamentWins = Score.get().tournamentWins();
+        result.TournamentLosses = Score.get().tournamentLosses();
+
         result.PopulationSize = _population.getSize();
         result.SaveFormatVersion = GameSnapshot.CurrentSaveFormatVersion;
-        result.TournamentsPlayed = _tournamentsPlayed;
-        result.TournamentWins = _tournamentWins;
         result.RegionName = _regionName;
         result.RegionMapSeed = _populationHud.getMapSeed();
         result.SettlementLocations = _populationHud.getSettlementLocations();
@@ -111,9 +109,6 @@ public class PopulationOverview implements State {
         _playByPlay = new MultiText(UIConfig.PopulationPlayByPlayPosition(), 25, Colors.randomPleasant().newAlpha(.50f), (int) UIConfig.PopulationPlayByPlaySize().X, (int) UIConfig.PopulationPlayByPlaySize().Y);
         _playByPlay.add("Welcome to the overview for " + _regionName);
 
-        _tournamentsPlayed = _payload.getTournamentsPlayed();
-        _tournamentWins = _payload.getTournamentWins();
-
         _populationHud.regenerateTextures();
         updateDeathDisplays();
         _continuePrompt = TextPool.get().write("Press " + Commands.get("Confirm") + " to enter the next tournament", UIConfig.PopulationContinuePosition());
@@ -121,6 +116,7 @@ public class PopulationOverview implements State {
         _savingNotice = TextPool.get().write("", Screen.pos(20, 50));
 
         StateManager.get().showTutorial();
+        Persistence.get().autoSave();
     }
 
     private int saveDotsMax = 5;
@@ -157,8 +153,6 @@ public class PopulationOverview implements State {
         _activeCauses = _topCauses.getActiveCount() + _bottomCauses.getActiveCount();
         int totalDiseases = GameConfig.NumberOfTournaments * 2;
         _solutionsMeter.setPercent((int) (100 * ((float) (totalDiseases - _activeCauses) / totalDiseases)));
-
-        Persistence.get().autoSave();
     }
 
     private void simluatePopulationChange() {
@@ -175,21 +169,21 @@ public class PopulationOverview implements State {
         DeathCause top = null;
         if (win) {
             top = _topCauses.disableOne();
-            _tournamentWins++;
+            Score.get().addTournyWin();
             MetaData.printWin();
         }
         else {
+            Score.get().addTournyLoss();
             MetaData.printLose();
         }
         _eradicated = new DeathCauseEradicated(top, _bottomCauses.disableOne());
         _playByPlay.setVisible(false);
         _continuePrompt.setVisible(false);
         _settlementGrowth = 0;
-        _tournamentsPlayed++;
     }
 
     private boolean gameFinished() {
-        return _tournamentsPlayed >= GameConfig.NumberOfTournaments;
+        return (Score.get().tournamentWins() + Score.get().tournamentLosses()) >= GameConfig.NumberOfTournaments;
     }
 
     private void nextState() {
@@ -197,7 +191,7 @@ public class PopulationOverview implements State {
             StateManager.get().push(new PreloadArena());
         }
         else {
-            StateManager.get().push(new EndGame(_tournamentWins));
+            StateManager.get().push(new EndGame());
         }
     }
 
@@ -285,6 +279,7 @@ public class PopulationOverview implements State {
                     _playByPlay.add("No settlements were founded or lost.");
                 }
                 _playByPlay.add("");
+                Persistence.get().autoSave();
             }
             updatePopulationCount();
         }
