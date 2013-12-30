@@ -1,7 +1,7 @@
 package game.dev;
 
 import game.battle.Battle;
-import game.core.GameConfig;
+import game.core.UIConfig;
 import game.creatures.Creature;
 import game.forces.Force;
 import sps.bridge.EntityTypes;
@@ -80,12 +80,12 @@ public class ConsoleCommands {
         DevConsole.get().register(new DevConsoleAction("battlehud.enemystats") {
             @Override
             public String act(int[] input) {
-                GameConfig.BattleEnableEnemyForcesHUD = !GameConfig.BattleEnableEnemyForcesHUD;
+                UIConfig.BattleEnableEnemyForcesHUD = !UIConfig.BattleEnableEnemyForcesHUD;
                 if (StateManager.get().hasAny(Battle.class)) {
                     Battle battle = (Battle) StateManager.get().current();
                     battle.rebuildHud();
                 }
-                return "Enemy forces HUD  " + (GameConfig.BattleEnableEnemyForcesHUD ? "enabled" : "disabled");
+                return "Enemy forces HUD  " + (UIConfig.BattleEnableEnemyForcesHUD ? "enabled" : "disabled");
             }
         });
 

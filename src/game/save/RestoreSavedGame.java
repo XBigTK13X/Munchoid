@@ -1,9 +1,9 @@
 package game.save;
 
 import game.core.BackgroundCache;
-import game.core.GameConfig;
 import game.core.PreloaderState;
 import game.core.Score;
+import game.core.UIConfig;
 import game.population.*;
 import game.pregame.MainMenu;
 import sps.preload.PreloadChainLink;
@@ -58,7 +58,7 @@ public class RestoreSavedGame extends PreloaderState {
         _preloadChain.add(new PreloadChainLink("Rebuilding population HUD.") {
             @Override
             public void process() {
-                _payload.setPopulationHUD(new PopulationHUD(_payload.getPopulation(), GameConfig.PopulationHUDSize(), GameConfig.PopulationHUDPosition(), _snapshot.RegionMapSeed, _snapshot.SettlementLocations));
+                _payload.setPopulationHUD(new PopulationHUD(_payload.getPopulation(), UIConfig.PopulationHUDSize(), UIConfig.PopulationHUDPosition(), _snapshot.RegionMapSeed, _snapshot.SettlementLocations));
             }
         });
         _preloadChain.add(new PreloadChainLink("Tallying previous tournament score.") {

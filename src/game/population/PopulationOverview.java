@@ -2,10 +2,7 @@ package game.population;
 
 import com.badlogic.gdx.Gdx;
 import game.arena.PreloadArena;
-import game.core.EndGame;
-import game.core.GameConfig;
-import game.core.InputWrapper;
-import game.core.Score;
+import game.core.*;
 import game.dev.DevConfig;
 import game.dev.MetaData;
 import game.save.GameSnapshot;
@@ -104,12 +101,12 @@ public class PopulationOverview implements State {
 
         _topCauses.generateDisplay();
         _bottomCauses.generateDisplay();
-        _populationCountDisplay = TextPool.get().write("", GameConfig.PopulationCountPosition());
+        _populationCountDisplay = TextPool.get().write("", UIConfig.PopulationCountPosition());
 
-        TextPool.get().write("Causes of Death Solved", GameConfig.PopulationSolutionsCaptionPosition());
-        _solutionsMeter = new Meter(40, 5, Color.GREEN, GameConfig.PopulationSolutionMeterPosition(), false);
+        TextPool.get().write("Causes of Death Solved", UIConfig.PopulationSolutionsCaptionPosition());
+        _solutionsMeter = new Meter(40, 5, Color.GREEN, UIConfig.PopulationSolutionMeterPosition(), false);
 
-        _playByPlay = new MultiText(GameConfig.PopulationPlayByPlayPosition(), 25, Colors.randomPleasant().newAlpha(.50f), (int) GameConfig.PopulationPlayByPlaySize().X, (int) GameConfig.PopulationPlayByPlaySize().Y);
+        _playByPlay = new MultiText(UIConfig.PopulationPlayByPlayPosition(), 25, Colors.randomPleasant().newAlpha(.50f), (int) UIConfig.PopulationPlayByPlaySize().X, (int) UIConfig.PopulationPlayByPlaySize().Y);
         _playByPlay.add("Welcome to the overview for " + _regionName);
 
         _tournamentsPlayed = _payload.getTournamentsPlayed();
@@ -117,7 +114,7 @@ public class PopulationOverview implements State {
 
         _populationHud.regenerateTextures();
         updateDeathDisplays();
-        _continuePrompt = TextPool.get().write("Press " + Commands.get("Confirm") + " to enter the next tournament", GameConfig.PopulationContinuePosition());
+        _continuePrompt = TextPool.get().write("Press " + Commands.get("Confirm") + " to enter the next tournament", UIConfig.PopulationContinuePosition());
 
         _savingNotice = TextPool.get().write("", Screen.pos(20, 50));
 

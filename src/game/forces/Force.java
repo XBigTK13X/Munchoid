@@ -1,6 +1,6 @@
 package game.forces;
 
-import game.core.GameConfig;
+import game.core.UIConfig;
 import game.forces.sideeffects.*;
 import sps.color.Color;
 import sps.color.RGBA;
@@ -27,7 +27,7 @@ public enum Force {
     }
 
     private static float tToC(float t) {
-        return t == 0 ? GameConfig.ForceColorIntensity : GameConfig.ForceColorMix;
+        return t == 0 ? UIConfig.ForceColorIntensity : UIConfig.ForceColorMix;
     }
 
     public static BaseForce create(Force force, int magnitude) {

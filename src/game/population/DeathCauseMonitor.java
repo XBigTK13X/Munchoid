@@ -1,6 +1,7 @@
 package game.population;
 
 import game.core.GameConfig;
+import game.core.UIConfig;
 import game.dev.DevConfig;
 import sps.core.Logger;
 import sps.display.Screen;
@@ -26,7 +27,7 @@ public class DeathCauseMonitor {
     }
 
     public void generateDisplay() {
-        if (GameConfig.UseOldPopulationDeathMonitors) {
+        if (UIConfig.UseOldPopulationDeathMonitors) {
             _display = TextPool.get().write("", _top ? Screen.pos(75, 95) : Screen.pos(75, 45));
         }
     }
@@ -59,7 +60,7 @@ public class DeathCauseMonitor {
     }
 
     public void update() {
-        if (GameConfig.UseOldPopulationDeathMonitors) {
+        if (UIConfig.UseOldPopulationDeathMonitors) {
             String tD = _header + "\n";
             for (DeathCause d : _deathCauses) {
                 tD += display(d);

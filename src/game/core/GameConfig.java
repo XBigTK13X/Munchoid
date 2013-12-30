@@ -34,37 +34,10 @@ public class GameConfig {
     //Intro
     public static final float IntroVideoSkipSeconds = 1.1f;
 
-    //Arena
-    public static final int CreatureLimit = 50;
-    public static final int SpacePercentPerCreature = 1;
-
-    public static final int ArenaBufferPercent() {
-        return (int) ((GameConfig.CreatureLimit / 2) * GameConfig.SpacePercentPerCreature);
-    }
-
-    public static final boolean ArenaShowCreatureCount = false;
-
-    public static int ArenaHeight() {
-        return Screen.get().VirtualHeight + (int) Screen.height(ArenaBufferPercent()) * 2;
-    }
-
-    public static int ArenaWidth() {
-        return Screen.get().VirtualWidth + (int) Screen.width(ArenaBufferPercent()) * 2;
-    }
-
-    //The length of Quickly.ogg
-    public static final float ArenaTimeoutSeconds = 9f;
-    public static final float ArenaCreatureScale = .6f;
-    public static final boolean EnableChompText = false;
-
-    public static final float PlayerFrozenSecondsMax = .5f;
-    public static final int ArenaMergeChance = 60;
-    //TODO Convert into easier to manipulate units
-    public static final int PlayerTopSpeed = 500;
-
-    public static final int ChompRewardStatsImpact = 2;
-    public static final int ChompPointsRewardCost = Math.max(GameConfig.CreatureLimit / 10, 1);
-    public static final int ChompPoints = 1;
+    //Population
+    public static final int StartingPopulationSize = 1_000_000;
+    public static final int NaturalPopulationGrowthPercent = 27;
+    public static final int PopulationMax = 70_000_000;
 
     //Creature construction
     public static final Point2 MinBodyPartSize = Screen.pos(7, 7);
@@ -76,27 +49,22 @@ public class GameConfig {
     public static final int MaxStatInit = 5;
     public static final int DisableStat = 0;
 
-    //Merging
-    public static final int MinMergeImpactPercent = 15;
-    public static final int MaxMergeImpactPercent = 30;
-    public static final int MergeRejectGrowthPercent = 40;
-    public static final int NaturalStatGrowthPercent = 10;
-
+    //Arena
+    public static final int CreatureLimit = 50;
+    public static final float ArenaTimeoutSeconds = 9f;//The length of Quickly.ogg
+    public static final float PlayerFrozenSecondsMax = .5f;
+    public static final int ArenaMergeChance = 60;
+    //TODO Convert into easier to manipulate units
+    public static final int PlayerTopSpeed = 500;
+    public static final int ChompRewardStatsImpact = 2;
+    public static final int ChompPointsRewardCost = Math.max(GameConfig.CreatureLimit / 10, 1);
+    public static final int ChompPoints = 1;
 
     //Battle
-    public static boolean BattleEnableEnemyForcesHUD = false;
-    public static final Point2 BattleEnemyPosition = Screen.pos(60, 35);
-    public static final Point2 BattlePlayerPosition = Screen.pos(25, 35);
-    public static final Point2 BattlePlayerForcesHUDPosition = Screen.pos(15, 85);
-    public static final Point2 BattleEnemyForcesHUDPosition = Screen.pos(55, 85);
-    public static final boolean BattleEffectHUDEnabled = false;
-    public static final float BattleCreatureScale = 1f;
     public static final float FirstFightMult = 1.5f;
     public static final int MaxForcesEnabled = 4;
     public static final int MinStat = 0;
     public static final int MaxStat = 100;
-    public static final float ForceColorIntensity = .85f;
-    public static final float ForceColorMix = .4f;
     public static final int SliceScale = 6;
     public static final int AbrasiveScale = 6;
     public static final int ExplosiveScale = 10;
@@ -109,44 +77,14 @@ public class GameConfig {
     public static final float MinScaleDeath = .5f;
     public static final float MaxScaleDeath = 1.5f;
 
-    //Tournament/Population
-    public static Point2 PopulationHUDSize() {
-        return Screen.pos(40, 70);
-    }
+    //Merging
+    public static final int MinMergeImpactPercent = 15;
+    public static final int MaxMergeImpactPercent = 30;
+    public static final int MergeRejectGrowthPercent = 40;
+    public static final int NaturalStatGrowthPercent = 10;
 
-    public static Point2 PopulationHUDPosition() {
-        return Screen.pos(10, 15);
-    }
-
-    public static Point2 PopulationContinuePosition() {
-        return Screen.pos(30, 10);
-    }
-
-    public static Point2 PopulationCountPosition() {
-        return Screen.pos(15, 95);
-    }
-
-    public static Point2 PopulationSolutionMeterPosition() {
-        return Screen.pos(55, 80);
-    }
-
-    public static Point2 PopulationSolutionsCaptionPosition() {
-        return Screen.pos(55, 90);
-    }
-
-    public static Point2 PopulationPlayByPlaySize() {
-        return Screen.pos(40, 59);
-    }
-
-    public static Point2 PopulationPlayByPlayPosition() {
-        return Screen.pos(55, 15);
-    }
-
+    //Tournament
     public static final int TournamentStatRange = 10;
     public static final int NumberOfTournaments = 5;
-    public static final int TournamentMatches = 3;
-    public static final int StartingPopulationSize = 1_000_000;
-    public static final int NaturalPopulationGrowthPercent = 27;
-    public static final int PopulationMax = 70_000_000;
-    public static final boolean UseOldPopulationDeathMonitors = false;
+    public static final int BattlesPerTournament = 3;
 }

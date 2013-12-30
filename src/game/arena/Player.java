@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import game.core.GameConfig;
 import game.core.InputWrapper;
 import game.core.Score;
+import game.core.UIConfig;
 import game.creatures.Creature;
 import game.dev.DevConfig;
 import sps.audio.MusicPlayer;
@@ -117,7 +118,7 @@ public class Player extends Entity implements IActor {
                 else {
                     if (_pet.isLargerThan(_creature)) {
                         ChompPlayer.play();
-                        if (GameConfig.EnableChompText) {
+                        if (UIConfig.EnableChompText) {
                             TextPool.get().write("*CHOMP*", getLocation(), 1f, TextEffects.Fountain);
                         }
                         Score.get().addChomp();

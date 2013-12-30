@@ -5,6 +5,7 @@ import game.battle.TimerGraphic;
 import game.core.GameConfig;
 import game.core.InputWrapper;
 import game.core.Score;
+import game.core.UIConfig;
 import game.creatures.Creature;
 import game.creatures.Merge;
 import game.creatures.Stats;
@@ -69,7 +70,7 @@ public class Arena implements State {
             EntityManager.get().addEntity(catchable);
         }
 
-        if (GameConfig.ArenaShowCreatureCount) {
+        if (UIConfig.ArenaShowCreatureCount) {
             _creatureText = TextPool.get().write(creatureDisplay(GameConfig.CreatureLimit), __creatureTextPos);
             _creatureText.setMoveable(false);
         }
@@ -114,7 +115,7 @@ public class Arena implements State {
                 }
             }
 
-            if (GameConfig.ArenaShowCreatureCount) {
+            if (UIConfig.ArenaShowCreatureCount) {
                 if (_lastCreatureCount != opponents.size()) {
                     _lastCreatureCount = opponents.size();
                     _creatureText.setMessage(creatureDisplay(opponents.size()));

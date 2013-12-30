@@ -25,14 +25,14 @@ public class Tournament implements State {
 
     @Override
     public void create() {
-        _matches = new Matches(_player, GameConfig.TournamentMatches);
+        _matches = new Matches(_player, GameConfig.BattlesPerTournament);
         _entranceInfo = TextPool.get().write(boutMessage(), Screen.pos(5, 50));
     }
 
     private String boutMessage() {
         String message = "Your arena is empty and the strongest from other arenas have gathered!";
         message += "\nBeat all of them to gain control of the strongest Munchoid.";
-        message += "\n\nPress " + Commands.get("Confirm") + " to start tournament match " + _boutNumber + " of " + GameConfig.TournamentMatches;
+        message += "\n\nPress " + Commands.get("Confirm") + " to start tournament match " + _boutNumber + " of " + GameConfig.BattlesPerTournament;
         return message;
     }
 

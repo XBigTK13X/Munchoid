@@ -3,6 +3,7 @@ package game.population;
 import game.core.BackgroundCache;
 import game.core.GameConfig;
 import game.core.PreloaderState;
+import game.core.UIConfig;
 import sps.core.Point2;
 import sps.preload.PreloadChainLink;
 import sps.states.StateManager;
@@ -27,7 +28,7 @@ public class PreloadPopulationOverview extends PreloaderState {
         _preloadChain.add(new PreloadChainLink("Collecting information about your region.") {
             @Override
             public void process() {
-                _payload.setPopulationHUD(new PopulationHUD(_payload.getPopulation(), GameConfig.PopulationHUDSize(), GameConfig.PopulationHUDPosition(), Map.NO_SEED, new ArrayList<Point2>()));
+                _payload.setPopulationHUD(new PopulationHUD(_payload.getPopulation(), UIConfig.PopulationHUDSize(), UIConfig.PopulationHUDPosition(), Map.NO_SEED, new ArrayList<Point2>()));
             }
         });
         _preloadChain.add(new PreloadChainLink("Determining the hardest causes of death to solve.") {

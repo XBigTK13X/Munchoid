@@ -2,6 +2,7 @@ package game.arena;
 
 import com.badlogic.gdx.Gdx;
 import game.core.GameConfig;
+import game.core.UIConfig;
 import game.creatures.Creature;
 import game.dev.DevConfig;
 import sps.bridge.DrawDepths;
@@ -33,7 +34,7 @@ public class Catchable extends Entity {
         __player = player;
         _creature = new Creature();
         _creature.getBody().setFloor(floor);
-        _creature.getBody().setScale(GameConfig.ArenaCreatureScale);
+        _creature.getBody().setScale(UIConfig.ArenaCreatureScale);
         _creature.orientX((DevConfig.FlipEnabled) ? RNG.coinFlip() : false, false);
         setSize(_creature.getWidth(), _creature.getHeight());
         if (floor != null) {
@@ -103,6 +104,6 @@ public class Catchable extends Entity {
     public void setCreature(Creature creature) {
         _creature = creature;
         setSize(_creature.getWidth(), _creature.getHeight());
-        _creature.getBody().setScale(GameConfig.ArenaCreatureScale);
+        _creature.getBody().setScale(UIConfig.ArenaCreatureScale);
     }
 }

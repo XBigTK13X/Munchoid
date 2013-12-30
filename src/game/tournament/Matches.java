@@ -56,7 +56,7 @@ public class Matches {
     }
 
     private boolean isLastMatch() {
-        return _playerMatches == GameConfig.TournamentMatches;
+        return _playerMatches == GameConfig.BattlesPerTournament;
     }
 
     public void beginPlayerMatch() {

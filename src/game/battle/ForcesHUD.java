@@ -1,6 +1,6 @@
 package game.battle;
 
-import game.core.GameConfig;
+import game.core.UIConfig;
 import game.creatures.Creature;
 import game.forces.Force;
 import sps.core.Point2;
@@ -26,11 +26,11 @@ public class ForcesHUD {
         _owner = owner;
         boolean shouldCreate = true;
         if (_owner.getLocation().X < Screen.width(50)) {
-            _origin = GameConfig.BattlePlayerForcesHUDPosition;
+            _origin = UIConfig.BattlePlayerForcesHUDPosition;
         }
         else {
-            _origin = GameConfig.BattleEnemyForcesHUDPosition;
-            if (!GameConfig.BattleEnableEnemyForcesHUD) {
+            _origin = UIConfig.BattleEnemyForcesHUDPosition;
+            if (!UIConfig.BattleEnableEnemyForcesHUD) {
                 shouldCreate = false;
                 _visible = false;
             }

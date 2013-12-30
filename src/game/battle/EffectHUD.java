@@ -1,6 +1,6 @@
 package game.battle;
 
-import game.core.GameConfig;
+import game.core.UIConfig;
 import game.creatures.Creature;
 import game.forces.sideeffects.SideEffectType;
 import sps.display.Screen;
@@ -19,7 +19,7 @@ public class EffectHUD {
     }
 
     private String getDisplay() {
-        if (GameConfig.BattleEffectHUDEnabled) {
+        if (UIConfig.BattleEffectHUDEnabled) {
             _lastDisplay = "";
             for (SideEffectType e : SideEffectType.values()) {
                 _lastDisplay += _creature.getSideEffects().getCount(e) + ":";

@@ -2,7 +2,7 @@ package game.arena;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.core.BackgroundCache;
-import game.core.GameConfig;
+import game.core.UIConfig;
 import game.dev.DevConfig;
 import sps.bridge.DrawDepths;
 import sps.bridge.EntityTypes;
@@ -13,13 +13,12 @@ import sps.entities.Entity;
 import sps.util.BoundingBox;
 
 public class Floor extends Entity {
-    private static final int __fieldSmoothness = 6;
     private BoundingBox _boundingBox = BoundingBox.empty();
     private Sprite _background;
 
     public Floor() {
         initialize(0, 0, Point2.Zero, null, EntityTypes.get("Floor"), DrawDepths.get("Floor"));
-        setSize(GameConfig.ArenaWidth(), GameConfig.ArenaHeight());
+        setSize(UIConfig.ArenaWidth(), UIConfig.ArenaHeight());
 
         _background = BackgroundCache.getRandom();
 

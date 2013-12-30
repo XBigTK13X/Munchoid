@@ -2,9 +2,9 @@ package game.battle;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.core.BackgroundCache;
-import game.core.GameConfig;
 import game.core.InputWrapper;
 import game.core.Score;
+import game.core.UIConfig;
 import game.creatures.Creature;
 import game.dev.DevConfig;
 import game.forces.Force;
@@ -66,8 +66,8 @@ public class Battle implements State {
         _right.orientX(true, true);
 
         EntityManager.get().addEntity(_right);
-        _right.getBody().setScale(GameConfig.BattleCreatureScale);
-        _left.getBody().setScale(GameConfig.BattleCreatureScale);
+        _right.getBody().setScale(UIConfig.BattleCreatureScale);
+        _left.getBody().setScale(UIConfig.BattleCreatureScale);
         EntityManager.get().addEntity(_left);
         _right.setOpponent(_left);
         _left.setOpponent(_right);

@@ -3,6 +3,7 @@ package game.creatures;
 import com.badlogic.gdx.Gdx;
 import game.arena.Player;
 import game.core.GameConfig;
+import game.core.UIConfig;
 import game.dev.DevConfig;
 import game.forces.Force;
 import game.forces.sideeffects.SideEffectType;
@@ -76,11 +77,11 @@ public class Creature extends Entity {
         }
         if (updatePos) {
             if (faceLeft) {
-                Point2 rightSide = GameConfig.BattleEnemyPosition;
+                Point2 rightSide = UIConfig.BattleEnemyPosition;
                 setLocation(rightSide);
             }
             else {
-                Point2 leftSide = GameConfig.BattlePlayerPosition;
+                Point2 leftSide = UIConfig.BattlePlayerPosition;
                 setLocation(leftSide);
             }
         }
