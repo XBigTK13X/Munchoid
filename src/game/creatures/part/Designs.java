@@ -1,5 +1,6 @@
 package game.creatures.part;
 
+import game.core.GameConfig;
 import game.creatures.Atom;
 import game.creatures.PartFunction;
 import game.creatures.part.designimpls.*;
@@ -27,12 +28,15 @@ public class Designs {
         }
         __designs.get(PartFunction.Eye).add(new RoundEye());
         __designs.get(PartFunction.Head).add(new RoundHead());
-        __designs.get(PartFunction.Head).add(new RegularPoly());
-        __designs.get(PartFunction.UpperLimb).add(new LimbSegment());
-        __designs.get(PartFunction.UpperLimb).add(new RegularPoly());
-        __designs.get(PartFunction.Core).add(new RectangleBody());
-        __designs.get(PartFunction.LowerLimb).add(new LimbSegment());
-        __designs.get(PartFunction.LowerLimb).add(new RegularPoly());
+
+        if (GameConfig.OptProceduralBodyPartDesignsEnabled) {
+            __designs.get(PartFunction.Head).add(new RegularPoly());
+            __designs.get(PartFunction.UpperLimb).add(new LimbSegment());
+            __designs.get(PartFunction.UpperLimb).add(new RegularPoly());
+            __designs.get(PartFunction.Core).add(new RectangleBody());
+            __designs.get(PartFunction.LowerLimb).add(new LimbSegment());
+            __designs.get(PartFunction.LowerLimb).add(new RegularPoly());
+        }
 
         //Silhouettes that have explicit detailed part functions
         File silhouetteDesigns = Loader.get().graphics("designs");
@@ -65,7 +69,7 @@ public class Designs {
         //Silhouettes that can be any partfunction (except core)
         File rawSilhouettes = Loader.get().graphics("designs/raw");
         for (File file : rawSilhouettes.listFiles()) {
-            if (file.getName().charAt(0) != '.') {
+            if (file.getName().charAt(0) != '.' && !file.getName().contains("~")) {
                 try {
                     SilhouetteDesign silhouette = new SilhouetteDesign(file);
                     for (PartFunction function : PartFunction.values()) {

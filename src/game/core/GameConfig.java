@@ -7,6 +7,7 @@ public class GameConfig {
     //Options / Optimizations
     //TODO Make these toggleable in the options menu,
     //     helps with lots of creatures running on weaker computers
+    public static boolean OptProceduralBodyPartDesignsEnabled = false;
     public static boolean OptPerformanceGraphicsSettings = false;
     public static final boolean OptCollectMetaData = true;
     public static boolean OptDisableCloudyTextures = false;
