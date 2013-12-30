@@ -175,6 +175,8 @@ public class PopulationOverview implements State {
             MetaData.printLose();
         }
         _eradicated = new DeathCauseEradicated(top, _bottomCauses.disableOne());
+        _playByPlay.setVisible(false);
+        _continuePrompt.setVisible(false);
         _tournamentsPlayed++;
     }
 
@@ -203,6 +205,8 @@ public class PopulationOverview implements State {
             }
             if (!_eradicated.isActive()) {
                 simluatePopulationChange();
+                _playByPlay.setVisible(true);
+                _continuePrompt.setVisible(true);
                 _eradicated = null;
             }
         }
@@ -277,11 +281,13 @@ public class PopulationOverview implements State {
         }
         _savingNotice.setVisible(false);
 
-        _populationHud.draw();
-        _solutionsMeter.draw();
-        _playByPlay.draw();
         if (_eradicated != null) {
             _eradicated.draw();
+        }
+        else {
+            _populationHud.draw();
+            _solutionsMeter.draw();
+            _playByPlay.draw();
         }
 
     }

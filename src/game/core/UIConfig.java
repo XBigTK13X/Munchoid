@@ -40,6 +40,10 @@ public class UIConfig {
         return Screen.pos(55, 15);
     }
 
+    public static Point2 EradicationAnnouncementPosition() {
+        return Screen.pos(5, 75);
+    }
+
     //Arena
     public static final boolean ArenaShowCreatureCount = false;
     public static final boolean EnableChompText = false;
