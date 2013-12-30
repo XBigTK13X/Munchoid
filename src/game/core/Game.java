@@ -153,17 +153,19 @@ public class Game implements ApplicationListener {
             options.save();
         }
 
-        if (Input.get().isActive(Commands.get("Help"))) {
-            StateManager.get().showTutorial(true);
-        }
-
-        if (Input.get().isActive(Commands.get("Exit"))) {
-            if (ExitPrompt.get().isActive()) {
-                ExitPrompt.get().setActive(false);
+        if (!DevConsole.get().isActive()) {
+            if (Input.get().isActive(Commands.get("Help"))) {
+                StateManager.get().showTutorial(true);
             }
-            else {
-                if (!StateManager.get().closeTutorial()) {
-                    ExitPrompt.get().setActive(true);
+
+            if (Input.get().isActive(Commands.get("Exit"))) {
+                if (ExitPrompt.get().isActive()) {
+                    ExitPrompt.get().setActive(false);
+                }
+                else {
+                    if (!StateManager.get().closeTutorial()) {
+                        ExitPrompt.get().setActive(true);
+                    }
                 }
             }
         }

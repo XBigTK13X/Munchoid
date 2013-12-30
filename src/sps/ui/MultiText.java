@@ -21,7 +21,6 @@ public class MultiText {
 
     private int _messageLimit;
     private final Text[] _contents;
-    private int _lineMargin;
     private String _fontLabel;
     private int _pointSize;
     private Color _bgColor;
@@ -30,31 +29,33 @@ public class MultiText {
     private int _index = 0;
     private int _width;
     private int _height;
+    private Point2 _position;
 
     private DrawDepth _textDepth;
     private DrawDepth _backgroundDepth;
 
-    public MultiText(int messageLimit, int lineMargin, Color background, int width, int height) {
+    public MultiText(Point2 position, int messageLimit, Color background, int width, int height) {
         _messageLimit = messageLimit;
         _contents = new Text[_messageLimit];
-        _lineMargin = lineMargin;
         _isActive = true;
         _bgColor = background;
         _background = SpriteMaker.pixel(Color.WHITE);
         _width = width;
         _height = height;
+        _position = position;
         setBackgroundDepth(DrawDepths.get("DefaultTextBG"));
         setTextDepth(DrawDepths.get("DefaultText"));
         setFont(__defaultFontLabel, __defaultFontPointSize);
     }
 
     private int getY(int index) {
-        return _height - (index * _lineMargin / 4) - 200 + _lineMargin;
+        //TODO automatically compensate for multiline wrap
+        return (int) (_height - (index * _pointSize));
     }
 
     public void add(String message) {
         if (_index < _contents.length) {
-            _contents[_index] = TextPool.get().write(message, new Point2(_lineMargin, getY(_index)));
+            _contents[_index] = TextPool.get().write(message, new Point2(_position.X, getY(_index)));
             _contents[_index].setFont(_fontLabel, _pointSize);
             _contents[_index].setMoveable(false);
             _contents[_index].setVisible(_isActive);
@@ -73,7 +74,7 @@ public class MultiText {
         if (_isActive) {
             _background.setSize(_width, _height);
             _background.setColor(_bgColor.getGdxColor());
-            _background.setPosition(0, 0);
+            _background.setPosition(_position.X, _position.Y);
             Window.get(true).schedule(_background, _backgroundDepth);
             for (Text _content : _contents) {
                 if (_content != null) {

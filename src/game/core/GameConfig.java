@@ -129,6 +129,14 @@ public class GameConfig {
         return Screen.pos(55, 90);
     }
 
+    public static Point2 PopulationPlayByPlaySize() {
+        return Screen.pos(40, 70);
+    }
+
+    public static Point2 PopulationPlayByPlayPosition() {
+        return Screen.pos(55, 15);
+    }
+
     public static final int TournamentStatRange = 10;
     public static final int NumberOfTournaments = 5;
     public static final int TournamentMatches = 3;

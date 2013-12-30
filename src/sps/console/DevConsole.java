@@ -18,8 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DevConsole {
-    private static final int __marginPixels = 70;
-    private static final int __consoleBufferSize = 50;
+    private static final int __consoleBufferSize = 40;
 
     private static DevConsole __instance;
 
@@ -38,10 +37,10 @@ public class DevConsole {
 
     private DevConsole() {
         _actions = new HashMap<>();
-        _input = TextPool.get().write("", new Point2(__marginPixels, Screen.get().VirtualHeight - __marginPixels));
+        _input = TextPool.get().write("", new Point2(50, Screen.get().VirtualHeight - 50));
         _input.setDepth(DrawDepths.get("DevConsoleText"));
 
-        _multiText = new MultiText(__consoleBufferSize, __marginPixels, Color.BLACK.newAlpha(.75f), Screen.get().VirtualWidth, Screen.get().VirtualHeight);
+        _multiText = new MultiText(new Point2(0, 0), __consoleBufferSize, Color.BLACK.newAlpha(.75f), Screen.get().VirtualWidth, Screen.get().VirtualHeight - 100);
         _multiText.setBackgroundDepth(DrawDepths.get("DevConsole"));
         _multiText.setTextDepth(DrawDepths.get("DevConsoleText"));
 
@@ -170,7 +169,7 @@ public class DevConsole {
                             else {
                                 //Only deal with single characters
                                 String chars = Input.Keys.toString(key);
-                                if (chars.length() == 1) {
+                                if (chars != null && chars.length() == 1) {
                                     if (!Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && !Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
                                         chars = chars.toLowerCase();
                                     }

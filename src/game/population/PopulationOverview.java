@@ -22,6 +22,7 @@ import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
 import sps.ui.Meter;
+import sps.ui.MultiText;
 import sps.util.CoolDown;
 import sps.util.Markov;
 
@@ -48,6 +49,8 @@ public class PopulationOverview implements State {
     private String _regionName;
     private PopulationHUD _populationHud;
     private Text _populationCountDisplay;
+
+    private MultiText _playByPlay;
 
     private Text _continuePrompt;
 
@@ -101,6 +104,9 @@ public class PopulationOverview implements State {
 
         TextPool.get().write("Causes of Death Solved", GameConfig.PopulationSolutionsCaptionPosition());
         _solutionsMeter = new Meter(40, 5, Color.GREEN, GameConfig.PopulationSolutionMeterPosition(), false);
+
+        _playByPlay = new MultiText(GameConfig.PopulationPlayByPlayPosition(), 25, Color.BLUE.newAlpha(.75f), (int) GameConfig.PopulationPlayByPlaySize().X, (int) GameConfig.PopulationPlayByPlaySize().Y);
+        _playByPlay.add("Welcome to the overview for " + _regionName);
 
         _tournamentsPlayed = _payload.getTournamentsPlayed();
         _tournamentWins = _payload.getTournamentWins();
@@ -261,9 +267,11 @@ public class PopulationOverview implements State {
 
         _populationHud.draw();
         _solutionsMeter.draw();
+        _playByPlay.draw();
         if (_eradicated != null) {
             _eradicated.draw();
         }
+
     }
 
     @Override
