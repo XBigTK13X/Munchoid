@@ -6,9 +6,10 @@ import sps.display.Screen;
 public class UIConfig {
     //Population - Tournament
     public static final boolean UseOldPopulationDeathMonitors = false;
+    public static final int RequiredLivingSpacePixels = 32;
 
     public static Point2 PopulationHUDSize() {
-        return Screen.pos(40, 70);
+        return Screen.pos(40, 65);
     }
 
     public static Point2 PopulationHUDPosition() {
@@ -24,15 +25,15 @@ public class UIConfig {
     }
 
     public static Point2 PopulationSolutionMeterPosition() {
-        return Screen.pos(55, 80);
+        return Screen.pos(55, 85);
     }
 
     public static Point2 PopulationSolutionsCaptionPosition() {
-        return Screen.pos(55, 90);
+        return Screen.pos(65, 95);
     }
 
     public static Point2 PopulationPlayByPlaySize() {
-        return Screen.pos(40, 59);
+        return Screen.pos(40, 65);
     }
 
     public static Point2 PopulationPlayByPlayPosition() {

@@ -2,9 +2,11 @@ package game.population;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.core.GameConfig;
+import game.core.UIConfig;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.color.RGBA;
+import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.display.Window;
@@ -13,6 +15,10 @@ import sps.draw.SpriteMaker;
 import sps.draw.TextureManipulation;
 
 public class Map {
+    private static final int HABITABLE = 1;
+    private static final int NOT_HABITABLE = 0;
+    private static final int TAKEN = 2;
+
     public static final int NO_SEED = 0;
     public static final int C = 255;
     private static final int __frameSizePixels = 6;
@@ -46,10 +52,10 @@ public class Map {
                 int elevation = (int) (255 * _spriteBase[ii][jj].r);
                 _spriteBase[ii][jj] = Biome.getColor(elevation);
                 if (ii > __habitBuffer && ii < width - __habitBuffer && jj > __habitBuffer && jj < height - __habitBuffer) {
-                    _habitableZones[ii][jj] = Biome.fromElevation(elevation).Habitable ? 1 : 0;
+                    _habitableZones[ii][jj] = Biome.fromElevation(elevation).Habitable ? HABITABLE : NOT_HABITABLE;
                 }
                 else {
-                    _habitableZones[ii][jj] = 0;
+                    _habitableZones[ii][jj] = NOT_HABITABLE;
                 }
             }
         }
@@ -73,33 +79,34 @@ public class Map {
     public void resetSpace(Point2 location) {
         int x = (int) (location.X);
         int y = (int) (location.Y);
-        _habitableZones[x][y] = 1;
+        _habitableZones[x][y] = HABITABLE;
     }
 
-    private static final int requiredLivingSpace = 15;
-
     public Point2 getOpenSpace() {
-        while (true) {
+        int tries = 100;
+        while (tries-- > 0) {
             Point2 location = new Point2(RNG.next(0, _habitableZones.length), RNG.next(0, _habitableZones[0].length));
             if (_habitableZones[(int) location.X][(int) location.Y] == 1) {
                 boolean success = true;
-                for (int ii = -requiredLivingSpace; ii < requiredLivingSpace; ii++) {
-                    for (int jj = -requiredLivingSpace; jj < requiredLivingSpace; jj++) {
+                for (int ii = -UIConfig.RequiredLivingSpacePixels; ii < UIConfig.RequiredLivingSpacePixels; ii++) {
+                    for (int jj = -UIConfig.RequiredLivingSpacePixels; jj < UIConfig.RequiredLivingSpacePixels; jj++) {
                         int x = (int) (ii + location.X);
                         int y = (int) (jj + location.Y);
                         if (x >= 0 && x < _habitableZones.length && y >= 0 && y < _habitableZones[0].length) {
-                            if (_habitableZones[x][y] != 1) {
+                            if (_habitableZones[x][y] != HABITABLE) {
                                 success = false;
                             }
                         }
                     }
                 }
                 if (success) {
-                    _habitableZones[(int) location.X][(int) location.Y] = 2;
+                    _habitableZones[(int) location.X][(int) location.Y] = TAKEN;
                     return location;
                 }
             }
         }
+        Logger.error("Unable to find an open point. Returning a random location, might collide.");
+        return new Point2(RNG.next(0, _habitableZones.length), RNG.next(0, _habitableZones[0].length));
     }
 
     public Point2 getPosition() {

@@ -5,6 +5,7 @@ import game.core.GameConfig;
 import sps.bridge.DrawDepths;
 import sps.bridge.SpriteTypes;
 import sps.core.Point2;
+import sps.core.RNG;
 import sps.display.Assets;
 import sps.display.SpriteInfo;
 import sps.display.SpriteSheetManager;
@@ -33,11 +34,13 @@ public class PopulationHUD {
     }
 
     public void recalcIcons() {
-        int iconsToDraw = Maths.clamp((int) (_maxIcons * ((float) _population.getSize()) / GameConfig.PopulationMax), 1, _maxIcons);
+        int possibleIcons = (int) (_maxIcons * ((float) _population.getSize()) / GameConfig.PopulationMax);
+        int iconsToDraw = Maths.clamp(possibleIcons, 1, _maxIcons);
 
         while (iconsToDraw < _iconPositions.size()) {
-            Point2 kill = _iconPositions.get(_iconPositions.size() - 1);
-            _iconPositions.remove(_iconPositions.size() - 1);
+            int choice = RNG.next(_iconPositions.size());
+            Point2 kill = _iconPositions.get(choice);
+            _iconPositions.remove(choice);
             _map.resetSpace(kill.add(-_map.getPosition().X, -_map.getPosition().Y).add(_popIcon.getWidth() / 2, _popIcon.getHeight() / 2));
         }
 

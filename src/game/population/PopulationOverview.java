@@ -103,7 +103,7 @@ public class PopulationOverview implements State {
         _bottomCauses.generateDisplay();
         _populationCountDisplay = TextPool.get().write("", UIConfig.PopulationCountPosition());
 
-        TextPool.get().write("Causes of Death Solved", UIConfig.PopulationSolutionsCaptionPosition());
+        TextPool.get().write("Salvation Progress", UIConfig.PopulationSolutionsCaptionPosition());
         _solutionsMeter = new Meter(40, 5, Color.GREEN, UIConfig.PopulationSolutionMeterPosition(), false);
 
         _playByPlay = new MultiText(UIConfig.PopulationPlayByPlayPosition(), 25, Colors.randomPleasant().newAlpha(.50f), (int) UIConfig.PopulationPlayByPlaySize().X, (int) UIConfig.PopulationPlayByPlaySize().Y);
@@ -137,7 +137,7 @@ public class PopulationOverview implements State {
 
     private void updatePopulationCount() {
 
-        _populationCountDisplay.setMessage("Population of " + _regionName + "\n" + _nF.format(_population.getSize()) + " people");
+        _populationCountDisplay.setMessage("Population of " + _regionName + "\n\t" + _nF.format(_population.getSize()) + " people");
         _populationHud.recalcIcons();
     }
 
