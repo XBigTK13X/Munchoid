@@ -74,6 +74,7 @@ public class ExitPrompt {
         _mainMenu = new UIButton("Main Menu") {
             @Override
             public void click() {
+                StateManager.get().setPaused(false);
                 if (StateManager.get().current().getClass() == MainMenu.class) {
                     _cancel.click();
                 }
