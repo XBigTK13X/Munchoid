@@ -34,7 +34,7 @@ public class ForceSelectionButton {
 
         _meter = new Meter(width, height, force.Color, _originalPosition.add(0, 0), false);
         _meter.shade(Color.GRAY);
-        _meter.scale(Maths.percent(stat / ((float) GameConfig.MaxStat)));
+        _meter.setPercent(Maths.percent(stat / ((float) GameConfig.MaxStat)));
 
         _message = (stat > GameConfig.DisableStat && _owner.getStats().isEnabled(_force)) ? force.name() + ": " + strength() + Commands.get(force.Command) : "Disabled";
         Tooltips.get().add(new Tooltips.User() {

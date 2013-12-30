@@ -31,7 +31,7 @@ public class MeterProgressTest implements State {
     public void create() {
         _progress = TextPool.get().write("", Screen.pos(30, 70));
         regenMeter();
-        _meter.scale(50);
+        _meter.setPercent(50);
     }
 
     @Override
@@ -45,14 +45,14 @@ public class MeterProgressTest implements State {
     @Override
     public void update() {
         if (InputWrapper.moveRight()) {
-            _meter.scale(_meter.getPercent() + 1);
+            _meter.setPercent(_meter.getPercent() + 1);
             _timer2.setPercent(_timer2.getPercent() + 1);
             _timer.setPercent(_timer.getPercent() + 1);
             _progress.setMessage("Meter: " + _meter.getPercent() + ", Timer: " + _timer.getPercent());
 
         }
         if (InputWrapper.moveLeft()) {
-            _meter.scale(_meter.getPercent() - 1);
+            _meter.setPercent(_meter.getPercent() - 1);
             _timer.setPercent(_timer.getPercent() - 1);
             _timer2.setPercent(_timer2.getPercent() - 1);
             _progress.setMessage("Meter: " + _meter.getPercent() + ", Timer: " + _timer.getPercent());

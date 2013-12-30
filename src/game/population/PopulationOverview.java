@@ -1,5 +1,6 @@
 package game.population;
 
+import com.badlogic.gdx.Gdx;
 import game.arena.PreloadArena;
 import game.core.EndGame;
 import game.core.GameConfig;
@@ -12,6 +13,7 @@ import game.save.Persistence;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import sps.bridge.Commands;
+import sps.color.Color;
 import sps.core.Loader;
 import sps.core.RNG;
 import sps.display.Screen;
@@ -19,6 +21,7 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
+import sps.ui.Meter;
 import sps.util.CoolDown;
 import sps.util.Markov;
 
@@ -32,9 +35,15 @@ public class PopulationOverview implements State {
     }
 
     private Population _population;
+    private int _peopleToKill = 0;
+    private int _peopleBorn = 0;
+    private int _killSpeed;
+    private int _birthSpeed;
 
     private DeathCauseMonitor _topCauses;
     private DeathCauseMonitor _bottomCauses;
+
+    private Meter _solutionsMeter;
 
     private String _regionName;
     private PopulationHUD _populationHud;
@@ -88,14 +97,17 @@ public class PopulationOverview implements State {
 
         _topCauses.generateDisplay();
         _bottomCauses.generateDisplay();
-        _populationCountDisplay = TextPool.get().write("", Screen.pos(30, 95));
+        _populationCountDisplay = TextPool.get().write("", GameConfig.PopulationCountPosition());
+
+        TextPool.get().write("Causes of Death Solved", GameConfig.PopulationSolutionsCaptionPosition());
+        _solutionsMeter = new Meter(40, 5, Color.GREEN, GameConfig.PopulationSolutionMeterPosition(), false);
 
         _tournamentsPlayed = _payload.getTournamentsPlayed();
         _tournamentWins = _payload.getTournamentWins();
 
         _populationHud.regenerateTextures();
         updateDeathDisplays();
-        _continuePrompt = TextPool.get().write("Press " + Commands.get("Confirm") + " to enter the next tournament", Screen.pos(10, 10));
+        _continuePrompt = TextPool.get().write("Press " + Commands.get("Confirm") + " to enter the next tournament", GameConfig.PopulationContinuePosition());
 
         _savingNotice = TextPool.get().write("", Screen.pos(20, 50));
 
@@ -113,21 +125,30 @@ public class PopulationOverview implements State {
         }
     }
 
+    private void updatePopulationCount() {
+        NumberFormat f = NumberFormat.getNumberInstance();
+        _populationCountDisplay.setMessage("Population of " + _regionName + "\n" + f.format(_population.getSize()) + " people");
+        _populationHud.recalcIcons();
+    }
+
     private void updateDeathDisplays() {
         _topCauses.update();
         _bottomCauses.update();
 
-        _populationHud.recalcIcons();
-        NumberFormat f = NumberFormat.getNumberInstance();
-        _populationCountDisplay.setMessage("Population of " + _regionName + "\n" + f.format(_population.getSize()) + " people");
+        updatePopulationCount();
+
+        int activeDiseases = _topCauses.getActiveCount() + _bottomCauses.getActiveCount();
+        int totalDiseases = GameConfig.NumberOfTournaments * 2;
+        _solutionsMeter.setPercent((int) (100 * ((float) (totalDiseases - activeDiseases) / totalDiseases)));
 
         Persistence.get().autoSave();
     }
 
     private void simluatePopulationChange() {
-        int totalDeaths = _bottomCauses.totalDeaths(_population) + _topCauses.totalDeaths(_population);
-        _population.setSize(_population.getSize() - totalDeaths);
-        _population.grow();
+        _peopleToKill = _bottomCauses.totalDeaths(_population) + _topCauses.totalDeaths(_population);
+        _peopleBorn = _population.getGrowth();
+        _killSpeed = (int) (_peopleToKill * Gdx.graphics.getDeltaTime());
+        _birthSpeed = (int) (_peopleBorn * Gdx.graphics.getDeltaTime());
         updateDeathDisplays();
     }
 
@@ -145,21 +166,6 @@ public class PopulationOverview implements State {
         _tournamentsPlayed++;
     }
 
-    @Override
-    public void draw() {
-        if (Persistence.get().isBusy()) {
-            updateSaveMessage();
-            _savingNotice.setVisible(true);
-            return;
-        }
-        _savingNotice.setVisible(false);
-
-        _populationHud.draw();
-        if (_eradicated != null) {
-            _eradicated.draw();
-        }
-    }
-
     private boolean gameFinished() {
         return _tournamentsPlayed >= GameConfig.NumberOfTournaments;
     }
@@ -173,6 +179,45 @@ public class PopulationOverview implements State {
         }
     }
 
+    private void displayEradicatedNotice() {
+        if (DevConfig.BotEnabled) {
+            simluatePopulationChange();
+            nextState();
+            _eradicated = null;
+        }
+        else {
+            if (_eradicated.isActive()) {
+                _eradicated.update();
+            }
+            if (!_eradicated.isActive()) {
+                simluatePopulationChange();
+                _eradicated = null;
+            }
+        }
+    }
+
+    private void handleUserInput() {
+        if (gameFinished()) {
+            _continuePrompt.setMessage("Press " + Commands.get("Confirm") + " to see the outcome of your efforts.");
+        }
+        if (InputWrapper.confirm() || DevConfig.BotEnabled) {
+            nextState();
+        }
+        if (DevConfig.PopulationTest) {
+            boolean a = InputWrapper.pop();
+            boolean b = InputWrapper.push();
+            boolean c = InputWrapper.moveRight();
+            if (a || b || c) {
+                if (gameFinished() || c) {
+                    StateManager.reset().push(new PreloadPopulationOverview());
+                }
+                else {
+                    tournamentResult(a);
+                }
+            }
+        }
+    }
+
     @Override
     public void update() {
         if (Persistence.get().isBusy()) {
@@ -180,41 +225,44 @@ public class PopulationOverview implements State {
         }
 
         if (_eradicated != null) {
-            if (DevConfig.BotEnabled) {
-                simluatePopulationChange();
-                nextState();
-                _eradicated = null;
+            displayEradicatedNotice();
+            return;
+        }
+
+        if (_peopleToKill > 0) {
+            if (_killSpeed > _peopleToKill) {
+                _killSpeed = _peopleToKill;
             }
-            else {
-                if (_eradicated.isActive()) {
-                    _eradicated.update();
-                }
-                if (!_eradicated.isActive()) {
-                    simluatePopulationChange();
-                    _eradicated = null;
-                }
+            _peopleToKill -= _killSpeed;
+            _population.setSize(_population.getSize() - _killSpeed);
+            updatePopulationCount();
+        }
+        else if (_peopleBorn > 0) {
+            if (_birthSpeed > _peopleBorn) {
+                _birthSpeed = _peopleBorn;
             }
+            _peopleBorn -= _birthSpeed;
+            _population.setSize(_population.getSize() + _birthSpeed);
+            updatePopulationCount();
         }
         else {
-            if (gameFinished()) {
-                _continuePrompt.setMessage("Press " + Commands.get("Confirm") + " to see the outcome of your efforts.");
-            }
-            if (InputWrapper.confirm() || DevConfig.BotEnabled) {
-                nextState();
-            }
-            if (DevConfig.PopulationTest) {
-                boolean a = InputWrapper.pop();
-                boolean b = InputWrapper.push();
-                boolean c = InputWrapper.moveRight();
-                if (a || b || c) {
-                    if (gameFinished() || c) {
-                        StateManager.reset().push(new PreloadPopulationOverview());
-                    }
-                    else {
-                        tournamentResult(a);
-                    }
-                }
-            }
+            handleUserInput();
+        }
+    }
+
+    @Override
+    public void draw() {
+        if (Persistence.get().isBusy()) {
+            updateSaveMessage();
+            _savingNotice.setVisible(true);
+            return;
+        }
+        _savingNotice.setVisible(false);
+
+        _populationHud.draw();
+        _solutionsMeter.draw();
+        if (_eradicated != null) {
+            _eradicated.draw();
         }
     }
 

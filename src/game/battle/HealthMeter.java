@@ -28,7 +28,7 @@ public class HealthMeter {
 
     private void scaleHeight() {
         if (_lastHealth == 0 || _lastHealth != _owner.getBody().getHealth()) {
-            _meter.scale(_owner.getBody().getPercentHealth());
+            _meter.setPercent(_owner.getBody().getPercentHealth());
             _lastHealth = _owner.getBody().getHealth();
         }
     }

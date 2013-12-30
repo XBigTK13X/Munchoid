@@ -30,7 +30,7 @@ public class EnergyMeter {
 
     private void scaleHeight() {
         if (_lastEnergy == 0 || _lastEnergy != _owner.getEnergy()) {
-            _meter.scale(_owner.getPercentEnergy());
+            _meter.setPercent(_owner.getPercentEnergy());
             _lastEnergy = _owner.getEnergy();
         }
     }

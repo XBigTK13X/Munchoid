@@ -28,7 +28,7 @@ public class CostMeter {
 
     public void scaleHeight(int costPercent) {
         if (_lastCost == 0 || _lastCost != costPercent) {
-            _meter.scale(costPercent);
+            _meter.setPercent(costPercent);
             _lastCost = costPercent;
         }
     }

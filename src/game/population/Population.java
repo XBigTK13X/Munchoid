@@ -8,12 +8,7 @@ public class Population {
     private int _size;
 
     public Population(int startingSize) {
-        _size = startingSize;
-    }
-
-    public void grow() {
-        _size += _size * (GameConfig.NaturalPopulationGrowthPercent / 100f);
-        _size = Maths.clamp(_size, 0, GameConfig.PopulationMax);
+        setSize(startingSize);
     }
 
     public int getSize() {
@@ -21,7 +16,11 @@ public class Population {
     }
 
     public void setSize(int size) {
-        _size = size;
+        _size = Maths.clamp(size, 0, GameConfig.PopulationMax);
+    }
+
+    public int getGrowth() {
+        return (int) (_size * (GameConfig.NaturalPopulationGrowthPercent / 100f));
     }
 
     public int deathsCausedBy(DeathCause deathCause) {

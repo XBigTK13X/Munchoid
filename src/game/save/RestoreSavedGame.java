@@ -58,7 +58,7 @@ public class RestoreSavedGame extends PreloaderState {
         _preloadChain.add(new PreloadChainLink("Rebuilding population HUD.") {
             @Override
             public void process() {
-                _payload.setPopulationHUD(new PopulationHUD(_payload.getPopulation(), GameConfig.HUDSize(), GameConfig.HUDPosition(), _snapshot.RegionMapSeed, _snapshot.SettlementLocations));
+                _payload.setPopulationHUD(new PopulationHUD(_payload.getPopulation(), GameConfig.PopulationHUDSize(), GameConfig.PopulationHUDPosition(), _snapshot.RegionMapSeed, _snapshot.SettlementLocations));
             }
         });
         _preloadChain.add(new PreloadChainLink("Tallying previous tournament score.") {

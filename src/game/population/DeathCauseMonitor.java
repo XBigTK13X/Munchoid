@@ -26,13 +26,23 @@ public class DeathCauseMonitor {
     }
 
     public void generateDisplay() {
-        _display = TextPool.get().write("", _top ? Screen.pos(5, 95) : Screen.pos(75, 95));
+        if (GameConfig.UseOldPopulationDeathMonitors) {
+            _display = TextPool.get().write("", _top ? Screen.pos(75, 95) : Screen.pos(75, 45));
+        }
     }
 
     public DeathCause disableOne() {
         DeathCause disabled = _deathCauses.get(_disableIndex++);
         disabled.setActive(false);
         return disabled;
+    }
+
+    public int getActiveCount() {
+        int active = 0;
+        for (DeathCause cause : _deathCauses) {
+            active += cause.isActive() ? 1 : 0;
+        }
+        return active;
     }
 
     public int totalDeaths(Population population) {
@@ -49,12 +59,14 @@ public class DeathCauseMonitor {
     }
 
     public void update() {
-        String tD = _header + "\n";
-        for (DeathCause d : _deathCauses) {
-            tD += display(d);
+        if (GameConfig.UseOldPopulationDeathMonitors) {
+            String tD = _header + "\n";
+            for (DeathCause d : _deathCauses) {
+                tD += display(d);
+            }
+            _display.setMessage(tD);
+            _display.setScale(.5f);
         }
-        _display.setMessage(tD);
-        _display.setScale(.5f);
     }
 
     private String display(DeathCause d) {

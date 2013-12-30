@@ -35,7 +35,7 @@ public abstract class PreloadChain {
                 finish();
             }
             else {
-                _loadingMeter.scale((int) ((_preloadedItems / (float) _preloadedItemsTarget) * 100));
+                _loadingMeter.setPercent((int) ((_preloadedItems / (float) _preloadedItemsTarget) * 100));
                 _loadingMessage.setMessage(link.getMessage() + "\n" + getProgress());
             }
         }

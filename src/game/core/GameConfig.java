@@ -105,12 +105,28 @@ public class GameConfig {
     public static final float MaxScaleDeath = 1.5f;
 
     //Tournament/Population
-    public static Point2 HUDSize() {
+    public static Point2 PopulationHUDSize() {
         return Screen.pos(40, 70);
     }
 
-    public static Point2 HUDPosition() {
-        return Screen.pos(30, 15);
+    public static Point2 PopulationHUDPosition() {
+        return Screen.pos(10, 15);
+    }
+
+    public static Point2 PopulationContinuePosition() {
+        return Screen.pos(30, 10);
+    }
+
+    public static Point2 PopulationCountPosition() {
+        return Screen.pos(15, 95);
+    }
+
+    public static Point2 PopulationSolutionMeterPosition() {
+        return Screen.pos(55, 80);
+    }
+
+    public static Point2 PopulationSolutionsCaptionPosition() {
+        return Screen.pos(55, 90);
     }
 
     public static final int TournamentStatRange = 10;
@@ -119,4 +135,5 @@ public class GameConfig {
     public static final int StartingPopulationSize = 1_000_000;
     public static final int NaturalPopulationGrowthPercent = 27;
     public static final int PopulationMax = 70_000_000;
+    public static final boolean UseOldPopulationDeathMonitors = false;
 }

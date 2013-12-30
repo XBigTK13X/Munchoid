@@ -40,7 +40,7 @@ public class ForceMeter {
         _meter = new Meter(width, height, force.Color, _position, false);
         _meter.shade(core);
 
-        _meter.scale(Maths.percent(stat / ((float) GameConfig.MaxStat)));
+        _meter.setPercent(Maths.percent(stat / ((float) GameConfig.MaxStat)));
 
         boolean isPlayer = _position.X < Screen.width(50);
         if (isPlayer) {

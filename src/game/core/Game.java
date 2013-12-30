@@ -35,6 +35,7 @@ import sps.particles.ParticleWrapper;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.TextPool;
+import sps.ui.MultiText;
 import sps.ui.UiElements;
 import sps.util.CoolDown;
 
@@ -56,6 +57,7 @@ public class Game implements ApplicationListener {
         Assets.get().fontPack().cacheFont("UIButton", "neris/Neris-SemiBold.otf", 70);
         Assets.get().fontPack().cacheFont("Console", "ubuntu/UbuntuMono-R.ttf", 24);
 
+        MultiText.setDefaultFont("Console", 24);
         DevConsole.get().setFont("Console", 24);
 
         SoundPlayer.get().add("Click", "click.ogg");

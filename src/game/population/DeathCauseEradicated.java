@@ -21,7 +21,6 @@ public class DeathCauseEradicated {
     private Text _announcement;
     private Sprite _bg;
 
-    private final CoolDown __displayTimer = new CoolDown(7);
     private final CoolDown _fireWorksTimer = new CoolDown(.5f);
 
     public DeathCauseEradicated(DeathCause top, DeathCause bottom) {

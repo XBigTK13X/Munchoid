@@ -2,22 +2,24 @@ package sps.console;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.core.Logger;
+import sps.core.Point2;
 import sps.core.SpsConfig;
 import sps.display.Screen;
-import sps.display.Window;
-import sps.draw.SpriteMaker;
 import sps.states.StateManager;
+import sps.text.Text;
+import sps.text.TextPool;
+import sps.ui.MultiText;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DevConsole {
-    public static final int __marginPixels = 70;
+    private static final int __marginPixels = 70;
+    private static final int __consoleBufferSize = 50;
 
     private static DevConsole __instance;
 
@@ -28,25 +30,21 @@ public class DevConsole {
         return __instance;
     }
 
-    private final int messageLimit = 50;
-    private final ConsoleText _input;
-    private final ConsoleText[] _contents = new ConsoleText[messageLimit];
+    private final Text _input;
     private final Map<String, DevConsoleAction> _actions;
     private boolean[] _locked = new boolean[256];
-    private int _index = 0;
     private boolean _isActive;
-    private final Color _bgColor;
-    private final Sprite _consoleBase;
-
-    private String _fontLabel;
-    private int _pointSize;
+    private MultiText _multiText;
 
     private DevConsole() {
         _actions = new HashMap<>();
-        _input = new ConsoleText(__marginPixels, Screen.get().VirtualHeight - __marginPixels, "");
-        _input.getContent().setDepth(DrawDepths.get("DevConsoleText"));
-        _bgColor = Color.BLACK.newAlpha(.75f);
-        _consoleBase = SpriteMaker.pixel(Color.WHITE);
+        _input = TextPool.get().write("", new Point2(__marginPixels, Screen.get().VirtualHeight - __marginPixels));
+        _input.setDepth(DrawDepths.get("DevConsoleText"));
+
+        _multiText = new MultiText(__consoleBufferSize, __marginPixels, Color.BLACK.newAlpha(.75f), Screen.get().VirtualWidth, Screen.get().VirtualHeight);
+        _multiText.setBackgroundDepth(DrawDepths.get("DevConsole"));
+        _multiText.setTextDepth(DrawDepths.get("DevConsoleText"));
+
         _isActive = false;
         add("The development console has been started.");
 
@@ -79,51 +77,21 @@ public class DevConsole {
     }
 
     public void setFont(String fontLabel, int pointSize) {
-        _fontLabel = fontLabel;
-        _pointSize = pointSize;
-        _input.getContent().setFont(_fontLabel, _pointSize);
-        _input.getContent().setMoveable(false);
-        for (int ii = 0; ii < _contents.length - 1; ii++) {
-            if (_contents[ii] != null) {
-                _contents[ii].getContent().setFont(_fontLabel, _pointSize);
-            }
-        }
-    }
-
-    private int getY(int index) {
-        return Screen.get().VirtualHeight - (index * __marginPixels / 4) - 200 + __marginPixels;
+        _input.setFont(fontLabel, pointSize);
+        _input.setMoveable(false);
+        _multiText.setFont(fontLabel, pointSize);
     }
 
     public void add(String message) {
         if (SpsConfig.get().devConsoleEnabled) {
-            if (_index < _contents.length) {
-                _contents[_index] = new ConsoleText(__marginPixels, getY(_index), message);
-                _contents[_index].getContent().setFont(_fontLabel, _pointSize);
-                _contents[_index].getContent().setMoveable(false);
-                _contents[_index].getContent().setVisible(_isActive);
-                _index++;
-            }
-            else {
-                for (int ii = 0; ii < _contents.length - 1; ii++) {
-                    _contents[ii].setContent(_contents[ii + 1].getContent().getMessage());
-                }
-                _contents[_contents.length - 1].setContent(message);
-            }
+            _multiText.add(message);
         }
     }
 
     public void draw() {
         if (_isActive) {
-            _consoleBase.setSize(Screen.get().VirtualWidth, Screen.get().VirtualHeight);
-            _consoleBase.setColor(_bgColor.getGdxColor());
-            _consoleBase.setPosition(0, 0);
-            Window.get(true).schedule(_consoleBase, DrawDepths.get("DevConsole"));
+            _multiText.draw();
             _input.draw();
-            for (ConsoleText _content : _contents) {
-                if (_content != null) {
-                    _content.draw();
-                }
-            }
         }
     }
 
@@ -134,12 +102,8 @@ public class DevConsole {
                 StateManager.get().setPaused(true);
             }
 
-            for (int ii = 0; ii < _contents.length; ii++) {
-                if (_contents[ii] != null) {
-                    _contents[ii].getContent().setVisible(_isActive);
-                }
-            }
-            _input.getContent().setMessage("");
+            _multiText.setVisible(_isActive);
+            _input.setMessage("");
         }
     }
 
@@ -148,12 +112,12 @@ public class DevConsole {
     }
 
     private String getInput() {
-        return _input.getContent().getMessage();
+        return _input.getMessage();
     }
 
     private void appendInput(String input) {
         String scrub = getInput();
-        _input.getContent().setMessage(scrub + input);
+        _input.setMessage(scrub + input);
     }
 
     public void register(DevConsoleAction action) {
@@ -163,18 +127,23 @@ public class DevConsole {
     private void takeAction() {
         String input = getInput();
         if (input.trim().length() > 0) {
-            DevParsedCommand command = new DevParsedCommand(input);
-            if (_actions.containsKey(command.Id.toLowerCase())) {
-                String result = _actions.get(command.Id.toLowerCase()).act(command.Arguments);
-                if (!result.isEmpty()) {
-                    add(result);
+            try {
+                DevParsedCommand command = new DevParsedCommand(input);
+                if (_actions.containsKey(command.Id.toLowerCase())) {
+                    String result = _actions.get(command.Id.toLowerCase()).act(command.Arguments);
+                    if (!result.isEmpty()) {
+                        add(result);
+                    }
+                }
+                else {
+                    add("Unknown command: " + input);
                 }
             }
-            else {
-                add("Unknown command: " + input);
+            catch (Exception e) {
+                add("Exception caught while attempting to parse command.");
             }
         }
-        _input.getContent().setMessage("");
+        _input.setMessage("");
     }
 
     public void update() {
@@ -186,7 +155,7 @@ public class DevConsole {
                         boolean pressed = Gdx.input.isKeyPressed(key);
                         if (pressed && !_locked[key]) {
                             if (key == Input.Keys.ENTER) {
-                                if (!_input.getContent().getMessage().isEmpty()) {
+                                if (!_input.getMessage().isEmpty()) {
                                     takeAction();
                                 }
                             }
@@ -195,7 +164,7 @@ public class DevConsole {
                             }
                             else if (key == Input.Keys.BACKSPACE || key == Input.Keys.DEL) {
                                 if (getInput().length() > 0) {
-                                    _input.getContent().setMessage(_input.getContent().getMessage().substring(0, _input.getContent().getMessage().length() - 1));
+                                    _input.setMessage(_input.getMessage().substring(0, _input.getMessage().length() - 1));
                                 }
                             }
                             else {

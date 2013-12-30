@@ -47,7 +47,7 @@ public class Meter {
         ProcTextures.remove(frame, Color.BLACK);
         _frame = SpriteMaker.fromColors(frame);
 
-        scale(0);
+        setPercent(0);
         setPosition(position.X, position.Y);
 
     }
@@ -62,7 +62,7 @@ public class Meter {
         _sprite.setSize(_width, _scaledHeight);
     }
 
-    public void scale(int percent) {
+    public void setPercent(int percent) {
         _scaledPercent = percent;
         if (_isVertical) {
             scaleHeight(100);
