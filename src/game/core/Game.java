@@ -174,8 +174,8 @@ public class Game implements ApplicationListener {
         handleUserInput();
         PausePrompt.get().updateAndDraw();
         ExitPrompt.get().updateAndDraw();
+        DevConsole.get().updateAndDraw();
         DevShortcuts.handle();
-        DevConsole.get().update();
     }
 
     private void update() {
@@ -201,7 +201,6 @@ public class Game implements ApplicationListener {
                 StateManager.get().draw();
                 UiElements.get().draw();
                 TextPool.get().draw();
-                DevConsole.get().draw();
                 ParticleWrapper.get().draw();
             }
 

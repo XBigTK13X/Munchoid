@@ -26,7 +26,7 @@ public class MultiText {
     private String _fontLabel;
     private int _pointSize;
     private Sprite _background;
-    private boolean _isActive;
+    private boolean _active;
     private int _index = 0;
     private int _width;
     private int _height;
@@ -38,7 +38,7 @@ public class MultiText {
     public MultiText(Point2 position, int messageLimit, Color background, int width, int height) {
         _messageLimit = messageLimit;
         _contents = new Text[_messageLimit];
-        _isActive = true;
+        _active = true;
         _width = width;
         _height = height;
         _position = position;
@@ -62,7 +62,7 @@ public class MultiText {
             _contents[_index] = TextPool.get().write(message, new Point2(_position.X + _pointSize / 2, getY(_index)));
             _contents[_index].setFont(_fontLabel, _pointSize);
             _contents[_index].setMoveable(false);
-            _contents[_index].setVisible(_isActive);
+            _contents[_index].setVisible(_active);
             _contents[_index].setDepth(_textDepth);
             _index++;
         }
@@ -75,7 +75,7 @@ public class MultiText {
     }
 
     public void draw() {
-        if (_isActive) {
+        if (_active) {
             _background.setPosition(_position.X, _position.Y);
             Window.get(true).schedule(_background, _backgroundDepth);
             for (Text _content : _contents) {
@@ -97,6 +97,8 @@ public class MultiText {
     }
 
     public void setVisible(boolean visible) {
+        _active = visible;
+
         for (int ii = 0; ii < _contents.length; ii++) {
             if (_contents[ii] != null) {
                 _contents[ii].setVisible(visible);

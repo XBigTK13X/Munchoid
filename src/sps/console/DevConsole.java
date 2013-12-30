@@ -32,7 +32,7 @@ public class DevConsole {
     private final Text _input;
     private final Map<String, DevConsoleAction> _actions;
     private boolean[] _locked = new boolean[256];
-    private boolean _isActive;
+    private boolean _active;
     private MultiText _multiText;
 
     private DevConsole() {
@@ -44,7 +44,7 @@ public class DevConsole {
         _multiText.setBackgroundDepth(DrawDepths.get("DevConsole"));
         _multiText.setTextDepth(DrawDepths.get("DevConsoleText"));
 
-        _isActive = false;
+        _active = false;
         add("The development console has been started.");
 
         register(new DevConsoleAction("stop") {
@@ -87,27 +87,20 @@ public class DevConsole {
         }
     }
 
-    public void draw() {
-        if (_isActive) {
-            _multiText.draw();
-            _input.draw();
-        }
-    }
-
     public void toggle() {
         if (SpsConfig.get().devConsoleEnabled) {
-            _isActive = !_isActive;
-            if (!StateManager.get().isPaused() && _isActive) {
+            _active = !_active;
+            if (!StateManager.get().isPaused() && _active) {
                 StateManager.get().setPaused(true);
             }
 
-            _multiText.setVisible(_isActive);
+            _multiText.setVisible(_active);
             _input.setMessage("");
         }
     }
 
     public boolean isActive() {
-        return _isActive;
+        return _active;
     }
 
     private String getInput() {
@@ -145,8 +138,8 @@ public class DevConsole {
         _input.setMessage("");
     }
 
-    public void update() {
-        if (_isActive) {
+    public void updateAndDraw() {
+        if (_active) {
             try {
                 for (Field keys : Input.Keys.class.getFields()) {
                     int key = keys.getInt(null);
@@ -187,6 +180,9 @@ public class DevConsole {
             catch (Exception swallow) {
                 Logger.exception(swallow);
             }
+
+            _multiText.draw();
+            _input.draw();
         }
     }
 }
