@@ -12,54 +12,77 @@ import sps.core.RNG;
 import sps.draw.ProcTextures;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Designs {
-    private static final Map<PartFunction, List<Design>> __designs;
+    private static Map<PartFunction, List<Design>> __designs;
 
-    static {
-        Map<PartFunction, List<Design>> tmp = new HashMap<PartFunction, List<Design>>();
+    public static void rebuildIndex() {
+        __designs = new HashMap<PartFunction, List<Design>>();
         for (PartFunction function : PartFunction.values()) {
-            tmp.put(function, new ArrayList<Design>());
+            __designs.put(function, new ArrayList<Design>());
         }
-        tmp.get(PartFunction.Head).add(new RoundHead());
-        tmp.get(PartFunction.Head).add(new RegularPoly());
-        tmp.get(PartFunction.HeadDetail).add(new RoundEye());
-        tmp.get(PartFunction.UpperLimb).add(new LimbSegment());
-        tmp.get(PartFunction.UpperLimb).add(new RegularPoly());
-        tmp.get(PartFunction.Core).add(new RectangleBody());
-        tmp.get(PartFunction.LowerLimb).add(new LimbSegment());
-        tmp.get(PartFunction.LowerLimb).add(new RegularPoly());
+        __designs.get(PartFunction.Head).add(new RoundHead());
+        __designs.get(PartFunction.Head).add(new RegularPoly());
+        __designs.get(PartFunction.HeadDetail).add(new RoundEye());
+        __designs.get(PartFunction.UpperLimb).add(new LimbSegment());
+        __designs.get(PartFunction.UpperLimb).add(new RegularPoly());
+        __designs.get(PartFunction.Core).add(new RectangleBody());
+        __designs.get(PartFunction.LowerLimb).add(new LimbSegment());
+        __designs.get(PartFunction.LowerLimb).add(new RegularPoly());
 
-        //Silhouettes that are restricted to a subset of partfunctions
+        //Silhouettes that have explicit detailed part functions
         File silhouetteDesigns = Loader.get().graphics("designs");
         for (File file : silhouetteDesigns.listFiles()) {
-            if (FilenameUtils.getExtension(file.getName()).equals("prt")) {
-                DesignSilhouette silhouette = new DesignSilhouette(file);
-                for (PartFunction function : silhouette.Functions) {
-                    tmp.get(function).add(silhouette);
-                }
-            }
-        }
-
-        //Silhouettes that can be any partfunction
-        File rawSilhouettes = Loader.get().graphics("designs/raw");
-        for (File file : rawSilhouettes.listFiles()) {
-            if (FilenameUtils.getExtension(file.getName()).equals("png")) {
-                DesignSilhouette silhouette = new DesignSilhouette(file.getAbsolutePath());
-                for (PartFunction function : PartFunction.values()) {
-                    if (function != PartFunction.Core) {
-                        tmp.get(function).add(silhouette);
+            if (file.isDirectory() && !file.getName().equals("raw")) {
+                for (File specSource : file.listFiles()) {
+                    if (FilenameUtils.getExtension(specSource.getName()).equals("partspec")) {
+                        try {
+                            SilhouetteSpecs spec = new SilhouetteSpecs(specSource);
+                            for (File image : spec.getEntries().keySet()) {
+                                try {
+                                    SilhouetteDesign silhouette = new SilhouetteDesign(image);
+                                    for (PartFunction function : spec.getEntries().get(image)) {
+                                        __designs.get(function).add(silhouette);
+                                    }
+                                }
+                                catch (Exception e) {
+                                    Logger.error("Unable to load part silhouette: " + image.getAbsolutePath());
+                                }
+                            }
+                        }
+                        catch (Exception e) {
+                            Logger.error("Invalid .prt format. Unable to read silhouette spec: " + specSource);
+                        }
                     }
                 }
             }
         }
 
-        __designs = Collections.unmodifiableMap(tmp);
+        //Silhouettes that can be any partfunction (except core)
+        File rawSilhouettes = Loader.get().graphics("designs/raw");
+        for (File file : rawSilhouettes.listFiles()) {
+            if (file.getName().charAt(0) != '.') {
+                try {
+                    SilhouetteDesign silhouette = new SilhouetteDesign(file);
+                    for (PartFunction function : PartFunction.values()) {
+                        if (function != PartFunction.Core) {
+                            __designs.get(function).add(silhouette);
+                        }
+                    }
+                }
+                catch (Exception e) {
+                    Logger.error("Invalid image format in RAW silhouettes: " + file.getAbsolutePath());
+                }
+            }
+        }
     }
 
     public static Design get(PartFunction function) {
-        return __designs.get(function).get(RNG.next(0, __designs.get(function).size()));
+        return RNG.pick(__designs.get(function));
     }
 
     public static Atom[][] toAtoms(int[][] design, Color color) {

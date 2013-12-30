@@ -8,10 +8,7 @@ import game.population.PreloadPopulationOverview;
 import game.pregame.Intro;
 import game.pregame.MainMenu;
 import game.save.Options;
-import game.test.BackgroundGenerationTest;
-import game.test.CatchableGenerationTest;
-import game.test.MeterProgressTest;
-import game.test.SkeletonTest;
+import game.test.*;
 import sps.states.State;
 
 public class InitialStateResolver {
@@ -39,6 +36,9 @@ public class InitialStateResolver {
         }
         else if (DevConfig.ForceSelectionTest) {
             return new ForceSelection();
+        }
+        else if (DevConfig.SilhouetteTest) {
+            return new SilhouetteTest();
         }
         else {
             if (Options.load().ShowIntro) {
