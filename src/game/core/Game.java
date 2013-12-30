@@ -98,7 +98,6 @@ public class Game implements ApplicationListener {
         }
 
         StateManager.get().push(InitialStateResolver.create());
-        StateManager.get().setPaused(false);
 
         ConsoleCommands.init();
 
@@ -174,7 +173,8 @@ public class Game implements ApplicationListener {
     private void nonGameUpdates() {
         handleWindowQuerks();
         handleUserInput();
-        ExitPrompt.get().update();
+        PausePrompt.get().updateAndDraw();
+        ExitPrompt.get().updateAndDraw();
         DevShortcuts.handle();
         DevConsole.get().update();
     }
@@ -182,7 +182,7 @@ public class Game implements ApplicationListener {
     private void update() {
         nonGameUpdates();
 
-        if (!StateManager.get().isPaused()) {
+        if (!PausePrompt.get().isActive() && !ExitPrompt.get().isActive()) {
             _preUpdateState = StateManager.get().current();
             StateManager.get().asyncUpdate();
             StateManager.get().update();
@@ -198,11 +198,13 @@ public class Game implements ApplicationListener {
                 DevConsole.get().add("" + Gdx.graphics.getFramesPerSecond() + ": " + Gdx.graphics.getDeltaTime());
             }
 
-            StateManager.get().draw();
-            UiElements.get().draw();
-            TextPool.get().draw();
-            DevConsole.get().draw();
-            ParticleWrapper.get().draw();
+            if (!PausePrompt.get().isActive() && !ExitPrompt.get().isActive()) {
+                StateManager.get().draw();
+                UiElements.get().draw();
+                TextPool.get().draw();
+                DevConsole.get().draw();
+                ParticleWrapper.get().draw();
+            }
 
             Window.processDrawCalls();
         }

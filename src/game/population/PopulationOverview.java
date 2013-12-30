@@ -37,13 +37,16 @@ public class PopulationOverview implements State {
     }
 
     private Population _population;
+    private int _peopleThatHaveDied = 0;
+    private int _peopleThatWereBorn = 0;
     private int _peopleToKill = 0;
-    private int _peopleBorn = 0;
+    private int _peopleToBirth = 0;
     private int _killSpeed;
     private int _birthSpeed;
 
     private DeathCauseMonitor _topCauses;
     private DeathCauseMonitor _bottomCauses;
+    private int _activeCauses;
 
     private Meter _solutionsMeter;
 
@@ -125,6 +128,8 @@ public class PopulationOverview implements State {
     private int saveDots = 0;
     private CoolDown _saveUpdate = new CoolDown(.5f);
 
+    private NumberFormat _nF = NumberFormat.getNumberInstance();
+
     private void updateSaveMessage() {
         if (_saveUpdate.updateAndCheck()) {
             saveDots = (saveDots + 1) % saveDotsMax;
@@ -132,9 +137,10 @@ public class PopulationOverview implements State {
         }
     }
 
+
     private void updatePopulationCount() {
-        NumberFormat f = NumberFormat.getNumberInstance();
-        _populationCountDisplay.setMessage("Population of " + _regionName + "\n" + f.format(_population.getSize()) + " people");
+
+        _populationCountDisplay.setMessage("Population of " + _regionName + "\n" + _nF.format(_population.getSize()) + " people");
         _populationHud.recalcIcons();
     }
 
@@ -144,18 +150,20 @@ public class PopulationOverview implements State {
 
         updatePopulationCount();
 
-        int activeDiseases = _topCauses.getActiveCount() + _bottomCauses.getActiveCount();
+        _activeCauses = _topCauses.getActiveCount() + _bottomCauses.getActiveCount();
         int totalDiseases = GameConfig.NumberOfTournaments * 2;
-        _solutionsMeter.setPercent((int) (100 * ((float) (totalDiseases - activeDiseases) / totalDiseases)));
+        _solutionsMeter.setPercent((int) (100 * ((float) (totalDiseases - _activeCauses) / totalDiseases)));
 
         Persistence.get().autoSave();
     }
 
     private void simluatePopulationChange() {
         _peopleToKill = _bottomCauses.totalDeaths(_population) + _topCauses.totalDeaths(_population);
-        _peopleBorn = _population.getGrowth();
+        _peopleThatHaveDied = _peopleToKill;
+        _peopleToBirth = _population.getGrowth();
+        _peopleThatWereBorn = _peopleToBirth;
         _killSpeed = (int) (_peopleToKill * Gdx.graphics.getDeltaTime());
-        _birthSpeed = (int) (_peopleBorn * Gdx.graphics.getDeltaTime());
+        _birthSpeed = (int) (_peopleToBirth * Gdx.graphics.getDeltaTime());
         updateDeathDisplays();
     }
 
@@ -242,14 +250,20 @@ public class PopulationOverview implements State {
             }
             _peopleToKill -= _killSpeed;
             _population.setSize(_population.getSize() - _killSpeed);
+            if (_peopleToKill <= 0) {
+                _playByPlay.add(_nF.format(_peopleThatHaveDied) + " people have died from " + _activeCauses + " solveable causes.");
+            }
             updatePopulationCount();
         }
-        else if (_peopleBorn > 0) {
-            if (_birthSpeed > _peopleBorn) {
-                _birthSpeed = _peopleBorn;
+        else if (_peopleToBirth > 0) {
+            if (_birthSpeed > _peopleToBirth) {
+                _birthSpeed = _peopleToBirth;
             }
-            _peopleBorn -= _birthSpeed;
+            _peopleToBirth -= _birthSpeed;
             _population.setSize(_population.getSize() + _birthSpeed);
+            if (_peopleToBirth <= 0) {
+                _playByPlay.add(_nF.format(_peopleThatWereBorn) + " people were born in your region during that time.");
+            }
             updatePopulationCount();
         }
         else {

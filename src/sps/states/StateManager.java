@@ -1,23 +1,16 @@
 package sps.states;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.core.GameConfig;
+import game.core.PausePrompt;
 import game.dev.DevConfig;
 import game.save.Options;
 import game.tutorial.Tutorial;
 import sps.audio.MusicPlayer;
-import sps.bridge.Commands;
-import sps.bridge.DrawDepths;
-import sps.color.Color;
 import sps.core.Logger;
-import sps.display.Screen;
 import sps.display.Window;
-import sps.draw.ProcTextures;
-import sps.draw.SpriteMaker;
 import sps.entities.EntityManager;
 import sps.particles.ParticleEngine;
 import sps.particles.ParticleWrapper;
-import sps.text.Text;
 import sps.text.TextPool;
 import sps.ui.Buttons;
 import sps.ui.Tooltips;
@@ -28,12 +21,9 @@ import java.util.Map;
 import java.util.Stack;
 
 public class StateManager {
-
     private static StateManager __instance = new StateManager();
     private static long lastMil = System.currentTimeMillis();
     private static Map<String, Long> stateTimes = new HashMap<>();
-    private static Sprite __pausedScreen;
-    private static Text __pausedText;
 
     public static StateManager get() {
         return __instance;
@@ -84,21 +74,13 @@ public class StateManager {
     }
 
     public void setPaused(boolean value) {
-        if (__pausedScreen == null) {
-            Color[][] tbg = ProcTextures.monotone((int) Screen.width(50), (int) Screen.height(50), new Color(.5f, .1f, .5f, .7f));
-            __pausedScreen = SpriteMaker.fromColors(tbg);
-            __pausedScreen.setPosition(Screen.width(25), Screen.height(25));
-            __pausedText = TextPool.get().write("     PAUSED\n" + Commands.get("Pause") + " to continue", Screen.pos(45, 55));
-            __pausedText.setDepth(DrawDepths.get("PauseText"));
-        }
         _paused = value;
+        PausePrompt.get().setActive(value);
         if (_paused) {
             MusicPlayer.get().pause();
-            __pausedText.setVisible(true);
         }
         else {
             MusicPlayer.get().resume();
-            __pausedText.setVisible(false);
         }
     }
 
@@ -192,13 +174,7 @@ public class StateManager {
     }
 
     public void draw() {
-        if (!_paused) {
-            current().draw();
-        }
-        else {
-            Window.get().schedule(__pausedScreen, DrawDepths.get("PauseScreen"));
-            __pausedText.draw();
-        }
+        current().draw();
     }
 
     public void update() {

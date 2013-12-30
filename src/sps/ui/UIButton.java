@@ -40,6 +40,7 @@ public abstract class UIButton {
     private Point2 _position;
     private Color _start;
     private Color _end;
+    private boolean _moveable = true;
 
     public UIButton(String text) {
         this(text, 0, 0);
@@ -168,7 +169,7 @@ public abstract class UIButton {
                     click();
                 }
             }
-            Window.get().schedule(_sprite, _depth);
+            Window.get(!_moveable).schedule(_sprite, _depth);
         }
     }
 
@@ -204,5 +205,14 @@ public abstract class UIButton {
 
     public Sprite getSprite() {
         return _sprite;
+    }
+
+    public Text getMessage() {
+        return _message;
+    }
+
+    public void setMoveable(boolean moveable) {
+        _moveable = moveable;
+        _message.setMoveable(moveable);
     }
 }

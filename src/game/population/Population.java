@@ -1,6 +1,7 @@
 package game.population;
 
 import game.core.GameConfig;
+import sps.core.RNG;
 import sps.util.Maths;
 
 public class Population {
@@ -20,7 +21,7 @@ public class Population {
     }
 
     public int getGrowth() {
-        return (int) (_size * (GameConfig.NaturalPopulationGrowthPercent / 100f));
+        return (int) (_size * (GameConfig.NaturalPopulationGrowthPercent / 100f)) + RNG.next(1000);
     }
 
     public int deathsCausedBy(DeathCause deathCause) {

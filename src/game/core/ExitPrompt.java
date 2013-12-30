@@ -105,6 +105,12 @@ public class ExitPrompt {
 
         _display = TextPool.get().write("Do you want to exit the game?", Screen.pos(25, 80));
         _display.setDepth(DrawDepths.get("ExitText"));
+
+        _display.setMoveable(false);
+        _desktop.setMoveable(false);
+        _cancel.setMoveable(false);
+        _toggleFullScreen.setMoveable(false);
+        _mainMenu.setMoveable(false);
         setActive(false);
     }
 
@@ -113,6 +119,9 @@ public class ExitPrompt {
     }
 
     public void setActive(boolean active) {
+        if (active) {
+            StateManager.get().setPaused(true);
+        }
         _active = active;
         _display.setVisible(active);
         _desktop.setVisible(active);
@@ -121,11 +130,19 @@ public class ExitPrompt {
         _toggleFullScreen.setVisible(active);
     }
 
-    public void update() {
+    public void updateAndDraw() {
         if (_active) {
             UiElements.get().update();
-            Window.get().schedule(_background, DrawDepths.get("ExitBackground"));
-            UiElements.get().draw();
+            Window.get(true).schedule(_background, DrawDepths.get("ExitBackground"));
+            _display.draw();
+            _desktop.draw();
+            _toggleFullScreen.draw();
+            _cancel.draw();
+            _mainMenu.draw();
+            _desktop.getMessage().draw();
+            _toggleFullScreen.getMessage().draw();
+            _cancel.getMessage().draw();
+            _mainMenu.getMessage().draw();
         }
     }
 }
