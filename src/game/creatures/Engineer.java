@@ -23,6 +23,10 @@ public class Engineer {
             fill(maxParts, body, result, core);
         }
 
+        if (!result.hasEye()) {
+            //TODO Ensure that at least one eye was placed
+        }
+
         if (DevConfig.DrawSkeleton) {
             Logger.info(result.getCore().getJoints().debug());
         }

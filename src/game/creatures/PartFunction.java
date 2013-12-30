@@ -12,7 +12,8 @@ public enum PartFunction {
     Head(1, 4, 0, 2),
     UpperLimb(1, 1, 15, 2),
     LowerLimb(1, 1, 90, 2),
-    HeadDetail(.7f, 0, 10, 5);
+    HeadDetail(.7f, 0, 10, 5),
+    Eye(.5f, 0, 10, 5);
 
     //Must be a square number
     public static final int GridSize = 9;
@@ -50,15 +51,17 @@ public enum PartFunction {
             __joints.put(UpperLimb, new Integer[]{2, 8});
             __joints.put(LowerLimb, new Integer[]{2, 8});
             __joints.put(HeadDetail, new Integer[]{5});
+            __joints.put(Eye, new Integer[]{});
 
             //What a part's children can be
             //NULL means a part has no ability to host a child
             __childFunctions = new HashMap<PartFunction, PartFunction[]>();
-            __childFunctions.put(Core, new PartFunction[]{UpperLimb, LowerLimb, Head});
-            __childFunctions.put(Head, new PartFunction[]{HeadDetail});
-            __childFunctions.put(UpperLimb, new PartFunction[]{UpperLimb});
-            __childFunctions.put(LowerLimb, new PartFunction[]{LowerLimb});
-            __childFunctions.put(HeadDetail, null);
+            __childFunctions.put(Core, new PartFunction[]{UpperLimb, LowerLimb, Head, Eye});
+            __childFunctions.put(Head, new PartFunction[]{HeadDetail, Eye});
+            __childFunctions.put(UpperLimb, new PartFunction[]{UpperLimb, Eye});
+            __childFunctions.put(LowerLimb, new PartFunction[]{LowerLimb, Eye});
+            __childFunctions.put(HeadDetail, new PartFunction[]{Eye});
+            __childFunctions.put(Eye, null);
 
             //The places on a parent where a function may connect
             __parentJoints = new HashMap<PartFunction, Integer[]>();
@@ -67,6 +70,7 @@ public enum PartFunction {
             __parentJoints.put(UpperLimb, new Integer[]{4, 5, 6});
             __parentJoints.put(LowerLimb, new Integer[]{1, 2, 3});
             __parentJoints.put(HeadDetail, new Integer[]{5, 6});
+            __parentJoints.put(Eye, new Integer[]{1, 2, 3, 4, 5, 6, 7, 8});
         }
 
         for (PartFunction pf : values()) {
@@ -95,9 +99,9 @@ public enum PartFunction {
         return childrenWithCorrectAttachment.get(RNG.next(childrenWithCorrectAttachment.size()));
     }
 
-    public static PartFunction lookup(String name){
-        for(PartFunction function:values()){
-            if(function.name().equals(name)){
+    public static PartFunction lookup(String name) {
+        for (PartFunction function : values()) {
+            if (function.name().equals(name)) {
                 return function;
             }
         }

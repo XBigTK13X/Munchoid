@@ -15,6 +15,8 @@ public class BodyParts {
     private List<BodyPart> _front;
     private List<BodyPart> _back;
 
+    private boolean _hasEye;
+
     public BodyParts(Body owner) {
         _owner = owner;
         _parts = new ArrayList<>();
@@ -124,5 +126,9 @@ public class BodyParts {
             }
         }
         return false;
+    }
+
+    public boolean hasEye() {
+        return _hasEye;
     }
 }

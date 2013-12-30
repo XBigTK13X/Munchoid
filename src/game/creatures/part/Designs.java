@@ -25,9 +25,9 @@ public class Designs {
         for (PartFunction function : PartFunction.values()) {
             __designs.put(function, new ArrayList<Design>());
         }
+        __designs.get(PartFunction.Eye).add(new RoundEye());
         __designs.get(PartFunction.Head).add(new RoundHead());
         __designs.get(PartFunction.Head).add(new RegularPoly());
-        __designs.get(PartFunction.HeadDetail).add(new RoundEye());
         __designs.get(PartFunction.UpperLimb).add(new LimbSegment());
         __designs.get(PartFunction.UpperLimb).add(new RegularPoly());
         __designs.get(PartFunction.Core).add(new RectangleBody());
