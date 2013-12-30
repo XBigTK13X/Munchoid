@@ -14,6 +14,9 @@ import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
 import sps.draw.TextureManipulation;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Map {
     private static final int HABITABLE = 1;
     private static final int NOT_HABITABLE = 0;
@@ -30,6 +33,8 @@ public class Map {
     private Color[][] _spriteBase;
     private Color[][] _bgBase;
 
+    private List<Point2> _habitableLocations;
+
     private static final int __habitBuffer = 25;
 
     private int _seed;
@@ -39,6 +44,7 @@ public class Map {
             mapSeed = RNG.next(0, Integer.MAX_VALUE);
         }
         RNG.seed(mapSeed);
+        _habitableLocations = new LinkedList<>();
         _position = position;
         _spriteBase = ProcTextures.perlin(width, height, new RGBA(0, 255, 255).toColor(), new RGBA(255, 255, 255).toColor(), 9, true);
         _habitableZones = new int[width][height];
@@ -53,6 +59,9 @@ public class Map {
                 _spriteBase[ii][jj] = Biome.getColor(elevation);
                 if (ii > __habitBuffer && ii < width - __habitBuffer && jj > __habitBuffer && jj < height - __habitBuffer) {
                     _habitableZones[ii][jj] = Biome.fromElevation(elevation).Habitable ? HABITABLE : NOT_HABITABLE;
+                    if (_habitableZones[ii][jj] == HABITABLE) {
+                        _habitableLocations.add(new Point2(ii, jj));
+                    }
                 }
                 else {
                     _habitableZones[ii][jj] = NOT_HABITABLE;
@@ -80,12 +89,13 @@ public class Map {
         int x = (int) (location.X);
         int y = (int) (location.Y);
         _habitableZones[x][y] = HABITABLE;
+        _habitableLocations.add(new Point2(x, y));
     }
 
     public Point2 getOpenSpace() {
         int tries = 100;
         while (tries-- > 0) {
-            Point2 location = new Point2(RNG.next(0, _habitableZones.length), RNG.next(0, _habitableZones[0].length));
+            Point2 location = RNG.pick(_habitableLocations);
             if (_habitableZones[(int) location.X][(int) location.Y] == 1) {
                 boolean success = true;
                 for (int ii = -UIConfig.RequiredLivingSpacePixels; ii < UIConfig.RequiredLivingSpacePixels; ii++) {
@@ -101,11 +111,12 @@ public class Map {
                 }
                 if (success) {
                     _habitableZones[(int) location.X][(int) location.Y] = TAKEN;
+                    _habitableLocations.remove(location);
                     return location;
                 }
             }
         }
-        Logger.error("Unable to find an open point. Returning a random location, might collide.");
+        Logger.error("Unable to find a habitable zone. Returning a random location, might collide.");
         return new Point2(RNG.next(0, _habitableZones.length), RNG.next(0, _habitableZones[0].length));
     }
 

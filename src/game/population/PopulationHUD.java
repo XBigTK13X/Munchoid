@@ -33,20 +33,26 @@ public class PopulationHUD {
         _iconPositions = iconPositions;
     }
 
-    public void recalcIcons() {
+    //Returns the growth of settlements
+    public int recalcIcons() {
         int possibleIcons = (int) (_maxIcons * ((float) _population.getSize()) / GameConfig.PopulationMax);
         int iconsToDraw = Maths.clamp(possibleIcons, 1, _maxIcons);
 
-        while (iconsToDraw < _iconPositions.size()) {
-            int choice = RNG.next(_iconPositions.size());
-            Point2 kill = _iconPositions.get(choice);
-            _iconPositions.remove(choice);
-            _map.resetSpace(kill.add(-_map.getPosition().X, -_map.getPosition().Y).add(_popIcon.getWidth() / 2, _popIcon.getHeight() / 2));
-        }
+        int growth = iconsToDraw - _iconPositions.size();
+        if (growth != 0) {
 
-        while (iconsToDraw > _iconPositions.size()) {
-            _iconPositions.add(_map.getOpenSpace().add(_map.getPosition()).add(-_popIcon.getWidth() / 2, -_popIcon.getHeight() / 2));
+            while (iconsToDraw < _iconPositions.size()) {
+                int choice = RNG.next(_iconPositions.size());
+                Point2 kill = _iconPositions.get(choice);
+                _iconPositions.remove(choice);
+                _map.resetSpace(kill.add(-_map.getPosition().X, -_map.getPosition().Y).add(_popIcon.getWidth() / 2, _popIcon.getHeight() / 2));
+            }
+
+            while (iconsToDraw > _iconPositions.size()) {
+                _iconPositions.add(_map.getOpenSpace().add(_map.getPosition()).add(-_popIcon.getWidth() / 2, -_popIcon.getHeight() / 2));
+            }
         }
+        return growth;
     }
 
     public void draw() {

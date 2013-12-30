@@ -34,6 +34,8 @@ public class PopulationOverview implements State {
     }
 
     private Population _population;
+    private int _settlementGrowth = 0;
+    private int _settlementDecay = 0;
     private int _peopleThatHaveDied = 0;
     private int _peopleThatWereBorn = 0;
     private int _peopleToKill = 0;
@@ -136,9 +138,14 @@ public class PopulationOverview implements State {
 
 
     private void updatePopulationCount() {
-
         _populationCountDisplay.setMessage("Population of " + _regionName + "\n\t" + _nF.format(_population.getSize()) + " people");
-        _populationHud.recalcIcons();
+        int growth = _populationHud.recalcIcons();
+        if (growth < 0) {
+            _settlementDecay += growth;
+        }
+        if (growth > 0) {
+            _settlementGrowth += growth;
+        }
     }
 
     private void updateDeathDisplays() {
@@ -177,6 +184,7 @@ public class PopulationOverview implements State {
         _eradicated = new DeathCauseEradicated(top, _bottomCauses.disableOne());
         _playByPlay.setVisible(false);
         _continuePrompt.setVisible(false);
+        _settlementGrowth = 0;
         _tournamentsPlayed++;
     }
 
@@ -263,7 +271,20 @@ public class PopulationOverview implements State {
             _peopleToBirth -= _birthSpeed;
             _population.setSize(_population.getSize() + _birthSpeed);
             if (_peopleToBirth <= 0) {
-                _playByPlay.add(_nF.format(_peopleThatWereBorn) + " people were born in your region during that time.");
+                _playByPlay.add(_nF.format(_peopleThatWereBorn) + " people were born in " + _regionName + ".");
+
+                if (_settlementGrowth > 0) {
+                    boolean p = _settlementGrowth == 1;
+                    _playByPlay.add((p ? "A" : _settlementGrowth) + " new " + (p ? "settlement was" : "settlements were") + " founded.");
+                }
+                if (_settlementDecay < 0) {
+                    boolean p = _settlementDecay == -1;
+                    _playByPlay.add((p ? "A" : -1 * _settlementDecay) + " " + (p ? "settlement" : "settlements") + " fell apart.");
+                }
+                if (_settlementDecay == 0 && _settlementGrowth == 0) {
+                    _playByPlay.add("No settlements were founded or lost.");
+                }
+                _playByPlay.add("");
             }
             updatePopulationCount();
         }
