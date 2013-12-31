@@ -26,7 +26,6 @@ public class EndGame implements State {
         _results.setFont("default", 40);
         _results.setDoubleSpaced(true);
 
-        _results.add("Thus concludes the Munchoid arena games on this planet.");
         _results.add("The people have granted you the title of " + getTitle());
 
         if (WorldScore.TournamentWins == 0) {
