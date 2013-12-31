@@ -37,7 +37,6 @@ public class Tutorials {
         if (Options.load().TutorialEnabled || ignoreConfig) {
             Tutorial tutorial = _tutorials.get(StateManager.get().current().getClass());
             if (tutorial != null) {
-                StateManager.get().setSuspend(true);
                 Boolean completed = _completedTutorials.get(tutorial);
                 if (completed == null) {
                     completed = false;
@@ -75,7 +74,6 @@ public class Tutorials {
     public boolean close() {
         if (_tutorial != null) {
             _tutorial.close();
-            StateManager.get().setSuspend(false);
             _tutorial = null;
             return true;
         }

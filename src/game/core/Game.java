@@ -6,15 +6,13 @@ import com.badlogic.gdx.Gdx;
 import game.arena.Arena;
 import game.arena.ChompPlayer;
 import game.battle.Battle;
+import game.battle.MergeOutcome;
 import game.dev.ConsoleCommands;
 import game.dev.DevConfig;
 import game.dev.DevShortcuts;
 import game.population.PopulationOverview;
 import game.save.Options;
-import game.tutorial.ArenaTutorial;
-import game.tutorial.BattleTutorial;
-import game.tutorial.PopulationOverviewTutorial;
-import game.tutorial.Tutorials;
+import game.tutorial.*;
 import sps.audio.MusicPlayer;
 import sps.audio.SoundPlayer;
 import sps.bridge.Commands;
@@ -78,6 +76,7 @@ public class Game implements ApplicationListener {
         Tutorials.get().add(PopulationOverview.class, new PopulationOverviewTutorial());
         Tutorials.get().add(Battle.class, new BattleTutorial());
         Tutorials.get().add(Arena.class, new ArenaTutorial());
+        Tutorials.get().add(MergeOutcome.class, new MergeTutorial());
 
         if (DevConfig.BotEnabled) {
             Options options = Options.load();

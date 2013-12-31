@@ -9,6 +9,7 @@ import sps.color.Colors;
 import sps.display.*;
 import sps.draw.SpriteMaker;
 import sps.io.Input;
+import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
 
@@ -40,6 +41,7 @@ public class Tutorial {
     }
 
     public void load() {
+        StateManager.get().setSuspend(true);
         _display = TextPool.get().write("", Screen.pos(10, 30));
         _display.setDepth(DrawDepths.get("TutorialText"));
         _display.setMoveable(false);
@@ -107,6 +109,7 @@ public class Tutorial {
     public void close() {
         _finished = true;
         _display.setVisible(false);
+        StateManager.get().setSuspend(false);
     }
 
     public boolean isFinished() {

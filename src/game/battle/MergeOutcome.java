@@ -9,6 +9,7 @@ import game.creatures.Stats;
 import game.dev.DevConfig;
 import game.forces.Force;
 import game.forceselection.ForceSelection;
+import game.tutorial.Tutorials;
 import sps.audio.MusicPlayer;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
@@ -156,6 +157,8 @@ public class MergeOutcome implements State {
             acceptMerge();
         }
         _pet.setStats(cancelStats);
+
+        Tutorials.get().show();
     }
 
     @Override

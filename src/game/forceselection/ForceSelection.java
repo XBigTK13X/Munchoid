@@ -97,13 +97,13 @@ public class ForceSelection implements State {
     private String getMessage() {
         int diff = _pet.getStats().enabledCount() - _pet.getStats().maxEnabled();
         if (diff > 0) {
-            return "Please disable " + (_pet.getStats().enabledCount() - _pet.getStats().maxEnabled()) + " of the forces on the left.";
+            return "Please disable " + (_pet.getStats().enabledCount() - _pet.getStats().maxEnabled()) + " of the forces on the left by clicking the bars";
         }
         else if (diff == 0) {
-            return "Please press the green button to accept your changes.";
+            return "Please press confirm to accept your changes.";
         }
         else {
-            return "Please enable " + (_pet.getStats().maxEnabled() - _pet.getStats().enabledCount()) + " of the forces on the right";
+            return "Please enable " + (_pet.getStats().maxEnabled() - _pet.getStats().enabledCount()) + " of the forces on the right by clicking the bars.";
         }
     }
 
