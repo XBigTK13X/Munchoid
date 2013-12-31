@@ -22,7 +22,6 @@ public class Floor extends Entity {
 
         _background = BackgroundCache.getRandom();
 
-
         BoundingBox.fromDimensions(_boundingBox, 0, 0, getWidth(), getHeight());
         if (DevConfig.PrintArenaSize) {
             Logger.info("Arena size: (W,H): (" + getWidth() + "," + getHeight() + ")");
@@ -37,5 +36,9 @@ public class Floor extends Entity {
 
     public BoundingBox getBounds() {
         return _boundingBox;
+    }
+
+    public void resizeSprite() {
+        _background.setSize(getWidth(), getHeight());
     }
 }

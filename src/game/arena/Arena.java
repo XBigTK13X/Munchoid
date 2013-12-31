@@ -172,15 +172,18 @@ public class Arena implements State {
             MusicPlayer.get().play("Anticipation");
         }
         else {
-            //FIXME this is ugly.
+
             MusicPlayer.get().play("Quickly", false);
+
+            //FIXME this is ugly.
             //Instead, should be a one liner to re-center the camera.
             //However, that would result in a lot of positions being gathered,
             //so the method below was chosen instead to save some time.
-
             //Recenter the camera on the player
             p.moveInBothDirections(-1, -1);
             p.moveInBothDirections(1, 1);
+
+            _preload.getFloor().resizeSprite();
         }
     }
 
