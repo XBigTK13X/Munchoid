@@ -26,6 +26,7 @@ public class Tutorial {
     private Step _currentStep;
     private int _currentStepIndex;
     private Text _display;
+    private boolean _arrowVisible = true;
 
     public Tutorial() {
         if (__background == null) {
@@ -50,7 +51,7 @@ public class Tutorial {
     }
 
     public void addStep(String message) {
-        _steps.add(new Step(0, 0, message));
+        _steps.add(new Step(-1, -1, message));
     }
 
     public void addStep(String message, int xPercent, int yPercent) {
@@ -62,13 +63,14 @@ public class Tutorial {
         String message = _currentStep.getMessage();
         message += "\n\n\t\t(Press " + Commands.get("AdvanceTutorial") + " to continue)";
         _display.setMessage(message);
-        if (!_currentStep.getArrowLocation().isZero()) {
+        if (_currentStep.getArrowLocation().X >= 0 && _currentStep.getArrowLocation().Y >= 0) {
             __arrow.setPosition(_currentStep.getArrowLocation().X, _currentStep.getArrowLocation().Y);
             __arrow.setRotation(45);
             __arrow.setColor(Colors.randomPleasant().getGdxColor());
+            _arrowVisible = true;
         }
         else {
-            __arrow.setColor(new Color(0, 0, 0, 0).getGdxColor());
+            _arrowVisible = false;
         }
     }
 
@@ -90,7 +92,9 @@ public class Tutorial {
         __arrow.setRotation(_rotation);
 
         Window.get(true).schedule(__background, DrawDepths.get("TutorialBackground"));
-        Window.get(true).schedule(__arrow, DrawDepths.get("TutorialArrow"));
+        if (_arrowVisible) {
+            Window.get(true).schedule(__arrow, DrawDepths.get("TutorialArrow"));
+        }
 
         if (_steps.size() > 0 && _display.getMessage().isEmpty()) {
             refreshDisplay();
