@@ -33,7 +33,7 @@ public class PreloadArena extends PreloaderState {
                 _payload.cache(new TimerGraphic(true, new Point2(0, 0), Color.WHITE.newAlpha(.75f)));
             }
         });
-        int creatureCount = DevConfig.TournyTest ? 0 : GameConfig.CreatureLimit;
+        int creatureCount = DevConfig.TournyTest ? 1 : GameConfig.CreatureLimit;
         _preloadChain.add(new PreloadChainLink("Collecting mental fragments from combatents.", creatureCount) {
             @Override
             public void process() {

@@ -22,7 +22,6 @@ public class EndGame implements State {
     @Override
     public void create() {
         _background = BackgroundCache.getRandom();
-        _background.setSize(Screen.width(100), Screen.height(100));
         _results = new MultiText(Screen.pos(10, 10), 20, Color.BLACK.newAlpha(.4f), (int) Screen.width(80), (int) Screen.height(80));
         _results.setFont("default", 40);
         _results.setDoubleSpaced(true);
@@ -85,7 +84,7 @@ public class EndGame implements State {
 
     @Override
     public void draw() {
-        Window.get().schedule(_background, DrawDepths.get("Default"));
+        Window.get().schedule(_background, DrawDepths.get("GameBackground"));
         _results.draw();
     }
 

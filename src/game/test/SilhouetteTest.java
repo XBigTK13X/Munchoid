@@ -34,7 +34,7 @@ public class SilhouetteTest implements State {
 
     @Override
     public void draw() {
-        Window.get(false).schedule(_silhouette, DrawDepths.get("Default"));
+        Window.get().schedule(_silhouette, DrawDepths.get("Default"));
     }
 
     @Override

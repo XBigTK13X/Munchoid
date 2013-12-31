@@ -1,11 +1,15 @@
 package game.tournament;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.arena.Player;
+import game.core.BackgroundCache;
 import game.core.GameConfig;
 import game.core.InputWrapper;
 import game.dev.DevConfig;
 import sps.bridge.Commands;
+import sps.bridge.DrawDepths;
 import sps.display.Screen;
+import sps.display.Window;
 import sps.states.State;
 import sps.text.Text;
 import sps.text.TextPool;
@@ -14,6 +18,7 @@ public class Tournament implements State {
 
     private Matches _matches;
     private Player _player;
+    private Sprite _background;
 
     private int _boutNumber = 1;
 
@@ -21,6 +26,7 @@ public class Tournament implements State {
 
     public Tournament(Player player) {
         _player = player;
+        _background = BackgroundCache.getRandom();
     }
 
     @Override
@@ -31,13 +37,14 @@ public class Tournament implements State {
 
     private String boutMessage() {
         String message = "Your arena is empty and the strongest from other arenas have gathered!";
-        message += "\nBeat all of them to gain control of the strongest Munchoid.";
+        message += "\nBeat all of them to create a powerful Munchoid.";
         message += "\n\nPress " + Commands.get("Confirm") + " to start tournament match " + _boutNumber + " of " + GameConfig.BattlesPerTournament;
         return message;
     }
 
     @Override
     public void draw() {
+        Window.get().schedule(_background, DrawDepths.get("GameBackground"));
     }
 
     @Override

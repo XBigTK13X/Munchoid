@@ -31,6 +31,8 @@ public class BackgroundCache {
         while (_lastRandom == result) {
             result = RNG.pick(_backgrounds);
         }
+        result.setSize(Screen.width(100), Screen.height(100));
+        result.setPosition(0, 0);
         _lastRandom = result;
         return result;
     }

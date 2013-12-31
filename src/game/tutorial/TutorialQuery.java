@@ -85,7 +85,7 @@ public class TutorialQuery implements State {
 
     @Override
     public void draw() {
-        Window.get().schedule(_background, DrawDepths.get("Default"));
+        Window.get().schedule(_background, DrawDepths.get("GameBackground"));
         _launchTutorial.draw();
         _launchGame.draw();
         _back.draw();
