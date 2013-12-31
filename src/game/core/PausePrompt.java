@@ -41,7 +41,7 @@ public class PausePrompt {
 
     public void setActive(boolean active) {
         _active = active;
-        __pausedText.setVisible(true);
+        __pausedText.setVisible(active);
     }
 
     public void updateAndDraw() {
