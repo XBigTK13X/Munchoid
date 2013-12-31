@@ -6,7 +6,7 @@ import game.dev.DevConfig;
 import game.forceselection.ForceSelection;
 import game.population.PreloadPopulationOverview;
 import game.pregame.Intro;
-import game.pregame.MainMenu;
+import game.pregame.PreloadMainMenu;
 import game.save.Options;
 import game.test.*;
 import sps.states.State;
@@ -45,7 +45,7 @@ public class InitialStateResolver {
                 return new Intro(true);
             }
             else {
-                return new MainMenu();
+                return new PreloadMainMenu();
             }
         }
     }

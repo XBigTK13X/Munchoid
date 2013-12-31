@@ -3,6 +3,7 @@ package game.core;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.pregame.MainMenu;
+import game.pregame.PreloadMainMenu;
 import game.save.Options;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
@@ -84,7 +85,7 @@ public class ExitPrompt {
                         StateManager.get().rollBackTo(MainMenu.class);
                     }
                     catch (Exception e) {
-                        StateManager.reset().push(new MainMenu());
+                        StateManager.reset().push(new PreloadMainMenu());
                     }
                 }
             }

@@ -29,7 +29,7 @@ public class Intro implements State {
     @Override
     public void create() {
         if (!_enabled) {
-            StateManager.get().push(new MainMenu());
+            StateManager.get().push(new PreloadMainMenu());
         }
         else {
             _movie = new Movie();
@@ -57,7 +57,7 @@ public class Intro implements State {
         _movie.play(MusicPlayer.get().music("Intro").getPosition());
 
         if (_skip.isCooled() || !MusicPlayer.get().music("Intro").isPlaying() || DevConfig.EndToEndStateLoadTest || DevConfig.BotEnabled) {
-            StateManager.get().push(new MainMenu());
+            StateManager.get().push(new PreloadMainMenu());
         }
 
         if (Input.get().isActive(Commands.get("Confirm"), 0, false)) {

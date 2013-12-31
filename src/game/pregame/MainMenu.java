@@ -2,44 +2,39 @@ package game.pregame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.core.BackgroundMaker;
 import game.core.InputWrapper;
-import game.core.Score;
 import game.dev.DevConfig;
 import game.save.Persistence;
 import game.save.RestoreSavedGame;
 import game.tutorial.TutorialQuery;
-import org.apache.commons.io.FileUtils;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
-import sps.core.Loader;
-import sps.core.Logger;
 import sps.display.Screen;
 import sps.display.Window;
-import sps.draw.SpriteMaker;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
 import sps.ui.UIButton;
 
-import java.io.File;
-
 public class MainMenu implements State {
     private Sprite _background;
     private Sprite _logo;
     private Text _corruptSave;
     private UIButton _load;
+    private String _version;
+    private boolean _saveFilePresent;
+
+    public MainMenu(MainMenuPayload payload) {
+        _background = payload.Background;
+        _logo = payload.Logo;
+        _version = payload.Version;
+        _saveFilePresent = payload.SaveFilePresent;
+    }
+
 
     @Override
     public void create() {
-        _background = BackgroundMaker.noisyRadialDark();
-        StateManager.clearTimes();
-        StateManager.get().clearTutorialCompletions();
-        Score.reset();
-
-        _logo = SpriteMaker.fromGraphic("munchoid_logo.png");
-
         _logo.setPosition(Screen.centerWidth((int) _logo.getWidth()), Screen.height(80));
 
         UIButton _start = new UIButton("Start", Commands.get("Confirm")) {
@@ -71,23 +66,11 @@ public class MainMenu implements State {
         _options.layout();
         _exit.layout();
 
-        if (Persistence.get().saveFileExists()) {
+        if (_saveFilePresent) {
             _load = new UIButton("Continue") {
                 @Override
                 public void click() {
                     StateManager.get().push(new RestoreSavedGame());
-                    try {
-
-                    }
-                    catch (RuntimeException e) {
-                        setVisible(false);
-                        if (e.getMessage() != null) {
-
-                        }
-                        else {
-                            Logger.exception(e);
-                        }
-                    }
                 }
             };
             _load.setColRow(2, 2);
@@ -96,17 +79,8 @@ public class MainMenu implements State {
             _corruptSave.setVisible(false);
         }
 
-        String version = "Unknown";
-        File versionDat = Loader.get().data("version.dat");
-        if (versionDat.exists()) {
-            try {
-                version = FileUtils.readFileToString(versionDat);
-            }
-            catch (Exception e) {
-                Logger.exception(e, false);
-            }
-        }
-        Text versionDisplay = TextPool.get().write("Version " + version, Screen.pos(5, 5));
+
+        Text versionDisplay = TextPool.get().write("Version " + _version, Screen.pos(5, 5));
         versionDisplay.setFont("Console", 24);
 
         Text developedDisplay = TextPool.get().write("Developed by Simple Path Studios", Screen.pos(40, 5));

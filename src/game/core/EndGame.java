@@ -1,7 +1,7 @@
 package game.core;
 
 import game.dev.DevConfig;
-import game.pregame.MainMenu;
+import game.pregame.PreloadMainMenu;
 import sps.bridge.Commands;
 import sps.display.Screen;
 import sps.states.State;
@@ -24,7 +24,7 @@ public class EndGame implements State {
     @Override
     public void update() {
         if (InputWrapper.confirm() || DevConfig.EndToEndStateLoadTest || DevConfig.BotEnabled) {
-            StateManager.reset().push(new MainMenu());
+            StateManager.reset().push(new PreloadMainMenu());
         }
     }
 
