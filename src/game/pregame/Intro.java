@@ -1,13 +1,13 @@
 package game.pregame;
 
 import game.core.GameConfig;
+import game.core.InputWrapper;
 import game.dev.DevConfig;
 import sps.audio.MusicPlayer;
 import sps.bridge.Commands;
 import sps.color.Color;
 import sps.display.Screen;
 import sps.io.Input;
-import sps.movie.Movie;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
@@ -15,12 +15,17 @@ import sps.text.TextPool;
 import sps.util.CoolDown;
 
 public class Intro implements State {
-    private Movie _movie;
     private CoolDown _skip;
     private Text _skipInfo;
     private static final String __defaultSkipInfo = "[SPACE to skip]";
 
+    private String _introText = "";
+    private String _readText = "";
+
     private boolean _enabled;
+    private int _index;
+    private Text _introDisplay;
+    private CoolDown _typingSpeed = new CoolDown(.05f);
 
     public Intro(boolean enabled) {
         _enabled = enabled;
@@ -32,19 +37,23 @@ public class Intro implements State {
             StateManager.get().push(new PreloadMainMenu());
         }
         else {
-            _movie = new Movie();
-            _movie.addStrip(.8f, "We created the Munchoid. A collection of untapped mental fragments.");
-            _movie.addStrip(5.9f, "Citizens volunteer their unused thoughts and we convert them into digital warriors.");
-            _movie.addStrip(12.2f, "The strongest could be used to unlock the secrets of our world.");
-            _movie.addStrip(16.5f, "There’s always a problem that needs solving, and honest people hoping to gain a little fame.");
-            _movie.addStrip(22.9f, "Men and women flock to Munchoid Arena. A modern day coliseum where munchoids battle it out for the sake of humankind.");
-            _movie.addStrip(32f, "How can you make this world a better place?");
-            _movie.addStrip(35f, "Step forward, lend us your thoughts, and may we all learn from one another.");
+            _introText += "We created the Munchoid. A collection of untapped mental fragments.\n\n";
+            _introText += "Citizens volunteer their unused thoughts and we convert them into digital warriors.\n";
+            _introText += "The strongest could be used to prevent causes of death.\n\n";
+            _introText += "There’s always a problem that needs solving, and honest people hoping to gain a little fame.\n";
+            _introText += "Men and women flock to Munchoid Arena. A modern day colosseum where Munchoids battle it out for the sake of humankind.\n\n";
+            _introText += "An eipdemic is about to wash over the planet.\n";
+            _introText += "Can you grow Munchoids strong enough to save your home region?\n";
+            _introText += "Step forward, lend us your thoughts, and may the people be correct in selecting you to fight for them.\n\n";
+            _introText += "(This intro can be disabled in the Options menu. Press " + Commands.get("Confirm") + " to begin.)";
 
             _skip = new CoolDown(GameConfig.IntroVideoSkipSeconds);
             _skipInfo = TextPool.get().write(__defaultSkipInfo, Screen.pos(80, 10));
             Color bgText = new Color(.5f, .5f, .5f, .75f);
             _skipInfo.setColor(bgText);
+
+            _introDisplay = TextPool.get().write("", Screen.pos(5, 95));
+            _introDisplay.setFont("Console", 30);
         }
     }
 
@@ -54,9 +63,17 @@ public class Intro implements State {
 
     @Override
     public void update() {
-        _movie.play(MusicPlayer.get().music("Intro").getPosition());
+        if (!_readText.equals(_introText)) {
+            if (_typingSpeed.updateAndCheck()) {
+                _readText = _introText.substring(0, _index++);
+                _introDisplay.setMessage(_readText);
+            }
+        }
+        else {
+            MusicPlayer.get().stop();
+        }
 
-        if (_skip.isCooled() || !MusicPlayer.get().music("Intro").isPlaying() || DevConfig.EndToEndStateLoadTest || DevConfig.BotEnabled) {
+        if ((_readText.equals(_introText) && InputWrapper.confirm()) || _skip.isCooled() || DevConfig.EndToEndStateLoadTest || DevConfig.BotEnabled) {
             StateManager.get().push(new PreloadMainMenu());
         }
 
@@ -76,7 +93,7 @@ public class Intro implements State {
 
     @Override
     public void load() {
-        MusicPlayer.get().play("Intro", false);
+        MusicPlayer.get().play("Intro");
     }
 
     @Override

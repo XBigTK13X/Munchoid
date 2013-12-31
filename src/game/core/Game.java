@@ -61,7 +61,7 @@ public class Game implements ApplicationListener {
         SoundPlayer.get().add("Click", "click.ogg");
         ChompPlayer.setup();
 
-        MusicPlayer.get().add("Intro", "Intro.ogg");
+        MusicPlayer.get().add("Intro", "keyboard.ogg");
         MusicPlayer.get().add("Anticipation", "Anticipation.ogg");
         MusicPlayer.get().add("MergeTheme", "MergeTheme.ogg");
         MusicPlayer.get().add("Quickly", "Quickly.ogg");
