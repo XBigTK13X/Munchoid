@@ -227,6 +227,9 @@ public class PopulationOverview implements State {
             boolean c = InputWrapper.moveRight();
             if (a || b || c) {
                 if (gameFinished() || c) {
+                    StateManager.clearTimes();
+                    StateManager.get().clearTutorialCompletions();
+                    Score.reset();
                     StateManager.reset().push(new PreloadPopulationOverview());
                 }
                 else {

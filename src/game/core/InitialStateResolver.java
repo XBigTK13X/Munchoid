@@ -40,6 +40,9 @@ public class InitialStateResolver {
         else if (DevConfig.SilhouetteTest) {
             return new SilhouetteTest();
         }
+        else if (DevConfig.EndGameTest) {
+            return new EndGameTest();
+        }
         else {
             if (Options.load().ShowIntro) {
                 return new Intro(true);

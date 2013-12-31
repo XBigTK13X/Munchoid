@@ -20,6 +20,7 @@ public class DevConfig {
 
     //Debugging / Development
     public static final boolean ForceShortcutsEnabled = true && canEnable();
+    public static final boolean EndGameTest = false && canEnable();
     public static final boolean SilhouetteTest = false && canEnable();
     public static final boolean TournyTest = false && canEnable();
     public static final boolean MergeOutcomeTest = false && canEnable();

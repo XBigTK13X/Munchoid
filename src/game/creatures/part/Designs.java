@@ -90,6 +90,10 @@ public class Designs {
     }
 
     public static Design get(PartFunction function) {
+        if (!Designs.indexExists()) {
+            PartFunction.initJointSpecs();
+            Designs.rebuildIndex();
+        }
         return RNG.pick(__designs.get(function));
     }
 

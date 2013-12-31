@@ -31,6 +31,7 @@ public class MultiText {
     private int _width;
     private int _height;
     private Point2 _position;
+    private boolean _doubleSpaced;
 
     private DrawDepth _textDepth;
     private DrawDepth _backgroundDepth;
@@ -57,7 +58,7 @@ public class MultiText {
         return (int) (_height - (index * _pointSize) + _position.Y - _pointSize / 2);
     }
 
-    public void add(String message) {
+    private void add(String message, boolean checkDoubleSpaced) {
         if (_index < _contents.length) {
             _contents[_index] = TextPool.get().write(message, new Point2(_position.X + _pointSize / 2, getY(_index)));
             _contents[_index].setFont(_fontLabel, _pointSize);
@@ -72,6 +73,13 @@ public class MultiText {
             }
             _contents[_contents.length - 1].setMessage(message);
         }
+        if (checkDoubleSpaced && _doubleSpaced) {
+            add("", false);
+        }
+    }
+
+    public void add(String message) {
+        add(message, true);
     }
 
     public void draw() {
@@ -119,5 +127,8 @@ public class MultiText {
         }
     }
 
+    public void setDoubleSpaced(boolean doubleSpaced) {
+        _doubleSpaced = doubleSpaced;
+    }
 }
 

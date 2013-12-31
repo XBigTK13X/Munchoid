@@ -2,7 +2,6 @@ package game.pregame;
 
 import game.core.BackgroundMaker;
 import game.core.PreloaderState;
-import game.core.Score;
 import game.creatures.PartFunction;
 import game.creatures.part.Designs;
 import game.save.Persistence;
@@ -45,14 +44,6 @@ public class PreloadMainMenu extends PreloaderState {
             @Override
             public void process() {
                 _payload.SaveFilePresent = Persistence.get().saveFileExists();
-            }
-        });
-        _preloadChain.add(new PreloadChainLink("Resetting gameplay information.") {
-            @Override
-            public void process() {
-                StateManager.clearTimes();
-                StateManager.get().clearTutorialCompletions();
-                Score.reset();
             }
         });
         _preloadChain.add(new PreloadChainLink("Preparing the logo.") {

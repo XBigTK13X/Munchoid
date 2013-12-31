@@ -3,6 +3,7 @@ package game.pregame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.core.InputWrapper;
+import game.core.Score;
 import game.dev.DevConfig;
 import game.save.Persistence;
 import game.save.RestoreSavedGame;
@@ -117,6 +118,9 @@ public class MainMenu implements State {
 
     @Override
     public void load() {
+        StateManager.clearTimes();
+        StateManager.get().clearTutorialCompletions();
+        Score.reset();
     }
 
     @Override

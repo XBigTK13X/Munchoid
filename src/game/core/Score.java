@@ -6,9 +6,6 @@ import game.creatures.Stats;
 import sps.entities.EntityManager;
 import sps.util.JSON;
 
-import java.text.NumberFormat;
-import java.util.Locale;
-
 public class Score {
     private static Score __instance;
 
@@ -147,10 +144,6 @@ public class Score {
         _rejectedMerges++;
     }
 
-    public String message() {
-        NumberFormat dollars = NumberFormat.getCurrencyInstance(Locale.US);
-        return "Reward from your people: " + dollars.format(total());
-    }
 
     public String json() {
         return "\"score\":{" +
