@@ -71,15 +71,9 @@ public class PopulationOverview implements State {
 
     public GameSnapshot takeSnapshot() {
         GameSnapshot result = new GameSnapshot();
-        result.Victories = Score.get().victories();
-        result.AcceptedMerges = Score.get().acceptedMerges();
-        result.RejectedMerges = Score.get().rejectedMerges();
-        result.HealthRemaining = Score.get().healthRemaining();
-        result.Chomps = Score.get().chomps();
-        result.PetVariety = Score.get().petVariety();
-        result.PetPower = Score.get().petPower();
-        result.TournamentWins = Score.get().tournamentWins();
-        result.TournamentLosses = Score.get().tournamentLosses();
+        result.CumulativeArenaScore = WorldScore.ArenaTotal;
+        result.TournamentWins = WorldScore.TournamentWins;
+        result.TournamentLosses = WorldScore.TournamentLosses;
 
         result.PopulationSize = _population.getSize();
         result.SaveFormatVersion = GameSnapshot.CurrentSaveFormatVersion;
@@ -171,13 +165,14 @@ public class PopulationOverview implements State {
 
     public void tournamentResult(boolean win) {
         DeathCause top = null;
+        WorldScore.ArenaTotal += ArenaScore.get().total();
         if (win) {
             top = _topCauses.disableOne();
-            Score.get().addTournyWin();
+            WorldScore.TournamentWins++;
             MetaData.printWin();
         }
         else {
-            Score.get().addTournyLoss();
+            WorldScore.TournamentLosses++;
             MetaData.printLose();
         }
         _eradicated = new DeathCauseEradicated(top, _bottomCauses.disableOne());
@@ -187,7 +182,7 @@ public class PopulationOverview implements State {
     }
 
     private boolean gameFinished() {
-        return (Score.get().tournamentWins() + Score.get().tournamentLosses()) >= GameConfig.NumberOfTournaments;
+        return (WorldScore.TournamentWins + WorldScore.TournamentLosses) >= GameConfig.NumberOfTournaments;
     }
 
     private void nextState() {
@@ -233,7 +228,7 @@ public class PopulationOverview implements State {
                 if (gameFinished() || c) {
                     StateManager.clearTimes();
                     Tutorials.get().clearCompletion();
-                    Score.reset();
+                    ArenaScore.reset();
                     StateManager.reset().push(new PreloadPopulationOverview());
                 }
                 else {

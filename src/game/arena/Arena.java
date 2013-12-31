@@ -2,9 +2,9 @@ package game.arena;
 
 import game.battle.Battle;
 import game.battle.TimerGraphic;
+import game.core.ArenaScore;
 import game.core.GameConfig;
 import game.core.InputWrapper;
-import game.core.Score;
 import game.core.UIConfig;
 import game.creatures.Creature;
 import game.creatures.Merge;
@@ -55,7 +55,7 @@ public class Arena implements State {
 
     @Override
     public void create() {
-        Score.reset();
+        ArenaScore.reset();
         _battleCountDown = new CoolDown(GameConfig.ArenaTimeoutSeconds);
         _lastTime = (int) GameConfig.ArenaTimeoutSeconds;
         _timer = _preload.getTimer();
@@ -106,7 +106,7 @@ public class Arena implements State {
             else {
                 if ((_battleCountDown.isCooled() && opponents.size() > 0) || (InputWrapper.push() && DevConfig.ShortcutsEnabled) || DevConfig.EndToEndStateLoadTest) {
                     Creature opponent = ((Catchable) opponents.get(RNG.next(0, opponents.size()))).getCreature();
-                    if (Score.get().victories() == 0) {
+                    if (ArenaScore.get().victories() == 0) {
                         opponent.setStats(Stats.createWeakling(player.getPet().getStats()));
                         Stats pet = player.getPet().getStats();
                         Force strongest = pet.randomEnabledForce();

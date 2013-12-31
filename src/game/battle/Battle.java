@@ -1,9 +1,9 @@
 package game.battle;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import game.core.ArenaScore;
 import game.core.BackgroundCache;
 import game.core.InputWrapper;
-import game.core.Score;
 import game.core.UIConfig;
 import game.creatures.Creature;
 import game.dev.DevConfig;
@@ -219,12 +219,12 @@ public class Battle implements State {
     }
 
     private void victory() {
-        Score.get().addVictory();
-        Score.get().addHealthRemaining(_left.getBody().getPercentHealth());
+        ArenaScore.get().addVictory();
+        ArenaScore.get().addHealthRemaining(_left.getBody().getPercentHealth());
         _left.restore();
         StateManager.get().pop();
         if (_isFinalBattle) {
-            Score.get().setPlayerPetStats(_left.getStats());
+            ArenaScore.get().setPlayerPetStats(_left.getStats());
             StateManager.get().push(new TournamentEnd(true));
         }
         else {
@@ -233,7 +233,7 @@ public class Battle implements State {
     }
 
     private void loss() {
-        Score.get().setPlayerPetStats(_left.getStats());
+        ArenaScore.get().setPlayerPetStats(_left.getStats());
         StateManager.get().push(new TournamentEnd(false));
     }
 

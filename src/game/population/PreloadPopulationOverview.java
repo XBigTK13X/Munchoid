@@ -1,9 +1,6 @@
 package game.population;
 
-import game.core.BackgroundCache;
-import game.core.GameConfig;
-import game.core.PreloaderState;
-import game.core.UIConfig;
+import game.core.*;
 import sps.core.Point2;
 import sps.preload.PreloadChainLink;
 import sps.states.StateManager;
@@ -18,9 +15,10 @@ public class PreloadPopulationOverview extends PreloaderState {
         _payload = new PopulationOverviewPayload();
         BackgroundCache.clear();
 
-        _preloadChain.add(new PreloadChainLink("Location your region of the planet.") {
+        _preloadChain.add(new PreloadChainLink("Locating your region of the planet.") {
             @Override
             public void process() {
+                WorldScore.reset(0, 0, 0);
                 _payload.setRegionName(PopulationOverview.getRegionName());
                 _payload.setPopulation(new Population(GameConfig.StartingPopulationSize));
             }

@@ -6,10 +6,10 @@ import game.creatures.Stats;
 import sps.entities.EntityManager;
 import sps.util.JSON;
 
-public class Score {
-    private static Score __instance;
+public class ArenaScore {
+    private static ArenaScore __instance;
 
-    public static Score get() {
+    public static ArenaScore get() {
         if (__instance == null) {
             reset();
         }
@@ -17,7 +17,7 @@ public class Score {
     }
 
     public static void reset() {
-        __instance = new Score();
+        __instance = new ArenaScore();
     }
 
     private static final int __scoreMult = 13;
@@ -35,40 +35,18 @@ public class Score {
     private int _petVariety;
     private int _petPower;
     private int _healthRemaining;
-    private int _tournamentWins;
-    private int _tournamentLosses;
 
     private int _acceptedMerges;
     private int _rejectedMerges;
 
     private Stats _petStats;
 
-    private Score() {
+    private ArenaScore() {
 
-    }
-
-    public void set(int victories, int chomps, int petVariety, int petPower, int healthRemaining, int acceptedMerges, int rejectedMerges, int tournamentWins, int tournamentLosses) {
-        _victories = victories;
-        _chomps = chomps;
-        _petVariety = petVariety;
-        _petPower = petPower;
-        _healthRemaining = healthRemaining;
-        _acceptedMerges = acceptedMerges;
-        _rejectedMerges = rejectedMerges;
-        _tournamentLosses = tournamentLosses;
-        _tournamentWins = tournamentWins;
     }
 
     public void addChomp() {
         _chomps++;
-    }
-
-    public void addTournyWin() {
-        _tournamentWins++;
-    }
-
-    public void addTournyLoss() {
-        _tournamentLosses++;
     }
 
     public void addVictory() {
@@ -103,14 +81,6 @@ public class Score {
         return _rejectedMerges;
     }
 
-    public int tournamentWins() {
-        return _tournamentWins;
-    }
-
-    public int tournamentLosses() {
-        return _tournamentLosses;
-    }
-
     public Stats petStats() {
         if (_petStats == null) {
             Player p = (Player) EntityManager.get().getPlayer();
@@ -131,8 +101,8 @@ public class Score {
                         _petVariety * __petVarietyWeight +
                         _petPower * __petPowerWeight +
                         _healthRemaining * __healthRemainingWeight +
-                        _tournamentWins * __tournamentWinWeight +
-                        _tournamentLosses * __tournamentLossWeight
+                        WorldScore.TournamentWins * __tournamentWinWeight +
+                        WorldScore.TournamentLosses * __tournamentLossWeight
         );
     }
 
@@ -153,9 +123,7 @@ public class Score {
                         JSON.pad("chomps", _chomps),
                         JSON.pad("healthRemaining", _healthRemaining),
                         JSON.pad("acceptedMerges", _acceptedMerges),
-                        JSON.pad("rejectedMerges", _rejectedMerges),
-                        JSON.pad("tournamentWins", _tournamentWins),
-                        JSON.pad("tournamentLosses", _tournamentLosses)) +
+                        JSON.pad("rejectedMerges", _rejectedMerges)) +
                 "}";
     }
 

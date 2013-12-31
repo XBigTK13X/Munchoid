@@ -29,14 +29,14 @@ public class EndGame implements State {
         _results.add("Thus concludes the Munchoid arena games on this planet.");
         _results.add("The people have granted you the title of " + getTitle());
 
-        if (Score.get().tournamentWins() == 0) {
+        if (WorldScore.TournamentWins == 0) {
             _results.add("Your weak Munchoids solved simple causes of death.");
             _results.add("However, not a single tournament was won.");
             _results.add("Almost everyone in your region has succumbed to the epidemic.");
             _results.add("You find " + getMoney() + " among the wasteland that was once your home.");
             _results.add("Better luck next universe!");
         }
-        else if (Score.get().tournamentWins() == GameConfig.NumberOfTournaments) {
+        else if (WorldScore.TournamentWins == GameConfig.NumberOfTournaments) {
             _results.add("You championed each tournament on this planet.");
             _results.add("The resulting Munchoids were able to solve most causes of death.");
             _results.add("Everyone in the region heralds you as their savior.");
@@ -44,7 +44,7 @@ public class EndGame implements State {
             _results.add("The people provided you with a cash reward of " + getMoney());
         }
         else {
-            _results.add("You are welcomed home after winning " + Score.get().tournamentWins() + " of the " + GameConfig.NumberOfTournaments + " tournaments.");
+            _results.add("You are welcomed home after winning " + WorldScore.TournamentWins + " of the " + GameConfig.NumberOfTournaments + " tournaments.");
             _results.add("Thanks to your efforts some severe causes of death were solved.");
             _results.add("With a larger population available to face the epidemic the region survived.");
             _results.add("Many have died, but more remain to carry on and rebuild");
@@ -56,14 +56,14 @@ public class EndGame implements State {
     private static final NumberFormat dollars = NumberFormat.getCurrencyInstance(Locale.US);
 
     private String getMoney() {
-        if (Score.get().total() <= 0) {
+        if (ArenaScore.get().total() <= 0) {
             return "no money";
         }
-        return dollars.format(Score.get().total());
+        return dollars.format(ArenaScore.get().total());
     }
 
     private String getTitle() {
-        switch (Score.get().tournamentWins()) {
+        switch (WorldScore.TournamentWins) {
             case 0:
                 return "\"Complete Failure\"";
             case 1:

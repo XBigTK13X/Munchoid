@@ -9,18 +9,12 @@ import java.util.ArrayList;
 public class GameSnapshot {
     public static final int CurrentSaveFormatVersion = 7;
 
+    public int SaveFormatVersion;
     public String RegionName;
     public int PopulationSize;
-    public int Victories;
-    public int Chomps;
-    public int PetVariety;
-    public int PetPower;
-    public int HealthRemaining;
-    public int AcceptedMerges;
-    public int RejectedMerges;
-    public int SaveFormatVersion;
     public int TournamentLosses;
     public int TournamentWins;
+    public int CumulativeArenaScore;
     public int RegionMapSeed;
     public String TopDeathCauses;
     public String BottomDeathCauses;
@@ -30,13 +24,7 @@ public class GameSnapshot {
         String persistable = "";
         persistable += "RegionName=" + RegionName + "\n";
         persistable += "PopulationSize=" + PopulationSize + "\n";
-        persistable += "Victories=" + Victories + "\n";
-        persistable += "Chomps=" + Chomps + "\n";
-        persistable += "PetVariety=" + PetVariety + "\n";
-        persistable += "PetPower=" + PetPower + "\n";
-        persistable += "HealthRemaining=" + HealthRemaining + "\n";
-        persistable += "AcceptedMerges=" + AcceptedMerges + "\n";
-        persistable += "RejectedMerges=" + RejectedMerges + "\n";
+        persistable += "CumulativeArenaScore=" + CumulativeArenaScore + "\n";
         persistable += "SaveFormatVersion=" + SaveFormatVersion + "\n";
         persistable += "TournamentLosses=" + TournamentLosses + "\n";
         persistable += "TournamentWins=" + TournamentWins + "\n";
@@ -63,31 +51,13 @@ public class GameSnapshot {
             String key = keyval[0];
             String val = keyval[1];
             switch (key) {
-                case "Victories":
-                    snapshot.Victories = Parse.inte(val);
-                    break;
-                case "Chomps":
-                    snapshot.Chomps = Parse.inte(val);
-                    break;
-                case "PetVariety":
-                    snapshot.PetVariety = Parse.inte(val);
-                    break;
-                case "PetPower":
-                    snapshot.PetPower = Parse.inte(val);
-                    break;
-                case "HealthRemaining":
-                    snapshot.HealthRemaining = Parse.inte(val);
-                    break;
-                case "AcceptedMerges":
-                    snapshot.AcceptedMerges = Parse.inte(val);
-                    break;
-                case "RejectedMerges":
-                    snapshot.RejectedMerges = Parse.inte(val);
+                case "CumulativeArenaScore":
+                    snapshot.CumulativeArenaScore = Parse.inte(val);
                     break;
                 case "SaveFormatVersion":
                     snapshot.SaveFormatVersion = Parse.inte(val);
                     break;
-                case "TournamentsLosses":
+                case "TournamentLosses":
                     snapshot.TournamentLosses = Parse.inte(val);
                     break;
                 case "TournamentWins":
@@ -118,7 +88,7 @@ public class GameSnapshot {
                     }
                     break;
                 default:
-                    Logger.error("Unknown key found in save file. " + key + " Might not load properly.");
+                    Logger.error("Unknown key found in save file: \"" + key + "\". The game might not load properly or crash.");
             }
         }
         return snapshot;

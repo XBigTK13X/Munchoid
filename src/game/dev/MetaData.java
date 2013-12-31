@@ -1,7 +1,9 @@
 package game.dev;
 
+import game.core.ArenaScore;
 import game.core.GameConfig;
-import game.core.Score;
+import game.core.UIConfig;
+import game.core.WorldScore;
 import sps.core.Logger;
 import sps.states.StateManager;
 import sps.util.JSON;
@@ -38,11 +40,13 @@ public class MetaData {
             String metaData = "{";
             metaData += "\"version\":\"" + version + "\"" + ",";
             metaData += end + ",";
-            metaData += Score.get().json() + ",";
-            metaData += Score.get().petStats().json() + ",";
+            metaData += ArenaScore.get().json() + ",";
+            metaData += ArenaScore.get().petStats().json() + ",";
             metaData += StateManager.json() + ",";
             metaData += JSON.formatFields(GameConfig.class) + ",";
             metaData += JSON.formatFields(DevConfig.class) + ",";
+            metaData += JSON.formatFields(UIConfig.class) + ",";
+            metaData += JSON.formatFields(WorldScore.class) + ",";
             metaData += "\"timestamp\":\"" + dateFormat.format(date) + "\"";
             metaData += "}";
 

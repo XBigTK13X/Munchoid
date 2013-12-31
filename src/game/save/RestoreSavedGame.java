@@ -2,8 +2,8 @@ package game.save;
 
 import game.core.BackgroundCache;
 import game.core.PreloaderState;
-import game.core.Score;
 import game.core.UIConfig;
+import game.core.WorldScore;
 import game.population.*;
 import game.pregame.MainMenu;
 import sps.preload.PreloadChainLink;
@@ -38,9 +38,7 @@ public class RestoreSavedGame extends PreloaderState {
         _preloadChain.add(new PreloadChainLink("Restoring score data.") {
             @Override
             public void process() {
-                Score.get().set(_snapshot.Victories, _snapshot.Chomps, _snapshot.PetVariety,
-                        _snapshot.PetPower, _snapshot.HealthRemaining, _snapshot.AcceptedMerges,
-                        _snapshot.RejectedMerges, _snapshot.TournamentWins, _snapshot.TournamentLosses);
+                WorldScore.reset(_snapshot.TournamentWins, _snapshot.TournamentLosses, _snapshot.CumulativeArenaScore);
             }
         });
         _preloadChain.add(new PreloadChainLink("Resolving region name.") {

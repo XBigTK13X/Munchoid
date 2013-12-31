@@ -2,8 +2,8 @@ package game.pregame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import game.core.ArenaScore;
 import game.core.InputWrapper;
-import game.core.Score;
 import game.dev.DevConfig;
 import game.save.Persistence;
 import game.save.RestoreSavedGame;
@@ -121,7 +121,7 @@ public class MainMenu implements State {
     public void load() {
         StateManager.clearTimes();
         Tutorials.get().clearCompletion();
-        Score.reset();
+        ArenaScore.reset();
     }
 
     @Override

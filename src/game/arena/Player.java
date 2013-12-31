@@ -1,9 +1,9 @@
 package game.arena;
 
 import com.badlogic.gdx.Gdx;
+import game.core.ArenaScore;
 import game.core.GameConfig;
 import game.core.InputWrapper;
-import game.core.Score;
 import game.core.UIConfig;
 import game.creatures.Creature;
 import game.dev.DevConfig;
@@ -121,7 +121,7 @@ public class Player extends Entity implements IActor {
                         if (UIConfig.EnableChompText) {
                             TextPool.get().write("*CHOMP*", getLocation(), 1f, TextEffects.Fountain);
                         }
-                        Score.get().addChomp();
+                        ArenaScore.get().addChomp();
                         _pet.addBonus(GameConfig.ChompPoints);
                         e.setInactive();
                         chompCount++;

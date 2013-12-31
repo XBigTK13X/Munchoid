@@ -1,8 +1,8 @@
 package game.battle;
 
+import game.core.ArenaScore;
 import game.core.GameConfig;
 import game.core.InputWrapper;
-import game.core.Score;
 import game.creatures.Creature;
 import game.creatures.Merge;
 import game.creatures.Stats;
@@ -170,14 +170,14 @@ public class MergeOutcome implements State {
     }
 
     private void acceptMerge() {
-        Score.get().addMergeAccept();
+        ArenaScore.get().addMergeAccept();
         _defeated.getBody().kill();
         _pet.reset(_merged);
         loadNextScene();
     }
 
     private void rejectMerge() {
-        Score.get().addMergeReject();
+        ArenaScore.get().addMergeReject();
         _defeated.getBody().kill();
         loadNextScene();
     }

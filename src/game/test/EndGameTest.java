@@ -2,7 +2,7 @@ package game.test;
 
 import game.core.EndGame;
 import game.core.InputWrapper;
-import game.core.Score;
+import game.core.WorldScore;
 import sps.bridge.Commands;
 import sps.display.Screen;
 import sps.states.State;
@@ -23,15 +23,15 @@ public class EndGameTest implements State {
     @Override
     public void update() {
         if (InputWrapper.confirm()) {
-            Score.get().set(0, 0, 0, 0, 0, 0, 0, 5, 0);
+            WorldScore.reset(5, 0, 10000);
             StateManager.get().push(new EndGame());
         }
         if (InputWrapper.pop()) {
-            Score.get().set(0, 0, 0, 0, 0, 0, 0, 0, 5);
+            WorldScore.reset(0, 5, 10000);
             StateManager.get().push(new EndGame());
         }
         if (InputWrapper.push()) {
-            Score.get().set(0, 0, 0, 0, 0, 0, 0, 2, 3);
+            WorldScore.reset(2, 3, 10000);
             StateManager.get().push(new EndGame());
         }
     }
