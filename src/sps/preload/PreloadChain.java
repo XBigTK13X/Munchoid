@@ -22,7 +22,7 @@ public abstract class PreloadChain {
 
     public PreloadChain() {
         _preloadChain = new LinkedList<>();
-        _percentDisplay = TextPool.get().write("", Screen.pos(10, 20));
+        _percentDisplay = TextPool.get().write("", Screen.pos(40, 20));
         _loadingMessage = new MultiText(Screen.pos(10, 50), 6, Color.GRAY.newAlpha(.5f), (int) Screen.width(80), (int) Screen.height(20));
         _loadingMeter = new Meter(90, 9, Colors.randomPleasant(), Screen.pos(5, 30), false);
     }
