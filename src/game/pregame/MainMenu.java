@@ -117,7 +117,7 @@ public class MainMenu implements State {
     }
 
     private void start() {
-        StateManager.get().push(new TutorialQuery());
+        StateManager.get().push(new TutorialQuery(_background));
     }
 
     @Override

@@ -1,20 +1,29 @@
 package game.tutorial;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.dev.DevConfig;
 import game.population.PreloadPopulationOverview;
 import game.pregame.MainMenu;
 import game.save.Options;
 import sps.bridge.Commands;
+import sps.bridge.DrawDepths;
 import sps.display.Screen;
+import sps.display.Window;
 import sps.states.State;
 import sps.states.StateManager;
+import sps.text.Text;
 import sps.text.TextPool;
 import sps.ui.UIButton;
 
 public class TutorialQuery implements State {
-    UIButton _launchTutorial;
-    UIButton _launchGame;
-    UIButton _back;
+    private Sprite _background;
+    private UIButton _launchTutorial;
+    private UIButton _launchGame;
+    private UIButton _back;
+
+    public TutorialQuery(Sprite background) {
+        _background = background;
+    }
 
     @Override
     public void create() {
@@ -32,7 +41,9 @@ public class TutorialQuery implements State {
             StateManager.get().push(new PreloadPopulationOverview());
             return;
         }
-        TextPool.get().write("Is this your first time entering a Munchoid tournament?", Screen.pos(5, 50));
+        TextPool.get().write("Is this your first time entering a Munchoid tournament?", Screen.pos(15, 75));
+        Text optionsNotice = TextPool.get().write("*You can disable this question in the Options menu under Game", Screen.pos(30, 60));
+        optionsNotice.setFont("default", 24);
 
         _launchTutorial = new UIButton("Yes", Commands.get("Confirm")) {
             @Override
@@ -73,6 +84,7 @@ public class TutorialQuery implements State {
 
     @Override
     public void draw() {
+        Window.get().schedule(_background, DrawDepths.get("Default"));
         _launchTutorial.draw();
         _launchGame.draw();
         _back.draw();
