@@ -25,6 +25,7 @@ public class ForceSelection implements State {
 
     private ForcesSelectionUI _forces;
     private Text _wrongCountMessage;
+    private UIButton _confirm;
 
     public ForceSelection() {
         this(new Creature());
@@ -50,21 +51,21 @@ public class ForceSelection implements State {
         TextPool.get().write("ENABLED", Screen.pos(20, 100));
         TextPool.get().write("DISABLED", Screen.pos(70, 100));
 
-        setMessage();
+        setMessage(-1);
 
-        final UIButton confirm = new UIButton("Confirm") {
+        _confirm = new UIButton("Confirm") {
             @Override
             public void click() {
                 confirmSelection();
             }
         };
 
-        confirm.setSize(30, 24);
-        confirm.setBackgroundColors(Colors.brightnessShift(Color.GREEN, -80), Colors.brightnessShift(Color.GREEN, -45));
-        confirm.setDepth(DrawDepths.get("ForceAccept"));
-        confirm.setScreenPercent(35, 10);
+        _confirm.setSize(30, 24);
+        _confirm.setBackgroundColors(Colors.brightnessShift(Color.GREEN, -80), Colors.brightnessShift(Color.GREEN, -45));
+        _confirm.setDepth(DrawDepths.get("ForceAccept"));
+        _confirm.setScreenPercent(35, 10);
 
-        confirm.layout();
+        _confirm.layout();
 
         _forces = new ForcesSelectionUI(_pet);
         if (DevConfig.EndToEndStateLoadTest) {
@@ -94,8 +95,7 @@ public class ForceSelection implements State {
         _forces.draw();
     }
 
-    private String getMessage() {
-        int diff = _pet.getStats().enabledCount() - _pet.getStats().maxEnabled();
+    private String getMessage(int diff) {
         if (diff > 0) {
             return "Please disable " + (_pet.getStats().enabledCount() - _pet.getStats().maxEnabled()) + " of the forces on the left by clicking the bars";
         }
@@ -109,21 +109,23 @@ public class ForceSelection implements State {
 
     private int _lastEnabledCount;
 
-    private void setMessage() {
+    private void setMessage(int diff) {
         if (_wrongCountMessage == null) {
-            _wrongCountMessage = TextPool.get().write(getMessage(), Screen.pos(25, 45));
+            _wrongCountMessage = TextPool.get().write(getMessage(diff), Screen.pos(15, 45));
         }
         else {
             if (_lastEnabledCount != _pet.getStats().enabledCount()) {
                 _lastEnabledCount = _pet.getStats().enabledCount();
-                _wrongCountMessage.setMessage(getMessage());
+                _wrongCountMessage.setMessage(getMessage(diff));
             }
         }
     }
 
     @Override
     public void update() {
-        setMessage();
+        int diff = _pet.getStats().enabledCount() - _pet.getStats().maxEnabled();
+        _confirm.setVisible(diff == 0);
+        setMessage(diff);
         if (DevConfig.BotEnabled) {
             if (!confirmSelection()) {
                 _pet.getStats().setEnabled(_pet.getStats().randomEnabledForce(), false);

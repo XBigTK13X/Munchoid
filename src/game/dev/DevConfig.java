@@ -25,13 +25,13 @@ public class DevConfig {
     public static final boolean TournyTest = false && canEnable();
     public static final boolean MergeOutcomeTest = false && canEnable();
     public static final boolean PopulationTest = false && canEnable();
-    public static final boolean BattleTest = true && canEnable();
+    public static final boolean BattleTest = false && canEnable();
     public static final boolean ForceSelectionTest = false && canEnable();
     public static final boolean SkeletonTest = false && canEnable();
     public static final boolean BackgroundGenerationTest = false && canEnable();
     public static final boolean OutlineTest = false && canEnable();
     public static final boolean MeterTest = false && canEnable();
-    public static final boolean ShortcutsEnabled = MeterTest || OutlineTest || ForceShortcutsEnabled || TournyTest || MergeOutcomeTest || PopulationTest || BattleTest || SkeletonTest || BackgroundGenerationTest;
+    public static final boolean ShortcutsEnabled = SilhouetteTest || EndGameTest || MeterTest || OutlineTest || ForceShortcutsEnabled || TournyTest || MergeOutcomeTest || PopulationTest || BattleTest || SkeletonTest || BackgroundGenerationTest;
 
     public static final boolean EndToEndStateLoadTest = false && canEnable();
     public static final boolean FlipEnabled = false && canEnable();
