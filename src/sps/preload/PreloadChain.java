@@ -1,10 +1,12 @@
 package sps.preload;
 
+import sps.color.Color;
 import sps.color.Colors;
 import sps.display.Screen;
 import sps.text.Text;
 import sps.text.TextPool;
 import sps.ui.Meter;
+import sps.ui.MultiText;
 
 import java.text.NumberFormat;
 import java.util.LinkedList;
@@ -14,19 +16,23 @@ public abstract class PreloadChain {
     private boolean processStep = false;
     private int _preloadedItemsTarget = 0;
     private int _preloadedItems = 0;
-    private Text _loadingMessage;
+    private MultiText _loadingMessage;
+    private Text _percentDisplay;
     private Meter _loadingMeter;
 
     public PreloadChain() {
         _preloadChain = new LinkedList<>();
-        _loadingMessage = TextPool.get().write("", Screen.pos(10, 60));
-        _loadingMeter = new Meter(90, 5, Colors.randomPleasant(), Screen.pos(5, 30), false);
+        _percentDisplay = TextPool.get().write("", Screen.pos(10, 20));
+        _loadingMessage = new MultiText(Screen.pos(10, 50), 6, Color.GRAY.newAlpha(.5f), (int) Screen.width(80), (int) Screen.height(20));
+        _loadingMeter = new Meter(90, 9, Colors.randomPleasant(), Screen.pos(5, 30), false);
     }
 
     public void add(PreloadChainLink link) {
         _preloadChain.add(link);
         _preloadedItemsTarget += link.getRepetitions();
     }
+
+    private String _lastMessage;
 
     public void update() {
         PreloadChainLink link = _preloadChain.peek();
@@ -36,7 +42,11 @@ public abstract class PreloadChain {
             }
             else {
                 _loadingMeter.setPercent((int) ((_preloadedItems / (float) _preloadedItemsTarget) * 100));
-                _loadingMessage.setMessage(link.getMessage() + "\n" + getProgress());
+                if (_lastMessage == null || !_lastMessage.equals(link.getMessage())) {
+                    _loadingMessage.add(link.getMessage());
+                    _lastMessage = link.getMessage();
+                }
+                _percentDisplay.setMessage(getProgress());
             }
         }
         else {
@@ -58,6 +68,7 @@ public abstract class PreloadChain {
 
     public void draw() {
         _loadingMeter.draw();
+        _loadingMessage.draw();
     }
 
     public abstract void finish();
