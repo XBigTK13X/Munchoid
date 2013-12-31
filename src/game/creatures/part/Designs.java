@@ -21,6 +21,10 @@ import java.util.Map;
 public class Designs {
     private static Map<PartFunction, List<Design>> __designs;
 
+    public static boolean indexExists() {
+        return __designs != null;
+    }
+
     public static void rebuildIndex() {
         __designs = new HashMap<PartFunction, List<Design>>();
         for (PartFunction function : PartFunction.values()) {

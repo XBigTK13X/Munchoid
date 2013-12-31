@@ -3,6 +3,8 @@ package game.pregame;
 import game.core.BackgroundMaker;
 import game.core.PreloaderState;
 import game.core.Score;
+import game.creatures.PartFunction;
+import game.creatures.part.Designs;
 import game.save.Persistence;
 import org.apache.commons.io.FileUtils;
 import sps.core.Loader;
@@ -53,10 +55,19 @@ public class PreloadMainMenu extends PreloaderState {
                 Score.reset();
             }
         });
-        _preloadChain.add(new PreloadChainLink("Finding the logo.") {
+        _preloadChain.add(new PreloadChainLink("Preparing the logo.") {
             @Override
             public void process() {
                 _payload.Logo = SpriteMaker.fromGraphic("munchoid_logo.png");
+            }
+        });
+        _preloadChain.add(new PreloadChainLink("Caching creature part designs.") {
+            @Override
+            public void process() {
+                if (!Designs.indexExists()) {
+                    PartFunction.initJointSpecs();
+                    Designs.rebuildIndex();
+                }
             }
         });
         _preloadChain.add(new PreloadChainLink("Generating background image.") {

@@ -6,8 +6,6 @@ import com.badlogic.gdx.Gdx;
 import game.arena.Arena;
 import game.arena.ChompPlayer;
 import game.battle.Battle;
-import game.creatures.PartFunction;
-import game.creatures.part.Designs;
 import game.dev.ConsoleCommands;
 import game.dev.DevConfig;
 import game.dev.DevShortcuts;
@@ -76,8 +74,6 @@ public class Game implements ApplicationListener {
         Input.get().setup(new DefaultStateProvider());
         SpriteSheetManager.setup(SpriteTypes.getDefs());
 
-        PartFunction.initJointSpecs();
-
         StateManager.get().addTutorial(PopulationOverview.class, new PopulationOverviewTutorial());
         StateManager.get().addTutorial(Battle.class, new BattleTutorial());
         StateManager.get().addTutorial(Arena.class, new ArenaTutorial());
@@ -97,8 +93,6 @@ public class Game implements ApplicationListener {
             options.apply();
             _firstCreateOptionsLoaded = true;
         }
-
-        Designs.rebuildIndex();
 
         StateManager.get().push(InitialStateResolver.create());
 
