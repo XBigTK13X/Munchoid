@@ -7,9 +7,11 @@ import game.dev.DevConfig;
 import game.dev.MetaData;
 import game.save.GameSnapshot;
 import game.save.Persistence;
+import game.tutorial.Tutorials;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import sps.bridge.Commands;
+import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.color.Colors;
 import sps.core.Loader;
@@ -108,6 +110,8 @@ public class PopulationOverview implements State {
 
         _playByPlay = new MultiText(UIConfig.PopulationPlayByPlayPosition(), 25, Colors.randomPleasant().newAlpha(.50f), (int) UIConfig.PopulationPlayByPlaySize().X, (int) UIConfig.PopulationPlayByPlaySize().Y);
         _playByPlay.add("Welcome to the overview for " + _regionName);
+        _playByPlay.setBackgroundDepth(DrawDepths.get("PlayByPlayBackground"));
+        _playByPlay.setTextDepth(DrawDepths.get("PlayByPlayText"));
 
         _populationHud.regenerateTextures();
         updateDeathDisplays();
@@ -115,7 +119,7 @@ public class PopulationOverview implements State {
 
         _savingNotice = TextPool.get().write("", Screen.pos(20, 50));
 
-        StateManager.get().showTutorial();
+        Tutorials.get().show();
         Persistence.get().autoSave();
     }
 
@@ -228,7 +232,7 @@ public class PopulationOverview implements State {
             if (a || b || c) {
                 if (gameFinished() || c) {
                     StateManager.clearTimes();
-                    StateManager.get().clearTutorialCompletions();
+                    Tutorials.get().clearCompletion();
                     Score.reset();
                     StateManager.reset().push(new PreloadPopulationOverview());
                 }

@@ -1,10 +1,7 @@
 package sps.states;
 
 import game.core.GameConfig;
-import game.core.PausePrompt;
 import game.dev.DevConfig;
-import game.save.Options;
-import game.tutorial.Tutorial;
 import sps.audio.MusicPlayer;
 import sps.core.Logger;
 import sps.display.Window;
@@ -61,31 +58,21 @@ public class StateManager {
 
     private Stack<State> _states;
     private Map<State, StateDependentComponents> _components;
-    private boolean _paused = false;
-    private Map<Class, Tutorial> _tutorials;
-    private Map<Tutorial, Boolean> _completedTutorials;
-    private Tutorial _tutorial;
+    private boolean _suspended = false;
 
     private StateManager() {
         _states = new Stack<>();
         _components = new HashMap<>();
-        _tutorials = new HashMap<>();
-        _completedTutorials = new HashMap<>();
     }
 
-    public void setPaused(boolean value) {
-        _paused = value;
-        PausePrompt.get().setActive(value);
-        if (_paused) {
+    public void setSuspend(boolean suspend) {
+        _suspended = suspend;
+        if (_suspended) {
             MusicPlayer.get().pause();
         }
         else {
             MusicPlayer.get().resume();
         }
-    }
-
-    public boolean isPaused() {
-        return _paused;
     }
 
     private void loadCurrent() {
@@ -178,23 +165,13 @@ public class StateManager {
     }
 
     public void update() {
-        if (!_paused) {
-            if (_tutorial == null) {
-                current().update();
-            }
-            if (_tutorial != null) {
-                if (_tutorial.isFinished()) {
-                    _tutorial = null;
-                }
-                else {
-                    _tutorial.update();
-                }
-            }
+        if (!_suspended) {
+            current().update();
         }
     }
 
     public void asyncUpdate() {
-        if (!_paused) {
+        if (!_suspended) {
             current().asyncUpdate();
         }
     }
@@ -213,47 +190,5 @@ public class StateManager {
             }
         }
         return false;
-    }
-
-    public void addTutorial(Class state, Tutorial tutorial) {
-        _tutorials.put(state, tutorial);
-    }
-
-    public void showTutorial(boolean force) {
-        if (Options.load().TutorialEnabled || force) {
-            Tutorial tutorial = _tutorials.get(current().getClass());
-            if (tutorial != null) {
-                Boolean completed = _completedTutorials.get(tutorial);
-                if (completed == null) {
-                    completed = false;
-                }
-                if (!completed || force) {
-                    _tutorial = tutorial;
-                    _tutorial.load();
-                    if (!completed) {
-                        _completedTutorials.put(tutorial, true);
-                    }
-                }
-            }
-        }
-    }
-
-    public void showTutorial() {
-        showTutorial(false);
-    }
-
-    public boolean closeTutorial() {
-        if (_tutorial != null) {
-            _tutorial.close();
-            return true;
-        }
-        return false;
-    }
-
-    public void clearTutorialCompletions() {
-        for (Class state : _tutorials.keySet()) {
-            Tutorial t = _tutorials.get(state);
-            _completedTutorials.put(t, false);
-        }
     }
 }

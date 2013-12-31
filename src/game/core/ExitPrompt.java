@@ -76,7 +76,7 @@ public class ExitPrompt {
         _mainMenu = new UIButton("Main Menu") {
             @Override
             public void click() {
-                StateManager.get().setPaused(false);
+                PausePrompt.get().setActive(false);
                 if (StateManager.get().current().getClass() == MainMenu.class) {
                     _cancel.click();
                 }
@@ -123,7 +123,7 @@ public class ExitPrompt {
 
     public void setActive(boolean active) {
         if (active) {
-            StateManager.get().setPaused(true);
+            PausePrompt.get().setActive(true);
         }
         _active = active;
         _display.setVisible(active);

@@ -42,6 +42,7 @@ public class Tutorial {
     public void load() {
         _display = TextPool.get().write("", Screen.pos(10, 30));
         _display.setDepth(DrawDepths.get("TutorialText"));
+        _display.setMoveable(false);
         _currentStepIndex = 0;
         _finished = false;
     }
@@ -85,8 +86,10 @@ public class Tutorial {
         }
         _rotation += _arrowRotationDirection;
         __arrow.setRotation(_rotation);
-        Window.get().schedule(__background, DrawDepths.get("TutorialBackground"));
-        Window.get().schedule(__arrow, DrawDepths.get("TutorialArrow"));
+
+        Window.get(true).schedule(__background, DrawDepths.get("TutorialBackground"));
+        Window.get(true).schedule(__arrow, DrawDepths.get("TutorialArrow"));
+
         if (_steps.size() > 0 && _display.getMessage().isEmpty()) {
             refreshDisplay();
         }

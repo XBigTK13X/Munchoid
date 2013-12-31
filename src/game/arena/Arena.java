@@ -12,6 +12,7 @@ import game.creatures.Stats;
 import game.dev.DevConfig;
 import game.forces.Force;
 import game.tournament.Tournament;
+import game.tutorial.Tutorials;
 import sps.audio.MusicPlayer;
 import sps.bridge.EntityTypes;
 import sps.core.Point2;
@@ -81,7 +82,7 @@ public class Arena implements State {
             }
         }
         EntityManager.get().update();
-        StateManager.get().showTutorial();
+        Tutorials.get().show();
     }
 
     @Override

@@ -14,6 +14,7 @@ import game.save.Options;
 import game.tutorial.ArenaTutorial;
 import game.tutorial.BattleTutorial;
 import game.tutorial.PopulationOverviewTutorial;
+import game.tutorial.Tutorials;
 import sps.audio.MusicPlayer;
 import sps.audio.SoundPlayer;
 import sps.bridge.Commands;
@@ -74,9 +75,9 @@ public class Game implements ApplicationListener {
         Input.get().setup(new DefaultStateProvider());
         SpriteSheetManager.setup(SpriteTypes.getDefs());
 
-        StateManager.get().addTutorial(PopulationOverview.class, new PopulationOverviewTutorial());
-        StateManager.get().addTutorial(Battle.class, new BattleTutorial());
-        StateManager.get().addTutorial(Arena.class, new ArenaTutorial());
+        Tutorials.get().add(PopulationOverview.class, new PopulationOverviewTutorial());
+        Tutorials.get().add(Battle.class, new BattleTutorial());
+        Tutorials.get().add(Arena.class, new ArenaTutorial());
 
         if (DevConfig.BotEnabled) {
             Options options = Options.load();
@@ -137,8 +138,8 @@ public class Game implements ApplicationListener {
     private void handleUserInput() {
         Input.get().update();
 
-        if (InputWrapper.pause() && !DevConsole.get().isActive()) {
-            StateManager.get().setPaused(!StateManager.get().isPaused());
+        if (InputWrapper.pause() && !DevConsole.get().isActive() && !Tutorials.get().isActive() && !ExitPrompt.get().isActive()) {
+            PausePrompt.get().setActive(!PausePrompt.get().isActive());
         }
 
         if (InputWrapper.fullScreen()) {
@@ -150,7 +151,7 @@ public class Game implements ApplicationListener {
 
         if (!DevConsole.get().isActive()) {
             if (Input.get().isActive(Commands.get("Help"))) {
-                StateManager.get().showTutorial(true);
+                Tutorials.get().show(true);
             }
 
             if (Input.get().isActive(Commands.get("Exit"))) {
@@ -158,7 +159,7 @@ public class Game implements ApplicationListener {
                     ExitPrompt.get().setActive(false);
                 }
                 else {
-                    if (!StateManager.get().closeTutorial()) {
+                    if (!Tutorials.get().close()) {
                         ExitPrompt.get().setActive(true);
                     }
                 }
@@ -171,6 +172,7 @@ public class Game implements ApplicationListener {
         handleUserInput();
         PausePrompt.get().updateAndDraw();
         ExitPrompt.get().updateAndDraw();
+        Tutorials.get().update();
         DevConsole.get().updateAndDraw();
         DevShortcuts.handle();
     }

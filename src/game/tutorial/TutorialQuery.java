@@ -41,6 +41,7 @@ public class TutorialQuery implements State {
             StateManager.get().push(new PreloadPopulationOverview());
             return;
         }
+
         TextPool.get().write("Is this your first time entering a Munchoid tournament?", Screen.pos(15, 75));
         Text optionsNotice = TextPool.get().write("*You can disable this question in the Options menu under Game", Screen.pos(30, 60));
         optionsNotice.setFont("default", 24);

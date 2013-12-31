@@ -2,13 +2,13 @@ package sps.console;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import game.core.PausePrompt;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.SpsConfig;
 import sps.display.Screen;
-import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
 import sps.ui.MultiText;
@@ -90,8 +90,8 @@ public class DevConsole {
     public void toggle() {
         if (SpsConfig.get().devConsoleEnabled) {
             _active = !_active;
-            if (!StateManager.get().isPaused() && _active) {
-                StateManager.get().setPaused(true);
+            if (!PausePrompt.get().isActive() && _active) {
+                PausePrompt.get().setActive(true);
             }
 
             _multiText.setVisible(_active);

@@ -8,6 +8,7 @@ import sps.display.Screen;
 import sps.display.Window;
 import sps.draw.ProcTextures;
 import sps.draw.SpriteMaker;
+import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
 
@@ -42,6 +43,7 @@ public class PausePrompt {
     public void setActive(boolean active) {
         _active = active;
         __pausedText.setVisible(active);
+        StateManager.get().setSuspend(active);
     }
 
     public void updateAndDraw() {

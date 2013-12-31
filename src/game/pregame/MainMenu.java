@@ -8,6 +8,7 @@ import game.dev.DevConfig;
 import game.save.Persistence;
 import game.save.RestoreSavedGame;
 import game.tutorial.TutorialQuery;
+import game.tutorial.Tutorials;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
 import sps.display.Screen;
@@ -119,7 +120,7 @@ public class MainMenu implements State {
     @Override
     public void load() {
         StateManager.clearTimes();
-        StateManager.get().clearTutorialCompletions();
+        Tutorials.get().clearCompletion();
         Score.reset();
     }
 
