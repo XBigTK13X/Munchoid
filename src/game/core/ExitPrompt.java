@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.pregame.MainMenu;
 import game.save.Options;
+import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.display.Screen;
@@ -61,7 +62,7 @@ public class ExitPrompt {
             }
         };
 
-        _toggleFullScreen = new UIButton("Toggle Fullscreen") {
+        _toggleFullScreen = new UIButton("Toggle Fullscreen " + Commands.get("ToggleFullscreen")) {
             @Override
             public void click() {
                 Options options = Options.load();
