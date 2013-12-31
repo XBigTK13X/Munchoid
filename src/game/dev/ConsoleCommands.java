@@ -54,26 +54,38 @@ public class ConsoleCommands {
                 if (input.length != 1) {
                     return "value [0,100] required for player.setforce";
                 }
-                List<Entity> creatures = EntityManager.get().getEntities(EntityTypes.get("Creature"));
-                if (creatures.isEmpty()) {
-                    return "No creatures found";
-                }
-
                 int forceValue = input[0];
-                for (Entity e : creatures) {
-                    Creature c = (Creature) e;
-                    if (c.isOwned()) {
-                        for (Force force : Force.values()) {
-                            c.getStats().set(force, forceValue);
-                            c.getStats().setEnabled(force, true);
-                        }
-                        Battle battle = (Battle) StateManager.get().current();
-                        battle.rebuildHud();
-                        return "Player forces set to: " + forceValue;
-                    }
-                }
-                return "Player does not have a pet";
 
+                if (StateManager.get().hasAny(Battle.class)) {
+                    Battle battle = (Battle) StateManager.get().current();
+                    Creature c = battle.getPlayer();
+                    for (Force force : Force.values()) {
+                        c.getStats().set(force, forceValue);
+                        c.getStats().setEnabled(force, true);
+                    }
+                    battle.rebuildHud();
+                    return "Player forces set to: " + forceValue;
+                }
+                else {
+                    List<Entity> creatures = EntityManager.get().getEntities(EntityTypes.get("Creature"));
+                    if (creatures.isEmpty()) {
+                        return "No creatures found";
+                    }
+
+                    for (Entity e : creatures) {
+                        Creature c = (Creature) e;
+                        if (c.isOwned()) {
+                            for (Force force : Force.values()) {
+                                c.getStats().set(force, forceValue);
+                                c.getStats().setEnabled(force, true);
+                            }
+                            Battle battle = (Battle) StateManager.get().current();
+                            battle.rebuildHud();
+                            return "Player forces set to: " + forceValue;
+                        }
+                    }
+                    return "Player does not have a pet";
+                }
             }
         });
 

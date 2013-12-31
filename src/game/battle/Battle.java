@@ -23,6 +23,7 @@ import sps.states.StateManager;
 import sps.text.TextEffects;
 import sps.text.TextPool;
 import sps.ui.Tooltips;
+import sps.ui.UIButton;
 
 public class Battle implements State {
     private Creature _left;
@@ -37,6 +38,8 @@ public class Battle implements State {
 
     private boolean _isBattleOver;
     private boolean _playerWon;
+
+    private UIButton _passBtn;
 
     public Battle() {
         this(new Creature(), new Creature());
@@ -74,6 +77,17 @@ public class Battle implements State {
 
         rebuildHud();
 
+        _passBtn = new UIButton("Pass") {
+            @Override
+            public void click() {
+                pass();
+            }
+        };
+        _passBtn.setScreenPercent(27, 65);
+        _passBtn.setVisible(false);
+        _passBtn.setSize(10, 8);
+        _passBtn.layout();
+
         Tutorials.get().show();
     }
 
@@ -106,7 +120,7 @@ public class Battle implements State {
             }
         }
         else {
-            TextPool.get().write("Not enough energy", Screen.pos(10, 50), 1f, TextEffects.Fountain);
+            TextPool.get().write("Not enough energy", Screen.pos(20, 50), 1f, TextEffects.Fountain);
         }
     }
 
@@ -136,6 +150,12 @@ public class Battle implements State {
         }
     }
 
+    private void pass() {
+        TextPool.get().write("Recharging...", _passBtn.getPosition().add(0, Screen.height(10)), _left.getCoolDown().getSecondsMax());
+        _left.getCoolDown().reset();
+        _passBtn.setVisible(false);
+    }
+
     private void battleStep() {
         if (DevConfig.ShortcutsEnabled) {
             if (InputWrapper.pop()) {
@@ -154,9 +174,19 @@ public class Battle implements State {
                     usableForces++;
                 }
             }
-            if (usableForces == 0 || InputWrapper.pass()) {
-                TextPool.get().write("Recharging...", _left.getLocation().add(Screen.pos(0, 10)).add(0, _left.getBody().getHeight()), _left.getCoolDown().getSecondsMax());
-                _left.getCoolDown().reset();
+            if (usableForces == 0) {
+                pass();
+            }
+            else {
+                if (usableForces < _left.getStats().enabledCount()) {
+                    _passBtn.setVisible(true);
+                    if (InputWrapper.pass()) {
+                        pass();
+                    }
+                }
+                else {
+                    _passBtn.setVisible(false);
+                }
             }
         }
 
@@ -263,5 +293,9 @@ public class Battle implements State {
 
     public void playerShowCost(Force force) {
         _leftHud.flashCost(_left.getCostPercent(force));
+    }
+
+    public Creature getPlayer() {
+        return _left;
     }
 }
