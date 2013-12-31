@@ -39,10 +39,10 @@ public class Intro implements State {
         else {
             _introText += "We created the Munchoid. A collection of untapped mental fragments.\n\n";
             _introText += "Citizens volunteer their unused thoughts and we convert them into digital warriors.\n";
-            _introText += "The strongest could be used to prevent causes of death.\n\n";
-            _introText += "There’s always a problem that needs solving, and honest people hoping to gain a little fame.\n";
+            _introText += "The strongest can be used to prevent death.\n\n";
+            _introText += "There’s always a problem that needs solving, and people hoping to gain a little fame.\n";
             _introText += "Men and women flock to Munchoid Arena. A modern day colosseum where Munchoids battle it out for the sake of humankind.\n\n";
-            _introText += "An eipdemic is about to wash over the planet.\n";
+            _introText += "An epidemic is spreading over the planet.\n";
             _introText += "Can you grow Munchoids strong enough to save your home region?\n";
             _introText += "Step forward, lend us your thoughts, and may the people be correct in selecting you to fight for them.\n\n";
             _introText += "(This intro can be disabled in the Options menu. Press " + Commands.get("Confirm") + " to begin.)";
