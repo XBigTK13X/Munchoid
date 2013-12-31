@@ -6,7 +6,6 @@ import game.core.UIConfig;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.color.RGBA;
-import sps.core.Logger;
 import sps.core.Point2;
 import sps.core.RNG;
 import sps.display.Window;
@@ -116,7 +115,6 @@ public class Map {
                 }
             }
         }
-        Logger.error("Unable to find a habitable zone. Returning a random location, might collide.");
         return new Point2(RNG.next(0, _habitableZones.length), RNG.next(0, _habitableZones[0].length));
     }
 

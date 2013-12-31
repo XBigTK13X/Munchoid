@@ -207,7 +207,6 @@ public class PopulationOverview implements State {
             if (!_eradicated.isActive()) {
                 simluatePopulationChange();
                 _playByPlay.setVisible(true);
-                _continuePrompt.setVisible(true);
                 _eradicated = null;
             }
         }
@@ -286,6 +285,7 @@ public class PopulationOverview implements State {
             updatePopulationCount();
         }
         else {
+            _continuePrompt.setVisible(true);
             handleUserInput();
         }
     }
