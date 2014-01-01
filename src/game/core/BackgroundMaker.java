@@ -19,8 +19,8 @@ public class BackgroundMaker {
 
     }
 
-    public static Sprite noisyRadialDark() {
-        Color[][] base = radialDarkBase((int) Screen.width(100), (int) Screen.height(100));
+    public static Sprite noisyRadialDark(int percentX, int percentY) {
+        Color[][] base = radialDarkBase((int) Screen.width(percentX), (int) Screen.height(percentY));
         TextureManipulation.subtleNoise(base, 5);
         return SpriteMaker.fromColors(base);
     }

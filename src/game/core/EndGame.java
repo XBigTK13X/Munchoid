@@ -40,14 +40,14 @@ public class EndGame implements State {
             _results.add("The resulting Munchoids were able to solve most causes of death.");
             _results.add("Everyone in the region heralds you as their savior.");
             _results.add("Few faced their mortality thanks to your work.");
-            _results.add("The people provided you with a cash reward of " + getMoney());
+            _results.add("The people provided you with a cash reward of " + getMoney() + ".");
         }
         else {
             _results.add("You are welcomed home after winning " + WorldScore.TournamentWins + " of the " + GameConfig.NumberOfTournaments + " tournaments.");
             _results.add("Thanks to your efforts some severe causes of death were solved.");
             _results.add("With a larger population available to face the epidemic the region survived.");
-            _results.add("Many have died, but more remain to carry on and rebuild");
-            _results.add("Your people chose to grant you a gift " + getMoney());
+            _results.add("Many have died, but more remain to carry on and rebuild.");
+            _results.add("Your people chose to grant you a gift of" + getMoney() + ".");
         }
         _results.add("Press " + Commands.get("Confirm") + " to return to the main menu and play in a parallel universe.");
     }
@@ -58,7 +58,7 @@ public class EndGame implements State {
         if (ArenaScore.get().total() <= 0) {
             return "no money";
         }
-        return dollars.format(ArenaScore.get().total());
+        return dollars.format(WorldScore.ArenaTotal);
     }
 
     private String getTitle() {

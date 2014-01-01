@@ -1,6 +1,6 @@
 package game.pregame;
 
-import game.core.BackgroundMaker;
+import game.core.BackgroundCache;
 import game.core.PreloaderState;
 import game.creatures.PartFunction;
 import game.creatures.part.Designs;
@@ -64,7 +64,7 @@ public class PreloadMainMenu extends PreloaderState {
         _preloadChain.add(new PreloadChainLink("Generating background image.") {
             @Override
             public void process() {
-                _payload.Background = BackgroundMaker.noisyRadialDark();
+                _payload.Background = BackgroundCache.createMenuBackground();
             }
         });
     }

@@ -44,4 +44,13 @@ public class BackgroundCache {
                 BackgroundMaker.radialDark(scaleWidth, scaleHeight) :
                 BackgroundMaker.printedCircuitBoard(scaleWidth, scaleHeight));
     }
+
+    public static Sprite createMenuBackground() {
+        int scaleWidthPercent = (int) ((100f) * GameConfig.OptGraphicsDetailScale);
+        int scaleHeightPercent = (int) ((100f) * GameConfig.OptGraphicsDetailScale);
+        Sprite result = BackgroundMaker.noisyRadialDark(scaleWidthPercent, scaleHeightPercent);
+        result.setPosition(0, 0);
+        result.setSize(Screen.width(100), Screen.height(100));
+        return result;
+    }
 }
