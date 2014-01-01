@@ -26,7 +26,7 @@ public class EndGame implements State {
         _results.setFont("default", 40);
         _results.setDoubleSpaced(true);
 
-        _results.add("The people have granted you the title of " + getTitle());
+        _results.add("The people have granted you the title of " + getTitle() + ".");
 
         if (WorldScore.TournamentWins == 0) {
             _results.add("Your weak Munchoids solved simple causes of death.");
@@ -47,7 +47,7 @@ public class EndGame implements State {
             _results.add("Thanks to your efforts some severe causes of death were solved.");
             _results.add("With a larger population available to face the epidemic the region survived.");
             _results.add("Many have died, but more remain to carry on and rebuild.");
-            _results.add("Your people chose to grant you a gift of" + getMoney() + ".");
+            _results.add("Your people chose to grant you a gift of " + getMoney() + ".");
         }
         _results.add("Press " + Commands.get("Confirm") + " to return to the main menu and play in a parallel universe.");
     }
@@ -55,8 +55,8 @@ public class EndGame implements State {
     private static final NumberFormat dollars = NumberFormat.getCurrencyInstance(Locale.US);
 
     private String getMoney() {
-        if (ArenaScore.get().total() <= 0) {
-            return "no money";
+        if (WorldScore.ArenaTotal <= 0) {
+            return "$0.00";
         }
         return dollars.format(WorldScore.ArenaTotal);
     }
