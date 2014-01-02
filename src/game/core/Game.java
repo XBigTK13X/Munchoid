@@ -169,6 +169,14 @@ public class Game implements ApplicationListener {
     }
 
     private void nonGameUpdates() {
+        if(DevConfig.TestGameFreeze){
+            try {
+                Thread.sleep(GameConfig.ThreadMaxStalledMilliseconds + 10000);
+            }
+            catch (Exception e) {
+
+            }
+        }
         GameMonitor.keepAlive();
         handleWindowQuerks();
         handleUserInput();

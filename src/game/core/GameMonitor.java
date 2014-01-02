@@ -1,7 +1,13 @@
 package game.core;
 
 import com.badlogic.gdx.Gdx;
+import org.apache.commons.io.FileUtils;
+import org.lwjgl.opengl.Display;
+import sps.core.Loader;
 import sps.core.Logger;
+import sps.display.Window;
+
+import javax.swing.*;
 
 public class GameMonitor extends Thread {
     private static int __millisecondsWait = 200;
@@ -27,8 +33,6 @@ public class GameMonitor extends Thread {
     private int _stalledMilliseconds;
     private int _lastUpdateCount;
 
-    private int _stepsTaken;
-
     private GameMonitor() {
         _stalledMilliseconds = _maxStalledMilliseconds = GameConfig.ThreadMaxStalledMilliseconds;
     }
@@ -41,17 +45,18 @@ public class GameMonitor extends Thread {
                 if (_updateCount == _lastUpdateCount) {
                     _stalledMilliseconds -= __millisecondsWait;
                     if (_stalledMilliseconds <= 0) {
-                        if (_stepsTaken == 0) {
-                            _stalledMilliseconds = __millisecondsWait;
-                            Logger.error("The game appears to have hung for at least " + (GameConfig.ThreadMaxStalledMilliseconds / 1000f) + " seconds. Attempting graceful shutdown.");
-                            Gdx.app.exit();
-                            _stepsTaken++;
+                        Logger.error("The game appears to have hung for at least " + GameConfig.ThreadMaxStalledMilliseconds + " milliseconds. Forcing shutdown and recording the failure.");
+
+                        String errorMessage = "Unfortunately, an error caused Munchoid to freeze.\nThis likely happened because the graphics settings were too high for this computer.\nYou might be able to play by changing the graphics from Pretty to Fast in the Options menu.";
+                        Logger.error(errorMessage);
+                        try {
+                            FileUtils.writeStringToFile(Loader.get().userSave("Munchoid", "game.crash"), errorMessage);
                         }
-                        else {
-                            Logger.error("Unable to gracefully close the game. Forcing shutdown.");
-                            System.exit(1);
-                            return;
+                        catch (Exception e) {
+                            Logger.exception(e, false);
                         }
+                        System.exit(1);
+                        return;
                     }
                 }
                 else {

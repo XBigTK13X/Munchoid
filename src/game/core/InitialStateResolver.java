@@ -9,10 +9,17 @@ import game.pregame.Intro;
 import game.pregame.PreloadMainMenu;
 import game.save.Options;
 import game.test.*;
+import sps.core.Loader;
 import sps.states.State;
+
+import java.io.File;
 
 public class InitialStateResolver {
     public static State create() {
+        File crash = Loader.get().userSave("Munchoid", "game.crash");
+        if (crash.exists()) {
+            return new CrashNotification(crash);
+        }
         if (DevConfig.PopulationTest) {
             return new PreloadPopulationOverview();
         }

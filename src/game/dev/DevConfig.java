@@ -33,6 +33,8 @@ public class DevConfig {
     public static final boolean MeterTest = false && canEnable();
     public static final boolean ShortcutsEnabled = SilhouetteTest || EndGameTest || MeterTest || OutlineTest || ForceShortcutsEnabled || TournyTest || MergeOutcomeTest || PopulationTest || BattleTest || SkeletonTest || BackgroundGenerationTest;
 
+    public static final boolean TestGameFreeze = false && canEnable();
+
     public static final boolean EndToEndStateLoadTest = false && canEnable();
     public static final boolean FlipEnabled = false && canEnable();
     public static final boolean PartSortingEnabled = false;
