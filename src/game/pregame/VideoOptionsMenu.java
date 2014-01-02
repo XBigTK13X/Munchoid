@@ -2,6 +2,7 @@ package game.pregame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import game.core.SettingsDetector;
 import game.save.Options;
 import sps.display.Screen;
 import sps.states.StateManager;
@@ -22,6 +23,14 @@ public class VideoOptionsMenu extends OptionsState {
             @Override
             public void click() {
                 StateManager.get().pop();
+            }
+        };
+
+        final UIButton settingsDetection = new UIButton("Detect Optimal Settings") {
+
+            @Override
+            public void click() {
+                StateManager.reset().push(new SettingsDetector());
             }
         };
 
@@ -70,10 +79,12 @@ public class VideoOptionsMenu extends OptionsState {
         graphicsMode.setColRow(1, 1);
         back.setColRow(2, 3);
         fullScreen.setColRow(2, 1);
+        settingsDetection.setColRow(3, 1);
 
         graphicsMode.layout();
         back.layout();
         fullScreen.layout();
+        settingsDetection.layout();
 
         TextPool.get().write("Brightness", Screen.pos(15, 55));
     }

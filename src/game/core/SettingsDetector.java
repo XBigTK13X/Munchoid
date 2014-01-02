@@ -5,36 +5,21 @@ import game.creatures.Creature;
 import game.pregame.PreloadMainMenu;
 import game.save.Options;
 import sps.bridge.Commands;
-import sps.core.Logger;
+import sps.color.Color;
 import sps.display.Screen;
 import sps.states.State;
 import sps.states.StateManager;
-import sps.text.Text;
-import sps.text.TextPool;
-import sps.ui.UIButton;
+import sps.ui.MultiText;
 import sps.util.SimpleTimer;
 
 public class SettingsDetector implements State {
-    Text _display;
+    private MultiText _display;
 
     @Override
     public void create() {
-        _display = TextPool.get().write("Press 'Begin' and Munchoid will determine the optimal settings for your machine.", Screen.pos(5, 70));
-        _display.setFont("Console", 30);
-        UIButton confirm = new UIButton("Begin") {
-            @Override
-            public void click() {
-                _display.setMessage("Determining optimal settings for this machine...");
-                Options o = Options.load();
-                o.GraphicsLowQuality = false;
-                o.apply();
-                o.save();
-                testStep = 1;
-                setVisible(false);
-            }
-        };
-        confirm.setColRow(2, 2);
-        confirm.layout();
+        _display = new MultiText(Screen.pos(5, 5), 15, Color.GRAY.newAlpha(.5f), (int) Screen.width(90), (int) Screen.height(90));
+        _display.setFont("Console", 40);
+        testStep = 0;
     }
 
     private void proceed() {
@@ -46,27 +31,37 @@ public class SettingsDetector implements State {
 
     }
 
-    private int testStep = 0;
+    private int testStep = -1;
     private SimpleTimer timer = new SimpleTimer();
     private boolean creatureQuality;
     private boolean bgQuality;
 
     @Override
     public void update() {
-        if (testStep == 1) {
+        if (testStep == 0) {
+            _display.add("Determining optimal settings for this machine...");
+            Options o = Options.load();
+            o.GraphicsLowQuality = false;
+            o.apply();
+            o.save();
+            testStep = 1;
+        }
+        else if (testStep == 1) {
             timer.start(true);
             Creature creature = new Creature();
             timer.stop();
-            creatureQuality = (timer.getElapsedTimeMillis() <= 1000);
-            Logger.info("CR: " + timer.getElapsedTimeMillis());
+            creatureQuality = (timer.getElapsedTimeMillis() <= GameConfig.PrettyObjectGenerationThresholdMilliseconds);
+            _display.add("PRETTY creature generation speed is " + timer.getElapsedTimeMillis() + " milliseconds.");
+            _display.add("Threshold is " + GameConfig.PrettyObjectGenerationThresholdMilliseconds + " milliseconds.");
             testStep = 2;
         }
         else if (testStep == 2) {
             timer.start(true);
             Sprite bg = BackgroundCache.createMenuBackground();
             timer.stop();
-            bgQuality = timer.getElapsedTimeMillis() <= 1000;
-            Logger.info("BG: " + timer.getElapsedTimeMillis());
+            bgQuality = timer.getElapsedTimeMillis() <= GameConfig.PrettyObjectGenerationThresholdMilliseconds;
+            _display.add("PRETTY background generation speed is " + timer.getElapsedTimeMillis() + " milliseconds.");
+            _display.add("Threshold is " + GameConfig.PrettyObjectGenerationThresholdMilliseconds + " milliseconds.");
             testStep = 3;
         }
         else if (testStep == 3) {
@@ -76,7 +71,8 @@ public class SettingsDetector implements State {
             options.apply();
             options.save();
             testStep = 4;
-            _display.setMessage("Graphics mode has been set to " + (options.GraphicsLowQuality ? "FAST" : "PRETTY") + "\nPress " + Commands.get("Confirm") + " to continue");
+            _display.add("Graphics mode has been set to \"" + (options.GraphicsLowQuality ? "FAST" : "PRETTY") + "\".");
+            _display.add("Press " + Commands.get("Confirm") + " to start the game.");
         }
         else if (testStep == 4) {
             if (InputWrapper.confirm()) {

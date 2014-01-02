@@ -5,6 +5,7 @@ import sps.display.Screen;
 
 public class GameConfig {
     public static final int ThreadMaxStalledMilliseconds = 10000;
+    public static final int PrettyObjectGenerationThresholdMilliseconds = 800;
 
     //Options / Optimizations
     //TODO Make these toggleable in the options menu,
