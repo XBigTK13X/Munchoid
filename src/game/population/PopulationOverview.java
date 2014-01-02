@@ -102,7 +102,7 @@ public class PopulationOverview implements State {
         TextPool.get().write("Salvation Progress", UIConfig.PopulationSolutionsCaptionPosition());
         _solutionsMeter = new Meter(40, 5, Color.GREEN, UIConfig.PopulationSolutionMeterPosition(), false);
 
-        _playByPlay = new MultiText(UIConfig.PopulationPlayByPlayPosition(), 25, Colors.randomPleasant().newAlpha(.50f), (int) UIConfig.PopulationPlayByPlaySize().X, (int) UIConfig.PopulationPlayByPlaySize().Y);
+        _playByPlay = new MultiText(UIConfig.PopulationPlayByPlayPosition(), 30, Colors.randomPleasant().newAlpha(.50f), (int) UIConfig.PopulationPlayByPlaySize().X, (int) UIConfig.PopulationPlayByPlaySize().Y);
         _playByPlay.add("Welcome to the overview for " + _regionName);
         _playByPlay.setBackgroundDepth(DrawDepths.get("PlayByPlayBackground"));
         _playByPlay.setTextDepth(DrawDepths.get("PlayByPlayText"));
