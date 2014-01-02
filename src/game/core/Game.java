@@ -67,6 +67,7 @@ public class Game implements ApplicationListener {
         MusicPlayer.get().add("Quickly", "Quickly.ogg");
         MusicPlayer.get().add("BattleTheme", "BattleTheme.ogg");
 
+
         Window.setWindowBackground(Color.BLACK);
         Window.get(false).screenEngine().setStrategy(new FrameStrategy());
         Window.get(true).screenEngine().setStrategy(new FrameStrategy());
@@ -99,6 +100,7 @@ public class Game implements ApplicationListener {
         ConsoleCommands.init();
 
         _persistResizeOperation.zeroOut();
+        GameMonitor.monitor();
     }
 
     @Override
@@ -167,6 +169,7 @@ public class Game implements ApplicationListener {
     }
 
     private void nonGameUpdates() {
+        GameMonitor.keepAlive();
         handleWindowQuerks();
         handleUserInput();
         PausePrompt.get().updateAndDraw();

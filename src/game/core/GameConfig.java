@@ -4,6 +4,8 @@ import sps.core.Point2;
 import sps.display.Screen;
 
 public class GameConfig {
+    public static final int ThreadMaxStalledMilliseconds = 5000;
+
     //Options / Optimizations
     //TODO Make these toggleable in the options menu,
     //     helps with lots of creatures running on weaker computers
