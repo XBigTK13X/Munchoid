@@ -4,7 +4,7 @@ import sps.core.Point2;
 import sps.display.Screen;
 
 public class GameConfig {
-    public static final int ThreadMaxStalledMilliseconds = 5000;
+    public static final int ThreadMaxStalledMilliseconds = 10000;
 
     //Options / Optimizations
     //TODO Make these toggleable in the options menu,

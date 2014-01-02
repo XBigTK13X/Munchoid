@@ -27,6 +27,8 @@ public class GameMonitor extends Thread {
     private int _stalledMilliseconds;
     private int _lastUpdateCount;
 
+    private int _stepsTaken;
+
     private GameMonitor() {
         _stalledMilliseconds = _maxStalledMilliseconds = GameConfig.ThreadMaxStalledMilliseconds;
     }
@@ -39,9 +41,17 @@ public class GameMonitor extends Thread {
                 if (_updateCount == _lastUpdateCount) {
                     _stalledMilliseconds -= __millisecondsWait;
                     if (_stalledMilliseconds <= 0) {
-                        Logger.error("The game appears to have hung for at least 10 seconds. Forcing it to close.");
-                        Gdx.app.exit();
-                        return;
+                        if (_stepsTaken == 0) {
+                            _stalledMilliseconds = __millisecondsWait;
+                            Logger.error("The game appears to have hung for at least " + (GameConfig.ThreadMaxStalledMilliseconds / 1000f) + " seconds. Attempting graceful shutdown.");
+                            Gdx.app.exit();
+                            _stepsTaken++;
+                        }
+                        else {
+                            Logger.error("Unable to gracefully close the game. Forcing shutdown.");
+                            System.exit(1);
+                            return;
+                        }
                     }
                 }
                 else {
