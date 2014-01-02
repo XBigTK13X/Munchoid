@@ -23,4 +23,8 @@ public class SimpleTimer {
     public String getDisplay() {
         return _elapsedTime + " milliseconds";
     }
+
+    public long getElapsedTimeMillis(){
+        return _elapsedTime;
+    }
 }

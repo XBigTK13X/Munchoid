@@ -37,12 +37,14 @@ public class BackgroundCache {
         return result;
     }
 
-    public static void cacheScreenSize() {
+    public static Sprite cacheScreenSize() {
         int scaleWidth = (int) (Screen.width(100) * GameConfig.OptGraphicsDetailScale);
         int scaleHeight = (int) (Screen.height(100) * GameConfig.OptGraphicsDetailScale);
-        add(GameConfig.OptSimpleBackgrounds ?
+        Sprite result = GameConfig.OptSimpleBackgrounds ?
                 BackgroundMaker.radialDark(scaleWidth, scaleHeight) :
-                BackgroundMaker.printedCircuitBoard(scaleWidth, scaleHeight));
+                BackgroundMaker.printedCircuitBoard(scaleWidth, scaleHeight);
+        add(result);
+        return result;
     }
 
     public static Sprite createMenuBackground() {

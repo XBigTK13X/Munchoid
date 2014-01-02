@@ -20,10 +20,13 @@ public class InitialStateResolver {
         if (crash.exists()) {
             return new CrashNotification(crash);
         }
-        if (DevConfig.PopulationTest) {
+        else if(!Options.load().SettingsDetected){
+            return new SettingsDetector();
+        }
+        else if (DevConfig.PopulationTest) {
             return new PreloadPopulationOverview();
         }
-        if (DevConfig.MergeOutcomeTest) {
+        else if (DevConfig.MergeOutcomeTest) {
             return new MergeOutcome();
         }
         else if (DevConfig.BattleTest) {

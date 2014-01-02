@@ -55,6 +55,9 @@ public class Options {
                     case "brightness":
                         options.Brightness = Parse.inte(value);
                         break;
+                    case "settingsDetected":
+                        options.SettingsDetected = Parse.bool(value);
+                        break;
                     default:
                         Logger.error("Invalid user config: " + line);
                         break;
@@ -83,14 +86,15 @@ public class Options {
 
     public int WindowResolutionX;
     public int WindowResolutionY;
-    public boolean FullScreen;
+    public boolean FullScreen = false;
     public boolean MusicEnabled = true;
     public boolean SoundEnabled = true;
     public boolean GraphicsLowQuality;
     public boolean TutorialEnabled = true;
     public boolean ShowIntro = true;
     public boolean TutorialQueryEnabled = true;
-    public int Brightness = 100;
+    public int Brightness = 85;
+    public boolean SettingsDetected = false;
 
     public void save() {
         try {
@@ -104,7 +108,8 @@ public class Options {
             options += "tutorialEnabled=" + TutorialEnabled + "\n";
             options += "tutorialQueryEnabled=" + TutorialQueryEnabled + "\n";
             options += "brightness=" + Brightness + "\n";
-            options += "showIntro=" + ShowIntro;
+            options += "showIntro=" + ShowIntro + "\n";
+            options += "settingsDetected=" + SettingsDetected;
 
             FileUtils.write(__config, options);
         }
