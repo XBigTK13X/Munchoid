@@ -2,6 +2,7 @@ package sps.ui;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import org.apache.commons.lang3.StringUtils;
+import sps.audio.RandomSoundPlayer;
 import sps.audio.SoundPlayer;
 import sps.bridge.Command;
 import sps.bridge.DrawDepth;
@@ -75,7 +76,7 @@ public abstract class UIButton {
 
             @Override
             public void onClick() {
-                SoundPlayer.get().play("Click");
+                RandomSoundPlayer.play("click");
                 click();
             }
 

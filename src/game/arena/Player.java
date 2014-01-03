@@ -8,6 +8,7 @@ import game.core.UIConfig;
 import game.creatures.Creature;
 import game.dev.DevConfig;
 import sps.audio.MusicPlayer;
+import sps.audio.RandomSoundPlayer;
 import sps.bridge.*;
 import sps.color.Color;
 import sps.core.Point2;
@@ -117,7 +118,7 @@ public class Player extends Entity implements IActor {
                 }
                 else {
                     if (_pet.isLargerThan(_creature)) {
-                        ChompPlayer.play();
+                        RandomSoundPlayer.play("chomp");
                         if (UIConfig.EnableChompText) {
                             TextPool.get().write("*CHOMP*", getLocation(), 1f, TextEffects.Fountain);
                         }

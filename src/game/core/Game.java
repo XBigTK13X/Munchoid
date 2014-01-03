@@ -4,7 +4,6 @@ package game.core;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import game.arena.Arena;
-import game.arena.ChompPlayer;
 import game.battle.Battle;
 import game.battle.MergeOutcome;
 import game.dev.ConsoleCommands;
@@ -14,6 +13,7 @@ import game.population.PopulationOverview;
 import game.save.Options;
 import game.tutorial.*;
 import sps.audio.MusicPlayer;
+import sps.audio.RandomSoundPlayer;
 import sps.audio.SoundPlayer;
 import sps.bridge.Commands;
 import sps.bridge.SpriteTypes;
@@ -58,8 +58,8 @@ public class Game implements ApplicationListener {
         MultiText.setDefaultFont("Console", 24);
         DevConsole.get().setFont("Console", 24);
 
-        SoundPlayer.get().add("Click", "click.ogg");
-        ChompPlayer.setup();
+        RandomSoundPlayer.setup("chomp");
+        RandomSoundPlayer.setup("click");
 
         MusicPlayer.get().add("Intro", "keyboard.ogg");
         MusicPlayer.get().add("Anticipation", "Anticipation.ogg");
