@@ -2,7 +2,6 @@ package game.core;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.creatures.Creature;
-import game.pregame.PreloadMainMenu;
 import game.save.Options;
 import sps.bridge.Commands;
 import sps.color.Color;
@@ -23,7 +22,7 @@ public class SettingsDetector implements State {
     }
 
     private void proceed() {
-        StateManager.get().push(new PreloadMainMenu());
+        StateManager.get().push(InitialStateResolver.create());
     }
 
     @Override
