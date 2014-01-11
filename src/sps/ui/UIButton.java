@@ -105,7 +105,7 @@ public abstract class UIButton {
 
     private void rebuildBackground() {
         Color[][] base = ProcTextures.gradient(_width, _height, _start, _end, false);
-        Outline.single(base, Color.WHITE, 3);
+        Outline.single(base, Color.WHITE, 1);
         _sprite = SpriteMaker.fromColors(base);
         _sprite.setPosition(_position.X, _position.Y);
     }
