@@ -2,7 +2,7 @@ package game.app.save;
 
 import game.app.core.BackgroundCache;
 import sps.preload.PreloaderState;
-import config.UIConfig;
+import game.config.UIConfig;
 import game.app.core.WorldScore;
 import game.stages.population.*;
 import game.stages.pregame.MainMenu;

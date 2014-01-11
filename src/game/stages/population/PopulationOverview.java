@@ -1,8 +1,8 @@
 package game.stages.population;
 
 import com.badlogic.gdx.Gdx;
-import config.GameConfig;
-import config.UIConfig;
+import game.config.GameConfig;
+import game.config.UIConfig;
 import game.stages.arena.PreloadArena;
 import game.app.core.*;
 import game.app.dev.DevConfig;

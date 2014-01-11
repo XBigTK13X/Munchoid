@@ -1,6 +1,6 @@
 package game.stages.common.forces;
 
-import config.UIConfig;
+import game.config.UIConfig;
 import game.stages.common.forces.sideeffects.*;
 import sps.color.Color;
 import sps.color.RGBA;

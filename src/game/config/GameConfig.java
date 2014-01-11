@@ -1,4 +1,4 @@
-package config;
+package game.config;
 
 import sps.core.Point2;
 import sps.display.Screen;

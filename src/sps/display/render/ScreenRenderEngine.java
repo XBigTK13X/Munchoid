@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
-import config.GameConfig;
+import game.config.GameConfig;
 import sps.color.Color;
 import sps.core.Point2;
 import sps.display.Assets;

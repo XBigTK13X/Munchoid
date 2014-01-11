@@ -2,7 +2,7 @@ package game.stages.tournament;
 
 import game.stages.arena.Player;
 import game.stages.battle.Battle;
-import config.GameConfig;
+import game.config.GameConfig;
 import game.stages.common.creatures.Creature;
 import game.stages.common.creatures.Stats;
 import game.stages.common.forces.Force;

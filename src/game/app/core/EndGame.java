@@ -1,7 +1,7 @@
 package game.app.core;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import config.GameConfig;
+import game.config.GameConfig;
 import game.app.dev.DevConfig;
 import game.stages.pregame.PreloadMainMenu;
 import sps.bridge.Commands;

@@ -1,6 +1,6 @@
 package game.stages.common.creatures.part;
 
-import config.GameConfig;
+import game.config.GameConfig;
 import game.stages.common.creatures.Atom;
 import game.stages.common.creatures.PartFunction;
 import game.stages.common.creatures.part.designimpls.*;

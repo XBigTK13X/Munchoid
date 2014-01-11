@@ -1,8 +1,8 @@
 package game.stages.arena;
 
 import com.badlogic.gdx.Gdx;
-import config.GameConfig;
-import config.UIConfig;
+import game.config.GameConfig;
+import game.config.UIConfig;
 import game.stages.common.creatures.Creature;
 import game.app.dev.DevConfig;
 import sps.bridge.DrawDepths;

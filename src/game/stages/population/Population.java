@@ -1,6 +1,6 @@
 package game.stages.population;
 
-import config.GameConfig;
+import game.config.GameConfig;
 import sps.core.RNG;
 import sps.util.Maths;
 

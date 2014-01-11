@@ -1,6 +1,6 @@
 package game.stages.common.creatures;
 
-import config.GameConfig;
+import game.config.GameConfig;
 import game.app.dev.DevConfig;
 import sps.color.Color;
 import sps.display.DrawApiCall;

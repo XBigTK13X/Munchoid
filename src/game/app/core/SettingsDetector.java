@@ -1,7 +1,7 @@
 package game.app.core;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import config.GameConfig;
+import game.config.GameConfig;
 import game.app.InitialStateResolver;
 import game.stages.common.creatures.Creature;
 import game.app.save.Options;

@@ -1,7 +1,7 @@
 package game.app;
 
 import com.badlogic.gdx.Gdx;
-import config.GameConfig;
+import game.config.GameConfig;
 import sps.util.GameMonitor;
 import game.app.core.InputWrapper;
 import game.app.dev.DevConfig;

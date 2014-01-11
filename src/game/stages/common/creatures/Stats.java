@@ -1,6 +1,6 @@
 package game.stages.common.creatures;
 
-import config.GameConfig;
+import game.config.GameConfig;
 import game.stages.common.forces.Force;
 import sps.core.RNG;
 

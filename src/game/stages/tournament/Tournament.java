@@ -3,7 +3,7 @@ package game.stages.tournament;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.stages.arena.Player;
 import game.app.core.BackgroundCache;
-import config.GameConfig;
+import game.config.GameConfig;
 import game.app.core.InputWrapper;
 import game.app.dev.DevConfig;
 import sps.bridge.Commands;

@@ -1,7 +1,7 @@
 package game.stages.population;
 
-import config.GameConfig;
-import config.UIConfig;
+import game.config.GameConfig;
+import game.config.UIConfig;
 import game.app.dev.DevConfig;
 import sps.core.Logger;
 import sps.display.Screen;
