@@ -3,6 +3,7 @@ package game.pregame;
 import game.core.GameConfig;
 import game.core.InputWrapper;
 import game.dev.DevConfig;
+import game.save.Options;
 import sps.audio.MusicPlayer;
 import sps.bridge.Commands;
 import sps.color.Color;
@@ -74,6 +75,12 @@ public class Intro implements State {
         }
 
         if ((_readText.equals(_introText) && InputWrapper.confirm()) || _skip.isCooled() || DevConfig.EndToEndStateLoadTest || DevConfig.BotEnabled) {
+            if (_skip.isCooled()) {
+                Options options = Options.load();
+                options.ShowIntro = false;
+                options.apply();
+                options.save();
+            }
             StateManager.get().push(new PreloadMainMenu());
         }
 

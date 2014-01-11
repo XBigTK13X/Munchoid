@@ -17,6 +17,7 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
+import sps.ui.ButtonStyle;
 import sps.ui.UIButton;
 
 public class MainMenu implements State {
@@ -39,7 +40,7 @@ public class MainMenu implements State {
     public void create() {
         _logo.setPosition(Screen.centerWidth((int) _logo.getWidth()), Screen.height(80));
 
-        UIButton _start = new UIButton("Start", Commands.get("Confirm")) {
+        UIButton _start = new UIButton("New Game", Commands.get("Confirm")) {
             @Override
             public void click() {
                 start();
@@ -60,14 +61,10 @@ public class MainMenu implements State {
             }
         };
 
-        _start.setColRow(1, 1);
-        _options.setColRow(2, 1);
-        _exit.setColRow(3, 1);
-
-        _start.layout();
-        _options.layout();
-        _exit.layout();
-
+        ButtonStyle style = new ButtonStyle(30, 20, 40, 10, 10);
+        style.apply(_start, 0, 2);
+        style.apply(_options, 0, 1);
+        style.apply(_exit, 0, 0);
         if (_saveFilePresent) {
             _load = new UIButton("Continue") {
                 @Override
@@ -75,8 +72,7 @@ public class MainMenu implements State {
                     StateManager.get().push(new RestoreSavedGame());
                 }
             };
-            _load.setColRow(2, 2);
-            _load.layout();
+            style.apply(_load, 0, 3);
             _corruptSave = TextPool.get().write("\t\t\t\t\tUnable to load the save file.\n It is most likely from an older version of the game.", Screen.pos(20, 70));
             _corruptSave.setVisible(false);
         }

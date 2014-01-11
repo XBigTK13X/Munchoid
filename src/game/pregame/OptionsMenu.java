@@ -3,6 +3,7 @@ package game.pregame;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.save.Options;
 import sps.states.StateManager;
+import sps.ui.ButtonStyle;
 import sps.ui.UIButton;
 
 public class OptionsMenu extends OptionsState {
@@ -12,7 +13,7 @@ public class OptionsMenu extends OptionsState {
 
     @Override
     public void create() {
-        final UIButton gameplay = new UIButton("Game") {
+        final UIButton gameplay = new UIButton("Gameplay") {
             @Override
             public void click() {
                 StateManager.get().push(new GameOptionsMenu(_background));
@@ -54,21 +55,14 @@ public class OptionsMenu extends OptionsState {
             }
         };
 
-        gameplay.setColRow(1, 2);
-        video.setColRow(2, 2);
-        audio.setColRow(3, 2);
+        ButtonStyle style = new ButtonStyle(12, 30, 25, 10, 10);
 
+        style.apply(gameplay, 0, 3);
+        style.apply(video, 1, 3);
+        style.apply(audio, 2, 3);
 
-        controls.setColRow(3, 1);
-        defaults.setColRow(1, 1);
-
-        back.setColRow(2, 3);
-
-        gameplay.layout();
-        video.layout();
-        audio.layout();
-        defaults.layout();
-        controls.layout();
-        back.layout();
+        style.apply(controls, 1, 2);
+        style.apply(defaults, 2, 0);
+        style.apply(back, 0, 0);
     }
 }

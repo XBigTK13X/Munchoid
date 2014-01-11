@@ -3,7 +3,6 @@ package sps.ui;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import org.apache.commons.lang3.StringUtils;
 import sps.audio.RandomSoundPlayer;
-import sps.audio.SoundPlayer;
 import sps.bridge.Command;
 import sps.bridge.DrawDepth;
 import sps.bridge.DrawDepths;
@@ -42,6 +41,7 @@ public abstract class UIButton {
     private Color _start;
     private Color _end;
     private boolean _moveable = true;
+    private String _originalMessage;
 
     public UIButton(String text) {
         this(text, 0, 0);
@@ -65,6 +65,8 @@ public abstract class UIButton {
         _message = TextPool.get().write(text, new Point2(0, 0));
         _message.setFont("UIButton", 60);
         _message.setDepth(_depth);
+
+        _originalMessage = text;
 
         setSize(20, 20);
 
@@ -108,17 +110,20 @@ public abstract class UIButton {
         _sprite.setPosition(_position.X, _position.Y);
     }
 
-    public void setSize(int width, int height) {
-        _width = (int) Screen.width(width);
-        _height = (int) (Screen.height(height));
-
+    public void setPixelSize(int width, int height) {
+        _width = width;
+        _height = height;
         rebuildBackground();
-
         layout();
+    }
+
+    public void setSize(int width, int height) {
+        setPixelSize((int) Screen.width(width), (int) (Screen.height(height)));
     }
 
     public void setMessage(String message) {
         int maxLines = 5;
+        _originalMessage = message;
         _message.setMessage(message);
         int longestLineLength = 0;
         while (_width < _message.getBounds().width && maxLines-- > 0) {
@@ -151,7 +156,7 @@ public abstract class UIButton {
     public void layout() {
         //FIXME Is it possible to have a work piece of code than this?
         //TODO Figure out why if this isn't called, text isn't centered properly.
-        setMessage(_message.getMessage());
+        setMessage(_originalMessage);
         setXY((int) _position.X, (int) _position.Y);
     }
 

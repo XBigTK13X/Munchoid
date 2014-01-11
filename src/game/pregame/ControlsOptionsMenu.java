@@ -2,6 +2,7 @@ package game.pregame;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import sps.states.StateManager;
+import sps.ui.ButtonStyle;
 import sps.ui.UIButton;
 
 
@@ -26,20 +27,17 @@ public class ControlsOptionsMenu extends OptionsState {
             }
         };
 
-        final UIButton view = new UIButton("View") {
+        final UIButton view = new UIButton("View Current Controls") {
             @Override
             public void click() {
                 //TODO StateManager.get().push(new ViwConfigState());
             }
         };
 
-        configure.setColRow(3, 1);
-        view.setColRow(1, 1);
-        back.setColRow(2, 3);
-
-        configure.layout();
-        view.layout();
-        back.layout();
+        ButtonStyle style = new ButtonStyle(30, 30, 40, 10, 10);
+        style.apply(configure, 0, 3);
+        style.apply(view, 0, 1);
+        style.apply(back, 0, 0);
     }
 }
 

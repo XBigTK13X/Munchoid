@@ -15,6 +15,7 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
+import sps.ui.ButtonStyle;
 import sps.ui.UIButton;
 import sps.ui.UiElements;
 
@@ -49,17 +50,18 @@ public class ExitPrompt {
         }
         _background = SpriteMaker.pixel(_bg);
         _background.setSize(Screen.width(100), Screen.height(100));
-        _desktop = new UIButton("Desktop") {
+        _desktop = new UIButton("Exit to Desktop") {
             @Override
             public void click() {
                 Gdx.app.exit();
             }
         };
 
-        _cancel = new UIButton("No") {
+        _cancel = new UIButton("Continue Playing") {
             @Override
             public void click() {
                 setActive(false);
+                PausePrompt.get().setActive(false);
             }
         };
 
@@ -73,7 +75,7 @@ public class ExitPrompt {
             }
         };
 
-        _mainMenu = new UIButton("Main Menu") {
+        _mainMenu = new UIButton("Quit to Main Menu") {
             @Override
             public void click() {
                 PausePrompt.get().setActive(false);
@@ -91,22 +93,18 @@ public class ExitPrompt {
             }
         };
 
-        _desktop.setColRow(1, 2);
-        _cancel.setColRow(2, 1);
-        _mainMenu.setColRow(3, 2);
-        _toggleFullScreen.setColRow(2, 2);
-
         _mainMenu.setDepth(DrawDepths.get("ExitText"));
         _desktop.setDepth(DrawDepths.get("ExitText"));
         _cancel.setDepth(DrawDepths.get("ExitText"));
         _toggleFullScreen.setDepth(DrawDepths.get("ExitText"));
 
-        _desktop.layout();
-        _cancel.layout();
-        _mainMenu.layout();
-        _toggleFullScreen.layout();
+        ButtonStyle style = new ButtonStyle(30, 20, 40, 10, 10);
+        style.apply(_desktop, 0, 6);
+        style.apply(_mainMenu, 0, 4);
+        style.apply(_toggleFullScreen, 0, 2);
+        style.apply(_cancel, 0, 0);
 
-        _display = TextPool.get().write("Do you want to exit the game?", Screen.pos(25, 80));
+        _display = TextPool.get().write("", Screen.pos(25, 80));
         _display.setDepth(DrawDepths.get("ExitText"));
 
         _display.setMoveable(false);

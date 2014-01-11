@@ -5,8 +5,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.core.SettingsDetector;
 import game.save.Options;
 import sps.display.Screen;
+import sps.entities.HitTest;
 import sps.states.StateManager;
 import sps.text.TextPool;
+import sps.ui.ButtonStyle;
+import sps.ui.Tooltips;
 import sps.ui.UIButton;
 import sps.ui.UISlider;
 
@@ -34,7 +37,7 @@ public class VideoOptionsMenu extends OptionsState {
             }
         };
 
-        final UIButton fullScreen = new UIButton("Full Screen") {
+        final UIButton fullScreen = new UIButton("Toggle Full Screen") {
             @Override
             public void click() {
                 Options options = Options.load();
@@ -57,7 +60,13 @@ public class VideoOptionsMenu extends OptionsState {
             }
         };
 
-        _brightness = new UISlider(80, 10, (int) Screen.width(10), (int) Screen.height(50)) {
+        ButtonStyle style = new ButtonStyle(30, 20, 40, 10, 10);
+        style.apply(back, 0, 0);
+        style.apply(graphicsMode, 0, 3);
+        style.apply(fullScreen, 0, 2);
+        style.apply(settingsDetection, 0, 1);
+
+        _brightness = new UISlider(80, 10, (int) Screen.width(10), (int) Screen.height(70)) {
             @Override
             public void onSlide() {
                 setBrightnessPercent(getSliderPercent(), true);
@@ -72,21 +81,21 @@ public class VideoOptionsMenu extends OptionsState {
                 setBrightnessPercent(100, true);
             }
         };
+        TextPool.get().write("Brightness", Screen.pos(15, 77));
 
         brightnessReset.setSize(5, 5);
-        brightnessReset.setScreenPercent(3, 52);
+        brightnessReset.setScreenPercent(3, 73);
+        Tooltips.get().add(new Tooltips.User() {
+            @Override
+            public boolean isActive() {
+                return HitTest.mouseInside(brightnessReset.getSprite());
+            }
 
-        graphicsMode.setColRow(1, 1);
-        back.setColRow(2, 3);
-        fullScreen.setColRow(2, 1);
-        settingsDetection.setColRow(3, 1);
-
-        graphicsMode.layout();
-        back.layout();
-        fullScreen.layout();
-        settingsDetection.layout();
-
-        TextPool.get().write("Brightness", Screen.pos(15, 55));
+            @Override
+            public String message() {
+                return "Reset brightness.";
+            }
+        });
     }
 
     private void setBrightnessPercent(int brightness, boolean persist) {
@@ -100,7 +109,7 @@ public class VideoOptionsMenu extends OptionsState {
     }
 
     private String qualityMessage(Options options) {
-        return "Graphics Mode\n" + (options.GraphicsLowQuality ? "Fast" : "Pretty");
+        return "Graphics Mode: " + (options.GraphicsLowQuality ? "Fast" : "Pretty");
     }
 
     @Override
