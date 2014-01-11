@@ -19,12 +19,21 @@ public abstract class PreloadChain {
     private MultiText _loadingMessage;
     private Text _percentDisplay;
     private Meter _loadingMeter;
+    private boolean _showGUI;
+    private boolean _finished;
+
+    public PreloadChain(boolean showGUI) {
+        _showGUI = showGUI;
+        _preloadChain = new LinkedList<>();
+        if (showGUI) {
+            _percentDisplay = TextPool.get().write("", Screen.pos(40, 20));
+            _loadingMessage = new MultiText(Screen.pos(10, 50), 6, Color.GRAY.newAlpha(.5f), (int) Screen.width(80), (int) Screen.height(20));
+            _loadingMeter = new Meter(90, 9, Colors.randomPleasant(), Screen.pos(5, 30), false);
+        }
+    }
 
     public PreloadChain() {
-        _preloadChain = new LinkedList<>();
-        _percentDisplay = TextPool.get().write("", Screen.pos(40, 20));
-        _loadingMessage = new MultiText(Screen.pos(10, 50), 6, Color.GRAY.newAlpha(.5f), (int) Screen.width(80), (int) Screen.height(20));
-        _loadingMeter = new Meter(90, 9, Colors.randomPleasant(), Screen.pos(5, 30), false);
+        this(true);
     }
 
     public void add(PreloadChainLink link) {
@@ -38,15 +47,18 @@ public abstract class PreloadChain {
         PreloadChainLink link = _preloadChain.peek();
         if (!processStep) {
             if (link == null) {
+                _finished = true;
                 finish();
             }
             else {
-                _loadingMeter.setPercent((int) ((_preloadedItems / (float) _preloadedItemsTarget) * 100));
-                if (_lastMessage == null || !_lastMessage.equals(link.getMessage())) {
-                    _loadingMessage.add(link.getMessage());
-                    _lastMessage = link.getMessage();
+                if (_showGUI) {
+                    _loadingMeter.setPercent((int) ((_preloadedItems / (float) _preloadedItemsTarget) * 100));
+                    if (_lastMessage == null || !_lastMessage.equals(link.getMessage())) {
+                        _loadingMessage.add(link.getMessage());
+                        _lastMessage = link.getMessage();
+                    }
+                    _percentDisplay.setMessage(getProgress());
                 }
-                _percentDisplay.setMessage(getProgress());
             }
         }
         else {
@@ -67,8 +79,14 @@ public abstract class PreloadChain {
     }
 
     public void draw() {
-        _loadingMeter.draw();
-        _loadingMessage.draw();
+        if (_showGUI) {
+            _loadingMeter.draw();
+            _loadingMessage.draw();
+        }
+    }
+
+    public boolean isFinished() {
+        return _finished;
     }
 
     public abstract void finish();

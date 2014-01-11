@@ -4,6 +4,10 @@ public abstract class PreloadChainLink {
     private String _loadingMessage;
     private int _repetitions;
 
+    public PreloadChainLink() {
+        this("", 1);
+    }
+
     public PreloadChainLink(String message) {
         this(message, 1);
     }

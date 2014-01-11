@@ -2,10 +2,13 @@ package targets;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import game.core.Game;
+import game.core.GamePreloader;
+import game.core.GameWrapper;
+import game.core.LoadedGame;
 import game.dev.DevConfig;
 import sps.core.Logger;
 import sps.core.SpsConfig;
+import sps.core.SpsLoader;
 
 import java.util.UUID;
 
@@ -40,7 +43,7 @@ public class DesktopGame {
         }
         cfg.vSyncEnabled = SpsConfig.get().vSyncEnabled;
         cfg.useGL20 = true;
-        instance = new LwjglApplication(new Game(), cfg);
+        instance = new LwjglApplication(new GameWrapper(new SpsLoader(GamePreloader.createPreloadChain()), new LoadedGame()), cfg);
     }
 
     public static LwjglApplication get() {
