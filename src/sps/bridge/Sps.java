@@ -1,10 +1,19 @@
 package sps.bridge;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.utils.GdxNativesLoader;
 import sps.core.SpsConfig;
 
 public class Sps {
-    public static void setup(boolean enableGraphics) {
+    private static Application _application;
+
+    public static Application getApp() {
+        return _application;
+    }
+
+    public static void setup(Application application, boolean enableGraphics) {
+        _application = application;
         GdxNativesLoader.load();
         Bridge.setup(enableGraphics);
     }

@@ -7,6 +7,7 @@ import sps.bridge.Sps;
 import sps.draw.SpriteMaker;
 import sps.preload.PreloadChain;
 import sps.preload.PreloadChainLink;
+import targets.DesktopGame;
 
 public class SpsLoader {
     private SpriteBatch _batch;
@@ -43,7 +44,7 @@ public class SpsLoader {
             @Override
             public void process() {
                 RNG.naturalReseed();
-                Sps.setup(true);
+                Sps.setup(DesktopGame.get(),true);
             }
         });
     }

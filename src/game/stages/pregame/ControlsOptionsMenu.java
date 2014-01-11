@@ -30,7 +30,7 @@ public class ControlsOptionsMenu extends OptionsState {
         final UIButton view = new UIButton("View Current Controls") {
             @Override
             public void click() {
-                //TODO StateManager.get().push(new ViwConfigState());
+                StateManager.get().push(new ViewCurrentControls(_background));
             }
         };
 

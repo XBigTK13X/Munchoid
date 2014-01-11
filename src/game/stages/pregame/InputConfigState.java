@@ -9,6 +9,7 @@ import sps.core.Logger;
 import sps.display.Screen;
 import sps.io.Input;
 import sps.io.InputBindings;
+import sps.io.KeyCatcher;
 import sps.io.Keys;
 import sps.states.State;
 import sps.states.StateManager;
@@ -27,60 +28,20 @@ public class InputConfigState implements State {
 
     private Map<Integer, Integer> _duplicates;
 
-    private InputProcessor keyboardCatcher = new InputProcessor() {
+
+    private KeyCatcher keyCatcher = new KeyCatcher() {
+
         @Override
-        public boolean keyDown(int i) {
-            if (!_duplicates.containsKey(i)) {
-                _current.bind(_current.controllerInput(), Keys.find(i));
+        public void onDown(int keyCode) {
+            if (!_duplicates.containsKey(keyCode)) {
+                _current.bind(_current.controllerInput(), Keys.find(keyCode));
                 selectNextCommand();
-                _duplicates.put(i, i);
+                _duplicates.put(keyCode, keyCode);
                 _overlap.setVisible(false);
-                return false;
             }
             _overlap.setVisible(true);
-            return false;
         }
-
-        @Override
-        public boolean keyUp(int i) {
-            return false;
-        }
-
-        @Override
-        public boolean keyTyped(char c) {
-            return false;
-        }
-
-        @Override
-        public boolean touchDown(int i, int i2, int i3, int i4) {
-            return false;
-        }
-
-        @Override
-        public boolean touchUp(int i, int i2, int i3, int i4) {
-            return false;
-        }
-
-        @Override
-        public boolean touchDragged(int i, int i2, int i3) {
-            return false;
-        }
-
-        @Override
-        public boolean mouseMoved(int i, int i2) {
-            return false;
-        }
-
-        @Override
-        public boolean scrolled(int i) {
-            return false;
-        }
-
-        ;
     };
-
-    private InputProcessor originalInputProcessor;
-
 
     private void setCommand() {
         if (_current != null) {
@@ -101,8 +62,7 @@ public class InputConfigState implements State {
             catch (Exception e) {
                 Logger.exception(e, false);
             }
-            DesktopGame.get().getInput().setInputProcessor(originalInputProcessor);
-            Input.enable();
+            keyCatcher.deactivate();
             StateManager.get().pop();
         }
     }
@@ -114,11 +74,7 @@ public class InputConfigState implements State {
         _duplicates = new HashMap<>();
         _overlap.setVisible(false);
         selectNextCommand();
-
-        Input.disable();
-
-        originalInputProcessor = DesktopGame.get().getInput().getInputProcessor();
-        DesktopGame.get().getInput().setInputProcessor(keyboardCatcher);
+        keyCatcher.activate();
     }
 
     @Override
