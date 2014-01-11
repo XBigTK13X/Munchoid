@@ -5,19 +5,31 @@ import sps.bridge.Sps;
 
 public abstract class KeyCatcher implements InputProcessor {
     private InputProcessor originalInputProcessor;
-    public void activate(){
-        Input.disable();
+    private boolean _active;
 
-        originalInputProcessor = Sps.getApp().getInput().getInputProcessor();
-        Sps.getApp().getInput().setInputProcessor(this);
+    public boolean isActive() {
+        return _active;
     }
 
-    public void deactivate(){
-        Sps.getApp().getInput().setInputProcessor(originalInputProcessor);
-        Input.enable();
+    public void setActive(boolean active) {
+        if (active != _active) {
+            if (active) {
+                Input.disable();
+                originalInputProcessor = Sps.getApp().getInput().getInputProcessor();
+                Sps.getApp().getInput().setInputProcessor(this);
+            }
+            else {
+                Sps.getApp().getInput().setInputProcessor(originalInputProcessor);
+                Input.enable();
+            }
+        }
+        _active = active;
     }
 
     public abstract void onDown(int keyCode);
+
+    public void onUp(int keyCode) {
+    }
 
     @Override
     public boolean keyDown(int i) {
@@ -27,6 +39,7 @@ public abstract class KeyCatcher implements InputProcessor {
 
     @Override
     public boolean keyUp(int i) {
+        onUp(i);
         return false;
     }
 

@@ -1,13 +1,11 @@
 package game.stages.pregame;
 
-import com.badlogic.gdx.InputProcessor;
 import game.app.core.UserFiles;
 import org.apache.commons.io.FileUtils;
 import sps.bridge.Command;
 import sps.bridge.Commands;
 import sps.core.Logger;
 import sps.display.Screen;
-import sps.io.Input;
 import sps.io.InputBindings;
 import sps.io.KeyCatcher;
 import sps.io.Keys;
@@ -15,7 +13,6 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.text.Text;
 import sps.text.TextPool;
-import targets.DesktopGame;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,7 +59,7 @@ public class InputConfigState implements State {
             catch (Exception e) {
                 Logger.exception(e, false);
             }
-            keyCatcher.deactivate();
+            keyCatcher.setActive(false);
             StateManager.get().pop();
         }
     }
@@ -74,7 +71,7 @@ public class InputConfigState implements State {
         _duplicates = new HashMap<>();
         _overlap.setVisible(false);
         selectNextCommand();
-        keyCatcher.activate();
+        keyCatcher.setActive(true);
     }
 
     @Override
