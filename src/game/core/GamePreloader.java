@@ -19,6 +19,7 @@ import sps.display.Window;
 import sps.display.render.FrameStrategy;
 import sps.io.DefaultStateProvider;
 import sps.io.Input;
+import sps.io.InputBindings;
 import sps.preload.PreloadChain;
 import sps.preload.PreloadChainLink;
 import sps.states.StateManager;
@@ -32,6 +33,13 @@ public class GamePreloader {
 
             }
         };
+
+        preload.add(new PreloadChainLink() {
+            @Override
+            public void process() {
+                InputBindings.init(UserFiles.input());
+            }
+        });
 
         preload.add(new PreloadChainLink() {
             @Override

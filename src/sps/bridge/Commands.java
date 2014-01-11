@@ -19,6 +19,10 @@ public class Commands {
         instance.put(command);
     }
 
+    public static void clear() {
+        instance = new Commands();
+    }
+
     public static List<Command> values() {
         if (instance == null) {
             instance = new Commands();

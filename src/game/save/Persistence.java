@@ -1,8 +1,8 @@
 package game.save;
 
+import game.core.UserFiles;
 import game.population.PopulationOverview;
 import org.apache.commons.io.FileUtils;
-import sps.core.Loader;
 import sps.core.Logger;
 import sps.states.StateManager;
 import sps.util.Scrambler;
@@ -12,7 +12,7 @@ import java.io.File;
 public class Persistence {
     private static Persistence __instance;
 
-    private static final File __autoSave = Loader.get().userSave("Munchoid", "autosave.dat");
+    private static final File __autoSave = UserFiles.save();
 
     public static Persistence get() {
         if (__instance == null) {

@@ -33,6 +33,13 @@ public class OptionsMenu extends OptionsState {
             }
         };
 
+        final UIButton controls = new UIButton("Controls") {
+            @Override
+            public void click() {
+                StateManager.get().push(new ControlsOptionsMenu(_background));
+            }
+        };
+
         final UIButton back = new UIButton("Back") {
             @Override
             public void click() {
@@ -51,7 +58,9 @@ public class OptionsMenu extends OptionsState {
         video.setColRow(2, 2);
         audio.setColRow(3, 2);
 
-        defaults.setColRow(2, 1);
+
+        controls.setColRow(3, 1);
+        defaults.setColRow(1, 1);
 
         back.setColRow(2, 3);
 
@@ -59,6 +68,7 @@ public class OptionsMenu extends OptionsState {
         video.layout();
         audio.layout();
         defaults.layout();
+        controls.layout();
         back.layout();
     }
 }

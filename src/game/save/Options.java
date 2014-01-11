@@ -1,18 +1,20 @@
 package game.save;
 
 import game.core.GameConfig;
+import game.core.UserFiles;
 import org.apache.commons.io.FileUtils;
 import sps.core.Loader;
 import sps.core.Logger;
 import sps.core.SpsConfig;
 import sps.display.Window;
+import sps.io.InputBindings;
 import sps.util.Maths;
 import sps.util.Parse;
 
 import java.io.File;
 
 public class Options {
-    private static final File __config = Loader.get().userSave("Munchoid", "munchoid.cfg");
+    private static final File __config = UserFiles.config();
     private static final File __defaultConfig = Loader.get().data("default.munchoid.cfg");
 
     public static Options load() {
@@ -71,6 +73,15 @@ public class Options {
     }
 
     public static void resetToDefaults() {
+        if (UserFiles.input().exists()) {
+            try {
+                FileUtils.forceDelete(UserFiles.input());
+            }
+            catch (Exception e) {
+                Logger.exception(e, false);
+            }
+            InputBindings.init();
+        }
         try {
             FileUtils.copyFile(__defaultConfig, __config);
             Options.load().apply();
