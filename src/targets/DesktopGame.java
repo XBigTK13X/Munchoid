@@ -2,10 +2,10 @@ package targets;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import game.core.GamePreloader;
-import game.core.GameWrapper;
-import game.core.LoadedGame;
-import game.dev.DevConfig;
+import game.app.GamePreloader;
+import game.app.GameWrapper;
+import game.app.LoadedGame;
+import game.app.dev.DevConfig;
 import sps.core.Logger;
 import sps.core.SpsConfig;
 import sps.core.SpsLoader;

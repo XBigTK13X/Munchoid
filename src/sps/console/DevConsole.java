@@ -2,7 +2,7 @@ package sps.console;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import game.core.PausePrompt;
+import game.app.prompts.PausePrompt;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.core.Logger;

@@ -1,7 +1,7 @@
 package sps.states;
 
-import game.core.GameConfig;
-import game.dev.DevConfig;
+import config.GameConfig;
+import game.app.dev.DevConfig;
 import sps.audio.MusicPlayer;
 import sps.core.Logger;
 import sps.display.Window;

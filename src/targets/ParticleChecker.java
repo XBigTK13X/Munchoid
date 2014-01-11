@@ -2,7 +2,7 @@ package targets;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
-import game.core.InputWrapper;
+import game.app.core.InputWrapper;
 import sps.core.Logger;
 import sps.display.Screen;
 import sps.display.Window;
