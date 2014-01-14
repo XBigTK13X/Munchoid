@@ -1,4 +1,4 @@
-package targets;
+package game;
 
 import sps.core.Logger;
 import sps.util.Commander;

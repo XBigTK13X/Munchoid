@@ -1,4 +1,4 @@
-package targets;
+package game;
 
 import com.badlogic.gdx.ApplicationListener;
 import sps.color.Color;

@@ -1,4 +1,4 @@
-package targets;
+package game;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
@@ -13,6 +13,7 @@ import sps.display.Window;
 import sps.display.render.FrameStrategy;
 import sps.io.DefaultStateProvider;
 import sps.io.Input;
+import targets.DesktopGame;
 
 public class DummyApp {
     private ApplicationListener _app;
