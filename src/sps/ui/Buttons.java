@@ -1,12 +1,14 @@
 package sps.ui;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import sps.bridge.Command;
 import sps.bridge.DrawDepth;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.display.Window;
 import sps.entities.HitTest;
 import sps.io.Input;
+import sps.states.StateManager;
 import sps.util.BoundingBox;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public class Buttons {
         private DrawDepth _depth;
         private boolean _active = true;
         private boolean _shouldDraw = true;
+        private Command _command;
 
         public User() {
             _depth = DrawDepths.get("UIButton");
@@ -31,6 +34,14 @@ public class Buttons {
 
         public DrawDepth getDepth() {
             return _depth;
+        }
+
+        public void setCommand(Command command) {
+            _command = command;
+        }
+
+        public Command getCommand() {
+            return _command;
         }
 
         public abstract Sprite getSprite();
@@ -134,7 +145,11 @@ public class Buttons {
                     _states.put(user, State.Over);
                     user.over();
                 }
-                if (_states.get(user) == State.Over && mouseOver && mouseDown) {
+                //FIXME Commands should only function for the highest, but that doesn't work.
+                // Without this ugly one-liner, the exit prompt wouldn't disable keyboard input on menus
+                // This has the downside of disabling keyboard controls for the exit menu
+                boolean commandActive = (!StateManager.get().isSuspended() && (user.getCommand() != null && Input.get().isActive(user.getCommand())));
+                if ((_states.get(user) == State.Over && mouseOver && mouseDown) || commandActive) {
                     if (_highest == null) {
                         _highest = user;
                     }

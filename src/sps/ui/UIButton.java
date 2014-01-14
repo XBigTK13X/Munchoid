@@ -87,6 +87,7 @@ public abstract class UIButton {
                 mouseDown();
             }
         };
+        _buttonUser.setCommand(command);
         Buttons.get().add(_buttonUser);
 
         setMessage(text);
@@ -124,7 +125,7 @@ public abstract class UIButton {
     public void setMessage(String message) {
         int maxLines = 5;
         _originalMessage = message;
-        _message.setMessage(message);
+        _message.setMessage(message + ((_command == null) ? "" : " " + _command));
         int longestLineLength = 0;
         while (_width < _message.getBounds().width && maxLines-- > 0) {
             _message.setMessage(_message.getMessage().replace(" ", "\n"));
@@ -154,7 +155,7 @@ public abstract class UIButton {
     }
 
     public void layout() {
-        //FIXME Is it possible to have a work piece of code than this?
+        //FIXME Is it possible to have a worse piece of code than this?
         //TODO Figure out why if this isn't called, text isn't centered properly.
         setMessage(_originalMessage);
         setXY((int) _position.X, (int) _position.Y);

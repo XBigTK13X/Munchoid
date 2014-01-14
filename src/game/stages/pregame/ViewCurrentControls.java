@@ -2,6 +2,7 @@ package game.stages.pregame;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.app.core.UserFiles;
+import game.stages.common.forces.Force;
 import org.apache.commons.io.FileUtils;
 import sps.bridge.Command;
 import sps.bridge.Commands;
@@ -34,6 +35,26 @@ public class ViewCurrentControls extends OptionsState {
         commandNames.put("MoveRight", "Move Right");
         commandNames.put("MoveUp", "Move Up");
         commandNames.put("MoveDown", "Move Down");
+        commandNames.put("Force1", "Use " + Force.values()[0]);
+        commandNames.put("Force2", "Use " + Force.values()[1]);
+        commandNames.put("Force3", "Use " + Force.values()[2]);
+        commandNames.put("Force4", "Use " + Force.values()[3]);
+        commandNames.put("Force5", "Use " + Force.values()[4]);
+        commandNames.put("Force6", "Use " + Force.values()[5]);
+        commandNames.put("Help", "Show Tutorial");
+        commandNames.put("AdvanceTutorial", "Tutorial Next Page");
+        commandNames.put("Menu1", "Menu Option 1");
+        commandNames.put("Menu2", "Menu Option 2");
+        commandNames.put("Menu3", "Menu Option 3");
+        commandNames.put("Menu4", "Menu Option 4");
+        commandNames.put("Menu5", "Menu Option 5");
+        commandNames.put("Menu6", "Menu Option 6");
+        commandNames.put("Menu7", "Menu Option 7");
+        commandNames.put("Menu8", "Menu Option 8");
+        commandNames.put("Menu9", "Menu Option 9");
+        commandNames.put("Pause", "Pause");
+        commandNames.put("FullScreenToggle", "Toggle Full Screen");
+        commandNames.put("Exit", "Exit Prompt");
     }
 
     private String _chord;

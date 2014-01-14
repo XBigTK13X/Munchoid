@@ -2,9 +2,9 @@ package game.app.prompts;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import game.app.save.Options;
 import game.stages.pregame.MainMenu;
 import game.stages.pregame.PreloadMainMenu;
-import game.app.save.Options;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
@@ -57,11 +57,10 @@ public class ExitPrompt {
             }
         };
 
-        _cancel = new UIButton("Continue Playing") {
+        _cancel = new UIButton("Continue Playing " + Commands.get("Exit")) {
             @Override
             public void click() {
-                setActive(false);
-                PausePrompt.get().setActive(false);
+                close();
             }
         };
 
@@ -98,7 +97,7 @@ public class ExitPrompt {
         _cancel.setDepth(DrawDepths.get("ExitText"));
         _toggleFullScreen.setDepth(DrawDepths.get("ExitText"));
 
-        ButtonStyle style = new ButtonStyle(30, 20, 40, 10, 10);
+        ButtonStyle style = new ButtonStyle(20, 20, 60, 10, 10);
         style.apply(_desktop, 0, 6);
         style.apply(_mainMenu, 0, 4);
         style.apply(_toggleFullScreen, 0, 2);
@@ -119,7 +118,11 @@ public class ExitPrompt {
         return _active;
     }
 
-    public void setActive(boolean active) {
+    public void activate() {
+        setActive(true);
+    }
+
+    private void setActive(boolean active) {
         if (active) {
             PausePrompt.get().setActive(true);
         }
@@ -145,5 +148,10 @@ public class ExitPrompt {
             _cancel.getMessage().draw();
             _mainMenu.getMessage().draw();
         }
+    }
+
+    public void close() {
+        setActive(false);
+        PausePrompt.get().setActive(false);
     }
 }

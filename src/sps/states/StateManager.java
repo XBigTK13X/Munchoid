@@ -75,6 +75,10 @@ public class StateManager {
         }
     }
 
+    public boolean isSuspended() {
+        return _suspended;
+    }
+
     private void loadCurrent() {
         //$$$ Logger.info("=== Loading new state: " + state.getName());
         if (_components.containsKey(current())) {

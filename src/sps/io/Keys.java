@@ -111,6 +111,16 @@ public enum Keys {
     NUM_7(Input.Keys.NUM_7),
     NUM_8(Input.Keys.NUM_8),
     NUM_9(Input.Keys.NUM_9),
+    NUMPAD_0(Input.Keys.NUMPAD_0),
+    NUMPAD_1(Input.Keys.NUMPAD_1),
+    NUMPAD_2(Input.Keys.NUMPAD_2),
+    NUMPAD_3(Input.Keys.NUMPAD_3),
+    NUMPAD_4(Input.Keys.NUMPAD_4),
+    NUMPAD_5(Input.Keys.NUMPAD_5),
+    NUMPAD_6(Input.Keys.NUMPAD_6),
+    NUMPAD_7(Input.Keys.NUMPAD_7),
+    NUMPAD_8(Input.Keys.NUMPAD_8),
+    NUMPAD_9(Input.Keys.NUMPAD_9),
     O(Input.Keys.O),
     P(Input.Keys.P),
     PAGE_DOWN(Input.Keys.PAGE_DOWN),
@@ -169,9 +179,12 @@ public enum Keys {
         return null;
     }
 
-    public static Keys find(int keyCode){
-        for(Keys key:values()){
-            if(key.getKeyCode() == keyCode){
+    public static Keys find(int keyCode) {
+        if (keyCode == 16) {
+            return NUM_9;
+        }
+        for (Keys key : values()) {
+            if (key.getKeyCode() == keyCode) {
                 return key;
             }
         }

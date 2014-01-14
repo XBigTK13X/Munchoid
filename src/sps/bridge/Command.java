@@ -21,7 +21,7 @@ public class Command implements Comparable<Command> {
     public void bind(ControllerInput controllerInput, Keys... keys) {
         _controllerInput = controllerInput;
         _keys = keys;
-        recalcId();
+        recalcPrettyId();
     }
 
     public ControllerInput controllerInput() {
@@ -50,18 +50,19 @@ public class Command implements Comparable<Command> {
         return c._name.equalsIgnoreCase(_name);
     }
 
-    private void recalcId() {
-        _id = "";
+    private void recalcPrettyId() {
+        _prettyId = "";
         for (int ii = 0; ii < keys().length; ii++) {
-            _id += keys()[ii];
+            _prettyId += keys()[ii];
             if (ii < keys().length - 1) {
-                _id += "+";
+                _prettyId += "+";
             }
         }
-        _id = "[" + _id + "]";
+        _prettyId = _prettyId.replaceAll("NUM_", "");
+        _prettyId = "[" + _prettyId + "]";
     }
 
-    private String _id;
+    private String _prettyId;
 
     @Override
     public String toString() {
@@ -69,7 +70,7 @@ public class Command implements Comparable<Command> {
             return "[Undefined]";
         }
 
-        return _id;
+        return _prettyId;
     }
 
     @Override

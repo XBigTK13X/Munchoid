@@ -2,7 +2,6 @@ package game.app;
 
 import com.badlogic.gdx.Gdx;
 import game.app.config.GameConfig;
-import sps.util.GameMonitor;
 import game.app.core.InputWrapper;
 import game.app.dev.DevConfig;
 import game.app.dev.DevShortcuts;
@@ -20,6 +19,7 @@ import sps.states.State;
 import sps.states.StateManager;
 import sps.text.TextPool;
 import sps.ui.UiElements;
+import sps.util.GameMonitor;
 
 public class LoadedGame extends SpsGame {
     private State _preUpdateState;
@@ -54,11 +54,11 @@ public class LoadedGame extends SpsGame {
 
             if (Input.get().isActive(Commands.get("Exit"))) {
                 if (ExitPrompt.get().isActive()) {
-                    ExitPrompt.get().setActive(false);
+                    ExitPrompt.get().close();
                 }
                 else {
                     if (!Tutorials.get().close()) {
-                        ExitPrompt.get().setActive(true);
+                        ExitPrompt.get().activate();
                     }
                 }
             }

@@ -2,9 +2,9 @@ package game.app.tutorial;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.app.dev.DevConfig;
+import game.app.save.Options;
 import game.stages.population.PreloadPopulationOverview;
 import game.stages.pregame.MainMenu;
-import game.app.save.Options;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
 import sps.display.Screen;
@@ -46,21 +46,21 @@ public class TutorialQuery implements State {
         Text optionsNotice = TextPool.get().write("*You can disable this question in the Options menu.", Screen.pos(30, 60));
         optionsNotice.setFont("default", 24);
 
-        _launchTutorial = new UIButton("Yes", Commands.get("Confirm")) {
+        _launchTutorial = new UIButton("Yes", Commands.get("Menu1")) {
             @Override
             public void click() {
                 proceed(true);
             }
         };
 
-        _launchGame = new UIButton("No", Commands.get("Push")) {
+        _launchGame = new UIButton("No", Commands.get("Menu2")) {
             @Override
             public void click() {
                 proceed(false);
             }
         };
 
-        _back = new UIButton("Back") {
+        _back = new UIButton("Back", Commands.get("Menu3")) {
             @Override
             public void click() {
                 StateManager.get().rollBackTo(MainMenu.class);

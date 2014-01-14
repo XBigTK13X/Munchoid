@@ -72,11 +72,19 @@ public class InputBindings {
                     String[] rawChord = value.split("-")[0].split("\\+");
 
                     Keys[] chord = new Keys[rawChord.length];
+                    String keyNotFound = "";
                     for (int ii = 0; ii < rawChord.length; ii++) {
                         chord[ii] = Keys.get(rawChord[ii]);
+                        if (chord[ii] == null) {
+                            keyNotFound = "[" + rawChord[ii] + "] was not listed as any KeyID.";
+                        }
                     }
 
                     ControllerInput controllerInput = ControllerInput.parse(value.split("-")[1]);
+                    if (controllerInput == null && !keyNotFound.isEmpty()) {
+                        Logger.exception(new RuntimeException("Unable to parse input config: '" + line + "'. " + keyNotFound));
+                    }
+
                     //Unless otherwise defined in bridge.cfg already,
                     // init a new binding to always lock after 1 pressF
                     if (Commands.get(key) == null) {

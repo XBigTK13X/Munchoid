@@ -40,21 +40,21 @@ public class MainMenu implements State {
     public void create() {
         _logo.setPosition(Screen.centerWidth((int) _logo.getWidth()), Screen.height(80));
 
-        UIButton _start = new UIButton("New Game", Commands.get("Confirm")) {
+        UIButton _start = new UIButton("New Game", Commands.get("Menu2")) {
             @Override
             public void click() {
                 start();
             }
         };
 
-        UIButton _options = new UIButton("Options", Commands.get("Push")) {
+        UIButton _options = new UIButton("Options", Commands.get("Menu3")) {
             @Override
             public void click() {
                 StateManager.get().push(new OptionsMenu(_background));
             }
         };
 
-        UIButton _exit = new UIButton("Exit") {
+        UIButton _exit = new UIButton("Exit", Commands.get("Menu4")) {
             @Override
             public void click() {
                 Gdx.app.exit();
@@ -66,7 +66,7 @@ public class MainMenu implements State {
         style.apply(_options, 0, 1);
         style.apply(_exit, 0, 0);
         if (_saveFilePresent) {
-            _load = new UIButton("Continue") {
+            _load = new UIButton("Continue", Commands.get("Menu1")) {
                 @Override
                 public void click() {
                     StateManager.get().push(new RestoreSavedGame());

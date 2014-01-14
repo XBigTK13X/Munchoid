@@ -1,15 +1,14 @@
 package game.stages.battle;
 
-import game.app.core.ArenaScore;
 import game.app.config.GameConfig;
-import game.app.core.InputWrapper;
+import game.app.core.ArenaScore;
+import game.app.dev.DevConfig;
+import game.app.tutorial.Tutorials;
 import game.stages.common.creatures.Creature;
 import game.stages.common.creatures.Merge;
 import game.stages.common.creatures.Stats;
-import game.app.dev.DevConfig;
 import game.stages.common.forces.Force;
 import game.stages.forceselection.ForceSelection;
-import game.app.tutorial.Tutorials;
 import sps.audio.MusicPlayer;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
@@ -76,7 +75,7 @@ public class MergeOutcome implements State {
             forceRow++;
         }
 
-        final UIButton reject = new UIButton("") {
+        final UIButton reject = new UIButton("", Commands.get("Menu2")) {
             @Override
             public void click() {
                 rejectMerge();
@@ -87,7 +86,7 @@ public class MergeOutcome implements State {
         reject.setDepth(DrawDepths.get("MergeChoice"));
         reject.setXY((int) Screen.width(5), (int) Screen.height(35));
 
-        final UIButton accept = new UIButton("") {
+        final UIButton accept = new UIButton("", Commands.get("Menu2")) {
             @Override
             public void click() {
                 acceptMerge();
@@ -111,7 +110,7 @@ public class MergeOutcome implements State {
 
             @Override
             public String message() {
-                return "Click here or press " + Commands.get("Confirm") + "\nto merge with the opponent.";
+                return "Click here or press " + Commands.get("Menu2") + "\nto merge with the opponent.";
             }
         });
 
@@ -124,7 +123,7 @@ public class MergeOutcome implements State {
 
             @Override
             public String message() {
-                return "Click here or press " + Commands.get("Push") + "\nto devour the opponent";
+                return "Click here or press " + Commands.get("Menu1") + "\nto devour the opponent";
             }
         });
 
@@ -193,12 +192,6 @@ public class MergeOutcome implements State {
 
     @Override
     public void update() {
-        if (InputWrapper.confirm()) {
-            acceptMerge();
-        }
-        if (InputWrapper.push()) {
-            rejectMerge();
-        }
         if (DevConfig.BotEnabled) {
             if (DevConfig.BotRandomlyMerges) {
                 if (RNG.coinFlip()) {
