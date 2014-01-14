@@ -16,46 +16,31 @@ import sps.ui.UIButton;
 import sps.util.CoolDown;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class ViewCurrentControls extends OptionsState {
+    private static class PrettyCommand {
+        public final String Command;
+        public final String Display;
+
+        public PrettyCommand(String command, String display) {
+            Display = display;
+            Command = command;
+        }
+    }
+
     public ViewCurrentControls(Sprite background) {
         super(background);
     }
 
-    private Map<String, String> commandNames;
+    private List<PrettyCommand> _prettyCommands;
     private Map<Command, UIButton> _buttons;
     private Map<Command, String> _chords;
     private CoolDown _delay;
 
-    private void setupCommandNames() {
-        commandNames = new HashMap<>();
-        commandNames.put("Confirm", "Confirm");
-        commandNames.put("MoveLeft", "Move Left");
-        commandNames.put("MoveRight", "Move Right");
-        commandNames.put("MoveUp", "Move Up");
-        commandNames.put("MoveDown", "Move Down");
-        commandNames.put("Force1", "Use " + Force.values()[0]);
-        commandNames.put("Force2", "Use " + Force.values()[1]);
-        commandNames.put("Force3", "Use " + Force.values()[2]);
-        commandNames.put("Force4", "Use " + Force.values()[3]);
-        commandNames.put("Force5", "Use " + Force.values()[4]);
-        commandNames.put("Force6", "Use " + Force.values()[5]);
-        commandNames.put("Help", "Show Tutorial");
-        commandNames.put("AdvanceTutorial", "Tutorial Next Page");
-        commandNames.put("Menu1", "Menu Option 1");
-        commandNames.put("Menu2", "Menu Option 2");
-        commandNames.put("Menu3", "Menu Option 3");
-        commandNames.put("Menu4", "Menu Option 4");
-        commandNames.put("Menu5", "Menu Option 5");
-        commandNames.put("Menu6", "Menu Option 6");
-        commandNames.put("Menu7", "Menu Option 7");
-        commandNames.put("Menu8", "Menu Option 8");
-        commandNames.put("Menu9", "Menu Option 9");
-        commandNames.put("Pause", "Pause");
-        commandNames.put("ToggleFullScreen", "Toggle Full Screen");
-        commandNames.put("Exit", "Exit Prompt");
-    }
+    private int _columnHeight = 7;
 
     private String _chord;
     private KeyCatcher _catcher = new KeyCatcher() {
@@ -72,33 +57,6 @@ public class ViewCurrentControls extends OptionsState {
         }
     };
 
-    private void updateUI() {
-        if (_current != null) {
-            if (!_chord.isEmpty()) {
-                _chords.put(_current, _chord);
-                _delay.reset();
-                _buttons.get(_current).setMessage(getCommandInputString(_current, "[" + getPersistableChord() + "]"));
-            }
-        }
-    }
-
-    private String getPersistableChord() {
-        String chordFormat = _chord;
-        if (chordFormat.length() > 0) {
-            if (chordFormat.charAt(_chord.length() - 1) == '+') {
-                chordFormat = _chord.substring(0, _chord.length() - 1);
-            }
-        }
-        return chordFormat;
-    }
-
-    private Command _current;
-
-    private void configure(Command command) {
-        _chord = "";
-        _current = command;
-        _catcher.setActive(true);
-    }
 
     @Override
     public void create() {
@@ -107,17 +65,19 @@ public class ViewCurrentControls extends OptionsState {
         _chords = new HashMap<>();
         _delay = new CoolDown(.1f);
         _delay.zeroOut();
-        ButtonStyle style = new ButtonStyle(20, 5, 60, 10, 10);
+
+        ButtonStyle style = new ButtonStyle(20, 18, 15, 10, 15);
         int ii = 0;
-        for (final String commandId : commandNames.keySet()) {
-            final Command command = Commands.get(commandId);
+        for (final PrettyCommand pretty : _prettyCommands) {
+            final Command command = Commands.get(pretty.Command);
             UIButton config = new UIButton(getCommandInputString(command, command.toString())) {
                 @Override
                 public void click() {
                     configure(command);
                 }
             };
-            style.apply(config, 0, 7 - ii++);
+            config.getMessage().setFont("UIButton", 24);
+            style.apply(config, ii / _columnHeight, _columnHeight - (ii++ % _columnHeight + 1));
             _buttons.put(command, config);
         }
 
@@ -161,13 +121,75 @@ public class ViewCurrentControls extends OptionsState {
             }
         };
 
-        ButtonStyle style2 = new ButtonStyle(5, 5, 40, 10, 10);
-        style2.apply(save, 0, 1);
-        style2.apply(cancel, 1, 1);
+        ButtonStyle style2 = new ButtonStyle(10, 5, 40, 10, 10);
+        style2.apply(save, 0, 0);
+        style2.apply(cancel, 1, 0);
+    }
+
+    private void setupCommandNames() {
+        _prettyCommands = new LinkedList<>();
+        _prettyCommands.add(new PrettyCommand("Confirm", "Confirm"));
+        _prettyCommands.add(new PrettyCommand("MoveLeft", "Move Left"));
+        _prettyCommands.add(new PrettyCommand("MoveRight", "Move Right"));
+        _prettyCommands.add(new PrettyCommand("MoveUp", "Move Up"));
+        _prettyCommands.add(new PrettyCommand("MoveDown", "Move Down"));
+        _prettyCommands.add(new PrettyCommand("Force1", Force.values()[0] + " Force"));
+        _prettyCommands.add(new PrettyCommand("Force2", Force.values()[1] + " Force"));
+        _prettyCommands.add(new PrettyCommand("Force3", Force.values()[2] + " Force"));
+        _prettyCommands.add(new PrettyCommand("Force4", Force.values()[3] + " Force"));
+        _prettyCommands.add(new PrettyCommand("Force5", Force.values()[4] + " Force"));
+        _prettyCommands.add(new PrettyCommand("Force6", Force.values()[5] + " Force"));
+        _prettyCommands.add(new PrettyCommand("Help", "Show Tutorial"));
+        _prettyCommands.add(new PrettyCommand("AdvanceTutorial", "Tutorial Next Page"));
+        _prettyCommands.add(new PrettyCommand("Menu1", "Menu Option 1"));
+        _prettyCommands.add(new PrettyCommand("Menu2", "Menu Option 2"));
+        _prettyCommands.add(new PrettyCommand("Menu3", "Menu Option 3"));
+        _prettyCommands.add(new PrettyCommand("Menu4", "Menu Option 4"));
+        _prettyCommands.add(new PrettyCommand("Menu5", "Menu Option 5"));
+        _prettyCommands.add(new PrettyCommand("Menu6", "Menu Option 6"));
+        _prettyCommands.add(new PrettyCommand("Menu7", "Menu Option 7"));
+        _prettyCommands.add(new PrettyCommand("Menu8", "Menu Option 8"));
+        _prettyCommands.add(new PrettyCommand("Menu9", "Menu Option 9"));
+        _prettyCommands.add(new PrettyCommand("Pause", "Pause"));
+        _prettyCommands.add(new PrettyCommand("ToggleFullScreen", "Toggle Full Screen"));
+        _prettyCommands.add(new PrettyCommand("Exit", "Exit Prompt"));
+    }
+
+    private void updateUI() {
+        if (_current != null) {
+            if (!_chord.isEmpty()) {
+                _chords.put(_current, _chord);
+                _delay.reset();
+                _buttons.get(_current).setMessage(getCommandInputString(_current, "[" + getPersistableChord() + "]"));
+            }
+        }
+    }
+
+    private String getPersistableChord() {
+        String chordFormat = _chord;
+        if (chordFormat.length() > 0) {
+            if (chordFormat.charAt(_chord.length() - 1) == '+') {
+                chordFormat = _chord.substring(0, _chord.length() - 1);
+            }
+        }
+        return chordFormat;
+    }
+
+    private Command _current;
+
+    private void configure(Command command) {
+        _chord = "";
+        _current = command;
+        _catcher.setActive(true);
     }
 
     private String getCommandInputString(Command command, String chord) {
-        return commandNames.get(command.name()) + ": " + chord;
+        for (PrettyCommand pretty : _prettyCommands) {
+            if (command.name().equals(pretty.Command)) {
+                return pretty.Display + "\n" + chord;
+            }
+        }
+        return null;
     }
 
     @Override
