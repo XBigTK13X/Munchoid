@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.app.core.ArenaScore;
 import game.app.core.BackgroundCache;
 import game.app.core.InputWrapper;
-import game.config.UIConfig;
+import game.app.config.UIConfig;
 import game.stages.common.creatures.Creature;
 import game.app.dev.DevConfig;
 import game.stages.common.forces.Force;

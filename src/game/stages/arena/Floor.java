@@ -2,7 +2,7 @@ package game.stages.arena;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.app.core.BackgroundCache;
-import game.config.UIConfig;
+import game.app.config.UIConfig;
 import game.app.dev.DevConfig;
 import sps.bridge.DrawDepths;
 import sps.bridge.EntityTypes;

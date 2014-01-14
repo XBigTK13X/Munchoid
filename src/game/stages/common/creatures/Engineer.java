@@ -1,6 +1,6 @@
 package game.stages.common.creatures;
 
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 import game.stages.common.creatures.part.DebugPoly;
 import game.stages.common.creatures.part.Design;
 import game.stages.common.creatures.part.Designs;

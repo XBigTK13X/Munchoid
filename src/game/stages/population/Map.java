@@ -1,8 +1,8 @@
 package game.stages.population;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.config.GameConfig;
-import game.config.UIConfig;
+import game.app.config.GameConfig;
+import game.app.config.UIConfig;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.color.RGBA;

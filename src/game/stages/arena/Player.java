@@ -2,9 +2,9 @@ package game.stages.arena;
 
 import com.badlogic.gdx.Gdx;
 import game.app.core.ArenaScore;
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 import game.app.core.InputWrapper;
-import game.config.UIConfig;
+import game.app.config.UIConfig;
 import game.stages.common.creatures.Creature;
 import game.app.dev.DevConfig;
 import sps.audio.MusicPlayer;

@@ -2,7 +2,7 @@ package game.app.dev.test;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.app.core.BackgroundMaker;
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 import game.app.core.InputWrapper;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;

@@ -1,6 +1,6 @@
 package game.stages.common.forces;
 
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 import game.stages.common.creatures.BodyPart;
 import sps.core.RNG;
 import sps.particles.ParticleWrapper;

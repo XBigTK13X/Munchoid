@@ -1,7 +1,7 @@
 package game.app.dev.test;
 
 import game.stages.arena.Catchable;
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 import game.app.core.InputWrapper;
 import sps.bridge.Commands;
 import sps.display.Screen;

@@ -1,7 +1,7 @@
 package game.app.core;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 import sps.core.Logger;
 import sps.core.RNG;
 import sps.display.Screen;

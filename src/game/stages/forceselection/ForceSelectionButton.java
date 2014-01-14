@@ -1,7 +1,7 @@
 package game.stages.forceselection;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 import game.stages.common.creatures.Creature;
 import game.stages.common.forces.Force;
 import sps.bridge.Commands;

@@ -1,6 +1,6 @@
 package game.app;
 
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 import game.stages.arena.Arena;
 import game.stages.battle.Battle;
 import game.stages.battle.MergeOutcome;

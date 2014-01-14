@@ -1,7 +1,7 @@
 package game.stages.forceselection;
 
 import game.stages.arena.Arena;
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 import game.app.core.InputWrapper;
 import game.stages.common.creatures.Creature;
 import game.app.dev.DevConfig;

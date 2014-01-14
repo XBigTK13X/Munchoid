@@ -2,8 +2,8 @@ package game.stages.common.creatures;
 
 import com.badlogic.gdx.Gdx;
 import game.stages.arena.Player;
-import game.config.GameConfig;
-import game.config.UIConfig;
+import game.app.config.GameConfig;
+import game.app.config.UIConfig;
 import game.app.dev.DevConfig;
 import game.stages.common.forces.Force;
 import game.stages.common.forces.sideeffects.SideEffectType;

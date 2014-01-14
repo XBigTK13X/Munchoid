@@ -1,7 +1,7 @@
 package game.stages.common.forces;
 
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 import game.stages.common.creatures.Atom;
 import game.stages.common.creatures.BodyPart;
 import sps.core.Point2;

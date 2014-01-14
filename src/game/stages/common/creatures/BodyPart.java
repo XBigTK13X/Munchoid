@@ -1,7 +1,7 @@
 package game.stages.common.creatures;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 import game.stages.common.creatures.part.Design;
 import game.stages.common.creatures.part.Designs;
 import game.stages.common.creatures.style.Grid;

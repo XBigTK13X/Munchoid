@@ -1,6 +1,6 @@
 package game.stages.common.creatures;
 
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 import game.stages.common.creatures.style.Grid;
 import game.stages.common.forces.Force;
 import sps.color.Color;

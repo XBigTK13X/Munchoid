@@ -1,7 +1,7 @@
 package game.stages.battle;
 
 import game.app.core.ArenaScore;
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 import game.app.core.InputWrapper;
 import game.stages.common.creatures.Creature;
 import game.stages.common.creatures.Merge;

@@ -3,7 +3,7 @@ package game.stages.population;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.app.core.InputWrapper;
-import game.config.UIConfig;
+import game.app.config.UIConfig;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
 import sps.color.Color;

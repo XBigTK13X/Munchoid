@@ -1,7 +1,7 @@
 package game.app.dev;
 
 import game.stages.battle.Battle;
-import game.config.UIConfig;
+import game.app.config.UIConfig;
 import game.stages.common.creatures.Creature;
 import game.stages.common.forces.Force;
 import sps.bridge.EntityTypes;

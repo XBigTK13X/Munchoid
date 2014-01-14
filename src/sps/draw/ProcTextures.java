@@ -1,6 +1,6 @@
 package sps.draw;
 
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 import sps.color.Color;
 import sps.color.Colors;
 import sps.core.Point2;

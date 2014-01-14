@@ -1,6 +1,6 @@
 package game.stages.pregame;
 
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 import game.app.core.InputWrapper;
 import game.app.dev.DevConfig;
 import game.app.save.Options;

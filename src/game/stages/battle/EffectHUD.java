@@ -1,6 +1,6 @@
 package game.stages.battle;
 
-import game.config.UIConfig;
+import game.app.config.UIConfig;
 import game.stages.common.creatures.Creature;
 import game.stages.common.forces.sideeffects.SideEffectType;
 import sps.display.Screen;

@@ -1,8 +1,8 @@
 package game.app.dev;
 
 import game.app.core.ArenaScore;
-import game.config.GameConfig;
-import game.config.UIConfig;
+import game.app.config.GameConfig;
+import game.app.config.UIConfig;
 import game.app.core.WorldScore;
 import sps.core.Logger;
 import sps.states.StateManager;

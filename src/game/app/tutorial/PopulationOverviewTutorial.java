@@ -1,6 +1,6 @@
 package game.app.tutorial;
 
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 
 public class PopulationOverviewTutorial extends Tutorial {
     public PopulationOverviewTutorial() {

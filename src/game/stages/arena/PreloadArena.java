@@ -1,7 +1,7 @@
 package game.stages.arena;
 
 import game.stages.battle.TimerGraphic;
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 import sps.preload.PreloaderState;
 import game.app.dev.DevConfig;
 import sps.color.Color;

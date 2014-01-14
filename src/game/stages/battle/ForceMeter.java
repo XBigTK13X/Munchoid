@@ -1,7 +1,7 @@
 package game.stages.battle;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 import game.stages.common.creatures.Creature;
 import game.app.dev.DevConfig;
 import game.stages.common.forces.Force;

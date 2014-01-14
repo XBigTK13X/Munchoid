@@ -1,6 +1,6 @@
 package sps.states;
 
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 import game.app.dev.DevConfig;
 import sps.audio.MusicPlayer;
 import sps.core.Logger;

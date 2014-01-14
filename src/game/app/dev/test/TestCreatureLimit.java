@@ -1,6 +1,6 @@
 package game.app.dev.test;
 
-import game.config.GameConfig;
+import game.app.config.GameConfig;
 import game.stages.common.creatures.Atom;
 import game.stages.common.creatures.Creature;
 import sps.core.Logger;
