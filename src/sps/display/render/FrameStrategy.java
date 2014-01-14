@@ -20,6 +20,7 @@ public class FrameStrategy implements RenderStrategy {
 
     @Override
     public void begin(OrthographicCamera camera, SpriteBatch batch, int offsetX, int offsetY) {
+        Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
         camera.setToOrtho(false, Screen.get().VirtualWidth, Screen.get().VirtualHeight);
         camera.translate(offsetX, offsetY);
         camera.update();
