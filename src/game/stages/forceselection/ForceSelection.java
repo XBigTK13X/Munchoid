@@ -1,13 +1,13 @@
 package game.stages.forceselection;
 
-import game.stages.arena.Arena;
 import game.app.config.GameConfig;
-import game.app.core.InputWrapper;
-import game.stages.common.creatures.Creature;
 import game.app.dev.DevConfig;
+import game.stages.arena.Arena;
+import game.stages.common.creatures.Creature;
 import game.stages.common.forces.Force;
 import game.stages.tournament.Tournament;
 import sps.audio.MusicPlayer;
+import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
 import sps.color.Color;
 import sps.color.Colors;
@@ -48,12 +48,12 @@ public class ForceSelection implements State {
             exitMenu();
             return;
         }
-        TextPool.get().write("ENABLED", Screen.pos(20, 100));
-        TextPool.get().write("DISABLED", Screen.pos(70, 100));
+        TextPool.get().write("ENABLED", Screen.pos(20, 95));
+        TextPool.get().write("DISABLED", Screen.pos(70, 95));
 
         setMessage(-1);
 
-        _confirm = new UIButton("Confirm") {
+        _confirm = new UIButton("Confirm", Commands.get("Confirm")) {
             @Override
             public void click() {
                 confirmSelection();
@@ -96,22 +96,22 @@ public class ForceSelection implements State {
     }
 
     private String getMessage(int diff) {
-        if (diff > 0) {
-            return "Please disable " + (_pet.getStats().enabledCount() - _pet.getStats().maxEnabled()) + " of the forces on the left by clicking the bars";
-        }
-        else if (diff == 0) {
+        if (diff == 0) {
             return "Please press confirm to accept your changes.";
         }
-        else {
-            return "Please enable " + (_pet.getStats().maxEnabled() - _pet.getStats().enabledCount()) + " of the forces on the right by clicking the bars.";
-        }
+        boolean disable = diff > 0;
+        int changeNeeded = (disable) ? (_pet.getStats().enabledCount() - _pet.getStats().maxEnabled()) : (_pet.getStats().maxEnabled() - _pet.getStats().enabledCount());
+        String action = (disable) ? "disable" : "enable";
+        String direction = (disable) ? "left" : "right";
+        return "Please " + action + " " + changeNeeded + " of the forces on the " + direction + "\nby clicking the bars or using the keyboard.";
+
     }
 
     private int _lastEnabledCount;
 
     private void setMessage(int diff) {
         if (_wrongCountMessage == null) {
-            _wrongCountMessage = TextPool.get().write(getMessage(diff), Screen.pos(15, 45));
+            _wrongCountMessage = TextPool.get().write(getMessage(diff), Screen.pos(20, 40));
         }
         else {
             if (_lastEnabledCount != _pet.getStats().enabledCount()) {
@@ -121,18 +121,21 @@ public class ForceSelection implements State {
         }
     }
 
+    int _lastDiff = -10000;
+
     @Override
     public void update() {
         int diff = _pet.getStats().enabledCount() - _pet.getStats().maxEnabled();
-        _confirm.setVisible(diff == 0);
-        setMessage(diff);
+        if (diff != _lastDiff) {
+            _confirm.setVisible(diff == 0);
+            setMessage(diff);
+            _lastDiff = diff;
+        }
+
         if (DevConfig.BotEnabled) {
             if (!confirmSelection()) {
                 _pet.getStats().setEnabled(_pet.getStats().randomEnabledForce(), false);
             }
-        }
-        if (InputWrapper.confirm()) {
-            confirmSelection();
         }
     }
 

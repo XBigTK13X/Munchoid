@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ForcesSelectionUI {
+    private static final int __bottomHeight = 53;
+
     private static final int __widthPercent = 30;
     private static final int __heightPercent = 5;
 
@@ -18,7 +20,7 @@ public class ForcesSelectionUI {
 
     public ForcesSelectionUI(Creature owner) {
         _owner = owner;
-        _origin = new Point2(Screen.width(10), Screen.get().VirtualHeight - __heightPercent * Force.values().length - Screen.height(48));
+        _origin = new Point2(Screen.width(10), Screen.get().VirtualHeight - __heightPercent * Force.values().length - Screen.height(__bottomHeight));
         _meters = new ArrayList<>();
         int row = Force.values().length;
         for (Force force : Force.values()) {

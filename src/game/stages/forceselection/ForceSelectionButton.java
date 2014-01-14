@@ -8,21 +8,23 @@ import sps.bridge.Commands;
 import sps.color.Color;
 import sps.core.Point2;
 import sps.display.Screen;
-import sps.entities.HitTest;
-import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
+import sps.text.Text;
+import sps.text.TextPool;
 import sps.ui.Buttons;
 import sps.ui.Meter;
-import sps.ui.Tooltips;
 import sps.util.Maths;
 
 public class ForceSelectionButton {
     private Force _force;
     private Meter _meter;
+    private Text _display;
     private Creature _owner;
     private String _message;
     private Point2 _originalPosition;
+    private int _messageOffsetX = 30;
+    private int _messageOffsetY = 37;
 
     public ForceSelectionButton(Force force, Creature owner, int width, int height, Point2 origin, int row) {
         _owner = owner;
@@ -32,24 +34,13 @@ public class ForceSelectionButton {
 
         _originalPosition = new Point2(origin.X, (row * (int) (Screen.height(height) * 1.5)) + origin.Y);
 
-        _meter = new Meter(width, height, force.Color, _originalPosition.add(0, 0), false);
+        _meter = new Meter(width, height, force.Color, _originalPosition, false);
         _meter.shade(Color.GRAY);
         _meter.setPercent(Maths.percent(stat / ((float) GameConfig.MaxStat)));
 
-        _message = (stat > GameConfig.DisableStat && _owner.getStats().isEnabled(_force)) ? force.name() + ": " + strength() + Commands.get(force.Command) : "Disabled";
-        Tooltips.get().add(new Tooltips.User() {
-            @Override
-            public boolean isActive() {
-                return HitTest.inBox(Input.get().x(), Input.get().y(), _meter.getBounds());
-            }
-
-            @Override
-            public String message() {
-                setTooltip();
-                return _message;
-            }
-        });
-
+        _message = force.name() + ": " + strength() + Commands.get(force.Command);
+        _display = TextPool.get().write(_message, _originalPosition.add(_messageOffsetX, _messageOffsetY));
+        _display.setFont("default", 30);
 
         if (!_owner.getStats().isEnabled(_force) || _owner.getStats().get(_force) <= GameConfig.DisableStat) {
             moveToRightSide();
@@ -72,6 +63,7 @@ public class ForceSelectionButton {
                 }
             }
         };
+        user.setCommand(Commands.get(force.Command));
         user.setShouldDraw(false);
         Buttons.get().add(user);
 
@@ -79,10 +71,12 @@ public class ForceSelectionButton {
 
     private void moveToRightSide() {
         _meter.setPosition(_originalPosition.X + Screen.width(50), _originalPosition.Y);
+        _display.setPosition((int) (_originalPosition.X + Screen.width(50) + _messageOffsetX), (int) _originalPosition.Y + _messageOffsetY);
     }
 
     private void moveToLeftSide() {
         _meter.setPosition(_originalPosition.X, _originalPosition.Y);
+        _display.setPosition((int) (_originalPosition.X + _messageOffsetX), (int) _originalPosition.Y + _messageOffsetY);
     }
 
     private String strength() {
