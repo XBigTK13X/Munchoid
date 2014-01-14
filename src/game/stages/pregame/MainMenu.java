@@ -104,7 +104,7 @@ public class MainMenu implements State {
             _corruptSave.setVisible(true);
             _load.setVisible(false);
         }
-        if (InputWrapper.confirm() || DevConfig.EndToEndStateLoadTest || DevConfig.BotEnabled) {
+        if (DevConfig.EndToEndStateLoadTest || DevConfig.BotEnabled) {
             start();
         }
     }
