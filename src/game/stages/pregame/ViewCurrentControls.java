@@ -81,7 +81,7 @@ public class ViewCurrentControls extends OptionsState {
             _buttons.put(command, config);
         }
 
-        UIButton save = new UIButton("Save") {
+        UIButton save = new UIButton("Save", Commands.get("Menu1")) {
             @Override
             public void click() {
                 for (Command command : _chords.keySet()) {
@@ -107,7 +107,7 @@ public class ViewCurrentControls extends OptionsState {
             }
         };
 
-        UIButton cancel = new UIButton("Cancel") {
+        UIButton cancel = new UIButton("Cancel", Commands.get("Menu6")) {
             @Override
             public void click() {
                 if (UserFiles.input().exists()) {
