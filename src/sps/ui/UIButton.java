@@ -126,7 +126,7 @@ public abstract class UIButton {
     public void setMessage(String message) {
         int maxLines = 5;
         _originalMessage = message;
-        if (_command != null && !message.isEmpty() && Options.load().GUIButtonKeyboardLabels) {
+        if (_command != null && !message.isEmpty() && Options.get().GUIButtonKeyboardLabels) {
             _message.setMessage(message + " " + _command);
         }
         else {

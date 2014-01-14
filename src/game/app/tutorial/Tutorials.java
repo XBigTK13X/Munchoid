@@ -34,7 +34,7 @@ public class Tutorials {
     }
 
     public void show(boolean ignoreConfig) {
-        if (Options.load().TutorialEnabled || ignoreConfig) {
+        if (Options.get().TutorialEnabled || ignoreConfig) {
             Tutorial tutorial = _tutorials.get(StateManager.get().current().getClass());
             if (tutorial != null) {
                 Boolean completed = _completedTutorials.get(tutorial);

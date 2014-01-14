@@ -67,10 +67,9 @@ public class ExitPrompt {
         _toggleFullScreen = new UIButton("Toggle Fullscreen " + Commands.get("ToggleFullscreen")) {
             @Override
             public void click() {
-                Options options = Options.load();
-                options.FullScreen = !Gdx.graphics.isFullscreen();
-                options.apply();
-                options.save();
+                Options.get().FullScreen = !Gdx.graphics.isFullscreen();
+                Options.get().apply();
+                Options.get().save();
             }
         };
 

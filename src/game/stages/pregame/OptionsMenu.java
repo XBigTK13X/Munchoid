@@ -38,7 +38,7 @@ public class OptionsMenu extends OptionsState {
         final UIButton controls = new UIButton("Controls", Commands.get("Menu4")) {
             @Override
             public void click() {
-                StateManager.get().push( new ViewCurrentControls(_background));
+                StateManager.get().push(new ControlConfigMenu(_background));
             }
         };
 

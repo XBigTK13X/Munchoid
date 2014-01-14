@@ -17,8 +17,17 @@ public class Options {
     private static final File __config = UserFiles.config();
     private static final File __defaultConfig = Loader.get().data("default.munchoid.cfg");
 
-    public static Options load() {
-        Options options = new Options();
+    private static Options options;
+
+    public static Options get() {
+        if (options == null) {
+            load();
+        }
+        return options;
+    }
+
+    public static void load() {
+        options = new Options();
         try {
             if (!__config.exists()) {
                 FileUtils.copyFile(__defaultConfig, __config);
@@ -72,7 +81,6 @@ public class Options {
         catch (Exception e) {
             Logger.exception(e, false);
         }
-        return options;
     }
 
     public static void resetToDefaults() {
@@ -87,7 +95,8 @@ public class Options {
         }
         try {
             FileUtils.copyFile(__defaultConfig, __config);
-            Options.load().apply();
+            Options.load();
+            Options.get().apply();
         }
         catch (Exception e) {
             Logger.exception(e, false);

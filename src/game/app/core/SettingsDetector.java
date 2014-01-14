@@ -1,10 +1,10 @@
 package game.app.core;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import game.app.config.GameConfig;
 import game.app.InitialStateResolver;
-import game.stages.common.creatures.Creature;
+import game.app.config.GameConfig;
 import game.app.save.Options;
+import game.stages.common.creatures.Creature;
 import sps.bridge.Commands;
 import sps.color.Color;
 import sps.display.Screen;
@@ -41,10 +41,9 @@ public class SettingsDetector implements State {
     public void update() {
         if (testStep == 0) {
             _display.add("Determining optimal settings for this machine...");
-            Options o = Options.load();
-            o.GraphicsLowQuality = false;
-            o.apply();
-            o.save();
+            Options.get().GraphicsLowQuality = false;
+            Options.get().apply();
+            Options.get().save();
             testStep = 1;
         }
         else if (testStep == 1) {
@@ -66,13 +65,12 @@ public class SettingsDetector implements State {
             testStep = 3;
         }
         else if (testStep == 3) {
-            Options options = Options.load();
-            options.GraphicsLowQuality = !bgQuality || !creatureQuality;
-            options.SettingsDetected = true;
-            options.apply();
-            options.save();
+            Options.get().GraphicsLowQuality = !bgQuality || !creatureQuality;
+            Options.get().SettingsDetected = true;
+            Options.get().apply();
+            Options.get().save();
             testStep = 4;
-            _display.add("Graphics mode has been set to \"" + (options.GraphicsLowQuality ? "FAST" : "PRETTY") + "\".");
+            _display.add("Graphics mode has been set to \"" + (Options.get().GraphicsLowQuality ? "FAST" : "PRETTY") + "\".");
             _display.add("Press " + Commands.get("Confirm") + " to start the game.");
         }
         else if (testStep == 4) {

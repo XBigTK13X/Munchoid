@@ -27,8 +27,8 @@ public class LoadedGame extends SpsGame {
 
     private void handleWindowQuerks() {
         if (!_firstUpdateOptionsLoaded) {
-            Options options = Options.load();
-            options.apply();
+            Options.load();
+            Options.get().apply();
             _firstUpdateOptionsLoaded = true;
         }
     }
@@ -41,10 +41,9 @@ public class LoadedGame extends SpsGame {
         }
 
         if (InputWrapper.fullScreen()) {
-            Options options = Options.load();
-            options.FullScreen = !Gdx.graphics.isFullscreen();
-            options.apply();
-            options.save();
+            Options.get().FullScreen = !Gdx.graphics.isFullscreen();
+            Options.get().apply();
+            Options.get().save();
         }
 
         if (!DevConsole.get().isActive()) {

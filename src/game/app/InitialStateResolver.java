@@ -1,17 +1,17 @@
 package game.app;
 
-import game.stages.battle.Battle;
-import game.stages.battle.MergeOutcome;
 import game.app.core.CrashNotification;
 import game.app.core.SettingsDetector;
 import game.app.core.UserFiles;
 import game.app.dev.DevConfig;
+import game.app.dev.test.*;
+import game.app.save.Options;
+import game.stages.battle.Battle;
+import game.stages.battle.MergeOutcome;
 import game.stages.forceselection.ForceSelection;
 import game.stages.population.PreloadPopulationOverview;
 import game.stages.pregame.Intro;
 import game.stages.pregame.PreloadMainMenu;
-import game.app.save.Options;
-import game.app.dev.test.*;
 import sps.states.State;
 
 import java.io.File;
@@ -22,7 +22,7 @@ public class InitialStateResolver {
         if (crash.exists()) {
             return new CrashNotification(crash);
         }
-        else if(!Options.load().SettingsDetected){
+        else if (!Options.get().SettingsDetected) {
             return new SettingsDetector();
         }
         else if (DevConfig.PopulationTest) {
@@ -56,7 +56,7 @@ public class InitialStateResolver {
             return new EndGameTest();
         }
         else {
-            if (Options.load().ShowIntro) {
+            if (Options.get().ShowIntro) {
                 return new Intro(true);
             }
             else {

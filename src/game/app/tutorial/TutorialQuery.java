@@ -27,16 +27,15 @@ public class TutorialQuery implements State {
 
     @Override
     public void create() {
-        Options options = Options.load();
-        if (!options.TutorialQueryEnabled) {
+        if (!Options.get().TutorialQueryEnabled) {
             proceed(false);
             return;
         }
 
         if (DevConfig.EndToEndStateLoadTest || DevConfig.BotEnabled) {
-            options.TutorialEnabled = false;
-            options.apply();
-            options.save();
+            Options.get().TutorialEnabled = false;
+            Options.get().apply();
+            Options.get().save();
 
             StateManager.get().push(new PreloadPopulationOverview());
             return;
@@ -77,9 +76,8 @@ public class TutorialQuery implements State {
     }
 
     private void proceed(boolean showTutorial) {
-        Options options = Options.load();
-        options.TutorialEnabled = showTutorial;
-        options.save();
+        Options.get().TutorialEnabled = showTutorial;
+        Options.get().save();
         StateManager.get().push(new PreloadPopulationOverview());
     }
 

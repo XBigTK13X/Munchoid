@@ -7,10 +7,13 @@ import org.apache.commons.io.FileUtils;
 import sps.bridge.Command;
 import sps.bridge.Commands;
 import sps.core.Logger;
+import sps.display.Screen;
 import sps.io.InputBindings;
 import sps.io.KeyCatcher;
 import sps.io.Keys;
 import sps.states.StateManager;
+import sps.text.Text;
+import sps.text.TextPool;
 import sps.ui.ButtonStyle;
 import sps.ui.UIButton;
 import sps.util.CoolDown;
@@ -20,7 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class ViewCurrentControls extends OptionsState {
+public class ControlConfigMenu extends OptionsState {
     private static class PrettyCommand {
         public final String Command;
         public final String Display;
@@ -31,7 +34,7 @@ public class ViewCurrentControls extends OptionsState {
         }
     }
 
-    public ViewCurrentControls(Sprite background) {
+    public ControlConfigMenu(Sprite background) {
         super(background);
     }
 
@@ -40,12 +43,26 @@ public class ViewCurrentControls extends OptionsState {
     private Map<Command, String> _chords;
     private CoolDown _delay;
 
+    private Text _prompt;
+    private UIButton _save;
+    private UIButton _cancel;
+    private Command _current;
+
     private int _columnHeight = 7;
 
     private String _chord;
     private KeyCatcher _catcher = new KeyCatcher() {
         @Override
         public void onDown(int keyCode) {
+            for (Command command : Commands.values()) {
+                if (command != _current) {
+                    for (Keys key : command.keys()) {
+                        if (key.getKeyCode() == keyCode) {
+                            _prompt.setMessage("Duplicate key detected.\nUnable to save.");
+                        }
+                    }
+                }
+            }
             _chord += Keys.find(keyCode) + "+";
             updateUI();
         }
@@ -66,6 +83,9 @@ public class ViewCurrentControls extends OptionsState {
         _delay = new CoolDown(.1f);
         _delay.zeroOut();
 
+        _prompt = TextPool.get().write("", Screen.pos(20, 13));
+        _prompt.setVisible(false);
+
         ButtonStyle style = new ButtonStyle(20, 18, 15, 10, 15);
         int ii = 0;
         for (final PrettyCommand pretty : _prettyCommands) {
@@ -81,7 +101,7 @@ public class ViewCurrentControls extends OptionsState {
             _buttons.put(command, config);
         }
 
-        UIButton save = new UIButton("Save", Commands.get("Menu1")) {
+        _save = new UIButton("Save", Commands.get("Menu1")) {
             @Override
             public void click() {
                 for (Command command : _chords.keySet()) {
@@ -107,23 +127,17 @@ public class ViewCurrentControls extends OptionsState {
             }
         };
 
-        UIButton cancel = new UIButton("Cancel", Commands.get("Menu6")) {
+        _cancel = new UIButton("Cancel", Commands.get("Menu6")) {
             @Override
             public void click() {
-                if (UserFiles.input().exists()) {
-                    InputBindings.init(UserFiles.input());
-                }
-                else {
-                    InputBindings.init();
-                }
                 _catcher.setActive(false);
                 StateManager.get().pop();
             }
         };
 
         ButtonStyle style2 = new ButtonStyle(10, 5, 40, 10, 10);
-        style2.apply(save, 0, 0);
-        style2.apply(cancel, 1, 0);
+        style2.apply(_save, 0, 0);
+        style2.apply(_cancel, 1, 0);
     }
 
     private void setupCommandNames() {
@@ -139,6 +153,8 @@ public class ViewCurrentControls extends OptionsState {
         _prettyCommands.add(new PrettyCommand("Force4", Force.values()[3] + " Force"));
         _prettyCommands.add(new PrettyCommand("Force5", Force.values()[4] + " Force"));
         _prettyCommands.add(new PrettyCommand("Force6", Force.values()[5] + " Force"));
+        _prettyCommands.add(new PrettyCommand("Reroll", "Reroll"));
+        _prettyCommands.add(new PrettyCommand("Pass", "Pass"));
         _prettyCommands.add(new PrettyCommand("Help", "Show Tutorial"));
         _prettyCommands.add(new PrettyCommand("AdvanceTutorial", "Tutorial Next Page"));
         _prettyCommands.add(new PrettyCommand("Menu1", "Menu Option 1"));
@@ -175,12 +191,14 @@ public class ViewCurrentControls extends OptionsState {
         return chordFormat;
     }
 
-    private Command _current;
-
     private void configure(Command command) {
         _chord = "";
         _current = command;
         _catcher.setActive(true);
+        _save.setVisible(false);
+        _cancel.setVisible(false);
+        _prompt.setVisible(true);
+        _prompt.setMessage("Waiting for a keypress...");
     }
 
     private String getCommandInputString(Command command, String chord) {
@@ -196,6 +214,11 @@ public class ViewCurrentControls extends OptionsState {
     public void update() {
         if (!_delay.isCooled()) {
             if (_delay.updateAndCheck()) {
+                if (!_prompt.getMessage().contains("Duplicate")) {
+                    _prompt.setVisible(false);
+                    _save.setVisible(true);
+                }
+                _cancel.setVisible(true);
                 _delay.zeroOut();
                 _catcher.setActive(false);
             }

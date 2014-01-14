@@ -14,7 +14,6 @@ public class GameOptionsMenu extends OptionsState {
 
     @Override
     public void create() {
-        Options options = Options.load();
         final UIButton back = new UIButton("Back", Commands.get("Menu6")) {
             @Override
             public void click() {
@@ -22,14 +21,13 @@ public class GameOptionsMenu extends OptionsState {
             }
         };
 
-        final UIButton commandLabels = new UIButton("Keyboard Labels: " + (options.GUIButtonKeyboardLabels ? "Enabled" : "Disabled"), Commands.get("Menu3")) {
+        final UIButton commandLabels = new UIButton("Keyboard Labels: " + (Options.get().GUIButtonKeyboardLabels ? "Enabled" : "Disabled"), Commands.get("Menu3")) {
             @Override
             public void click() {
-                Options options = Options.load();
-                options.GUIButtonKeyboardLabels = !options.GUIButtonKeyboardLabels;
-                options.save();
-                options.apply();
-                setMessage("Keyboard Labels: " + (options.GUIButtonKeyboardLabels ? "Enabled" : "Disabled"));
+                Options.get().GUIButtonKeyboardLabels = !Options.get().GUIButtonKeyboardLabels;
+                Options.get().save();
+                Options.get().apply();
+                setMessage("Keyboard Labels: " + (Options.get().GUIButtonKeyboardLabels ? "Enabled" : "Disabled"));
                 layout();
             }
         };
@@ -41,26 +39,24 @@ public class GameOptionsMenu extends OptionsState {
             }
         };
 
-        final UIButton introEnabled = new UIButton("Intro Video: " + (options.ShowIntro ? "Enabled" : "Disabled"), Commands.get("Menu1")) {
+        final UIButton introEnabled = new UIButton("Intro Video: " + (Options.get().ShowIntro ? "Enabled" : "Disabled"), Commands.get("Menu1")) {
             @Override
             public void click() {
-                Options options = Options.load();
-                options.ShowIntro = !options.ShowIntro;
-                options.save();
-                options.apply();
-                setMessage("Intro Video: " + (options.ShowIntro ? "Enabled" : "Disabled"));
+                Options.get().ShowIntro = !Options.get().ShowIntro;
+                Options.get().save();
+                Options.get().apply();
+                setMessage("Intro Video: " + (Options.get().ShowIntro ? "Enabled" : "Disabled"));
                 layout();
             }
         };
 
-        final UIButton tutorialQueryEnabled = new UIButton("Tutorial Prompt: " + (options.TutorialQueryEnabled ? "Enabled" : "Disabled"), Commands.get("Menu2")) {
+        final UIButton tutorialQueryEnabled = new UIButton("Tutorial Prompt: " + (Options.get().TutorialQueryEnabled ? "Enabled" : "Disabled"), Commands.get("Menu2")) {
             @Override
             public void click() {
-                Options options = Options.load();
-                options.TutorialQueryEnabled = !options.TutorialQueryEnabled;
-                options.save();
-                options.apply();
-                setMessage("Tutorial Prompt: " + (options.TutorialQueryEnabled ? "Enabled" : "Disabled"));
+                Options.get().TutorialQueryEnabled = !Options.get().TutorialQueryEnabled;
+                Options.get().save();
+                Options.get().apply();
+                setMessage("Tutorial Prompt: " + (Options.get().TutorialQueryEnabled ? "Enabled" : "Disabled"));
                 layout();
             }
         };

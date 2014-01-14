@@ -76,10 +76,9 @@ public class Intro implements State {
 
         if ((_readText.equals(_introText) && InputWrapper.confirm()) || _skip.isCooled() || DevConfig.EndToEndStateLoadTest || DevConfig.BotEnabled) {
             if (_skip.isCooled()) {
-                Options options = Options.load();
-                options.ShowIntro = false;
-                options.apply();
-                options.save();
+                Options.get().ShowIntro = false;
+                Options.get().apply();
+                Options.get().save();
             }
             StateManager.get().push(new PreloadMainMenu());
         }

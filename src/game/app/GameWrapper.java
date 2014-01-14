@@ -48,11 +48,10 @@ public class GameWrapper implements ApplicationListener {
     private void handleWindowQuirks() {
         if (!_persistResizeOperation.isCooled()) {
             if (_persistResizeOperation.updateAndCheck()) {
-                Options options = Options.load();
-                options.WindowResolutionX = Window.Width;
-                options.WindowResolutionY = Window.Height;
-                options.apply();
-                options.save();
+                Options.get().WindowResolutionX = Window.Width;
+                Options.get().WindowResolutionY = Window.Height;
+                Options.get().apply();
+                Options.get().save();
                 _persistResizeOperation.zeroOut();
             }
         }

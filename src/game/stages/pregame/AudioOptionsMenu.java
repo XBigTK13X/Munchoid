@@ -21,26 +21,24 @@ public class AudioOptionsMenu extends OptionsState {
             }
         };
 
-        final UIButton musicEnabled = new UIButton("Music: " + (Options.load().MusicEnabled ? "Enabled" : "Disabled"), Commands.get("Menu1")) {
+        final UIButton musicEnabled = new UIButton("Music: " + (Options.get().MusicEnabled ? "Enabled" : "Disabled"), Commands.get("Menu1")) {
             @Override
             public void click() {
-                Options options = Options.load();
-                options.MusicEnabled = !options.MusicEnabled;
-                options.save();
-                options.apply();
-                setMessage("Music: " + (options.MusicEnabled ? "Enabled" : "Disabled"));
+                Options.get().MusicEnabled = !Options.get().MusicEnabled;
+                Options.get().save();
+                Options.get().apply();
+                setMessage("Music: " + (Options.get().MusicEnabled ? "Enabled" : "Disabled"));
                 layout();
             }
         };
 
-        final UIButton soundEnabled = new UIButton("Sound: " + (Options.load().MusicEnabled ? "Enabled" : "Disabled"), Commands.get("Menu2")) {
+        final UIButton soundEnabled = new UIButton("Sound: " + (Options.get().MusicEnabled ? "Enabled" : "Disabled"), Commands.get("Menu2")) {
             @Override
             public void click() {
-                Options options = Options.load();
-                options.SoundEnabled = !options.SoundEnabled;
-                options.save();
-                options.apply();
-                setMessage("Sound: " + (options.SoundEnabled ? "Enabled" : "Disabled"));
+                Options.get().SoundEnabled = !Options.get().SoundEnabled;
+                Options.get().save();
+                Options.get().apply();
+                setMessage("Sound: " + (Options.get().SoundEnabled ? "Enabled" : "Disabled"));
                 layout();
             }
         };

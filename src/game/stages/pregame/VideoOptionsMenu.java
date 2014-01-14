@@ -41,22 +41,18 @@ public class VideoOptionsMenu extends OptionsState {
         final UIButton fullScreen = new UIButton("Toggle Full Screen", Commands.get("Menu2")) {
             @Override
             public void click() {
-                Options options = Options.load();
-                options.FullScreen = !Gdx.graphics.isFullscreen();
-                options.save();
-                options.apply();
+                Options.get().FullScreen = !Gdx.graphics.isFullscreen();
+                Options.get().save();
+                Options.get().apply();
             }
         };
-
-        Options options = Options.load();
-        final UIButton graphicsMode = new UIButton(qualityMessage(options), Commands.get("Menu1")) {
+        final UIButton graphicsMode = new UIButton(qualityMessage(Options.get()), Commands.get("Menu1")) {
             @Override
             public void click() {
-                Options options = Options.load();
-                options.GraphicsLowQuality = !options.GraphicsLowQuality;
-                options.save();
-                options.apply();
-                setMessage(qualityMessage(options));
+                Options.get().GraphicsLowQuality = !Options.get().GraphicsLowQuality;
+                Options.get().save();
+                Options.get().apply();
+                setMessage(qualityMessage(Options.get()));
                 layout();
             }
         };
@@ -74,7 +70,7 @@ public class VideoOptionsMenu extends OptionsState {
             }
         };
 
-        setBrightnessPercent(options.Brightness, false);
+        setBrightnessPercent(Options.get().Brightness, false);
 
         final UIButton brightnessReset = new UIButton("") {
             @Override
@@ -102,10 +98,9 @@ public class VideoOptionsMenu extends OptionsState {
     private void setBrightnessPercent(int brightness, boolean persist) {
         _brightness.setSliderPercent(brightness);
         if (persist) {
-            Options options = Options.load();
-            options.Brightness = brightness;
-            options.apply();
-            options.save();
+            Options.get().Brightness = brightness;
+            Options.get().apply();
+            Options.get().save();
         }
     }
 

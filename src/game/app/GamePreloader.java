@@ -1,16 +1,15 @@
 package game.app;
 
 import game.app.config.GameConfig;
-import game.stages.arena.Arena;
-import game.stages.battle.Battle;
-import game.stages.battle.MergeOutcome;
-import sps.util.GameMonitor;
 import game.app.core.UserFiles;
 import game.app.dev.ConsoleCommands;
 import game.app.dev.DevConfig;
-import game.stages.population.PopulationOverview;
 import game.app.save.Options;
 import game.app.tutorial.*;
+import game.stages.arena.Arena;
+import game.stages.battle.Battle;
+import game.stages.battle.MergeOutcome;
+import game.stages.population.PopulationOverview;
 import sps.audio.MusicPlayer;
 import sps.audio.RandomSoundPlayer;
 import sps.bridge.SpriteTypes;
@@ -27,6 +26,7 @@ import sps.preload.PreloadChain;
 import sps.preload.PreloadChainLink;
 import sps.states.StateManager;
 import sps.ui.MultiText;
+import sps.util.GameMonitor;
 
 public class GamePreloader {
     public static PreloadChain createPreloadChain() {
@@ -128,13 +128,12 @@ public class GamePreloader {
             @Override
             public void process() {
                 if (DevConfig.BotEnabled) {
-                    Options options = Options.load();
-                    options.GraphicsLowQuality = DevConfig.BotsLowQualityGraphics;
-                    options.FullScreen = false;
-                    options.WindowResolutionY = 100;
-                    options.WindowResolutionX = 100;
-                    options.apply();
-                    options.save();
+                    Options.get().GraphicsLowQuality = DevConfig.BotsLowQualityGraphics;
+                    Options.get().FullScreen = false;
+                    Options.get().WindowResolutionY = 100;
+                    Options.get().WindowResolutionX = 100;
+                    Options.get().apply();
+                    Options.get().save();
                 }
             }
         });
@@ -142,8 +141,8 @@ public class GamePreloader {
         preload.add(new PreloadChainLink() {
             @Override
             public void process() {
-                Options options = Options.load();
-                options.apply();
+                Options.load();
+                Options.get().apply();
             }
         });
 
