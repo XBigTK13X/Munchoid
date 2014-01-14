@@ -1,15 +1,15 @@
 package game.stages.battle;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import game.app.config.UIConfig;
 import game.app.core.ArenaScore;
 import game.app.core.BackgroundCache;
 import game.app.core.InputWrapper;
-import game.app.config.UIConfig;
-import game.stages.common.creatures.Creature;
 import game.app.dev.DevConfig;
+import game.app.tutorial.Tutorials;
+import game.stages.common.creatures.Creature;
 import game.stages.common.forces.Force;
 import game.stages.tournament.TournamentEnd;
-import game.app.tutorial.Tutorials;
 import sps.audio.MusicPlayer;
 import sps.bridge.Commands;
 import sps.bridge.DrawDepths;
@@ -17,7 +17,6 @@ import sps.core.Logger;
 import sps.display.Screen;
 import sps.display.Window;
 import sps.entities.EntityManager;
-import sps.io.Input;
 import sps.states.State;
 import sps.states.StateManager;
 import sps.text.TextEffects;
@@ -213,11 +212,6 @@ public class Battle implements State {
                 else {
                     Force f = _left.getStats().randomEnabledForce();
                     playerActivate(f);
-                }
-            }
-            for (Force force : Force.values()) {
-                if (Input.get().isActive(Commands.get(force.Command), 0) && _left.getStats().isEnabled(force)) {
-                    playerActivate(force);
                 }
             }
         }

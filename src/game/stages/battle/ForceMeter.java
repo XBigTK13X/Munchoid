@@ -2,8 +2,8 @@ package game.stages.battle;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.app.config.GameConfig;
-import game.stages.common.creatures.Creature;
 import game.app.dev.DevConfig;
+import game.stages.common.creatures.Creature;
 import game.stages.common.forces.Force;
 import game.stages.forceselection.ForceSelection;
 import sps.bridge.Commands;
@@ -84,6 +84,7 @@ public class ForceMeter {
                         }
                     }
                 };
+                user.setCommand(Commands.get(force.Command));
                 user.setShouldDraw(false);
                 Buttons.get().add(user);
             }
