@@ -110,7 +110,7 @@ public class MergeOutcome implements State {
 
             @Override
             public String message() {
-                return "Click here or press " + Commands.get("Menu2") + "\nto merge with the opponent.";
+                return "Click here or press " + Commands.get("Menu3") + "\nto merge with the opponent.";
             }
         });
 
@@ -128,7 +128,7 @@ public class MergeOutcome implements State {
         });
 
         //Body merge display
-        _reroll = new UIButton("Reroll") {
+        _reroll = new UIButton("Reroll", Commands.get("Reroll")) {
             @Override
             public void click() {
                 _merged.setBody(Merge.body(_pet, _defeated));

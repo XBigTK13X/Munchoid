@@ -2,6 +2,7 @@ package game.stages.pregame;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.app.save.Options;
+import sps.bridge.Commands;
 import sps.states.StateManager;
 import sps.ui.ButtonStyle;
 import sps.ui.UIButton;
@@ -13,49 +14,49 @@ public class OptionsMenu extends OptionsState {
 
     @Override
     public void create() {
-        final UIButton gameplay = new UIButton("Gameplay") {
+        final UIButton gameplay = new UIButton("Gameplay", Commands.get("Menu1")) {
             @Override
             public void click() {
                 StateManager.get().push(new GameOptionsMenu(_background));
             }
         };
 
-        final UIButton video = new UIButton("Video") {
+        final UIButton video = new UIButton("Video", Commands.get("Menu2")) {
             @Override
             public void click() {
                 StateManager.get().push(new VideoOptionsMenu(_background));
             }
         };
 
-        final UIButton audio = new UIButton("Audio") {
+        final UIButton audio = new UIButton("Audio", Commands.get("Menu3")) {
             @Override
             public void click() {
                 StateManager.get().push(new AudioOptionsMenu(_background));
             }
         };
 
-        final UIButton controls = new UIButton("Controls") {
+        final UIButton controls = new UIButton("Controls", Commands.get("Menu4")) {
             @Override
             public void click() {
                 StateManager.get().push( new ViewCurrentControls(_background));
             }
         };
 
-        final UIButton back = new UIButton("Back") {
+        final UIButton back = new UIButton("Back", Commands.get("Menu6")) {
             @Override
             public void click() {
                 StateManager.get().pop();
             }
         };
 
-        final UIButton defaults = new UIButton("Reset to Defaults") {
+        final UIButton defaults = new UIButton("Reset Defaults", Commands.get("Menu9")) {
             @Override
             public void click() {
                 Options.resetToDefaults();
             }
         };
 
-        ButtonStyle style = new ButtonStyle(12, 30, 25, 10, 10);
+        ButtonStyle style = new ButtonStyle(5, 30, 30, 10, 10);
 
         style.apply(gameplay, 0, 3);
         style.apply(video, 1, 3);

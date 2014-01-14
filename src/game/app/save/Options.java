@@ -60,6 +60,9 @@ public class Options {
                     case "settingsDetected":
                         options.SettingsDetected = Parse.bool(value);
                         break;
+                    case "guiButtonKeyboardLabels":
+                        options.GUIButtonKeyboardLabels = Parse.bool(value);
+                        break;
                     default:
                         Logger.error("Invalid user config: " + line);
                         break;
@@ -106,6 +109,7 @@ public class Options {
     public boolean TutorialQueryEnabled = true;
     public int Brightness = 85;
     public boolean SettingsDetected = false;
+    public boolean GUIButtonKeyboardLabels = true;
 
     public void save() {
         try {
@@ -120,6 +124,7 @@ public class Options {
             options += "tutorialQueryEnabled=" + TutorialQueryEnabled + "\n";
             options += "brightness=" + Brightness + "\n";
             options += "showIntro=" + ShowIntro + "\n";
+            options += "guiButtonKeyboardLabels=" + GUIButtonKeyboardLabels + "\n";
             options += "settingsDetected=" + SettingsDetected;
 
             FileUtils.write(__config, options);

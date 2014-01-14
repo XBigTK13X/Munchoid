@@ -2,6 +2,7 @@ package game.stages.pregame;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.app.save.Options;
+import sps.bridge.Commands;
 import sps.states.StateManager;
 import sps.ui.ButtonStyle;
 import sps.ui.UIButton;
@@ -13,14 +14,14 @@ public class AudioOptionsMenu extends OptionsState {
 
     @Override
     public void create() {
-        final UIButton back = new UIButton("Back") {
+        final UIButton back = new UIButton("Back", Commands.get("Menu6")) {
             @Override
             public void click() {
                 StateManager.get().pop();
             }
         };
 
-        final UIButton musicEnabled = new UIButton("Music: " + (Options.load().MusicEnabled ? "Enabled" : "Disabled")) {
+        final UIButton musicEnabled = new UIButton("Music: " + (Options.load().MusicEnabled ? "Enabled" : "Disabled"), Commands.get("Menu1")) {
             @Override
             public void click() {
                 Options options = Options.load();
@@ -32,7 +33,7 @@ public class AudioOptionsMenu extends OptionsState {
             }
         };
 
-        final UIButton soundEnabled = new UIButton("Sound: " + (Options.load().MusicEnabled ? "Enabled" : "Disabled")) {
+        final UIButton soundEnabled = new UIButton("Sound: " + (Options.load().MusicEnabled ? "Enabled" : "Disabled"), Commands.get("Menu2")) {
             @Override
             public void click() {
                 Options options = Options.load();

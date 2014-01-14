@@ -53,7 +53,7 @@ public class ViewCurrentControls extends OptionsState {
         commandNames.put("Menu8", "Menu Option 8");
         commandNames.put("Menu9", "Menu Option 9");
         commandNames.put("Pause", "Pause");
-        commandNames.put("FullScreenToggle", "Toggle Full Screen");
+        commandNames.put("ToggleFullScreen", "Toggle Full Screen");
         commandNames.put("Exit", "Exit Prompt");
     }
 
@@ -134,7 +134,6 @@ public class ViewCurrentControls extends OptionsState {
                             keys[ii++] = Keys.get(id);
                         }
                         command.bind(command.controllerInput(), keys);
-                        Logger.info("Binding " + command.name() + " to " + chord + " with a chord length " + keyIds.length);
                     }
                 }
                 try {

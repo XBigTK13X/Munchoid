@@ -1,6 +1,7 @@
 package sps.ui;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import game.app.save.Options;
 import org.apache.commons.lang3.StringUtils;
 import sps.audio.RandomSoundPlayer;
 import sps.bridge.Command;
@@ -125,7 +126,12 @@ public abstract class UIButton {
     public void setMessage(String message) {
         int maxLines = 5;
         _originalMessage = message;
-        _message.setMessage(message + ((_command == null) ? "" : " " + _command));
+        if (_command != null && !message.isEmpty() && Options.load().GUIButtonKeyboardLabels) {
+            _message.setMessage(message + " " + _command);
+        }
+        else {
+            _message.setMessage(message);
+        }
         int longestLineLength = 0;
         while (_width < _message.getBounds().width && maxLines-- > 0) {
             _message.setMessage(_message.getMessage().replace(" ", "\n"));

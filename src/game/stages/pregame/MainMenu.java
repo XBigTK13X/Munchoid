@@ -54,7 +54,7 @@ public class MainMenu implements State {
             }
         };
 
-        UIButton _exit = new UIButton("Exit", Commands.get("Menu4")) {
+        UIButton _exit = new UIButton("Exit", Commands.get("Menu6")) {
             @Override
             public void click() {
                 Gdx.app.exit();

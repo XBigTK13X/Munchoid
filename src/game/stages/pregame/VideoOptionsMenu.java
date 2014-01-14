@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import game.app.core.SettingsDetector;
 import game.app.save.Options;
+import sps.bridge.Commands;
 import sps.display.Screen;
 import sps.entities.HitTest;
 import sps.states.StateManager;
@@ -22,14 +23,14 @@ public class VideoOptionsMenu extends OptionsState {
 
     @Override
     public void create() {
-        final UIButton back = new UIButton("Back") {
+        final UIButton back = new UIButton("Back", Commands.get("Menu6")) {
             @Override
             public void click() {
                 StateManager.get().pop();
             }
         };
 
-        final UIButton settingsDetection = new UIButton("Detect Optimal Settings") {
+        final UIButton settingsDetection = new UIButton("Detect Optimal Settings", Commands.get("Menu3")) {
 
             @Override
             public void click() {
@@ -37,7 +38,7 @@ public class VideoOptionsMenu extends OptionsState {
             }
         };
 
-        final UIButton fullScreen = new UIButton("Toggle Full Screen") {
+        final UIButton fullScreen = new UIButton("Toggle Full Screen", Commands.get("Menu2")) {
             @Override
             public void click() {
                 Options options = Options.load();
@@ -48,7 +49,7 @@ public class VideoOptionsMenu extends OptionsState {
         };
 
         Options options = Options.load();
-        final UIButton graphicsMode = new UIButton(qualityMessage(options)) {
+        final UIButton graphicsMode = new UIButton(qualityMessage(options), Commands.get("Menu1")) {
             @Override
             public void click() {
                 Options options = Options.load();
@@ -60,7 +61,7 @@ public class VideoOptionsMenu extends OptionsState {
             }
         };
 
-        ButtonStyle style = new ButtonStyle(30, 20, 40, 10, 10);
+        ButtonStyle style = new ButtonStyle(10, 20, 80, 10, 10);
         style.apply(back, 0, 0);
         style.apply(graphicsMode, 0, 3);
         style.apply(fullScreen, 0, 2);
