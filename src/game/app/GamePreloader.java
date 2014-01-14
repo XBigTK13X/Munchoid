@@ -40,7 +40,7 @@ public class GamePreloader {
         preload.add(new PreloadChainLink() {
             @Override
             public void process() {
-                InputBindings.init(UserFiles.input());
+                InputBindings.reload(UserFiles.input());
             }
         });
 

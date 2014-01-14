@@ -86,14 +86,17 @@ public class Options {
     public static void resetToDefaults() {
         if (UserFiles.input().exists()) {
             try {
+                Logger.info("Removing user input config.");
                 FileUtils.forceDelete(UserFiles.input());
             }
             catch (Exception e) {
                 Logger.exception(e, false);
             }
-            InputBindings.init();
+            Logger.info("Restoring default input config.");
+            InputBindings.reload();
         }
         try {
+            Logger.info("Restoring default options.");
             FileUtils.copyFile(__defaultConfig, __config);
             Options.load();
             Options.get().apply();

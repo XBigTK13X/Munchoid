@@ -75,7 +75,7 @@ public class MergeOutcome implements State {
             forceRow++;
         }
 
-        final UIButton reject = new UIButton("", Commands.get("Menu2")) {
+        final UIButton reject = new UIButton("", Commands.get("Menu1")) {
             @Override
             public void click() {
                 rejectMerge();
@@ -86,7 +86,7 @@ public class MergeOutcome implements State {
         reject.setDepth(DrawDepths.get("MergeChoice"));
         reject.setXY((int) Screen.width(5), (int) Screen.height(35));
 
-        final UIButton accept = new UIButton("", Commands.get("Menu2")) {
+        final UIButton accept = new UIButton("", Commands.get("Menu3")) {
             @Override
             public void click() {
                 acceptMerge();

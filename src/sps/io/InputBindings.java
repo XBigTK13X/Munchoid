@@ -13,33 +13,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InputBindings {
-    private static InputBindings __instance;
-
-    public static void init() {
-        if (__instance == null) {
-            __instance = new InputBindings(Loader.get().data("input.cfg"));
-        }
+    public static void reload() {
+        reload(Loader.get().data("input.cfg"));
     }
 
-    public static void init(final File config) {
+    public static void reload(final File config) {
         if (config.exists()) {
-            __instance = new InputBindings(config);
-            Logger.info("Loading control config from " + config.getAbsolutePath());
+            try {
+                fromConfig(FileUtils.readLines(config));
+            }
+            catch (Exception e) {
+                Logger.exception(e);
+            }
         }
         else {
-            Logger.info(config.getAbsolutePath() + " does not exist. The default control scheme will be used.");
+            Logger.info("Unable to find " + config.getAbsolutePath() + ". The default control scheme will be used.");
         }
     }
 
 
-    public InputBindings(final File config) {
-        Logger.info("Parsing input.cfg");
-        try {
-            fromConfig(FileUtils.readLines(config));
-        }
-        catch (Exception e) {
-            Logger.exception(e);
-        }
+    private InputBindings() {
+
     }
 
     public static List<String> toConfig() {
@@ -63,7 +57,7 @@ public class InputBindings {
         return result;
     }
 
-    public static void fromConfig(List<String> config) {
+    private static void fromConfig(List<String> config) {
         try {
             for (String line : config) {
                 if (!line.contains("##") && line.length() > 1) {

@@ -55,11 +55,12 @@ public class Input implements InputProvider {
 
         if (stateProvider == null) {
             provider = new DefaultStateProvider();
-        } else {
+        }
+        else {
             provider = stateProvider;
         }
 
-        InputBindings.init();
+        InputBindings.reload();
     }
 
     @Override
