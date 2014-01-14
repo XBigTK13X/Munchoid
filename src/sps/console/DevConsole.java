@@ -36,6 +36,8 @@ public class DevConsole {
     private MultiText _multiText;
 
     private DevConsole() {
+        _active = false;
+
         _actions = new HashMap<>();
         _input = TextPool.get().write("", new Point2(50, Screen.get().VirtualHeight - 50));
         _input.setDepth(DrawDepths.get("DevConsoleText"));
@@ -43,14 +45,16 @@ public class DevConsole {
         _multiText = new MultiText(new Point2(0, 0), __consoleBufferSize, Color.BLACK.newAlpha(.75f), Screen.get().VirtualWidth, Screen.get().VirtualHeight - 100);
         _multiText.setBackgroundDepth(DrawDepths.get("DevConsole"));
         _multiText.setTextDepth(DrawDepths.get("DevConsoleText"));
+        _multiText.setVisible(false);
 
-        _active = false;
+
         add("The development console has been started.");
 
         register(new DevConsoleAction("stop") {
             @Override
             public String act(int[] input) {
                 toggle();
+                PausePrompt.get().setActive(false);
                 return "";
             }
         });
@@ -68,7 +72,7 @@ public class DevConsole {
             public String act(int[] input) {
                 String result = "";
                 for (String id : _actions.keySet()) {
-                    result += id + ",";
+                    result += id + ", ";
                 }
                 return result;
             }
@@ -123,7 +127,7 @@ public class DevConsole {
                 DevParsedCommand command = new DevParsedCommand(input);
                 if (_actions.containsKey(command.Id.toLowerCase())) {
                     String result = _actions.get(command.Id.toLowerCase()).act(command.Arguments);
-                    if (!result.isEmpty()) {
+                    if (result != null && !result.isEmpty()) {
                         add(result);
                     }
                 }

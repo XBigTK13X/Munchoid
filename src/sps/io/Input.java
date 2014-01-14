@@ -59,8 +59,6 @@ public class Input implements InputProvider {
         else {
             provider = stateProvider;
         }
-
-        InputBindings.reload();
     }
 
     @Override

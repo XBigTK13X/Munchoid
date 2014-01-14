@@ -93,7 +93,7 @@ public class Options {
                 Logger.exception(e, false);
             }
             Logger.info("Restoring default input config.");
-            InputBindings.reload();
+            InputBindings.reload(Loader.get().data("input.cfg"));
         }
         try {
             Logger.info("Restoring default options.");

@@ -1,7 +1,8 @@
 package game.app.dev;
 
-import game.stages.battle.Battle;
 import game.app.config.UIConfig;
+import game.app.save.Options;
+import game.stages.battle.Battle;
 import game.stages.common.creatures.Creature;
 import game.stages.common.forces.Force;
 import sps.bridge.EntityTypes;
@@ -105,6 +106,15 @@ public class ConsoleCommands {
             @Override
             public String act(int[] input) {
                 return Memory.getDebugInfo();
+            }
+        });
+
+        DevConsole.get().register(new DevConsoleAction("fs") {
+            @Override
+            public String act(int[] input) {
+                Options.get().FullScreen = !Options.get().FullScreen;
+                Options.get().apply();
+                return null;
             }
         });
     }

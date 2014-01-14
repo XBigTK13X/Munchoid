@@ -95,28 +95,6 @@ public class GamePreloader {
         preload.add(new PreloadChainLink() {
             @Override
             public void process() {
-                Window.setWindowBackground(Color.BLACK);
-                Window.get(false).screenEngine().setStrategy(new FrameStrategy());
-                Window.get(true).screenEngine().setStrategy(new FrameStrategy());
-                Input.get().setup(new DefaultStateProvider());
-                SpriteSheetManager.setup(SpriteTypes.getDefs());
-            }
-        });
-
-        preload.add(new PreloadChainLink() {
-            @Override
-            public void process() {
-                Window.setWindowBackground(Color.BLACK);
-                Window.get(false).screenEngine().setStrategy(new FrameStrategy());
-                Window.get(true).screenEngine().setStrategy(new FrameStrategy());
-                Input.get().setup(new DefaultStateProvider());
-                SpriteSheetManager.setup(SpriteTypes.getDefs());
-            }
-        });
-
-        preload.add(new PreloadChainLink() {
-            @Override
-            public void process() {
                 Tutorials.get().add(PopulationOverview.class, new PopulationOverviewTutorial());
                 Tutorials.get().add(Battle.class, new BattleTutorial());
                 Tutorials.get().add(Arena.class, new ArenaTutorial());

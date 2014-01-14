@@ -13,21 +13,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InputBindings {
-    public static void reload() {
-        reload(Loader.get().data("input.cfg"));
+    public static void reload(final File config) {
+        reload(config, true);
     }
 
-    public static void reload(final File config) {
+    private static void reload(final File config, boolean fallback) {
         if (config.exists()) {
             try {
+                Logger.info("Reading input config: " + config.getAbsolutePath());
                 fromConfig(FileUtils.readLines(config));
             }
             catch (Exception e) {
-                Logger.exception(e);
+                Logger.exception(e, false);
             }
         }
         else {
-            Logger.info("Unable to find " + config.getAbsolutePath() + ". The default control scheme will be used.");
+            if (fallback) {
+                Logger.info("Unable to find " + config.getAbsolutePath() + ". Attempting to load default sps-gamelib input config.");
+                reload(Loader.get().data("input.cfg"), false);
+            }
         }
     }
 

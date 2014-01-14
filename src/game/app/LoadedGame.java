@@ -40,7 +40,7 @@ public class LoadedGame extends SpsGame {
             PausePrompt.get().setActive(!PausePrompt.get().isActive());
         }
 
-        if (InputWrapper.fullScreen()) {
+        if (InputWrapper.fullScreen() && !DevConsole.get().isActive()) {
             Options.get().FullScreen = !Gdx.graphics.isFullscreen();
             Options.get().apply();
             Options.get().save();

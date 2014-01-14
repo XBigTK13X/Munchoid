@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import sps.console.DevConsole;
+import sps.core.SpsConfig;
 import sps.display.Screen;
 
 public class FrameStrategy implements RenderStrategy {
@@ -28,6 +30,9 @@ public class FrameStrategy implements RenderStrategy {
 
     @Override
     public void resize(int width, int height) {
+        if (SpsConfig.get().displayLoggingEnabled) {
+            DevConsole.get().add("Resizing with Frame strategy: " + width + ", " + height);
+        }
         float aspectRatio = (float) width / (float) height;
         float scale = (float) width / (float) Screen.get().VirtualWidth;
         crop.set(0, 0);
@@ -44,6 +49,9 @@ public class FrameStrategy implements RenderStrategy {
         float w = (float) Screen.get().VirtualWidth * scale;
         float h = (float) Screen.get().VirtualHeight * scale;
         viewport.set(crop.x, crop.y, w, h);
+        if (SpsConfig.get().displayLoggingEnabled) {
+            DevConsole.get().add("Calculated: wh: " + w + ", " + h + ", crop: " + crop);
+        }
         Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
     }
 

@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.GL10;
 import sps.color.Color;
-import sps.core.Logger;
+import sps.console.DevConsole;
 import sps.core.SpsConfig;
 import sps.display.render.RenderStrategy;
 import sps.display.render.Renderer;
@@ -37,14 +37,14 @@ public class Window {
             int width = SpsConfig.get().virtualWidth;
             int height = SpsConfig.get().virtualHeight;
             if (SpsConfig.get().displayLoggingEnabled) {
-                Logger.info("Virtual resolution: " + width + "W, " + height + "H");
+                DevConsole.get().add("Virtual resolution: " + width + "W, " + height + "H");
             }
             __dynamic = new Renderer(width, height);
             __dynamic.screenEngine().setStrategy(__defaultStrategy);
             __fixed = new Renderer(width, height);
             __fixed.screenEngine().setStrategy(__defaultStrategy);
             if (SpsConfig.get().displayLoggingEnabled) {
-                Logger.info("Window resolution: " + Gdx.graphics.getWidth() + "W, " + Gdx.graphics.getHeight() + "H");
+                DevConsole.get().add("Window resolution: " + Gdx.graphics.getWidth() + "W, " + Gdx.graphics.getHeight() + "H");
             }
             Width = width;
             Height = height;
@@ -58,14 +58,14 @@ public class Window {
 
     public static void resize(int width, int height, boolean enableFullScreen) {
         if (SpsConfig.get().displayLoggingEnabled) {
-            Logger.info("Resizing window: " + width + ", " + height + ", " + (enableFullScreen ? "FullScreen" : "Windowed"));
+            DevConsole.get().add("== Resizing window: " + width + ", " + height + ", " + (enableFullScreen ? "FullScreen" : "Windowed"));
         }
         if (enableFullScreen) {
             Graphics.DisplayMode nativeMode = Gdx.graphics.getDesktopDisplayMode();
             width = nativeMode.width;
             height = nativeMode.height;
             if (SpsConfig.get().displayLoggingEnabled) {
-                Logger.info("Fullscreen enabled. Ignore parameters and resize to native resolution:  " + width + "x" + height);
+                DevConsole.get().add("Fullscreen enabled. Ignore parameters and resize to native resolution:  " + width + "x" + height);
             }
         }
         Gdx.graphics.setDisplayMode(width, height, enableFullScreen);
