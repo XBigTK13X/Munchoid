@@ -29,7 +29,7 @@ public class InputBindings {
         }
         else {
             if (fallback) {
-                Logger.info("Unable to find " + config.getAbsolutePath() + ". Attempting to load default sps-gamelib input config.");
+                Logger.info("Unable to find " + config.getAbsolutePath() + ". Attempting to load " + Loader.get().data("input.cfg").getAbsolutePath());
                 reload(Loader.get().data("input.cfg"), false);
             }
         }

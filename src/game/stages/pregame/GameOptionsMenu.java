@@ -21,13 +21,13 @@ public class GameOptionsMenu extends OptionsState {
             }
         };
 
-        final UIButton commandLabels = new UIButton("Keyboard Labels: " + (Options.get().GUIButtonKeyboardLabels ? "Enabled" : "Disabled"), Commands.get("Menu3")) {
+        final UIButton commandLabels = new UIButton("Keyboard Labels: " + (Options.get().GUIButtonKeyboardLabelsEnabled ? "Enabled" : "Disabled"), Commands.get("Menu3")) {
             @Override
             public void click() {
-                Options.get().GUIButtonKeyboardLabels = !Options.get().GUIButtonKeyboardLabels;
+                Options.get().GUIButtonKeyboardLabelsEnabled = !Options.get().GUIButtonKeyboardLabelsEnabled;
                 Options.get().save();
                 Options.get().apply();
-                setMessage("Keyboard Labels: " + (Options.get().GUIButtonKeyboardLabels ? "Enabled" : "Disabled"));
+                setMessage("Keyboard Labels: " + (Options.get().GUIButtonKeyboardLabelsEnabled ? "Enabled" : "Disabled"));
                 layout();
             }
         };

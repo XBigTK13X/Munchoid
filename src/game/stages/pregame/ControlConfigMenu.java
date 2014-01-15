@@ -96,7 +96,7 @@ public class ControlConfigMenu extends OptionsState {
                     configure(command);
                 }
             };
-            config.getMessage().setFont("UIButton", 24);
+            config.setFont("UIButton", 24);
             style.apply(config, ii / _columnHeight, _columnHeight - (ii++ % _columnHeight + 1));
             _buttons.put(command, config);
         }

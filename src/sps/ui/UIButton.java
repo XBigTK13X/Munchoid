@@ -32,6 +32,7 @@ public abstract class UIButton {
 
     private Buttons.User _buttonUser;
     private Text _message;
+    private Text _commandMessage;
     private Sprite _sprite;
     private int _width;
     private int _height;
@@ -63,8 +64,12 @@ public abstract class UIButton {
         _command = command;
         _position = new Point2(0, 0);
 
+        if (_command != null && Options.get().GUIButtonKeyboardLabelsEnabled) {
+            _commandMessage = TextPool.get().write(_command.toString(), new Point2(0, 0));
+        }
+
         _message = TextPool.get().write(text, new Point2(0, 0));
-        _message.setFont("UIButton", 60);
+        setFont("UIButton", 60);
         _message.setDepth(_depth);
 
         _originalMessage = text;
@@ -126,12 +131,7 @@ public abstract class UIButton {
     public void setMessage(String message) {
         int maxLines = 5;
         _originalMessage = message;
-        if (_command != null && !message.isEmpty() && Options.get().GUIButtonKeyboardLabels) {
-            _message.setMessage(message + " " + _command);
-        }
-        else {
-            _message.setMessage(message);
-        }
+        _message.setMessage(message);
         int longestLineLength = 0;
         while (_width < _message.getBounds().width && maxLines-- > 0) {
             _message.setMessage(_message.getMessage().replace(" ", "\n"));
@@ -156,6 +156,14 @@ public abstract class UIButton {
         int mX = x + (_width - mW) / 2;
         int mY = y + mH + (_height - mH) / 2;
         _message.setPosition(mX, mY);
+
+        if (_commandMessage != null) {
+            int cW = (int) _commandMessage.getBounds().width;
+            int cH = (int) _commandMessage.getBounds().height;
+            int cX = x + (_width - cW) - (int) (Screen.width(1) / 2);
+            int cY = y + cH + (int) Screen.height(1);
+            _commandMessage.setPosition(cX, cY);
+        }
         _sprite.setPosition(x, y);
         _position.reset(x, y);
     }
@@ -198,6 +206,9 @@ public abstract class UIButton {
 
     public void setVisible(boolean visible) {
         _message.setVisible(visible);
+        if (_commandMessage != null) {
+            _commandMessage.setVisible(visible);
+        }
         _visible = visible;
         _buttonUser.setActive(visible);
     }
@@ -205,6 +216,9 @@ public abstract class UIButton {
     public void setDepth(DrawDepth depth) {
         _depth = depth;
         _message.setDepth(depth);
+        if (_commandMessage != null) {
+            _commandMessage.setDepth(depth);
+        }
         _buttonUser.setDepth(depth);
     }
 
@@ -227,5 +241,15 @@ public abstract class UIButton {
     public void setMoveable(boolean moveable) {
         _moveable = moveable;
         _message.setMoveable(moveable);
+        if (_commandMessage != null) {
+            _commandMessage.setMoveable(moveable);
+        }
+    }
+
+    public void setFont(String fontLabel, int pointSize) {
+        _message.setFont(fontLabel, pointSize);
+        if (_commandMessage != null) {
+            _commandMessage.setFont(fontLabel, pointSize / 2);
+        }
     }
 }

@@ -15,7 +15,6 @@ import java.io.File;
 
 public class Options {
     private static final File __config = UserFiles.config();
-    private static final File __defaultConfig = Loader.get().data("default.munchoid.cfg");
 
     private static Options options;
 
@@ -30,7 +29,7 @@ public class Options {
         options = new Options();
         try {
             if (!__config.exists()) {
-                FileUtils.copyFile(__defaultConfig, __config);
+                options.save();
             }
             for (String line : FileUtils.readLines(__config)) {
                 String[] configs = line.split("=");
@@ -70,7 +69,7 @@ public class Options {
                         options.SettingsDetected = Parse.bool(value);
                         break;
                     case "guiButtonKeyboardLabels":
-                        options.GUIButtonKeyboardLabels = Parse.bool(value);
+                        options.GUIButtonKeyboardLabelsEnabled = Parse.bool(value);
                         break;
                     default:
                         Logger.error("Invalid user config: " + line);
@@ -97,7 +96,8 @@ public class Options {
         }
         try {
             Logger.info("Restoring default options.");
-            FileUtils.copyFile(__defaultConfig, __config);
+            Options defaultConfig = new Options();
+            defaultConfig.save();
             Options.load();
             Options.get().apply();
         }
@@ -110,18 +110,18 @@ public class Options {
 
     }
 
-    public int WindowResolutionX;
-    public int WindowResolutionY;
+    public int WindowResolutionX = 1344;
+    public int WindowResolutionY = 756;
     public boolean FullScreen = false;
     public boolean MusicEnabled = true;
     public boolean SoundEnabled = true;
-    public boolean GraphicsLowQuality;
+    public boolean GraphicsLowQuality = true;
     public boolean TutorialEnabled = true;
     public boolean ShowIntro = true;
     public boolean TutorialQueryEnabled = true;
     public int Brightness = 85;
     public boolean SettingsDetected = false;
-    public boolean GUIButtonKeyboardLabels = true;
+    public boolean GUIButtonKeyboardLabelsEnabled = true;
 
     public void save() {
         try {
@@ -136,7 +136,7 @@ public class Options {
             options += "tutorialQueryEnabled=" + TutorialQueryEnabled + "\n";
             options += "brightness=" + Brightness + "\n";
             options += "showIntro=" + ShowIntro + "\n";
-            options += "guiButtonKeyboardLabels=" + GUIButtonKeyboardLabels + "\n";
+            options += "guiButtonKeyboardLabels=" + GUIButtonKeyboardLabelsEnabled + "\n";
             options += "settingsDetected=" + SettingsDetected;
 
             FileUtils.write(__config, options);
