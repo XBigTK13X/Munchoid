@@ -12,6 +12,7 @@ push(){
 	butler push $WORKSPACE/artifacts/$ZIP simplepathstudios/munchoid:$CHANNEL --userversion-file $WORKSPACE/assets/data/version.dat
 }
 
-push Munchoid-lin-64.zip linux-stable
-push Munchoid-mac.zip osx-stable
-push Munchoid-win-32.zip windows-stable
+push Munchoid-lin-64.zip linux
+push Munchoid-lin-32.zip linux-thirtytwobit
+push Munchoid-mac.zip osx
+push Munchoid-win-32.zip windows
