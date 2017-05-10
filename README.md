@@ -1,3 +1,5 @@
+# Migrated to https://gitlab.com/xbigtk13x/Munchoid
+
 # Munchoid #
 > Use mental monsters to solve the world's problems.
 
